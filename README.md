@@ -1,6 +1,6 @@
 GPIG-C
 ======
 
-Tailorable HUMS solution.
+A tailorable HUMS solution.
 
 **Sense. Store. Analyse. Report.**
