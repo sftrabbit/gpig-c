@@ -111,6 +111,21 @@ The functional requirements detail what inputs, behaviour and outputs the system
 \section{Possible solutions}
 
 \subsection{Proposed solution}
+Our proposed solution uses the concept of a client-server architecture, where the client is the consumer?s system, sensing the data, and the server is the system processing the data. These could exist within the same package or on the same device, but they could also be geographically-distant machines connected across the internet. The solution brings together the best elements from our possible solutions for each section of the system, utilising a plugin architecture for several components.
+\\ \\
+We will provide an input API for data input clients to push new data to the system, accepting any correctly formatted sensor data sent on the correct network (DD.1). Achieving correctly formatted data may require changes to the consumers system, or using middleware. This approach makes our system flexible, supporting a wide range of data input clients, meaning in future the solution could easily extend across domains.
+\\ \\
+For data storage, the only applicable solution in this scenario is a database (DD.2). Using polyglot persistence gives us the option of choosing a database technology most suited to the consumer?s needs, which we will determine during development. To make our choice we will look at all the relevant technologies available and evaluate strengths and weaknesses in relation to other design decisions for the data being stored, and how it will be accessed.
+\\ \\
+The data analysis part of the system will provide plugins offering analysis tools, as well as an API for consumers to extend and create their own specialised analysis rules (DD.4). Offering an API makes the system more tailorable to different consumers and domains, as generic analysis tools could not hope to meet every consumers needs by itself. Since some customers may not want to take on the task of creating a whole analysis system themselves, we will offer domain-specific plugins to simplify the process. This might include graphical tools or other user-friendly features. The range of plugins offered can be expanded as the system expands into more domains.
+\\ \\
+The system will include various output features for generating reports (DD.5) and providing notifications (DD.6). For reports, we will allow the consumer to customise the types of reports created. They will be able to request reports in a variety of formats, including human-friendly formats, e.g. PDF, and common data interchange formats. Consumers can use these data formats as a data API to build their own reports or for any other purpose. This will allow the consumer flexibility to produce what they want, whilst also offering them easy to use built-in tools.
+\\ \\
+Our system will provide plugins to support various types of notification that can be triggered based upon customisable events. Notifications will include  emails, alongside more generic notifications formatted in standard formats such as XML, just as with reports. The generic notifications could then be processed further by the consumer, allowing them to tailor how notifications are used and delivered.
+\\ \\
+The system will also provide an administration centre (DD.3) that lets the consumer configure any customisable system settings including, setting up events that trigger notifications and defining data schemas. This tool will be offered through an intuitive web based interface which is only accessible by the authorised consumer.
+\\ \\
+For the prototype we hope to demonstrate at the end of the project, we plan to implement most of the solution described above. The core of the system, including sensing, storing, analysing and reporting data, will be functional, as will some of the basic components built utilising the plugin architecture. Some additional simple components may be required when demonstrating, such as a tool to simulate data being input to the system. 
 
 \include{design-dec-table}
 
