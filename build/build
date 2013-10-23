@@ -1,2 +1,2 @@
 #!/bin/sh
-pdflatex ../docs/initial-report/initial-report.tex
+rubber --pdf ../docs/initial-report/initial-report.tex
