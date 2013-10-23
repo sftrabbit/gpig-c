@@ -85,7 +85,13 @@ The intended audience of this document are both the developers and the customer.
 \item The user implements a notification and reporting system with correctly integrates with the HUMS to keep end users informed.
 \item We implement a notification and reporting system on behalf of the customer, allowing them to receive updates about the state of the system they are monitoring.
 \end{itemize}
-
+\textbf{Main Success Postcondition:}
+\begin{itemize}
+\item The user is notified when the analysis system fires an event
+\item The user can request reports
+\end{itemize}
+\textbf{Exception Scenarios:} User's notification and reporting system implementation does not conform to the notification and reporting interface and so cannot function correctly.\\
+\textbf{Exception Postcondition:} HUMS can still collect, store and analyse data.\\\\
 
 \section{Requirements}
 For this project, requirements have been divided into three categories, functional, non-functional and constraint. The requirements have been engineered such that each falls into one of those three categories, this prevents them from becoming too complex. Each requirement has been structured as simply and concisely as possible and been worded in such a way as to avoid ambiguity. The requirements represent the problem to be solved and serve as a contract between us, as the development team, and the customer. All requirements have therefore been checked with the customer to ensure the system described is the system they envisioned.\\
