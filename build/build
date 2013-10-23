@@ -22,6 +22,7 @@ if [ "$assi" -eq "1" ]; then
 	WCFI="${RPDI}/wc.tex";
 else
 	echo "${COL_RED}Invalid! ${COL_WHT}Please choose another selection${COL_CLR}";
+	exit 1;
 fi
 
 if [ -f "$WCFI" ]; then
