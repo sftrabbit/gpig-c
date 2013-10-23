@@ -1,6 +1,8 @@
 bin
 
+
 # LaTeX outputs
+initial-report.pdf
 build/*.pdf
 *.log
 *.aux
