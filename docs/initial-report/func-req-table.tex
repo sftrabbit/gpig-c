@@ -1,8 +1,6 @@
 \subsection{Functional Requirements}
 \subsubsection{Sensing Data}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{| p{1.1cm} | p{6cm} | p{9cm} | }
+\begin{longtable}[H]{| p{1.1cm} | p{6cm} | p{9cm} | }
     	\hline
     	\cellcolor{titleColor}\textbf{ID}   & \cellcolor{titleColor}\textbf{Description}                                                              & \cellcolor{titleColor}\textbf{Verification}                                                                                                                                                                                                                                     \\ \hline
     	\textbf{FR.1} & Data input clients shall be able to push correctly structured data to the system. & Unit Testing 
@@ -11,12 +9,11 @@
 	 \item Attempt to send incorrectly structured data to the system. Assert the data failed structure validation.
 	 \end{itemize} \\ \hline
     	\textbf{FR.2} & The system shall allocate a timestamp to new data.                                & Unit Testing\begin{itemize} \item Assert data is timestamped.\item Assert there is a €™happens before€™ relation between any pair of timestamps, such that timestamps reflect the order in which data arrives.\end{itemize}\\ \hline
-	\end{tabular}
-\end{table}
+\end{longtable}
+
+
 \subsubsection{Storing Data}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{| p{1.1cm} | p{6cm} | p{9cm}| }
+\begin{longtable}[H]{| p{1.1cm} | p{6cm} | p{9cm}| }
         \hline
         \cellcolor{titleColor}\textbf{ID}    & \cellcolor{titleColor}\textbf{Description}                                                                                                                           & \cellcolor{titleColor}\textbf{Verification}                                                                                                                                                                                                                                                                    
         \\ \hline
@@ -28,21 +25,19 @@
         \textbf{FR.8}  & The system must store no more data records than the consumers defined storage quota.                                                           & Integration Testing\begin{itemize} \item Assert the maximum number of data records held by the consumer is less than or equal to their defined quota.\end{itemize}                                                                                                                  \\ \hline
         \textbf{FR.9}  & The system shall allow the user to define that, upon reaching their defined data storage quota, new data is no longer added.                   & Unit Testing\begin{itemize} \item Simulate reaching the an arbitrary storage quota. Attempt to send more data to the system. Assert the send failed due to insufficient storage.\end{itemize}                                                                                       \\ \hline
     	\textbf{FR.10} & The system shall allow the user to define that, upon reaching their defined data storage limit, old data is deleted to make room for new data. & Unit Testing\begin{itemize} \item Simulate reaching the an arbitrary storage quota. Attempt to send more data to the system. Assert the send succeeded and the new data has been added to storage. Assert that the previous oldest record in storage has been deleted.\end{itemize} \\ \hline
-	\end{tabular}
-\end{table}
+\end{longtable}
+
 \subsubsection{Analysing Data}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{| p{1.1cm} | p{6cm} | p{9cm} |}
+\begin{longtable}[H]{| p{1.1cm} | p{6cm} | p{9cm} |}
         \hline
         \cellcolor{titleColor}\textbf{ID}    & \cellcolor{titleColor}\textbf{Description}                                                                                      & \cellcolor{titleColor}\textbf{Verification}                                                                                                                                     \\ \hline
         \textbf{FR.11} & The system shall allow the consumer to specify what patterns of data will produce events.                 & Black Box Testing\begin{itemize} \item Assert that a specification of a valid pattern within a valid set of data succeeds.\end{itemize}              \\ \hline
         \textbf{FR.12} & Events shall be triggered in response to new data that matches a pattern that the consumer has specified. & Unit Testing\begin{itemize} \item Send the system a pattern of data which is known to constitute an event. Assert an event is produced.\end{itemize} \\ \hline
-    \end{tabular}
-\end{table}
+\end{longtable}
+
+
 \subsubsection{Reporting Events}
-\begin{table}
-    \begin{tabular}{| p{1.5cm}| p{6cm}| p{9cm}|}
+\begin{longtable}[H]{| p{1.5cm}| p{6cm}| p{9cm}|}
         \hline
         \cellcolor{titleColor}\textbf{ID}    & \cellcolor{titleColor}\textbf{Description}                                                                                                                                              & \cellcolor{titleColor}\textbf{Verification}                                                                                                                                                                                                                                                                                                                                      \\ \hline
         \textbf{FR.13} & The system shall dispatch a notification to the data output client after an event has occurred.                                                                  & Unit Testing\begin{itemize}\item Simulate an event occurring. Assert that the method producing a notification is invoked.\end{itemize}                                                                                                                                                                                                               \\ \hline
@@ -52,5 +47,4 @@
         \textbf{FR.17} & The system must allow data output clients to pull reports from the system.                                                                                       & Unit Testing\begin{itemize}\item Attempt to pull a data report from the system. Assert attempt is successful. Assert received data is correct.\end{itemize}                                                                                                                                                                                          \\ \hline
         \textbf{FR.18} & The system shall allow the consumer to set which data output clients can pull reports.                                                                           & Unit Testing\begin{itemize}\item Attempt to set which output clients can pull reports.\item Attempt to send a report to an output client who is allowed to receive them and verify that it succeeds.\item Attempt to send a report to an output client who is not allowed to receive them and verify that it fails.\end{itemize}                 \\ \hline
     	\textbf{FR.19} & The system shall allow the consumer to set which output clients can be sent notifications.                                                                       & Unit Testing\begin{itemize}\item Attempt to set which output clients can be sent notifications.\item Attempt to send a notification to an output client who is allowed to receive them and verify that it succeeds.\item Attempt to send a notification to and output client who is not allowed to receive them and verify that it fails.\end{itemize} \\ \hline
-	\end{tabular}
-\end{table}
+\end{longtable}
