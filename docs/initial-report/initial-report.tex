@@ -29,74 +29,127 @@
 \thispagestyle{fancy} % Make sure header and footer appear on the front page
 
 \section{Introduction}
+
 \subsection{Single statement of need}
-This project aims to deliver a tailorable Health and Usage Monitoring System (HUMS), tailorable to multiple target domains. The target for the system is any consumer needing to collect, store, analyse and report data from one or more data input clients.
+This project aims to deliver a tailorable Health and Usage Monitoring System
+(HUMS), tailorable to multiple target domains. The target for the system is any
+consumer needing to collect, store, analyse and report data from one or more
+data input clients.
+
 \subsection{Intended audience of this document}
-The intended audience of this document are both the developers and the customer. The document is structured in a manner which will interest all concerned parties. Requirements will follow the introduction, followed by use cases, a review of possible solutions and a risk register.
+The intended audience of this document are both the developers and the customer.
+The document is structured in a manner which will interest all concerned
+parties. Requirements will follow the introduction, followed by use cases, a
+review of possible solutions and a risk register.
 
 \section{Use cases}
 \noindent \textbf{ID:} UC1\\
 \textbf{Name:} Monitoring a system.\\
-\textbf{Context:} The organisation has developed a system, for which they require health and usage monitoring.\\
+\textbf{Context:} The organisation has developed a system, for which they
+require health and usage monitoring.\\
 \textbf{Primary Actor:} The organisation's technical representative.\\
-\textbf{Secondary Actors:} The health and usage monitoring system, the organisation's system.\\
-\textbf{Precondition:}  The organisation has a system that requires monitoring. The organisation's system and environment must conform to the constraint requirements detailed in this document. The end user has access to the facilities required to install the HUMS. The end user has basic technical computing knowledge.\\
-\textbf{Trigger:} The end user sets up an account and attempts to integrate their system.\\
-\textbf{Main Success Scenario:} The end user successfully manages to integrate their system with the HUMS.\\
-\textbf{Main Success Postcondition:} The HUMS is successfully integrated with the user's system, allowing data to be passed through the input and output interfaces.\\
+\textbf{Secondary Actors:} The health and usage monitoring system, the
+organisation's system.\\
+\textbf{Precondition:}  The organisation has a system that requires monitoring.
+The organisation's system and environment must conform to the constraint
+requirements detailed in this document. The end user has access to the
+facilities required to install the HUMS. The end user has basic technical
+computing knowledge.\\
+\textbf{Trigger:} The end user sets up an account and attempts to integrate
+their system.\\
+\textbf{Main Success Scenario:} The end user successfully manages to integrate
+their system with the HUMS.\\
+\textbf{Main Success Postcondition:} The HUMS is successfully integrated with
+the user's system, allowing data to be passed through the input and output
+interfaces.\\
 \textbf{Exception Scenarios:}
 \begin{itemize}
-\item The end user fails to integrate their system with the HUMS because their system does not conform to the data input interface.
-\item The end user fails to integrate their system with the HUMS because their system does not conform to the output interface.
+\item The end user fails to integrate their system with the HUMS because their
+system does not conform to the data input interface.
+\item The end user fails to integrate their system with the HUMS because their
+system does not conform to the output interface.
 \item The end user chooses to abort the process.
 \end{itemize}
-\textbf{Exception Postcondition:} If the end user's system could not be integrated with the HUMS, the user is provided with diagnostic information and technical support needed to solve any problems. If the end user chose to quit the process, they are presented with access to technical support.\\\\
+\textbf{Exception Postcondition:} If the end user's system could not be
+integrated with the HUMS, the user is provided with diagnostic information and
+technical support needed to solve any problems. If the end user chose to quit
+the process, they are presented with access to technical support.\\\\
 \noindent \textbf{ID:} UC2\\
 \textbf{Name:} Analysing collected data.\\
-\textbf{Context:} The organisation wishes to define how their data should be analysed.\\
+\textbf{Context:} The organisation wishes to define how their data should be
+analysed.\\
 \textbf{Primary Actor:} The end user.\\
 \textbf{Secondary Actors:} The HUMS.\\
 \textbf{Precondition:}
 \begin{itemize}
 \item The user has set up an account.
-\item The organisation's sensor system and the HUMS have been successfully integrated.
+\item The organisation's sensor system and the HUMS have been successfully
+integrated.
 \end{itemize}
-\textbf{Trigger:} The user decides how they want to analyse their data abstractly.\\
+\textbf{Trigger:} The user decides how they want to analyse their data
+abstractly.\\
 \textbf{Main Success Scenario:}
 \begin{itemize}
-\item The user creates a concrete implementation of their abstract analysis system and interfaces it with the HUMS, allowing them to analyse data as per their definition.
-\item We implement an analysis system on the user's behalf. The HUMS then analyses data as as defined by the user.
+\item The user creates a concrete implementation of their abstract analysis
+system and interfaces it with the HUMS, allowing them to analyse data as per
+their definition.
+\item We implement an analysis system on the user's behalf. The HUMS then
+analyses data as as defined by the user.
 \end{itemize}
 \textbf{Main Success Postcondition:} User can analyse data stored in the HUMS.\\
-\textbf{Exception Scenarios:} User's analysis system does not conform to the analysis interface.\\
+\textbf{Exception Scenarios:} User's analysis system does not conform to the
+analysis interface.\\
 \textbf{Exception Postcondition:} HUMS can still collect and store data.\\\\
 \noindent \textbf{ID:} UC3\\
 \textbf{Name:} Reporting and notifications\\
-\textbf{Context:} The organisation's sensor system, analysis system and the HUMS have been successfully integrated, and they now wish to define how users should be notified of events or receive reports.\\
+\textbf{Context:} The organisation's sensor system, analysis system and the HUMS
+have been successfully integrated, and they now wish to define how users should
+be notified of events or receive reports.\\
 \textbf{Primary Actor:} End user\\
 \textbf{Secondary Actors:} The HUMS.\\
 \textbf{Precondition:}
 \begin{itemize}
 \item The user has set up an account
-\item The organisation's sensor system, analysis system and the HUMS have been successfully integrated.
+\item The organisation's sensor system, analysis system and the HUMS have been
+successfully integrated.
 \end{itemize}
-\textbf{Trigger:} The user decides on the format and communication method used to keep them informed of the state of the system.\\
+\textbf{Trigger:} The user decides on the format and communication method used
+to keep them informed of the state of the system.\\
 \textbf{Main Success Scenario:}
 \begin{itemize}
-\item The user implements a notification and reporting system with correctly integrates with the HUMS to keep end users informed.
-\item We implement a notification and reporting system on behalf of the customer, allowing them to receive updates about the state of the system they are monitoring.
+\item The user implements a notification and reporting system with correctly
+integrates with the HUMS to keep end users informed.
+\item We implement a notification and reporting system on behalf of the
+customer, allowing them to receive updates about the state of the system they
+are monitoring.
 \end{itemize}
 \textbf{Main Success Postcondition:}
 \begin{itemize}
 \item The user is notified when the analysis system fires an event
 \item The user can request reports
 \end{itemize}
-\textbf{Exception Scenarios:} User's notification and reporting system implementation does not conform to the notification and reporting interface and so cannot function correctly.\\
-\textbf{Exception Postcondition:} HUMS can still collect, store and analyse data.
+\textbf{Exception Scenarios:} User's notification and reporting system
+implementation does not conform to the notification and reporting interface and
+so cannot function correctly.\\
+\textbf{Exception Postcondition:} HUMS can still collect, store and analyse
+data.
 
 \section{Requirements}
-For this project, requirements have been divided into three categories, functional, non-functional and constraint. The requirements have been engineered such that each falls into one of those three categories, this prevents them from becoming too complex. Each requirement has been structured as simply and concisely as possible and been worded in such a way as to avoid ambiguity. The requirements represent the problem to be solved and serve as a contract between us, as the development team, and the customer. All requirements have therefore been checked with the customer to ensure the system described is the system they envisioned.\\
-The functional requirements detail what inputs, behaviour and outputs the system must provide. The non-functional requirements specify the qualities of the system as opposed to its behaviour. Constraint requirements are those that apply to the entire system, including any constraints on the environment the system can be used in and any timing constraints. In order to ensure all requirements are verifiable, appropriate testing procedures have been included.
+For this project, requirements have been divided into three categories,
+functional, non-functional and constraint. The requirements have been
+engineered such that each falls into one of those three categories, this
+prevents them from becoming too complex. Each requirement has been
+structured as simply and concisely as possible and been worded in such a way
+as to avoid ambiguity. The requirements represent the problem to be solved
+and serve as a contract between us, as the development team, and the
+customer. All requirements have therefore been checked with the customer to
+ensure the system described is the system they envisioned.\\
+functional requirements detail what inputs, behaviour and outputs the system
+must provide. The non-functional requirements specify the qualities of the
+system as opposed to its behaviour. Constraint requirements are those that apply
+to the entire system, including any constraints on the environment the system
+can be used in and any timing constraints. In order to ensure all requirements
+are verifiable, appropriate testing procedures have been included.
 
 \include{func-req-table}
 
@@ -105,41 +158,143 @@ The functional requirements detail what inputs, behaviour and outputs the system
 \include{const-req-table}
 
 \section{Possible solutions}
-When examining possible HUMS solutions, we inspected sensing, storing, analysing and reporting data separately. This was done so that the best choice for each could be individually selected, ensuring every sector of the system performs to the highest possible standard. 
+When examining possible HUMS solutions, we inspected sensing, storing, analysing
+and reporting data separately. This was done so that the best choice for each
+could be individually selected, ensuring every sector of the system performs to
+the highest possible standard. 
 \\ \\
-When examining how the HUMS should sense new data we identified three distinct options:
+When examining how the HUMS should sense new data we identified three distinct
+options:
 \begin{enumerate}
-\item Data input clients are directly linked to the system, with data being pushed or polled depending on client support. This requires the system to implement custom data specifications which is likely to become infeasible as the system expands across domains.
-\item Unmanaged data input clients which store data elsewhere. The HUMS polls for data at the customers request. This option is slower and more inefficient than having data pushed to the system, however may integrate better with existing data input clients, reducing workload for the consumer.
-\item Provide an input API which data input clients wishing to push data to the system must implement. This option is the most flexible, allowing the system to be integrated with any consumer system, in any domain. It does potentially mean more work for the consumer in migrating existing systems to use the provided API. \\
+\item Data input clients are directly linked to the system, with data being
+pushed or polled depending on client support. This requires the system to
+implement custom data specifications which is likely to become infeasible as the
+system expands across domains.
+\item Unmanaged data input clients which store data elsewhere. The HUMS polls
+for data at the customers request. This option is slower and more inefficient
+than having data pushed to the system, however may integrate better with
+existing data input clients, reducing workload for the consumer.
+\item Provide an input API which data input clients wishing to push data to the
+system must implement. This option is the most flexible, allowing the system to
+be integrated with any consumer system, in any domain. It does potentially mean
+more work for the consumer in migrating existing systems to use the provided
+API. \\
 \end{enumerate}
-When considering options for how to store data there are two core methods, an SQL or NoSQL database. Using an SQL database would provide the consumer with guaranteed atomicity, consistency, isolation and durability (ACID), thereby offering reliability over throughput. Migration for the consumer may be easier when using an SQL database, as SQL has been popular among enterprises for a long time. SQL however does not easily scale horizontally, making it difficult to expand one system across a large number of consumers. NoSQL solves the problem of scalability at the expense of ACID compliance. Polyglot persistence offers a solution to all of the problems identified when choosing between SQL and NoSQL, by allowing the use of both. When using polyglot persistence the type and structure of every type of data must be examined to determine which datastore is most suitable, whether SQL or NoSQL.
+When considering options for how to store data there are two core methods, an
+SQL or NoSQL database. Using an SQL database would provide the consumer with
+guaranteed atomicity, consistency, isolation and durability (ACID), thereby
+offering reliability over throughput. Migration for the consumer may be easier
+when using an SQL database, as SQL has been popular among enterprises for a long
+time. SQL however does not easily scale horizontally, making it difficult to
+expand one system across a large number of consumers. NoSQL solves the problem
+of scalability at the expense of ACID compliance. Polyglot persistence offers a
+solution to all of the problems identified when choosing between SQL and NoSQL,
+by allowing the use of both. When using polyglot persistence the type and
+structure of every type of data must be examined to determine which datastore is
+most suitable, whether SQL or NoSQL.
 \\ \\
-When designing the data analysis segment of the system there are three feasible implementations:
+When designing the data analysis segment of the system there are three feasible
+implementations:
 \begin{enumerate}
-\item A plugin API, which allows users to implement their own analysis rules. The system would provide multiple layers of abstraction, allowing the consumer to take control of analysis at the level they see fit. For example, using a low level API may be faster and allow greater customisation, but a web API is more generic and easier for the consumer to implement.
-\item Providing a rules engine for analysis, allowing the consumer to specify and integrate their analysis requirements at a high level. This option would be useful from the consumers perspective, abstracting from any low level interfacing with the HUMS, but increasing the workload for our team.
-\item Create customised single-purpose tools for each domain. This would be massively inefficient from a development perspective, as well as costly and inflexible. However the consumer may prefer to have a system completely designed around their needs. \\
+\item A plugin API, which allows users to implement their own analysis rules.
+The system would provide multiple layers of abstraction, allowing the consumer
+to take control of analysis at the level they see fit. For example, using a low
+level API may be faster and allow greater customisation, but a web API is more
+generic and easier for the consumer to implement.
+\item Providing a rules engine for analysis, allowing the consumer to specify
+and integrate their analysis requirements at a high level. This option would be
+useful from the consumers perspective, abstracting from any low level
+interfacing with the HUMS, but increasing the workload for our team.
+\item Create customised single-purpose tools for each domain. This would be
+massively inefficient from a development perspective, as well as costly and
+inflexible. However the consumer may prefer to have a system completely designed
+around their needs. \\
 \end{enumerate}
-For the reporting segment of the HUMS there are again multiple options. Consumers may wish to pull reports from the system at specified times, or want the system to notify another system or end user when an event has occurred. When considering the consumer requesting a data report, we could provide them with a single output format such as PDF or XML, however this is not very flexible and is unlikely to provide the required functionality for all consumers. Another option is to allow the user to directly access the HUMS datastore, however this would leave the system open to data inconsistencies and expose implementation detail to the consumer. A more flexible solution would be to provide a generic reporting API to which plugins can be added. Each plugin would add a different report format, allowing the consumer to choose which they wish to use in each situation. This solution would be highly flexible, with new plugins being added as the HUMS extends across domains.
+For the reporting segment of the HUMS there are again multiple options.
+Consumers may wish to pull reports from the system at specified times, or want
+the system to notify another system or end user when an event has occurred. When
+considering the consumer requesting a data report, we could provide them with a
+single output format such as PDF or XML, however this is not very flexible and
+is unlikely to provide the required functionality for all consumers. Another
+option is to allow the user to directly access the HUMS datastore, however this
+would leave the system open to data inconsistencies and expose implementation
+detail to the consumer. A more flexible solution would be to provide a generic
+reporting API to which plugins can be added. Each plugin would add a different
+report format, allowing the consumer to choose which they wish to use in each
+situation. This solution would be highly flexible, with new plugins being added
+as the HUMS extends across domains.
 \\ \\
-When pushing notifications to another system or user, the HUMS could send events encoded with a standard data interchange format, for example JSON or XML. This would allow them to process the output themselves. The HUMS could also provide a set of plugins allowing the consumer to choose what type of notification is triggered when an event of a specific type occurs. For example, the system could send an email for passive events but a mobile push notification or text message for an event that requires urgent action. Allowing a variety of notification channels provides a much more tailorable and maintainable product, but it requires more development time and effort.
+When pushing notifications to another system or user, the HUMS could send events
+encoded with a standard data interchange format, for example JSON or XML. This
+would allow them to process the output themselves. The HUMS could also provide a
+set of plugins allowing the consumer to choose what type of notification is
+triggered when an event of a specific type occurs. For example, the system could
+send an email for passive events but a mobile push notification or text message
+for an event that requires urgent action. Allowing a variety of notification
+channels provides a much more tailorable and maintainable product, but it
+requires more development time and effort.
+
 \subsection{Proposed solution}
-Our proposed solution uses the concept of a client-server architecture, where the client is the consumer?s system, sensing the data, and the server is the system processing the data. These could exist within the same package or on the same device, but they could also be geographically-distant machines connected across the internet. The solution brings together the best elements from our possible solutions for each section of the system, utilising a plugin architecture for several components.
+Our proposed solution uses the concept of a client-server architecture, where
+the client is the consumer?s system, sensing the data, and the server is the
+system processing the data. These could exist within the same package or on the
+same device, but they could also be geographically-distant machines connected
+across the internet. The solution brings together the best elements from our
+possible solutions for each section of the system, utilising a plugin
+architecture for several components.
 \\ \\
-We will provide an input API for data input clients to push new data to the system, accepting any correctly formatted sensor data sent on the correct network (\textbf{DD.1}). Achieving correctly formatted data may require changes to the consumers system, or using middleware. This approach makes our system flexible, supporting a wide range of data input clients, meaning in future the solution could easily extend across domains.
+We will provide an input API for data input clients to push new data to the
+system, accepting any correctly formatted sensor data sent on the correct
+network (\textbf{DD.1}). Achieving correctly formatted data may require changes
+to the consumers system, or using middleware. This approach makes our system
+flexible, supporting a wide range of data input clients, meaning in future the
+solution could easily extend across domains.
 \\ \\
-For data storage, the only applicable solution in this scenario is a database (\textbf{DD.2}). Using polyglot persistence gives us the option of choosing a database technology most suited to the consumer?s needs, which we will determine during development. To make our choice we will look at all the relevant technologies available and evaluate strengths and weaknesses in relation to other design decisions for the data being stored, and how it will be accessed.
+For data storage, the only applicable solution in this scenario is a database
+(\textbf{DD.2}). Using polyglot persistence gives us the option of choosing a
+database technology most suited to the consumer?s needs, which we will determine
+during development. To make our choice we will look at all the relevant
+technologies available and evaluate strengths and weaknesses in relation to
+other design decisions for the data being stored, and how it will be accessed.
 \\ \\
-The data analysis part of the system will provide plugins offering analysis tools, as well as an API for consumers to extend and create their own specialised analysis rules (\textbf{DD.4}). Offering an API makes the system more tailorable to different consumers and domains, as generic analysis tools could not hope to meet every consumers needs by itself. Since some customers may not want to take on the task of creating a whole analysis system themselves, we will offer domain-specific plugins to simplify the process. This might include graphical tools or other user-friendly features. The range of plugins offered can be expanded as the system expands into more domains.
+The data analysis part of the system will provide plugins offering analysis
+tools, as well as an API for consumers to extend and create their own
+specialised analysis rules (\textbf{DD.4}). Offering an API makes the system
+more tailorable to different consumers and domains, as generic analysis tools
+could not hope to meet every consumers needs by itself. Since some customers may
+not want to take on the task of creating a whole analysis system themselves, we
+will offer domain-specific plugins to simplify the process. This might include
+graphical tools or other user-friendly features. The range of plugins offered
+can be expanded as the system expands into more domains.
 \\ \\
-The system will include various output features for generating reports (\textbf{DD.5}) and providing notifications (\textbf{DD.6}). For reports, we will allow the consumer to customise the types of reports created. They will be able to request reports in a variety of formats, including human-friendly formats, e.g. PDF, and common data interchange formats. Consumers can use these data formats as a data API to build their own reports or for any other purpose. This will allow the consumer flexibility to produce what they want, whilst also offering them easy to use built-in tools.
+The system will include various output features for generating reports
+(\textbf{DD.5}) and providing notifications (\textbf{DD.6}). For reports, we
+will allow the consumer to customise the types of reports created. They will be
+able to request reports in a variety of formats, including human-friendly
+formats, e.g. PDF, and common data interchange formats. Consumers can use these
+data formats as a data API to build their own reports or for any other purpose.
+This will allow the consumer flexibility to produce what they want, whilst also
+offering them easy to use built-in tools.
 \\ \\
-Our system will provide plugins to support various types of notification that can be triggered based upon customisable events. Notifications will include  emails, alongside more generic notifications formatted in standard formats such as XML, just as with reports. The generic notifications could then be processed further by the consumer, allowing them to tailor how notifications are used and delivered.
+Our system will provide plugins to support various types of notification that
+can be triggered based upon customisable events. Notifications will include 
+emails, alongside more generic notifications formatted in standard formats such
+as XML, just as with reports. The generic notifications could then be processed
+further by the consumer, allowing them to tailor how notifications are used and
+delivered.
 \\ \\
-The system will also provide an administration centre (\textbf{DD.3}) that lets the consumer configure any customisable system settings including, setting up events that trigger notifications and defining data schemas. This tool will be offered through an intuitive web based interface which is only accessible by the authorised consumer.
+The system will also provide an administration centre (\textbf{DD.3}) that lets
+the consumer configure any customisable system settings including, setting up
+events that trigger notifications and defining data schemas. This tool will be
+offered through an intuitive web based interface which is only accessible by the
+authorised consumer.
 \\ \\
-For the prototype we hope to demonstrate at the end of the project, we plan to implement most of the solution described above. The core of the system, including sensing, storing, analysing and reporting data, will be functional, as will some of the basic components built utilising the plugin architecture. Some additional simple components may be required when demonstrating, such as a tool to simulate data being input to the system. 
+For the prototype we hope to demonstrate at the end of the project, we plan to
+implement most of the solution described above. The core of the system,
+including sensing, storing, analysing and reporting data, will be functional,
+as will some of the basic components built utilising the plugin architecture.
+Some additional simple components may be required when demonstrating, such as a
+tool to simulate data being input to the system. 
 
 \include{design-dec-table}
 
@@ -152,7 +307,12 @@ For the prototype we hope to demonstrate at the end of the project, we plan to i
 \section{Team organisation}
 
 \subsection{Team members}
-A list of team members is provided below, accompanied by a list of roles and assignments relevant for the course of the project. The responsibilities have been divided in a such a way that effort for all team members is equal and fairly distributed. Assignees have been given roles which, where possible, utilise their identified skills, and minimise exposure to established weaknesses. \\
+A list of team members is provided below, accompanied by a list of roles and
+assignments relevant for the course of the project. The responsibilities have
+been divided in a such a way that effort for all team members is equal and
+fairly distributed. Assignees have been given roles which, where possible,
+utilise their identified skills, and minimise exposure to established
+weaknesses. \\
 \\
 \begin{tabular}{  p{4cm}  p{4cm}  p{4cm} p{4cm}  }
 \textbf{AJF}-Adam Fahie            &         \textbf{AIF}-Andrew Fairbairn    &     \textbf{TF}-Anthony Free          &        \textbf{TD}-Tom Davies \\
@@ -171,9 +331,43 @@ A list of team members is provided below, accompanied by a list of roles and ass
 \section{Development plan}
 
 \subsection{Software engineering methodology}
-When developing the HUMS system, we chose to take an agile approach to development and team management. Our implementation will follow a plugin architecture, with one central codebase providing the core functionality and plugins which provide domain tailorability. If a non-agile approach was to be taken, a plugin architecture would be infeasible as those methodologies require all requirements and documentation to be completed before development commences. For example, the V-Model and waterfall model are linear processes, where requirements are only discussed and designed before implementation commences. This linearity gives no support for changes in requirements during the later phases. Given the time constraints and the need for the system to be able to evolve into various domains, these linear development methodologies are impractical. \\
-Agile software development, however, allows the project to split into smaller sub-projects called `iterations' \cite{hazzan2008agile}. Each iteration allows for a different section of the project to be planned, documented, developed and tested. It also allows for the development team to be split into smaller sub-teams working simultaneously on different areas on the project. At the end of each iteration project priorities can be re-evaluated and the team structure altered. 
-\cite{hazzan2008agile} identifies three key perspectives of software development: human, organisational and technological. The scrum methodology harnesses two of those perspectives, providing a platform for both team and project organisation. Unfortunately scrum does not provide a clear approach to development from a technological perspective, providing no clear guidelines on how code should be created or structured. However, the test driven approach does provide a clear method of developing software from a technological perspective. This encourages the development of unit and acceptance tests before the development of code, the code itself is then written to make the tests pass. Using both methodologies side by side appears to be the best approach for this project, allowing for a well managed and organised team to produce well structured and reliable code. Feature driven development could be used in place of test driven and would provide a good platform for plugin generation, allowing each plugin to be designed and implemented independently. However, it conflicts with the project organisation aspects of the scrum methodology, meaning they could not be used together without creating confusion. Since the scrum method provides more guidance for managing team structure and monitoring project progress, feature driven development was discounted in favour of scrum.
+When developing the HUMS system, we chose to take an agile approach to
+development and team management. Our implementation will follow a plugin
+architecture, with one central codebase providing the core functionality and
+plugins which provide domain tailorability. If a non-agile approach was to be
+taken, a plugin architecture would be infeasible as those methodologies require
+all requirements and documentation to be completed before development commences.
+For example, the V-Model and waterfall model are linear processes, where
+requirements are only discussed and designed before implementation commences.
+This linearity gives no support for changes in requirements during the later
+phases. Given the time constraints and the need for the system to be able to
+evolve into various domains, these linear development methodologies are
+impractical. \\
+Agile software development, however, allows the project to split into smaller
+sub-projects called `iterations' \cite{hazzan2008agile}. Each iteration allows
+for a different section of the project to be planned, documented, developed and
+tested. It also allows for the development team to be split into smaller
+sub-teams working simultaneously on different areas on the project. At the end
+of each iteration project priorities can be re-evaluated and the team structure
+altered. 
+\cite{hazzan2008agile} identifies three key perspectives of software
+development: human, organisational and technological. The scrum methodology
+harnesses two of those perspectives, providing a platform for both team and
+project organisation. Unfortunately scrum does not provide a clear approach to
+development from a technological perspective, providing no clear guidelines on
+how code should be created or structured. However, the test driven approach does
+provide a clear method of developing software from a technological perspective.
+This encourages the development of unit and acceptance tests before the
+development of code, the code itself is then written to make the tests pass.
+Using both methodologies side by side appears to be the best approach for this
+project, allowing for a well managed and organised team to produce well
+structured and reliable code. Feature driven development could be used in place
+of test driven and would provide a good platform for plugin generation, allowing
+each plugin to be designed and implemented independently. However, it conflicts
+with the project organisation aspects of the scrum methodology, meaning they
+could not be used together without creating confusion. Since the scrum method
+provides more guidance for managing team structure and monitoring project
+progress, feature driven development was discounted in favour of scrum.
 
 \subsection{Schedule}
 
