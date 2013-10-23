@@ -7,3 +7,5 @@ build/*.pdf
 *.log
 *.aux
 *.synctex.gz
+
+docs/initial-report/wc.tex
