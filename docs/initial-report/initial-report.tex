@@ -8,6 +8,7 @@
 \usepackage{multirow}
 \usepackage[table]{xcolor}
 \usepackage{float}
+\usepackage{longtable}
 
 \definecolor{titleColor}{RGB}{138,201,242}
 \pagestyle{fancy}
@@ -23,7 +24,7 @@
 \begin{document}
 
 \title{\vspace{-1cm}GPIG-C Initial Report}
-\author{Word count: \textbf{??} according to \textsl{detex \$FILE $\vert$ wc -w}}
+\author{Word count: \textbf{\input{wc}} according to \textsl{detex \$FILE $\vert$ wc -w}}
 \date{Friday, 25th October}
 \maketitle
 \thispagestyle{fancy} % Make sure header and footer appear on the front page
@@ -373,11 +374,32 @@ progress, feature driven development was discounted in favour of scrum.
 
 
 \section{Risk register}
+A risk assessment has been performed as part of the initial report to ensure the team is aware of any problems which could later arise, and to provide a guide as to how to react when such problems occur. The hazards (risks) have been identified and classified based upon team members past experiences in similar projects and group discussion. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS) and impact scores (IS) are listed in table XXXX. %% REF REF REF REF REF
 \include{risk-register}
+The likelihood score defines probability of something occurring. Utilising `Kents Words of Estimative Probability\cite{kent1966strategic}`, with `certain? weighted $7$ and `impossible? weighted $1$.
 \include{riskass-table}
 \include{risklevel-table}
 
 \section{Customer communication}
-
-
+Knowing that the customer may not respond to emails rapidly, we began our correspondence promptly after the project kick off (13/10). The customer did respond quickly to all messages, however we feel that erring on the side of caution and starting early was the best strategy. We followed up each response with a team meeting within two days in order to discuss and implement any changes or suggestions mentioned. \\
+Communication so far has focussed on verifying that the outlined requirements meet the expectations of the customer. We used the initial meeting (9/10) to clarify terminology and produce an initial set of requirements,  having formatted these we sent them to the customer for feedback (13/10).  \\
+Feedback (14/10) suggested that our understanding of system tailorability was inaccurate, with the customer providing clarification. After altering the requirements in response and resending them to the customer (16/10), we received further feedback suggesting that the wording of our requirements was lacking in parts. \\
+We quickly remedied this before forwarding the changes to the customer (19/10), which resulted in helpful feedback allowing us to settle on the outlined list of requirements.
+In producing and gradually refining the requirements, we began to conceive an idea of how the system should function, and how it should be tailorable. This has directly affected our proposed solution, by leading us towards the outlined client-server architecture, where the HUMS acts as the server. Having decided that we wanted to structure the HUMS as a framework with support for plugins, we pitched this idea to the customer and received positive and succinct feedback.
+\\
+\section{Glossary}
+\begin{tabular}{p{3.5cm}p{13cm}}
+\textbf{HUMS}			&	Health and usage monitoring system(s) \\
+\textbf{Customer}		&	Thales \\
+\textbf{Consumer}		&	The recipient organisation of the system \\
+\textbf{(End) User}		&	An individual or organisation using the system \\
+\textbf{Client}			&	A piece of computer hardware or software which accesses a service made available by the HUMS system \\
+\textbf{The System}		&	The HUMS we are designing and developing \\
+\textbf{Event}			&	A point of interest flagged up by an analysis system, which may result in a notification, appear in a future report or be stored in the HUMS \\
+\textbf{Data input client}	&	Anything that provides data to the HUMS through the input interface \\
+\textbf{Data output client}	&	Anything that receives data from the HUMS through the reporting or notification interfaces \\
+\textbf{Notification}		&	A message sent by the system as a result of an event being fired \\
+\textbf{Report}			&	A message sent by the system as a result of a request from a user \\
+\textbf{HUMS Instance}	&	One installation or occurrence of the system for a specific consumer \\
+\end{tabular}
 \end{document}
