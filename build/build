@@ -1,2 +1,3 @@
 #!/bin/sh
 rubber --pdf ../docs/initial-report/initial-report.tex
+(cd ../docs/initial-report/ && ./makelatex);
