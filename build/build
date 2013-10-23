@@ -38,7 +38,7 @@ rubber --pdf ${TXFI}
 echo -n "${COL_YEL}Computing Word Count: ${COL_CLR}";
 WC=`(cd $RPDI && detex ../$TXFI) | wc -w | tr -d ' '`;
 echo "${COL_GRN}${WC}${COL_CLR}";
-echo -e -n "$WC" > $WCFI
+echo "$WC" > $WCFI
 
 echo "${COL_YEL}Compiling Latex${COL_CLR}";
 rubber --pdf ${TXFI}
