@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ "$1" == "" ]; then
+FILE="initial-report.tex";
+else
+FILE=$1;
+fi
+
+set -e
+
+echo "Running PDF Latex";
+pdflatex $FILE;
+echo -n "Calculating word count: ";
+WC=`detex $FILE | wc -w`;
+echo "$${WC}$" > wc.tex
+echo $WC;
+echo -e -n "\n\r";
+
+echo -e -n "Complete\n\r";
