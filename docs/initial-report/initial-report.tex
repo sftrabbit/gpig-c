@@ -4,6 +4,7 @@
 \usepackage[UKenglish]{babel}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
+\usepackage{graphicx}
 
 \pagestyle{fancy}
 \lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M Walker}
@@ -31,6 +32,59 @@ This project aims to deliver a tailorable Health and Usage Monitoring System (HU
 The intended audience of this document are both the developers and the customer. The document is structured in a manner which will interest all concerned parties. Requirements will follow the introduction, followed by use cases, a review of possible solutions and a risk register.
 
 \section{Use cases}
+\noindent \textbf{ID:} UC1\\
+\textbf{Name:} Monitoring a system.\\
+\textbf{Context:} The organisation has developed a system, for which they require health and usage monitoring.\\
+\textbf{Primary Actor:} The organisation's technical representative.\\
+\textbf{Secondary Actors:} The health and usage monitoring system, the organisation's system.\\
+\textbf{Precondition:}  The organisation has a system that requires monitoring. The organisation's system and environment must conform to the constraint requirements detailed in this document. The end user has access to the facilities required to install the HUMS. The end user has basic technical computing knowledge.\\
+\textbf{Trigger:} The end user sets up an account and attempts to integrate their system.\\
+\textbf{Main Success Scenario:} The end user successfully manages to integrate their system with the HUMS.\\
+\textbf{Main Success Postcondition:} The HUMS is successfully integrated with the user's system, allowing data to be passed through the input and output interfaces.\\
+\textbf{Exception Scenarios:}
+\begin{itemize}
+\item The end user fails to integrate their system with the HUMS because their system does not conform to the data input interface.
+\item The end user fails to integrate their system with the HUMS because their system does not conform to the output interface.
+\item The end user chooses to abort the process.
+\end{itemize}
+\textbf{Exception Postcondition:} If the end user's system could not be integrated with the HUMS, the user is provided with diagnostic information and technical support needed to solve any problems. If the end user chose to quit the process, they are presented with access to technical support.\\\\
+
+\noindent \textbf{ID:} UC2\\
+\textbf{Name:} Analysing collected data.\\
+\textbf{Context:} The organisation wishes to define how their data should be analysed.\\
+\textbf{Primary Actor:} The end user.\\
+\textbf{Secondary Actors:} The HUMS.\\
+\textbf{Precondition:}
+\begin{itemize}
+\item The user has set up an account.
+\item The organisation's sensor system and the HUMS have been successfully integrated.
+\end{itemize}
+\textbf{Trigger:} The user decides how they want to analyse their data abstractly.\\
+\textbf{Main Success Scenario:}
+\begin{itemize}
+\item The user creates a concrete implementation of their abstract analysis system and interfaces it with the HUMS, allowing them to analyse data as per their definition.
+\item We implement an analysis system on the user's behalf. The HUMS then analyses data as as defined by the user.
+\end{itemize}
+\textbf{Main Success Postcondition:} User can analyse data stored in the HUMS.\\
+\textbf{Exception Scenarios:} User's analysis system does not conform to the analysis interface.\\
+\textbf{Exception Postcondition:} HUMS can still collect and store data.\\\\
+
+\noindent \textbf{ID:} UC3\\
+\textbf{Name:} Reporting and notifications\\
+\textbf{Context:} The organisation's sensor system, analysis system and the HUMS have been successfully integrated, and they now wish to define how users should be notified of events or receive reports.\\
+\textbf{Primary Actor:} End user\\
+\textbf{Secondary Actors:} The HUMS.\\
+\textbf{Precondition:}
+\begin{itemize}
+\item The user has set up an account
+\item The organisation's sensor system, analysis system and the HUMS have been successfully integrated.
+\end{itemize}
+\textbf{Trigger:} The user decides on the format and communication method used to keep them informed of the state of the system.\\
+\textbf{Main Success Scenario:}
+\begin{itemize}
+\item The user implements a notification and reporting system with correctly integrates with the HUMS to keep end users informed.
+\item We implement a notification and reporting system on behalf of the customer, allowing them to receive updates about the state of the system they are monitoring.
+\end{itemize}
 
 
 \section{Requirements}
@@ -46,6 +100,8 @@ The functional requirements detail what inputs, behaviour and outputs the system
 \section{Possible solutions}
 
 \subsection{Proposed solution}
+
+\includegraphics[width=0.75\textwidth]{system-architecture.pdf}
 
 
 \section{Team organisation}

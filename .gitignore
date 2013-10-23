@@ -1,7 +1,9 @@
 bin
 
+
 # LaTeX outputs
-*.pdf
+initial-report.pdf
+build/*.pdf
 *.log
 *.aux
 *.synctex.gz
