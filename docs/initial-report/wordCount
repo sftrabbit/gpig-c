@@ -1,9 +1,0 @@
-#!/bin/bash
-if [ "$1" == "" ]; then
-FILE="initial-report.tex";
-else
-FILE=$1;
-fi
-
-echo "There are: "`detex $FILE | wc -w`" words in the file"
- 
