@@ -1,0 +1,9 @@
+\subsection{Functional Requirements}
+\subsubsection{Sensing Data}
+\begin{table}
+    \begin{tabular}{lll}
+    \textbf{ID}   & \textbf{Description}                                                              & \textbf{Verification}                                                                                                                                                                                                                                              \\ \hline
+    \textbf{FR.1} & Data input clients shall be able to push correctly structured data to the system. & Unit Testing\\\begin{itemize}\\\item Attempt to send correctly structured data to the system. Assert the data is correctly received.\\\item Attempt to send incorrectly structured data to the system. Assert the data failed structure validation.\\\end{itemize} \\
+    \textbf{FR.2} & The system shall allocate a timestamp to new data.                                & Unit Testing\\\begin{itemize}\\\item Assert data is timestamped.\\\item Assert there is a ’happens before’ relation between any pair of timestamps, such that timestamps reflect the order in which data arrives.\\\end{itemize}                                   \\
+	\end{tabular}
+\end{table}
