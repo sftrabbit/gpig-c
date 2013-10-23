@@ -23,3 +23,12 @@
     	\textbf{FR.10} & The system shall allow the user to define that, upon reaching their defined data storage limit, old data is deleted to make room for new data. & Unit Testing\\\begin{itemize}\\\item Simulate reaching the an arbitrary storage quota. Attempt to send more data to the system. Assert the send succeeded and the new data has been added to storage. Assert that the previous oldest record in storage has been deleted.\\\end{itemize} \\ \hline
 	\end{tabular}
 \end{table}
+\subsubsection{Analysing Data}
+\begin{table}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{ID}    & \textbf{Description}                                                                                      & \textbf{Verification}                                                                                                                                     \\ \hline
+        \textbf{FR.11} & The system shall allow the consumer to specify what patterns of data will produce events.                 & Black Box Testing\\\begin{itemize}\\\item Assert that a specification of a valid pattern within a valid set of data succeeds.\\\end{itemize}              \\ \hline
+        \textbf{FR.12} & Events shall be triggered in response to new data that matches a pattern that the consumer has specified. & Unit Testing\\\begin{itemize}\\\item Send the system a pattern of data which is known to constitute an event. Assert an event is produced.\\\end{itemize} \\ \hline
+    \end{tabular}
+\end{table}
