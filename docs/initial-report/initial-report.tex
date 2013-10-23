@@ -24,7 +24,7 @@
 \begin{document}
 
 \title{\vspace{-1cm}GPIG-C Initial Report}
-\author{Word count: \textbf{\input{wc}} according to
+\author{Word count is \input{wc}according to
         \textsl{detex \$FILE $\vert$ wc -w}}
 \date{Friday, 25th October}
 \maketitle
@@ -45,6 +45,7 @@ parties. Requirements will follow the introduction, followed by use cases, a
 review of possible solutions and a risk register.
 
 \section{Use cases}
+<<<<<<< HEAD
 
 \begin{description}
 	\item[ID] UC1
@@ -149,6 +150,100 @@ review of possible solutions and a risk register.
 			interface and so cannot function correctly.
 	\item[Exception Postcondition] HUMS can still collect, store and analyse data.
 \end{description}
+=======
+Below, we list three use cases that we used to generate the requirements. We created the use cases after our discussions with the customer where their needs were outlined.\\
+
+\noindent \textbf{ID:} UC1\\
+\textbf{Name:} Monitoring a system.\\
+\textbf{Context:} The organisation has developed a system, for which they
+require health and usage monitoring.\\
+\textbf{Primary Actor:} The organisation's technical representative.\\
+\textbf{Secondary Actors:} The health and usage monitoring system, the
+organisation's system.\\
+\textbf{Precondition:}  The organisation has a system that requires monitoring.
+The organisation's system and environment must conform to the constraint
+requirements detailed in this document. The end user has access to the
+facilities required to install the HUMS. The end user has basic technical
+computing knowledge.\\
+\textbf{Trigger:} The end user sets up an account and attempts to integrate
+their system.\\
+\textbf{Main Success Scenario:} The end user successfully manages to integrate
+their system with the HUMS.\\
+\textbf{Main Success Postcondition:} The HUMS is successfully integrated with
+the user's system, allowing data to be passed through the input and output
+interfaces.\\
+\textbf{Exception Scenarios:}
+\begin{itemize}
+\item The end user fails to integrate their system with the HUMS because their
+system does not conform to the data input interface.
+\item The end user fails to integrate their system with the HUMS because their
+system does not conform to the output interface.
+\item The end user chooses to abort the process.
+\end{itemize}
+\textbf{Exception Postcondition:} If the end user's system could not be
+integrated with the HUMS, the user is provided with diagnostic information and
+technical support needed to solve any problems. If the end user chose to quit
+the process, they are presented with access to technical support.\\\\
+\noindent \textbf{ID:} UC2\\
+\textbf{Name:} Analysing collected data.\\
+\textbf{Context:} The organisation wishes to define how their data should be
+analysed.\\
+\textbf{Primary Actor:} The end user.\\
+\textbf{Secondary Actors:} The HUMS.\\
+\textbf{Precondition:}
+\begin{itemize}
+\item The user has set up an account.
+\item The organisation's sensor system and the HUMS have been successfully
+integrated.
+\end{itemize}
+\textbf{Trigger:} The user decides how they want to analyse their data
+abstractly.\\
+\textbf{Main Success Scenario:}
+\begin{itemize}
+\item The user creates a concrete implementation of their abstract analysis
+system and interfaces it with the HUMS, allowing them to analyse data as per
+their definition.
+\item We implement an analysis system on the user's behalf. The HUMS then
+analyses data as as defined by the user.
+\end{itemize}
+\textbf{Main Success Postcondition:} User can analyse data stored in the HUMS.\\
+\textbf{Exception Scenarios:} User's analysis system does not conform to the
+analysis interface.\\
+\textbf{Exception Postcondition:} HUMS can still collect and store data.\\\\
+\noindent \textbf{ID:} UC3\\
+\textbf{Name:} Reporting and notifications\\
+\textbf{Context:} The organisation's sensor system, analysis system and the HUMS
+have been successfully integrated, and they now wish to define how users should
+be notified of events or receive reports.\\
+\textbf{Primary Actor:} End user\\
+\textbf{Secondary Actors:} The HUMS.\\
+\textbf{Precondition:}
+\begin{itemize}
+\item The user has set up an account
+\item The organisation's sensor system, analysis system and the HUMS have been
+successfully integrated.
+\end{itemize}
+\textbf{Trigger:} The user decides on the format and communication method used
+to keep them informed of the state of the system.\\
+\textbf{Main Success Scenario:}
+\begin{itemize}
+\item The user implements a notification and reporting system with correctly
+integrates with the HUMS to keep end users informed.
+\item We implement a notification and reporting system on behalf of the
+customer, allowing them to receive updates about the state of the system they
+are monitoring.
+\end{itemize}
+\textbf{Main Success Postcondition:}
+\begin{itemize}
+\item The user is notified when the analysis system fires an event
+\item The user can request reports
+\end{itemize}
+\textbf{Exception Scenarios:} User's notification and reporting system
+implementation does not conform to the notification and reporting interface and
+so cannot function correctly.\\
+\textbf{Exception Postcondition:} HUMS can still collect, store and analyse
+data.
+>>>>>>> 3ff8e1387fe9d5214287a7af1e5fee873fb4b544
 
 \section{Requirements}
 For this project, requirements have been divided into three categories,
@@ -167,11 +262,11 @@ to the entire system, including any constraints on the environment the system
 can be used in and any timing constraints. In order to ensure all requirements
 are verifiable, appropriate testing procedures have been included.
 
-\include{func-req-table}
+\input{func-req-table}
 
-\include{nfunc-req-table}
+\input{nfunc-req-table}
 
-\include{const-req-table}
+\input{const-req-table}
 
 \section{Possible solutions}
 When examining possible HUMS solutions, we inspected sensing, storing, analysing
@@ -312,7 +407,7 @@ as will some of the basic components built utilising the plugin architecture.
 Some additional simple components may be required when demonstrating, such as a
 tool to simulate data being input to the system. 
 
-\include{design-dec-table}
+\input{design-dec-table}
 
 \begin{figure}[hptb]
   \centering
@@ -337,10 +432,10 @@ weaknesses. \\
 
 \subsection{Roles}
 \subsubsection{Administrator Roles} 
-\include{admin-roles}
+\input{admin-roles}
 
 \subsubsection{Technical Roles}
-\include{tech-roles}
+\input{tech-roles}
 
 \subsection{Time and Task Management}
 
@@ -390,10 +485,10 @@ progress, feature driven development was discounted in favour of scrum.
 
 \section{Risk register}
 A risk assessment has been performed as part of the initial report to ensure the team is aware of any problems which could later arise, and to provide a guide as to how to react when such problems occur. The hazards (risks) have been identified and classified based upon team members past experiences in similar projects and group discussion. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS) and impact scores (IS) are listed in table XXXX. %% REF REF REF REF REF
-\include{risk-register}
+\input{risk-register}
 The likelihood score defines probability of something occurring. Utilising `Kents Words of Estimative Probability\cite{kent1966strategic}`, with `certain? weighted $7$ and `impossible? weighted $1$.
-\include{riskass-table}
-\include{risklevel-table}
+\input{riskass-table}
+\input{risklevel-table}
 
 \section{Customer communication}
 Knowing that the customer may not respond to emails rapidly, we began our correspondence promptly after the project kick off (13/10). The customer did respond quickly to all messages, however we feel that erring on the side of caution and starting early was the best strategy. We followed up each response with a team meeting within two days in order to discuss and implement any changes or suggestions mentioned. \\
