@@ -3,9 +3,18 @@
 \usepackage[margin=1.5cm]{geometry}
 \usepackage[UKenglish]{babel}
 \usepackage{enumitem}
+\usepackage{fancyhdr}
 
+\pagestyle{fancy}
+\lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M Walker}
+\chead{}
+\rhead{GPIG-C}
+\cfoot{}
 
 \setlist{nolistsep} % Reduces lots of white space around lists
+
+\renewcommand{\headrulewidth}{0.4pt} % Add rules below header
+\renewcommand{\footrulewidth}{0.4pt}
 
 \begin{document}
 
@@ -13,7 +22,7 @@
 \author{GPIG-C}
 \date{\today}
 \maketitle
-
+\thispagestyle{fancy} % Make sure header and footer appear on the front page
 
 \section{Introduction}
 
