@@ -1,3 +1,26 @@
-#!/bin/sh
+#!/bin/bash
+if [ "$1" == "" ]; then
+FILE="../docs/initial-report/initial-report.tex";
+else
+FILE=$1;
+fi
+
+if [ -f "../docs/initial-report/wc.tex" ]; then
+X=100;
+else
+touch ../docs/initial-report/wc.tex;
+fi
+
+set -e
+
+echo "Compiling LaTeX";
 rubber --pdf ../docs/initial-report/initial-report.tex
-(cd ../docs/initial-report/ && ./makelatex);
+echo -n "Calculating word count: ";
+WC=`(cd ../docs/initial-report && detex ../$FILE) | wc -w | tr -d ' '`;
+echo -e -n "$WC" > ../docs/initial-report/wc.tex
+echo $WC;
+echo -e -n "\n\r";
+
+echo -e -n "Complete\n\r";
+echo "Compiling LaTeX";
+rubber --pdf ../docs/initial-report/initial-report.tex

@@ -1,68 +1,50 @@
 \subsection{Non-functional requirements}
 
 \subsubsection{Maintainability}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.1} & The system shall be able to receive hardware changes without loss of previously stored data. & Recovery Testing\begin{itemize}\item Take a snapshot of a live system. Change a piece of hardware on the system and then check that, after the change, the data is still consistent with the snapshot.\end{itemize} \\ \hline
-    \end{tabular}
-\end{table}
+\end{longtable}
 
 \subsubsection{Accessibility}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.2} & Users shall be provided with documentation detailing how to use the system. & Acceptance Testing\begin{itemize}\item We will require a receipt verifying the availability and standard of the documentation when allowing the user access to the system documentation.\end{itemize} \\ \hline
     \textbf{NFR.3} & The system, when running externally on servers, must be accessible to end users who are in multiple geographic locations. & Black Box Testing\begin{itemize}\item Assert the networked system can be accessed from multiple geographic locations.\end{itemize} \\ \hline
-    \end{tabular}
-\end{table}
+\end{longtable}
 
 \subsubsection{Security}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.4} & The system shall only accept data from an input client providing valid credentials. & Unit testing\begin{itemize}\item Check that system both rejects unauthorised data and successfully accepts data from a source with valid credentials.\end{itemize} \\ \hline
     \textbf{NFR.5} & The system shall store data according to the relevant industry security standards. & Acceptance testing\begin{itemize}\item Have system externally verified against relevant standard setting body guidelines.\end{itemize} \\ \hline
-    \end{tabular}
-\end{table}
+\end{longtable}
 
 \subsubsection{Testability}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.6} & The system shall be tested to ensure all requirements are met before deployment. & System Testing\begin{itemize}\item Make sure all tests of other requirements have passed.\end{itemize} \\ \hline
     \textbf{NFR.7} & The customer will complete acceptance testing before the system is deployed. & Acceptance Testing\begin{itemize}\item The customer will be required to sign off the project upon passing acceptance testing.\end{itemize} \\ \hline
-    \end{tabular}
-\end{table}
+\end{longtable}
 
 \subsubsection{Scalability}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.8} & The system must be able to support at least 5 output clients per HUMS instance. & Black box testing\begin{itemize}\item Set up a HUMS instance and add 5 output clients and verify each can be sent a report.\end{itemize} \\ \hline
     \textbf{NFR.9} & The system must cope with up to 2000 data input requests per second per HUMS instance. & Grey Box Testing\begin{itemize}\item Set up a HUMS instance and send it 2000 data valid input requests per second and verify that all data is stored in the system.\end{itemize} \\ \hline
-    \end{tabular}
-\end{table}
+\end{longtable}
 
 \subsubsection{Reliability}
-\begin{table}[H]
-\vspace{-0.5cm}
-    \begin{tabular}{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.10} & The system must be available for no less than 99.9\% of each month. & Alpha testing\begin{itemize}\item Allow the system to be used as it would be in the real world for one month and check that it is available for the required amount of time.\end{itemize} \\ \hline
     \textbf{NFR.11} & Data must be backed up within 24 hours of having been made available to the system. & Integration testing\begin{itemize}\item Run the system for over 24 hours and verify that any data older than 24 hours exists in the back ups.\end{itemize}White Box Testing\begin{itemize}\item Verify there is a method in place to automatically back up data before it being 24 hours since having been made available to the system.\end{itemize} \\ \hline
     \textbf{NFR.12} & Timestamps applied by the system must be accurate to within 5ms of UTC. & Grey Box Testing\begin{itemize}\item Send the system the maximum number of supported data input requests per second and check that all timestamps are to within the given accuracy.\end{itemize} \\ \hline
     \textbf{NFR.13} & The system shall dispatch notifications within 5ms of the event being triggered. & Unit Testing\begin{itemize}\item Simulate an event. Assert that the notification is dispatched within the time period specified.\end{itemize} \\ \hline
-    \end{tabular}
-\end{table}
+\end{longtable}
