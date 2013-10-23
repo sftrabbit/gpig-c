@@ -1,26 +1,46 @@
-#!/bin/bash
-if [ "$1" == "" ]; then
-FILE="../docs/initial-report/initial-report.tex";
+#!/bin/sh
+COL_WHT="\033[1;37m";
+COL_RED="\033[1;31m";
+COL_YEL="\033[1;33m";
+COL_GRN="\033[01;32m";
+COL_CLR="\033[00m";
+
+if [ -z "$1" ]; then
+echo "Choose Assessment:  1 ";
+	echo -n "${COL_WHT}Assmnt#:${COL_CLR} ";
+	read assi;
 else
-FILE=$1;
+	assi=$1;
+fi;
+
+echo "${COL_YEL}Chosen: ${COL_WHT}${assi}${COL_CLR}";
+
+if [ "$assi" -eq "1" ]; then
+	echo "${COL_WHT}Assessment 1 chosen${COL_CLR}";
+	RPDI="../docs/initial-report";
+	TXFI="${RPDI}/initial-report.tex";
+	WCFI="${RPDI}/wc.tex";
+else
+	echo "${COL_RED}Invalid! ${COL_WHT}Please choose another selection${COL_CLR}";
 fi
 
-if [ -f "../docs/initial-report/wc.tex" ]; then
+if [ -f "$WCFI" ]; then
 X=100;
 else
-touch ../docs/initial-report/wc.tex;
+touch $WCFI
 fi
 
-set -e
 
-echo "Compiling LaTeX";
-rubber --pdf ../docs/initial-report/initial-report.tex
-echo -n "Calculating word count: ";
-WC=`(cd ../docs/initial-report && detex ../$FILE) | wc -w | tr -d ' '`;
-echo -e -n "$WC" > ../docs/initial-report/wc.tex
-echo $WC;
-echo -e -n "\n\r";
+echo "${COL_YEL}Compiling Latex${COL_CLR}";
+rubber --pdf ${TXFI}
 
-echo -e -n "Complete\n\r";
-echo "Compiling LaTeX";
-rubber --pdf ../docs/initial-report/initial-report.tex
+echo -n "${COL_YEL}Computing Word Count: ${COL_CLR}";
+WC=`(cd $RPDI && detex ../$TXFI) | wc -w | tr -d ' '`;
+echo "${COL_GRN}${WC}${COL_CLR}";
+echo -e -n "$WC" > $WCFI
+
+echo "${COL_YEL}Compiling Latex${COL_CLR}";
+rubber --pdf ${TXFI}
+
+
+echo "${COL_GRN} - OK - ${COL_CLR}";
