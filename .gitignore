@@ -4,3 +4,4 @@ bin
 *.pdf
 *.log
 *.aux
+*.synctex.gz
