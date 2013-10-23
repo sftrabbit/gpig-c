@@ -10,8 +10,8 @@ set -e
 echo "Running PDF Latex";
 pdflatex $FILE;
 echo -n "Calculating word count: ";
-WC=`detex $FILE | wc -w`;
-echo -e "$WC" > wc.tex
+WC=`detex $FILE | wc -w | tr -d ' '`;
+echo -e -n "$WC" > wc.tex
 echo $WC;
 echo -e -n "\n\r";
 
