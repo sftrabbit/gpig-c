@@ -1,1 +1,6 @@
 bin
+
+# LaTeX outputs
+*.pdf
+*.log
+*.aux
