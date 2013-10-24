@@ -10,6 +10,8 @@
 \usepackage{float}
 \usepackage{longtable}
 \usepackage{parskip}
+\usepackage[small,compact]{titlesec} 
+
 \definecolor{titleColor}{RGB}{138,201,242}
 \pagestyle{fancy}
 \lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M Walker}
@@ -43,12 +45,9 @@ consumer needing to collect, store, analyse and report data from one or more
 data input clients.
 
 \section{Use cases}
-
 Below, we list three use cases that we used to generate the requirements. We
 created the use cases after our discussions with the customer where their needs
 were outlined.
-
-\vspace{\baselineskip}
 
 \begin{description}
 	\item[ID] UC1
@@ -104,7 +103,7 @@ were outlined.
 				\item The user creates a concrete implementation of their abstract
 				      analysis system and interfaces it with the HUMS, allowing them to
 				      analyse data as per their definition.
-				\item We implement an analysis system on the user's behalf. The HUMS
+				\item The user uses a pre built analysis plugin. The HUMS
 				      then analyses data as as defined by the user.
 			\end{itemize}
 	\item[Main Success Postcondition] User can analyse data stored in the HUMS.
@@ -133,10 +132,10 @@ were outlined.
 	               to keep them informed of the state of the system.
 	\item[Main Success Scenario] ~
 			\begin{itemize}
-				\item The user implements a notification and reporting system with
-				      correctly integrates with the HUMS to keep end users informed.
-				\item We implement a notification and reporting system on behalf of the
-				      customer, allowing them to receive updates about the state of the
+				\item The user implements a notification and reporting system which
+				      correctly integrates with the HUMS.
+				\item The user uses a pre made notification and reporting system plugin,
+				 allowing them to receive updates about the state of the
 				      system they are monitoring.
 			\end{itemize}
 	\item[Main Success Postcondition] ~
@@ -146,7 +145,7 @@ were outlined.
 			\end{itemize}
 	\item[Exception Scenarios] User's notification and reporting system
 			implementation does not conform to the notification and reporting
-			interface and so cannot function correctly.
+			interface.
 	\item[Exception Postcondition] HUMS can still collect, store and analyse data.
 \end{description}
 
@@ -200,7 +199,7 @@ options:
 	      the system must implement. This option is the most flexible, allowing
 	      the system to be integrated with any consumer system, in any domain. It
 	      does potentially mean more work for the consumer in migrating existing
-	      systems to use the provided API. \\
+	      systems to use the provided API. 
 \end{enumerate} 
 When considering options for how to store data there are two core methods, an
 SQL or NoSQL database. Using an SQL database would provide the consumer with
@@ -232,7 +231,7 @@ implementations:
 	\item Create customised single-purpose tools for each domain. This would be
 	      massively inefficient from a development perspective, as well as costly
 	      and inflexible. However the consumer may prefer to have a system
-	      completely designed around their needs. \\
+	      completely designed around their needs. 
 \end{enumerate}
 For the reporting segment of the HUMS there are again multiple options.
 Consumers may wish to pull reports from the system at specified times, or want
@@ -323,7 +322,7 @@ demonstrating, such as a tool to simulate data being input to the system.
 
 \begin{figure}[hptb]
 	\centering
-	\includegraphics[width=0.75\textwidth]{system-architecture.pdf}
+	\includegraphics[width=0.65\textwidth]{system-architecture.pdf}
 	\caption{System diagram}
 	\label{fig:systemDiagram}
 \end{figure}
