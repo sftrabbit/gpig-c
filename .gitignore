@@ -6,6 +6,8 @@ initial-report.pdf
 build/*.pdf
 *.log
 *.aux
+*.bbl
+*.blg
 *.synctex.gz
 
 docs/initial-report/wc.tex
