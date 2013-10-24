@@ -149,9 +149,9 @@ Three use cases were identified after initial communications with the customer a
 
 \section{Requirements}
 
-For this project, requirements have been divided into three categories,
+For this project, requirements have been divided into three categories:
 functional, non-functional and constraint. The requirements have been
-engineered such that each falls into one of those three categories, this
+engineered such that each falls into one of these three categories, which
 prevents them from becoming too complex. Each requirement has been
 structured as simply and concisely as possible and been worded in such a way
 as to avoid ambiguity. The requirements represent the problem to be solved
@@ -185,7 +185,7 @@ options:
 \begin{enumerate}
 	\item Data input clients are directly linked to the system, with data being
 	      pushed or polled depending on client support. This requires the system
-	      to implement custom data specifications which is likely to become
+	      to implement custom data specifications, which is likely to become
 	      infeasible as the system expands across domains.
 	\item Unmanaged data input clients which store data elsewhere. The HUMS polls
 	      for data at the customers request. This option is slower and more
@@ -203,9 +203,9 @@ SQL or NoSQL database. Using an SQL database would provide the consumer with
 guaranteed atomicity, consistency, isolation and durability (ACID), thereby
 offering reliability over throughput. Migration for the consumer may be easier
 when using an SQL database, as SQL has been popular among enterprises for a long
-time. SQL however does not easily scale horizontally, making it difficult to
+time. However, SQL does not easily scale horizontally, making it difficult to
 expand one system across a large number of consumers. NoSQL solves the problem
-of scalability at the expense of ACID compliance. Polyglot persistence offers a
+of scalability at the expense of full ACID compliance. Polyglot persistence offers a
 solution to all of the problems identified when choosing between SQL and NoSQL,
 by allowing the use of both. When using polyglot persistence the type and
 structure of every type of data must be examined to determine which datastore is
@@ -238,7 +238,7 @@ single output format such as PDF or XML, however this is not very flexible and
 is unlikely to provide the required functionality for all consumers. Another
 option is to allow the user to directly access the HUMS datastore, however this
 would leave the system open to data inconsistencies and expose implementation
-detail to the consumer. A more flexible solution would be to provide a generic
+details to the consumer. A more flexible solution would be to provide a generic
 reporting API to which plugins can be added. Each plugin would add a different
 report format, allowing the consumer to choose which they wish to use in each
 situation. This solution would be highly flexible, with new plugins being added
@@ -257,7 +257,7 @@ requires more development time and effort.
 \subsection{Proposed solution}
 Our proposed solution, shown in figure \ref{fig:systemDiagram}, uses the 
 concept of a client-server architecture, with the consumer's system acting 
-as the client, and the server being the HUMS processing the data. 
+as the client and the server being the HUMS processing the data. 
 The HUMS could exist within the consumer's data input client, or could be 
 geographically-distant but connected on the same network or though the 
 internet. The solution brings together the best elements from our
@@ -267,7 +267,7 @@ architecture for several components.
 The HUMS will provide an input API for data input clients to push new data to the
 system, accepting any correctly formatted sensor data sent on the correct
 network $(\textbf{DD.1})$. Achieving correctly formatted data may require changes
-to the consumers system, or using middleware. This approach makes our system
+to the consumer's system, or use of middleware. This approach makes our system
 flexible, supporting a wide range of data input clients, meaning in future the
 solution could easily extend across domains. 
 
