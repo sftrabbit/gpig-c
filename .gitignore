@@ -10,4 +10,5 @@ build/*.pdf
 *.blg
 *.synctex.gz
 
-docs/initial-report/wc.tex
+# Horrible OSX stuff
+.DS_Store
