@@ -4,14 +4,14 @@
 \begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
-   $ \textbf{NFR.1} $ & The system shall be able to receive hardware changes without loss of previously stored data. & Recovery Testing\begin{itemize}\item Take a snapshot of a live system. Change a piece of hardware on the system and then check that, after the change, the data is still consistent with the snapshot.\end{itemize} \\ \hline
+   $ \textbf{NFR.1} $ & The system shall be able to receive hardware changes without loss of previously stored data. & Recovery Testing\begin{itemize}\item Snapshot live system. Change a piece of hardware. Assert after change, data is still consistent with snapshot.\end{itemize} \\ \hline
 \end{longtable}
 
 \subsubsection{Accessibility}
 \begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
-    $ \textbf{NFR.2} $ & Users shall be provided with documentation detailing how to use the system. & Acceptance Testing\begin{itemize}\item We will require a receipt verifying the availability and standard of the documentation when allowing the user access to the system documentation.\end{itemize} \\ \hline
+    $ \textbf{NFR.2} $ & Users shall be provided with documentation detailing how to use the system. & Acceptance Testing\begin{itemize}\item Require a receipt verifying the availability and standard of the documentation when allowing the user access to the system documentation.\end{itemize} \\ \hline
     \textbf{NFR.3} & The system, when running externally on servers, must be accessible to end users who are in multiple geographic locations. & Black Box Testing\begin{itemize}\item Assert the networked system can be accessed from multiple geographic locations.\end{itemize} \\ \hline
 \end{longtable}
 
