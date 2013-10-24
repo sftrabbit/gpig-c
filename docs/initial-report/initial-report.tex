@@ -24,27 +24,23 @@
 \begin{document}
 
 \title{\vspace{-1cm}GPIG-C Initial Report}
-\author{Word count is \input{wc}according to
-        \texttt{detex \$FILE $\vert$ wc -w}}
+\author{Word count is \input{wc} (\textit{detex \$FILE $\vert$ wc -w})}
 \date{Friday, 25th October}
 \maketitle
 \thispagestyle{fancy} % Make sure header and footer appear on the front page
 
 
 \section{Introduction}
-
-\subsection{Single statement of need}
-This project aims to deliver a tailorable Health and Usage Monitoring System
-(HUMS), tailorable to multiple target domains. The target for the system is any
-consumer needing to collect, store, analyse and report data from one or more
-data input clients.
-
-\subsection{Intended audience of this document}
 The intended audience of this document are both the developers and the customer.
 The document is structured in a manner which will interest all concerned
 parties. Requirements will follow the introduction, followed by use cases, a
 review of possible solutions and a risk register.
 
+\subsection{Single statement of need}
+This project aims to deliver a Health and Usage Monitoring System
+(HUMS), tailorable to multiple target domains. The target for the system is any
+consumer needing to collect, store, analyse and report data from one or more
+data input clients.
 
 \section{Use cases}
 
@@ -189,11 +185,10 @@ are verifiable, appropriate testing procedures have been included.
 When examining possible HUMS solutions, we inspected sensing, storing, analysing
 and reporting data separately. This was done so that the best choice for each
 could be individually selected, ensuring every sector of the system performs to
-the highest possible standard. 
-
+the highest possible standard.
+\\ \\
 When examining how the HUMS should sense new data we identified three distinct
 options:
-
 \begin{enumerate}
 	\item Data input clients are directly linked to the system, with data being
 	      pushed or polled depending on client support. This requires the system
@@ -208,9 +203,8 @@ options:
 	      the system must implement. This option is the most flexible, allowing
 	      the system to be integrated with any consumer system, in any domain. It
 	      does potentially mean more work for the consumer in migrating existing
-	      systems to use the provided API.
-\end{enumerate}
-
+	      systems to use the provided API. \\
+\end{enumerate} 
 When considering options for how to store data there are two core methods, an
 SQL or NoSQL database. Using an SQL database would provide the consumer with
 guaranteed atomicity, consistency, isolation and durability (ACID), thereby
@@ -223,10 +217,9 @@ solution to all of the problems identified when choosing between SQL and NoSQL,
 by allowing the use of both. When using polyglot persistence the type and
 structure of every type of data must be examined to determine which datastore is
 most suitable, whether SQL or NoSQL.
-
+\\ \\
 When designing the data analysis segment of the system there are three feasible
 implementations:
-
 \begin{enumerate}
 	\item A plugin API, which allows users to implement their own analysis rules.
 	      The system would provide multiple layers of abstraction, allowing the
@@ -242,9 +235,8 @@ implementations:
 	\item Create customised single-purpose tools for each domain. This would be
 	      massively inefficient from a development perspective, as well as costly
 	      and inflexible. However the consumer may prefer to have a system
-	      completely designed around their needs.
+	      completely designed around their needs. \\
 \end{enumerate}
-
 For the reporting segment of the HUMS there are again multiple options.
 Consumers may wish to pull reports from the system at specified times, or want
 the system to notify another system or end user when an event has occurred. When
@@ -258,7 +250,7 @@ reporting API to which plugins can be added. Each plugin would add a different
 report format, allowing the consumer to choose which they wish to use in each
 situation. This solution would be highly flexible, with new plugins being added
 as the HUMS extends across domains.
-
+\\ \\
 When pushing notifications to another system or user, the HUMS could send events
 encoded with a standard data interchange format, for example JSON or XML. This
 would allow them to process the output themselves. The HUMS could also provide a
@@ -270,66 +262,65 @@ channels provides a much more tailorable and maintainable product, but it
 requires more development time and effort.
 
 \subsection{Proposed solution}
-Our proposed solution uses the concept of a client-server architecture, where
-the client is the consumer?s system, sensing the data, and the server is the
-system processing the data. These could exist within the same package or on the
-same device, but they could also be geographically-distant machines connected
-across the internet. The solution brings together the best elements from our
+Our proposed solution, shown in figure \ref{fig:systemDiagram}, uses the 
+concept of a client-server architecture, with the consumer's system acting 
+as the client, and the server being the HUMS processing the data. 
+The HUMS could exist within the consumer's data input client, or could be 
+geographically-distant but connected on the same network or though the 
+internet. The solution brings together the best elements from our
 possible solutions for each section of the system, utilising a plugin
-architecture for several components.
-
-We will provide an input API for data input clients to push new data to the
+architecture for several components. 
+\\ \\
+The HUMS will provide an input API for data input clients to push new data to the
 system, accepting any correctly formatted sensor data sent on the correct
 network (\textbf{DD.1}). Achieving correctly formatted data may require changes
 to the consumers system, or using middleware. This approach makes our system
 flexible, supporting a wide range of data input clients, meaning in future the
-solution could easily extend across domains.
-
+solution could easily extend across domains. 
+\\ \\
 For data storage, the only applicable solution in this scenario is a database
-(\textbf{DD.2}). Using polyglot persistence gives us the option of choosing a
-database technology most suited to the consumer?s needs, which we will determine
+(\textbf{DD.2}). Using polyglot persistence gives us the option of choosing the
+database technology most suited to the data, which we will determine
 during development. To make our choice we will look at all the relevant
 technologies available and evaluate strengths and weaknesses in relation to
-other design decisions for the data being stored, and how it will be accessed.
-
-The data analysis part of the system will provide plugins offering analysis
-tools, as well as an API for consumers to extend and create their own
-specialised analysis rules (\textbf{DD.4}). Offering an API makes the system
-more tailorable to different consumers and domains, as generic analysis tools
-could not hope to meet every consumers needs by itself. Since some customers may
-not want to take on the task of creating a whole analysis system themselves, we
-will offer domain-specific plugins to simplify the process. This might include
-graphical tools or other user-friendly features. The range of plugins offered
-can be expanded as the system expands into more domains.
-
-The system will include various output features for generating reports
-(\textbf{DD.5}) and providing notifications (\textbf{DD.6}). For reports, we
-will allow the consumer to customise the types of reports created. They will be
-able to request reports in a variety of formats, including human-friendly
-formats, e.g. PDF, and common data interchange formats. Consumers can use these
-data formats as a data API to build their own reports or for any other purpose.
-This will allow the consumer flexibility to produce what they want, whilst also
-offering them easy to use built-in tools.
-
-Our system will provide plugins to support various types of notification that
-can be triggered based upon customisable events. Notifications will include 
-emails, alongside more generic notifications formatted in standard formats such
-as XML, just as with reports. The generic notifications could then be processed
-further by the consumer, allowing them to tailor how notifications are used and
-delivered.
-
-The system will also provide an administration centre (\textbf{DD.3}) that lets
+other design decisions for the data being stored, and how it will be accessed. 
+\\ \\
+For analysis the system will provide generic plugins, as well as an API for
+consumers to extend and create their own specialised analysis rules
+ (\textbf{DD.4}). Offering an API allows the system to be tailored to different 
+ consumers and domains, as generic analysis tools
+could not hope to meet every consumers needs by itself.  Domain-specific plugins 
+will be provided to simplify the process, for those performing common analysis
+ functions. This might include graphical tools or other user-friendly features. 
+ The range of plugins offered can be expanded as the system expands into 
+ more domains. 
+ \\ \\
+We will allow the consumer to customise the types of reports that can be 
+created(\textbf{DD.5}. They will be able to request reports in a variety of 
+formats, including human-friendly formats, e.g. PDF, and common data interchange
+ formats. Consumers can use these data formats as a data API to build their own
+reports or for any other purpose.This will allow the consumer flexibility to produce 
+what they want, whilst also offering them easy to use built-in tools.
+\\ \\
+Our system will provide plugins to support various types of notification 
+ (\textbf{DD.6})that can be triggered based upon customisable events. 
+ Notifications will include emails, alongside more generic notifications formatted 
+ in standard formats such as XML. The generic notifications 
+ could then be processed further by the consumer, allowing them to tailor how 
+ notifications are used and delivered. 
+ \\ \\
+An administration centre (\textbf{DD.3}) that allows
 the consumer configure any customisable system settings including, setting up
-events that trigger notifications and defining data schemas. This tool will be
-offered through an intuitive web based interface which is only accessible by the
-authorised consumer.
-
+events that trigger notifications and defining data schemas, will be included. This tool 
+will be offered through an intuitive web based interface which is only accessible by the
+authorised consumer. 
+\\ \\
 For the prototype we hope to demonstrate at the end of the project, we plan to
 implement most of the solution described above. The core of the system,
 including sensing, storing, analysing and reporting data, will be functional,
-as will some of the basic components built utilising the plugin architecture.
-Some additional simple components may be required when demonstrating, such as a
-tool to simulate data being input to the system. 
+as will a small set of the domain specific components built utilising the plugin 
+architecture. Some additional simple components may be required when 
+demonstrating, such as a tool to simulate data being input to the system. 
 
 \input{design-dec-table}
 
@@ -337,6 +328,7 @@ tool to simulate data being input to the system.
 	\centering
 	\includegraphics[width=0.75\textwidth]{system-architecture.pdf}
 	\caption{System diagram}
+	\label{fig:systemDiagram}
 \end{figure}
 
 
@@ -356,12 +348,10 @@ weaknesses.
 	\textbf{JM}-Joseph Mansfield & \textbf{RT}-Rosy Tucker &
 			\textbf{MW}-Michael Walker & \\
 \end{tabular}
-
-\subsection{Roles}
-\subsubsection{Administrator Roles} 
+\subsection{Administrator Roles} 
 \input{admin-roles}
 
-\subsubsection{Technical Roles}
+\subsection{Technical Roles}
 \input{tech-roles}
 
 \subsection{Time and Task Management}
@@ -382,7 +372,7 @@ This linearity gives no support for changes in requirements during the later
 phases. Given the time constraints and the need for the system to be able to
 evolve into various domains, these linear development methodologies are
 impractical.
-
+\\ \\
 Agile software development, however, allows the project to split into smaller
 sub-projects called `iterations' \cite{hazzan2008agile}. Each iteration allows
 for a different section of the project to be planned, documented, developed and
@@ -390,7 +380,7 @@ tested. It also allows for the development team to be split into smaller
 sub-teams working simultaneously on different areas on the project. At the end
 of each iteration project priorities can be re-evaluated and the team structure
 altered. 
-
+\\\\
 \cite{hazzan2008agile} identifies three key perspectives of software
 development: human, organisational and technological. The scrum methodology
 harnesses two of those perspectives, providing a platform for both team and
@@ -443,18 +433,18 @@ respond quickly to all messages, however we feel that erring on the side of
 caution and starting early was the best strategy. We followed up each response
 with a team meeting within two days in order to discuss and implement any
 changes or suggestions mentioned.
-
+\\ \\
 Communication so far has focussed on verifying that the outlined requirements
 meet the expectations of the customer. We used the initial meeting (9/10) to
 clarify terminology and produce an initial set of requirements,  having
 formatted these we sent them to the customer for feedback (13/10).
-
+\\ \\
 Feedback (14/10) suggested that our understanding of system tailorability was
 inaccurate, with the customer providing clarification. After altering the
 requirements in response and resending them to the customer (16/10), we received
 further feedback suggesting that the wording of our requirements was lacking in
 parts.
-
+\\ \\
 We quickly remedied this before forwarding the changes to the customer (19/10),
 which resulted in helpful feedback allowing us to settle on the outlined list
 of requirements. In producing and gradually refining the requirements, we began
@@ -465,31 +455,29 @@ server. Having decided that we wanted to structure the HUMS as a framework with
 support for plugins, we pitched this idea to the customer and received positive
 and succinct feedback.
 
-
 \section{Glossary}
 
 \begin{description}
-	\item[HUMS] Health and usage monitoring system(s) 
-	\item[Customer] Thales 
-	\item[Consumer] The recipient organisation of the system 
-	\item[(End) User] An individual or organisation using the system 
+
+	\item[HUMS] Health and usage monitoring system(s).
+	\item[Customer] Thales. 
+	\item[Consumer] The recipient organisation of the system.
+	\item[(End) User] An individual or organisation using the system.
 	\item[Client] A piece of computer hardware or software which accesses a
-	              service made available by the HUMS system 
-	\item[The System] The HUMS we are designing and developing 
+	              service made available by the HUMS system.
+	\item[The System] The HUMS we are designing and developing.
 	\item[Event] A point of interest flagged up by an analysis system, which
-	             may result in a notification, appear in a future report or be
-	             stored in the HUMS 
+	             may result in a notification.
 	\item[Data input client] Anything that provides data to the HUMS through
-	                         the input interface 
+	                         the input interface.
 	\item[Data output client] Anything that receives data from the HUMS
-	                          through the reporting or notification
-	                          interfaces 
+	                          through the reporting or notification interfaces.
 	\item[Notification] A message sent by the system as a result of an event
-	                    being fired 
+	                    being fired.
 	\item[Report] A message sent by the system as a result of a request from a
-	              user 
+	              user. 
 	\item[HUMS Instance] One installation or occurrence of the system for a
-	                     specific consumer 
+	                     specific consumer.
 \end{description}
 
 \end{document}
