@@ -11,8 +11,8 @@
 \begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
-    $ \textbf{NFR.2} $ & Users shall be provided with documentation detailing how to use the system. & Acceptance Testing\begin{itemize}\item Require a receipt verifying the availability and standard of the documentation when allowing the user access to the system documentation.\end{itemize} \\ \hline
-    \textbf{NFR.3} & The system, when running externally on servers, must be accessible to end users who are in multiple geographic locations. & Black Box Testing\begin{itemize}\item Assert the networked system can be accessed from multiple geographic locations.\end{itemize} \\ \hline
+    $ \textbf{NFR.2} $ & Users shall be provided with documentation detailing how to use the system. & Acceptance Testing\begin{itemize}\item Require a receipt from the customer verifying the availability and standard.\end{itemize} \\ \hline
+    \textbf{NFR.3} & When running externally on servers, the system must be accessible to end users in multiple geographic locations. & Black Box Testing\begin{itemize}\item Assert networked system can be accessed from multiple geographic locations.\end{itemize} \\ \hline
 \end{longtable}
 
 \subsubsection{Security}
@@ -36,15 +36,15 @@
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
    $ \textbf{NFR.8} $& The system must be able to support at least $5$ output clients per HUMS instance. & Black box testing\begin{itemize}\item Set up a HUMS instance and add $5$ output clients and verify each can be sent a report.\end{itemize} \\ \hline
-   $  \textbf{NFR.9} $& The system must cope with up to $2000$ data input requests per second per HUMS instance. & Grey Box Testing\begin{itemize}\item Set up a HUMS instance and send it $2000$ data valid input requests per second and verify that all data is stored in the system.\end{itemize} \\ \hline
+   $  \textbf{NFR.9} $& The system must cope with up to $2000$ data input requests per second per HUMS instance. & Grey Box Testing\begin{itemize}\item Set up HUMS instance and send $2000$ data valid input requests per second. Verify all data is stored in  system.\end{itemize} \\ \hline
 \end{longtable}
 
 \subsubsection{Reliability}
 \begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
-   $ \textbf{NFR.10} $ & The system must be available for no less than $99.9\%$ of each month. & Alpha testing\begin{itemize}\item Allow the system to be used as it would be in the real world for one month and check that it is available for the required amount of time.\end{itemize} \\ \hline
-    $ \textbf{NFR.11} $ & Data must be backed up within $24$ hours of having been made available to the system. & Integration testing\begin{itemize}\item Run the system for over $24$ hours and verify that any data older than $24$ hours exists in the back ups.\end{itemize}White Box Testing\begin{itemize}\item Verify there is a method in place to automatically back up data before it being $24$ hours since having been made available to the system.\end{itemize} \\ \hline
-   $ \textbf{NFR.12} $ & Timestamps applied by the system must be accurate to within $5ms$ of UTC. & Grey Box Testing\begin{itemize}\item Send the system the maximum number of supported data input requests per second and check that all timestamps are to within the given accuracy.\end{itemize} \\ \hline
+   $ \textbf{NFR.10} $ & The system must be available for no less than $99.9\%$ of each month. & Alpha testing\begin{itemize}\item Allow system to be beta tested for one month. Assert it was available for at no less than the required amount of time.\end{itemize} \\ \hline
+    $ \textbf{NFR.11} $ & Data must be backed up within $24$ hours of having been made available to the system. & Integration testing\begin{itemize}\item Run system for over $24$ hours and verify that any data older than $24$ hours exists in back-ups.\end{itemize}White Box Testing\begin{itemize}\item Verify method exists to automatically back-up data at least every $24$ hours. \end{itemize} \\ \hline
+   $ \textbf{NFR.12} $ & Timestamps applied by the system must be accurate to within $5ms$ of UTC. & Grey Box Testing\begin{itemize}\item Send system the maximum supported data input requests per second. Assert all timestamps are to within the given accuracy.\end{itemize} \\ \hline
    $ \textbf{NFR.13} $ & The system shall dispatch notifications within $5ms$ of the event being triggered. & Unit Testing\begin{itemize}\item Simulate an event. Assert that the notification is dispatched within the time period specified.\end{itemize} \\ \hline
 \end{longtable}
