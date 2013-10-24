@@ -1,14 +1,14 @@
 \subsection{Non-functional requirements}
 
 \subsubsection{Maintainability}
-\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.1} & The system shall be able to receive hardware changes without loss of previously stored data. & Recovery Testing\begin{itemize}\item Take a snapshot of a live system. Change a piece of hardware on the system and then check that, after the change, the data is still consistent with the snapshot.\end{itemize} \\ \hline
 \end{longtable}
 
 \subsubsection{Accessibility}
-\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.2} & Users shall be provided with documentation detailing how to use the system. & Acceptance Testing\begin{itemize}\item We will require a receipt verifying the availability and standard of the documentation when allowing the user access to the system documentation.\end{itemize} \\ \hline
@@ -16,7 +16,7 @@
 \end{longtable}
 
 \subsubsection{Security}
-\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.4} & The system shall only accept data from an input client providing valid credentials. & Unit testing\begin{itemize}\item Check that system both rejects unauthorised data and successfully accepts data from a source with valid credentials.\end{itemize} \\ \hline
@@ -24,7 +24,7 @@
 \end{longtable}
 
 \subsubsection{Testability}
-\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.6} & The system shall be tested to ensure all requirements are met before deployment. & System Testing\begin{itemize}\item Make sure all tests of other requirements have passed.\end{itemize} \\ \hline
@@ -32,7 +32,7 @@
 \end{longtable}
 
 \subsubsection{Scalability}
-\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.8} & The system must be able to support at least 5 output clients per HUMS instance. & Black box testing\begin{itemize}\item Set up a HUMS instance and add 5 output clients and verify each can be sent a report.\end{itemize} \\ \hline
@@ -40,7 +40,7 @@
 \end{longtable}
 
 \subsubsection{Reliability}
-\begin{longtable}[H]{|p{1.5cm}|p{6.0cm}|p{9.0cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{4.5cm}|p{10.5cm}|}
     \hline
     \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification} \\ \hline
     \textbf{NFR.10} & The system must be available for no less than 99.9\% of each month. & Alpha testing\begin{itemize}\item Allow the system to be used as it would be in the real world for one month and check that it is available for the required amount of time.\end{itemize} \\ \hline
