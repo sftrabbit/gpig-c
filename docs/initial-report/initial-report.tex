@@ -9,6 +9,8 @@
 \usepackage[table]{xcolor}
 \usepackage{float}
 \usepackage{longtable}
+\usepackage{parskip}
+\usepackage[small,compact]{titlesec} 
 
 \definecolor{titleColor}{RGB}{138,201,242}
 \pagestyle{fancy}
@@ -43,46 +45,39 @@ consumer needing to collect, store, analyse and report data from one or more
 data input clients.
 
 \section{Use cases}
-
 Below, we list three use cases that we used to generate the requirements. We
 created the use cases after our discussions with the customer where their needs
 were outlined.
 
-\vspace{\baselineskip}
-
 \begin{description}
 	\item[ID] UC1
 	\item[Name] Monitoring a system.
-	\item[Context] The organisation has developed a system, for which they
-	               require health and usage monitoring.
-	\item[Primary Actor] The organisation's technical representative.
-	\item[Secondary Actors] The health and usage monitoring system, the
-	                        organisation's system.
-	\item[Precondition] The organisation has a system that requires monitoring.
-	                    The organisation's system and environment must conform to
-	                    the constraint requirements detailed in this document. The
+	\item[Context] The consumer has developed a system, for which they
+	               require a HUMS.
+	\item[Primary Actor] The consumer's technical representative.
+	\item[Secondary Actors] The HUMS, the consumer's system.
+	\item[Precondition] The consumer has a system that requires monitoring.
+	                    The consumer's system and environment must conform to constraint
+	                     requirements detailed in this document. The
 	                    end user has access to the facilities required to install
-	                    the HUMS. The end user has basic technical computing
-	                    knowledge.
-	\item[Trigger] The end user sets up an account and attempts to integrate
+	                    the HUMS. The end user has basic computing knowledge.
+	\item[Trigger] The technical representative sets up an account and attempts to integrate
 	               their system.
 	\item[Main Success Scenario] The end user successfully manages to integrate
 			their system with the HUMS.
-	\item[Main Success Postcondition] The HUMS is successfully integrated with
-			the user's system, allowing data to be passed through the input and output
-			interfaces.
+	\item[Main Success Postcondition] Data to be passed between the HUMS and the 
+					consumers system.
 	\item[Exception Scenarios] ~
 			\begin{itemize}
-				\item The end user fails to integrate their system with the HUMS because
+				\item The end user fails to integrate their system because
 				      their system does not conform to the data input interface.
-				\item The end user fails to integrate their system with the HUMS because
+				\item The end user fails to integrate their system because
 				      their system does not conform to the output interface.
 				\item The end user chooses to abort the process.
 			\end{itemize}
 	\item[Exception Postcondition]
-			If the end user's system could not be integrated with the HUMS, the user
-			is provided with diagnostic information and technical support needed to
-			solve any problems. If the end user chose to quit the process, they are
+			The user is provided with diagnostics and technical support. 
+			If the end user chose to quit the process, they are
 			presented with access to technical support.
 \end{description}
 
@@ -108,7 +103,7 @@ were outlined.
 				\item The user creates a concrete implementation of their abstract
 				      analysis system and interfaces it with the HUMS, allowing them to
 				      analyse data as per their definition.
-				\item We implement an analysis system on the user's behalf. The HUMS
+				\item The user uses a pre built analysis plugin. The HUMS
 				      then analyses data as as defined by the user.
 			\end{itemize}
 	\item[Main Success Postcondition] User can analyse data stored in the HUMS.
@@ -137,10 +132,10 @@ were outlined.
 	               to keep them informed of the state of the system.
 	\item[Main Success Scenario] ~
 			\begin{itemize}
-				\item The user implements a notification and reporting system with
-				      correctly integrates with the HUMS to keep end users informed.
-				\item We implement a notification and reporting system on behalf of the
-				      customer, allowing them to receive updates about the state of the
+				\item The user implements a notification and reporting system which
+				      correctly integrates with the HUMS.
+				\item The user uses a pre made notification and reporting system plugin,
+				 allowing them to receive updates about the state of the
 				      system they are monitoring.
 			\end{itemize}
 	\item[Main Success Postcondition] ~
@@ -150,7 +145,7 @@ were outlined.
 			\end{itemize}
 	\item[Exception Scenarios] User's notification and reporting system
 			implementation does not conform to the notification and reporting
-			interface and so cannot function correctly.
+			interface.
 	\item[Exception Postcondition] HUMS can still collect, store and analyse data.
 \end{description}
 
@@ -166,7 +161,7 @@ as to avoid ambiguity. The requirements represent the problem to be solved
 and serve as a contract between us, as the development team, and the
 customer. All requirements have therefore been checked with the customer to
 ensure the system described is the system they envisioned.
-\\ \\
+
 The functional requirements detail what inputs, behaviour and outputs the system
 must provide. The non-functional requirements specify the qualities of the
 system as opposed to its behaviour. Constraint requirements are those that apply
@@ -187,7 +182,7 @@ When examining possible HUMS solutions, we inspected sensing, storing, analysing
 and reporting data separately. This was done so that the best choice for each
 could be individually selected, ensuring every sector of the system performs to
 the highest possible standard.
-\\ \\
+
 When examining how the HUMS should sense new data we identified three distinct
 options:
 \begin{enumerate}
@@ -204,7 +199,7 @@ options:
 	      the system must implement. This option is the most flexible, allowing
 	      the system to be integrated with any consumer system, in any domain. It
 	      does potentially mean more work for the consumer in migrating existing
-	      systems to use the provided API. \\
+	      systems to use the provided API. 
 \end{enumerate} 
 When considering options for how to store data there are two core methods, an
 SQL or NoSQL database. Using an SQL database would provide the consumer with
@@ -218,7 +213,7 @@ solution to all of the problems identified when choosing between SQL and NoSQL,
 by allowing the use of both. When using polyglot persistence the type and
 structure of every type of data must be examined to determine which datastore is
 most suitable, whether SQL or NoSQL.
-\\ \\
+
 When designing the data analysis segment of the system there are three feasible
 implementations:
 \begin{enumerate}
@@ -236,7 +231,7 @@ implementations:
 	\item Create customised single-purpose tools for each domain. This would be
 	      massively inefficient from a development perspective, as well as costly
 	      and inflexible. However the consumer may prefer to have a system
-	      completely designed around their needs. \\
+	      completely designed around their needs. 
 \end{enumerate}
 For the reporting segment of the HUMS there are again multiple options.
 Consumers may wish to pull reports from the system at specified times, or want
@@ -251,7 +246,7 @@ reporting API to which plugins can be added. Each plugin would add a different
 report format, allowing the consumer to choose which they wish to use in each
 situation. This solution would be highly flexible, with new plugins being added
 as the HUMS extends across domains.
-\\ \\
+
 When pushing notifications to another system or user, the HUMS could send events
 encoded with a standard data interchange format, for example JSON or XML. This
 would allow them to process the output themselves. The HUMS could also provide a
@@ -271,21 +266,21 @@ geographically-distant but connected on the same network or though the
 internet. The solution brings together the best elements from our
 possible solutions for each section of the system, utilising a plugin
 architecture for several components. 
-\\ \\
+
 The HUMS will provide an input API for data input clients to push new data to the
 system, accepting any correctly formatted sensor data sent on the correct
 network (\textbf{DD.1}). Achieving correctly formatted data may require changes
 to the consumers system, or using middleware. This approach makes our system
 flexible, supporting a wide range of data input clients, meaning in future the
 solution could easily extend across domains. 
-\\ \\
+
 For data storage, the only applicable solution in this scenario is a database
 (\textbf{DD.2}). Using polyglot persistence gives us the option of choosing the
 database technology most suited to the data, which we will determine
 during development. To make our choice we will look at all the relevant
 technologies available and evaluate strengths and weaknesses in relation to
 other design decisions for the data being stored, and how it will be accessed. 
-\\ \\
+
 For analysis the system will provide generic plugins, as well as an API for
 consumers to extend and create their own specialised analysis rules
  (\textbf{DD.4}). Offering an API allows the system to be tailored to different 
@@ -295,27 +290,27 @@ will be provided to simplify the process, for those performing common analysis
  functions. This might include graphical tools or other user-friendly features. 
  The range of plugins offered can be expanded as the system expands into 
  more domains. 
- \\ \\
+
 We will allow the consumer to customise the types of reports that can be 
 created (\textbf{DD.5}). They will be able to request reports in a variety of 
 formats, including human-friendly formats, e.g. PDF, and common data interchange
  formats. Consumers can use these data formats as a data API to build their own
 reports or for any other purpose.This will allow the consumer flexibility to produce 
 what they want, whilst also offering them easy to use built-in tools.
-\\ \\
+
 Our system will provide plugins to support various types of notification 
 (\textbf{DD.6}) that can be triggered based upon customisable events. 
  Notifications will include emails, alongside more generic notifications formatted 
  in standard formats such as XML. The generic notifications 
  could then be processed further by the consumer, allowing them to tailor how 
  notifications are used and delivered. 
- \\ \\
+
 An administration centre (\textbf{DD.3}) that allows
 the consumer configure any customisable system settings including, setting up
 events that trigger notifications and defining data schemas, will be included. This tool 
 will be offered through an intuitive web based interface which is only accessible by the
 authorised consumer. 
-\\ \\
+
 For the prototype we hope to demonstrate at the end of the project, we plan to
 implement most of the solution described above. The core of the system,
 including sensing, storing, analysing and reporting data, will be functional,
@@ -327,7 +322,7 @@ demonstrating, such as a tool to simulate data being input to the system.
 
 \begin{figure}[hptb]
 	\centering
-	\includegraphics[width=0.75\textwidth]{system-architecture.pdf}
+	\includegraphics[width=0.65\textwidth]{system-architecture.pdf}
 	\caption{System diagram}
 	\label{fig:systemDiagram}
 \end{figure}
@@ -373,7 +368,7 @@ This linearity gives no support for changes in requirements during the later
 phases. Given the time constraints and the need for the system to be able to
 evolve into various domains, these linear development methodologies are
 impractical.
-\\ \\
+
 Agile software development, however, allows the project to split into smaller
 sub-projects called `iterations' \cite{hazzan2008agile}. Each iteration allows
 for a different section of the project to be planned, documented, developed and
@@ -381,7 +376,7 @@ tested. It also allows for the development team to be split into smaller
 sub-teams working simultaneously on different areas on the project. At the end
 of each iteration project priorities can be re-evaluated and the team structure
 altered. 
-\\\\
+
 \cite{hazzan2008agile} identifies three key perspectives of software
 development: human, organisational and technological. The scrum methodology
 harnesses two of those perspectives, providing a platform for both team and
@@ -434,18 +429,18 @@ respond quickly to all messages, however we feel that erring on the side of
 caution and starting early was the best strategy. We followed up each response
 with a team meeting within two days in order to discuss and implement any
 changes or suggestions mentioned.
-\\ \\
+
 Communication so far has focussed on verifying that the outlined requirements
 meet the expectations of the customer. We used the initial meeting (9/10) to
 clarify terminology and produce an initial set of requirements,  having
 formatted these we sent them to the customer for feedback (13/10).
-\\ \\
+
 Feedback (14/10) suggested that our understanding of system tailorability was
 inaccurate, with the customer providing clarification. After altering the
 requirements in response and resending them to the customer (16/10), we received
 further feedback suggesting that the wording of our requirements was lacking in
 parts.
-\\ \\
+
 We quickly remedied this before forwarding the changes to the customer (19/10),
 which resulted in helpful feedback allowing us to settle on the outlined list
 of requirements. In producing and gradually refining the requirements, we began
