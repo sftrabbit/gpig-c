@@ -32,28 +32,26 @@
 \thispagestyle{fancy} % Make sure header and footer appear on the front page
 
 
-\section{Introduction}
+\section{Introduction} %40 words
 This document is intended for both the developers and the customer.
 The document is structured in a manner which will interest all concerned
 parties. The document presents a chosen project solution based on derived 
  use cases and requirements.
  
-\subsection{Single statement of need}
+\subsection{Single statement of need} %40 words
 This project aims to deliver a Health and Usage Monitoring System
 (HUMS), tailorable to multiple target domains. The target for the system is any
 consumer needing to collect, store, analyse and report data from one or more
 data input clients.
 
-\section{Use cases}
-Below, we list three use cases that we used to generate the requirements. We
-created the use cases after our discussions with the customer where their needs
-were outlined.
+\section{Use cases} %300 Words
+Three use cases were identified after initial communications with the customer and used to generate the requirements. 
 
 \begin{description}
-	\item[ID] UC1
-	\item[Name] Monitoring a system.
-	\item[Context] The consumer has developed a system, for which they
-	               require a HUMS.
+	\item[ID] $UC1$
+	\item[Name]  System Monitoring.
+	\item[Context] The consumer develops a system, for which they
+	               require HUMS.
 	\item[Primary Actor] The consumer's technical representative.
 	\item[Secondary Actors] The HUMS, the consumer's system.
 	\item[Precondition] The consumer has a system that requires monitoring.
@@ -84,7 +82,7 @@ were outlined.
 \vspace{\baselineskip}
 
 \begin{description}
-	\item[ID] UC2
+	\item[ID] $UC2$
 	\item[Name] Analysing collected data.
 	\item[Context] The organisation wishes to define how their data should be
 	               analysed.
@@ -115,7 +113,7 @@ were outlined.
 \vspace{\baselineskip}
 
 \begin{description}
-	\item[ID] UC3
+	\item[ID] $UC3$
 	\item[Name] Reporting and notifications.
 	\item[Context] The organisation's sensor system, analysis system and the HUMS
 	               have been successfully integrated, and they now wish to define
@@ -269,13 +267,13 @@ architecture for several components.
 
 The HUMS will provide an input API for data input clients to push new data to the
 system, accepting any correctly formatted sensor data sent on the correct
-network (\textbf{DD.1}). Achieving correctly formatted data may require changes
+network $(\textbf{DD.1})$. Achieving correctly formatted data may require changes
 to the consumers system, or using middleware. This approach makes our system
 flexible, supporting a wide range of data input clients, meaning in future the
 solution could easily extend across domains. 
 
 For data storage, the only applicable solution in this scenario is a database
-(\textbf{DD.2}). Using polyglot persistence gives us the option of choosing the
+$(\textbf{DD.2}).$ Using polyglot persistence gives us the option of choosing the
 database technology most suited to the data, which we will determine
 during development. To make our choice we will look at all the relevant
 technologies available and evaluate strengths and weaknesses in relation to
@@ -283,7 +281,7 @@ other design decisions for the data being stored, and how it will be accessed.
 
 For analysis the system will provide generic plugins, as well as an API for
 consumers to extend and create their own specialised analysis rules
- (\textbf{DD.4}). Offering an API allows the system to be tailored to different 
+ $(\textbf{DD.4})$. Offering an API allows the system to be tailored to different 
  consumers and domains, as generic analysis tools
 could not hope to meet every consumers needs by itself.  Domain-specific plugins 
 will be provided to simplify the process, for those performing common analysis
@@ -292,20 +290,20 @@ will be provided to simplify the process, for those performing common analysis
  more domains. 
 
 We will allow the consumer to customise the types of reports that can be 
-created (\textbf{DD.5}). They will be able to request reports in a variety of 
+created $(\textbf{DD.5})$. They will be able to request reports in a variety of 
 formats, including human-friendly formats, e.g. PDF, and common data interchange
  formats. Consumers can use these data formats as a data API to build their own
 reports or for any other purpose.This will allow the consumer flexibility to produce 
 what they want, whilst also offering them easy to use built-in tools.
 
 Our system will provide plugins to support various types of notification 
-(\textbf{DD.6}) that can be triggered based upon customisable events. 
+$(\textbf{DD.6})$ that can be triggered based upon customisable events. 
  Notifications will include emails, alongside more generic notifications formatted 
  in standard formats such as XML. The generic notifications 
  could then be processed further by the consumer, allowing them to tailor how 
  notifications are used and delivered. 
 
-An administration centre (\textbf{DD.3}) that allows
+An administration centre $(\textbf{DD.3})$ that allows
 the consumer configure any customisable system settings including, setting up
 events that trigger notifications and defining data schemas, will be included. This tool 
 will be offered through an intuitive web based interface which is only accessible by the
@@ -431,17 +429,17 @@ with a team meeting within two days in order to discuss and implement any
 changes or suggestions mentioned.
 
 Communication so far has focussed on verifying that the outlined requirements
-meet the expectations of the customer. We used the initial meeting (9/10) to
+meet the expectations of the customer. We used the initial meeting $(9/10)$ to
 clarify terminology and produce an initial set of requirements,  having
-formatted these we sent them to the customer for feedback (13/10).
+formatted these we sent them to the customer for feedback $(13/10)$.
 
-Feedback (14/10) suggested that our understanding of system tailorability was
+Feedback $(14/10)$ suggested that our understanding of system tailorability was
 inaccurate, with the customer providing clarification. After altering the
-requirements in response and resending them to the customer (16/10), we received
+requirements in response and resending them to the customer $(16/10)$, we received
 further feedback suggesting that the wording of our requirements was lacking in
 parts.
 
-We quickly remedied this before forwarding the changes to the customer (19/10),
+We quickly remedied this before forwarding the changes to the customer $(19/10)$,
 which resulted in helpful feedback allowing us to settle on the outlined list
 of requirements. In producing and gradually refining the requirements, we began
 to conceive an idea of how the system should function, and how it should be
