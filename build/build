@@ -20,6 +20,7 @@ if [ "$assi" -eq "1" ]; then
 	RPDI="../docs/initial-report";
 	TXFI="${RPDI}/initial-report.tex";
 	WCFI="${RPDI}/wc.tex";
+	XTRA="${RPDI}/risk-register.tex";
 else
 	echo "${COL_RED}Invalid! ${COL_WHT}Please choose another selection${COL_CLR}";
 	exit 1;
@@ -36,7 +37,11 @@ echo "${COL_YEL}Compiling Latex${COL_CLR}";
 rubber --pdf ${TXFI}
 
 echo -n "${COL_YEL}Computing Word Count: ${COL_CLR}";
-WC=`(cd $RPDI && detex ../$TXFI) | wc -w | tr -d ' '`;
+#WC=`(cd $RPDI && detex ../$TXFI) | wc -w | tr -d ' '`;
+# this needs to be on a seperate line to
+kxWC=`./tools/texcount/texcount.pl -v0 -brief -nosub -noinc -total $TXFI $XTRA | grep Total | sed -e 's/+/\n/g' | awk '{ print $1 } '`;
+# this line.
+WC=`echo $kxWC | awk ' { print $1 } ' | tr -d ' '`;
 echo "${COL_GRN}${WC}${COL_CLR}";
 echo "$WC" > $WCFI
 
