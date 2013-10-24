@@ -25,7 +25,7 @@
 
 \begin{document}
 
-\title{\vspace{-1cm}GPIG-C Initial Report}
+\title{\vspace{-2cm}GPIG-C Initial Report}
 \author{Word count: \input{wc} (\textit{Using TeXCount, excluding all tables and figures except the Risk Register})}
 \date{Friday, 25th October 2013}
 \maketitle
@@ -53,11 +53,14 @@ Three use cases were identified after initial communications with the customer a
 	               require a HUMS.
 	\item[Primary Actor] The consumer's technical representative.
 	\item[Secondary Actors] The HUMS, the consumer's system.
-	\item[Precondition] The consumer has a system that requires monitoring.
-	                    The consumer's system and environment must conform to constraint
-	                     requirements detailed in this document. The
-	                    end user has access to the facilities required to install
+	\item[Preconditions] ~
+		\begin{itemize}
+			\item The consumer has a system that requires monitoring.
+	                 \item The consumer's system and environment must conform to constraint
+	                     requirements detailed in this document. 
+	                 \item The end user has access to the facilities required to install
 	                    the HUMS. The end user has basic computing knowledge.
+	          \end{itemize}
 	\item[Trigger] The technical representative sets up an account and attempts to integrate
 	               their system.
 	\item[Main Success Scenario] The end user successfully manages to integrate
@@ -79,7 +82,6 @@ Three use cases were identified after initial communications with the customer a
 \end{description}
 
 \vspace{\baselineskip}
-
 \begin{description}
 	\item[ID] $UC2$
 	\item[Name] Analysing collected data.
@@ -87,7 +89,7 @@ Three use cases were identified after initial communications with the customer a
 	               analysed.
 	\item[Primary Actor] End user.
 	\item[Secondary Actors] The HUMS.
-	\item[Precondition] ~
+	\item[Preconditions] ~
 			\begin{itemize}
 				\item The user has set up an account.
 				\item The consumer's sensor system and the HUMS have been
@@ -95,13 +97,11 @@ Three use cases were identified after initial communications with the customer a
 			\end{itemize}
 	\item[Trigger] The user decides how they want to analyse their data
 	               abstractly.
-	\item[Main Success Scenario] ~
+	\item[Main Success Scenarios] ~
 			\begin{itemize}
 				\item The user creates a concrete implementation of their abstract
 				      analysis system and interfaces it with the HUMS, allowing them to
 				      analyse data as per their definition.
-				\item The user uses a pre-built analysis plugin. The HUMS
-				      then analyses data as as defined by the user.
 			\end{itemize}
 	\item[Main Success Postcondition] User can analyse data stored in the HUMS.
 	\item[Exception Scenarios] User's analysis system does not conform to the
@@ -119,7 +119,7 @@ Three use cases were identified after initial communications with the customer a
 	               how their users should be notified of events or receive reports.
 	\item[Primary Actor] End user.
 	\item[Secondary Actors] The HUMS.
-	\item[Precondition] ~
+	\item[Preconditions] ~
 			\begin{itemize}
 			\item The user has set up an account.
 			\item The consumer's sensor system, analysis system and the HUMS have
@@ -127,7 +127,7 @@ Three use cases were identified after initial communications with the customer a
 			\end{itemize}
 	\item[Trigger] The user decides on the format and communication method used
 	               to keep them informed of the state of the system.
-	\item[Main Success Scenario] ~
+	\item[Main Success Scenarios] ~
 			\begin{itemize}
 				\item The user implements a notification and reporting system which
 				      correctly integrates with the HUMS.
@@ -135,7 +135,7 @@ Three use cases were identified after initial communications with the customer a
 				 allowing them to receive updates about the state of the
 				      system they are monitoring.
 			\end{itemize}
-	\item[Main Success Postcondition] ~
+	\item[Main Success Postconditions] ~
 			\begin{itemize}
 				\item The user is notified when the analysis system fires an event.
 				\item The user can request reports.
@@ -188,10 +188,12 @@ options:
 	      to implement custom data specifications, which is likely to become
 	      infeasible as the system expands across domains.
 	\item Unmanaged data input clients which store data elsewhere. The HUMS polls
-	      for data at the customers request. This option is slower and more
-	      inefficient than having data pushed to the system, however may integrate
-	      better with existing data input clients, reducing workload for the
-	      consumer.
+	      for data at the customers request. This option is more
+	      inefficient than having data pushed to the system since polls may
+	      frequently fail to collect data and therefore waste resources, or data
+	      may otherwise be available but uncollected by the HUMS and thereby
+	      leave it out-of-date. This approach, however, may integrate better with 
+	      existing data input clients, reducing workload for the consumer.
 	\item Provide an input API which data input clients wishing to push data to
 	      the system must implement. This option is the most flexible, allowing
 	      the system to be integrated with any consumer system, in any domain. It
@@ -416,8 +418,6 @@ The likelihood score defines probability of something occurring. Utilising
 
 \input{riskass-table}
 \input{risklevel-table}
-
-
 
 \section{Customer communication}
 
