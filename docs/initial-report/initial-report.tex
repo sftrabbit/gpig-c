@@ -25,12 +25,14 @@
 
 \begin{document}
 
-\title{\vspace{-1cm}GPIG-C Initial Report}
-\author{Word count: \input{wc} (\textit{Using TeXCount, excluding all tables and figures except the Risk Register})}
-\date{Friday, 25th October 2013}
+% Worst latex ever, but it looks so pretty!
+\title{\vspace{-2cm}GPIG-C Initial Report\vspace{-0.7cm}}
+\author{\fontsize{7}{8pt}Word count: \input{wc}\footnote{\textit{Using TeXCount, excluding all tables and figures except the Risk Register}}}
+\date{\vspace{-0.6cm}\fontsize{7}{6pt}Friday, 25th October 2013}
 \maketitle
+\vspace{-0.4cm}
+\hline
 \thispagestyle{fancy} % Make sure header and footer appear on the front page
-
 
 \section{Introduction} %40 words
 This document is intended for both ourselves and the customer. It contains
@@ -42,7 +44,6 @@ We aim to deliver a Health and Usage Monitoring System (HUMS), tailorable to
 multiple target domains. The target user for the system is any consumer needing
 to collect, store, analyse and report data from one or more data input clients.
 
-
 \section{Use cases}
 Three use cases were identified after initial communications with the customer and used to generate the requirements. 
 
@@ -53,11 +54,14 @@ Three use cases were identified after initial communications with the customer a
 	               require a HUMS.
 	\item[Primary Actor] The consumer's technical representative.
 	\item[Secondary Actors] The HUMS, the consumer's system.
-	\item[Precondition] The consumer has a system that requires monitoring.
-	                    The consumer's system and environment must conform to constraint
-	                     requirements detailed in this document. The
-	                    end user has access to the facilities required to install
+	\item[Preconditions] ~
+		\begin{itemize}
+			\item The consumer has a system that requires monitoring.
+	                 \item The consumer's system and environment must conform to constraint
+	                     requirements detailed in this document. 
+	                 \item The end user has access to the facilities required to install
 	                    the HUMS. The end user has basic computing knowledge.
+	          \end{itemize}
 	\item[Trigger] The technical representative sets up an account and attempts to integrate
 	               their system.
 	\item[Main Success Scenario] The end user successfully manages to integrate
@@ -79,7 +83,6 @@ Three use cases were identified after initial communications with the customer a
 \end{description}
 
 \vspace{\baselineskip}
-
 \begin{description}
 	\item[ID] $UC2$
 	\item[Name] Analysing collected data.
@@ -87,7 +90,7 @@ Three use cases were identified after initial communications with the customer a
 	               analysed.
 	\item[Primary Actor] End user.
 	\item[Secondary Actors] The HUMS.
-	\item[Precondition] ~
+	\item[Preconditions] ~
 			\begin{itemize}
 				\item The user has set up an account.
 				\item The consumer's sensor system and the HUMS have been
@@ -95,13 +98,11 @@ Three use cases were identified after initial communications with the customer a
 			\end{itemize}
 	\item[Trigger] The user decides how they want to analyse their data
 	               abstractly.
-	\item[Main Success Scenario] ~
+	\item[Main Success Scenarios] ~
 			\begin{itemize}
 				\item The user creates a concrete implementation of their abstract
 				      analysis system and interfaces it with the HUMS, allowing them to
 				      analyse data as per their definition.
-				\item The user uses a pre-built analysis plugin. The HUMS
-				      then analyses data as as defined by the user.
 			\end{itemize}
 	\item[Main Success Postcondition] User can analyse data stored in the HUMS.
 	\item[Exception Scenarios] User's analysis system does not conform to the
@@ -119,7 +120,7 @@ Three use cases were identified after initial communications with the customer a
 	               how their users should be notified of events or receive reports.
 	\item[Primary Actor] End user.
 	\item[Secondary Actors] The HUMS.
-	\item[Precondition] ~
+	\item[Preconditions] ~
 			\begin{itemize}
 			\item The user has set up an account.
 			\item The consumer's sensor system, analysis system and the HUMS have
@@ -127,7 +128,7 @@ Three use cases were identified after initial communications with the customer a
 			\end{itemize}
 	\item[Trigger] The user decides on the format and communication method used
 	               to keep them informed of the state of the system.
-	\item[Main Success Scenario] ~
+	\item[Main Success Scenarios] ~
 			\begin{itemize}
 				\item The user implements a notification and reporting system which
 				      correctly integrates with the HUMS.
@@ -135,7 +136,7 @@ Three use cases were identified after initial communications with the customer a
 				 allowing them to receive updates about the state of the
 				      system they are monitoring.
 			\end{itemize}
-	\item[Main Success Postcondition] ~
+	\item[Main Success Postconditions] ~
 			\begin{itemize}
 				\item The user is notified when the analysis system fires an event.
 				\item The user can request reports.
@@ -146,12 +147,11 @@ Three use cases were identified after initial communications with the customer a
 	\item[Exception Postcondition] HUMS can still collect, store and analyse data.
 \end{description}
 
-
 \section{Requirements}
 
-For this project, requirements have been divided into three categories,
+For this project, requirements have been divided into three categories:
 functional, non-functional and constraint. The requirements have been
-engineered such that each falls into one of those three categories, this
+engineered such that each falls into one of these three categories, which
 prevents them from becoming too complex. Each requirement has been
 structured as simply and concisely as possible and been worded in such a way
 as to avoid ambiguity. The requirements represent the problem to be solved
@@ -172,7 +172,6 @@ are verifiable, appropriate testing procedures have been included.
 
 \input{const-req-table}
 
-
 \section{Possible solutions}
 
 When examining possible HUMS solutions, we inspected sensing, storing, analysing
@@ -185,13 +184,15 @@ options:
 \begin{enumerate}
 	\item Data input clients are directly linked to the system, with data being
 	      pushed or polled depending on client support. This requires the system
-	      to implement custom data specifications which is likely to become
+	      to implement custom data specifications, which is likely to become
 	      infeasible as the system expands across domains.
 	\item Unmanaged data input clients which store data elsewhere. The HUMS polls
-	      for data at the customers request. This option is slower and more
-	      inefficient than having data pushed to the system, however may integrate
-	      better with existing data input clients, reducing workload for the
-	      consumer.
+	      for data at the customers request. This option is more
+	      inefficient than having data pushed to the system since polls may
+	      frequently fail to collect data and therefore waste resources, or data
+	      may otherwise be available but uncollected by the HUMS and thereby
+	      leave it out-of-date. This approach, however, may integrate better with 
+	      existing data input clients, reducing workload for the consumer.
 	\item Provide an input API which data input clients wishing to push data to
 	      the system must implement. This option is the most flexible, allowing
 	      the system to be integrated with any consumer system, in any domain. It
@@ -203,9 +204,9 @@ SQL or NoSQL database. Using an SQL database would provide the consumer with
 guaranteed atomicity, consistency, isolation and durability (ACID), thereby
 offering reliability over throughput. Migration for the consumer may be easier
 when using an SQL database, as SQL has been popular among enterprises for a long
-time. SQL however does not easily scale horizontally, making it difficult to
+time. However, SQL does not easily scale horizontally, making it difficult to
 expand one system across a large number of consumers. NoSQL solves the problem
-of scalability at the expense of ACID compliance. Polyglot persistence offers a
+of scalability at the expense of full ACID compliance. Polyglot persistence offers a
 solution to all of the problems identified when choosing between SQL and NoSQL,
 by allowing the use of both. When using polyglot persistence the type and
 structure of every type of data must be examined to determine which datastore is
@@ -238,7 +239,7 @@ single output format such as PDF or XML, however this is not very flexible and
 is unlikely to provide the required functionality for all consumers. Another
 option is to allow the user to directly access the HUMS datastore, however this
 would leave the system open to data inconsistencies and expose implementation
-detail to the consumer. A more flexible solution would be to provide a generic
+details to the consumer. A more flexible solution would be to provide a generic
 reporting API to which plugins can be added. Each plugin would add a different
 report format, allowing the consumer to choose which they wish to use in each
 situation. This solution would be highly flexible, with new plugins being added
@@ -257,7 +258,7 @@ requires more development time and effort.
 \subsection{Proposed solution}
 Our proposed solution, shown in figure \ref{fig:systemDiagram}, uses the 
 concept of a client-server architecture, with the consumer's system acting 
-as the client, and the server being the HUMS processing the data. 
+as the client and the server being the HUMS processing the data. 
 The HUMS could exist within the consumer's data input client, or could be 
 geographically-distant but connected on the same network or though the 
 internet. The solution brings together the best elements from our
@@ -267,7 +268,7 @@ architecture for several components.
 The HUMS will provide an input API for data input clients to push new data to the
 system, accepting any correctly formatted sensor data sent on the correct
 network $(\textbf{DD.1})$. Achieving correctly formatted data may require changes
-to the consumers system, or using middleware. This approach makes our system
+to the consumer's system, or use of middleware. This approach makes our system
 flexible, supporting a wide range of data input clients, meaning in future the
 solution could easily extend across domains. 
 
@@ -282,29 +283,29 @@ For analysis the system will provide generic plugins, as well as an API for
 consumers to extend and create their own specialised analysis rules
  $(\textbf{DD.4})$. Offering an API allows the system to be tailored to different 
  consumers and domains, as generic analysis tools
-could not hope to meet every consumers needs by itself.  Domain-specific plugins 
-will be provided to simplify the process, for those performing common analysis
+could not hope to meet every consumer's needs by itself.  Domain-specific plugins 
+will be provided to simplify the process for those performing common analysis
  functions. This might include graphical tools or other user-friendly features. 
  The range of plugins offered can be expanded as the system expands into 
  more domains. 
 
 We will allow the consumer to customise the types of reports that can be 
 created $(\textbf{DD.5})$. They will be able to request reports in a variety of 
-formats, including human-friendly formats, e.g. PDF, and common data interchange
- formats. Consumers can use these data formats as a data API to build their own
-reports or for any other purpose.This will allow the consumer flexibility to produce 
+formats, including human-friendly formats, such as PDF, and common data interchange
+ formats, such as XML. Consumers can use these data formats as a data API to build their own
+reports or for any other purpose. This will allow the consumer flexibility to produce 
 what they want, whilst also offering them easy to use built-in tools.
 
-Our system will provide plugins to support various types of notification 
+Our system will provide plugins to support various types of notifications 
 $(\textbf{DD.6})$ that can be triggered based upon customisable events. 
- Notifications will include emails, alongside more generic notifications formatted 
- in standard formats such as XML. The generic notifications 
- could then be processed further by the consumer, allowing them to tailor how 
- notifications are used and delivered. 
+Notifications will include emails and mobile push, alongside more generic notifications formatted 
+in standard formats such as XML. The generic notifications 
+could then be processed further by the consumer, allowing them to tailor how 
+notifications are used and delivered. 
 
 An administration centre $(\textbf{DD.3})$ that allows
-the consumer configure any customisable system settings including, setting up
-events that trigger notifications and defining data schemas, will be included. This tool 
+the consumer to configure any customisable system settings, including setting up
+events that trigger notifications and defining data schemas, will also be included. This tool 
 will be offered through an intuitive web based interface which is only accessible by the
 authorised consumer. 
 
@@ -323,7 +324,6 @@ demonstrating, such as a tool to simulate data being input to the system.
 	\caption{System diagram}
 	\label{fig:systemDiagram}
 \end{figure}
-
 
 \section{Team organisation}
 
@@ -347,7 +347,6 @@ weaknesses.
 \subsection{Technical Roles}
 \input{tech-roles}
 
-
 \section{Development plan}
 
 \subsection{Software engineering methodology}
@@ -357,7 +356,7 @@ architecture, with one central codebase providing the core functionality and
 plugins which provide domain tailorability. If a non-agile approach was to be
 taken, a plugin architecture would be infeasible as those methodologies require
 all requirements and documentation to be completed before development commences.
-For example, the V-Model and waterfall model are linear processes, where
+For example, the V-model and Waterfall model are linear processes, where
 requirements are only discussed and designed before implementation commences.
 This linearity gives no support for changes in requirements during the later
 phases. Given the time constraints and the need for the system to be able to
@@ -393,6 +392,7 @@ progress, feature driven development was discounted in favour of scrum.
 
 \subsection{Schedule}
 After examining the scope of the project we divided the first two phases into a schedule of tasks, with each task assigned to the team members responsible for the corresponding project role. We then organised the tasks into sprints, assigning work periods for each. Once organised the tasks were examined to ensure equal effort from all team members throughout the course of the project. Dependencies between tasks were then extracted, identifying a critical path through the project, ensuring, for every task, all prerequisite tasks are completed prior to the task commencing.  The flow of work can be seen in figure \ref{fig:Gantt} and shows an even work schedule throughout.
+
 \input{pert-table}
 \begin{figure}[H]
 	\centering
@@ -400,12 +400,14 @@ After examining the scope of the project we divided the first two phases into a 
 	\caption{A Gantt Chart showing the project flow of work} 
 	\label{fig:Gantt}
 \end{figure}
+
+
 \section{Risk register}
 
 A risk assessment has been performed as part of the initial report to ensure the
 team is aware of any problems which could later arise, and to provide a guide as
 to how to react when such problems occur. The hazards (risks) have been
-identified and classified based upon team members past experiences in similar
+identified and classified based upon team members' past experiences in similar
 projects and group discussion. The areas these hazards impact were then
 analysed, as well as the probability of occurrence. These are then weighted so
 that we can identify the risks which are likely to have the greatest detrimental
@@ -420,8 +422,6 @@ The likelihood score defines probability of something occurring. Utilising
 
 \input{riskass-table}
 \input{risklevel-table}
-
-
 
 \section{Customer communication}
 
