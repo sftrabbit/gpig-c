@@ -12,3 +12,4 @@ build/*.pdf
 
 # Horrible OSX stuff
 .DS_Store
+*(busy)
