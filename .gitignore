@@ -1,14 +1,16 @@
-build
-bin
+/build
+/bin
 
 # LaTeX outputs
-initial-report.pdf
-build/*.pdf
 *.log
 *.aux
 *.bbl
 *.blg
+*.pdf
 *.synctex.gz
+
+# Allow PDF images in docs
+!/docs/*/images/*.pdf
 
 # Horrible OSX stuff
 .DS_Store
