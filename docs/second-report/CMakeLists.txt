@@ -1,5 +1,5 @@
 set(WORD_COUNT_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/initial-report.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/second-report.tex
     ${CMAKE_CURRENT_SOURCE_DIR}/risk-register.tex)
 
 set(TEXCOUNT_COMMAND
@@ -15,7 +15,7 @@ execute_process(COMMAND ${TEXCOUNT_COMMAND} ${TEXCOUNT_ARGS}
 
 set(LATEX_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/docs")
 
-add_latex_document(initial-report.tex
+add_latex_document(second-report.tex
                    BIBFILES report-refs.bib
                    INPUTS admin-roles.tex func-req-table.tex risklevel-table.tex
                    pert-table.tex risk-register.tex const-req-table.tex
