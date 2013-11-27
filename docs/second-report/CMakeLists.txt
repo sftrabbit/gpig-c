@@ -20,7 +20,7 @@ add_latex_document(second-report.tex
                    INPUTS admin-roles.tex func-req-table.tex risklevel-table.tex
                    pert-table.tex risk-register.tex const-req-table.tex
                    tech-roles.tex design-dec-table.tex  nfunc-req-table.tex
-                   riskass-table.tex wc.tex
+                   riskass-table.tex title.tex wc.tex
                    CONFIGURE wc.tex
                    IMAGE_DIRS images
                    DEFAULT_PDF
