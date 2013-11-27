@@ -1,36 +1,30 @@
-\begin{longtable}[H]{| p{0.6cm} | p{2cm} | p{0.3cm} | p{2.6cm} | p{8.1cm} | p{0.7cm} |}
-    \hline
-    \cellcolor{titleColor}\textbf{Risk ID}   & \cellcolor{titleColor}\textbf{Risk}                                             &\cellcolor{titleColor}\textbf{LS}        & \cellcolor{titleColor}\textbf{IS}                                 & \cellcolor{titleColor}\textbf{Mitigation and Contingency} & \cellcolor{titleColor}\textbf{RS} \\ \hline                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-    $\textbf{R.1}$   & Short term loss of team members                  & $6$       & \textit{Moderate}
-\newline Deadline failure                                        
-      &  The team can then reactively reallocate the team member's work across remaining team members. To aid with this, the team must proactively ensure that no work relating to the project is outside of team version control. Use of the scrum methodology proactively aids work reallocation, ensuring team members are aware of all assigned work. 
-      & $18$    \\ \hline
-    $\textbf{R.2}$    & Long term loss of team members                   & $2$ & \textit{Catastrophic}
-\newline Deadline failure and low standard of deliverables 
-    & If a team member is unavailable for an extended period, the team will react by notifying the customer and possibly extending deadlines. The proactive procedures mentioned in \textbf{R.1} will also be followed to reduce the impact of this scenario.                                                                                                                                                                                                                                                                                            
-    & $10$    \\ \hline
-    $\textbf{R.3}$     & Short or long term loss of resources             & $2$ & \textit{Catastrophic}
-\newline Deadline failure and loss of code base              
-    & Proactive use of a source code repository, meaning code-base and history is decentralised. If the repository is lost, the data can be retrieved from the local repository copies and university backups.                                                                                                                                                                                                                                                                                                        
-    & $10$    \\ \hline
-    $\textbf{R.4}$     & Team member under-performance                    & $3$         & \textit{Major}
-\newline Deadline failure and low standard  of deliverables            
-    & Project plan must be feasible. The skills of the team as a whole, and individual team members must be proactively established early on and taken into account when assigning roles.                                                                                                                                                                                                                                                                                                                                                              
-    & $12$    \\ \hline
-    $\textbf{R.5}$    & Mis-interpretation of requirements                & $3$        & \textit{Major}
-\newline Deliverables that are not valid                                        & 
-    Requirements, design and implementation strategy must be proactively verified with the customer. This process is iterative, stopping when both customer and developers are content. Any changes to those requirements must result in re-negotiated deadlines.                                                                                                                                                                                                                                                                                    
-    & $12$    \\ \hline
-    $\textbf{R.6}$    & Slow response to customer queries                & $3$        & \textit{Major}
-\newline Deadline failure and  low standard of deliverables         
-    & Customer has assured a two working day response where possible. Further mitigation can be achieved by proactively communicating issues well in advance of deadlines.                                                                                                                                                                                                                                                                                                                                                                            
-    & $12$    \\ \hline
-    $ \textbf{R.7}  $   & Failure to produce required system functionality & $2$ & \textit{Catastrophic}
-\newline Wasted time and loss of marks                        
-    & Customer verification of requirements can counteract this risk. System testing, to ensure all agreed upon requirements are met, will also reduce this risk.                                                                                                                                                                                                                                                                                                                                                                                      
-    & $10$    \\ \hline
-   $ \textbf{R.8} $    & Missing internal team deadlines                  & $5$            & \textit{Moderate}
-\newline Project falls behind due to missing dependencies                     
-    & Perform critical path analysis to identify tasks which will take the longest time and which are a prerequisite to others. A greater team effort can then be assigned to these areas if it seems likely to miss a deadline or halt progress elsewhere.                                           
-    &  $15$    \\ \hline
-\end{longtable}
+\begin{longtable}[H]{| p{0.6cm} | p{2cm} | p{0.5cm} | p{0.5cm} | p{2.4cm} | p{4.1cm} | p{4.0cm} | p{0.7cm} |}
+\hline							
+\cellcolor{titleColor}\textbf{Risk ID} &	\cellcolor{titleColor}\textbf{Risk} &	\cellcolor{titleColor}\textbf{LS} &	\cellcolor{titleColor}\textbf{IS} &	\cellcolor{titleColor}\textbf{Impact Description} &	\cellcolor{titleColor}\textbf{Mitigation} &	\cellcolor{titleColor}\textbf{Contingency} &	\cellcolor{titleColor}\textbf{RS} \\ \hline
+\textbf{R.1} &	Short term loss of team members &	6 &	3 &	Deadline Failure &	Ensurance that no work realting to the project is outside of team version control.
+Use of scrum methodology proactively aids work reallocation, ensuring team members are aware of all assigned work
+ &	Reallocation of work across remaining team members &	18 \\ \hline
+\textbf{R.2} &	Long term loss of team members &	2 &	5 &	Deadline failure and low standard of deliverables &	Mitigation measures mentioned in R.1. to reduce impact of this scenario. &	Notification of customer, possible deadline extension. &	10 \\ \hline
+\textbf{R.3} &	Short or long term loss of resources &	2 &	5 &	Deadline failure and loss of code base &	Use of version control. Code-base and history is decentralised. &	If remote repository (github) is lost, local checkouts/university backups can be used to regain access to resources. &	10 \\ \hline
+\textbf{R.4} &	Team member under-performance &	4 &	4 &	Deadline failure and low standard of deliverables &	Establish skills of team as a whole early on.
+Establish skills of individual members early on and taken into account when assigning roles. &	Re-allocation of roles to better suit member strengths. &	16 \\ \hline
+\textbf{R.5} &	Misinterpretation of requirements &	3 &	4 &	Deliverables that are not valid &	Proactively define requirements, design and implementation strategy with the customer. Iterative process stopping when both customer and developers are content. &	Changes to requirements must result in re-negotiated deadlines. &	12 \\ \hline
+\textbf{R.6} &	Slow response to customer queries &	3 &	5 &	Deadline failure and low standard of deliverables &	Communication of issues well in advance of any deadlines. &	Depending on time available to deadline, contingency is either to wait - or to implement best solution as decided by the team without receiving customer communication. &	15 \\ \hline
+\textbf{R.7} &	Failure to produce required system functionality &	2 &	5 &	Wasted time and loss of marks &	Verification of requirements by customer.
+Testing of system, to ensure all agreed upon requirements are met. &	  &	10 \\ \hline
+\textbf{R.8} &	Missing internal team deadlines &	5 &	3 &	Project falls behind due to missing dependencies &	Perform critical path analysis to identify tasks that take the longest amount of time and tasks that are prerequisites to others.
+Assign greater team effort to these areas if it seems likely to result in a deadline miss, or halt in progress elsewhere in the project. &	Greater team effort on area of deadline miss, to accelerate its completion. &	15 \\ \hline
+\textbf{R.9} &	System Performance required unattainable &	2 &	4 &	Could cause a task backup: gradual increase in load until system is inoperational &	Choice of implementation or choice of utilised hardware must offer enough in the way of performance to facilitate acceptable system performance. &	All of, or combination of:
+Optimisation of Code
+Use of Faster hardware
+Use of Faster networks &	8 \\ \hline
+\textbf{R.10} &	Design incomplete &	2 &	5 &	Deadline failure and/or low standard of deliverables and/or late submission &	Critical path analysis of roles
+Allocation of roles to areas of strength for each team member where possible &	  &	10 \\ \hline
+\textbf{R.11} &	Design unfeasible &	2 &	5 &	Deadline failure and/or low standard of deliverables &	Careful consideration of each aspect of the system design prior to commencement of work.
+Design to be agreed by the team as a whole, with any areas of issues addressed.
+Identify areas of worry before commencement of work, and put mitigation in place or choose an alternative solution. &	Abandoment of work completed thus far. Restart required. &	10 \\ \hline
+\textbf{R.12} &	Database implementation choice does not give required performance &	3 &	3 &	Database Queries fail or take too long &	Careful selection and comparison of database technologies. &	Perform new comparison of database technologies, utilise new database technology of possible.
+Implementation of query optimisations and/or database optimisations if appropriate. &	9 \\ \hline
+\textbf{R.13} &	System verification failure &	2 &	5 &	Low standard of deliverables &	Test system with Unit Tests throughout to ensure verification of requirements. &	Re-implementation of affected parts of the system &	10 \\ \hline
+\textbf{R.14} &	System validation failure &	2 &	5 &	Invalid deliverables and/or deadline miss &	Verify all requirements with the customer, before implementation starts on the system. &	Re-implementation of affected parts of the system &	10 \\ \hline
+\end{longtable}							
