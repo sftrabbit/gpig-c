@@ -1,0 +1,35 @@
+/* 
+    Document   : admin
+    Created on : 04-Dec-2013, 18:39:51
+    Author     : anthony
+    Description:
+        Admin Center CSS
+*/
+
+.btn-adminsplash, .btn-adminsplashmini {
+    padding: 18px 28px;
+    font-size: 22px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+    text-align: left;
+}
+
+.btn-adminsplash {
+    width: 350px!IMPORTANT;
+    height: 110px!IMPORTANT;
+    margin-left: 15px!IMPORTANT;
+    margin-right: 15px!IMPORTANT;
+}
+
+.btn-adminsplashmini {
+    width: 350px!IMPORTANT;
+    height: 60px!IMPORTANT;
+    margin-left: 15px!IMPORTANT;
+    margin-right: 15px!IMPORTANT;
+}
+
+.fa-adminsplash, .fa-adminsplashmini {
+    margin-right: 16px;
+}
