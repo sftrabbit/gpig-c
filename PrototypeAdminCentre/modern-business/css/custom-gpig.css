@@ -85,6 +85,16 @@ h3.h3_4 {
     border-radius:8px;
 }
 .account-box {
-    background-color: #fff1cc;
+    background-color: #fffcdb;
     border: 8px solid #3c7478;
+}
+
+.row-top-buffer{
+    margin-top: 30px;
+}
+
+.btn.b1{
+    color: #ffffff;
+    background-color: #3c7478;
+    border: 5px solid #304d4d;
 }
