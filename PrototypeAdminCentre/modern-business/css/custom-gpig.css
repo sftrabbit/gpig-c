@@ -21,7 +21,7 @@ Custom Things for GPIG
 }
 
 em.em1 {             /*Purple*/
-    color: #520827;
+    color: #430266;
     font-weight: bold;
     font-style: normal;
 }
@@ -40,4 +40,35 @@ em.em3 {            /*Orange*/
 }
 
 
+h3.h3_1 {             /*Purple*/
+    color: #430266;
+    font-weight: bold;
+    font-style: normal;
+}
 
+h3.h3_2 {    /*Pink*/
+    color: #cc2d47;
+    font-weight: bold;
+    font-style: normal;
+}
+
+h3.h3_3 {            /*Orange*/
+    color: #d94f36;
+    font-weight: bold;
+    font-style: normal;
+}
+
+h3.h3_4 {            /*Orange*/
+    color: #53777a;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #543366 !important;
+    border-color: #543366 !important;
+}
+
+.panel-primary {
+    border-color: #543366 !important;
+}
