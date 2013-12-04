@@ -1,3 +1,43 @@
 /**
 Custom Things for GPIG
 */
+
+.section-colored img {
+    border: 10px solid #456365;
+}
+
+.section-colored {
+    color: #efefef;
+}
+
+.section-colored a{
+   /* background-color: #adcacc;  */
+    font-weight: bold;
+    color: #a3cacc;
+}
+
+.section-colored a:hover{
+    color:#ffffff;
+}
+
+em.em1 {             /*Purple*/
+    color: #520827;
+    font-weight: bold;
+    font-style: normal;
+}
+
+em.em2 {    /*Pink*/
+    color: #cc2d47;
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+em.em3 {            /*Orange*/
+    color: #d94f36;
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+
