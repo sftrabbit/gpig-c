@@ -20,5 +20,4 @@ var navbar = {
 		return '<li><a href="' + hrefLink + '">' + hrefName + '</a>';
 	}
 }
-
 navbar.init();
