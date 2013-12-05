@@ -120,4 +120,10 @@ h3.h3_4 {
     color: #456365;
 }
 
+.btn-top-buffer{
+    margin-left: 12px;
+    margin-top:10px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+}
 

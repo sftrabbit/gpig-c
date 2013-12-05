@@ -6,6 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
+/**
+ * Account can only be created when passwords match
+ */
 $(function() {
     $('#create_account_button').prop('disabled',true);
     $('.password-input input').keyup(function() {
