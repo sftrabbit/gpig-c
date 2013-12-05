@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>New Account    GPIG-C</title>
+    <title>GPIG-C</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
@@ -15,6 +15,7 @@
     <!-- Add custom CSS here -->
     <link href="../css/modern-business.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="js/adminCenter.js"></script>
 </head>
 
 <body>
@@ -103,7 +104,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Add a user</h4>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-users fa-adminsplashmini"></i>Add a user</h4>
       </div>
       <div class="modal-body">
           <table style="width: 100%;">
@@ -113,9 +114,33 @@
                   <td style="width: 55%; text-align: center;"><input type="text" id="adduser_input_username"/></td>
               </tr>
               <tr>
+                  <td style="width: 40%; text-align: right; font-weight: bold;">Email</td>
+                  <td style="width: 5%; text-align: right;">:</td>
+                  <td style="width: 55%; text-align: center;"><input type="email" id="adduser_input_email"/></td>
+              </tr>
+              <tr>
                   <td style="width: 40%; text-align: right; font-weight: bold;">Password</td>
                   <td style="width: 5%; text-align: right;">:</td>
                   <td style="width: 55%; text-align: center;"><input type="password" id="adduser_input_password"/></td>
+              </tr>
+              <tr>
+                  <td style="width: 40%; text-align: right; font-weight: bold;">User Type</td>
+                  <td style="width: 5%; text-align: right;">:</td>
+                  <td style="width: 55%; text-align: center;">
+                        <!-- Split button -->
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-default" id="adduser_type_selected">User</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" style="cursor: pointer;">
+                            <li onclick="confusers.onclickUser(this);" onmouseover="confusers.hover(this);" onmouseout="confusers.dehover(this);">User</li>
+                            <li onclick="confusers.onclickAdmin(this);" onmouseover="confusers.hover(this);" onmouseout="confusers.dehover(this);">Administrator</li>
+                        </ul>
+                        </div>
+                        <input type="hidden" id="adduser_input_typeselected" value="User" />
+                  </td>
               </tr>
           </table>
       </div>
@@ -126,5 +151,8 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script type="text/javascript">
+    adminCenter.setTitle('Configure Users');
+</script>
 </body>
 </html>
