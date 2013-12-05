@@ -21,7 +21,7 @@ var navbar = {
 
     createbutton: function(hrefLink, hrefName){
         console.log("Adding link: " + hrefName + " => " + hrefLink);
-        return '<li><a href="' + hrefLink + '"><button  type="submit" class= "btn btn-primary btn-less-padding">' + hrefName +'</button></a></li>'
+        return '<li><a href="' + hrefLink + '"><button  type="submit" class= "btn btn-less-padding">' + hrefName +'</button></a></li>'
     }
 }
 navbar.init();

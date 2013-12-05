@@ -123,3 +123,7 @@ h3.h3_4 {
     padding-top: 1px;
 }
 
+.btn-less-padding:hover{
+    background-color:#222222;
+    color:#efefef;
+}
