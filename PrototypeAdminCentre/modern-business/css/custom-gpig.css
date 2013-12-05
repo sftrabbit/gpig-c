@@ -11,7 +11,6 @@ Custom Things for GPIG
 }
 
 .section-colored a{
-   /* background-color: #adcacc;  */
     font-weight: bold;
     color: #a3cacc;
 }
@@ -20,7 +19,7 @@ Custom Things for GPIG
     color:#ffffff;
 }
 
-em.em1 {             /*Purple*/
+em.em1 {
     color: #430266;
     font-weight: bold;
     font-style: normal;
@@ -33,42 +32,120 @@ em.em2 {    /*Pink*/
 }
 
 
-em.em3 {            /*Orange*/
+em.em3 {
     color: #d94f36;
     font-weight: bold;
     font-style: normal;
 }
 
 
-h3.h3_1 {             /*Purple*/
+h3.h3_1 {
     color: #430266;
     font-weight: bold;
     font-style: normal;
 }
 
-h3.h3_2 {    /*Pink*/
+h3.h3_2 {
     color: #cc2d47;
     font-weight: bold;
     font-style: normal;
 }
 
-h3.h3_3 {            /*Orange*/
+h3.h3_3 {
     color: #d94f36;
     font-weight: bold;
     font-style: normal;
 }
 
-h3.h3_4 {            /*Orange*/
+h3.h3_4 {
     color: #53777a;
     font-weight: bold;
     font-style: normal;
 }
 
 .panel-primary > .panel-heading {
-    background-color: #543366 !important;
-    border-color: #543366 !important;
+    background-color: #543366;
+    border-color: #543366;
+}
+
+.panel{
+    margin-top: 20px;
 }
 
 .panel-primary {
     border-color: #543366 !important;
+}
+
+.account-info {
+    margin-top: 60px !important;
+}
+
+.round-corners, .account-box {
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius:8px;
+}
+.account-box {
+    background-color: #fffcdb;
+    border: 8px solid #3c7478;
+    margin-top: 90px !important;
+}
+
+.block-top-buffer{
+    margin-top: 30px;
+}
+
+.btn.b1{
+    color: #ffffff;
+    background-color: #3c7478;
+    border: 5px solid #304d4d;
+}
+
+.tab-content{
+    padding: 0 20px;
+}
+
+.nav-tabs a:hover{
+    color: #cc2d47;
+}
+
+.nav-tabs > li.active > a{
+    color: #cc2d47;
+}
+
+.nav-tabs a{
+    font-weight: bold;
+    color: #456365;
+}
+
+.btn-less-padding{
+    padding-bottom: 1px;
+    padding-top: 1px;
+}
+
+.btn-less-padding:hover{
+    background-color:#222222;
+    color:#efefef;
+}
+
+.table-striped{
+    margin-top: 30px;
+}
+
+.table-striped .table-header{
+    color: #543366;
+    font-size: 1.5em;
+    border-bottom:3px solid #543366;
+}
+
+.button-header h1 {
+	float: left;
+}
+.button-header button {
+	float: right;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.button-header hr {
+	clear: both;
 }

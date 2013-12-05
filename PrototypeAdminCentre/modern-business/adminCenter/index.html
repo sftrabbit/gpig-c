@@ -6,16 +6,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>GPIG-C</title>
+    <title>GPIG-C: Admin Centre</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="css/admin.css" rel="stylesheet">
 
     <!-- Add custom CSS here -->
     <link href="../css/modern-business.css" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="js/adminCenter.js"></script>
+    <link href="../css/custom-gpig.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
-            <a class="navbar-brand" href="index.html">GPIG-C</a>
+            <a class="navbar-brand" href="index.html">Admin Home</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,55 +45,52 @@
 <div class="container">
 
     <div class="row">
-
-        <!--Stuff here -->
-
-    </div>
-
-</div>
-
-<div class="row">
-
-    <div class="col-lg-12">
-        <br />
-        <center>
+        <div class="col-sm-12 center-block">
+            <br />
             <h1>Administration Center</h1><hr />
-            
-            <!-- Top Row -->
-            <a href="conf-users.html"><button class="btn btn-primary btn-adminsplash">
+        </div>
+    </div>
+    <div class="row">  <!-- Top Row -->
+        <div class="col-sm-4 center-block block-top-buffer">
+            <a href="conf-users.html"><button class="btn btn-primary btn-adminsplash b1">
                 <i class="fa fa-users fa-adminsplash"></i>Configure Users
             </button></a>
-            <a href="conf-inputs.html"><button class="btn btn-primary btn-adminsplash">
+        </div>
+        <div class="col-sm-4 center-block block-top-buffer">
+            <a href="conf-inputs.html"><button class="btn btn-primary btn-adminsplash b1">
                 <i class="fa fa-signal fa-adminsplash"></i>Configure Inputs
             </button></a>
-            <a href="conf-analysis.html"><button class="btn btn-primary btn-adminsplash">
+        </div>
+        <div class="col-sm-4 center-block block-top-buffer">
+            <a href="conf-analysis.html"><button class="btn btn-primary btn-adminsplash b1">
                 <i class="fa fa-eye fa-adminsplash"></i>Configure Analysis Tool
             </button></a>
-            <br /><br />
-            
-            <!-- 2nd Row -->
-            <a href="conf-reporting.html"><button class="btn btn-primary btn-adminsplash">
-                <i class="fa fa-envelope-o fa-adminsplash"></i>Configure Reporting Tool
+        </div>
+    </div>
+    <div class="row">  <!-- Second Row -->
+        <div class="col-sm-4 center-block block-top-buffer">
+            <a href="conf-reporting.html"><button class="btn btn-primary btn-adminsplash b1">
+                <i class="fa fa-envelope-o fa-adminsplash"></i>Configure Reporting Tools
             </button></a>
-            <a href="conf-notification.html"><button class="btn btn-primary btn-adminsplash">
-                <i class="fa fa-warning fa-adminsplash"></i>Configure Notification Tool
+        </div>
+        <div class="col-sm-4 center-block block-top-buffer">
+            <a href="conf-notification.html"><button class="btn btn-primary btn-adminsplash b1">
+                <i class="fa fa-warning fa-adminsplash"></i>Configure Notification Tools
             </button></a>
-            <a href="pull-report.html"><button class="btn btn-primary btn-adminsplash">
+        </div>
+        <div class="col-sm-4 center-block block-top-buffer">
+            <a href="pull-report.html"><button class="btn btn-primary btn-adminsplash b1">
                 <i class="fa fa-level-down fa-adminsplash"></i>Pull Report
             </button></a>
             <br /><br /><hr />
             <a href="view-sensors.html"><button class="btn btn-warning btn-adminsplash">
                 <i class="fa fa-level-down fa-adminsplash"></i>View Active Sensor-set
             </button></a>
-        </center>
+        </div>
     </div>
-
-</div>
-
-</div><!-- /.container -->
+</div> <!--/.container -->
 
 <div class="container">
-
     <hr>
     <footer>
         <div class="row">
@@ -108,9 +106,9 @@
 <script src="../js/jquery-1.10.2.js"></script>
 <script src="../js/bootstrap.js"></script>
 <script src="../js/modern-business.js"></script>
-<script src="../js/navbar.js"></script>
 <script type="text/javascript">
     adminCenter.setTitle('Admin Home');
 </script>
+<script src="js/navbar.js"></script>
 </body>
 </html>

@@ -16,6 +16,7 @@
     <link href="../css/modern-business.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="js/adminCenter.js"></script>
+    <link href="../css/custom-gpig.css" rel="stylesheet">
 </head>
 
 <body>
@@ -44,40 +45,76 @@
 <div class="container">
 
     <div class="row">
-
-        <!--Stuff here -->
-
-    </div>
-
-</div>
-<div class="row">
-
-    <div class="col-lg-12" id="centerContent">
-        <br />
-        <center>
-        <div class="alert alert-success" id="addinput_ok" style="display: none">
-            <a class="close" onclick="confusers.okhide();">×</a>
-            <div id="createduser_name">undefined</div>
+        <div class="col-sm-12 center-block button-header">
+            <br />
+            <h1>Configure Inputs <small>Sense Anything Anywhere</small></h1>
+			<!-- Button trigger modal -->
+			<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal_configureinput">
+				Add New Input
+			</button>
+			<!-- Modal -->
+			<hr />
         </div>
-        <div class="alert alert-danger" id="addinput_nok" style="display: none">
-            <a class="close" onclick="confusers.nokhide();">×</a>
-            <b>Please fill out the entire form!</b>
-        </div>
-            <h1>Administration Center :: <i>Configure Inputs</i></h1><hr />
-            <div id="displayContainer">
-                <button class="btn btn-primary btn-adminsplashmini" data-toggle="modal" data-target="#modal_addinput" onclick="confusers.resetform();" >
-                    <i class="fa fa-signal fa-adminsplashmini"></i>Configure Input
-                </button>
-            </div>
-        </center>
     </div>
-
-</div>
-
-</div><!-- /.container -->
+    
+     <div class="row">  <!-- Top Row -->
+        <div class="col-sm-12 center-block">
+            <table class="table table-striped">
+  				<thead class="table-header">
+					<th>ID</th>
+					<th>Name</th>
+					<th>Type</th>
+					<th> </th>
+  				</thead>
+  				<tbody>
+  					<tr>
+  						<td>174F93</td>
+  						<td>Engine 16: Fuel line</td>
+  						<td>Temperature</td>
+  						<td>
+  							<div class="dropdown">
+								<a href="#" id="drop3" role="button" class="dropdown-toggle pull-right" data-toggle="dropdown">Action<b class="caret"></b></a>
+									<ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop6">
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Modify</a></li>
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+          							</ul>
+							</div> 
+						</td>
+  					</tr>
+  					<tr>
+  						<td>1C1DD50</td>
+  						<td>Bearing 9: Load</td>
+  						<td>Force</td>
+  						<td>
+  							<div class="dropdown">
+								<a href="#" id="drop3" role="button" class="dropdown-toggle pull-right" data-toggle="dropdown">Action<b class="caret"></b></a>
+									<ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop6">
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Modify</a></li>
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+          							</ul>
+							</div> 
+						</td>
+  					</tr>
+  					<tr>
+  						<td>A0326C1</td>
+  						<td>Blade 16: Speed</td>
+  						<td>RPM</td>
+  						<td>
+  							<div class="dropdown">
+								<a href="#" id="drop3" role="button" class="dropdown-toggle pull-right" data-toggle="dropdown">Action<b class="caret"></b></a>
+									<ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop6">
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Modify</a></li>
+										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>
+          							</ul>
+							</div> 
+						</td>
+  					</tr>
+  				</tbody>
+			</table>
+        </div>
+</div> <!--/.container -->
 
 <div class="container">
-
     <hr>
     <footer>
         <div class="row">
@@ -99,7 +136,7 @@
 
 
 <!-- USER ADD MODAL -->
-<div class="modal fade" id="modal_addinput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_configureinput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
