@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GPIG-C</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="../css/modern-business.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="js/adminCenter.js"></script>
+    <script type="text/javascript" src="js/view-sensors.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+            <a class="navbar-brand" href="index.html">GPIG-C</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul id="nbarstart" class="nav navbar-nav navbar-right"></ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav>
+
+
+<div class="container">
+
+    <div class="row">
+
+        <!--Stuff here -->
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <br />
+        <center>
+            <h1>Active Sensor Sets</h1><hr />
+            <ul class="pagination">
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">Set 1</a></li>
+                <li class="disabled"><a href="#">Set 2</a></li>
+                <li class="disabled"><a href="#">Set 3</a></li>
+                <li class="disabled"><a href="#">Set 4</a></li>
+                <li class="disabled"><a href="#">Set 5</a></li>
+                <li class="disabled"><a href="#" class="disabled">&raquo;</a></li>
+            </ul><br />
+            <b>Sensor Set 1</b>: <i>Diesel Backup Generator, Room 155</i><br />
+            <br />
+            <table style="width: 600px;">
+                <tr>
+                    <td style="width: 200px; vertical-align: center;">
+                        <b><i>#52</i> - Engine Temperature</b><br />
+                        <span id="enginetemp_now">0</span>&deg;C [Warning at: <span id="enginetemp_max">0</span>&deg;C]
+                    </td>
+                    <td style="width: 400px; vertical-align: center;">
+                       <div class="progress progress-striped">
+                            <div id="enginetemp_progressbar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+
+                            </div>
+                        </div> 
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px; vertical-align: center;">
+                        <b><i>#53</i> - Engine RPM (x10)</b><br />
+                        <span id="enginerpm_now">0</span> rpm [Warning at: <span id="enginerpm_max">0</span> rpm]
+                    </td>
+                    <td style="width: 400px; vertical-align: center;">
+                       <div class="progress progress-striped">
+                            <div id="enginerpm_progressbar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+
+                            </div>
+                        </div> 
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px; vertical-align: center;">
+                        <b><i>#54</i> - Power output</b><br />
+                        <span id="enginepower_now">0</span> kW [Warning at: <span id="enginepower_min">0</span> kW]
+                    </td>
+                    <td style="width: 400px; vertical-align: center;">
+                       <div class="progress progress-striped">
+                            <div id="enginepower_progressbar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+
+                            </div>
+                        </div> 
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px; vertical-align: center;">
+                        <b><i>#55</i> - Fuel</b><br />
+                        <span id="fuel_now">33</span> L [Capacity: <span id="fuel_max">40</span> L]
+                    </td>
+                    <td style="width: 400px; vertical-align: center;">
+                       <div class="progress progress-striped">
+                            <div id="fuel_progressbar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 82%">
+
+                            </div>
+                        </div> 
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px; vertical-align: center;">
+                        <b><i>#56</i> - Battery Backup Remaining</b><br />
+                        <span id="battery_min">98</span> kWh [Capacity: <span id="battery_max">100</span> kWh]
+                    </td>
+                    <td style="width: 400px; vertical-align: center;">
+                       <div class="progress progress-striped">
+                            <!--<div class="progress-bar progress-bar-danger" style="width: 25%">
+                                <span class="sr-only">25% Remaining</span>
+                            </div>
+                            <div class="progress-bar progress-bar-warning" style="width: 25%">
+                                <span class="sr-only">50% Remaining</span>
+                            </div>-->
+                            <div class="progress-bar progress-bar-success" style="width: 98%">
+                                <span class="sr-only">98% Remaining</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 200px; vertical-align: center;">
+                        <b>Power System Monitors</b><br />
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#modal_report">ACTIVE WARNINGS!</button>
+                    </td>
+                    <td style="width: 400px; vertical-align: center;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 150px; text-align: right;"><i>#57</i> - Mains Power</td>
+                                <td style="width: 35px; text-align: right;">:</td>
+                                <td style="width: 115px; text-align: left;">
+                                    <button class="btn btn-danger btn-status" data-toggle="tooltip" title="Mains power changed to status 'Failure' at 15:01 Dec 05 2013">Failure</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 150px; text-align: right;"><i>#58</i> - Room 155 Generator</td>
+                                <td style="width: 35px; text-align: right;">:</td>
+                                <td style="width: 115px; text-align: left;">
+                                    <button class="btn btn-success btn-status" title="Room 155 Generator changed to status 'Operating' at 15:01 Dec 05 2013">Operating</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 150px; text-align: right;"><i>#59</i> - Room 155 Battery Backup</td>
+                                <td style="width: 35px; text-align: right;">:</td>
+                                <td style="width: 115px; text-align: left;">
+                                    <button class="btn btn-warning btn-status"  title="Room 155 Battery Backup changed to status 'Discharging' at 15:01 Dec 05 2013">Discharging</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+
+</div>
+
+</div><!-- /.container -->
+
+<div class="container">
+
+    <hr>
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; GPIG-C 2013</p>
+            </div>
+        </div>
+    </footer>
+
+</div><!-- /.container -->
+
+<!-- USER ADD MODAL -->
+<div class="modal fade" id="modal_report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning fa-adminsplashmini"></i>Last Generated Report</h4>
+      </div>
+      <div class="modal-body">
+          <b>Auto-generated failure report</b><br />
+          <b>Subject: &nbsp;<i>Room 155 Sensor Set</i></b><hr />
+          <b>Report: </b>At 13:51:01, Thu 05 Dec 2013, failure of monitored system detected in sensor sensor#57 [Sensor Set 1: Mains Power]<br />
+          <b>Rule(s) #17 and #18 Triggered: </b>
+          <pre>#17: if sensor#57 senses "Failure" trigger notification of type "Power Loss building 1.";</pre>
+          <pre>#18: if rule#17 is triggered and sensor#58 senses "Operating" trigger notification of type "Backup generator in Room 155 working." otherwise trigger notification of type "Backup generator in Room 155 offline";</pre>
+          <i>Notification(s) sent at 13:51:07 to Administrator<i>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- JavaScript -->
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/modern-business.js"></script>
+<script src="../js/navbar.js"></script>
+<script type="text/javascript">
+    adminCenter.setTitle('Active sensors');
+</script>
+</body>
+</html>
