@@ -130,13 +130,12 @@ h3.h3_4 {
 
 .table-striped{
     margin-top: 30px;
-    border: 8px solid #543366;
 }
 
 .table-striped .table-header{
-    background-color: #543366;
-    color: #FFFFFF;
+    color: #543366;
     font-size: 1.5em;
+    border-bottom:3px solid #543366;
 }
 
 .button-header h1 {
