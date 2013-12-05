@@ -127,3 +127,8 @@ h3.h3_4 {
     background-color:#222222;
     color:#efefef;
 }
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #fffcdb;
+}
