@@ -128,7 +128,14 @@ h3.h3_4 {
     color:#efefef;
 }
 
-.table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #fffcdb;
+.table-striped{
+    margin-top: 30px;
+    border: 8px solid #543366;
 }
+
+.table-striped .table-header{
+    background-color: #543366;
+    color: #FFFFFF;
+    font-size: 1.5em;
+}
+
