@@ -8,9 +8,10 @@ function createbutton(hrefLink, hrefName){
 }
 
 $(function() {
-    $('#nbarstart').html($('#nbarstart').html() + createli('services.html', 'Services'));
-    $('#nbarstart').html($('#nbarstart').html() + createli('contact.php', 'Contact'));
-    $('#nbarstart').html($('#nbarstart').html() + createli('guide.html', 'Documentation'));
+    $('#nbarstart').html($('#nbarstart').html() + createli('../index.html', 'GPIG-C'));
+    $('#nbarstart').html($('#nbarstart').html() + createli('../services.html', 'Services'));
+    $('#nbarstart').html($('#nbarstart').html() + createli('../contact.php', 'Contact'));
+    $('#nbarstart').html($('#nbarstart').html() + createli('../guide.html', 'Documentation'));
     $('#nbarstart').html($('#nbarstart').html() + createbutton('../login.html', 'Log Out'));
 } );
 	
