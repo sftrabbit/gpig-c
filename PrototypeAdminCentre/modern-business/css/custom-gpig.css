@@ -145,6 +145,7 @@ h3.h3_4 {
 .button-header button {
 	float: right;
 	margin-top: 20px;
+	margin-bottom: 10px;
 }
 .button-header hr {
 	clear: both;
