@@ -80,9 +80,6 @@ h3.h3_4 {
     margin-top: 60px !important;
 }
 
-.account-setup {
-    margin-top: 90px !important;
-}
 .round-corners, .account-box {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -91,6 +88,7 @@ h3.h3_4 {
 .account-box {
     background-color: #fffcdb;
     border: 8px solid #3c7478;
+    margin-top: 90px !important;
 }
 
 .block-top-buffer{
@@ -120,9 +118,7 @@ h3.h3_4 {
     color: #456365;
 }
 
-.btn-top-buffer{
-    margin-left: 12px;
-    margin-top:10px;
+.btn-less-padding{
     padding-bottom: 1px;
     padding-top: 1px;
 }
