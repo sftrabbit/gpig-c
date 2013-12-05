@@ -8,7 +8,6 @@ var navbar = {
 	},
 	
 	setupNavbar: function() {
-		document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('about.html', 'About');
 		document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('services.html', 'Services');
 		document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('contact.php', 'Contact');
 		document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('clients.html', 'Clients');
