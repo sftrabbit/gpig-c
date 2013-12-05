@@ -64,8 +64,12 @@ h3.h3_4 {
 }
 
 .panel-primary > .panel-heading {
-    background-color: #543366 !important;
-    border-color: #543366 !important;
+    background-color: #543366;
+    border-color: #543366;
+}
+
+.panel{
+    margin-top: 20px;
 }
 
 .panel-primary {
@@ -98,3 +102,22 @@ h3.h3_4 {
     background-color: #3c7478;
     border: 5px solid #304d4d;
 }
+
+.tab-content{
+    padding: 0 20px;
+}
+
+.nav-tabs a:hover{
+    color: #cc2d47;
+}
+
+.nav-tabs > li.active > a{
+    color: #cc2d47;
+}
+
+.nav-tabs a{
+    font-weight: bold;
+    color: #456365;
+}
+
+
