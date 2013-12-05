@@ -33,3 +33,7 @@
 .fa-adminsplash, .fa-adminsplashmini {
     margin-right: 16px;
 }
+
+.btn-status {
+    width: 100px;
+}
