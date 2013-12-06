@@ -190,34 +190,45 @@
 
 <!-- Change tool modal dialog -->
 <div class="modal fade" id="modal_configure_tool" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-wrench fa-adminsplashmini"></i>Configure Analysis</h4>
-            </div>
-            <div class="modal-body">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="radioTool" id="radioToolBasic" value="basic" checked> Basic Tool
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="radioTool" id="radioToolAdvanced" value="advanced"> Advanced Tool
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="radioTool" id="radioToolCustom" value="custom"> Custom Tool
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="confusers.addinput();">Switch Tool</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-wrench fa-adminsplashmini"></i>Configure Analysis</h4>
+      </div>
+      <div class="modal-body">
+		<div class="radio">
+			<label>
+			  <input type="radio" class="radio-tool" name="radioTool" id="radioToolBasic" value="basic" checked> <i class="fa fa-cog fa-adminsplashmini"></i> Basic Tool
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+			  <input type="radio" class="radio-tool" name="radioTool" id="radioToolAdvanced" value="advanced"> <i class="fa fa-cogs fa-adminsplashmini"></i> Advanced Tool
+			</label>
+		</div>
+		<div class="radio">
+			<label>
+			  <input type="radio" class="radio-tool" name="radioTool" id="radioToolCustom" value="custom"> <i class="fa fa-code fa-adminsplashmini"></i> Custom Tool
+			</label>
+		</div>
+		<div class="well" style="display: none;" id="analToolUpload">
+			  <div class="form-group">
+				<label for="toolLabel">Tool Label</label>
+				<input type="text" class="form-control" id="toolLabel" placeholder="Enter tool label">
+			</div>
+			<div class="form-group">
+				<label for="analysisModuleFile">Custom Analysis Module</label>
+				<input type="file" id="analysisModuleFile">
+				<p class="help-block">Upload your custom analysis module here.</p>
+			</div>
+  		</div>
+	</div>	
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="confusers.addinput();">Switch Tool</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 </html>
