@@ -6,7 +6,45 @@
  * To change this template use File | Settings | File Templates.
  */
 
-$(function(){
+
+function buildHTMLforRule(ruleText){
+    return '<tr>'+
+       ' <td class="rule">' + ruleText + '</td>' +
+        '<td>'                                +
+            '<div class="dropdown pull-right">' +
+                '<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">Action<b class="caret"></b></a>' +
+                '<ul id="menu3" class="dropdown-menu" role="menu">' +
+                   ' <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Edit</a></li> ' +
+                    '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Delete</a></li>' +
+               ' </ul> '+
+            '</div>' +
+        '</td>' +
+    '</tr>';
+}
+
+/**
+ * Adds a new rule from the modal to the rules table
+ */
+function addNewRule(){
+    var input = $('#input-select');
+    var operator = $('#comparison-select');
+    var event = $('#event-select');
+    var value = $('#comp-value');
+    var text1 =input.find('option:selected').text();
+    var text2 =operator.find('option:selected').text();
+    var text3 =value.val();
+    var text4 =event.find('option:selected').text();
+    var ruleText = 'When Input '+text1 + ' Is '+ text2 + ' '+ text3 + " Trigger Event "+ text4;
+    var ruleHTML = buildHTMLforRule(ruleText);
+    var rulesBody = $('#rules-body');
+    rulesBody.html(rulesBody.html() + ruleHTML);
+    highlightRules();
+}
+
+/**
+ * Syntax Highlighting for rules
+ */
+function highlightRules(){
     var rules = $('.rule');
     var newContent = "";
     var currentRule;
@@ -28,6 +66,10 @@ $(function(){
         }
         currentRule.html(newContent);
     }
+}
+
+$(function(){
+    highlightRules();
 });
 
 /*
@@ -35,11 +77,11 @@ $(function(){
  * module upload stuff
  */
 $(function(){
-	$('input[name="radioTool"]').change(function() {
-		if($('#radioToolCustom').is(':checked')) {
-			$(analToolUpload).css("display", "block");
-		} else {
-			$(analToolUpload).css("display", "none");
-		}
-	});
+    $('input[name="radioTool"]').change(function() {
+        if($('#radioToolCustom').is(':checked')) {
+            $(analToolUpload).css("display", "block");
+        } else {
+            $(analToolUpload).css("display", "none");
+        }
+    });
 });
