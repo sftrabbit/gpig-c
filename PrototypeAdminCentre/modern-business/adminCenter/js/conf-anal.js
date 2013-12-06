@@ -28,7 +28,6 @@ $(function(){
         }
         currentRule.html(newContent);
     }
-    $('.rule').html(newContent)
 });
 
 /*
