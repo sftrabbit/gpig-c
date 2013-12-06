@@ -20,3 +20,17 @@ $(function(){
     }
     $('.rule').html(newContent)
 });
+
+/*
+ * When radioToolCustom is toggled, see if we need to display or hide the
+ * module upload stuff
+ */
+$(function(){
+	$('input[name="radioTool"]').change(function() {
+		if($('#radioToolCustom').is(':checked')) {
+			$(analToolUpload).css("display", "block");
+		} else {
+			$(analToolUpload).css("display", "none");
+		}
+	});
+});
