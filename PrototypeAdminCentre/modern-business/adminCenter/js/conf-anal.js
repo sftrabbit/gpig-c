@@ -7,16 +7,25 @@
  */
 
 $(function(){
-    var content = $('.rule').text();
-    var words = content.split(" ");
+    var rules = $('.rule');
     var newContent = "";
-    for(var i= 0 ; i < words.length; i++){
-        if(words[i] == 'When' || words[i] == 'Input' || words[i] == 'Is' ||
-            words[i] == 'Trigger' || words[i] == 'Event')
-            words[i] =   '<span class="rule-keyword">' + words[i] + '</span>';
-        else
-            words[i] =   '<span class="rule-non-keyword">' + words[i] + '</span>';
-        newContent += words[i] + ' ';
+    var currentRule;
+    var words;
+
+    for(var j = 0; j < rules.length; j++){
+
+        newContent = "";
+        currentRule = rules.eq(j);
+        words = currentRule.text().split(" ");
+
+        for(var i= 0 ; i < words.length; i++){
+            if(words[i] == 'When' || words[i] == 'Input' || words[i] == 'Is' ||
+                words[i] == 'Trigger' || words[i] == 'Event')
+                words[i] =   '<span class="rule-keyword">' + words[i] + '</span>';
+            else
+                words[i] =   '<span class="rule-non-keyword">' + words[i] + '</span>';
+            newContent += words[i] + ' ';
+        }
+        currentRule.html(newContent);
     }
-    $('.rule').html(newContent)
 });

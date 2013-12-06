@@ -39,11 +39,11 @@
 }
 
 .rule-keyword{
-    font-weight: bold;
-    color: #d94f36;
+    color: #53777a;
 }
 
 .rule-non-keyword{
-    color: #53777a;
+    font-weight: bold;
+    color: #d94f36;
 }
 
