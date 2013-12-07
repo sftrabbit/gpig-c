@@ -22,15 +22,13 @@ $(function() {
             password_inputs.removeClass('has-success has-error');
             button.prop('disabled', true);
         } else {
-            if (admin_pass == confirm_admin_pass)   {
+            if (admin_pass == confirm_admin_pass) {
                 password_inputs.addClass('has-success').removeClass('has-error');
                 button.prop('disabled', false);
-            }else{
+            } else {
                 password_inputs.addClass('has-error').removeClass('has-success');
                 button.prop('disabled', true);
             }
         }
     });
 });
-
-

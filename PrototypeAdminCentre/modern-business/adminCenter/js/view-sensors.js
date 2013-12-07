@@ -13,8 +13,7 @@ var sensors = {
         sensors.enginetemp.update();
         setTimeout('sensors.poll()', '500');
     },
-    
-    
+
     enginetemp: {
         enginetemp_rand_min: 400,
         enginetemp_rand_max: 700,
@@ -50,9 +49,9 @@ var sensors = {
             document.getElementById(sensors.enginetemp.enginetemp_now).innerHTML = temp;
             document.getElementById(sensors.enginetemp.enginetemp_progressbar).setAttribute('aria-valuenow', temp);
             document.getElementById(sensors.enginetemp.enginetemp_progressbar).style.width = "" + rInt + "%";
-            if(rInt > 67) {
+            if (rInt > 67) {
                 document.getElementById(sensors.enginetemp.enginetemp_progressbar).setAttribute('class', 'progress-bar progress-bar-danger');
-            } else if(rInt > 34) {
+            } else if (rInt > 34) {
                 document.getElementById(sensors.enginetemp.enginetemp_progressbar).setAttribute('class', 'progress-bar progress-bar-warning');
             } else {
                 document.getElementById(sensors.enginetemp.enginetemp_progressbar).setAttribute('class', 'progress-bar progress-bar-success');
@@ -67,9 +66,9 @@ var sensors = {
             document.getElementById(sensors.enginetemp.enginerpm_now).innerHTML = rpm;
             document.getElementById(sensors.enginetemp.enginerpm_progressbar).setAttribute('aria-valuenow', rpm);
             document.getElementById(sensors.enginetemp.enginerpm_progressbar).style.width = "" + rInt + "%";
-            if(rInt > 67) {
+            if (rInt > 67) {
                 document.getElementById(sensors.enginetemp.enginerpm_progressbar).setAttribute('class', 'progress-bar progress-bar-danger');
-            } else if(rInt > 34) {
+            } else if (rInt > 34) {
                 document.getElementById(sensors.enginetemp.enginerpm_progressbar).setAttribute('class', 'progress-bar progress-bar-warning');
             } else {
                 document.getElementById(sensors.enginetemp.enginerpm_progressbar).setAttribute('class', 'progress-bar progress-bar-success');
@@ -80,9 +79,9 @@ var sensors = {
             document.getElementById(sensors.enginetemp.enginepower_progressbar).setAttribute('aria-valuenow', rpm);
             document.getElementById(sensors.enginetemp.enginepower_progressbar).style.width = "" + dInt + "%";
             document.getElementById(sensors.enginetemp.enginepower_now).innerHTML = Math.ceil(dInt);
-            if(dInt > 45) {
+            if (dInt > 45) {
                 document.getElementById(sensors.enginetemp.enginepower_progressbar).setAttribute('class', 'progress-bar progress-bar-success');
-            } else if(dInt > 40) {
+            } else if (dInt > 40) {
                 document.getElementById(sensors.enginetemp.enginepower_progressbar).setAttribute('class', 'progress-bar progress-bar-warning');
             } else {
                 document.getElementById(sensors.enginetemp.enginepower_progressbar).setAttribute('class', 'progress-bar progress-bar-danger');

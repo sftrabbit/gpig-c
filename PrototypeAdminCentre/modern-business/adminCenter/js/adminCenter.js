@@ -10,4 +10,3 @@ var adminCenter = {
         document.title = title + " | GPIG-C";
     }
 }
-

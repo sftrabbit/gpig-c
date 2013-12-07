@@ -5,7 +5,7 @@ var contact = {
 	contactform_input_email: "#contactform_input_email",
 	contactform_input_message: "#contactform_input_message",
 	submit: function() {
-		if($(contact.contactform_input_email).val() == "" || $(contact.contactform_input_message).val() == "") {
+		if ($(contact.contactform_input_email).val() == "" || $(contact.contactform_input_message).val() == "") {
 			$(contact.contactform_alert_e).css('display', '');
 		} else {
 			$(contact.contactform).css('display', 'none');

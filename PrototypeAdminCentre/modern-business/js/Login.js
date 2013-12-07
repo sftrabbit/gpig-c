@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-
 /**
  * Account can only login when username and password fields are non empty
  */
@@ -15,12 +14,8 @@ $(function() {
     var password_input = $('#password');
     var email_input = $('#email');
     var button =  $('#login_button');
-    password_input.keyup(function() {
-        check();
-    });
-    email_input.keyup(function() {
-        check();
-    });
+    password_input.keyup(check);
+    email_input.keyup(check);
 
     function check() {
         if (password_input.val() == '' || email_input.val() == '') {
@@ -30,4 +25,3 @@ $(function() {
         }
     }
 });
-
