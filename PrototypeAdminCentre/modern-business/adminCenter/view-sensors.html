@@ -48,9 +48,9 @@
     <div class="row">
 
         <div class="col-lg-12">
-            <br />
+            <br>
             <center>
-                <h1>Active Sensor Sets</h1><hr />
+                <h1>Active Sensor Sets</h1><hr>
                 <ul class="pagination">
                     <li class="disabled"><a href="#">&laquo;</a></li>
                     <li class="active"><a href="#">Set 1</a></li>
@@ -59,13 +59,13 @@
                     <li class="disabled"><a href="#">Set 4</a></li>
                     <li class="disabled"><a href="#">Set 5</a></li>
                     <li class="disabled"><a href="#" class="disabled">&raquo;</a></li>
-                </ul><br />
-                <b>Sensor Set 1</b>: <i>Diesel Backup Generator, Room 155</i><br />
-                <br />
+                </ul><br>
+                <b>Sensor Set 1</b>: <i>Diesel Backup Generator, Room 155</i><br>
+                <br>
                 <table style="width: 600px;">
                     <tr>
                         <td style="width: 200px; vertical-align: center;">
-                            <b><i>#52</i> - Engine Temperature</b><br />
+                            <b><i>#52</i> - Engine Temperature</b><br>
                             <span id="enginetemp_now">0</span>&deg;C [Warning at: <span id="enginetemp_max">0</span>&deg;C]
                         </td>
                         <td style="width: 400px; vertical-align: center;">
@@ -78,7 +78,7 @@
                     </tr>
                     <tr>
                         <td style="width: 200px; vertical-align: center;">
-                            <b><i>#53</i> - Engine RPM (x10)</b><br />
+                            <b><i>#53</i> - Engine RPM (x10)</b><br>
                             <span id="enginerpm_now">0</span> rpm [Warning at: <span id="enginerpm_max">0</span> rpm]
                         </td>
                         <td style="width: 400px; vertical-align: center;">
@@ -91,7 +91,7 @@
                     </tr>
                     <tr>
                         <td style="width: 200px; vertical-align: center;">
-                            <b><i>#54</i> - Power output</b><br />
+                            <b><i>#54</i> - Power output</b><br>
                             <span id="enginepower_now">0</span> kW [Warning at: <span id="enginepower_min">0</span> kW]
                         </td>
                         <td style="width: 400px; vertical-align: center;">
@@ -104,7 +104,7 @@
                     </tr>
                     <tr>
                         <td style="width: 200px; vertical-align: center;">
-                            <b><i>#55</i> - Fuel</b><br />
+                            <b><i>#55</i> - Fuel</b><br>
                             <span id="fuel_now">33</span> L [Capacity: <span id="fuel_max">40</span> L]
                         </td>
                         <td style="width: 400px; vertical-align: center;">
@@ -117,7 +117,7 @@
                     </tr>
                     <tr>
                         <td style="width: 200px; vertical-align: center;">
-                            <b><i>#56</i> - Battery Backup Remaining</b><br />
+                            <b><i>#56</i> - Battery Backup Remaining</b><br>
                             <span id="battery_min">98</span> kWh [Capacity: <span id="battery_max">100</span> kWh]
                         </td>
                         <td style="width: 400px; vertical-align: center;">
@@ -136,7 +136,7 @@
                     </tr>
                     <tr>
                         <td style="width: 200px; vertical-align: center;">
-                            <b>Power System Monitors</b><br />
+                            <b>Power System Monitors</b><br>
                             <button class="btn btn-danger" data-toggle="modal" data-target="#modal_report">ACTIVE WARNINGS!</button>
                         </td>
                         <td style="width: 400px; vertical-align: center;">
@@ -195,9 +195,9 @@
         <h4 class="modal-title" id="myModalLabel"><i class="fa fa-warning fa-adminsplashmini"></i>Last Generated Report</h4>
       </div>
       <div class="modal-body">
-          <b>Auto-generated failure report</b><br />
-          <b>Subject: &nbsp;<i>Room 155 Sensor Set</i></b><hr />
-          <b>Report: </b>At 13:51:01, Thu 05 Dec 2013, failure of monitored system detected in sensor sensor#57 [Sensor Set 1: Mains Power]<br />
+          <b>Auto-generated failure report</b><br>
+          <b>Subject: &nbsp;<i>Room 155 Sensor Set</i></b><hr>
+          <b>Report: </b>At 13:51:01, Thu 05 Dec 2013, failure of monitored system detected in sensor sensor#57 [Sensor Set 1: Mains Power]<br>
           <b>Rule(s) #17 and #18 Triggered: </b>
           <pre>#17: if sensor#57 senses "Failure" trigger notification of type "Power Loss building 1.";</pre>
           <pre>#18: if rule#17 is triggered and sensor#58 senses "Operating" trigger notification of type "Backup generator in Room 155 working." otherwise trigger notification of type "Backup generator in Room 155 offline";</pre>
