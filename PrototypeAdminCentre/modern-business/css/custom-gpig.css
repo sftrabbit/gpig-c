@@ -135,7 +135,7 @@ h3.h3_4 {
 .table-striped .table-header{
     color: #543366;
     font-size: 1.5em;
-    border-bottom:3px solid #543366;
+    border-bottom:2px solid #543366;
 }
 
 .button-header h1 {
@@ -149,3 +149,16 @@ h3.h3_4 {
 .button-header hr {
 	clear: both;
 }
+
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+    border: none;
+}
+
+
+

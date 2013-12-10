@@ -13,7 +13,7 @@ var confusers = {
     adduser: function() {
         console.log("Add user clicked");
         //document.getElementById(confusers.modalContainer).style.display = "none";
-        if(document.getElementById(confusers.adduser_input_email).value != "") {
+        if (document.getElementById(confusers.adduser_input_email).value != "") {
             document.getElementById(confusers.created_email).innerHTML = '<strong>Success!</strong> <i>';
             document.getElementById(confusers.created_email).innerHTML += document.getElementById(confusers.adduser_input_email).value;
             document.getElementById(confusers.created_email).innerHTML += '</i>';
@@ -29,10 +29,10 @@ var confusers = {
         document.getElementById(confusers.adduser_type_selected).value = "User";
         document.getElementById(confusers.adduser_input_email).value = "";
     },
-    nokhide:function() {
+    nokhide: function() {
             document.getElementById(confusers.adduser_nok).style.display = 'none';
     },
-    okhide:function() {
+    okhide: function() {
             document.getElementById(confusers.adduser_ok).style.display = 'none';
     },
     hover: function(object) {
@@ -52,5 +52,3 @@ var confusers = {
         document.getElementById(confusers.adduser_input_typeselected).value = object.innerText;
     }
 }
-
-

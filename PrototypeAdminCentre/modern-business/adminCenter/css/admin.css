@@ -37,3 +37,13 @@
 .btn-status {
     width: 100px;
 }
+
+.rule-keyword{
+    color: #53777a;
+}
+
+.rule-non-keyword{
+    font-weight: bold;
+    color: #d94f36;
+}
+

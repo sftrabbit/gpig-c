@@ -7,7 +7,6 @@ var adminCenter = {
         
     },
     setTitle: function(title) {
-        document.title = "GPIG-C Admin Center: " + title + "";
+        document.title = title + " | GPIG-C";
     }
 }
-

@@ -3,10 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>GPIG-C</title>
+    <title>Configure Users</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
@@ -14,7 +12,6 @@
     <!-- Add custom CSS here -->
     <link href="../css/modern-business.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <script type="text/javascript" src="js/adminCenter.js"></script>
     <link href="css/admin.css" rel="stylesheet">
     <link href="../css/custom-gpig.css" rel="stylesheet">
 </head>
@@ -35,13 +32,12 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul id="nbarstart" class="nav navbar-nav navbar-right"/>
+            <ul id="nbarstart" class="nav navbar-nav navbar-right"></ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
 </nav>
 
 <div class="container">
-
 
     <div class="row">
         <div class="col-lg-12 center-block" id="centerContent">
@@ -63,6 +59,9 @@
                     onclick="confusers.resetform();"> Add User</button>
         </div>
     </div>
+
+    <hr>
+
     <div class="row">  <!-- Table Row -->
         <div class="col-sm-12 center-block">
             <table class="table table-striped table-bordered">
@@ -117,8 +116,6 @@
             </table>
         </div>
     </div>
-</div>
-</div>
 
 </div><!-- /.container -->
 
@@ -142,8 +139,6 @@
 <script src="js/navbar.js"></script>
 <script src="js/conf-users.js"></script>
 
-
-
 <!-- USER ADD MODAL -->
 <div class="modal fade" id="modal_adduser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -157,17 +152,17 @@
               <tr>
                   <td style="width: 40%; text-align: right; font-weight: bold;">Username</td>
                   <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;"><input type="text" id="adduser_input_username"/></td>
+                  <td style="width: 55%; text-align: center;"><input type="text" id="adduser_input_username"></td>
               </tr>
               <tr>
                   <td style="width: 40%; text-align: right; font-weight: bold;">Email</td>
                   <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;"><input type="email" id="adduser_input_email"/></td>
+                  <td style="width: 55%; text-align: center;"><input type="email" id="adduser_input_email"></td>
               </tr>
               <tr>
                   <td style="width: 40%; text-align: right; font-weight: bold;">Password</td>
                   <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;"><input type="password" id="adduser_input_password"/></td>
+                  <td style="width: 55%; text-align: center;"><input type="password" id="adduser_input_password"></td>
               </tr>
               <tr>
                   <td style="width: 40%; text-align: right; font-weight: bold;">User Type</td>
@@ -185,7 +180,7 @@
                             <li onclick="confusers.onclickAdmin(this);" onmouseover="confusers.hover(this);" onmouseout="confusers.dehover(this);">Administrator</li>
                         </ul>
                         </div>
-                        <input type="hidden" id="adduser_input_typeselected" value="User" />
+                        <input type="hidden" id="adduser_input_typeselected" value="User">
                   </td>
               </tr>
           </table>
@@ -197,8 +192,5 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script type="text/javascript">
-    adminCenter.setTitle('Configure Users');
-</script>
 </body>
 </html>
