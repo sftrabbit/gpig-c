@@ -47,3 +47,14 @@
     color: #d94f36;
 }
 
+.notification-high-priority{
+    color: #d94f36;
+}
+
+.notification-mid-priority{
+    color: #53777a;
+}
+
+.notification-low-priority{
+    color: #36b0c9;
+}
