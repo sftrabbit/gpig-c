@@ -45,7 +45,7 @@
             <br>
             <h1>Configure Inputs <small>Sense Anything Anywhere</small></h1>
 			<!-- Button trigger modal -->
-			<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal_configureinput">
+			<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-conf-input">
 				Add New Input
 			</button>
 			<hr>
@@ -61,11 +61,11 @@
 					<th>Type</th>
 					<th> </th>
   				</thead>
-  				<tbody>
+                <tbody id="inputs-body">
   					<tr>
   						<td>174F93</td>
   						<td>Engine 16: Fuel line</td>
-  						<td>Temperature</td>
+  						<td>Numeric</td>
   						<td>
   							<div class="dropdown">
 								<a href="#" id="drop3" role="button" class="dropdown-toggle pull-right" data-toggle="dropdown">Action<b class="caret"></b></a>
@@ -79,7 +79,7 @@
   					<tr>
   						<td>1C1DD50</td>
   						<td>Bearing 9: Load</td>
-  						<td>Force</td>
+  						<td>Numeric</td>
   						<td>
   							<div class="dropdown">
 								<a href="#" id="drop3" role="button" class="dropdown-toggle pull-right" data-toggle="dropdown">Action<b class="caret"></b></a>
@@ -93,7 +93,7 @@
   					<tr>
   						<td>A0326C1</td>
   						<td>Blade 16: Speed</td>
-  						<td>RPM</td>
+  						<td>Numeric</td>
   						<td>
   							<div class="dropdown">
 								<a href="#" id="drop3" role="button" class="dropdown-toggle pull-right" data-toggle="dropdown">Action<b class="caret"></b></a>
@@ -126,32 +126,42 @@
 <script src="../js/jquery-1.10.2.js"></script>
 <script src="../js/bootstrap.js"></script>
 <script src="../js/modern-business.js"></script>
-<script src="js/navbar.js"></script>
-<script src="js/conf-inputs.js"></script>
+<script src="js/admin-navbar.js"></script>
+<script src="js/configure-inputs.js"></script>
 
 <!-- USER ADD MODAL -->
-<div class="modal fade" id="modal_configureinput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-signal fa-adminsplashmini"></i>Configure Input</h4>
-      </div>
-      <div class="modal-body">
-          <table style="width: 100%;">
-              <tr>
-                  <td style="width: 40%; text-align: right; font-weight: bold;">Input ID#</td>
-                  <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;"><input type="text" id="addinput_input_username"></td>
-              </tr>
-          </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="confusers.addinput();">Add Input</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+<!-- Add Rule modal dialog -->
+<div class="modal fade" id="modal-conf-input" tabindex="-1" role="dialog" aria-labelledby="add-rule" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-signal fa-adminsplashmini"></i>Configure Input</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                            <label for="add-input-name">Name</label>
+                            <input type="text" id ="add-input-name" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="add-input-type">Type</label>
+                        <select class="form-control" id = "add-input-type">
+                            <option>Numeric</option>
+                            <option>Text</option>
+                            <option>Boolean</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addNewInput()">Add</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 </body>
 </html>

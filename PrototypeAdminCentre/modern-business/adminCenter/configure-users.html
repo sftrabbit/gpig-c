@@ -38,25 +38,12 @@
 </nav>
 
 <div class="container">
-
-    <div class="row">
-        <div class="col-lg-12 center-block" id="centerContent">
-            <div class="alert alert-success" id="adduser_ok" style="display: none">
-                <a class="close" onclick="confusers.okhide();">×</a>
-                <div id="created_email">undefined</div>
-            </div>
-            <div class="alert alert-danger" id="adduser_nok" style="display: none">
-                <a class="close" onclick="confusers.nokhide();">×</a>
-                <b>Please fill out the entire form!</b>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-lg-12 center-block block-top-buffer button-header">
             <h1>Configure Users<small> Who can edit your HUMS</small> </h1>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modal_adduser"
-                    onclick="confusers.resetform();"> Add User</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modal_adduser">
+                Add User
+            </button>
         </div>
     </div>
 
@@ -72,7 +59,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="users-body">
                 <tr>
                     <td>test@gpigc.com</td>
                     <td>Administrator  </td>
@@ -136,8 +123,8 @@
 <script src="../js/jquery-1.10.2.js"></script>
 <script src="../js/bootstrap.js"></script>
 <script src="../js/modern-business.js"></script>
-<script src="js/navbar.js"></script>
-<script src="js/conf-users.js"></script>
+<script src="js/admin-navbar.js"></script>
+<script src="js/configure-users.js"></script>
 
 <!-- USER ADD MODAL -->
 <div class="modal fade" id="modal_adduser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -148,46 +135,25 @@
         <h4 class="modal-title" id="myModalLabel"><i class="fa fa-users fa-adminsplashmini"></i>Add a user</h4>
       </div>
       <div class="modal-body">
-          <table style="width: 100%;">
-              <tr>
-                  <td style="width: 40%; text-align: right; font-weight: bold;">Username</td>
-                  <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;"><input type="text" id="adduser_input_username"></td>
-              </tr>
-              <tr>
-                  <td style="width: 40%; text-align: right; font-weight: bold;">Email</td>
-                  <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;"><input type="email" id="adduser_input_email"></td>
-              </tr>
-              <tr>
-                  <td style="width: 40%; text-align: right; font-weight: bold;">Password</td>
-                  <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;"><input type="password" id="adduser_input_password"></td>
-              </tr>
-              <tr>
-                  <td style="width: 40%; text-align: right; font-weight: bold;">User Type</td>
-                  <td style="width: 5%; text-align: right;">:</td>
-                  <td style="width: 55%; text-align: center;">
-                        <!-- Split button -->
-                        <div class="btn-group">
-                        <button type="button" class="btn btn-default" id="adduser_type_selected">User</button>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" style="cursor: pointer;">
-                            <li onclick="confusers.onclickUser(this);" onmouseover="confusers.hover(this);" onmouseout="confusers.dehover(this);">User</li>
-                            <li onclick="confusers.onclickAdmin(this);" onmouseover="confusers.hover(this);" onmouseout="confusers.dehover(this);">Administrator</li>
-                        </ul>
-                        </div>
-                        <input type="hidden" id="adduser_input_typeselected" value="User">
-                  </td>
-              </tr>
-          </table>
+          <div class="row">
+              <div class="col-sm-12 form-group">
+                  <label for="add-user-email">Email</label>
+                  <input type="text" id ="add-user-email" class="form-control">
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12">
+                  <label for="add-user-type">Type</label>
+                  <select class="form-control" id = "add-user-type">
+                      <option>Standard</option>
+                      <option>Administrator</option>
+                  </select>
+              </div>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="confusers.adduser();">Add User</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addNewUser();">Add User</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
