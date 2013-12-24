@@ -10,7 +10,6 @@ var navbar = {
 	setupNavbar: function() {
 		document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('services.html', 'Services');
 		document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('contact.html', 'Contact');
-		document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('clients.html', 'Clients');
 		//document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createli('guide.html', 'Documentation');
         document.getElementById('nbarstart').innerHTML = document.getElementById('nbarstart').innerHTML + navbar.createbutton('login.html', 'Log In');
     },
