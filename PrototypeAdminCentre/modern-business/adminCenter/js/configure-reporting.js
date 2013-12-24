@@ -1,7 +1,7 @@
 
-function buildHTMLForEventReport(event, reportType) {
+function buildHTMLForEventReport(input, reportType) {
     return 	'<tr>' +
-                '<td>'+  event +'</td>' +
+                '<td>'+  input +'</td>' +
                 '<td>' +reportType +'</td>' +
                 '<td>' +
                     '<div class="dropdown pull-right">' +
@@ -19,9 +19,9 @@ function buildHTMLForEventReport(event, reportType) {
  * Adds a new rule from the modal to the rules table
  */
 function addReportingToolForEvent() {
-    var eventField = $('#add-tool-to-event-event');
+    var inputField = $('#add-tool-to-event-input');
     var typeField = $('#add-tool-to-event-type');
-    var ruleHTML = buildHTMLForEventReport(eventField.val(), typeField.val());
+    var ruleHTML = buildHTMLForEventReport(inputField.val(), typeField.val());
     var reportingBody = $('#reporting-body');
     console.log(reportingBody.html());
     reportingBody.html(reportingBody.html() + ruleHTML);
