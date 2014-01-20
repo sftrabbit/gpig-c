@@ -150,7 +150,6 @@ h3.h3_4 {
 	clear: both;
 }
 
-
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,
@@ -160,5 +159,12 @@ h3.h3_4 {
     border: none;
 }
 
-
+.hums-intro
+{
+    background-color: #222;
+    color: #fff;
+    top: -3%;
+    position: relative;
+    padding-bottom: 10px;
+}
 
