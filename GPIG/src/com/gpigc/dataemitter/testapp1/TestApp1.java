@@ -1,35 +1,26 @@
 package com.gpigc.dataemitter.testapp1;
 
-import org.hyperic.sigar.*;
-
 public class TestApp1 {
-	public static void main(String[] args) throws SigarException
+	public static void main(String[] args) throws Exception
 	{
-		Sigar sigar = new Sigar();
-        ProcState procState = sigar.getProcState("$$");
+		/*
+		 * USAGE: test.jar PID PATH/TO/MANAGEMENT-AGENT.JAR
+		 */
+		long pid = Long.parseLong(args[0]);
+		Attach att = new Attach(args[1], pid);
 
-        System.out.println(procState.getName() + ": " +
-                           getStateString(procState.getState()));
+        SigarLoadMonitor slm = new SigarLoadMonitor(pid);
+        Thread.sleep(4500);
+        while(true)
+        {
+        	double percent = slm.getLoad();
 
-        sigar.close();
+        	System.out.println("CPU: " + percent + "\n" +
+        			"Mem: " + att.getmem() + "\n");
+        	Thread.sleep(1000);
+        }
+
+        //sigar.close();
 
 	}
-	
-    private static String getStateString(char state) {
-        switch (state) {
-          case ProcState.SLEEP:
-            return "Sleeping";
-          case ProcState.RUN:
-            return "Running";
-          case ProcState.STOP:
-            return "Suspended";
-          case ProcState.ZOMBIE:
-            return "Zombie";
-          case ProcState.IDLE:
-            return "Idle";
-          default:
-            return String.valueOf(state);
-        }
-    }
-
 }
