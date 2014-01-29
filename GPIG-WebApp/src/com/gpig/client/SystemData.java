@@ -104,7 +104,7 @@ public class SystemData {
 	private static void parseSensor(
 			JsonParser parser, 
 			Map<String, String> payload) 
-			throws JsonParseException, IOException {
+					throws JsonParseException, IOException {
 		String sensorID = null;
 		String sensorValue = null;
 		parser.nextToken(); // Returns a start of object token
@@ -144,6 +144,21 @@ public class SystemData {
 
 	public String toJSON(){
 		//TODO TOM
+		/*JsonFactory f = new JsonFactory();
+		JsonGenerator g = f.createJsonGenerator(new File("user.json"));
+		g.writeStartObject();
+		g.writeObjectFieldStart("name");
+		g.writeStringField("first", "Joe");
+		g.writeStringField("last", "Sixpack");
+		g.writeEndObject(); // for field 'name'
+		g.writeStringField("gender", Gender.MALE);
+		g.writeBooleanField("verified", false);
+		g.writeFieldName("userImage"); // no 'writeBinaryField' (yet?)
+		byte[] binaryData = ...;
+		g.writeBinary(binaryData);
+		g.writeEndObject();
+		g.close(); // important: will force flushing of output, close underlying output stream
+		 */
 		return null;
 	}
 
