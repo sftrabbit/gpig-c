@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="testappemitter" name="Create Runnable Jar for Project GPIG with Jar-in-Jar Loader">
-    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
-    <!--ANT 1.7 is required                                        -->
-    <target name="testappemitter">
+    <target name="proto">
+    	<exec executable="protoc">
+    		<arg value="-I=res"/>
+    		<arg value="--java_out=src"/>
+			<arg value="res/systemdata.proto"/>
+    	</exec>
+    </target>
+    <target name="testappemitter" depends="proto">
         <jar destfile="bin/TestAppEmitter.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
