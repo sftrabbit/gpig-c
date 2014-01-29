@@ -1,6 +1,6 @@
-package com.gpigc.dataemitter.testapp1;
+package com.gpigc.dataemitter;
 
-public class TestApp1 {
+public class TestAppEmitter {
 	public static void main(String[] args) throws Exception
 	{
 		/*

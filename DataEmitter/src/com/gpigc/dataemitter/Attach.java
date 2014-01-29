@@ -1,4 +1,4 @@
-package com.gpigc.dataemitter.testapp1;
+package com.gpigc.dataemitter;
 
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;

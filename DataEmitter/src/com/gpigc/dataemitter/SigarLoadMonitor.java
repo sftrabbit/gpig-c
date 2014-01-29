@@ -1,4 +1,4 @@
-package com.gpigc.dataemitter.testapp1;
+package com.gpigc.dataemitter;
 
 import java.util.*;
 
