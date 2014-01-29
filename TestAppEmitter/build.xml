@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="testapp1" name="Create Runnable Jar for Project GPIG with Jar-in-Jar Loader">
+<project default="testappemitter" name="Create Runnable Jar for Project GPIG with Jar-in-Jar Loader">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
-    <target name="testapp1">
-        <jar destfile="bin/test.jar">
+    <target name="testappemitter">
+        <jar destfile="bin/TestAppEmitter.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
                 <attribute name="Rsrc-Main-Class" value="com.gpigc.dataemitter.testapp1.TestApp1"/>
