@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,15 +47,20 @@ public class AppEngineServlet extends HttpServlet {
 			throws IOException {
 
 		SystemData systemData;
-		try {
-			systemData = SystemData.parseJSON(req.getReader());
-		} catch (Exception e) {
-			resp.sendError(
-					HttpServletResponse.SC_BAD_REQUEST, 
-					"Failed to parse JSON: " + e.getMessage());
-			e.printStackTrace();
-			return;
-		}
+//		try {
+//			systemData = SystemData.parseJSON(req.getReader());
+//		} catch (Exception e) {
+//			resp.sendError(
+//					HttpServletResponse.SC_BAD_REQUEST, 
+//					"Failed to parse JSON: " + e.getMessage());
+//			e.printStackTrace();
+//			return;
+//		}
+		HashMap<String, String> payload = new HashMap<>();
+		payload.put("test", "tomIsPoo");
+		systemData = new SystemData("1", new Date(), payload);
+		System.out.println("Payload: " + systemData.getPayload());
+		
 		Key systemKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemData.getSystemID());
 		Date dataBaseTimestamp = new Date();
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
@@ -66,6 +73,7 @@ public class AppEngineServlet extends HttpServlet {
 			entity.setProperty(VALUE_KEY,systemData.getPayload().get(key));
 		}
 		datastoreService.put(entities);
+		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
 	@Override
