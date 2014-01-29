@@ -1,19 +1,20 @@
 package com.gpig.client;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.google.gwt.dev.util.collect.HashMap;
 
 public class SystemData {
 
@@ -66,7 +67,14 @@ public class SystemData {
 		return payload;
 	}
 
-	public static SystemData parseJSON(BufferedReader bufferedReader) 
+	/**
+	 * @param reader A data source for a JSON string
+	 * @return The SystemData object represented by this JSON string
+	 * @throws JsonParseException
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	public static SystemData parseJSON(Reader reader) 
 			throws JsonParseException, IOException, ParseException {
 
 		String systemID = null;
@@ -74,21 +82,22 @@ public class SystemData {
 		Map<String, String> payload = new HashMap<>();
 
 		JsonFactory f = new JsonFactory();
-		JsonParser parser = f.createParser(bufferedReader);
+		JsonParser parser = f.createParser(reader);
 		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
-			parser.nextToken(); // Move to value
-			String jsonValue = parser.getCurrentName();
 			switch (jsonKey) {
 			case SYSTEM_ID_KEY:
-				systemID = jsonValue;
+				parser.nextToken(); // Move to value
+				systemID = parser.getText();
 				break;
 			case CREATION_TIMESTAMP_KEY:
-				timeStamp = dateFormat.parse(jsonValue);
+				parser.nextToken(); // Move to value
+				timeStamp = dateFormat.parse(parser.getText());
 				break;
 			case SENSORS_KEY:
-				while (parser.nextToken() != JsonToken.END_ARRAY) {
+				parser.nextToken(); // Start array
+				while (parser.nextToken() == JsonToken.START_OBJECT) { // Start object
 					parseSensor(parser, payload);
 				}
 				break;
@@ -101,17 +110,24 @@ public class SystemData {
 		return new SystemData(systemID, timeStamp, payload);
 	}
 
+	/**
+	 * Parses each sensor from SystemData JSON
+	 * 
+	 * @param parser The parser being used
+	 * @param payload The partially read payload
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
 	private static void parseSensor(
 			JsonParser parser, 
 			Map<String, String> payload) 
-			throws JsonParseException, IOException {
+					throws JsonParseException, IOException {
 		String sensorID = null;
 		String sensorValue = null;
-		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
 			parser.nextToken(); // Move to value
-			String jsonValue = parser.getCurrentName();
+			String jsonValue = parser.getText();
 			switch (jsonKey) {
 			case SENSOR_ID_KEY:
 				// We shouldn't have already seen a sensor ID
@@ -142,9 +158,31 @@ public class SystemData {
 		}
 	}
 
-	public String toJSON(){
-		//TODO TOM
-		return null;
+	/**
+	 * @return A JSON representation of this SystemData object
+	 * @throws IOException
+	 */
+	public String toJSON() throws IOException{
+		StringWriter writer = new StringWriter();
+		JsonFactory factory = new JsonFactory();
+		JsonGenerator gen = factory.createGenerator(writer);
+		gen.writeStartObject();
+		gen.writeStringField(SYSTEM_ID_KEY, this.systemID);
+		gen.writeStringField(
+				CREATION_TIMESTAMP_KEY, 
+				dateFormat.format(this.timeStamp));
+		gen.writeArrayFieldStart(SENSORS_KEY);
+		for (String key : this.payload.keySet()) {
+			String value = payload.get(key);
+			gen.writeStartObject();
+			gen.writeStringField(SENSOR_ID_KEY, key);
+			gen.writeStringField(SENSOR_VALUE_KEY, value);
+			gen.writeEndObject();
+		}
+		gen.writeEndArray();
+		gen.writeEndObject();
+		gen.close();
+		return writer.toString();
 	}
 
 }

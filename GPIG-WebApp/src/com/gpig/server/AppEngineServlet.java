@@ -1,15 +1,12 @@
 package com.gpig.server;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +46,21 @@ public class AppEngineServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-		SystemData systemData = SystemData.parseJSON(req.getReader());
+		SystemData systemData;
+//		try {
+//			systemData = SystemData.parseJSON(req.getReader());
+//		} catch (Exception e) {
+//			resp.sendError(
+//					HttpServletResponse.SC_BAD_REQUEST, 
+//					"Failed to parse JSON: " + e.getMessage());
+//			e.printStackTrace();
+//			return;
+//		}
+		HashMap<String, String> payload = new HashMap<>();
+		payload.put("test", "tomIsPoo");
+		systemData = new SystemData("1", new Date(), payload);
+		System.out.println("Payload: " + systemData.getPayload());
+		
 		Key systemKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemData.getSystemID());
 		Date dataBaseTimestamp = new Date();
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
@@ -62,6 +73,7 @@ public class AppEngineServlet extends HttpServlet {
 			entity.setProperty(VALUE_KEY,systemData.getPayload().get(key));
 		}
 		datastoreService.put(entities);
+		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
 	@Override
@@ -69,30 +81,33 @@ public class AppEngineServlet extends HttpServlet {
 			HttpServletResponse resp) throws ServletException,
 			java.io.IOException{
 		String systemID = req.getParameter(SYSTEM_ID_KEY);
-
+		if(systemID != null){
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 		//Want data for whole system
 		Key systemIDKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemID);
 		Query query = getQueryWithRequest(req, systemIDKey);
-		List<Entity> result;
+		List<Entity> results;
 		if(req.getParameter(NUM_RECORDS_KEY) != null){
-			result = queryWithNumRecords(Integer.parseInt(
+			results = queryWithNumRecords(Integer.parseInt(
 					req.getParameter(NUM_RECORDS_KEY)), query, datastoreService);
 		}else if(req.getParameter(START_TIME_KEY) != null && 
 				req.getParameter(END_TIME_KEY) !=null){
-			result = queryWithLimits(req.getParameter(START_TIME_KEY),
+			results = queryWithLimits(req.getParameter(START_TIME_KEY),
 					req.getParameter(END_TIME_KEY), query, datastoreService);
 		}else{
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		writeResponse(resp, result);
+		writeResponse(systemID, resp, results);
+		}else{
+			resp.getWriter().println("No System");
+		}
 	}
 
-	private void writeResponse(HttpServletResponse resp, List<Entity> result) {
-
-		
-		
+	private void writeResponse(String systemID, HttpServletResponse resp, List<Entity> results) throws IOException {
+		for(Entity result: results){
+			resp.getWriter().println(result);
+		}
 	}
 
 	private List<Entity> queryWithLimits(String startDate, String endDate,
