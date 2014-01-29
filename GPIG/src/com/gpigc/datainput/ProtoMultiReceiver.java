@@ -24,6 +24,8 @@ public class ProtoMultiReceiver extends Thread {
     		try
     		{
     			SystemData data = SystemData.parseDelimitedFrom(sock.getInputStream());
+    			if(data == null)
+    				break;
     			queue.add(data);
     		}
     		catch (IOException e)
