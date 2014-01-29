@@ -12,5 +12,5 @@ message SystemData {
     required string value = 2;
   }
 
-  repeated Datum data = 3;
+  repeated Datum datum = 3;
 }
