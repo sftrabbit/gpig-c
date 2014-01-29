@@ -1,5 +1,7 @@
 package com.gpigc.dataemitter;
 
+import com.gpigc.dataemitter.proto.Protos.SystemData;
+
 public class TestAppEmitter {
 	public static void main(String[] args) throws Exception
 	{
@@ -14,9 +16,20 @@ public class TestAppEmitter {
         while(true)
         {
         	double percent = slm.getLoad();
-
-        	System.out.println("CPU: " + percent + "\n" +
-        			"Mem: " + att.getmem() + "\n");
+        	
+        	SystemData data = SystemData.newBuilder()
+        		.setSystemId("1")
+        		.setTimestamp(0)
+        		.addDatum(SystemData.Datum.newBuilder()
+        			.setKey("CPU")
+        			.setValue(String.valueOf(percent)))
+        		.addDatum(SystemData.Datum.newBuilder()
+        			.setKey("Mem")
+        			.setValue(String.valueOf(att.getmem())))
+        		.build();
+        	
+        	System.out.println(data.toString());
+        	
         	Thread.sleep(1000);
         }
 
