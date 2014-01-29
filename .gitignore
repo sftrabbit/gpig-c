@@ -4,6 +4,6 @@ GPIG-WebApp/.settings/com.google.appengine.eclipse.core.prefs
 
 *.prefs
 
-GPIG-WebApp/test/.DS_Store
+*.DS_Store
 
 GPIG-WebApp/.settings/org.eclipse.wst.common.project.facet.core.xml
