@@ -73,7 +73,7 @@ public class AppEngineServlet extends HttpServlet {
 			HttpServletResponse resp) throws ServletException,
 			java.io.IOException{
 		String systemID = req.getParameter(SYSTEM_ID_KEY);
-
+		if(systemID != null){
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 		//Want data for whole system
 		Key systemIDKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemID);
@@ -91,6 +91,9 @@ public class AppEngineServlet extends HttpServlet {
 			return;
 		}
 		writeResponse(systemID, resp, results);
+		}else{
+			resp.getWriter().println("No System");
+		}
 	}
 
 	private void writeResponse(String systemID, HttpServletResponse resp, List<Entity> results) throws IOException {

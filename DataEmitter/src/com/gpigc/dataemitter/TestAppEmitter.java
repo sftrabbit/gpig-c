@@ -1,6 +1,6 @@
 package com.gpigc.dataemitter;
 
-import com.gpigc.dataemitter.proto.Protos.SystemData;
+import com.gpigc.proto.Protos.SystemData;
 
 public class TestAppEmitter {
 	public static void main(String[] args) throws Exception
@@ -11,7 +11,7 @@ public class TestAppEmitter {
 		long pid = Long.parseLong(args[0]);
 		Attach att = new Attach(args[1], pid);
 		
-		ProtoSender<SystemData> sender = new ProtoSender<SystemData>();
+		ProtoSender sender = new ProtoSender();
 
         SigarLoadMonitor slm = new SigarLoadMonitor(pid);
         Thread.sleep(4500);

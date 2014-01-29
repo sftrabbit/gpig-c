@@ -1,6 +1,6 @@
 package tutorial;
 
-option java_package = "com.gpigc.dataemitter.proto";
+option java_package = "com.gpigc.proto";
 option java_outer_classname = "Protos";
 
 message SystemData {

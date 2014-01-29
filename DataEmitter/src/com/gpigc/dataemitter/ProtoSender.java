@@ -2,9 +2,9 @@ package com.gpigc.dataemitter;
 
 import java.io.*;
 import java.net.*;
-import com.google.protobuf.*;
+import com.gpigc.proto.Protos.*;
 
-public class ProtoSender<T extends GeneratedMessage> {
+public class ProtoSender {
 	/* Hostname and port number for the default server.
 	 * Should these be parameters?
 	 * To test this, use `netcat -l GPIG_PORT` */
@@ -32,7 +32,7 @@ public class ProtoSender<T extends GeneratedMessage> {
 	}
 	
 	/* Send the message through the socket */
-	public void send(T msg) throws IOException
+	public void send(SystemData msg) throws IOException
 	{
 		msg.writeDelimitedTo(os);
 		os.flush();
