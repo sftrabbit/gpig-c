@@ -42,12 +42,12 @@ public class MeanAnalysis extends AnalysisEngine {
 		return new Result(result, true);
 	}
 	
-	private double processPayload(Map<String, Integer> payload) {
+	private double processPayload(Map<String, String> payload) {
 		Iterator<String> iterator = payload.keySet().iterator();
 		int total = 0;
 		
 		while(iterator.hasNext()) {
-			total = total + payload.get(iterator.next());
+			total = total + Integer.parseInt(payload.get(iterator.next()));
 		}
 		
 		return total / (double) payload.size();

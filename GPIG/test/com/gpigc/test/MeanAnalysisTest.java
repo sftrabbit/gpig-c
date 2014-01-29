@@ -3,7 +3,6 @@ package com.gpigc.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -74,11 +73,11 @@ public class MeanAnalysisTest {
 	
 	private List<SystemData> createSystemData(int systemData) {
 		List<SystemData> systemDatas = new ArrayList<SystemData>();
-		Map<String, Integer> payload = new HashMap<String, Integer>();	
+		Map<String, String> payload = new HashMap<String, String>();	
 		for(Integer i = 1; i < (systemData + 1); i ++) {
-			payload.put(i.toString(), i);		
+			payload.put(i.toString(), i.toString());		
 		}
-		systemDatas.add(new SystemData(payload, new Date(), "1234"));
+		systemDatas.add(new SystemData("1234", System.nanoTime(), payload));
 		
 		return systemDatas;
 	}
