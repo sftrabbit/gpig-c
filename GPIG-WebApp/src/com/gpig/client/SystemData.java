@@ -69,6 +69,13 @@ public class SystemData {
 		return payload;
 	}
 
+	/**
+	 * @param reader A data source for a JSON string
+	 * @return The SystemData object represented by this JSON string
+	 * @throws JsonParseException
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public static SystemData parseJSON(Reader reader) 
 			throws JsonParseException, IOException, ParseException {
 
@@ -105,6 +112,14 @@ public class SystemData {
 		return new SystemData(systemID, timeStamp, payload);
 	}
 
+	/**
+	 * Parses each sensor from SystemData JSON
+	 * 
+	 * @param parser The parser being used
+	 * @param payload The partially read payload
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
 	private static void parseSensor(
 			JsonParser parser, 
 			Map<String, String> payload) 
@@ -145,6 +160,10 @@ public class SystemData {
 		}
 	}
 
+	/**
+	 * @return A JSON representation of this SystemData object
+	 * @throws IOException
+	 */
 	public String toJSON() throws IOException{
 		StringWriter writer = new StringWriter();
 		JsonFactory factory = new JsonFactory();
