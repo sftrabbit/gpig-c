@@ -1,6 +1,6 @@
 */bin/*
 *.DS_STORE
+*.DS_Store
 *.prefs
 
 GPIG-WebApp/.settings/com.google.appengine.eclipse.core.prefs
-GPIG-WebApp/.settings/org.eclipse.wst.common.project.facet.core.xml
