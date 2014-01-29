@@ -30,8 +30,6 @@ public class Attach {
             if(virtualMachineDescriptor.id().equals(pid))
             	descriptor = virtualMachineDescriptor;
         }
-        
-        System.out.println(descriptor == null);
 
         VirtualMachine virtualMachine = attachProvider.attachVirtualMachine(descriptor);
         virtualMachine.loadAgent(agent, "com.sun.management.jmxremote");
