@@ -59,7 +59,7 @@ public class AnalysisController {
 //            	throw new RuntimeException(t);
 //            }
 //        }
-		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/analysis/engines");
+		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engines");
 		File[] listOfFiles = folder.listFiles();
 		for(int i = 0; i < listOfFiles.length; i++) {
 			Constructor<?> engCon = Class.forName("com.gpigc.core.analysis.engines." + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'))).getConstructor(SystemDataGateway.class);
