@@ -3,6 +3,7 @@ package com.gpig.client;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -66,7 +67,7 @@ public class SystemData {
 		return payload;
 	}
 
-	public static SystemData parseJSON(BufferedReader bufferedReader) 
+	public static SystemData parseJSON(Reader reader) 
 			throws JsonParseException, IOException, ParseException {
 
 		String systemID = null;
@@ -74,7 +75,7 @@ public class SystemData {
 		Map<String, String> payload = new HashMap<>();
 
 		JsonFactory f = new JsonFactory();
-		JsonParser parser = f.createParser(bufferedReader);
+		JsonParser parser = f.createParser(reader);
 		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();

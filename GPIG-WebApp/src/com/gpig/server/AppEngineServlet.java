@@ -1,16 +1,11 @@
 package com.gpig.server;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +44,16 @@ public class AppEngineServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-		SystemData systemData = SystemData.parseJSON(req.getReader());
+		SystemData systemData;
+		try {
+			systemData = SystemData.parseJSON(req.getReader());
+		} catch (Exception e) {
+			resp.sendError(
+					HttpServletResponse.SC_BAD_REQUEST, 
+					"Failed to parse JSON: " + e.getMessage());
+			e.printStackTrace();
+			return;
+		}
 		Key systemKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemData.getSystemID());
 		Date dataBaseTimestamp = new Date();
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
