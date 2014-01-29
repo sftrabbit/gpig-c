@@ -1,5 +1,5 @@
 */bin/*
-
+*.DS_STORE
 GPIG-WebApp/.settings/com.google.appengine.eclipse.core.prefs
 
 *.prefs
