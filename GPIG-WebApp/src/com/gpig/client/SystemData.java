@@ -91,7 +91,7 @@ public class SystemData {
 				timeStamp = dateFormat.parse(parser.getText());
 				break;
 			case SENSORS_KEY:
-				System.out.println("Start array: " + parser.nextToken()); // Start array
+				parser.nextToken(); // Start array
 				while (parser.nextToken() == JsonToken.START_OBJECT) { // Start object
 					parseSensor(parser, payload);
 				}
@@ -113,10 +113,8 @@ public class SystemData {
 		String sensorValue = null;
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
-			System.out.println("Key: " + jsonKey);
 			parser.nextToken(); // Move to value
 			String jsonValue = parser.getText();
-			System.out.println("Value: " + jsonValue);
 			switch (jsonKey) {
 			case SENSOR_ID_KEY:
 				// We shouldn't have already seen a sensor ID
