@@ -1,0 +1,16 @@
+package tutorial;
+
+option java_package = "com.gpigc.dataemitter.proto";
+option java_outer_classname = "Protos";
+
+message SystemData {
+  required string systemId = 1;
+  required long timestamp = 2;
+
+  message Datum {
+    required string key = 1;
+    required string value = 2;
+  }
+
+  repeated Datum data = 3;
+}
