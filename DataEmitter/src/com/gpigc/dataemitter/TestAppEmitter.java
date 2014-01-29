@@ -19,7 +19,7 @@ public class TestAppEmitter {
         	
         	SystemData data = SystemData.newBuilder()
         		.setSystemId("1")
-        		.setTimestamp(0)
+        		.setTimestamp(System.nanoTime())
         		.addDatum(SystemData.Datum.newBuilder()
         			.setKey("CPU")
         			.setValue(String.valueOf(percent)))
