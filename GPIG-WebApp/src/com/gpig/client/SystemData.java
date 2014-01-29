@@ -1,7 +1,11 @@
 package com.gpig.client;
 
+import java.io.BufferedReader;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 public class SystemData {
 
@@ -26,4 +30,10 @@ public class SystemData {
 	public Map<String, ? extends Object> getPayload() {
 		return payload;
 	}
+	
+	public static SystemData parseJSON(BufferedReader bufferedReader){
+		//TODO TOM
+		return null;
+	}
+	
 }
