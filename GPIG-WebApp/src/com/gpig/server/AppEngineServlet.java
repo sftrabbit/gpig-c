@@ -28,7 +28,9 @@ import com.gpig.client.SystemData;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class AppEngineServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -5913676594563624612L;
+
 	private static final String SYSTEM_ID_KEY = "SystemID";
 	private static final String SENSOR_ID_KEY = "SensorID";
 	private static final String CREATION_TIMESTAMP_KEY = "CreationTimestamp";
@@ -47,20 +49,20 @@ public class AppEngineServlet extends HttpServlet {
 			throws IOException {
 
 		SystemData systemData;
-//		try {
-//			systemData = SystemData.parseJSON(req.getReader());
-//		} catch (Exception e) {
-//			resp.sendError(
-//					HttpServletResponse.SC_BAD_REQUEST, 
-//					"Failed to parse JSON: " + e.getMessage());
-//			e.printStackTrace();
-//			return;
-//		}
+		//		try {
+		//			systemData = SystemData.parseJSON(req.getReader());
+		//		} catch (Exception e) {
+		//			resp.sendError(
+		//					HttpServletResponse.SC_BAD_REQUEST, 
+		//					"Failed to parse JSON: " + e.getMessage());
+		//			e.printStackTrace();
+		//			return;
+		//		}
 		HashMap<String, String> payload = new HashMap<>();
 		payload.put("test", "tomIsPoo");
 		systemData = new SystemData("1", new Date(), payload);
 		System.out.println("Payload: " + systemData.getPayload());
-		
+
 		Key systemKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemData.getSystemID());
 		Date dataBaseTimestamp = new Date();
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
@@ -82,23 +84,23 @@ public class AppEngineServlet extends HttpServlet {
 			java.io.IOException{
 		String systemID = req.getParameter(SYSTEM_ID_KEY);
 		if(systemID != null){
-		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-		//Want data for whole system
-		Key systemIDKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemID);
-		Query query = getQueryWithRequest(req, systemIDKey);
-		List<Entity> results;
-		if(req.getParameter(NUM_RECORDS_KEY) != null){
-			results = queryWithNumRecords(Integer.parseInt(
-					req.getParameter(NUM_RECORDS_KEY)), query, datastoreService);
-		}else if(req.getParameter(START_TIME_KEY) != null && 
-				req.getParameter(END_TIME_KEY) !=null){
-			results = queryWithLimits(req.getParameter(START_TIME_KEY),
-					req.getParameter(END_TIME_KEY), query, datastoreService);
-		}else{
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return;
-		}
-		writeResponse(systemID, resp, results);
+			DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+			//Want data for whole system
+			Key systemIDKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemID);
+			Query query = getQueryWithRequest(req, systemIDKey);
+			List<Entity> results;
+			if(req.getParameter(NUM_RECORDS_KEY) != null){
+				results = queryWithNumRecords(Integer.parseInt(
+						req.getParameter(NUM_RECORDS_KEY)), query, datastoreService);
+			}else if(req.getParameter(START_TIME_KEY) != null && 
+					req.getParameter(END_TIME_KEY) !=null){
+				results = queryWithLimits(req.getParameter(START_TIME_KEY),
+						req.getParameter(END_TIME_KEY), query, datastoreService);
+			}else{
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				return;
+			}
+			writeResponse(systemID, resp, results);
 		}else{
 			resp.getWriter().println("No System");
 		}

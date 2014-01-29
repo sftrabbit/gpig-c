@@ -24,7 +24,7 @@ public class SystemData {
 	private static final String SENSOR_ID_KEY = "SensorID";
 	private static final String SENSOR_VALUE_KEY = "SensorValue";
 
-	private static final SimpleDateFormat dateFormat = 
+	public static final SimpleDateFormat dateFormat = 
 			new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
 	private final String systemID;
