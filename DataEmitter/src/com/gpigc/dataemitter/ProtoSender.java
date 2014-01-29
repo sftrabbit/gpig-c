@@ -2,7 +2,7 @@ package com.gpigc.dataemitter;
 
 import java.io.*;
 import java.net.*;
-import com.gpigc.dataemitter.proto.Protos.SystemData;
+import com.gpigc.proto.Protos.*;
 
 public class ProtoSender {
 	/* Hostname and port number for the default server.

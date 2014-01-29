@@ -1,6 +1,6 @@
 package com.gpigc.dataemitter;
 
-import com.gpigc.dataemitter.proto.Protos.SystemData;
+import com.gpigc.proto.Protos.SystemData;
 
 public class TestAppEmitter {
 	public static void main(String[] args) throws Exception
