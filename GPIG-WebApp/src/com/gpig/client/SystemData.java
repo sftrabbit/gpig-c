@@ -182,7 +182,6 @@ public class SystemData {
 		gen.writeEndArray();
 		gen.writeEndObject();
 		gen.close();
-		System.out.println(writer.toString());
 		return writer.toString();
 	}
 
