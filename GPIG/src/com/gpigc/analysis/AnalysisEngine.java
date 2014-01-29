@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.gpigc.database.SystemDataGateway;
 
-abstract class AnalysisEngine {
+public abstract class AnalysisEngine {
 	
 	protected List<String> associatedSystems;
 	

@@ -15,14 +15,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.gpigc.analysis.MeanAnalysis;
+import com.gpigc.analysis.engines.MeanAnalysis;
 import com.gpigc.analysis.Result;
 import com.gpigc.database.SystemData;
 import com.gpigc.database.SystemDataGateway;
 
 public class MeanAnalysisTest {
 	
-	private String[] associatedIDs;
 	private MeanAnalysis maTest;
 	private Result result;
 	
@@ -40,6 +39,7 @@ public class MeanAnalysisTest {
 		andSensorValues(3);
 		whenTheMeanOfTheTenValuesAreCalculated();
 		thenTheMeanIsCalulcatedAs(2.0);
+		
 	}
 	
 	@Test
@@ -51,12 +51,11 @@ public class MeanAnalysisTest {
 	}
 
 	private void givenOneSystem() {
-		associatedIDs = new String[] {"1"};
+		maTest = new MeanAnalysis(database);
 	}
 	
 	private void andSensorValues(int numberOfRecords) {
 		Mockito.when(database.readSystemData("1", 10)).thenReturn(createSystemData(numberOfRecords));
-		maTest = new MeanAnalysis(associatedIDs, database);
 	}
 
 	private void whenTheMeanOfTheTenValuesAreCalculated() {

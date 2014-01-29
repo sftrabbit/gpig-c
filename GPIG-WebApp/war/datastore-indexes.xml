@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<datastore-indexes>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="DataEntity" ancestor="true" source="auto">
+        <property name="CreationTimestamp" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>

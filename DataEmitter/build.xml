@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="testappemitter" name="Create Runnable Jar for Project GPIG with Jar-in-Jar Loader">
+    <target name="testappemitter">
+        <jar destfile="bin/TestAppEmitter.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="com.gpigc.dataemitter.TestAppEmitter"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ sigar.jar tools.jar management-agent.jar protobuf.jar proto.jar"/>
+            </manifest>
+            <zipfileset src="lib/jar-in-jar-loader.zip"/>
+            <zipfileset dir="lib" includes="sigar.jar"/>
+            <zipfileset dir="lib" includes="tools.jar"/>
+            <zipfileset dir="lib" includes="management-agent.jar"/>
+            <zipfileset dir="lib" includes="protobuf.jar"/>
+            <zipfileset dir="lib" includes="proto.jar"/>
+            <zipfileset dir="lib" includes="libsigar-amd64-linux.so"/>
+        </jar>
+    </target>
+</project>
