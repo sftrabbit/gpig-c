@@ -8,11 +8,14 @@ import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 
 /**
  * An implementation of SystemDataGateway that uses a Google App Engine 
@@ -67,14 +70,21 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet(dbServletUri);
-
-		//get.setParams(params);
+		HttpParams params = new BasicHttpParams();
 		
+		// TODO Set params
+		//params.setParameter(arg0, arg1)
+
+		get.setParams(params);
+		
+		HttpResponse response;
 		try {
-			client.execute(get);
+			response = client.execute(get);
 		} catch (IOException e) {
 			throw new FailedToWriteToDatastoreException(e.getMessage());
 		}
+		
+		// TODO Parse response
 	}
 
 }
