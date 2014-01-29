@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -143,24 +145,25 @@ public class SystemData {
 		}
 	}
 
-	public String toJSON(){
-		//TODO TOM
-		/*JsonFactory f = new JsonFactory();
-		JsonGenerator g = f.createJsonGenerator(new File("user.json"));
-		g.writeStartObject();
-		g.writeObjectFieldStart("name");
-		g.writeStringField("first", "Joe");
-		g.writeStringField("last", "Sixpack");
-		g.writeEndObject(); // for field 'name'
-		g.writeStringField("gender", Gender.MALE);
-		g.writeBooleanField("verified", false);
-		g.writeFieldName("userImage"); // no 'writeBinaryField' (yet?)
-		byte[] binaryData = ...;
-		g.writeBinary(binaryData);
-		g.writeEndObject();
-		g.close(); // important: will force flushing of output, close underlying output stream
-		 */
-		return null;
+	public String toJSON() throws IOException{
+		StringWriter writer = new StringWriter();
+		JsonFactory factory = new JsonFactory();
+		JsonGenerator gen = factory.createGenerator(writer);
+		gen.writeStartObject();
+		gen.writeStringField(SYSTEM_ID_KEY, this.systemID);
+		gen.writeStringField(
+				CREATION_TIMESTAMP_KEY, 
+				dateFormat.format(this.timeStamp));
+		gen.writeArrayFieldStart(SENSORS_KEY);
+		for (String key : this.payload.keySet()) {
+			String value = payload.get(key);
+			gen.writeStringField(SENSOR_ID_KEY, key);
+			gen.writeStringField(SENSOR_VALUE_KEY, value);
+		}
+		gen.writeEndArray();
+		gen.writeEndObject();
+		gen.close();
+		return writer.toString();
 	}
 
 }
