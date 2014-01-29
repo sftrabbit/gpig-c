@@ -157,8 +157,10 @@ public class SystemData {
 		gen.writeArrayFieldStart(SENSORS_KEY);
 		for (String key : this.payload.keySet()) {
 			String value = payload.get(key);
+			gen.writeStartObject();
 			gen.writeStringField(SENSOR_ID_KEY, key);
 			gen.writeStringField(SENSOR_VALUE_KEY, value);
+			gen.writeEndObject();
 		}
 		gen.writeEndArray();
 		gen.writeEndObject();

@@ -51,14 +51,6 @@ public class SystemDataTest {
 	}
 
 	/**
-	 * Test method for {@link com.gpig.client.SystemData#SystemData(java.lang.String, java.util.Date, java.util.Map)}.
-	 */
-	@Test
-	public void testSystemData() {
-		fail("Not yet implemented");
-	}
-
-	/**
 	 * Test going to JSON and back
 	 * @throws ParseException 
 	 * @throws IOException 
