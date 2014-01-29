@@ -3,8 +3,13 @@
  */
 package com.gpig.client;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * An implementation of SystemDataGateway that uses a Google App Engine 
@@ -13,12 +18,25 @@ import java.util.List;
  * @author Tom Davies
  */
 public class GWTSystemDataGateway implements SystemDataGateway {
+	
+	private URI dbServletUri;
+
+	/**
+	 * @param dbServletUri The location of the servlet that handles the database
+	 */
+	public GWTSystemDataGateway(URI dbServletUri) {
+		this.dbServletUri = dbServletUri;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.gpig.client.SystemDataGateway#readMostRecent(java.lang.String, int)
 	 */
 	@Override
 	public List<SystemData> readMostRecent(String systemID, int numRecords) {
+		
+//		HttpClient client = new DefaultHttpClient();
+//		HttpPost post = new HttpPost();
+		
 		// TODO Auto-generated method stub
 		return null;
 	}
