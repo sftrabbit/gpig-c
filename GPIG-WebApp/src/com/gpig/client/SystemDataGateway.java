@@ -33,7 +33,9 @@ public interface SystemDataGateway {
 	 * Writes the given data to the datastore
 	 * 
 	 * @param data The data to be written
+	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
+	 * database
 	 */
-	public void write(SystemData data);
+	public void write(SystemData data) throws FailedToWriteToDatastoreException;
 
 }

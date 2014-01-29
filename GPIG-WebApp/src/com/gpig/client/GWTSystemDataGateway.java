@@ -3,11 +3,14 @@
  */
 package com.gpig.client;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -37,8 +40,8 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	@Override
 	public List<SystemData> readMostRecent(String systemID, int numRecords) {
 		
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(dbServletUri);
+//		HttpClient client = new DefaultHttpClient();
+//		HttpPost post = new HttpPost(dbServletUri);
 		
 		
 		
@@ -59,9 +62,19 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 * @see com.gpig.client.SystemDataGateway#write(com.gpig.client.SystemData)
 	 */
 	@Override
-	public void write(SystemData data) {
-		// TODO Auto-generated method stub
+	public void write(SystemData data) 
+			throws FailedToWriteToDatastoreException  {
+		
+		HttpClient client = new DefaultHttpClient();
+		HttpGet get = new HttpGet(dbServletUri);
 
+		//get.setParams(params);
+		
+		try {
+			client.execute(get);
+		} catch (IOException e) {
+			throw new FailedToWriteToDatastoreException(e.getMessage());
+		}
 	}
 
 }
