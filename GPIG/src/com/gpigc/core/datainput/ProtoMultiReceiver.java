@@ -1,4 +1,4 @@
-package com.gpigc.datainput;
+package com.gpigc.core.datainput;
 
 import java.net.*;
 import java.util.concurrent.*;

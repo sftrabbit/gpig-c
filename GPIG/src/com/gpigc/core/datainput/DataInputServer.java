@@ -1,12 +1,12 @@
-package com.gpigc.datainput;
+package com.gpigc.core.datainput;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.gpigc.analysis.AnalysisController;
-import com.gpigc.database.SystemData;
+import com.gpigc.core.analysis.AnalysisController;
+import com.gpigc.core.database.SystemData;
 import com.gpigc.proto.Protos;
 
 public class DataInputServer extends Thread {

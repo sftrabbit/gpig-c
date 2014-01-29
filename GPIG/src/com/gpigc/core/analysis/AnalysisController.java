@@ -1,4 +1,4 @@
-package com.gpigc.analysis;
+package com.gpigc.core.analysis;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //import com.gpigc.database.SystemData;
-import com.gpigc.database.SystemDataGateway;
+import com.gpigc.core.database.SystemDataGateway;
 
 public class AnalysisController {
 
@@ -62,7 +62,7 @@ public class AnalysisController {
 		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/analysis/engines");
 		File[] listOfFiles = folder.listFiles();
 		for(int i = 0; i < listOfFiles.length; i++) {
-			Constructor<?> engCon = Class.forName("com.gpigc.analysis.engines." + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'))).getConstructor(SystemDataGateway.class);
+			Constructor<?> engCon = Class.forName("com.gpigc.core.analysis.engines." + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'))).getConstructor(SystemDataGateway.class);
 			AnalysisEngine engine = (AnalysisEngine) engCon.newInstance(database);
 			engines.add(engine);
 		}

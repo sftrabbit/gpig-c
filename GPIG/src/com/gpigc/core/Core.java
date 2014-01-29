@@ -1,10 +1,10 @@
-package com.gpigc;
+package com.gpigc.core;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import com.gpigc.analysis.AnalysisController;
-import com.gpigc.datainput.DataInputServer;
+import com.gpigc.core.analysis.AnalysisController;
+import com.gpigc.core.datainput.DataInputServer;
 
 public class Core {
 	public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException

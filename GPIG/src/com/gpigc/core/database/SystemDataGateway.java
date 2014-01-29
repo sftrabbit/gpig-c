@@ -1,4 +1,4 @@
-package com.gpigc.database;
+package com.gpigc.core.database;
 
 import java.util.List;
 import java.util.Date;
