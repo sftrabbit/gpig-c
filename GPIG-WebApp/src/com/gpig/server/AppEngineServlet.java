@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,7 @@ public class AppEngineServlet extends HttpServlet {
 	public static final SimpleDateFormat dateFormat = 
 			new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		
@@ -47,4 +49,20 @@ public class AppEngineServlet extends HttpServlet {
 		}
 		datastoreService.put(entities);
 	}
+	
+	@Override
+	protected void doGet(HttpServletRequest req,
+            HttpServletResponse resp) throws ServletException,
+            java.io.IOException{
+		String systemID = req.getParameter(SYSTEM_ID_KEY);
+		String sensorID = req.getParameter(SENSOR_ID_KEY);
+		
+		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+		//Want data for whole system
+		if(sensorID == null){
+			
+		}
+	}
+	
+	
 }

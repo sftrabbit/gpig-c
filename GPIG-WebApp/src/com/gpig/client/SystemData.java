@@ -5,8 +5,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 public class SystemData {
 
 	private final String systemID;
@@ -32,6 +30,11 @@ public class SystemData {
 	}
 	
 	public static SystemData parseJSON(BufferedReader bufferedReader){
+		//TODO TOM
+		return null;
+	}
+	
+	public String toJSON(){
 		//TODO TOM
 		return null;
 	}
