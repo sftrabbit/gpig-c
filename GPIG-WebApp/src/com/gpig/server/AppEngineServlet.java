@@ -65,7 +65,6 @@ public class AppEngineServlet extends HttpServlet {
 			entity.setProperty(DB_TIMESTAMP_KEY,dataBaseTimestamp);
 			entity.setProperty(VALUE_KEY,systemData.getPayload().get(key));
 			entities.add(entity);
-			resp.getWriter().println(entity);
 		}
 		resp.getWriter().println(entities);
 		datastoreService.put(entities);
@@ -95,6 +94,7 @@ public class AppEngineServlet extends HttpServlet {
 			return;
 		}
 		writeResponse(systemID, resp, results);
+		resp.setStatus(HttpServletResponse.SC_OK);
 		}else{
 			resp.getWriter().println("No System");
 		}
@@ -102,7 +102,12 @@ public class AppEngineServlet extends HttpServlet {
 
 	private void writeResponse(String systemID, HttpServletResponse resp, List<Entity> results) throws IOException {
 		for(Entity result: results){
-			resp.getWriter().println(result);
+			resp.getWriter().println(systemID);
+			String sensorID = result.getKey().getParent().getName();
+			resp.getWriter().println(sensorID+"," +
+					result.getProperty(CREATION_TIMESTAMP_KEY) +"," 
+					+ result.getProperty(DB_TIMESTAMP_KEY) + "," +
+			result.getProperty(VALUE_KEY));
 		}
 	}
 
