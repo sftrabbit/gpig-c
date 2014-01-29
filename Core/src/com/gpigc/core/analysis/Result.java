@@ -1,4 +1,4 @@
-package com.gpigc.analysis;
+package com.gpigc.core.analysis;
 
 import java.util.Map;
 

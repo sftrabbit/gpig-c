@@ -1,4 +1,4 @@
-package com.gpigc.analysis.engines;
+package com.gpigc.core.analysis.engines;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.gpigc.analysis.AnalysisEngine;
-import com.gpigc.analysis.Result;
-import com.gpigc.database.SystemData;
-import com.gpigc.database.SystemDataGateway;
+import com.gpigc.core.analysis.AnalysisEngine;
+import com.gpigc.core.analysis.Result;
+import com.gpigc.core.database.SystemData;
+import com.gpigc.core.database.SystemDataGateway;
 
 public class MeanAnalysis extends AnalysisEngine {
 

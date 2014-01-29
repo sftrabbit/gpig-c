@@ -1,8 +1,8 @@
-package com.gpigc.analysis;
+package com.gpigc.core.analysis;
 
 import java.util.List;
 
-import com.gpigc.database.SystemDataGateway;
+import com.gpigc.core.database.SystemDataGateway;
 
 public abstract class AnalysisEngine {
 	

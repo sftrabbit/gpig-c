@@ -14,10 +14,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.gpigc.analysis.engines.MeanAnalysis;
-import com.gpigc.analysis.Result;
-import com.gpigc.database.SystemData;
-import com.gpigc.database.SystemDataGateway;
+import com.gpigc.core.analysis.Result;
+import com.gpigc.core.analysis.engines.MeanAnalysis;
+import com.gpigc.core.database.SystemData;
+import com.gpigc.core.database.SystemDataGateway;
 
 public class MeanAnalysisTest {
 	
