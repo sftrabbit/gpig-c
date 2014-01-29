@@ -1,17 +1,17 @@
 package com.gpigc.analysis;
 
-import java.util.List;
+import java.util.Map;
 
 public class Result {
-	private List<Object> dataToSave;
+	private Map<? , ?> dataToSave;
 	private boolean notify;
 	
-	public Result(List<Object> dataToSave, boolean notify) {
+	public Result(Map<? , ?> dataToSave, boolean notify) {
 		this.dataToSave = dataToSave;
 		this.notify = notify;
 	}
 	
-	public List<Object> getDataToSave() {
+	public Map<? , ?> getDataToSave() {
 		return dataToSave;
 	}
 
@@ -19,7 +19,7 @@ public class Result {
 		return notify;
 	}
 	
-	public void pushNotification() {
+	public void process() {
 		
 	}
 }
