@@ -19,6 +19,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class GWTSystemDataGateway implements SystemDataGateway {
 	
+	/**
+	 * The location of the servlet that handles the database
+	 */
 	private URI dbServletUri;
 
 	/**
@@ -34,8 +37,10 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	@Override
 	public List<SystemData> readMostRecent(String systemID, int numRecords) {
 		
-//		HttpClient client = new DefaultHttpClient();
-//		HttpPost post = new HttpPost();
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(dbServletUri);
+		
+		
 		
 		// TODO Auto-generated method stub
 		return null;
