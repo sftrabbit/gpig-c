@@ -81,19 +81,18 @@ public class SystemData {
 		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
-			System.out.println("Key: " + jsonKey);
-			parser.nextToken(); // Move to value
-			String jsonValue = parser.getText();
-			System.out.println("Value: " + jsonValue);
 			switch (jsonKey) {
 			case SYSTEM_ID_KEY:
-				systemID = jsonValue;
+				parser.nextToken(); // Move to value
+				systemID = parser.getText();
 				break;
 			case CREATION_TIMESTAMP_KEY:
-				timeStamp = dateFormat.parse(jsonValue);
+				parser.nextToken(); // Move to value
+				timeStamp = dateFormat.parse(parser.getText());
 				break;
 			case SENSORS_KEY:
-				while (parser.nextToken() != JsonToken.END_ARRAY) {
+				System.out.println("Start array: " + parser.nextToken()); // Start array
+				while (parser.nextToken() == JsonToken.START_OBJECT) { // Start object
 					parseSensor(parser, payload);
 				}
 				break;
@@ -112,11 +111,12 @@ public class SystemData {
 					throws JsonParseException, IOException {
 		String sensorID = null;
 		String sensorValue = null;
-		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
+			System.out.println("Key: " + jsonKey);
 			parser.nextToken(); // Move to value
 			String jsonValue = parser.getText();
+			System.out.println("Value: " + jsonValue);
 			switch (jsonKey) {
 			case SENSOR_ID_KEY:
 				// We shouldn't have already seen a sensor ID
