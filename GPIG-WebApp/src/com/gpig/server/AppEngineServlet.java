@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -25,7 +26,6 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.gpig.client.SystemData;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.gwt.dev.util.collect.HashMap;
 
 public class AppEngineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
