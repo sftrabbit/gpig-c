@@ -1,19 +1,29 @@
 package com.gpigc.database;
 
-import java.util.Date;
 import java.util.Map;
 
 public class SystemData {
 	
+	protected String systemId;
+	protected long timestamp;
+	protected Map<String, String> payload;
+	
+	public SystemData(String systemId, long timestamp, Map<String, String> payload)
+	{
+		this.systemId = systemId;
+		this.timestamp = timestamp;
+		this.payload = payload;
+	}
+	
 	public String getSystemID() {
-		return null;
+		return systemId;
 	}
 	
-	public Date getTimeStamp() {
-		return null;
+	public long getTimeStamp() {
+		return timestamp;
 	}
 	
-	public Map<String, ?> getPayload() {
-		return null;
+	public Map<String, String> getPayload() {
+		return payload;
 	}
 }
