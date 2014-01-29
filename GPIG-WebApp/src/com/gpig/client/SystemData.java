@@ -81,8 +81,10 @@ public class SystemData {
 		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
+			System.out.println("Key: " + jsonKey);
 			parser.nextToken(); // Move to value
-			String jsonValue = parser.getCurrentName();
+			String jsonValue = parser.getText();
+			System.out.println("Value: " + jsonValue);
 			switch (jsonKey) {
 			case SYSTEM_ID_KEY:
 				systemID = jsonValue;
@@ -114,7 +116,7 @@ public class SystemData {
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
 			parser.nextToken(); // Move to value
-			String jsonValue = parser.getCurrentName();
+			String jsonValue = parser.getText();
 			switch (jsonKey) {
 			case SENSOR_ID_KEY:
 				// We shouldn't have already seen a sensor ID
@@ -165,6 +167,7 @@ public class SystemData {
 		gen.writeEndArray();
 		gen.writeEndObject();
 		gen.close();
+		System.out.println(writer.toString());
 		return writer.toString();
 	}
 
