@@ -49,7 +49,7 @@ public class AppEngineServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-		SystemData systemData = SystemData.parseJSON(req.getReader());
+		SystemData systemData = null;//SystemData.parseJSON(req.getReader());
 		Key systemKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemData.getSystemID());
 		Date dataBaseTimestamp = new Date();
 		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();

@@ -8,12 +8,12 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.gpigc.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>com.gpigc.server.AppEngineServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/gpig_webapp/greet</url-pattern>
+    <servlet-name>AppEngineServlet</servlet-name>
+    <url-pattern>/gpig_webapp/appEngine</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
