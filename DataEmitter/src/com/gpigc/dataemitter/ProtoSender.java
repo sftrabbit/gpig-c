@@ -11,11 +11,11 @@ public class ProtoSender {
 	protected static String GPIG_SERVER = "localhost";
 	protected static int GPIG_PORT = 8000;
 
-	protected Socket sock;
-	protected OutputStream os;
+	protected final Socket sock;
+	protected final OutputStream os;
 	
 	/* Construction */
-	public ProtoSender(Socket sock) throws IOException
+	public ProtoSender(final Socket sock) throws IOException
 	{
 		this.sock = sock;
 		this.os = sock.getOutputStream();

@@ -48,4 +48,9 @@ public class ProtoReceiver extends Thread {
 	{
 		return queue;
 	}
+	
+	public void close() throws IOException
+	{
+		sock.close();
+	}
 }
