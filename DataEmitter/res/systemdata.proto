@@ -5,7 +5,7 @@ option java_outer_classname = "Protos";
 
 message SystemData {
   required string systemId = 1;
-  required long timestamp = 2;
+  required uint64 timestamp = 2;
 
   message Datum {
     required string key = 1;
