@@ -23,9 +23,10 @@ public class SystemData {
 	private static final String CREATION_TIMESTAMP_KEY = "CreationTimestamp";
 	private static final String SENSOR_ID_KEY = "SensorID";
 	private static final String SENSOR_VALUE_KEY = "SensorValue";
-
-	public static final SimpleDateFormat dateFormat = 
-			new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+	public static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss:SSS";
+	
+	private static final SimpleDateFormat DATE_FORMAT = 
+			new SimpleDateFormat(DATE_FORMAT_STRING);
 
 	private final String systemID;
 	private final Date timeStamp;
@@ -93,7 +94,7 @@ public class SystemData {
 				break;
 			case CREATION_TIMESTAMP_KEY:
 				parser.nextToken(); // Move to value
-				timeStamp = dateFormat.parse(parser.getText());
+				timeStamp = DATE_FORMAT.parse(parser.getText());
 				break;
 			case SENSORS_KEY:
 				parser.nextToken(); // Start array
@@ -170,7 +171,7 @@ public class SystemData {
 		gen.writeStringField(SYSTEM_ID_KEY, this.systemID);
 		gen.writeStringField(
 				CREATION_TIMESTAMP_KEY, 
-				dateFormat.format(this.timeStamp));
+				DATE_FORMAT.format(this.timeStamp));
 		gen.writeArrayFieldStart(SENSORS_KEY);
 		for (String key : this.payload.keySet()) {
 			String value = payload.get(key);

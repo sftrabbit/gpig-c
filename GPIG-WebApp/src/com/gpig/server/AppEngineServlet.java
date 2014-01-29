@@ -31,15 +31,15 @@ public class AppEngineServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5913676594563624612L;
 
-	private static final String SYSTEM_ID_KEY = "SystemID";
+	public static final String SYSTEM_ID_KEY = "SystemID";
 	private static final String SENSOR_ID_KEY = "SensorID";
 	private static final String CREATION_TIMESTAMP_KEY = "CreationTimestamp";
 	private static final String DB_TIMESTAMP_KEY = "DatabaseTimestamp";
 	private static final String VALUE_KEY = "Value";
-	private static final String NUM_RECORDS_KEY = "NumRecords";
+	public static final String NUM_RECORDS_KEY = "NumRecords";
 	private static final String ENTITY_KEY = "DataEntity";
-	private static final String START_TIME_KEY = "StartTimeStamp";
-	private static final String END_TIME_KEY = "EndTimeStamp";
+	public static final String START_TIME_KEY = "StartTimeStamp";
+	public static final String END_TIME_KEY = "EndTimeStamp";
 
 	public static final SimpleDateFormat dateFormat = 
 			new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");

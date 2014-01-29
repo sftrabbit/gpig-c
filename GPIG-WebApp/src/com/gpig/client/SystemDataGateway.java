@@ -18,16 +18,20 @@ public interface SystemDataGateway {
 	 * @param numRecords The maximum number of records to return
 	 * @return The numRecords most recent records associated with the given
 	 * systemID
+	 * @throws FailedToReadFromDatastoreException 
 	 */
-	public List<SystemData> readMostRecent(String systemID, int numRecords);
+	public List<SystemData> readMostRecent(String systemID, int numRecords) 
+			throws FailedToReadFromDatastoreException;
 	
 	/**
 	 * @param systemID A systemID
 	 * @param start The earliest point in the time period
 	 * @param end The latest point in the time period
 	 * @return All records for a given systemID within the given time period
+	 * @throws FailedToReadFromDatastoreException 
 	 */
-	public List<SystemData> readBetween(String systemID, Date start, Date end);
+	public List<SystemData> readBetween(String systemID, Date start, Date end) 
+			throws FailedToReadFromDatastoreException;
 	
 	/**
 	 * Writes the given data to the datastore
