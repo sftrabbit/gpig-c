@@ -74,25 +74,25 @@ public class AppEngineServlet extends HttpServlet {
 		//Want data for whole system
 		Key systemIDKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemID);
 		Query query = getQueryWithRequest(req, systemIDKey);
-		List<Entity> result;
+		List<Entity> results;
 		if(req.getParameter(NUM_RECORDS_KEY) != null){
-			result = queryWithNumRecords(Integer.parseInt(
+			results = queryWithNumRecords(Integer.parseInt(
 					req.getParameter(NUM_RECORDS_KEY)), query, datastoreService);
 		}else if(req.getParameter(START_TIME_KEY) != null && 
 				req.getParameter(END_TIME_KEY) !=null){
-			result = queryWithLimits(req.getParameter(START_TIME_KEY),
+			results = queryWithLimits(req.getParameter(START_TIME_KEY),
 					req.getParameter(END_TIME_KEY), query, datastoreService);
 		}else{
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
-		writeResponse(resp, result);
+		writeResponse(systemID, resp, results);
 	}
 
-	private void writeResponse(HttpServletResponse resp, List<Entity> result) {
-
-		
-		
+	private void writeResponse(String systemID, HttpServletResponse resp, List<Entity> results) throws IOException {
+		for(Entity result: results){
+			resp.getWriter().println(result);
+		}
 	}
 
 	private List<Entity> queryWithLimits(String startDate, String endDate,
