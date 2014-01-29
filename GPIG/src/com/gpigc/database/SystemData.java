@@ -5,15 +5,25 @@ import java.util.Map;
 
 public class SystemData {
 	
-	public String getSystemID() {
-		return null;
+	private Map<String, Integer> payload;
+	private Date timeStamp;
+	private String systemId;
+	
+	public SystemData(Map<String, Integer> payload, Date timeStamp, String systemId) {
+		this.payload = payload;
+		this.timeStamp = timeStamp;
+		this.systemId = systemId;
+	}
+	
+	public String getSystemId() {
+		return systemId;
 	}
 	
 	public Date getTimeStamp() {
-		return null;
+		return timeStamp;
 	}
 	
-	public Map<String, ?> getPayload() {
-		return null;
+	public Map<String, Integer> getPayload() {
+		return payload;
 	}
 }

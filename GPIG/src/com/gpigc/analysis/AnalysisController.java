@@ -1,9 +1,18 @@
 package com.gpigc.analysis;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnalysisController {
 
 	private List<AnalysisEngine> engines;
+	
+	public AnalysisController() {
+		
+		engines = new ArrayList<AnalysisEngine>();
+		//engines.addall(new MeanAnalysis());
+		
+		instantiateEngines();
+	}
 
 	public void systemUpdate(String systemId) {
 		for(AnalysisEngine engine : engines) {
@@ -14,4 +23,7 @@ public class AnalysisController {
 		}
 	}
 
+	private void instantiateEngines() {
+		
+	}	
 }

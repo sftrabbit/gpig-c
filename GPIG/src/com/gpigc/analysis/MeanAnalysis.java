@@ -1,30 +1,50 @@
 package com.gpigc.analysis;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.gpigc.database.SystemData;
+import com.gpigc.database.SystemDataGateway;
 
 public class MeanAnalysis extends AnalysisEngine {
 
 	private static final int TEN_RECORDS = 10;
 	
-	public MeanAnalysis() {
+	public MeanAnalysis(String[] systemIDs, SystemDataGateway database) {
 		associatedSystems = new ArrayList<String>();
-		associatedSystems.add("1");
-		associatedSystems.add("2");
-		associatedSystems.add("3");
+		for(String s : systemIDs) {
+			associatedSystems.add(s);
+		}
+		this.database = database;
 	}
 
 	public Result analyse() {
+		List<SystemData> systemDatas = getSystemData();
+		Iterator<SystemData> iterator = systemDatas.iterator();
+		double total = 0;
 		
-		List<SystemData> systemData = getSystemData();
+		while(iterator.hasNext()) {
+			total = total + processPayload(iterator.next().getPayload());
+		}
 		
-		// List<TDObject> data = dao.getDataBetween(componentID, Date.OneHourAgo(), Date.now());
-		// Get data for last 10 minutes
-		// Sum then divide by total
-		// is it higher than it should be? if so trigger event
-		return new Result(null, true);
+		Map<String, Double> result = new HashMap<String, Double>();
+		result.put("Test", total / (double) systemDatas.size());
+		
+		return new Result(result, true);
+	}
+	
+	private double processPayload(Map<String, Integer> payload) {
+		Iterator<String> iterator = payload.keySet().iterator();
+		int total = 0;
+		
+		while(iterator.hasNext()) {
+			total = total + payload.get(iterator.next());
+		}
+		
+		return total / (double) payload.size();
 	}
 	
 	private List<SystemData> getSystemData() {
