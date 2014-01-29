@@ -3,7 +3,6 @@ package com.gpigc.database;
 import java.util.Map;
 
 public class SystemData {
-	
 	protected String systemId;
 	protected long timestamp;
 	protected Map<String, String> payload;
