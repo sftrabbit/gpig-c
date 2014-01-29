@@ -12,7 +12,7 @@
 	<servlet-mapping>
 		<servlet-name>AppEngineServlet</servlet-name>
 		<url-pattern>/gpigc-webapp</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
