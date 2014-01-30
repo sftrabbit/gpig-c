@@ -6,8 +6,8 @@ public class TestAppEmitter {
 	private static final String TEST_APP_NAME = "b.jar";
 
 	public static void main(String[] args) throws Exception {
-		JvmHook jvmHook = new JvmHook(TEST_APP_NAME);
-		long pid = jvmHook.getProcessId();
+		JavaVirtualMachine jvm = new JavaVirtualMachine(TEST_APP_NAME);
+		long pid = jvm.getProcessId();
 
 		SigarLoadMonitor slm = new SigarLoadMonitor(pid);
 		Thread.sleep(4500);
@@ -20,7 +20,7 @@ public class TestAppEmitter {
 						.build();
 				SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
 						.setKey("Mem")
-						.setValue(String.valueOf(jvmHook.getUsedMemory()))
+						.setValue(String.valueOf(jvm.getUsedMemory()))
 						.build();
 				SystemData data = SystemData.newBuilder().setSystemId("1")
 						.setTimestamp(System.nanoTime()).addDatum(cpuDatum)
