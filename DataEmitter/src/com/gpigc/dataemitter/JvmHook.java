@@ -72,7 +72,8 @@ public class JvmHook {
 		try {
 			virtualMachine = attachProvider.attachVirtualMachine(descriptor);
 		} catch (AttachNotSupportedException | IOException e) {
-			throw new AttachException("Failed to attach to JVM for application " + appName, e);
+			throw new AttachException(
+					"Failed to attach to JVM for application " + appName, e);
 		}
 
 		loadAgent(virtualMachine);
@@ -91,7 +92,8 @@ public class JvmHook {
 	 * in the attached JVM.
 	 * 
 	 * @return Heap memory usage of Java application
-	 * @throws ServerFetchException Unable to fetch memory object from JMX server
+	 * @throws ServerFetchException
+	 *             Unable to fetch memory object from JMX server
 	 */
 	public long getUsedMemory() throws ServerFetchException {
 		ObjectName memoryObjectName;
@@ -103,7 +105,8 @@ public class JvmHook {
 		} catch (MalformedObjectNameException | AttributeNotFoundException
 				| InstanceNotFoundException | MBeanException
 				| ReflectionException | IOException e) {
-			throw new ServerFetchException("Failed to fetch memory object from JMX server", e);
+			throw new ServerFetchException(
+					"Failed to fetch memory object from JMX server", e);
 		}
 
 		return Long.valueOf((Long) compositeData.get(MEMORY_USED_KEY));
@@ -119,15 +122,16 @@ public class JvmHook {
 	 * @throws AppNotRunningException
 	 *             There is no JVM running the requested application
 	 */
-	private static VirtualMachineDescriptor getVirtualMachineDescriptor(String appName)
-			throws AppNotRunningException {
+	private static VirtualMachineDescriptor getVirtualMachineDescriptor(
+			String appName) throws AppNotRunningException {
 		for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
 			if (descriptor.displayName().equals(appName)) {
 				return descriptor;
 			}
 		}
 
-		throw new AppNotRunningException("Application " + appName + " not running");
+		throw new AppNotRunningException("Application " + appName
+				+ " not running");
 	}
 
 	/**
@@ -144,7 +148,8 @@ public class JvmHook {
 			}
 		}
 
-		throw new AttachException("Sun attach provider not installed on this machine");
+		throw new AttachException(
+				"Sun attach provider not installed on this machine");
 	}
 
 	/**
@@ -165,7 +170,8 @@ public class JvmHook {
 			virtualMachine.loadAgent(agentFilePath, AGENT_OPTIONS);
 		} catch (IOException | AgentInitializationException
 				| AgentLoadException e) {
-			throw new LoadAgentException("Failed to load agent: " + RELATIVE_AGENT_FILE_PATH, e);
+			throw new LoadAgentException("Failed to load agent: "
+					+ RELATIVE_AGENT_FILE_PATH, e);
 		}
 	}
 
