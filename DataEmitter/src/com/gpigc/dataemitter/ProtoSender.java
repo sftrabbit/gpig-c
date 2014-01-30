@@ -14,7 +14,7 @@ public class ProtoSender {
 	protected final OutputStream outputStream;
 
 	/**
-	 * Send Protocol Buffer messages via the given socket.
+	 * Create a ProtoSender that will send messages via the given socket.
 	 * 
 	 * @param socket
 	 *            Socket to send messages through.
@@ -26,7 +26,8 @@ public class ProtoSender {
 	}
 
 	/**
-	 * Send Protocol Buffer messages to the given hostname and port.
+	 * Create a ProtoSender that will send messages to the given hostname and
+	 * port.
 	 * 
 	 * @param host
 	 *            Hostname to send messages to
