@@ -9,6 +9,7 @@ import org.hyperic.sigar.SigarException;
 
 class ProcessMonitor {
 	private static final int TOTAL_TIME_UPDATE_LIMIT = 2000;
+	private static final int UPDATE_INTERVAL = 1000;
 
 	private final Sigar sigar;
 	private final long processId;
@@ -22,7 +23,7 @@ class ProcessMonitor {
 		previousCpuInfo = sigar.getProcCpu(processId);
 		cpuLoad = 0;
 
-		new Timer(true).schedule(new CpuLoadTask(), 0, 1000);
+		new Timer(true).schedule(new CpuLoadTask(), 0, UPDATE_INTERVAL);
 	}
 
 	public double getCpuLoad() {
