@@ -1,6 +1,8 @@
 package com.gpig.server;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -22,6 +24,8 @@ import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.gpig.client.QueryResult;
+import com.gpig.client.DBRecord;
 import com.gpig.client.SystemData;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
@@ -29,15 +33,18 @@ public class AppEngineServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5913676594563624612L;
 
-	public static final String SYSTEM_ID_KEY = "SystemID";
-	private static final String SENSOR_ID_KEY = "SensorID";
-	private static final String CREATION_TIMESTAMP_KEY = "CreationTimestamp";
-	private static final String DB_TIMESTAMP_KEY = "DatabaseTimestamp";
-	private static final String VALUE_KEY = "Value";
-	public static final String NUM_RECORDS_KEY = "NumRecords";
-	private static final String ENTITY_KEY = "DataEntity";
-	public static final String START_TIME_KEY = "StartTimeStamp";
-	public static final String END_TIME_KEY = "EndTimeStamp";
+	public  static final String SYSTEM_ID_KEY 				= "SystemID";
+	private static final String SENSOR_ID_KEY 				= "SensorID";
+	private static final String CREATION_TIMESTAMP_KEY 		= "CreationTimestamp";
+	public  static final String DB_TIMESTAMP_KEY 			= "DatabaseTimestamp";
+	private static final String VALUE_KEY 					= "Value";
+	public  static final String NUM_RECORDS_KEY 			= "NumRecords";
+	private static final String ENTITY_KEY 					= "DataEntity";
+	public  static final String START_TIME_KEY 				= "StartTimeStamp";
+	public  static final String END_TIME_KEY 				= "EndTimeStamp";
+
+	private static SimpleDateFormat DATE_FORMAT = 
+			new SimpleDateFormat(SystemData.DATE_FORMAT_STRING);
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -60,13 +67,11 @@ public class AppEngineServlet extends HttpServlet {
 		for(String key: systemData.getPayload().keySet()){
 			Key sensorKey = KeyFactory.createKey(systemKey, SENSOR_ID_KEY,key);
 			Entity entity = new Entity(ENTITY_KEY,sensorKey);
-			entity.setProperty(CREATION_TIMESTAMP_KEY, systemData.getTimeStamp());
-			entity.setProperty(DB_TIMESTAMP_KEY,dataBaseTimestamp);
+			entity.setProperty(CREATION_TIMESTAMP_KEY, DATE_FORMAT.format(systemData.getTimeStamp()));
+			entity.setProperty(DB_TIMESTAMP_KEY,DATE_FORMAT.format(dataBaseTimestamp));
 			entity.setProperty(VALUE_KEY,systemData.getPayload().get(key));
 			entities.add(entity);
-			resp.getWriter().println(entity);
 		}
-		resp.getWriter().println(entities);
 		datastoreService.put(entities);
 		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
@@ -77,32 +82,47 @@ public class AppEngineServlet extends HttpServlet {
 			java.io.IOException{
 		String systemID = req.getParameter(SYSTEM_ID_KEY);
 		if(systemID != null){
-		DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-		//Want data for whole system
-		Key systemIDKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemID);
-		Query query = getQueryWithRequest(req, systemIDKey);
-		List<Entity> results;
-		if(req.getParameter(NUM_RECORDS_KEY) != null){
-			results = queryWithNumRecords(Integer.parseInt(
-					req.getParameter(NUM_RECORDS_KEY)), query, datastoreService);
-		}else if(req.getParameter(START_TIME_KEY) != null && 
-				req.getParameter(END_TIME_KEY) !=null){
-			results = queryWithLimits(req.getParameter(START_TIME_KEY),
-					req.getParameter(END_TIME_KEY), query, datastoreService);
-		}else{
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return;
-		}
-		writeResponse(systemID, resp, results);
+			DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+			//Want data for whole system
+			Key systemIDKey = KeyFactory.createKey(SYSTEM_ID_KEY, systemID);
+			Query query = getQueryWithRequest(req, systemIDKey);
+			List<Entity> results;
+			if(req.getParameter(NUM_RECORDS_KEY) != null){
+				results = queryWithNumRecords(Integer.parseInt(
+						req.getParameter(NUM_RECORDS_KEY)), query, datastoreService);
+			}else if(req.getParameter(START_TIME_KEY) != null && 
+					req.getParameter(END_TIME_KEY) !=null){
+				results = queryWithLimits(req.getParameter(START_TIME_KEY),
+						req.getParameter(END_TIME_KEY), query, datastoreService);
+			}else{
+				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				return;
+			}
+			writeResponse(systemID, resp, results);
+			resp.setStatus(HttpServletResponse.SC_OK);
 		}else{
 			resp.getWriter().println("No System");
 		}
 	}
 
 	private void writeResponse(String systemID, HttpServletResponse resp, List<Entity> results) throws IOException {
+		ArrayList<DBRecord> sensorData = new ArrayList<>();
 		for(Entity result: results){
-			resp.getWriter().println(result);
+			String sensorID = result.getKey().getParent().getName();
+			try {
+				sensorData.add(new DBRecord(sensorID, 
+						DATE_FORMAT.parse(result.getProperty(CREATION_TIMESTAMP_KEY).toString()), 
+						DATE_FORMAT.parse(result.getProperty(DB_TIMESTAMP_KEY).toString()),result.getProperty(VALUE_KEY).toString()));
+			} catch (ParseException e) {
+				resp.getWriter().print("Date Parse Exception");
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
+				return;
+			}
+			QueryResult queryResult = new QueryResult(systemID, sensorData);
+			resp.getWriter().println(queryResult.toJSON());
 		}
+
 	}
 
 	private List<Entity> queryWithLimits(String startDate, String endDate,
