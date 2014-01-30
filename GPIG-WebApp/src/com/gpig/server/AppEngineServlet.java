@@ -25,7 +25,7 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.gpig.client.QueryResult;
-import com.gpig.client.SensorData;
+import com.gpig.client.DBRecord;
 import com.gpig.client.SystemData;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
@@ -107,11 +107,11 @@ public class AppEngineServlet extends HttpServlet {
 	}
 
 	private void writeResponse(String systemID, HttpServletResponse resp, List<Entity> results) throws IOException {
-		ArrayList<SensorData> sensorData = new ArrayList<>();
+		ArrayList<DBRecord> sensorData = new ArrayList<>();
 		for(Entity result: results){
 			String sensorID = result.getKey().getParent().getName();
 			try {
-				sensorData.add(new SensorData(sensorID, 
+				sensorData.add(new DBRecord(sensorID, 
 						DATE_FORMAT.parse(result.getProperty(CREATION_TIMESTAMP_KEY).toString()), 
 						DATE_FORMAT.parse(result.getProperty(DB_TIMESTAMP_KEY).toString()),result.getProperty(VALUE_KEY).toString()));
 			} catch (ParseException e) {

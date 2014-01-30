@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class QueryResult {
 	private final String systemID;
-	private final ArrayList<SensorData> entities;
+	private final ArrayList<DBRecord> entities;
 	
-	public QueryResult(String systemID, ArrayList<SensorData> entities){
+	public QueryResult(String systemID, ArrayList<DBRecord> entities){
 		this.systemID = systemID;
 		this.entities = entities;
 	}
@@ -15,7 +15,7 @@ public class QueryResult {
 		return systemID;
 	}
 
-	public ArrayList<SensorData> getEntities() {
+	public ArrayList<DBRecord> getEntities() {
 		return entities;
 	}
 
