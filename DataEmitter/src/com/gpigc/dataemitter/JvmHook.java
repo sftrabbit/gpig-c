@@ -88,9 +88,9 @@ public class JvmHook {
 	 * @throws Exception
 	 */
 	public long getUsedMemory() throws Exception {
-		ObjectName memory = new ObjectName(MEMORY_OBJECT_NAME);
+		ObjectName memoryObjectName = new ObjectName(MEMORY_OBJECT_NAME);
 		CompositeData cd = (CompositeData) serverConnection.getAttribute(
-				memory, MEMORY_USAGE_ATTRIBUTE);
+				memoryObjectName, MEMORY_USAGE_ATTRIBUTE);
 
 		return Long.valueOf((Long) cd.get(MEMORY_USED_KEY));
 	}
