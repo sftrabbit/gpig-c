@@ -2,9 +2,8 @@ package com.gpigc.dataemitter;
 
 import java.io.IOException;
 
-import org.hyperic.sigar.SigarException;
-
 import com.gpigc.dataemitter.JavaVirtualMachineMonitor.MonitorJvmException;
+import com.gpigc.dataemitter.ProcessMonitor.ProcessMonitorException;
 import com.gpigc.proto.Protos.SystemData;
 
 public class TestAppEmitter {
@@ -13,7 +12,7 @@ public class TestAppEmitter {
 	protected static int CORE_PORT = 8000;
 
 	public static void main(String[] args) throws MonitorJvmException,
-			SigarException, InterruptedException, IOException {
+			ProcessMonitorException, InterruptedException, IOException {
 		DataSender sender = new DataSender(CORE_HOST, CORE_PORT);
 
 		JavaVirtualMachineMonitor jvmMonitor = new JavaVirtualMachineMonitor(

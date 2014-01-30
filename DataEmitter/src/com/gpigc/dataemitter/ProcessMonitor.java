@@ -7,6 +7,8 @@ import org.hyperic.sigar.ProcCpu;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
+import com.gpigc.dataemitter.JavaVirtualMachineMonitor.MonitorJvmException;
+
 /**
  * Monitors a process's resource usage, such as CPU load and heap memory usage.
  */
@@ -24,15 +26,20 @@ class ProcessMonitor {
 	 * 
 	 * @param processId
 	 *            Process ID of the process to monitor
-	 * @throws SigarException
-	 *             Unable to retrieve CPU information
+	 * @throws ProcessMonitorException
+	 *             Unable to retrieve process information
 	 */
-	public ProcessMonitor(long processId) throws SigarException {
+	public ProcessMonitor(long processId) throws ProcessMonitorException {
 		sigar = new Sigar();
 		this.processId = processId;
-
-		previousCpuInfo = sigar.getProcCpu(processId);
 		cpuLoad = 0;
+
+		try {
+			previousCpuInfo = sigar.getProcCpu(processId);
+		} catch (SigarException e) {
+			throw new ProcessMonitorException(
+					"Unable to retrieve process information", e);
+		}
 
 		new Timer(true).schedule(new CpuLoadTask(), 0, UPDATE_INTERVAL);
 	}
@@ -74,4 +81,22 @@ class ProcessMonitor {
 			}
 		}
 	};
+
+	/**
+	 * Thrown if unable to retrieve information about a process.
+	 */
+	public static class ProcessMonitorException extends MonitorJvmException {
+		private static final long serialVersionUID = 1L;
+
+		public ProcessMonitorException() {
+		}
+
+		public ProcessMonitorException(String message) {
+			super(message);
+		}
+
+		public ProcessMonitorException(String message, Exception cause) {
+			super(message, cause);
+		}
+	}
 }
