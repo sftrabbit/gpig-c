@@ -4,9 +4,11 @@ import com.gpigc.proto.Protos.SystemData;
 
 public class TestAppEmitter {
 	private static final String TEST_APP_NAME = "b.jar";
+	protected static String CORE_HOST = "localhost";
+	protected static int CORE_PORT = 8000;
 
 	public static void main(String[] args) throws Exception {
-		ProtoSender sender = new ProtoSender();
+		ProtoSender sender = new ProtoSender(CORE_HOST, CORE_PORT);
 		
 		JavaVirtualMachineMonitor jvmMonitor = new JavaVirtualMachineMonitor(
 				TEST_APP_NAME);

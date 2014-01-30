@@ -1,16 +1,12 @@
 package com.gpigc.dataemitter;
 
-import java.io.*;
-import java.net.*;
-import com.gpigc.proto.Protos.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+
+import com.gpigc.proto.Protos.SystemData;
 
 public class ProtoSender {
-	/* Hostname and port number for the default server.
-	 * Should these be parameters?
-	 * To test this, use `netcat -l GPIG_PORT` */
-	protected static String GPIG_SERVER = "localhost";
-	protected static int GPIG_PORT = 8000;
-
 	protected final Socket sock;
 	protected final OutputStream os;
 	
@@ -24,11 +20,6 @@ public class ProtoSender {
 	public ProtoSender(String hostname, int port) throws IOException
 	{
 		this(new Socket(hostname, port));
-	}
-
-	public ProtoSender() throws IOException
-	{
-		this(GPIG_SERVER, GPIG_PORT);
 	}
 	
 	/* Send the message through the socket */
