@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.gpig.server.DBRecord;
+import com.gpig.server.SensorState;
 
 import static com.gpig.client.DataJSONAttribute.*;
 
@@ -25,13 +25,13 @@ import static com.gpig.client.DataJSONAttribute.*;
 public class QueryResult {
 
 	private final String systemID;
-	private final List<DBRecord> records;
+	private final List<SensorState> records;
 
 	/**
 	 * @param systemID The ID of the system that was queried
 	 * @param records The records matching the query
 	 */
-	public QueryResult(String systemID, List<DBRecord> records){
+	public QueryResult(String systemID, List<SensorState> records){
 		this.systemID = systemID;
 		this.records = records;
 		if (systemID == null) {
@@ -52,7 +52,7 @@ public class QueryResult {
 	/**
 	 * @return The records matching the submitted query
 	 */
-	public List<DBRecord> getRecords() {
+	public List<SensorState> getRecords() {
 		return records;
 	}
 
@@ -68,7 +68,7 @@ public class QueryResult {
 			gen.writeStartObject();
 			gen.writeStringField(JSON_SYSTEM_ID.getKey(), this.systemID);
 			gen.writeArrayFieldStart(JSON_RECORD_KEY.getKey());
-			for (DBRecord record :records) {
+			for (SensorState record :records) {
 				gen.writeStartObject();
 				gen.writeStringField(JSON_SENSOR_ID.getKey(),record.getSensorID());
 				gen.writeFieldName(JSON_CREATION_TIMESTAMP.getKey());
@@ -108,7 +108,7 @@ public class QueryResult {
 			throws JsonParseException, IOException {
 		
 		String systemID = null;
-		List<DBRecord> entities = new ArrayList<>();;
+		List<SensorState> entities = new ArrayList<>();;
 		
 		JsonFactory f = new JsonFactory();
 		JsonParser parser = f.createParser(reader);
@@ -142,7 +142,7 @@ public class QueryResult {
 	 * @throws IOException
 	 */
 	private static void parseRecord(JsonParser parser,
-			List<DBRecord> records) throws JsonParseException,IOException {
+			List<SensorState> records) throws JsonParseException,IOException {
 		String sensorID = null;
 		Date creationTimestamp = null;
 		Date databaseTimestamp = null;
@@ -181,7 +181,7 @@ public class QueryResult {
 		}
 
 		// Store the record
-		records.add(new DBRecord(
+		records.add(new SensorState(
 				sensorID, 
 				creationTimestamp, 
 				databaseTimestamp, 

@@ -135,10 +135,10 @@ public class AppEngineServlet extends HttpServlet {
 	private void writeResponse(String systemID, HttpServletResponse resp,
 			List<Entity> results) throws IOException {
 
-		ArrayList<DBRecord> sensorData = new ArrayList<>();
+		ArrayList<SensorState> sensorData = new ArrayList<>();
 		for (Entity result : results) {
 			String sensorID = result.getKey().getParent().getName();
-			sensorData.add(new DBRecord(sensorID, new Date(Long
+			sensorData.add(new SensorState(sensorID, new Date(Long
 					.parseLong(result.getProperty(CREATION_TIMESTAMP.getKey())
 							.toString())), new Date(Long.parseLong(result
 					.getProperty(DB_TIMESTAMP.getKey()).toString())), result

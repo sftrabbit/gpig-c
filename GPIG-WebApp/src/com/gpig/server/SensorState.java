@@ -3,12 +3,11 @@ package com.gpig.server;
 import java.util.Date;
 
 /**
- * A record we have read from the database, making up a part of the query's
- * result
+ * The state of a sensor at a point in time
  * 
  * @author GPIG-C
  */
-public class DBRecord {
+public class SensorState {
 	
 	private final String sensorID;
 	private final Date creationTimestamp;
@@ -21,7 +20,7 @@ public class DBRecord {
 	 * @param databaseTimestamp The time this sensor value was stored
 	 * @param value The sensor value
 	 */
-	public DBRecord(
+	public SensorState(
 			String sensorID, 
 			Date creationTimestamp, 
 			Date databaseTimestamp, 
@@ -86,7 +85,7 @@ public class DBRecord {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DBRecord other = (DBRecord) obj;
+		SensorState other = (SensorState) obj;
 		if (creationTimestamp == null) {
 			if (other.creationTimestamp != null)
 				return false;
