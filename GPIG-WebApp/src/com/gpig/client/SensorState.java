@@ -1,4 +1,4 @@
-package com.gpig.server;
+package com.gpig.client;
 
 import java.util.Date;
 

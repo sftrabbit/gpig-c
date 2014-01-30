@@ -8,13 +8,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.gpig.client.QueryResult;
-import com.gpig.server.SensorState;
+import com.gpig.client.SensorState;
 
 public class QueryResultTest {
 

@@ -24,6 +24,7 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.gpig.client.QueryResult;
 import com.gpig.client.EmitterSystemState;
+import com.gpig.client.SensorState;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 import static com.gpig.server.DatabaseField.*;
