@@ -1,8 +1,6 @@
 package com.gpig.server;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -30,12 +28,14 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 import static com.gpig.server.DatabaseField.*;
 
+/**
+ * Interacts with the App Engine datastore wrapper to read and write data
+ *
+ * @author Tom Davies
+ */
 public class AppEngineServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5913676594563624612L;
-	private static final String DATE_FORMAT_STRING 	= "yyyy-MM-dd HH:mm:ss:SSS";
-	private static final SimpleDateFormat DATE_FORMAT = 
-			new SimpleDateFormat(DATE_FORMAT_STRING);
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
