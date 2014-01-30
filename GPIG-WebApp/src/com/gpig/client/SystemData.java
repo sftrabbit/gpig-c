@@ -18,13 +18,13 @@ import com.fasterxml.jackson.core.JsonToken;
 
 public class SystemData {
 
-	private static final String SYSTEM_ID_KEY = "SystemID";
-	private static final String SENSORS_KEY = "Sensors";
-	private static final String CREATION_TIMESTAMP_KEY = "CreationTimestamp";
-	private static final String SENSOR_ID_KEY = "SensorID";
-	private static final String SENSOR_VALUE_KEY = "SensorValue";
-	public static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss:SSS";
-	
+	private static final String JSON_SYSTEM_ID_KEY 				= "SystemID";
+	private static final String JSON_SENSORS_KEY 				= "Sensors";
+	private static final String JSON_SENSOR_ID_KEY 				= "SensorID";
+	private static final String JSON_SENSOR_VALUE_KEY 			= "SensorValue";
+	private static final String DATE_FORMAT_STRING 				= "yyyy-MM-dd HH:mm:ss:SSS";
+	private static final String JSON_CREATION_TIMESTAMP_KEY 	= "CreationTimestamp";
+
 	private static final SimpleDateFormat DATE_FORMAT = 
 			new SimpleDateFormat(DATE_FORMAT_STRING);
 
@@ -42,15 +42,13 @@ public class SystemData {
 			String systemID, 
 			Date timeStamp, 
 			Map<String, String> payload) {
-		if (systemID == null) {
+		if (systemID == null)
 			throw new NullPointerException("System ID is null");
-		}
-		if (timeStamp == null) {
+		if (timeStamp == null)
 			throw new NullPointerException("Timestamp is null");
-		}
-		if (payload == null) {
+		if (payload == null) 
 			throw new NullPointerException("Payload is null");
-		}
+		
 		this.systemID = systemID;
 		this.timeStamp = timeStamp;
 		this.payload = Collections.unmodifiableMap(payload);
@@ -88,15 +86,15 @@ public class SystemData {
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
 			switch (jsonKey) {
-			case SYSTEM_ID_KEY:
+			case JSON_SYSTEM_ID_KEY:
 				parser.nextToken(); // Move to value
 				systemID = parser.getText();
 				break;
-			case CREATION_TIMESTAMP_KEY:
+			case JSON_CREATION_TIMESTAMP_KEY:
 				parser.nextToken(); // Move to value
 				timeStamp = DATE_FORMAT.parse(parser.getText());
 				break;
-			case SENSORS_KEY:
+			case JSON_SENSORS_KEY:
 				parser.nextToken(); // Start array
 				while (parser.nextToken() == JsonToken.START_OBJECT) { // Start object
 					parseSensor(parser, payload);
@@ -130,19 +128,19 @@ public class SystemData {
 			parser.nextToken(); // Move to value
 			String jsonValue = parser.getText();
 			switch (jsonKey) {
-			case SENSOR_ID_KEY:
+			case JSON_SENSOR_ID_KEY:
 				// We shouldn't have already seen a sensor ID
 				if (sensorID != null) {
 					throw new IllegalArgumentException(
-							"Duplicate " + SENSOR_ID_KEY);
+							"Duplicate " + JSON_SENSOR_ID_KEY);
 				}
 				sensorID = jsonValue;
 				break;
-			case SENSOR_VALUE_KEY:
+			case JSON_SENSOR_VALUE_KEY:
 				// We shouldn't have already seen a sensor value
 				if (sensorValue != null) {
 					throw new IllegalArgumentException(
-							"Duplicate " + SENSOR_VALUE_KEY);
+							"Duplicate " + JSON_SENSOR_VALUE_KEY);
 				}
 				sensorValue = jsonValue;
 				break;
@@ -168,16 +166,16 @@ public class SystemData {
 		JsonFactory factory = new JsonFactory();
 		JsonGenerator gen = factory.createGenerator(writer);
 		gen.writeStartObject();
-		gen.writeStringField(SYSTEM_ID_KEY, this.systemID);
+		gen.writeStringField(JSON_SYSTEM_ID_KEY, this.systemID);
 		gen.writeStringField(
-				CREATION_TIMESTAMP_KEY, 
+				JSON_CREATION_TIMESTAMP_KEY, 
 				DATE_FORMAT.format(this.timeStamp));
-		gen.writeArrayFieldStart(SENSORS_KEY);
+		gen.writeArrayFieldStart(JSON_SENSORS_KEY);
 		for (String key : this.payload.keySet()) {
 			String value = payload.get(key);
 			gen.writeStartObject();
-			gen.writeStringField(SENSOR_ID_KEY, key);
-			gen.writeStringField(SENSOR_VALUE_KEY, value);
+			gen.writeStringField(JSON_SENSOR_ID_KEY, key);
+			gen.writeStringField(JSON_SENSOR_VALUE_KEY, value);
 			gen.writeEndObject();
 		}
 		gen.writeEndArray();

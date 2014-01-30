@@ -2,14 +2,14 @@ package com.gpig.client;
 
 import java.util.Date;
 
-public class SensorData {
+public class DBRecord {
 	
 	private final String sensorID;
 	private final Date creationTimeStamp;
 	private final Date databaseStamp;
 	private final String value;
 
-	public SensorData(String sensorID, Date creationTimeStamp, Date databaseStamp, String value){
+	public DBRecord(String sensorID, Date creationTimeStamp, Date databaseStamp, String value){
 		this.sensorID = sensorID;
 		this.creationTimeStamp = creationTimeStamp;
 		this.databaseStamp = databaseStamp;
