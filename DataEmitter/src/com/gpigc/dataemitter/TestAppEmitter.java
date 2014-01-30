@@ -18,7 +18,7 @@ public class TestAppEmitter {
 		try {
 			while (true) {
 				SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
-						.setKey("CPU").setValue(String.valueOf(processMonitor.getLoad()))
+						.setKey("CPU").setValue(String.valueOf(processMonitor.getCpuLoad()))
 						.build();
 				SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
 						.setKey("Mem")
