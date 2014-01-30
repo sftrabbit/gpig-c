@@ -125,20 +125,13 @@ public class AppEngineServlet extends HttpServlet {
 		ArrayList<DBRecord> sensorData = new ArrayList<>();
 		for(Entity result: results){
 			String sensorID = result.getKey().getParent().getName();
-			try {
 				sensorData.add(new DBRecord(sensorID, 
-						DATE_FORMAT.parse(result.getProperty(CREATION_TIMESTAMP.getKey()).toString()), 
-						DATE_FORMAT.parse(result.getProperty(DB_TIMESTAMP.getKey()).toString()),
+						new Date(Long.parseLong(result.getProperty(CREATION_TIMESTAMP.getKey()).toString())), 
+						new Date(Long.parseLong(result.getProperty(DB_TIMESTAMP.getKey()).toString())),
 						result.getProperty(VALUE.getKey()).toString()));
-			} catch (ParseException e) {
-				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				e.printStackTrace();
-				return;
-			}
 			QueryResult queryResult = new QueryResult(systemID, sensorData);
 			resp.getWriter().println(queryResult.toJSON());
 		}
-
 	}
 
 	private List<Entity> queryWithLimits(long startTime, long endTime,
