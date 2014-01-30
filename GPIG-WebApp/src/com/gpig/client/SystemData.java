@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,11 +16,12 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import static com.gpig.client.DataJSONKey.*;
 
+/**
+ * Wraps up data about a system that is to be written to the database
+ * 
+ * @author Tom Davies
+ */
 public class SystemData {
-
-	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss:SSS";
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-			DATE_FORMAT_STRING);
 
 	private final String systemID;
 	private final Date timeStamp;
@@ -99,7 +99,7 @@ public class SystemData {
 			throw new IllegalArgumentException("Unrecognised JSON key: "
 					+ jsonKey);
 		}
-		parser.close(); // ensure resources get cleaned up timely and properly
+		parser.close();
 		return new SystemData(systemID, timeStamp, payload);
 	}
 
@@ -118,17 +118,10 @@ public class SystemData {
 			String jsonKey = parser.getCurrentName();
 			parser.nextToken(); // Move to value
 			String jsonValue = parser.getText();
-
 			if (jsonKey.equals(JSON_SENSOR_ID.getKey())) {
 				if (sensorID != null)// Shouldn't have already seen a sensor ID
 					throw new IllegalArgumentException("Duplicate "+ JSON_SENSOR_ID);
 				sensorID = jsonValue;
-				continue;
-			}
-			if (jsonKey.equals(JSON_CREATION_TIMESTAMP.getKey())) {
-				if (sensorValue != null) // Shouldn't have already seen a sensor value
-					throw new IllegalArgumentException("Duplicate "+ JSON_VALUE);
-				sensorValue = jsonValue;
 				continue;
 			}
 			if (jsonKey.equals(JSON_VALUE.getKey())) {
