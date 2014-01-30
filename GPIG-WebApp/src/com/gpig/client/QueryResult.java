@@ -18,4 +18,14 @@ public class QueryResult {
 	public ArrayList<SensorData> getEntities() {
 		return entities;
 	}
+
+	public String toJSON() {
+		//TODO TOM
+		return null;
+	}
+	
+	public static QueryResult parseJSON() {
+		//TODO TOM
+		return null;
+	}
 }

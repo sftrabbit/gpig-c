@@ -1,10 +1,11 @@
 package com.gpig.server;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,8 @@ import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.gpig.client.QueryResult;
+import com.gpig.client.SensorData;
 import com.gpig.client.SystemData;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
@@ -40,6 +43,9 @@ public class AppEngineServlet extends HttpServlet {
 	public static final String START_TIME_KEY = "StartTimeStamp";
 	public static final String END_TIME_KEY = "EndTimeStamp";
 
+	private static SimpleDateFormat DATE_FORMAT = 
+			new SimpleDateFormat(SystemData.DATE_FORMAT_STRING);
+	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -101,14 +107,22 @@ public class AppEngineServlet extends HttpServlet {
 	}
 
 	private void writeResponse(String systemID, HttpServletResponse resp, List<Entity> results) throws IOException {
+		ArrayList<SensorData> sensorData = new ArrayList<>();
 		for(Entity result: results){
-			resp.getWriter().println(systemID);
 			String sensorID = result.getKey().getParent().getName();
-			resp.getWriter().println(sensorID+"," +
-					result.getProperty(CREATION_TIMESTAMP_KEY) +"," 
-					+ result.getProperty(DB_TIMESTAMP_KEY) + "," +
-			result.getProperty(VALUE_KEY));
+			try {
+				sensorData.add(new SensorData(sensorID, 
+						DATE_FORMAT.parse(result.getProperty(CREATION_TIMESTAMP_KEY).toString()), 
+						DATE_FORMAT.parse(result.getProperty(DB_TIMESTAMP_KEY).toString()),result.getProperty(VALUE_KEY).toString()));
+			} catch (ParseException e) {
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
+				return;
+			}
+			QueryResult queryResult = new QueryResult(systemID, sensorData);
+			resp.getWriter().print(queryResult.toJSON());
 		}
+		
 	}
 
 	private List<Entity> queryWithLimits(String startDate, String endDate,
