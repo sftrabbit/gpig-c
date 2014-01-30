@@ -23,7 +23,7 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 /**
- * Hooks up to a Java Virtual Machine to access internal information about a
+ * Connects to a Java Virtual Machine to monitor internal information about a
  * running Java application.
  */
 public class JavaVirtualMachineMonitor {
@@ -48,7 +48,7 @@ public class JavaVirtualMachineMonitor {
 	private MBeanServerConnection serverConnection;
 
 	/**
-	 * Hook up to the JVM running the Java application with the given name.
+	 * Monitor the JVM running the Java application with the given name.
 	 * 
 	 * @param appName
 	 *            Name of the application being run by the JVM
@@ -71,7 +71,7 @@ public class JavaVirtualMachineMonitor {
 	}
 
 	/**
-	 * Hook up to the JVM with the given process ID.
+	 * Monitor the JVM with the given process ID.
 	 * 
 	 * @param processId
 	 *            Process ID of the JVM
