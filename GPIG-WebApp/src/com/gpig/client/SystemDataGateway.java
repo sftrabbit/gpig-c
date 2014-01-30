@@ -7,14 +7,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.http.ParseException;
 
 /**
  * The interface to any datastore
  * 
- * @author Tom Davies
+ * @author GPIGC
  */
 public interface SystemDataGateway {
 	
