@@ -2,10 +2,12 @@ package com.gpig.client;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -79,6 +81,17 @@ public class QueryResult {
 		}
 	}
 
+	/**
+	 * @param string A JSON string
+	 * @return The QueryObject represented by the JSON given by the reader
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	public static QueryResult parseJSON(String string) 
+			throws JsonParseException, IOException {
+		return parseJSON(new StringReader(string)); 
+	}
+	
 	/**
 	 * @param reader A source to read the JSON string from
 	 * @return The QueryObject represented by the JSON given by the reader
