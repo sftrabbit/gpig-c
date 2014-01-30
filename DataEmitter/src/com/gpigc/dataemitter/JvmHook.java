@@ -27,6 +27,7 @@ import javax.management.remote.JMXServiceURL;
  * running Java application.
  */
 public class JvmHook {
+	private static final String JAVA_HOME_PROPERTY = "java.home";
 	private static final String ATTACH_PROVIDER_NAME = "sun";
 	private static final String AGENT_OPTIONS = "com.sun.management.jmxremote";
 	private static final String RELATIVE_AGENT_FILE_PATH = "lib"
@@ -158,7 +159,7 @@ public class JvmHook {
 			throws LoadAgentException {
 		try {
 			String javaHomePath = virtualMachine.getSystemProperties()
-					.getProperty("java.home");
+					.getProperty(JAVA_HOME_PROPERTY);
 			String agentFilePath = javaHomePath + File.separator
 					+ RELATIVE_AGENT_FILE_PATH;
 			virtualMachine.loadAgent(agentFilePath, AGENT_OPTIONS);
