@@ -56,7 +56,7 @@ public class MeanAnalysis extends AnalysisEngine {
 	private List<SystemData> getSystemData() {
 		List<SystemData> systemData = new ArrayList<SystemData>();
 		for(String systemId : associatedSystems) {
-			systemData.addAll(database.readSystemData(systemId, TEN_RECORDS));			
+			systemData.addAll(database.readSystemData(systemId, TEN_RECORDS));
 		}
 		return systemData;
 	}

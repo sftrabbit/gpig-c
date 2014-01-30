@@ -1,5 +1,7 @@
 package com.gpigc.dataemitter;
 
+import java.io.File;
+
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import com.sun.tools.attach.spi.AttachProvider;
@@ -13,12 +15,10 @@ import javax.management.remote.JMXServiceURL;
 
 public class Attach {
 	
-	String agent;
 	String pid;
 	
-	public Attach(String agent, long pid)
+	public Attach(long pid)
 	{
-		this.agent = agent;
 		this.pid = String.valueOf(pid);
 	}
 
@@ -32,6 +32,9 @@ public class Attach {
         }
 
         VirtualMachine virtualMachine = attachProvider.attachVirtualMachine(descriptor);
+        
+        String agent = virtualMachine.getSystemProperties().getProperty("java.home") +
+        		File.separator + "lib" + File.separator + "management-agent.jar";
         virtualMachine.loadAgent(agent, "com.sun.management.jmxremote");
         Object portObject = virtualMachine.getAgentProperties().get("com.sun.management.jmxremote.localConnectorAddress");
 

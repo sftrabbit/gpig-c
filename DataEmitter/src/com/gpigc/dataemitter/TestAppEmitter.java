@@ -6,10 +6,10 @@ public class TestAppEmitter {
 	public static void main(String[] args) throws Exception
 	{
 		/*
-		 * USAGE: test.jar PID PATH/TO/MANAGEMENT-AGENT.JAR
+		 * USAGE: test.jar PID
 		 */
 		long pid = Long.parseLong(args[0]);
-		Attach att = new Attach(args[1], pid);
+		Attach att = new Attach(pid);
 		
 		ProtoSender sender = new ProtoSender();
 
