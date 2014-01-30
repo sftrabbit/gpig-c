@@ -13,12 +13,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -33,7 +31,7 @@ import static com.gpig.server.DatabaseField.*;
  * An implementation of SystemDataGateway that uses a Google App Engine
  * datastore
  * 
- * @author Tom Davies
+ * @author GPIGC
  */
 public class GWTSystemDataGateway implements SystemDataGateway {
 

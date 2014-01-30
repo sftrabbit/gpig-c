@@ -1,9 +1,9 @@
 package com.gpig.server;
 
 /**
- * The keys used for the fields stored in the datastore
+ * The keys used for the database fields and keys.
  * 
- * @author Tom Davies
+ * @author GPIGC
  */
 public enum DatabaseField {
 	

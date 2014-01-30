@@ -1,10 +1,9 @@
-/**
- * 
- */
 package com.gpig.client;
 
 /**
- * @author Tom Davies
+ * The Exception thrown when the execution of a query on the database fails.
+ * 
+ * @author GPIGC
  */
 public class FailedToReadFromDatastoreException extends Exception {
 
