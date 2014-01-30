@@ -6,7 +6,8 @@ public class TestAppEmitter {
 	private static final String TEST_APP_NAME = "b.jar";
 
 	public static void main(String[] args) throws Exception {
-		JavaVirtualMachine jvm = new JavaVirtualMachine(TEST_APP_NAME);
+		JavaVirtualMachineMonitor jvm = new JavaVirtualMachineMonitor(
+				TEST_APP_NAME);
 		long pid = jvm.getProcessId();
 
 		ProcessMonitor slm = new ProcessMonitor(pid);
@@ -20,8 +21,7 @@ public class TestAppEmitter {
 						.build();
 				SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
 						.setKey("Mem")
-						.setValue(String.valueOf(jvm.getUsedMemory()))
-						.build();
+						.setValue(String.valueOf(jvm.getUsedMemory())).build();
 				SystemData data = SystemData.newBuilder().setSystemId("1")
 						.setTimestamp(System.nanoTime()).addDatum(cpuDatum)
 						.addDatum(memoryDatum).build();

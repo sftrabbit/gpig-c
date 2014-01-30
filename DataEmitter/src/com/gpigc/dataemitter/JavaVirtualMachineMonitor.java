@@ -26,7 +26,7 @@ import javax.management.remote.JMXServiceURL;
  * Hooks up to a Java Virtual Machine to access internal information about a
  * running Java application.
  */
-public class JavaVirtualMachine {
+public class JavaVirtualMachineMonitor {
 	private static final String JAVA_HOME_PROPERTY = "java.home";
 	private static final String ATTACH_PROVIDER_NAME = "sun";
 	private static final String AGENT_OPTIONS = "com.sun.management.jmxremote";
@@ -61,8 +61,9 @@ public class JavaVirtualMachine {
 	 * @throws ServerConnectionException
 	 *             Unable to set up a connection to the JVM
 	 */
-	public JavaVirtualMachine(String appName) throws AppNotRunningException,
-			AttachException, LoadAgentException, ServerConnectionException {
+	public JavaVirtualMachineMonitor(String appName)
+			throws AppNotRunningException, AttachException, LoadAgentException,
+			ServerConnectionException {
 		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(appName);
 		processId = Long.parseLong(descriptor.id());
 
@@ -83,8 +84,9 @@ public class JavaVirtualMachine {
 	 * @throws ServerConnectionException
 	 *             Unable to set up a connection to the JVM
 	 */
-	public JavaVirtualMachine(long processId) throws AppNotRunningException,
-			AttachException, LoadAgentException, ServerConnectionException {
+	public JavaVirtualMachineMonitor(long processId)
+			throws AppNotRunningException, AttachException, LoadAgentException,
+			ServerConnectionException {
 		this.processId = processId;
 
 		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(processId);
