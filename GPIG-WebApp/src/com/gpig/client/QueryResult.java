@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.gpig.server.DBRecord;
 
-import static com.gpig.client.DataJSONKey.*;
+import static com.gpig.client.DataJSONAttribute.*;
 
 /**
  * The result of querying the database

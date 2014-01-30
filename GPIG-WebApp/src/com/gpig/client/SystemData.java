@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import static com.gpig.client.DataJSONKey.*;
+import static com.gpig.client.DataJSONAttribute.*;
 
 /**
  * Wraps up data about a system that is to be written to the database
