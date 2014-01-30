@@ -18,8 +18,9 @@ public class DataSender {
 	 * Create a DataSender that will send messages via the given socket.
 	 * 
 	 * @param socket
-	 *            Socket to send messages through.
+	 *            Socket to send messages through
 	 * @throws IOException
+	 *             Cannot create output stream or socket is not connected
 	 */
 	public DataSender(final Socket socket) throws IOException {
 		this.socket = socket;
@@ -27,14 +28,14 @@ public class DataSender {
 	}
 
 	/**
-	 * Create a DataSender that will send messages to the given hostname and
-	 * port.
+	 * Create a DataSender that will send messages to the given host and port.
 	 * 
 	 * @param host
-	 *            Hostname to send messages to
+	 *            Host to send messages to
 	 * @param port
 	 *            Port to send messages to
 	 * @throws IOException
+	 *             Cannot create output stream or socket failed to connect
 	 */
 	public DataSender(String host, int port) throws IOException {
 		this(new Socket(host, port));
@@ -46,6 +47,7 @@ public class DataSender {
 	 * @param message
 	 *            Message to send
 	 * @throws IOException
+	 *             Failed to write to the socket
 	 */
 	public void send(SystemData message) throws IOException {
 		message.writeDelimitedTo(outputStream);
@@ -56,6 +58,7 @@ public class DataSender {
 	 * Close the socket.
 	 * 
 	 * @throws IOException
+	 *             Unable to close socket.
 	 */
 	public void close() throws IOException {
 		outputStream.close();
