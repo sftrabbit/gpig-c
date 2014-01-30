@@ -84,8 +84,7 @@ public class JavaVirtualMachineMonitor {
 	 * @throws ServerConnectionException
 	 *             Unable to set up a connection to the JVM
 	 */
-	public JavaVirtualMachineMonitor(long processId)
-			throws MonitorJvmException {
+	public JavaVirtualMachineMonitor(long processId) throws MonitorJvmException {
 		this.processId = processId;
 
 		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(processId);
@@ -264,6 +263,11 @@ public class JavaVirtualMachineMonitor {
 		}
 	}
 
+	/**
+	 * Super class for all exceptions that might occur while attempting to
+	 * monitor a JVM.
+	 * 
+	 */
 	public static class MonitorJvmException extends Exception {
 		private static final long serialVersionUID = 1L;
 
