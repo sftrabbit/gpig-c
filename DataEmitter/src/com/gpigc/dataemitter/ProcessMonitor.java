@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.hyperic.sigar.*;
 
-class SigarLoadMonitor {
+class ProcessMonitor {
 
     private static final int TOTAL_TIME_UPDATE_LIMIT = 2000;
 
@@ -32,7 +32,7 @@ class SigarLoadMonitor {
         }
     };
 
-    public SigarLoadMonitor(long d) throws SigarException {
+    public ProcessMonitor(long d) throws SigarException {
         sigar = new Sigar();
         this.pid = d;
         prevPc = sigar.getProcCpu(d);

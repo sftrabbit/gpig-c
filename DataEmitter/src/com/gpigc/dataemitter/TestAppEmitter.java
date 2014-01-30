@@ -9,7 +9,7 @@ public class TestAppEmitter {
 		JavaVirtualMachine jvm = new JavaVirtualMachine(TEST_APP_NAME);
 		long pid = jvm.getProcessId();
 
-		SigarLoadMonitor slm = new SigarLoadMonitor(pid);
+		ProcessMonitor slm = new ProcessMonitor(pid);
 		Thread.sleep(4500);
 
 		ProtoSender sender = new ProtoSender();
