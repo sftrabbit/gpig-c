@@ -66,18 +66,30 @@ public class JvmHook {
 		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(appName);
 		processId = Long.parseLong(descriptor.id());
 
-		AttachProvider attachProvider = getSunAttachProvider();
+		connectVirtualMachine(descriptor);
+	}
 
-		VirtualMachine virtualMachine;
-		try {
-			virtualMachine = attachProvider.attachVirtualMachine(descriptor);
-		} catch (AttachNotSupportedException | IOException e) {
-			throw new AttachException(
-					"Failed to attach to JVM for application " + appName, e);
-		}
+	/**
+	 * Hook up to the JVM with the given process ID.
+	 * 
+	 * @param processId
+	 *            Process ID of the JVM
+	 * @throws AppNotRunningException
+	 *             There is no JVM running the requested application
+	 * @throws AttachException
+	 *             Unable to attach to the JVM
+	 * @throws LoadAgentException
+	 *             Unable to load an agent into the JVM
+	 * @throws ServerConnectionException
+	 *             Unable to set up a connection to the JVM
+	 */
+	public JvmHook(long processId) throws AppNotRunningException,
+			AttachException, LoadAgentException, ServerConnectionException {
+		this.processId = processId;
 
-		loadAgent(virtualMachine);
-		serverConnection = serverConnect(virtualMachine);
+		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(processId);
+
+		connectVirtualMachine(descriptor);
 	}
 
 	/**
@@ -113,6 +125,34 @@ public class JvmHook {
 	}
 
 	/**
+	 * Attach and connect to the requested virtual machine.
+	 * 
+	 * @param descriptor
+	 *            Descriptor of the JVM to connect to.
+	 * @throws AttachException
+	 *             Unable to attach to the JVM
+	 * @throws LoadAgentException
+	 *             Unable to load an agent into the JVM
+	 * @throws ServerConnectionException
+	 *             Unable to set up a connection to the JVM
+	 */
+	private void connectVirtualMachine(VirtualMachineDescriptor descriptor)
+			throws AttachException, LoadAgentException,
+			ServerConnectionException {
+		AttachProvider attachProvider = getSunAttachProvider();
+
+		VirtualMachine virtualMachine;
+		try {
+			virtualMachine = attachProvider.attachVirtualMachine(descriptor);
+		} catch (AttachNotSupportedException | IOException e) {
+			throw new AttachException("Failed to attach to JVM", e);
+		}
+
+		loadAgent(virtualMachine);
+		serverConnection = serverConnect(virtualMachine);
+	}
+
+	/**
 	 * Gets the virtual machine descriptor for the JVM running the application
 	 * with the given name.
 	 * 
@@ -132,6 +172,28 @@ public class JvmHook {
 
 		throw new AppNotRunningException("Application " + appName
 				+ " not running");
+	}
+
+	/**
+	 * Gets the virtual machine descriptor for the JVM with the given process
+	 * ID.
+	 * 
+	 * @param processId
+	 *            JVM process ID
+	 * @return Descriptor of the JVM with given process ID
+	 * @throws AppNotRunningException
+	 *             There is no JVM with the given process ID
+	 */
+	private static VirtualMachineDescriptor getVirtualMachineDescriptor(
+			long processId) throws AppNotRunningException {
+		for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
+			if (descriptor.id().equals(processId)) {
+				return descriptor;
+			}
+		}
+
+		throw new AppNotRunningException("Application with process ID "
+				+ processId + " not running");
 	}
 
 	/**
