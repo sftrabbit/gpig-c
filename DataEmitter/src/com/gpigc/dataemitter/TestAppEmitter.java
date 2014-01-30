@@ -1,17 +1,11 @@
 package com.gpigc.dataemitter;
 
-import java.io.IOException;
-
-import com.gpigc.dataemitter.JvmHook.AppNotRunningException;
-import com.gpigc.dataemitter.JvmHook.AttachException;
-import com.gpigc.dataemitter.JvmHook.LoadAgentException;
-import com.gpigc.dataemitter.JvmHook.ServerConnectionException;
 import com.gpigc.proto.Protos.SystemData;
 
 public class TestAppEmitter {
 	private static final String TEST_APP_NAME = "b.jar";
 	
-	public static void main(String[] args) throws AppNotRunningException, AttachException, LoadAgentException, ServerConnectionException, Exception {
+	public static void main(String[] args) throws Exception {
 		JvmHook jvmHook = new JvmHook(TEST_APP_NAME);
 		long pid = jvmHook.getPid();
 		
