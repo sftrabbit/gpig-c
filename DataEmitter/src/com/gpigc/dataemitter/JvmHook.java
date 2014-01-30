@@ -10,8 +10,13 @@ import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import com.sun.tools.attach.spi.AttachProvider;
 
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeData;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
@@ -85,14 +90,22 @@ public class JvmHook {
 	 * in the attached JVM.
 	 * 
 	 * @return Heap memory usage of Java application
-	 * @throws Exception
+	 * @throws ServerFetchException Unable to fetch memory object from JMX server
 	 */
-	public long getUsedMemory() throws Exception {
-		ObjectName memoryObjectName = new ObjectName(MEMORY_OBJECT_NAME);
-		CompositeData cd = (CompositeData) serverConnection.getAttribute(
-				memoryObjectName, MEMORY_USAGE_ATTRIBUTE);
+	public long getUsedMemory() throws ServerFetchException {
+		ObjectName memoryObjectName;
+		CompositeData compositeData;
+		try {
+			memoryObjectName = new ObjectName(MEMORY_OBJECT_NAME);
+			compositeData = (CompositeData) serverConnection.getAttribute(
+					memoryObjectName, MEMORY_USAGE_ATTRIBUTE);
+		} catch (MalformedObjectNameException | AttributeNotFoundException
+				| InstanceNotFoundException | MBeanException
+				| ReflectionException | IOException e) {
+			throw new ServerFetchException("Failed to fetch memory object from JMX server", e);
+		}
 
-		return Long.valueOf((Long) cd.get(MEMORY_USED_KEY));
+		return Long.valueOf((Long) compositeData.get(MEMORY_USED_KEY));
 	}
 
 	/**
@@ -250,6 +263,24 @@ public class JvmHook {
 		}
 
 		public ServerConnectionException(String message, Exception cause) {
+			super(message, cause);
+		}
+	}
+
+	/**
+	 * Thrown if unable to retrieve an object from the JMX agent server.
+	 */
+	public static class ServerFetchException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		public ServerFetchException() {
+		}
+
+		public ServerFetchException(String message) {
+			super(message);
+		}
+
+		public ServerFetchException(String message, Exception cause) {
 			super(message, cause);
 		}
 	}
