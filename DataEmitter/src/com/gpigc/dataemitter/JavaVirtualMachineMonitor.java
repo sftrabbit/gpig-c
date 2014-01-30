@@ -85,8 +85,7 @@ public class JavaVirtualMachineMonitor {
 	 *             Unable to set up a connection to the JVM
 	 */
 	public JavaVirtualMachineMonitor(long processId)
-			throws AppNotRunningException, AttachException, LoadAgentException,
-			ServerConnectionException {
+			throws MonitorJvmException {
 		this.processId = processId;
 
 		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(processId);
@@ -265,11 +264,26 @@ public class JavaVirtualMachineMonitor {
 		}
 	}
 
+	public static class MonitorJvmException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		public MonitorJvmException() {
+		}
+
+		public MonitorJvmException(String message) {
+			super(message);
+		}
+
+		public MonitorJvmException(String message, Exception cause) {
+			super(message, cause);
+		}
+	};
+
 	/**
 	 * Thrown if the application that has been requested to be monitored is not
 	 * currently running in any available JVM.
 	 */
-	public static class AppNotRunningException extends Exception {
+	public static class AppNotRunningException extends MonitorJvmException {
 		private static final long serialVersionUID = 1L;
 
 		public AppNotRunningException() {
@@ -287,7 +301,7 @@ public class JavaVirtualMachineMonitor {
 	/**
 	 * Thrown if unable to attach to a JVM.
 	 */
-	public static class AttachException extends Exception {
+	public static class AttachException extends MonitorJvmException {
 		private static final long serialVersionUID = 1L;
 
 		public AttachException() {
@@ -305,7 +319,7 @@ public class JavaVirtualMachineMonitor {
 	/**
 	 * Thrown if unable to load an agent into a JVM.
 	 */
-	public static class LoadAgentException extends Exception {
+	public static class LoadAgentException extends MonitorJvmException {
 		private static final long serialVersionUID = 1L;
 
 		public LoadAgentException() {
@@ -323,7 +337,7 @@ public class JavaVirtualMachineMonitor {
 	/**
 	 * Thrown if unable to connect to the JMX agent server.
 	 */
-	public static class ServerConnectionException extends Exception {
+	public static class ServerConnectionException extends MonitorJvmException {
 		private static final long serialVersionUID = 1L;
 
 		public ServerConnectionException() {
@@ -341,7 +355,7 @@ public class JavaVirtualMachineMonitor {
 	/**
 	 * Thrown if unable to retrieve an object from the JMX agent server.
 	 */
-	public static class ServerFetchException extends Exception {
+	public static class ServerFetchException extends MonitorJvmException {
 		private static final long serialVersionUID = 1L;
 
 		public ServerFetchException() {
