@@ -39,9 +39,9 @@ public class QueryResult {
 				gen.writeStartObject();
 				gen.writeStringField(JSON_SENSOR_ID.getKey(),record.getSensorID());
 				gen.writeFieldName(JSON_CREATION_TIMESTAMP.getKey());
-				gen.writeNumber(record.getCreationTimeStamp().getTime());
+				gen.writeNumber(record.getCreationTimestamp().getTime());
 				gen.writeFieldName(JSON_DB_TIMESTAMP.getKey());
-				gen.writeNumber(record.getDatabaseStamp().getTime());
+				gen.writeNumber(record.getDatabaseTimestamp().getTime());
 				gen.writeEndObject();
 			}
 			gen.writeEndArray();

@@ -8,8 +8,8 @@ public enum DatabaseField {
 	VALUE("Value"),
 	NUM_RECORDS("NumRecords"),
 	ENTITY("DataEntity"),
-	START_TIME("StartTimeStamp"),
-	END_TIME("EndTimeStamp");
+	START_TIME("StartTimestamp"),
+	END_TIME("EndTimestamp");
 	
 	private final String key;
 
