@@ -3,7 +3,7 @@ package com.gpig.client;
 /**
  * The keys used when reading or writing JSON
  * 
- * @author Tom Davies
+ * @author GPIGC
  */
 public enum DataJSONAttribute {
 	
