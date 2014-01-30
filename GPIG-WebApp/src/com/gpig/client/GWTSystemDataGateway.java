@@ -27,9 +27,6 @@ import com.gpig.server.AppEngineServlet;
  */
 public class GWTSystemDataGateway implements SystemDataGateway {
 	
-	private static SimpleDateFormat DATE_FORMAT = 
-			new SimpleDateFormat(SystemData.DATE_FORMAT_STRING);
-	
 	/**
 	 * The location of the servlet that handles the database
 	 */
@@ -49,24 +46,24 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	public List<SystemData> readMostRecent(String systemID, int numRecords) 
 			throws FailedToReadFromDatastoreException {
 		
-		HttpClient client = new DefaultHttpClient();
-		HttpGet get = new HttpGet(dbServletUri);
-		HttpParams params = new BasicHttpParams();
-		
-		params.setParameter(AppEngineServlet.SYSTEM_ID_KEY, systemID);
-		params.setIntParameter(AppEngineServlet.NUM_RECORDS_KEY, numRecords);
-		get.setParams(params);
-		
-		HttpResponse response;
-		try {
-			response = client.execute(get);
-		} catch (IOException e) {
-			throw new FailedToReadFromDatastoreException(e.getMessage());
-		}
-		
-		System.out.println("Response: " + response);
-		
-		// TODO Return result by parsing response
+//		HttpClient client = new DefaultHttpClient();
+//		HttpGet get = new HttpGet(dbServletUri);
+//		HttpParams params = new BasicHttpParams();
+//		
+//		params.setParameter(AppEngineServlet.SYSTEM_ID_KEY, systemID);
+//		params.setIntParameter(AppEngineServlet.NUM_RECORDS_KEY, numRecords);
+//		get.setParams(params);
+//		
+//		HttpResponse response;
+//		try {
+//			response = client.execute(get);
+//		} catch (IOException e) {
+//			throw new FailedToReadFromDatastoreException(e.getMessage());
+//		}
+//		
+//		System.out.println("Response: " + response);
+//		
+//		// TODO Return result by parsing response
 		return null;
 	}
 
@@ -77,28 +74,28 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	public List<SystemData> readBetween(String systemID, Date start, Date end) 
 			throws FailedToReadFromDatastoreException {
 		
-		HttpClient client = new DefaultHttpClient();
-		HttpGet get = new HttpGet(dbServletUri);
-		HttpParams params = new BasicHttpParams();
-		
-		
-		params.setParameter(AppEngineServlet.SYSTEM_ID_KEY, systemID);
-		params.setParameter(
-				AppEngineServlet.START_TIME_KEY, 
-				DATE_FORMAT.format(start));
-		params.setParameter(
-				AppEngineServlet.END_TIME_KEY, 
-				DATE_FORMAT.format(end));
-		get.setParams(params);
-		
-		HttpResponse response;
-		try {
-			response = client.execute(get);
-		} catch (IOException e) {
-			throw new FailedToReadFromDatastoreException(e.getMessage());
-		}
-		
-		// TODO Auto-generated method stub
+//		HttpClient client = new DefaultHttpClient();
+//		HttpGet get = new HttpGet(dbServletUri);
+//		HttpParams params = new BasicHttpParams();
+//		
+//		
+//		params.setParameter(AppEngineServlet.SYSTEM_ID_KEY, systemID);
+//		params.setParameter(
+//				AppEngineServlet.START_TIME_KEY, 
+//				DATE_FORMAT.format(start));
+//		params.setParameter(
+//				AppEngineServlet.END_TIME_KEY, 
+//				DATE_FORMAT.format(end));
+//		get.setParams(params);
+//		
+//		HttpResponse response;
+//		try {
+//			response = client.execute(get);
+//		} catch (IOException e) {
+//			throw new FailedToReadFromDatastoreException(e.getMessage());
+//		}
+//		
+//		// TODO Auto-generated method stub
 		return null;
 	}
 

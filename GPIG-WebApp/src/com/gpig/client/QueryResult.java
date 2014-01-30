@@ -6,10 +6,9 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-
+import com.gpig.server.DBRecord;
+import static com.gpig.client.DataJSONKey.*;
 public class QueryResult {
-	private final static String RECORD_KEY = "Records";
-	public  static final String DB_TIMESTAMP_KEY 			= "DatabaseTimestamp";
 
 	private final String systemID;
 	private final ArrayList<DBRecord> entities;
@@ -34,13 +33,15 @@ public class QueryResult {
 		try {
 			gen = factory.createGenerator(writer);
 			gen.writeStartObject();
-			gen.writeStringField(SystemData.SYSTEM_ID_KEY, this.systemID);
-			gen.writeArrayFieldStart(RECORD_KEY);
+			gen.writeStringField(JSON_SYSTEM_ID.getKey(), this.systemID);
+			gen.writeArrayFieldStart(JSON_RECORD_KEY.getKey());
 			for (DBRecord record :entities) {
 				gen.writeStartObject();
-				gen.writeStringField(SystemData.SENSOR_ID_KEY, record.getSensorID());
-				gen.writeStringField(SystemData.CREATION_TIMESTAMP_KEY, SystemData.DATE_FORMAT.format(record.getCreationTimeStamp()));
-				gen.writeStringField(DB_TIMESTAMP_KEY, SystemData.DATE_FORMAT.format(record.getDatabaseStamp()));
+				gen.writeStringField(JSON_SENSOR_ID.getKey(),record.getSensorID());
+				gen.writeFieldName(JSON_CREATION_TIMESTAMP.getKey());
+				gen.writeNumber(record.getCreationTimeStamp().getTime());
+				gen.writeFieldName(JSON_DB_TIMESTAMP.getKey());
+				gen.writeNumber(record.getDatabaseStamp().getTime());
 				gen.writeEndObject();
 			}
 			gen.writeEndArray();
