@@ -1,54 +1,43 @@
 package com.gpigc.dataemitter;
 
+import java.io.IOException;
+
+import com.gpigc.dataemitter.JvmHook.AppNotRunningException;
+import com.gpigc.dataemitter.JvmHook.AttachException;
+import com.gpigc.dataemitter.JvmHook.LoadAgentException;
+import com.gpigc.dataemitter.JvmHook.ServerConnectionException;
 import com.gpigc.proto.Protos.SystemData;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
 
 public class TestAppEmitter {
-	private static long getTestAppPid() {
-        for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
-            if (descriptor.displayName().equals("b.jar")) {
-            	return Long.parseLong(descriptor.id());
-            }
-        }
-        
-        return 0;
-	}
+	private static final String TEST_APP_NAME = "b.jar";
 	
-	public static void main(String[] args) throws Exception
-	{
-        long pid = getTestAppPid();
-        if (pid > 0) {
-			Attach att = new Attach(pid);
-			
-			ProtoSender sender = new ProtoSender();
-	
-	        SigarLoadMonitor slm = new SigarLoadMonitor(pid);
-	        Thread.sleep(4500);
-	        try
-	        {
-		        while(true)
-		        {
-		        	SystemData data = SystemData.newBuilder()
-		        		.setSystemId("1")
-		        		.setTimestamp(System.nanoTime())
-		        		.addDatum(SystemData.Datum.newBuilder()
-		        			.setKey("CPU")
-		        			.setValue(String.valueOf(slm.getLoad())))
-		        		.addDatum(SystemData.Datum.newBuilder()
-		        			.setKey("Mem")
-		        			.setValue(String.valueOf(att.getmem())))
-		        		.build();
-		        	
-		        	sender.send(data);
-		        	
-		        	Thread.sleep(1000);
-		        }
-	        } catch (Exception e) {
-	        	System.out.println("Server closed socket.");
+	public static void main(String[] args) throws AppNotRunningException, AttachException, LoadAgentException, ServerConnectionException, Exception {
+		JvmHook jvmHook = new JvmHook(TEST_APP_NAME);
+		long pid = jvmHook.getPid();
+		
+		ProtoSender sender = new ProtoSender();
+
+        SigarLoadMonitor slm = new SigarLoadMonitor(pid);
+        Thread.sleep(4500);
+        try {
+	        while (true) {
+	        	SystemData data = SystemData.newBuilder()
+	        		.setSystemId("1")
+	        		.setTimestamp(System.nanoTime())
+	        		.addDatum(SystemData.Datum.newBuilder()
+	        			.setKey("CPU")
+	        			.setValue(String.valueOf(slm.getLoad())))
+	        		.addDatum(SystemData.Datum.newBuilder()
+	        			.setKey("Mem")
+	        			.setValue(String.valueOf(jvmHook.getUsedMemory())))
+	        		.build();
+	        	
+	        	sender.send(data);
+	        	
+	        	Thread.sleep(1000);
 	        }
-        } else {
-	    	System.out.println("Test application not running");
-	    }
+        } catch (Exception e) {
+        	System.out.println("Server closed socket.");
+        }
 	}
 }
