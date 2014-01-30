@@ -17,114 +17,240 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+/**
+ * Hooks up to a Java Virtual Machine to access internal information about a
+ * running Java application.
+ */
 public class JvmHook {
 	private static final String ATTACH_PROVIDER_NAME = "sun";
 	private static final String AGENT_OPTIONS = "com.sun.management.jmxremote";
-	private static final String RELATIVE_AGENT_FILE_PATH = "lib" + File.separator + "management-agent.jar";
+	private static final String RELATIVE_AGENT_FILE_PATH = "lib"
+			+ File.separator + "management-agent.jar";
 	private static final String CONNECTOR_ADDRESS_PROPERTY = "com.sun.management.jmxremote.localConnectorAddress";
 	private static final String MEMORY_OBJECT_NAME = "java.lang:type=Memory";
 	private static final String MEMORY_USAGE_ATTRIBUTE = "HeapMemoryUsage";
 	private static final String MEMORY_USED_KEY = "used";
-	
+
+	/**
+	 * Process ID of the attached JVM.
+	 */
 	private long pid;
+
+	/**
+	 * Connection to the JVM.
+	 */
 	private MBeanServerConnection serverConnection;
-	
-	public JvmHook(String appName) throws AppNotRunningException, AttachException, LoadAgentException, ServerConnectionException
-	{
+
+	/**
+	 * Hook up to the JVM running the Java application with the given name.
+	 * 
+	 * @param appName
+	 *            Name of the application being run by the JVM
+	 * @throws AppNotRunningException
+	 *             There is no JVM running the requested application
+	 * @throws AttachException
+	 *             Unable to attach to the JVM
+	 * @throws LoadAgentException
+	 *             Unable to load an agent into the JVM
+	 * @throws ServerConnectionException
+	 *             Unable to set up a connection to the JVM
+	 */
+	public JvmHook(String appName) throws AppNotRunningException,
+			AttachException, LoadAgentException, ServerConnectionException {
 		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(appName);
 		pid = Long.parseLong(descriptor.id());
-		
-        AttachProvider attachProvider = getSunAttachProvider();
 
-        VirtualMachine virtualMachine;
-        try {
+		AttachProvider attachProvider = getSunAttachProvider();
+
+		VirtualMachine virtualMachine;
+		try {
 			virtualMachine = attachProvider.attachVirtualMachine(descriptor);
 		} catch (AttachNotSupportedException | IOException e) {
 			throw new AttachException("Failed to attach to JVM", e);
 		}
-        
-        loadAgent(virtualMachine);
-        serverConnection = serverConnect(virtualMachine);
+
+		loadAgent(virtualMachine);
+		serverConnection = serverConnect(virtualMachine);
 	}
-	
+
+	/**
+	 * @return Process ID of the attached JVM.
+	 */
 	public long getPid() {
 		return pid;
 	}
 
-    public long getUsedMemory() throws Exception {
-        ObjectName memory = new ObjectName(MEMORY_OBJECT_NAME);
-        CompositeData cd = (CompositeData) serverConnection.getAttribute(memory, MEMORY_USAGE_ATTRIBUTE);
-        
-        return Long.valueOf((Long)cd.get(MEMORY_USED_KEY));
-    }
-    
-    private VirtualMachineDescriptor getVirtualMachineDescriptor(String appName) throws AppNotRunningException {
-        for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
-            if (descriptor.displayName().equals(appName)) {
-            	return descriptor;
-            }
-        }
-        
-        throw new AppNotRunningException("Test application not running");
-    }
-    
-    private static AttachProvider getSunAttachProvider() throws AttachException {
-        for (AttachProvider attachProvider : AttachProvider.providers()) {
-            if (attachProvider.name().equals(ATTACH_PROVIDER_NAME)) {
-            	return attachProvider;
-            }
-        }
-        
-        throw new AttachException("Sun attach provider not found");
-    }
-    
-    private static void loadAgent(VirtualMachine virtualMachine) throws LoadAgentException {
-    	try {
-	        String javaHomePath = virtualMachine.getSystemProperties().getProperty("java.home");
-	        String agentFilePath = javaHomePath + File.separator + RELATIVE_AGENT_FILE_PATH;
-	        virtualMachine.loadAgent(agentFilePath, AGENT_OPTIONS);
-    	} catch (IOException | AgentInitializationException | AgentLoadException e) {
-    		throw new LoadAgentException("Failed to load agent", e);
-    	}
-    }
-    
-    private static MBeanServerConnection serverConnect(VirtualMachine virtualMachine) throws ServerConnectionException {
-    	try {
-	        String connectorAddress = virtualMachine.getAgentProperties().getProperty(CONNECTOR_ADDRESS_PROPERTY);
-	        
-	        JMXServiceURL jmxServerAddress = new JMXServiceURL(connectorAddress);
-	        JMXConnector jmxConnector = JMXConnectorFactory.connect(jmxServerAddress);
-	        return jmxConnector.getMBeanServerConnection();
-    	} catch (IOException e) {
-    		throw new ServerConnectionException("Failed to connect to JMX server", e);
-    	}
-    }
-	
+	/**
+	 * Get current heap memory usage (in bytes) of the Java application running
+	 * in the attached JVM.
+	 * 
+	 * @return Heap memory usage of Java application
+	 * @throws Exception
+	 */
+	public long getUsedMemory() throws Exception {
+		ObjectName memory = new ObjectName(MEMORY_OBJECT_NAME);
+		CompositeData cd = (CompositeData) serverConnection.getAttribute(
+				memory, MEMORY_USAGE_ATTRIBUTE);
+
+		return Long.valueOf((Long) cd.get(MEMORY_USED_KEY));
+	}
+
+	/**
+	 * Gets the virtual machine descriptor for the JVM running the application
+	 * with the given name.
+	 * 
+	 * @param appName
+	 *            Name of the application
+	 * @return Descriptor of the JVM running the requested application
+	 * @throws AppNotRunningException
+	 *             There is no JVM running the requested application
+	 */
+	private VirtualMachineDescriptor getVirtualMachineDescriptor(String appName)
+			throws AppNotRunningException {
+		for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
+			if (descriptor.displayName().equals(appName)) {
+				return descriptor;
+			}
+		}
+
+		throw new AppNotRunningException("Test application not running");
+	}
+
+	/**
+	 * Get the Sun attach provider, which can be used to attach to a JVM.
+	 * 
+	 * @return Sun attach provider
+	 * @throws AttachException
+	 *             Unable to attach to the JVM
+	 */
+	private static AttachProvider getSunAttachProvider() throws AttachException {
+		for (AttachProvider attachProvider : AttachProvider.providers()) {
+			if (attachProvider.name().equals(ATTACH_PROVIDER_NAME)) {
+				return attachProvider;
+			}
+		}
+
+		throw new AttachException("Sun attach provider not found");
+	}
+
+	/**
+	 * Load JMX agent into the given virtual machine.
+	 * 
+	 * @param virtualMachine
+	 *            JVM to attach JMX agent to
+	 * @throws LoadAgentException
+	 *             Unable to load an agent into the JVM
+	 */
+	private static void loadAgent(VirtualMachine virtualMachine)
+			throws LoadAgentException {
+		try {
+			String javaHomePath = virtualMachine.getSystemProperties()
+					.getProperty("java.home");
+			String agentFilePath = javaHomePath + File.separator
+					+ RELATIVE_AGENT_FILE_PATH;
+			virtualMachine.loadAgent(agentFilePath, AGENT_OPTIONS);
+		} catch (IOException | AgentInitializationException
+				| AgentLoadException e) {
+			throw new LoadAgentException("Failed to load agent", e);
+		}
+	}
+
+	/**
+	 * Connect to the JMX agent loaded into the given JVM to be able to retrieve
+	 * information about the running Java application.
+	 * 
+	 * @param virtualMachine
+	 *            JVM to connect to
+	 * @return Server connection
+	 * @throws ServerConnectionException
+	 *             Unable to set up a connection to the JVM
+	 */
+	private static MBeanServerConnection serverConnect(
+			VirtualMachine virtualMachine) throws ServerConnectionException {
+		try {
+			String connectorAddress = virtualMachine.getAgentProperties()
+					.getProperty(CONNECTOR_ADDRESS_PROPERTY);
+
+			JMXServiceURL jmxServerAddress = new JMXServiceURL(connectorAddress);
+			JMXConnector jmxConnector = JMXConnectorFactory
+					.connect(jmxServerAddress);
+			return jmxConnector.getMBeanServerConnection();
+		} catch (IOException e) {
+			throw new ServerConnectionException(
+					"Failed to connect to JMX server", e);
+		}
+	}
+
+	/**
+	 * Thrown if the application that has been requested to be monitored is not
+	 * currently running in any available JVM.
+	 */
 	public static class AppNotRunningException extends Exception {
 		private static final long serialVersionUID = 1L;
-		public AppNotRunningException() {}
-		public AppNotRunningException(String message) { super(message); }
-		public AppNotRunningException(String message, Exception cause) { super(message, cause); }
+
+		public AppNotRunningException() {
+		}
+
+		public AppNotRunningException(String message) {
+			super(message);
+		}
+
+		public AppNotRunningException(String message, Exception cause) {
+			super(message, cause);
+		}
 	}
-	
+
+	/**
+	 * Thrown if unable to attach to a JVM.
+	 */
 	public static class AttachException extends Exception {
 		private static final long serialVersionUID = 1L;
-		public AttachException() {}
-		public AttachException(String message) { super(message); }
-		public AttachException(String message, Exception cause) { super(message, cause); }
+
+		public AttachException() {
+		}
+
+		public AttachException(String message) {
+			super(message);
+		}
+
+		public AttachException(String message, Exception cause) {
+			super(message, cause);
+		}
 	}
-	
+
+	/**
+	 * Thrown if unable to load an agent into a JVM.
+	 */
 	public static class LoadAgentException extends Exception {
 		private static final long serialVersionUID = 1L;
-		public LoadAgentException() {}
-		public LoadAgentException(String message) { super(message); }
-		public LoadAgentException(String message, Exception cause) { super(message, cause); }
+
+		public LoadAgentException() {
+		}
+
+		public LoadAgentException(String message) {
+			super(message);
+		}
+
+		public LoadAgentException(String message, Exception cause) {
+			super(message, cause);
+		}
 	}
-	
+
+	/**
+	 * Thrown if unable to connect to the JMX agent server.
+	 */
 	public static class ServerConnectionException extends Exception {
 		private static final long serialVersionUID = 1L;
-		public ServerConnectionException() {}
-		public ServerConnectionException(String message) { super(message); }
-		public ServerConnectionException(String message, Exception cause) { super(message, cause); }
+
+		public ServerConnectionException() {
+		}
+
+		public ServerConnectionException(String message) {
+			super(message);
+		}
+
+		public ServerConnectionException(String message, Exception cause) {
+			super(message, cause);
+		}
 	}
 }
