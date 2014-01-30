@@ -53,6 +53,6 @@ public interface SystemDataGateway {
 	 * @throws IOException 
 	 * @throws UnsupportedEncodingException 
 	 */
-	public void write(SystemData data) throws FailedToWriteToDatastoreException, UnsupportedEncodingException, IOException;
+	public void write(ReadSystemState data) throws FailedToWriteToDatastoreException, UnsupportedEncodingException, IOException;
 
 }

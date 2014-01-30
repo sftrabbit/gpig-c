@@ -118,7 +118,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 * @see com.gpig.client.SystemDataGateway#write(com.gpig.client.SystemData)
 	 */
 	@Override
-	public void write(SystemData data)
+	public void write(ReadSystemState data)
 			throws FailedToWriteToDatastoreException,
 			UnsupportedEncodingException, IOException {
 

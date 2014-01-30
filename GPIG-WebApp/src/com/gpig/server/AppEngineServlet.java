@@ -23,7 +23,7 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.gpig.client.QueryResult;
-import com.gpig.client.SystemData;
+import com.gpig.client.ReadSystemState;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 import static com.gpig.server.DatabaseField.*;
@@ -41,11 +41,11 @@ public class AppEngineServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		SystemData systemData;
+		ReadSystemState systemData;
 
 		// Attempt to parse the request body
 		try {
-			systemData = SystemData.parseJSON(req.getReader());
+			systemData = ReadSystemState.parseJSON(req.getReader());
 		} catch (Exception e) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
 					"Failed to parse JSON: " + e.getMessage());
@@ -68,7 +68,7 @@ public class AppEngineServlet extends HttpServlet {
 		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
-	private ArrayList<Entity> createEntities(SystemData systemData,
+	private ArrayList<Entity> createEntities(ReadSystemState systemData,
 			Date dataBaseTimestamp) {
 		ArrayList<Entity> entities = new ArrayList<>();
 

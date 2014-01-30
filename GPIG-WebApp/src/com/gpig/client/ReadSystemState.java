@@ -17,11 +17,12 @@ import com.fasterxml.jackson.core.JsonToken;
 import static com.gpig.client.DataJSONAttribute.*;
 
 /**
- * Wraps up data about a system that is to be written to the database
+ * Wraps up the state of a system that has been read and about is to be written 
+ * to the database
  * 
  * @author Tom Davies
  */
-public class SystemData {
+public class ReadSystemState {
 
 	private final String systemID;
 	private final Date timeStamp;
@@ -33,7 +34,7 @@ public class SystemData {
 	 * @param payload  The contents of this data, i.e. the values of 0 or more
 	 *           	 sensors
 	 */
-	public SystemData(String systemID, Date timeStamp,
+	public ReadSystemState(String systemID, Date timeStamp,
 			Map<String, String> payload) {
 		if (systemID == null)
 			throw new NullPointerException("System ID is null");
@@ -67,7 +68,7 @@ public class SystemData {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static SystemData parseJSON(Reader reader)
+	public static ReadSystemState parseJSON(Reader reader)
 			throws JsonParseException, IOException, ParseException {
 
 		String systemID = null;
@@ -100,7 +101,7 @@ public class SystemData {
 					+ jsonKey);
 		}
 		parser.close();
-		return new SystemData(systemID, timeStamp, payload);
+		return new ReadSystemState(systemID, timeStamp, payload);
 	}
 
 	/**

@@ -17,14 +17,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.gpig.client.SystemData;
+import com.gpig.client.ReadSystemState;
 
 /**
  * @author Tom Davies
  */
 public class SystemDataTest {
 	
-	private SystemData testData;
+	private ReadSystemState testData;
 
 	/**
 	 * @throws java.lang.Exception
@@ -36,7 +36,7 @@ public class SystemDataTest {
 		payload.put("RPM", "1512");
 		payload.put("Speed", "30");
 		payload.put("Awesomness", "MAXIMUM");
-		testData = new SystemData(
+		testData = new ReadSystemState(
 				"TestSystemID", 
 				new Date(), 
 				payload);
@@ -61,7 +61,7 @@ public class SystemDataTest {
 		String systemID = testData.getSystemID();
 		Date timestamp = testData.getTimeStamp();
 		Map<String, String> payload = testData.getPayload();
-		SystemData parsedData = SystemData.parseJSON(
+		ReadSystemState parsedData = ReadSystemState.parseJSON(
 				new StringReader(testData.toJSON()));
 		assertEquals(systemID, parsedData.getSystemID());
 		assertEquals(timestamp, parsedData.getTimeStamp());
