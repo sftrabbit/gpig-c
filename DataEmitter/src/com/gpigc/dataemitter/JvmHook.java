@@ -119,7 +119,7 @@ public class JvmHook {
 	 * @throws AppNotRunningException
 	 *             There is no JVM running the requested application
 	 */
-	private VirtualMachineDescriptor getVirtualMachineDescriptor(String appName)
+	private static VirtualMachineDescriptor getVirtualMachineDescriptor(String appName)
 			throws AppNotRunningException {
 		for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
 			if (descriptor.displayName().equals(appName)) {
