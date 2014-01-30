@@ -40,7 +40,7 @@ public class JvmHook {
 	/**
 	 * Process ID of the attached JVM.
 	 */
-	private long pid;
+	private long processId;
 
 	/**
 	 * Connection to the JVM.
@@ -64,7 +64,7 @@ public class JvmHook {
 	public JvmHook(String appName) throws AppNotRunningException,
 			AttachException, LoadAgentException, ServerConnectionException {
 		VirtualMachineDescriptor descriptor = getVirtualMachineDescriptor(appName);
-		pid = Long.parseLong(descriptor.id());
+		processId = Long.parseLong(descriptor.id());
 
 		AttachProvider attachProvider = getSunAttachProvider();
 
@@ -82,8 +82,8 @@ public class JvmHook {
 	/**
 	 * @return Process ID of the attached JVM.
 	 */
-	public long getPid() {
-		return pid;
+	public long getProcessId() {
+		return processId;
 	}
 
 	/**

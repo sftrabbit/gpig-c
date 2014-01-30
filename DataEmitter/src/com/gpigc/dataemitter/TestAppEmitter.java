@@ -7,7 +7,7 @@ public class TestAppEmitter {
 	
 	public static void main(String[] args) throws Exception {
 		JvmHook jvmHook = new JvmHook(TEST_APP_NAME);
-		long pid = jvmHook.getPid();
+		long pid = jvmHook.getProcessId();
 		
 		ProtoSender sender = new ProtoSender();
 
