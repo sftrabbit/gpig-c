@@ -18,6 +18,7 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 public class JvmHook {
+	private static final String ATTACH_PROVIDER_NAME = "sun";
 	private static final String AGENT_OPTIONS = "com.sun.management.jmxremote";
 	private static final String RELATIVE_AGENT_FILE_PATH = "lib" + File.separator + "management-agent.jar";
 	private static final String CONNECTOR_ADDRESS_PROPERTY = "com.sun.management.jmxremote.localConnectorAddress";
@@ -69,7 +70,7 @@ public class JvmHook {
     
     private static AttachProvider getSunAttachProvider() throws AttachException {
         for (AttachProvider attachProvider : AttachProvider.providers()) {
-            if (attachProvider.name().equals("sun")) {
+            if (attachProvider.name().equals(ATTACH_PROVIDER_NAME)) {
             	return attachProvider;
             }
         }
