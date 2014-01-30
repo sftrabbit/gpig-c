@@ -4,7 +4,10 @@
 package com.gpig.client;
 
 /**
- * @author Tom Davies
+ * The exception thrown the execution of a post to the database fails, including
+ *  when the the the response status is incorrect.
+ * 
+ * @author GPIGC
  */
 public class FailedToWriteToDatastoreException extends Exception {
 

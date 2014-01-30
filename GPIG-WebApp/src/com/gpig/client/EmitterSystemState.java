@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,48 +14,59 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import static com.gpig.client.DataJSONKey.*;
+import static com.gpig.client.DataJSONAttribute.*;
 
-public class SystemData {
-
-	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss:SSS";
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-			DATE_FORMAT_STRING);
+/**
+ * Wraps up the state of a data emitter system that has been read at one point 
+ * in time and is about to be written to the database
+ * 
+ * @author Tom Davies
+ */
+public class EmitterSystemState {
 
 	private final String systemID;
-	private final Date timeStamp;
-	private final Map<String, String> payload;
+	private final Date timestamp;
+	private final Map<String, String> sensorReadings;
 
 	/**
 	 * @param systemID  The system this data is about
-	 * @param timeStamp The time that this data was received
-	 * @param payload  The contents of this data, i.e. the values of 0 or more
-	 *           	 sensors
+	 * @param timestamp The time that this data was received
+	 * @param sensorReadings The state of this system, i.e. the values of 0 or
+	 * more sensors at the given time
 	 */
-	public SystemData(String systemID, Date timeStamp,
+	public EmitterSystemState(String systemID, Date timestamp,
 			Map<String, String> payload) {
 		if (systemID == null)
 			throw new NullPointerException("System ID is null");
-		if (timeStamp == null)
+		if (timestamp == null)
 			throw new NullPointerException("Timestamp is null");
 		if (payload == null)
 			throw new NullPointerException("Payload is null");
 
 		this.systemID = systemID;
-		this.timeStamp = timeStamp;
-		this.payload = Collections.unmodifiableMap(payload);
+		this.timestamp = timestamp;
+		this.sensorReadings = Collections.unmodifiableMap(payload);
 	}
 
+	/**
+	 * @return The ID of the system from which we have read this data
+	 */
 	public String getSystemID() {
 		return systemID;
 	}
 
+	/**
+	 * @return The time at which the data was received by the HUMS
+	 */
 	public Date getTimeStamp() {
-		return timeStamp;
+		return timestamp;
 	}
 
-	public Map<String, String> getPayload() {
-		return payload;
+	/**
+	 * @return The value read by each sensor
+	 */
+	public Map<String, String> getSensorReadings() {
+		return sensorReadings;
 	}
 
 	/**
@@ -67,7 +77,7 @@ public class SystemData {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static SystemData parseJSON(Reader reader)
+	public static EmitterSystemState parseJSON(Reader reader)
 			throws JsonParseException, IOException, ParseException {
 
 		String systemID = null;
@@ -99,8 +109,8 @@ public class SystemData {
 			throw new IllegalArgumentException("Unrecognised JSON key: "
 					+ jsonKey);
 		}
-		parser.close(); // ensure resources get cleaned up timely and properly
-		return new SystemData(systemID, timeStamp, payload);
+		parser.close();
+		return new EmitterSystemState(systemID, timeStamp, payload);
 	}
 
 	/**
@@ -118,17 +128,10 @@ public class SystemData {
 			String jsonKey = parser.getCurrentName();
 			parser.nextToken(); // Move to value
 			String jsonValue = parser.getText();
-
 			if (jsonKey.equals(JSON_SENSOR_ID.getKey())) {
 				if (sensorID != null)// Shouldn't have already seen a sensor ID
 					throw new IllegalArgumentException("Duplicate "+ JSON_SENSOR_ID);
 				sensorID = jsonValue;
-				continue;
-			}
-			if (jsonKey.equals(JSON_CREATION_TIMESTAMP.getKey())) {
-				if (sensorValue != null) // Shouldn't have already seen a sensor value
-					throw new IllegalArgumentException("Duplicate "+ JSON_VALUE);
-				sensorValue = jsonValue;
 				continue;
 			}
 			if (jsonKey.equals(JSON_VALUE.getKey())) {
@@ -160,10 +163,10 @@ public class SystemData {
 		gen.writeStartObject();
 		gen.writeStringField(JSON_SYSTEM_ID.getKey(), this.systemID);
 		gen.writeFieldName(JSON_CREATION_TIMESTAMP.getKey());
-		gen.writeNumber(this.timeStamp.getTime());
+		gen.writeNumber(this.timestamp.getTime());
 		gen.writeArrayFieldStart(JSON_PAYLOAD.getKey());
-		for (String key : this.payload.keySet()) {
-			String value = payload.get(key);
+		for (String key : this.sensorReadings.keySet()) {
+			String value = sensorReadings.get(key);
 			gen.writeStartObject();
 			gen.writeStringField(JSON_SENSOR_ID.getKey(), key);
 			gen.writeStringField(JSON_VALUE.getKey(), value);

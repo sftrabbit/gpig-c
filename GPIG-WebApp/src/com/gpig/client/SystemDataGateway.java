@@ -3,13 +3,17 @@
  */
 package com.gpig.client;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.Date;
-import java.util.List;
+
+import org.apache.http.ParseException;
 
 /**
  * The interface to any datastore
  * 
- * @author Tom Davies
+ * @author GPIGC
  */
 public interface SystemDataGateway {
 	
@@ -19,9 +23,12 @@ public interface SystemDataGateway {
 	 * @return The numRecords most recent records associated with the given
 	 * systemID
 	 * @throws FailedToReadFromDatastoreException 
+	 * @throws IOException 
+	 * @throws ParseException 
+	 * @throws URISyntaxException 
 	 */
-	public List<SystemData> readMostRecent(String systemID, int numRecords) 
-			throws FailedToReadFromDatastoreException;
+	public QueryResult readMostRecent(String systemID, int numRecords) 
+			throws FailedToReadFromDatastoreException, URISyntaxException, ParseException, IOException;
 	
 	/**
 	 * @param systemID A systemID
@@ -29,9 +36,12 @@ public interface SystemDataGateway {
 	 * @param end The latest point in the time period
 	 * @return All records for a given systemID within the given time period
 	 * @throws FailedToReadFromDatastoreException 
+	 * @throws URISyntaxException 
+	 * @throws IOException 
+	 * @throws ParseException 
 	 */
-	public List<SystemData> readBetween(String systemID, Date start, Date end) 
-			throws FailedToReadFromDatastoreException;
+	public QueryResult readBetween(String systemID, Date start, Date end) 
+			throws FailedToReadFromDatastoreException, URISyntaxException, ParseException, IOException;
 	
 	/**
 	 * Writes the given data to the datastore
@@ -39,7 +49,9 @@ public interface SystemDataGateway {
 	 * @param data The data to be written
 	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
 	 * database
+	 * @throws IOException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public void write(SystemData data) throws FailedToWriteToDatastoreException;
+	public void write(EmitterSystemState data) throws FailedToWriteToDatastoreException, UnsupportedEncodingException, IOException;
 
 }
