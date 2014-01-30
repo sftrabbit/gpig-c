@@ -66,7 +66,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 		System.out.println("Response Body: " + responseBody);
 		
 		
-		return QueryResult.parseJSON();
+		return QueryResult.parseJSON(responseBody);
 	}
 
 	/* (non-Javadoc)
