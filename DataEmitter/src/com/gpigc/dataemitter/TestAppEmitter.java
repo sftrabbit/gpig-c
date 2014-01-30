@@ -1,14 +1,19 @@
 package com.gpigc.dataemitter;
 
 import com.gpigc.proto.Protos.SystemData;
+import com.sun.tools.attach.VirtualMachine;
+import com.sun.tools.attach.VirtualMachineDescriptor;
 
 public class TestAppEmitter {
 	public static void main(String[] args) throws Exception
 	{
-		/*
-		 * USAGE: test.jar PID
-		 */
-		long pid = Long.parseLong(args[0]);
+		long pid = 0;
+        for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
+            if (descriptor.displayName().equals("b.jar")) {
+            	pid = Long.parseLong(descriptor.id());
+            }
+        }
+        
 		Attach att = new Attach(pid);
 		
 		ProtoSender sender = new ProtoSender();
