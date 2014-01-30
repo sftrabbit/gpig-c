@@ -4,6 +4,7 @@
 package com.gpig.client;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
@@ -36,9 +37,12 @@ public interface SystemDataGateway {
 	 * @param end The latest point in the time period
 	 * @return All records for a given systemID within the given time period
 	 * @throws FailedToReadFromDatastoreException 
+	 * @throws URISyntaxException 
+	 * @throws IOException 
+	 * @throws ParseException 
 	 */
-	public List<SystemData> readBetween(String systemID, Date start, Date end) 
-			throws FailedToReadFromDatastoreException;
+	public QueryResult readBetween(String systemID, Date start, Date end) 
+			throws FailedToReadFromDatastoreException, URISyntaxException, ParseException, IOException;
 	
 	/**
 	 * Writes the given data to the datastore
@@ -46,7 +50,9 @@ public interface SystemDataGateway {
 	 * @param data The data to be written
 	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
 	 * database
+	 * @throws IOException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public void write(SystemData data) throws FailedToWriteToDatastoreException;
+	public void write(SystemData data) throws FailedToWriteToDatastoreException, UnsupportedEncodingException, IOException;
 
 }
