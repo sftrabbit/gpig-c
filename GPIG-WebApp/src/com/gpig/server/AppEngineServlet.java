@@ -29,7 +29,8 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import static com.gpig.server.DatabaseField.*;
 
 /**
- * Interacts with the App Engine datastore wrapper to read and write data
+ * Interacts with the App Engine datastore to read and write data based
+ * on instructions sent over HTTP from the rest of the HUMS
  *
  * @author Tom Davies
  */
