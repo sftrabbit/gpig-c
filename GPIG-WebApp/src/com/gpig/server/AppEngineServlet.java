@@ -33,12 +33,15 @@ import static com.gpig.server.DatabaseField.*;
  * Interacts with the App Engine datastore to read and write data based on
  * instructions sent over HTTP from the rest of the HUMS
  * 
- * @author Tom Davies
+ * @author GPIGC
  */
 public class AppEngineServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5913676594563624612L;
 
+	/**
+	 * Called by the server to handle a POST request.
+	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -91,6 +94,9 @@ public class AppEngineServlet extends HttpServlet {
 		return entities;
 	}
 
+	/**
+	 * Called by the server to handle a GET request.
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, java.io.IOException {
@@ -133,6 +139,9 @@ public class AppEngineServlet extends HttpServlet {
 		}
 	}
 
+	/*
+	 * Writes the HTTPResponse for a GET request
+	 */
 	private void writeResponse(String systemID, HttpServletResponse resp,
 			List<Entity> results) throws IOException {
 
@@ -150,6 +159,10 @@ public class AppEngineServlet extends HttpServlet {
 		}
 	}
 
+	/*
+	 * Queries the Datastore for DataEnties whose CreationTimestamp is 
+	 * between the given limits
+	 */
 	private List<Entity> queryWithLimits(long startTime, long endTime,
 			Query query, DatastoreService datastoreService) {
 		Collection<Filter> subFilters = new ArrayList<>();
@@ -164,13 +177,17 @@ public class AppEngineServlet extends HttpServlet {
 				FetchOptions.Builder.withDefaults());
 	}
 
+	/*
+	 * Creates a Query from a ServletRequest, identifying whether we are querying
+	 * a particular sensor or  a particular system
+	 */
 	private Query getQueryWithRequest(HttpServletRequest req, Key systemIDKey) {
 		String sensorID = req.getParameter(SENSOR_ID.getKey());
-		if (sensorID == null) {
+		if (sensorID == null) { //Querying the Whole System.
 			return new Query(ENTITY.getKey(), systemIDKey)
 					.addSort(CREATION_TIMESTAMP.getKey(),
 							Query.SortDirection.DESCENDING);
-		} else {
+		} else { //Querying a Sensor
 			Key sensorKey = KeyFactory.createKey(systemIDKey,
 					SENSOR_ID.getKey(), sensorID);
 			return new Query(ENTITY.getKey(), sensorKey)
@@ -179,6 +196,11 @@ public class AppEngineServlet extends HttpServlet {
 		}
 	}
 
+	/*
+	 * Queries the Datastore for latest 'numRecords' entries, the 
+	 * query parameter already defines whether this for a whole system, or 
+	 * a single sensor.
+	 */
 	private List<Entity> queryWithNumRecords(int numRecords, Query query,
 			DatastoreService datastoreService) {
 		return datastoreService.prepare(query).asList(
