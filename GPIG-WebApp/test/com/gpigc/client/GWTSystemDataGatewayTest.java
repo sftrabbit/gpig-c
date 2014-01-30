@@ -15,7 +15,7 @@ import com.google.gwt.dev.util.collect.HashMap;
 import com.gpig.client.FailedToReadFromDatastoreException;
 import com.gpig.client.FailedToWriteToDatastoreException;
 import com.gpig.client.GWTSystemDataGateway;
-import com.gpig.client.ReadSystemState;
+import com.gpig.client.EmitterSystemState;
 
 public class GWTSystemDataGatewayTest {
 
@@ -32,6 +32,6 @@ public class GWTSystemDataGatewayTest {
 		payload.put("Test1", "Blue");
 		payload.put("Test2", "Red");
 		payload.put("Test3", "Green");
-		gateway.write(new ReadSystemState(testSystemID, new Date(6),payload));
+		gateway.write(new EmitterSystemState(testSystemID, new Date(6),payload));
 	}
 }

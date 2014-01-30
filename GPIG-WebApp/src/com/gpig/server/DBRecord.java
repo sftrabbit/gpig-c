@@ -3,9 +3,10 @@ package com.gpig.server;
 import java.util.Date;
 
 /**
- * A record we have read from the database
+ * A record we have read from the database, making up a part of the query's
+ * result
  * 
- * @author Rosy Tucker
+ * @author GPIG-C
  */
 public class DBRecord {
 	
@@ -31,18 +32,30 @@ public class DBRecord {
 		this.value = value;
 	}
 
+	/**
+	 * @return The ID of the sensor that this record refers to
+	 */
 	public String getSensorID() {
 		return sensorID;
 	}
 
+	/**
+	 * @return The time that this sensor value was recived by the HUMS
+	 */
 	public Date getCreationTimestamp() {
 		return creationTimestamp;
 	}
 
+	/**
+	 * @return The time that this sensor value was written to the datastore
+	 */
 	public Date getDatabaseTimestamp() {
 		return databaseTimestamp;
 	}
 
+	/**
+	 * @return The value of the sensor at approximately the creation time
+	 */
 	public String getValue() {
 		return value;
 	}

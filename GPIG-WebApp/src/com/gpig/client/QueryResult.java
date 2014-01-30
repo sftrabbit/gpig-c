@@ -20,7 +20,7 @@ import static com.gpig.client.DataJSONAttribute.*;
 /**
  * The result of querying the database
  * 
- * @author Rosy Tucker
+ * @author GPIG-C
  */
 public class QueryResult {
 
@@ -42,10 +42,16 @@ public class QueryResult {
 		}
 	}
 
+	/**
+	 * @return The ID of the system to which these results pertain
+	 */
 	public String getSystemID() {
 		return systemID;
 	}
 
+	/**
+	 * @return The records matching the submitted query
+	 */
 	public List<DBRecord> getRecords() {
 		return records;
 	}

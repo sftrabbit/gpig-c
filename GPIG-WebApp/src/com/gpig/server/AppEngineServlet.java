@@ -23,7 +23,7 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.gpig.client.QueryResult;
-import com.gpig.client.ReadSystemState;
+import com.gpig.client.EmitterSystemState;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 import static com.gpig.server.DatabaseField.*;
@@ -41,11 +41,11 @@ public class AppEngineServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		ReadSystemState systemData;
+		EmitterSystemState systemData;
 
 		// Attempt to parse the request body
 		try {
-			systemData = ReadSystemState.parseJSON(req.getReader());
+			systemData = EmitterSystemState.parseJSON(req.getReader());
 		} catch (Exception e) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
 					"Failed to parse JSON: " + e.getMessage());
@@ -60,7 +60,7 @@ public class AppEngineServlet extends HttpServlet {
 		Date dataBaseTimestamp = new Date();
 		resp.getWriter().println(
 				systemData.getSystemID() + "    " + systemData.getTimeStamp()
-						+ "       " + systemData.getPayload());
+						+ "       " + systemData.getSensorReadings());
 
 		resp.getWriter().println(
 				datastoreService.put(createEntities(systemData,
@@ -68,14 +68,14 @@ public class AppEngineServlet extends HttpServlet {
 		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
-	private ArrayList<Entity> createEntities(ReadSystemState systemData,
+	private ArrayList<Entity> createEntities(EmitterSystemState systemData,
 			Date dataBaseTimestamp) {
 		ArrayList<Entity> entities = new ArrayList<>();
 
 		// Top Level Key: For the System
 		Key systemKey = KeyFactory.createKey(SYSTEM_ID.getKey(),
 				systemData.getSystemID());
-		for (String key : systemData.getPayload().keySet()) {
+		for (String key : systemData.getSensorReadings().keySet()) {
 			// Second Level Key: For this Sensor
 			Key sensorKey = KeyFactory.createKey(systemKey, SENSOR_ID.getKey(),
 					key);
@@ -84,7 +84,7 @@ public class AppEngineServlet extends HttpServlet {
 					.getTimeStamp().getTime());
 			entity.setProperty(DB_TIMESTAMP.getKey(),
 					dataBaseTimestamp.getTime());
-			entity.setProperty(VALUE.getKey(), systemData.getPayload().get(key));
+			entity.setProperty(VALUE.getKey(), systemData.getSensorReadings().get(key));
 			entities.add(entity);
 		}
 		return entities;

@@ -17,47 +17,56 @@ import com.fasterxml.jackson.core.JsonToken;
 import static com.gpig.client.DataJSONAttribute.*;
 
 /**
- * Wraps up the state of a system that has been read and about is to be written 
- * to the database
+ * Wraps up the state of a data emitter system that has been read at one point 
+ * in time and is about to be written to the database
  * 
  * @author Tom Davies
  */
-public class ReadSystemState {
+public class EmitterSystemState {
 
 	private final String systemID;
-	private final Date timeStamp;
-	private final Map<String, String> payload;
+	private final Date timestamp;
+	private final Map<String, String> sensorReadings;
 
 	/**
 	 * @param systemID  The system this data is about
-	 * @param timeStamp The time that this data was received
-	 * @param payload  The contents of this data, i.e. the values of 0 or more
-	 *           	 sensors
+	 * @param timestamp The time that this data was received
+	 * @param sensorReadings The state of this system, i.e. the values of 0 or
+	 * more sensors at the given time
 	 */
-	public ReadSystemState(String systemID, Date timeStamp,
+	public EmitterSystemState(String systemID, Date timestamp,
 			Map<String, String> payload) {
 		if (systemID == null)
 			throw new NullPointerException("System ID is null");
-		if (timeStamp == null)
+		if (timestamp == null)
 			throw new NullPointerException("Timestamp is null");
 		if (payload == null)
 			throw new NullPointerException("Payload is null");
 
 		this.systemID = systemID;
-		this.timeStamp = timeStamp;
-		this.payload = Collections.unmodifiableMap(payload);
+		this.timestamp = timestamp;
+		this.sensorReadings = Collections.unmodifiableMap(payload);
 	}
 
+	/**
+	 * @return The ID of the system from which we have read this data
+	 */
 	public String getSystemID() {
 		return systemID;
 	}
 
+	/**
+	 * @return The time at which the data was received by the HUMS
+	 */
 	public Date getTimeStamp() {
-		return timeStamp;
+		return timestamp;
 	}
 
-	public Map<String, String> getPayload() {
-		return payload;
+	/**
+	 * @return The value read by each sensor
+	 */
+	public Map<String, String> getSensorReadings() {
+		return sensorReadings;
 	}
 
 	/**
@@ -68,7 +77,7 @@ public class ReadSystemState {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static ReadSystemState parseJSON(Reader reader)
+	public static EmitterSystemState parseJSON(Reader reader)
 			throws JsonParseException, IOException, ParseException {
 
 		String systemID = null;
@@ -101,7 +110,7 @@ public class ReadSystemState {
 					+ jsonKey);
 		}
 		parser.close();
-		return new ReadSystemState(systemID, timeStamp, payload);
+		return new EmitterSystemState(systemID, timeStamp, payload);
 	}
 
 	/**
@@ -154,10 +163,10 @@ public class ReadSystemState {
 		gen.writeStartObject();
 		gen.writeStringField(JSON_SYSTEM_ID.getKey(), this.systemID);
 		gen.writeFieldName(JSON_CREATION_TIMESTAMP.getKey());
-		gen.writeNumber(this.timeStamp.getTime());
+		gen.writeNumber(this.timestamp.getTime());
 		gen.writeArrayFieldStart(JSON_PAYLOAD.getKey());
-		for (String key : this.payload.keySet()) {
-			String value = payload.get(key);
+		for (String key : this.sensorReadings.keySet()) {
+			String value = sensorReadings.get(key);
 			gen.writeStartObject();
 			gen.writeStringField(JSON_SENSOR_ID.getKey(), key);
 			gen.writeStringField(JSON_VALUE.getKey(), value);
