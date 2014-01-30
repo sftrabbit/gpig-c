@@ -3,8 +3,12 @@
  */
 package com.gpig.client;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.http.ParseException;
 
 /**
  * The interface to any datastore
@@ -19,9 +23,12 @@ public interface SystemDataGateway {
 	 * @return The numRecords most recent records associated with the given
 	 * systemID
 	 * @throws FailedToReadFromDatastoreException 
+	 * @throws IOException 
+	 * @throws ParseException 
+	 * @throws URISyntaxException 
 	 */
-	public List<SystemData> readMostRecent(String systemID, int numRecords) 
-			throws FailedToReadFromDatastoreException;
+	public QueryResult readMostRecent(String systemID, int numRecords) 
+			throws FailedToReadFromDatastoreException, URISyntaxException, ParseException, IOException;
 	
 	/**
 	 * @param systemID A systemID
