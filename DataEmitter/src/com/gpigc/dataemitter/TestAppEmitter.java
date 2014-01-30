@@ -6,6 +6,14 @@ import com.gpigc.dataemitter.JavaVirtualMachineMonitor.MonitorJvmException;
 import com.gpigc.dataemitter.ProcessMonitor.ProcessMonitorException;
 import com.gpigc.proto.Protos.SystemData;
 
+/**
+ * Monitors the test application provided by the customer and emits appropriate
+ * data to the GPIG-C system to be stored and analysed.
+ * 
+ * The test application must be running when this emitter application is
+ * launched. It locates the JVM process running b.jar, connects to it and
+ * monitors information such as its CPU and memory usage.
+ */
 public class TestAppEmitter {
 	private static final String TEST_APP_NAME = "b.jar";
 	protected static String CORE_HOST = "localhost";
