@@ -7,26 +7,27 @@ import java.net.Socket;
 import com.gpigc.proto.Protos.SystemData;
 
 /**
- * Sends Protocol Buffer messages via a socket.
+ * Sends messages containing system data via a socket. It is intended that this
+ * is used to communicate with the GPIG-C data input interface.
  */
-public class ProtoSender {
+public class DataSender {
 	protected final Socket socket;
 	protected final OutputStream outputStream;
 
 	/**
-	 * Create a ProtoSender that will send messages via the given socket.
+	 * Create a DataSender that will send messages via the given socket.
 	 * 
 	 * @param socket
 	 *            Socket to send messages through.
 	 * @throws IOException
 	 */
-	public ProtoSender(final Socket socket) throws IOException {
+	public DataSender(final Socket socket) throws IOException {
 		this.socket = socket;
 		this.outputStream = socket.getOutputStream();
 	}
 
 	/**
-	 * Create a ProtoSender that will send messages to the given hostname and
+	 * Create a DataSender that will send messages to the given hostname and
 	 * port.
 	 * 
 	 * @param host
@@ -35,12 +36,12 @@ public class ProtoSender {
 	 *            Port to send messages to
 	 * @throws IOException
 	 */
-	public ProtoSender(String host, int port) throws IOException {
+	public DataSender(String host, int port) throws IOException {
 		this(new Socket(host, port));
 	}
 
 	/**
-	 * Send a SystemData message.
+	 * Send a system data message.
 	 * 
 	 * @param message
 	 *            Message to send

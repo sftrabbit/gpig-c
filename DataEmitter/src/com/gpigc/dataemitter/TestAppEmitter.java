@@ -8,7 +8,7 @@ public class TestAppEmitter {
 	protected static int CORE_PORT = 8000;
 
 	public static void main(String[] args) throws Exception {
-		ProtoSender sender = new ProtoSender(CORE_HOST, CORE_PORT);
+		DataSender sender = new DataSender(CORE_HOST, CORE_PORT);
 		
 		JavaVirtualMachineMonitor jvmMonitor = new JavaVirtualMachineMonitor(
 				TEST_APP_NAME);
