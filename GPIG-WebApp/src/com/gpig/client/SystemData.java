@@ -15,40 +15,33 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import static com.gpig.client.DataJSONKey.*;
 
 public class SystemData {
 
-	private static final String JSON_SYSTEM_ID_KEY 				= "SystemID";
-	private static final String JSON_SENSORS_KEY 				= "Sensors";
-	private static final String JSON_SENSOR_ID_KEY 				= "SensorID";
-	private static final String JSON_SENSOR_VALUE_KEY 			= "SensorValue";
-	private static final String DATE_FORMAT_STRING 				= "yyyy-MM-dd HH:mm:ss:SSS";
-	private static final String JSON_CREATION_TIMESTAMP_KEY 	= "CreationTimestamp";
-
-	private static final SimpleDateFormat DATE_FORMAT = 
-			new SimpleDateFormat(DATE_FORMAT_STRING);
+	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss:SSS";
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
+			DATE_FORMAT_STRING);
 
 	private final String systemID;
 	private final Date timeStamp;
 	private final Map<String, String> payload;
 
 	/**
-	 * @param systemID The system this data is about
+	 * @param systemID  The system this data is about
 	 * @param timeStamp The time that this data was received
-	 * @param payload The contents of this data, i.e. the values of 0 or more
-	 * sensors
+	 * @param payload  The contents of this data, i.e. the values of 0 or more
+	 *           	 sensors
 	 */
-	public SystemData(
-			String systemID, 
-			Date timeStamp, 
+	public SystemData(String systemID, Date timeStamp,
 			Map<String, String> payload) {
 		if (systemID == null)
 			throw new NullPointerException("System ID is null");
 		if (timeStamp == null)
 			throw new NullPointerException("Timestamp is null");
-		if (payload == null) 
+		if (payload == null)
 			throw new NullPointerException("Payload is null");
-		
+
 		this.systemID = systemID;
 		this.timeStamp = timeStamp;
 		this.payload = Collections.unmodifiableMap(payload);
@@ -67,13 +60,14 @@ public class SystemData {
 	}
 
 	/**
-	 * @param reader A data source for a JSON string
+	 * @param reader
+	 *            A data source for a JSON string
 	 * @return The SystemData object represented by this JSON string
 	 * @throws JsonParseException
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static SystemData parseJSON(Reader reader) 
+	public static SystemData parseJSON(Reader reader)
 			throws JsonParseException, IOException, ParseException {
 
 		String systemID = null;
@@ -85,25 +79,25 @@ public class SystemData {
 		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
-			switch (jsonKey) {
-			case JSON_SYSTEM_ID_KEY:
+			if (jsonKey.equals(JSON_SYSTEM_ID.getKey())) {
 				parser.nextToken(); // Move to value
 				systemID = parser.getText();
-				break;
-			case JSON_CREATION_TIMESTAMP_KEY:
-				parser.nextToken(); // Move to value
-				timeStamp = DATE_FORMAT.parse(parser.getText());
-				break;
-			case JSON_SENSORS_KEY:
-				parser.nextToken(); // Start array
-				while (parser.nextToken() == JsonToken.START_OBJECT) { // Start object
-					parseSensor(parser, payload);
-				}
-				break;
-			default:
-				throw new IllegalArgumentException(
-						"Unrecognised JSON key: " + jsonKey);
+				continue;
 			}
+			if (jsonKey.equals(JSON_CREATION_TIMESTAMP.getKey())) {
+				parser.nextToken(); // Move to value
+				timeStamp = new Date(parser.getLongValue());
+				continue;
+			}
+			if (jsonKey.equals(JSON_PAYLOAD.getKey())) {
+				parser.nextToken(); // Start array
+				while (parser.nextToken() == JsonToken.START_OBJECT)
+					// Start object
+					parseSensor(parser, payload);
+				continue;
+			}
+			throw new IllegalArgumentException("Unrecognised JSON key: "
+					+ jsonKey);
 		}
 		parser.close(); // ensure resources get cleaned up timely and properly
 		return new SystemData(systemID, timeStamp, payload);
@@ -111,49 +105,47 @@ public class SystemData {
 
 	/**
 	 * Parses each sensor from SystemData JSON
-	 * 
-	 * @param parser The parser being used
-	 * @param payload The partially read payload
+	 * @param parser   The parser being used
+	 * @param payload  The partially read payload
 	 * @throws JsonParseException
 	 * @throws IOException
 	 */
-	private static void parseSensor(
-			JsonParser parser, 
-			Map<String, String> payload) 
-					throws JsonParseException, IOException {
+	private static void parseSensor(JsonParser parser,
+			Map<String, String> payload) throws JsonParseException,IOException {
 		String sensorID = null;
 		String sensorValue = null;
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
 			parser.nextToken(); // Move to value
 			String jsonValue = parser.getText();
-			switch (jsonKey) {
-			case JSON_SENSOR_ID_KEY:
-				// We shouldn't have already seen a sensor ID
-				if (sensorID != null) {
-					throw new IllegalArgumentException(
-							"Duplicate " + JSON_SENSOR_ID_KEY);
-				}
+
+			if (jsonKey.equals(JSON_SENSOR_ID.getKey())) {
+				if (sensorID != null)// Shouldn't have already seen a sensor ID
+					throw new IllegalArgumentException("Duplicate "+ JSON_SENSOR_ID);
 				sensorID = jsonValue;
-				break;
-			case JSON_SENSOR_VALUE_KEY:
-				// We shouldn't have already seen a sensor value
-				if (sensorValue != null) {
-					throw new IllegalArgumentException(
-							"Duplicate " + JSON_SENSOR_VALUE_KEY);
-				}
+				continue;
+			}
+			if (jsonKey.equals(JSON_CREATION_TIMESTAMP.getKey())) {
+				if (sensorValue != null) // Shouldn't have already seen a sensor value
+					throw new IllegalArgumentException("Duplicate "+ JSON_VALUE);
 				sensorValue = jsonValue;
-				break;
-			default:
-				throw new IllegalArgumentException(
-						"Unrecognised JSON sensor key: " + jsonKey);
+				continue;
 			}
-			// Write values to the payload map
-			if (sensorID != null && sensorValue != null) {
-				payload.put(sensorID, sensorValue);
-				sensorID = null;
-				sensorValue = null;	
+			if (jsonKey.equals(JSON_VALUE.getKey())) {
+				if (sensorValue != null) // Shouldn't have already seen a sensor value
+					throw new IllegalArgumentException("Duplicate "+ JSON_VALUE);
+				sensorValue = jsonValue;
+				continue;
 			}
+			throw new IllegalArgumentException(
+					"Unrecognised JSON sensor key: " + jsonKey);
+		}
+
+		// Write values to the payload map
+		if (sensorID != null && sensorValue != null) {
+			payload.put(sensorID, sensorValue);
+			sensorID = null;
+			sensorValue = null;
 		}
 	}
 
@@ -161,21 +153,20 @@ public class SystemData {
 	 * @return A JSON representation of this SystemData object
 	 * @throws IOException
 	 */
-	public String toJSON() throws IOException{
+	public String toJSON() throws IOException {
 		StringWriter writer = new StringWriter();
 		JsonFactory factory = new JsonFactory();
 		JsonGenerator gen = factory.createGenerator(writer);
 		gen.writeStartObject();
-		gen.writeStringField(JSON_SYSTEM_ID_KEY, this.systemID);
-		gen.writeStringField(
-				JSON_CREATION_TIMESTAMP_KEY, 
-				DATE_FORMAT.format(this.timeStamp));
-		gen.writeArrayFieldStart(JSON_SENSORS_KEY);
+		gen.writeStringField(JSON_SYSTEM_ID.getKey(), this.systemID);
+		gen.writeFieldName(JSON_CREATION_TIMESTAMP.getKey());
+		gen.writeNumber(this.timeStamp.getTime());
+		gen.writeArrayFieldStart(JSON_PAYLOAD.getKey());
 		for (String key : this.payload.keySet()) {
 			String value = payload.get(key);
 			gen.writeStartObject();
-			gen.writeStringField(JSON_SENSOR_ID_KEY, key);
-			gen.writeStringField(JSON_SENSOR_VALUE_KEY, value);
+			gen.writeStringField(JSON_SENSOR_ID.getKey(), key);
+			gen.writeStringField(JSON_VALUE.getKey(), value);
 			gen.writeEndObject();
 		}
 		gen.writeEndArray();
