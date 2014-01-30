@@ -47,15 +47,16 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 */
 	@Override
 	public QueryResult readMostRecent(String systemID, int numRecords) 
-			throws FailedToReadFromDatastoreException, URISyntaxException, ParseException, IOException {
+			throws FailedToReadFromDatastoreException, URISyntaxException, 
+			ParseException, IOException {
 		
 		//Set up the get
 		HttpClient client 	= new DefaultHttpClient();
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add( new BasicNameValuePair( SYSTEM_ID.getKey(), systemID) );
-		params.add( new BasicNameValuePair( NUM_RECORDS.getKey(), numRecords+""));
-		URI uri = new URI( dbServletUri + "?" + URLEncodedUtils.format(params,"utf-8"));
-		HttpGet 	get 	= new HttpGet(uri);
+		params.add(new BasicNameValuePair( SYSTEM_ID.getKey(), systemID) );
+		params.add(new BasicNameValuePair( NUM_RECORDS.getKey(), numRecords+""));
+		URI uri = new URI(dbServletUri + "?" + URLEncodedUtils.format(params,"utf-8"));
+		HttpGet get = new HttpGet(uri);
 		HttpResponse response;
 		try {
 			response = client.execute(get);
@@ -70,7 +71,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.gpig.client.SystemDataGateway#readBetween(java.lang.String, java.util.Date, java.util.Date)
+	 * @see com.gpig.client.SystemDataGateway#readBetween(java.lang.String,java.util.Date, java.util.Date)
 	 */
 	@Override
 	public List<SystemData> readBetween(String systemID, Date start, Date end) 
