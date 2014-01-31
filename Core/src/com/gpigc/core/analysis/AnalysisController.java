@@ -17,12 +17,8 @@ public class AnalysisController {
 	private SystemDataGateway database;
 	
 	public AnalysisController(SystemDataGateway database) throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		
 		this.database = database;
-		
 		engines = new ArrayList<AnalysisEngine>();
-		//engines.addall(new MeanAnalysis());
-		
 		instantiateEngines();
 	}
 
@@ -36,27 +32,6 @@ public class AnalysisController {
 	}
 
 	private void instantiateEngines() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-//		File folder = new File("/"+System.getProperty("user.dir") + "/resources/engines");
-//        File[] listOfFiles = folder.listFiles(); 
-//        ClassLoader loader;
-//        String className;
-//        URLConnection theURL;
-//        for(int i = 0; i < listOfFiles.length; i++) {
-//        	theURL = new URL(listOfFiles[i].toURI().toURL()).openConnection();
-//        	loader = new URLClassLoader(new URL[]{listOfFiles[i].toURI().toURL()});
-//        	if(listOfFiles[i].getName().contains(".")) {
-//        		className = listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'));
-//        	} else {
-//        		className = listOfFiles[i].getName();
-//        	}
-//            Class<?> engine = loader.loadClass("com.gpigc.analysis."+className);
-//            try {
-//            	engines.add((AnalysisEngine) engine.newInstance());
-//            } catch(Throwable t) {
-//            	t.printStackTrace();
-//            	throw new RuntimeException(t);
-//            }
-//        }
 		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engines");
 		File[] listOfFiles = folder.listFiles();
 		for(int i = 0; i < listOfFiles.length; i++) {

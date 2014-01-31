@@ -37,28 +37,49 @@ public class MeanAnalysisTest {
 	@Test
 	public void meanAnalysisRealNumbers() throws FailedToReadFromDatastoreException {
 		givenOneSystem();
-		andSensorValues(3);
+		addSensorValues(3);
 		whenTheMeanOfTheValuesAreCalculated();
 		thenTheMeanIsCalulcatedAs(2.0);
-		
+		noNotificationIsTriggered();
 	}
 	
 	@Test
 	public void meanAnalysisFloatNumbers() throws FailedToReadFromDatastoreException {
 		givenOneSystem();
-		andSensorValues(2);
+		addSensorValues(2);
 		whenTheMeanOfTheValuesAreCalculated();
 		thenTheMeanIsCalulcatedAs(1.5);
+		noNotificationIsTriggered();
 	}
-	
+
 	@Test
 	public void notificationWhenMeanViolatesBounds() throws FailedToReadFromDatastoreException {
 		givenOneSystem();
-		andSensorValues(1);
+		addSensorValues(1);
 		whenTheMeanOfTheValuesAreCalculated();
 		thenNotificationIsTriggered();		
 	}
 	
+	@Test
+	public void errorWhenSystemIdNotFound() throws FailedToReadFromDatastoreException {
+		givenOneSystem();
+		withNoSensorData();
+		whenTheMeanOfTheValuesAreCalculated();
+		thenAnErrorResultIsReturned();
+	}
+	
+	private void noNotificationIsTriggered() {
+		assertFalse(result.isNotify());
+	}
+	
+	private void thenAnErrorResultIsReturned() {
+		assertTrue(result.getDataToSave().containsKey((String) "Error"));
+	}
+
+	private void withNoSensorData() throws FailedToReadFromDatastoreException {
+		Mockito.when(database.readMostRecent("1", 10)).thenThrow(new FailedToReadFromDatastoreException("Failed"));
+	}
+
 	private void thenNotificationIsTriggered() {
 		assertTrue(result.isNotify());
 	}
@@ -67,7 +88,7 @@ public class MeanAnalysisTest {
 		meanAnalysis = new MeanAnalysis(database);
 	}
 	
-	private void andSensorValues(int numberOfRecords) throws FailedToReadFromDatastoreException {
+	private void addSensorValues(int numberOfRecords) throws FailedToReadFromDatastoreException {
 		Mockito.when(database.readMostRecent("1", 10)).thenReturn(createQueryResult(numberOfRecords));
 	}
 
