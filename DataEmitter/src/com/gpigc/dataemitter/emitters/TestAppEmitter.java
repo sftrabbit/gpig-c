@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import com.gpigc.dataemitter.DataSender;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor;
-import com.gpigc.dataemitter.monitors.ProcessMonitor;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.MonitorJvmException;
-import com.gpigc.dataemitter.monitors.ProcessMonitor.ProcessMonitorException;
+import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.ServerFetchException;
+import com.gpigc.dataemitter.monitors.ProcessMonitor;
 import com.gpigc.proto.Protos.SystemData;
 
 /**
@@ -22,33 +22,73 @@ public class TestAppEmitter {
 	protected static String CORE_HOST = "localhost";
 	protected static int CORE_PORT = 8000;
 
-	public static void main(String[] args) throws MonitorJvmException,
-			ProcessMonitorException, InterruptedException, IOException {
-		DataSender sender = new DataSender(CORE_HOST, CORE_PORT);
+	protected static int FAIL_SEND_LIMIT = 5;
+	protected static int EXIT_SERVER_ERROR = 1;
+	protected static int EXIT_JVM_ERROR = 2;
 
-		JavaVirtualMachineMonitor jvmMonitor = new JavaVirtualMachineMonitor(
-				TEST_APP_NAME);
-		long pid = jvmMonitor.getProcessId();
+	public static void main(String[] args) {
 
-		ProcessMonitor processMonitor = new ProcessMonitor(pid);
-		Thread.sleep(4500);
+		DataSender sender = null;
+		try {
+			sender = new DataSender(CORE_HOST, CORE_PORT);
+		} catch (IOException e) {
+			System.err.println("Could not connect to server. Terminating...");
+			System.exit(EXIT_SERVER_ERROR);
+		}
 
+		JavaVirtualMachineMonitor jvmMonitor = null;
+		ProcessMonitor processMonitor = null;
+		try {
+			jvmMonitor = new JavaVirtualMachineMonitor(TEST_APP_NAME);
+			processMonitor = new ProcessMonitor(jvmMonitor.getProcessId());
+		} catch (MonitorJvmException e) {
+			System.err.println("Could not find JVM for test program. Terminating...");
+			System.exit(EXIT_JVM_ERROR);
+		}
+
+		try {
+			Thread.sleep(4500);
+		} catch (InterruptedException e1) {
+			System.err.println(
+					"Interrupted whilst waiting for CPU load measurements to stabilise.\n" +
+					"First few reported values will be inaccurate.");
+		}
+
+		// When this reaches the limit, give up and terminate
+		int failcount = 0;
 		while (true) {
-			SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
+			try {
+				SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
 					.setKey("CPU")
 					.setValue(String.valueOf(processMonitor.getCpuLoad()))
 					.build();
-			SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
+				SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
 					.setKey("Mem")
 					.setValue(String.valueOf(jvmMonitor.getUsedMemory()))
 					.build();
-			SystemData data = SystemData.newBuilder().setSystemId("1")
+				SystemData data = SystemData.newBuilder().setSystemId("1")
 					.setTimestamp(System.nanoTime()).addDatum(cpuDatum)
 					.addDatum(memoryDatum).build();
 
-			sender.send(data);
+				sender.send(data);
+				failcount = 0;
+			} catch (IOException e) {
+				System.err.println("Could not send data to server.");
+				failcount ++;
+			} catch (ServerFetchException e) {
+				System.err.println("Could not get memory usage from JVM. Terminating...");
+				System.exit(EXIT_JVM_ERROR);
+			}
 
-			Thread.sleep(1000);
+			if(failcount == FAIL_SEND_LIMIT) {
+				System.err.println("Failed to send too much data. Terminating...");
+				System.exit(EXIT_SERVER_ERROR);
+			}
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
 		}
 	}
 }
