@@ -39,7 +39,7 @@ public class SensorState {
 	}
 
 	/**
-	 * @return The time that this sensor value was recived by the HUMS
+	 * @return The time that this sensor value was received by the HUMS
 	 */
 	public Date getCreationTimestamp() {
 		return creationTimestamp;

@@ -41,10 +41,10 @@ public class AnalysisController {
 	}
 
 	private void instantiateEngines() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engines");
+		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
 		for(int i = 0; i < listOfFiles.length; i++) {
-			Constructor<?> constructor = Class.forName("com.gpigc.core.analysis.engines." + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'))).getConstructor(SystemDataGateway.class);
+			Constructor<?> constructor = Class.forName("com.gpigc.core.analysis.engine." + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'))).getConstructor(SystemDataGateway.class);
 			AnalysisEngine engine = (AnalysisEngine) constructor.newInstance(database);
 			engines.add(engine);
 		}
