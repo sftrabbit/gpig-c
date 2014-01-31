@@ -31,14 +31,14 @@ public class MeanAnalysis extends AnalysisEngine {
 		Map<String, Double> result = new HashMap<String, Double>();
 
 		try {
-			List<SensorState> sensorDatas = getSensorData();
+			List<SensorState> sensorStates = getSensorStates();
 			double total = 0;
 		
-			for(SensorState ss : sensorDatas) {
-				total += Integer.parseInt(ss.getValue());
+			for(SensorState sensorState : sensorStates) {
+				total += Integer.parseInt(sensorState.getValue());
 			}
 		
-			result.put("Test", total / (double) sensorDatas.size());
+			result.put("Test", total / (double) sensorStates.size());
 		} catch (FailedToReadFromDatastoreException e) {
 			result.put("Fail", 0.0);
 		}
@@ -46,12 +46,12 @@ public class MeanAnalysis extends AnalysisEngine {
 		return new Result(result, true);
 	}
 	
-	private List<SensorState> getSensorData() throws FailedToReadFromDatastoreException {
-		List<SensorState> systemData = new ArrayList<SensorState>();
+	private List<SensorState> getSensorStates() throws FailedToReadFromDatastoreException {
+		List<SensorState> sensorState = new ArrayList<SensorState>();
 		for(String systemId : associatedSystems) {
-			systemData.addAll(database.readMostRecent(systemId, TEN_RECORDS).getRecords());
+			sensorState.addAll(database.readMostRecent(systemId, TEN_RECORDS).getRecords());
 		}
-		return systemData;
+		return sensorState;
 	}
 
 }
