@@ -21,6 +21,8 @@ public class TestAppEmitter {
 	private static final String TEST_APP_NAME = "b.jar";
 	protected static String CORE_HOST = "localhost";
 	protected static int CORE_PORT = 8000;
+	protected static int DELAY_BEFORE_MONITOR = 4500;
+	protected static final int MONITOR_INTERVAL = 1000;
 
 	public static void main(String[] args) throws MonitorJvmException,
 			ProcessMonitorException, InterruptedException, IOException {
@@ -31,7 +33,7 @@ public class TestAppEmitter {
 		long pid = jvmMonitor.getProcessId();
 
 		ProcessMonitor processMonitor = new ProcessMonitor(pid);
-		Thread.sleep(4500);
+		Thread.sleep(DELAY_BEFORE_MONITOR);
 
 		while (true) {
 			SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
@@ -48,7 +50,7 @@ public class TestAppEmitter {
 
 			sender.send(data);
 
-			Thread.sleep(1000);
+			Thread.sleep(MONITOR_INTERVAL);
 		}
 	}
 }
