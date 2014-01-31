@@ -1,9 +1,9 @@
 package com.gpigc.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +14,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.gpig.client.FailedToReadFromDatastoreException;
+import com.gpig.client.QueryResult;
+import com.gpig.client.SensorState;
+import com.gpig.client.SystemDataGateway;
 import com.gpigc.core.analysis.Result;
-import com.gpigc.core.analysis.engines.MeanAnalysis;
-import com.gpigc.core.database.SystemData;
-import com.gpigc.core.database.SystemDataGateway;
+import com.gpigc.core.analysis.engine.MeanAnalysis;
 
 public class MeanAnalysisTest {
 	
-	private MeanAnalysis maTest;
+	private MeanAnalysis meanAnalysis;
 	private Result result;
 	
 	@Mock
@@ -33,53 +35,83 @@ public class MeanAnalysisTest {
 	}
 	
 	@Test
-	public void meanAnalysisRealNumbers() {
+	public void meanAnalysisRealNumbers() throws FailedToReadFromDatastoreException {
 		givenOneSystem();
-		andSensorValues(3);
-		whenTheMeanOfTheTenValuesAreCalculated();
-		thenTheMeanIsCalulcatedAs(2.0);
-		
+		addSensorValues(3);
+		whenTheMeanOfTheValuesAreCalculated();
+		thenTheMeanIsCalulcatedAs("2.0");
+		noNotificationIsTriggered();
 	}
 	
 	@Test
-	public void meanAnalysisFloatNumbers() {
+	public void meanAnalysisFloatNumbers() throws FailedToReadFromDatastoreException {
 		givenOneSystem();
-		andSensorValues(2);
-		whenTheMeanOfTheTenValuesAreCalculated();
-		thenTheMeanIsCalulcatedAs(1.5);
+		addSensorValues(2);
+		whenTheMeanOfTheValuesAreCalculated();
+		thenTheMeanIsCalulcatedAs("1.5");
+		noNotificationIsTriggered();
+	}
+
+	@Test
+	public void notificationWhenMeanViolatesBounds() throws FailedToReadFromDatastoreException {
+		givenOneSystem();
+		addSensorValues(1);
+		whenTheMeanOfTheValuesAreCalculated();
+		thenNotificationIsTriggered();		
+	}
+	
+	@Test
+	public void errorWhenSystemIdNotFound() throws FailedToReadFromDatastoreException {
+		givenOneSystem();
+		withNoSensorData();
+		whenTheMeanOfTheValuesAreCalculated();
+		thenAnErrorResultIsReturned();
+	}
+	
+	private void noNotificationIsTriggered() {
+		assertFalse(result.isNotify());
+	}
+	
+	private void thenAnErrorResultIsReturned() {
+		assertTrue(result.getDataToSave().containsKey((String) "Error"));
+	}
+
+	private void withNoSensorData() throws FailedToReadFromDatastoreException {
+		Mockito.when(database.readMostRecent("1", 10)).thenThrow(new FailedToReadFromDatastoreException("Failed"));
+	}
+
+	private void thenNotificationIsTriggered() {
+		assertTrue(result.isNotify());
 	}
 
 	private void givenOneSystem() {
-		maTest = new MeanAnalysis(database);
+		meanAnalysis = new MeanAnalysis(database);
 	}
 	
-	private void andSensorValues(int numberOfRecords) {
-		Mockito.when(database.readSystemData("1", 10)).thenReturn(createSystemData(numberOfRecords));
+	private void addSensorValues(int numberOfRecords) throws FailedToReadFromDatastoreException {
+		Mockito.when(database.readMostRecent("1", 10)).thenReturn(createQueryResult(numberOfRecords));
 	}
 
-	private void whenTheMeanOfTheTenValuesAreCalculated() {
-		result = maTest.analyse();
+	private void whenTheMeanOfTheValuesAreCalculated() {
+		result = meanAnalysis.analyse();
 	}
 	
-	private void thenTheMeanIsCalulcatedAs(double meanValue) {
+	private void thenTheMeanIsCalulcatedAs(String string) {
 		Map<?, ?> data = result.getDataToSave();
 		Iterator<?> dataIterator = data.keySet().iterator();
 		
 		while(dataIterator.hasNext()) {
 			String key = dataIterator.next().toString();
-			assertEquals(meanValue, data.get(key));
+			assertEquals(string, data.get(key));
 		}
 	}
-	
-	private List<SystemData> createSystemData(int systemData) {
-		List<SystemData> systemDatas = new ArrayList<SystemData>();
-		Map<String, String> payload = new HashMap<String, String>();	
-		for(Integer i = 1; i < (systemData + 1); i ++) {
-			payload.put(i.toString(), i.toString());		
+
+	private QueryResult createQueryResult(int numberOfRecords) {
+		List<SensorState> sensorStates = new ArrayList<SensorState>();	
+		for(Integer i = 1; i < (numberOfRecords + 1); i ++) {
+			sensorStates.add(new SensorState(i.toString(), new Date(), new Date(), i.toString()));
 		}
-		systemDatas.add(new SystemData("1234", System.nanoTime(), payload));
-		
-		return systemDatas;
+		QueryResult queryResult = new QueryResult("1", sensorStates);
+		return queryResult;
 	}
-	
 }
