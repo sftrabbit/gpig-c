@@ -8,10 +8,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 
+import com.gpigc.dataemitter.emitters.Emitter;
+import com.gpigc.dataemitter.emitters.TestAppEmitter;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.AppNotRunningException;
 
 public class DataEmitter implements Runnable {
-	private static final TestAppEmitter emitter = new TestAppEmitter();
+	private static final Emitter emitter = new TestAppEmitter();
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
 		ExecutorService threadExecutor = null;

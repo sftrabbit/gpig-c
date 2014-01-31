@@ -1,7 +1,6 @@
-package com.gpigc.dataemitter;
+package com.gpigc.dataemitter.emitters;
 
 import java.io.IOException;
-import java.util.concurrent.Callable;
 
 import com.gpigc.dataemitter.comms.DataSender;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor;
@@ -18,19 +17,19 @@ import com.gpigc.proto.Protos.SystemData;
  * launched. It locates the JVM process running b.jar, connects to it and
  * monitors information such as its CPU and memory usage.
  */
-public class TestAppEmitter implements Callable<Void> {
+public class TestAppEmitter implements Emitter {
 	private static final String TEST_APP_NAME = "b.jar";
 	protected static String CORE_HOST = "localhost";
 	protected static int CORE_PORT = 8000;
 	protected static int DELAY_BEFORE_MONITOR = 4500;
 	protected static final int MONITOR_INTERVAL = 1000;
-	
+
 	protected boolean running = true;
 
 	@Override
-	public Void call() throws MonitorJvmException,
-			ProcessMonitorException, InterruptedException, IOException {
-		
+	public Void call() throws MonitorJvmException, ProcessMonitorException,
+			InterruptedException, IOException {
+
 		DataSender sender = new DataSender(CORE_HOST, CORE_PORT);
 
 		JavaVirtualMachineMonitor jvmMonitor = new JavaVirtualMachineMonitor(
@@ -57,7 +56,7 @@ public class TestAppEmitter implements Callable<Void> {
 
 			Thread.sleep(MONITOR_INTERVAL);
 		}
-		
+
 		return null;
 	}
 
