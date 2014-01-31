@@ -1,4 +1,4 @@
-package com.gpigc.core.analysis.engines;
+package com.gpigc.core.analysis.engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,12 +30,12 @@ public class MeanAnalysis extends AnalysisEngine {
 	public Result analyse() {
 		error = false;
 		List<SensorState> sensorStates = getSensorStates();
-		double mean = computeMean(sensorStates);
-		return computeResult(mean);
+		Double mean = computeMean(sensorStates);
+		return computeResult(mean.toString());
 	}
 	
-	private Result computeResult(double mean) {
-		Map<String, Double> payload = new HashMap<String, Double>();
+	private Result computeResult(String mean) {
+		Map<String, String> payload = new HashMap<String, String>();
 		if(error) {
 			payload.put(ERROR, mean);
 			return new Result(payload, true);
@@ -47,8 +47,8 @@ public class MeanAnalysis extends AnalysisEngine {
 		return new Result(payload, true);	
 	}
 
-	private boolean meanIsAcceptable(double mean) {
-		return mean >= LOWER_BOUND && mean <= UPPER_BOUND;
+	private boolean meanIsAcceptable(String mean) {
+		return Double.valueOf(mean) >= LOWER_BOUND && Double.valueOf(mean) <= UPPER_BOUND;
 	}
 
 	private double computeMean(List<SensorState> sensorStates) {

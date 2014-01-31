@@ -19,7 +19,7 @@ import com.gpig.client.QueryResult;
 import com.gpig.client.SensorState;
 import com.gpig.client.SystemDataGateway;
 import com.gpigc.core.analysis.Result;
-import com.gpigc.core.analysis.engines.MeanAnalysis;
+import com.gpigc.core.analysis.engine.MeanAnalysis;
 
 public class MeanAnalysisTest {
 	
@@ -39,7 +39,7 @@ public class MeanAnalysisTest {
 		givenOneSystem();
 		addSensorValues(3);
 		whenTheMeanOfTheValuesAreCalculated();
-		thenTheMeanIsCalulcatedAs(2.0);
+		thenTheMeanIsCalulcatedAs("2.0");
 		noNotificationIsTriggered();
 	}
 	
@@ -48,7 +48,7 @@ public class MeanAnalysisTest {
 		givenOneSystem();
 		addSensorValues(2);
 		whenTheMeanOfTheValuesAreCalculated();
-		thenTheMeanIsCalulcatedAs(1.5);
+		thenTheMeanIsCalulcatedAs("1.5");
 		noNotificationIsTriggered();
 	}
 
@@ -96,13 +96,13 @@ public class MeanAnalysisTest {
 		result = meanAnalysis.analyse();
 	}
 	
-	private void thenTheMeanIsCalulcatedAs(double meanValue) {
+	private void thenTheMeanIsCalulcatedAs(String string) {
 		Map<?, ?> data = result.getDataToSave();
 		Iterator<?> dataIterator = data.keySet().iterator();
 		
 		while(dataIterator.hasNext()) {
 			String key = dataIterator.next().toString();
-			assertEquals(meanValue, data.get(key));
+			assertEquals(string, data.get(key));
 		}
 	}
 

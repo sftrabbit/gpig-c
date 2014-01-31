@@ -26,8 +26,17 @@ public class AnalysisController {
 		for(AnalysisEngine engine : engines) {
 			List<String> associatedSystems = engine.getAssociatedSystems();
 			if (associatedSystems.contains(systemId)) {
-				engine.analyse().process();
+				processResult(engine.analyse());
 			}
+		}
+	}
+
+	private void processResult(Result result) {
+		//database.write(Shizzam);
+		// TODO write back data
+		if(result.isNotify()){
+			// TODO Sort out notifications
+			System.out.println("Bitches need to notify: " + result.getDataToSave().toString());
 		}
 	}
 
@@ -35,8 +44,8 @@ public class AnalysisController {
 		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engines");
 		File[] listOfFiles = folder.listFiles();
 		for(int i = 0; i < listOfFiles.length; i++) {
-			Constructor<?> engCon = Class.forName("com.gpigc.core.analysis.engines." + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'))).getConstructor(SystemDataGateway.class);
-			AnalysisEngine engine = (AnalysisEngine) engCon.newInstance(database);
+			Constructor<?> constructor = Class.forName("com.gpigc.core.analysis.engines." + listOfFiles[i].getName().substring(0, listOfFiles[i].getName().lastIndexOf('.'))).getConstructor(SystemDataGateway.class);
+			AnalysisEngine engine = (AnalysisEngine) constructor.newInstance(database);
 			engines.add(engine);
 		}
 	}	
