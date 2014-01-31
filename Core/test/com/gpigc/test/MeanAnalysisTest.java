@@ -23,7 +23,7 @@ import com.gpigc.core.analysis.engines.MeanAnalysis;
 
 public class MeanAnalysisTest {
 	
-	private MeanAnalysis maTest;
+	private MeanAnalysis meanAnalysis;
 	private Result result;
 	
 	@Mock
@@ -52,15 +52,15 @@ public class MeanAnalysisTest {
 	}
 
 	private void givenOneSystem() {
-		maTest = new MeanAnalysis(database);
+		meanAnalysis = new MeanAnalysis(database);
 	}
 	
 	private void andSensorValues(int numberOfRecords) throws FailedToReadFromDatastoreException {
-		Mockito.when(database.readMostRecent("1", 10)).thenReturn(createSystemData(numberOfRecords));
+		Mockito.when(database.readMostRecent("1", 10)).thenReturn(createQueryResult(numberOfRecords));
 	}
 
 	private void whenTheMeanOfTheTenValuesAreCalculated() {
-		result = maTest.analyse();
+		result = meanAnalysis.analyse();
 	}
 	
 	private void thenTheMeanIsCalulcatedAs(double meanValue) {
@@ -73,14 +73,14 @@ public class MeanAnalysisTest {
 		}
 	}
 
-	private QueryResult createSystemData(int systemData) {
-		List<SensorState> systemDatas = new ArrayList<SensorState>();	
+	private QueryResult createQueryResult(int systemData) {
+		List<SensorState> sensorStates = new ArrayList<SensorState>();	
 		for(Integer i = 1; i < (systemData + 1); i ++) {
-			systemDatas.add(new SensorState("1234", new Date(), new Date(), i.toString()));
+			sensorStates.add(new SensorState(i.toString(), new Date(), new Date(), i.toString()));
 		}
 		
-		QueryResult result = new QueryResult("1", systemDatas);
-		return result;
+		QueryResult queryResult = new QueryResult("1", sensorStates);
+		return queryResult;
 	}
 	
 }
