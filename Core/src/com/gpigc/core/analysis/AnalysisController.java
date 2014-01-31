@@ -1,14 +1,15 @@
 package com.gpigc.core.analysis;
+
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
-//import java.net.URL;
-//import java.net.URLClassLoader;
-//import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.gpig.client.SystemDataGateway;
+import com.gpigc.core.eventnotify.EventNotify;
+import com.gpigc.core.eventnotify.InvalidEventNotifyException;
 
 public class AnalysisController {
 
@@ -32,12 +33,14 @@ public class AnalysisController {
 	}
 
 	private void processResult(Result result) {
-		//database.write(Shizzam);
+		//database.write(Shizzam);s
 		// TODO write back data
-		if(result.isNotify()){
-			// TODO Sort out notifications
-			System.out.println("Bitches need to notify: " + result.getDataToSave().toString());
+		try {
+			new EventNotify(result, "Mean Analysis", "1");
+		} catch (InvalidEventNotifyException e) {
+			e.printStackTrace();
 		}
+		System.out.println("Bitches need to notify: " + result.getDataToSave().toString());
 	}
 
 	private void instantiateEngines() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {

@@ -27,5 +27,4 @@ public class EventNotify {
 	public String getComponentID() {
 		return this.componentID;
 	}
-	
 }
