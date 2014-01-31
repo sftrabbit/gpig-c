@@ -8,9 +8,7 @@ import java.net.MalformedURLException;
 //import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-//import com.gpigc.database.SystemData;
-import com.gpigc.core.database.SystemDataGateway;
+import com.gpig.client.SystemDataGateway;
 
 public class AnalysisController {
 
@@ -18,9 +16,9 @@ public class AnalysisController {
 	
 	private SystemDataGateway database;
 	
-	public AnalysisController() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public AnalysisController(SystemDataGateway database) throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		
-		//database = new SystemDataGateway();
+		this.database = database;
 		
 		engines = new ArrayList<AnalysisEngine>();
 		//engines.addall(new MeanAnalysis());

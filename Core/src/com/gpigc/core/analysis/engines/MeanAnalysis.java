@@ -2,14 +2,14 @@ package com.gpigc.core.analysis.engines;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.analysis.Result;
-import com.gpigc.core.database.SystemData;
-import com.gpigc.core.database.SystemDataGateway;
+import com.gpig.client.FailedToReadFromDatastoreException;
+import com.gpig.client.SensorState;
+import com.gpig.client.SystemDataGateway;
 
 public class MeanAnalysis extends AnalysisEngine {
 
@@ -28,35 +28,28 @@ public class MeanAnalysis extends AnalysisEngine {
 	}
 
 	public Result analyse() {
-		List<SystemData> systemDatas = getSystemData();
-		Iterator<SystemData> iterator = systemDatas.iterator();
-		double total = 0;
-		
-		while(iterator.hasNext()) {
-			total = total + processPayload(iterator.next().getPayload());
-		}
-		
 		Map<String, Double> result = new HashMap<String, Double>();
-		result.put("Test", total / (double) systemDatas.size());
+
+		try {
+			List<SensorState> sensorDatas = getSensorData();
+			double total = 0;
+		
+			for(SensorState ss : sensorDatas) {
+				total += Integer.parseInt(ss.getValue());
+			}
+		
+			result.put("Test", total / (double) sensorDatas.size());
+		} catch (FailedToReadFromDatastoreException e) {
+			result.put("Fail", 0.0);
+		}
 		
 		return new Result(result, true);
 	}
 	
-	private double processPayload(Map<String, String> payload) {
-		Iterator<String> iterator = payload.keySet().iterator();
-		int total = 0;
-		
-		while(iterator.hasNext()) {
-			total = total + Integer.parseInt(payload.get(iterator.next()));
-		}
-		
-		return total / (double) payload.size();
-	}
-	
-	private List<SystemData> getSystemData() {
-		List<SystemData> systemData = new ArrayList<SystemData>();
+	private List<SensorState> getSensorData() throws FailedToReadFromDatastoreException {
+		List<SensorState> systemData = new ArrayList<SensorState>();
 		for(String systemId : associatedSystems) {
-			systemData.addAll(database.readSystemData(systemId, TEN_RECORDS));
+			systemData.addAll(database.readMostRecent(systemId, TEN_RECORDS).getRecords());
 		}
 		return systemData;
 	}
