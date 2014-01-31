@@ -1,6 +1,7 @@
 package com.gpigc.dataemitter;
 
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
 import com.gpigc.dataemitter.comms.DataSender;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor;
@@ -17,15 +18,19 @@ import com.gpigc.proto.Protos.SystemData;
  * launched. It locates the JVM process running b.jar, connects to it and
  * monitors information such as its CPU and memory usage.
  */
-public class TestAppEmitter {
+public class TestAppEmitter implements Callable<Void> {
 	private static final String TEST_APP_NAME = "b.jar";
 	protected static String CORE_HOST = "localhost";
 	protected static int CORE_PORT = 8000;
 	protected static int DELAY_BEFORE_MONITOR = 4500;
 	protected static final int MONITOR_INTERVAL = 1000;
+	
+	protected boolean running = true;
 
-	public static void main(String[] args) throws MonitorJvmException,
+	@Override
+	public Void call() throws MonitorJvmException,
 			ProcessMonitorException, InterruptedException, IOException {
+		
 		DataSender sender = new DataSender(CORE_HOST, CORE_PORT);
 
 		JavaVirtualMachineMonitor jvmMonitor = new JavaVirtualMachineMonitor(
@@ -35,7 +40,7 @@ public class TestAppEmitter {
 		ProcessMonitor processMonitor = new ProcessMonitor(pid);
 		Thread.sleep(DELAY_BEFORE_MONITOR);
 
-		while (true) {
+		while (running) {
 			SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
 					.setKey("CPU")
 					.setValue(String.valueOf(processMonitor.getCpuLoad()))
@@ -52,5 +57,11 @@ public class TestAppEmitter {
 
 			Thread.sleep(MONITOR_INTERVAL);
 		}
+		
+		return null;
+	}
+
+	public void stop() {
+		running = false;
 	}
 }
