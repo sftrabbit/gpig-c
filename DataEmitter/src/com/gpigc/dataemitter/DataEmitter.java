@@ -8,27 +8,28 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 
-import com.gpigc.dataemitter.emitters.Emitter;
-import com.gpigc.dataemitter.emitters.TestAppEmitter;
+import com.gpigc.dataemitter.emitters.*;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.AppNotRunningException;
 
 public class DataEmitter implements Runnable {
-	private static final Emitter emitter = new TestAppEmitter();
-	
-	public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
+	// _StubEmitter_ is replaced by the appropriate Emitter by the build system
+	private static final Emitter emitter = new _StubEmitter_();
+
+	public static void main(String[] args) throws InterruptedException,
+			ExecutionException, TimeoutException {
 		ExecutorService threadExecutor = null;
 		try {
 			threadExecutor = Executors.newSingleThreadExecutor();
-			
+
 			DataEmitter dataEmitter = new DataEmitter();
 			Thread dataEmitterThread = new Thread(dataEmitter);
 			dataEmitterThread.setDaemon(true);
 			dataEmitterThread.start();
-	
+
 			Future<Void> futureResult = threadExecutor.submit(emitter);
-	
+
 			futureResult.get();
-			
+
 			emitter.stop();
 		} catch (ExecutionException e) {
 			Throwable cause = e.getCause();

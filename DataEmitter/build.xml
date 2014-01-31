@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="testappemitter" name="Create Runnable Jar for Project GPIG with Jar-in-Jar Loader">
-    <target name="testappemitter">
-    	<!-- Create space separated list of relative (<map>) paths to all jar files in lib director (<fileset>) -->
-    	<pathconvert pathsep=" " property="classpath">
-    		<map from="${basedir}/" to="" />
-			<fileset dir="lib" includes="*.jar"/>
-    	</pathconvert>
-    	
-        <jar destfile="bin/TestAppEmitter.jar">
-            <manifest>
-                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
-                <attribute name="Rsrc-Main-Class" value="com.gpigc.dataemitter.DataEmitter"/>
-                <attribute name="Class-Path" value="."/>
-                <attribute name="Rsrc-Class-Path" value="./ ${classpath}"/>
-            </manifest>
-            <zipfileset src="lib/jar-in-jar-loader.zip"/>
-            <zipfileset dir="lib" prefix="lib"/>
-        </jar>
-    </target>
+	<target name="testappemitter">
+		<copy file="src/com/gpigc/dataemitter/DataEmitter.java" tofile="bin/src/com/gpigc/dataemitter/DataEmitter.java">
+			<filterchain>
+				<replacetokens begintoken="_" endtoken="_">
+					<token key="StubEmitter" value="TestAppEmitter" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+
+		<!-- Create space separated list of relative (<map>) paths to all jar files in lib director (<fileset>) -->
+		<pathconvert pathsep=" " property="classpath">
+			<map from="${basedir}/" to="" />
+			<fileset dir="lib" includes="*.jar" />
+		</pathconvert>
+
+		<jar destfile="bin/TestAppEmitter.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader" />
+				<attribute name="Rsrc-Main-Class" value="com.gpigc.dataemitter.DataEmitter" />
+				<attribute name="Class-Path" value="." />
+				<attribute name="Rsrc-Class-Path" value="./ ${classpath}" />
+			</manifest>
+			<zipfileset src="lib/jar-in-jar-loader.zip" />
+			<zipfileset dir="lib" prefix="lib" />
+		</jar>
+
+		<javac destdir="bin" classpath="${classpath}" includeantruntime="false">
+			<src path="src" />
+			<src path="bin/src" />
+			<exclude name="./src/com/gpigc/dataemitter/DataEmitter.java" />
+		</javac>
+	</target>
 </project>
