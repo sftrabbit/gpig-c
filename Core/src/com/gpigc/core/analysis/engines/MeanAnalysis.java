@@ -48,7 +48,7 @@ public class MeanAnalysis extends AnalysisEngine {
 	}
 
 	private boolean meanIsAcceptable(double mean) {
-		return mean > LOWER_BOUND && mean < UPPER_BOUND;
+		return mean >= LOWER_BOUND && mean <= UPPER_BOUND;
 	}
 
 	private double computeMean(List<SensorState> sensorStates) {
