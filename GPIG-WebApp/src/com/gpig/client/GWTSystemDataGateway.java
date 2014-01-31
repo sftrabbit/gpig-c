@@ -56,17 +56,19 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 */
 	@Override
 	public QueryResult readMostRecent(String systemID, int numRecords)
-			throws FailedToReadFromDatastoreException, URISyntaxException,
-			ParseException, IOException {
-
-		// Set up the get
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair(SYSTEM_ID.getKey(), systemID));
-		params.add(new BasicNameValuePair(NUM_RECORDS.getKey(), numRecords + ""));
-		URI uri = new URI(dbServletUri + "?"
-				+ URLEncodedUtils.format(params, "utf-8"));
-		HttpGet get = new HttpGet(uri);
-		return getQueryResult(get);
+			throws FailedToReadFromDatastoreException {
+		try {
+			// Set up the get
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair(SYSTEM_ID.getKey(), systemID));
+			params.add(new BasicNameValuePair(NUM_RECORDS.getKey(), numRecords + ""));
+			URI uri = new URI(dbServletUri + "?"
+					+ URLEncodedUtils.format(params, "utf-8"));
+			HttpGet get = new HttpGet(uri);
+			return getQueryResult(get);
+		} catch (URISyntaxException | ParseException e) {
+			throw new FailedToReadFromDatastoreException(e.getMessage());
+		}
 	}
 
 	/*
@@ -78,36 +80,37 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 */
 	@Override
 	public QueryResult readBetween(String systemID, Date start, Date end)
-			throws FailedToReadFromDatastoreException, URISyntaxException,
-			ParseException, IOException {
+			throws FailedToReadFromDatastoreException {
+		try {
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair(SYSTEM_ID.getKey(), systemID));
+			params.add(new BasicNameValuePair(START_TIME.getKey(), start.getTime()
+					+ ""));
+			params.add(new BasicNameValuePair(END_TIME.getKey(), end.getTime() + ""));
+			URI uri = new URI(dbServletUri + "?"
+					+ URLEncodedUtils.format(params, "utf-8"));
+			HttpGet get = new HttpGet(uri);
 
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair(SYSTEM_ID.getKey(), systemID));
-		params.add(new BasicNameValuePair(START_TIME.getKey(), start.getTime()
-				+ ""));
-		params.add(new BasicNameValuePair(END_TIME.getKey(), end.getTime() + ""));
-		URI uri = new URI(dbServletUri + "?"
-				+ URLEncodedUtils.format(params, "utf-8"));
-		HttpGet get = new HttpGet(uri);
-
-		return getQueryResult(get);
+			return getQueryResult(get);
+		} catch (URISyntaxException | ParseException e) {
+			throw new FailedToReadFromDatastoreException(e.getMessage());
+		}
 	}
 
 	private QueryResult getQueryResult(HttpGet get)
-			throws FailedToReadFromDatastoreException, ParseException,
-			IOException {
-		HttpClient client = new DefaultHttpClient();
-		HttpResponse response;
+			throws FailedToReadFromDatastoreException {
 		try {
+			HttpClient client = new DefaultHttpClient();
+			HttpResponse response;
 			response = client.execute(get);
-		} catch (IOException e) {
+			String responseBody = EntityUtils.toString(response.getEntity(),
+					"UTF-8");
+			System.out.println("Response Body: " + responseBody);
+
+			return QueryResult.parseJSON(responseBody);
+		} catch (ParseException | IOException e) {
 			throw new FailedToReadFromDatastoreException(e.getMessage());
 		}
-		String responseBody = EntityUtils.toString(response.getEntity(),
-				"UTF-8");
-		System.out.println("Response Body: " + responseBody);
-
-		return QueryResult.parseJSON(responseBody);
 	}
 
 	/*
@@ -117,23 +120,21 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 */
 	@Override
 	public void write(EmitterSystemState data)
-			throws FailedToWriteToDatastoreException,
-			UnsupportedEncodingException, IOException {
-
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(dbServletUri);
-
-		StringEntity entity = new StringEntity(data.toJSON());
-		post.setEntity(entity);
-		HttpResponse response;
+			throws FailedToWriteToDatastoreException {
 		try {
+			HttpClient client = new DefaultHttpClient();
+			HttpPost post = new HttpPost(dbServletUri);
+
+			StringEntity entity = new StringEntity(data.toJSON());
+			post.setEntity(entity);
+			HttpResponse response;
 			response = client.execute(post);
+			if (response.getStatusLine().getStatusCode() != HttpServletResponse.SC_CREATED)
+				throw new FailedToWriteToDatastoreException(
+						"Failed to Write to DB, Response was "
+								+ response.getStatusLine().getStatusCode());
 		} catch (IOException e) {
 			throw new FailedToWriteToDatastoreException(e.getMessage());
 		}
-		if (response.getStatusLine().getStatusCode() != HttpServletResponse.SC_CREATED)
-			throw new FailedToWriteToDatastoreException(
-					"Failed to Write to DB, Response was "
-							+ response.getStatusLine().getStatusCode());
 	}
 }

@@ -1,21 +1,29 @@
 package com.gpigc.core.datainput;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.gpigc.core.analysis.AnalysisController;
-import com.gpigc.core.database.SystemData;
+import com.gpig.client.EmitterSystemState;
+import com.gpig.client.FailedToWriteToDatastoreException;
+import com.gpig.client.SystemDataGateway;
 import com.gpigc.proto.Protos;
 
 public class DataInputServer extends Thread {
 	protected boolean running = true;
 	protected AnalysisController analysisController;
+	protected SystemDataGateway database;
 	
-	public DataInputServer(AnalysisController analysisController)
+	public DataInputServer(AnalysisController analysisController,
+							SystemDataGateway database)
 	{
 		this.analysisController = analysisController;
+		this.database = database;
 	}
 	
 	public void stopserver()
@@ -35,6 +43,7 @@ public class DataInputServer extends Thread {
 		
 		pr.start();
 		ConcurrentLinkedQueue<Protos.SystemData> queue = pr.getQueue();
+		List<Protos.SystemData> failed = new ArrayList<Protos.SystemData>();
 		
 		while(running)
 		{
@@ -46,20 +55,33 @@ public class DataInputServer extends Thread {
 				{
 					datamap.put(datum.getKey(), datum.getValue());
 				}
-				SystemData sd = new SystemData(data.getSystemId(), data.getTimestamp(), datamap);
+
+				try {
+					database.write(new EmitterSystemState(
+						data.getSystemId(),
+						new Date(data.getTimestamp()),
+						datamap));
 				
-				// database.add(sd) <-- uncomment when we have a database.
-				
-				analysisController.systemUpdate(data.getSystemId());
-				System.out.println(sd);
+					analysisController.systemUpdate(data.getSystemId());
+				} catch (FailedToWriteToDatastoreException e) {
+					// If we failed to write, add it to a queue to process in the next batch.
+					failed.add(data);
+				}
 			}
+
+			queue.addAll(failed);
+			failed.clear();
+
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 			}
 		}
 		
-		pr.stop();
+		try {
+			pr.close();
+		} catch (IOException e) {
+		}
 	}
 
 }
