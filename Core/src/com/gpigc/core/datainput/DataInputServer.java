@@ -78,7 +78,10 @@ public class DataInputServer extends Thread {
 			}
 		}
 		
-		pr.stop();
+		try {
+			pr.close();
+		} catch (IOException e) {
+		}
 	}
 
 }
