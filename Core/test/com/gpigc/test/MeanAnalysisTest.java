@@ -1,6 +1,6 @@
 package com.gpigc.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +38,7 @@ public class MeanAnalysisTest {
 	public void meanAnalysisRealNumbers() throws FailedToReadFromDatastoreException {
 		givenOneSystem();
 		andSensorValues(3);
-		whenTheMeanOfTheTenValuesAreCalculated();
+		whenTheMeanOfTheValuesAreCalculated();
 		thenTheMeanIsCalulcatedAs(2.0);
 		
 	}
@@ -47,8 +47,20 @@ public class MeanAnalysisTest {
 	public void meanAnalysisFloatNumbers() throws FailedToReadFromDatastoreException {
 		givenOneSystem();
 		andSensorValues(2);
-		whenTheMeanOfTheTenValuesAreCalculated();
+		whenTheMeanOfTheValuesAreCalculated();
 		thenTheMeanIsCalulcatedAs(1.5);
+	}
+	
+	@Test
+	public void notificationWhenMeanViolatesBounds() throws FailedToReadFromDatastoreException {
+		givenOneSystem();
+		andSensorValues(1);
+		whenTheMeanOfTheValuesAreCalculated();
+		thenNotificationIsTriggered();		
+	}
+	
+	private void thenNotificationIsTriggered() {
+		assertTrue(result.isNotify());
 	}
 
 	private void givenOneSystem() {
@@ -59,7 +71,7 @@ public class MeanAnalysisTest {
 		Mockito.when(database.readMostRecent("1", 10)).thenReturn(createQueryResult(numberOfRecords));
 	}
 
-	private void whenTheMeanOfTheTenValuesAreCalculated() {
+	private void whenTheMeanOfTheValuesAreCalculated() {
 		result = meanAnalysis.analyse();
 	}
 	
@@ -73,14 +85,12 @@ public class MeanAnalysisTest {
 		}
 	}
 
-	private QueryResult createQueryResult(int systemData) {
+	private QueryResult createQueryResult(int numberOfRecords) {
 		List<SensorState> sensorStates = new ArrayList<SensorState>();	
-		for(Integer i = 1; i < (systemData + 1); i ++) {
+		for(Integer i = 1; i < (numberOfRecords + 1); i ++) {
 			sensorStates.add(new SensorState(i.toString(), new Date(), new Date(), i.toString()));
 		}
-		
 		QueryResult queryResult = new QueryResult("1", sensorStates);
 		return queryResult;
 	}
-	
 }

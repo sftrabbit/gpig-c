@@ -13,8 +13,13 @@ import com.gpig.client.SystemDataGateway;
 
 public class MeanAnalysis extends AnalysisEngine {
 
+	private static final double LOWER_BOUND = 1.5;
+	private static final double UPPER_BOUND = 50.0;
+	
 	private static final int TEN_RECORDS = 10;
-	private String mapKey = "Mean";
+	private static final String MEAN = "Mean";
+	private static final String ERROR = "Error";
+	private boolean error;
 
 	public MeanAnalysis(SystemDataGateway database) {
 		associatedSystems = new ArrayList<String>();
@@ -23,15 +28,35 @@ public class MeanAnalysis extends AnalysisEngine {
 	}
 
 	public Result analyse() {
-		mapKey = "Mean";
-		Map<String, Double> result = new HashMap<String, Double>();
+		error = false;
 		List<SensorState> sensorStates = getSensorStates();
+		double mean = computeMean(sensorStates);
+		return computeResult(mean);
+	}
+	
+	private Result computeResult(double mean) {
+		Map<String, Double> payload = new HashMap<String, Double>();
+		if(error) {
+			payload.put(ERROR, mean);
+			return new Result(payload, true);
+		}
+		payload.put(MEAN, mean);
+		if(meanIsAcceptable(mean)) {
+			return new Result(payload, false);
+		}
+		return new Result(payload, true);	
+	}
+
+	private boolean meanIsAcceptable(double mean) {
+		return mean > LOWER_BOUND && mean < UPPER_BOUND;
+	}
+
+	private double computeMean(List<SensorState> sensorStates) {
 		double total = 0;
 		for (SensorState sensorState : sensorStates) {
 			total += Integer.parseInt(sensorState.getValue());
 		}
-		result.put(mapKey, total / (double) sensorStates.size());
-		return new Result(result, true);
+		return total / (double) sensorStates.size();
 	}
 
 	private List<SensorState> getSensorStates() {
@@ -46,11 +71,10 @@ public class MeanAnalysis extends AnalysisEngine {
 		try {
 			return database.readMostRecent(systemId, TEN_RECORDS).getRecords();
 		} catch (FailedToReadFromDatastoreException e) {
+			error = true;
 			System.out.println("Failed to find any sensor data for the system with ID: " + systemId);
 			e.printStackTrace();
-			mapKey = "No sensor data found";
 			return new ArrayList<SensorState>();
 		}
 	}
-
 }
