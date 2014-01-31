@@ -24,6 +24,7 @@ public class MeanAnalysis extends AnalysisEngine {
 	public MeanAnalysis(SystemDataGateway database) {
 		associatedSystems = new ArrayList<String>();
 		associatedSystems.add("1");
+		engineName = "MeanAnalyis1";
 		this.database = database;
 	}
 

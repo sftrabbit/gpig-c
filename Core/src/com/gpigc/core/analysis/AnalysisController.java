@@ -27,16 +27,16 @@ public class AnalysisController {
 		for(AnalysisEngine engine : engines) {
 			List<String> associatedSystems = engine.getAssociatedSystems();
 			if (associatedSystems.contains(systemId)) {
-				processResult(engine.analyse());
+				processResult(engine.getEngineName(), engine.analyse());
 			}
 		}
 	}
 
-	private void processResult(Result result) {
-		//database.write(Shizzam);s
+	private void processResult(String engineName, Result result) {
+		//database.write(engineName, result);
 		// TODO write back data
 		try {
-			new EventNotify(result, "Mean Analysis", "1");
+			new EventNotify(result, engineName, "1");
 		} catch (InvalidEventNotifyException e) {
 			e.printStackTrace();
 		}
