@@ -1,4 +1,4 @@
-package com.gpigc.dataemitter;
+package com.gpigc.dataemitter.comms;
 
 import java.io.IOException;
 import java.io.OutputStream;

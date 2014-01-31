@@ -1,4 +1,4 @@
-package com.gpigc.dataemitter;
+package com.gpigc.dataemitter.monitors;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -7,12 +7,12 @@ import org.hyperic.sigar.ProcCpu;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
-import com.gpigc.dataemitter.JavaVirtualMachineMonitor.MonitorJvmException;
+import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.MonitorJvmException;
 
 /**
  * Monitors a process's resource usage, such as CPU load and heap memory usage.
  */
-class ProcessMonitor {
+public class ProcessMonitor {
 	private static final int TOTAL_TIME_UPDATE_LIMIT = 2000;
 	private static final int UPDATE_INTERVAL = 1000;
 
