@@ -3,6 +3,7 @@
 \usepackage[margin=1.5cm]{geometry}
 \usepackage[UKenglish]{babel}
 \usepackage{enumitem}
+\usepackage{calc}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{multirow}
@@ -32,7 +33,7 @@
 
 \section{Glossary}
 
-\begin{description}
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries{}Data output client}]
 
 	\item[HUMS] Health and usage monitoring system(s).
 	\item[Customer] Thales. 
@@ -55,7 +56,48 @@
 	                     specific consumer.
 \end{description}
 
-\section{Requirements}
+\section{Requirements Refinement}
+
+\section{System Architecture}
+\subsection{Quality Attributes}
+Quality attributes are defined in order to ensure the architectural decisions made when 
+creating the system architecture not only provide the required functionality,
+but also produce a system meeting the expectations of all stakeholders. For example the system may be expected to meet certain security standards or availability levels. Explicitly defining these quality attributes before concretely designing a system allows for the correct tactics and patterns to be adopted in order to maximise the utility of important qualities.
+
+When examining the HUMS non-functional requirements the following quality attributes were identified:
+	\begin{center}
+	\textit{
+		Availability, Performance, Maintainability, Security, Testability, Scalability, Usability}
+	\end{center}
+Of these availability, performance, security and usability can be observed and measured, the others are unobservable 
+however steps can still be taken to maximise their utility.
+%Maybe go into more detail if space
+
+Availability defines how ready the system is to be used, and is normally defined as the percentage of downtime over a 
+specified timeframe. The desired utility of the quality attribute within the HUMS, as defined by the non functional requirements, is  99.9\% per month. Tactics that could be employed in order to achieve this level of availability include fault detection, prevention and recovery tactics, since lack of availability is often linked to faults occurring.
+When considering fault detection, exceptions can be used within the code, to detect when an runtime error has occurred, such as mis-formatted data and mitigate the situation without a fault occurring, this is however not comprehensive and susceptible to human error.
+Fault prevention....
+Fault recovery......
+
+Performance
+
+Scalability 
+
+Maintainability
+
+\subsection{User Stories}
+\subsection{Design Decisions}
+\subsection{Data Emitter}
+\subsection{Data Input Layer}
+\subsection{Analysis Controller}
+\subsection{Analysis Engine}
+\subsection{Data Abstraction Layer}
+\subsection{Notification Generator}
+\subsection{Notification Engine}
+\subsection{Reports Engine}
+\subsection{Admin Centre}
+
+\section{Interim Prototype}
 
 \section{Risk register}
 
