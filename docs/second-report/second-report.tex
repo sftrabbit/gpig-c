@@ -75,14 +75,11 @@ attributes were identified:
 		Availability, Performance, Modifiability, Security, Testability, Usability}
 	\end{center}
 Of these availability, performance, security and usability can be observed and measured, 
-the others are unobservable 
-however steps can still be taken to maximise their utility.
+the others are unobservable however steps can still be taken to maximise their utility.
 %Maybe go into more detail if space
 
 Availability defines how ready the system is to be used, and is normally the percentage of 
-downtime over a 
-specified timeframe. The desired utility of the quality attribute within the HUMS, as 
-defined by the non functional requirements, is  99.9\% per month. Since lack of 
+downtime over a specified timeframe. The desired utility of the quality attribute within the HUMS, as defined by the non functional requirements, is  99.9\% per month. Since lack of 
 availability is often linked to faults occurring, fault detection and recovery tactics, such as 
 use of runtime exceptions, redundancy through backups and transactions, could be 
 employed in order to achieve the desired level of availability. 
@@ -103,16 +100,40 @@ lack of modifiability can increase the cost and time taken to complete the proje
 HUMS will initially be built to tackle a single domain, software, however will in the future 
 be required to work on embedded systems, mechanical systems electrical systems and 
 even people, in order to ensure this process is as efficient as possible the initial system 
-must be modifiable.
-Tactics that can be used to increase the modifiability of the system include using small 
-modules within the system, decreasing the coupling between those modules and 
-increasing the cohesion.
-\subsection{User Stories}
-\subsection{Design Decisions}
-\subsection{Data Emitter}
-\subsection{Data Input Layer}
-\subsection{Analysis Controller}
-\subsection{Analysis Engine}
+must be modifiable.Tactics that can be used to increase the modifiability of the system include using small modules within the system, decreasing the coupling between those modules and increasing the cohesion. In order to achieve low coupling  the HUMS uses interfaces between modules and restricts dependencies, such that the majority of modules can be swapped out without large changes to the overall system.
+
+\subsection{System Views}
+When designing the HUMS we identified four different views of of the system which must be documented:
+\begin{description}
+\item[Module View] The required software modules and relationships between them at a high level.
+\item[Behavioural View] Used to show the flow of data and dynamic actions within the system.
+\item[Deployment View] The hardware realisation of the system, and the geographic positioning of modules.
+\item[Conceptual View] Class Diagrams, showing a concrete implementation of the functionality.
+\end{description}
+
+\subsection{Module View}
+Having determined the quality attributes of the HUMS and the tactics which can be employed in order to achieve a high utility of these qualities a conceptual diagram can be formed, this diagram shown in figure XXX depicts the modules of the HUMS and the interactions between these modules at a high level.
+
+%%%Input Diagram WITH KEY
+
+\begin{description}
+\item[Data Emitter]  Sends data to the system core in a standard format, may be included within the HUMS or created by the end user.
+\item[Data Input Layer] Receives data from a data emitter and sends it to the data abstraction layer. Alerts the analysis controller that new data was received.
+\item[Data Abstraction Layer] Handles all interaction with the database, such that is the database was to be altered only this layer would need to be changed.
+\item[Analysis Controller] Alert the analysis engines when new data has arrived, pulling the required data from the Database Abstraction Layer. If an analysis engine determines an event has occurred within the data then the analysis controller forwards that event to the notification generator
+ \item[Analysis Engine] Analyses the data looking for trends, it a trend is found an event it returned to the analysis controller. Analysis engines may be included in the HUMS or created by the end user.
+ \item[Notification Generator] Receives events from the analysis controller, defines an abstract notification and sends it to the appropriate notification engine.
+ \item[Notification Engine] Receives an abstract notification from the notification generator and creates a concrete notification, for example an email or trigging a change in the end user's system behaviour. Notification engines may be included in the HUMS or created by the end user.
+  \item[Reports Engine] Pulls data from the data abstraction layer and formats it into a report, for example a PDF or graph. Reports engines may be included in the HUMS or created by the end user.
+\end{description}
+
+\subsection{Behavioural View}
+The Module model shows how modules of the system are connected, however, does not fully represent the interactions between components and the dynamic actions of the system.
+A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure XXX shows the behavioural model of the HUMS, showing how system use begins with a data emitter having new data and ends with a notification being generated.
+
+%%Input Diagram WITH KEY
+
+
 \subsection{Data Abstraction Layer}
 \subsection{Notification Generator}
 \subsection{Notification Engine}
