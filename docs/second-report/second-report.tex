@@ -1,6 +1,6 @@
 \documentclass[10pt,a4paper]{article}
 
-\usepackage[margin=1.5cm]{geometry}
+\usepackage[margin=2cm]{geometry}
 \usepackage[UKenglish]{babel}
 \usepackage{enumitem}
 \usepackage{calc}
@@ -62,29 +62,51 @@
 \subsection{Quality Attributes}
 Quality attributes are defined in order to ensure the architectural decisions made when 
 creating the system architecture not only provide the required functionality,
-but also produce a system meeting the expectations of all stakeholders. For example the system may be expected to meet certain security standards or availability levels. Explicitly defining these quality attributes before concretely designing a system allows for the correct tactics and patterns to be adopted in order to maximise the utility of important qualities.
+but also produce a system meeting the expectations of all stakeholders. For example the 
+system may be expected to meet certain security standards or availability levels. 
+Explicitly defining these quality attributes before concretely designing a system allows for 
+the correct tactics and patterns to be adopted in order to maximise the utility of important 
+qualities.
 
-When examining the HUMS non-functional requirements the following quality attributes were identified:
+When examining the HUMS non-functional requirements the following system quality 
+attributes were identified:
 	\begin{center}
 	\textit{
-		Availability, Performance, Maintainability, Security, Testability, Scalability, Usability}
+		Availability, Performance, Modifiability, Security, Testability, Usability}
 	\end{center}
-Of these availability, performance, security and usability can be observed and measured, the others are unobservable 
+Of these availability, performance, security and usability can be observed and measured, 
+the others are unobservable 
 however steps can still be taken to maximise their utility.
 %Maybe go into more detail if space
 
-Availability defines how ready the system is to be used, and is normally defined as the percentage of downtime over a 
-specified timeframe. The desired utility of the quality attribute within the HUMS, as defined by the non functional requirements, is  99.9\% per month. Tactics that could be employed in order to achieve this level of availability include fault detection, prevention and recovery tactics, since lack of availability is often linked to faults occurring.
-When considering fault detection, exceptions can be used within the code, to detect when an runtime error has occurred, such as mis-formatted data and mitigate the situation without a fault occurring, this is however not comprehensive and susceptible to human error.
-Fault prevention....
-Fault recovery......
+Availability defines how ready the system is to be used, and is normally the percentage of 
+downtime over a 
+specified timeframe. The desired utility of the quality attribute within the HUMS, as 
+defined by the non functional requirements, is  99.9\% per month. Since lack of 
+availability is often linked to faults occurring, fault detection and recovery tactics, such as 
+use of runtime exceptions, redundancy through backups and transactions, could be 
+employed in order to achieve the desired level of availability. 
 
-Performance
+The performance of a system is normally measured by its latency and throughput. The 
+HUMS is required to dispatch notifications through the notification generator after events 
+have been triggered by the analysis controller with a latency less than 5ms, the system is 
+also required to be able to support multiple data output clients, either notification or 
+reporting. Tactics such as reducing overhead though carefully examining the time 
+complexity of used data structures and prioritising events can help reduce latency, at 
+least for the most important events, as defined by the end user. It may also be possible to 
+add concurrency, such that multiple notification threads are used when demand for 
+notifications and reports are high, reducing the bottleneck created at the notification 
+generator.
 
-Scalability 
-
-Maintainability
-
+Modifiability is one of the most important qualities of the HUMS, though not measurable, 
+lack of modifiability can increase the cost and time taken to complete the project. The 
+HUMS will initially be built to tackle a single domain, software, however will in the future 
+be required to work on embedded systems, mechanical systems electrical systems and 
+even people, in order to ensure this process is as efficient as possible the initial system 
+must be modifiable.
+Tactics that can be used to increase the modifiability of the system include using small 
+modules within the system, decreasing the coupling between those modules and 
+increasing the cohesion.
 \subsection{User Stories}
 \subsection{Design Decisions}
 \subsection{Data Emitter}
@@ -108,7 +130,8 @@ identified and classified based upon team members' past experiences in similar
 projects and group discussion. The areas these hazards impact were then
 analysed, as well as the probability of occurrence. These are then weighted so
 that we can identify the risks which are likely to have the greatest detrimental
-effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are
+effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score 
+(RS) are
 listed in the table below.
 
 \input{risk-register}
