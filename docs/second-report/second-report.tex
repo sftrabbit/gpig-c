@@ -11,6 +11,7 @@
 \usepackage{float}
 \usepackage{longtable}
 \usepackage{parskip}
+\usepackage{soul}
 \usepackage[small,compact]{titlesec} 
 
 \definecolor{titleColor}{RGB}{138,201,242}
@@ -86,57 +87,53 @@ employed in order to achieve the desired level of availability.
 
 The performance of a system is normally measured by its latency and throughput. The 
 HUMS is required to dispatch notifications through the notification generator after events 
-have been triggered by the analysis controller with a latency less than 5ms, the system is 
-also required to be able to support multiple data output clients, either notification or 
-reporting. Tactics such as reducing overhead though carefully examining the time 
-complexity of used data structures and prioritising events can help reduce latency, at 
-least for the most important events, as defined by the end user. It may also be possible to 
+have been triggered by the analysis controller, with a latency less than 5ms, the system is 
+also required to be able to support multiple data output clients. Tactics such as reducing overhead though careful use of data structures and prioritising events can help reduce latency, at 
+least for the most important events, defined by the end user. It may also be possible to 
 add concurrency, such that multiple notification threads are used when demand for 
 notifications and reports are high, reducing the bottleneck created at the notification 
 generator.
 
 Modifiability is one of the most important qualities of the HUMS, though not measurable, 
 lack of modifiability can increase the cost and time taken to complete the project. The 
-HUMS will initially be built to tackle a single domain, software, however will in the future 
-be required to work on embedded systems, mechanical systems electrical systems and 
-even people, in order to ensure this process is as efficient as possible the initial system 
-must be modifiable.Tactics that can be used to increase the modifiability of the system include using small modules within the system, decreasing the coupling between those modules and increasing the cohesion. In order to achieve low coupling  the HUMS uses interfaces between modules and restricts dependencies, such that the majority of modules can be swapped out without large changes to the overall system.
+HUMS will initially be built to tackle a single domain, software, however, will in the future 
+be required to work on embedded systems, mechanical systems, electrical systems and 
+even people. In order to ensure these changes are as efficient as possible the initial system 
+must be modifiable. Tactics that can be used to increase the modifiability of the system include using small modules within the system, decreasing the coupling between those modules and increasing the cohesion. In order to achieve low coupling  the HUMS uses interfaces between modules and restricts dependencies, such that the majority of modules can be swapped out without large changes to the overall system.
 
 \subsection{System Views}
 When designing the HUMS we identified four different views of of the system which must be documented:
 \begin{description}
 \item[Module View] The required software modules and relationships between them at a high level.
-\item[Behavioural View] Used to show the flow of data and dynamic actions within the system.
-\item[Deployment View] The hardware realisation of the system, and the geographic positioning of modules.
+\item[Behavioural View] The flow of data and dynamic actions within the system.
+\item[Deployment View] How modules are geographically positioned.
 \item[Conceptual View] Class Diagrams, showing a concrete implementation of the functionality.
 \end{description}
 
 \subsection{Module View}
-Having determined the quality attributes of the HUMS and the tactics which can be employed in order to achieve a high utility of these qualities a conceptual diagram can be formed, this diagram shown in figure XXX depicts the modules of the HUMS and the interactions between these modules at a high level.
+Having determined the quality attributes of the HUMS and the tactics which can be employed in order to achieve a high utility of these qualities a conceptual view can be formed. The conceptual diagram shown in figure XXX depicts the modules of the HUMS and the interactions between these modules at a high level.
 
 %%%Input Diagram WITH KEY
-
 \begin{description}
 \item[Data Emitter]  Sends data to the system core in a standard format, may be included within the HUMS or created by the end user.
 \item[Data Input Layer] Receives data from a data emitter and sends it to the data abstraction layer. Alerts the analysis controller that new data was received.
-\item[Data Abstraction Layer] Handles all interaction with the database, such that is the database was to be altered only this layer would need to be changed.
-\item[Analysis Controller] Alert the analysis engines when new data has arrived, pulling the required data from the Database Abstraction Layer. If an analysis engine determines an event has occurred within the data then the analysis controller forwards that event to the notification generator
- \item[Analysis Engine] Analyses the data looking for trends, it a trend is found an event it returned to the analysis controller. Analysis engines may be included in the HUMS or created by the end user.
+\item[Data Abstraction Layer] Handles all interaction with the database, such that if the database was to be altered, only this layer would need to change.
+\item[Analysis Controller] Alert the analysis engines when new data has arrived, pulling the required data from the data abstraction layer. If an analysis engine determines an event has occurred within the data then the analysis controller forwards that event to the notification generator
+ \item[Analysis Engine] Analyses the data looking for trends, it a trend is found an event is returned to the analysis controller. Analysis engines may be included in the HUMS or created by the end user.
  \item[Notification Generator] Receives events from the analysis controller, defines an abstract notification and sends it to the appropriate notification engine.
- \item[Notification Engine] Receives an abstract notification from the notification generator and creates a concrete notification, for example an email or trigging a change in the end user's system behaviour. Notification engines may be included in the HUMS or created by the end user.
+ \item[Notification Engine] Receives an abstract notification from the notification generator and creates a concrete notification, for example an email or triggering a change in system behaviour. Notification engines may be included in the HUMS or created by the end user.
   \item[Reports Engine] Pulls data from the data abstraction layer and formats it into a report, for example a PDF or graph. Reports engines may be included in the HUMS or created by the end user.
 \end{description}
 
 \subsection{Behavioural View}
-The Module model shows how modules of the system are connected, however, does not fully represent the interactions between components and the dynamic actions of the system.
-A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure XXX shows the behavioural model of the HUMS, showing how system use begins with a data emitter having new data and ends with a notification being generated.
-
+The module view shows how modules of the system are connected, however, does not fully represent the interactions between components and the dynamic actions of the system.
+A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \hl{XXX} shows the behavioural model of the HUMS, detailing how the HUMS goes from receiving data from a data emitter to generating a notification.
 %%Input Diagram WITH KEY
 
 \subsection{Deployment View}
-With view to deployment the HUMS needs to be tailorable, the core system may be running on the same hardware as the data emitter, it may also be geographically distant. Engines may all be on separate machines or may all be together. Figures XXX and XXX show the most main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations , then it can perform under all others.
+With view to deployment the HUMS needs to be tailorable, the core system may be running on the same hardware as the data emitter, it may also be geographically distant. Engines may all be on separate machines or may all be together. Figures \hl{XXX and XXX} show the most main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-We also chose to look at deploying the system as a service....
+\hl{We also chose to look at deploying the system as a service....}
 %% TODO talk about admin centre shizzle
 
 \subsection{Conceptual View}
@@ -145,14 +142,14 @@ We also chose to look at deploying the system as a service....
 \section{Interim Prototype Implementation}
 
 \subsection{Technologies}
-We chose to develop the core of the HUMS prototype using Java, this does restrict the use of the prototype as the JVM is required, however, at this stage we do not see this as a problem since the underline architecture of the system is transferrable across languages.
+We chose to develop the core of the HUMS prototype using Java, this does restrict its use, as the JVM is required, however, at this stage we do not see this as a problem since the underline architecture of the system is transferrable across languages.
 All members of our team were familiar with the Java programming language and thus no time was spent having to learn or teach a new language. 
-We did not impose a language restriction when developing the data emitter and various engines as the data being passed between them and the core is language independent, meaning end users are free, even with the prototype, to implement engines in whatever languages they see fit. For the prototype we used Java and XXX when creating the engines, again language team members are familiar with, and allowing to show off the versatility of the system.
-We chose to use Google App Engine to host the database for the prototype, again wanting to show the versatility of the system, and how easily it can incorporate popular technologies. The prototype could easily be extended to work with other database technologies simply by implementing an interface within the data abstraction layer.
+We did not impose a language restriction when developing the data emitter and various engines as the data being passed between them and the core is language independent, meaning end users are free, even with the prototype, to implement engines in any language they see fit. For the prototype we used Java and \hl{XXX} when creating the engines, languages team members are familiar with, allowing us to show off the versatility of the system.
+We chose to use Google App Engine to host the database for the prototype, again wanting to show the versatility of the system, and how easily it can easily incorporate popular technologies. The prototype could easily be extended to work with other database technologies simply by implementing an interface within the data abstraction layer.
 
 We created a prototype admin centre to show how the HUMS could be run as a service, allowing users to integrate their system, viewing and editing it online. The admin centre was developed using HTML, JavaScript and CSS in order to create a prototype realistically simulating the required behaviour.
 
-We used Git for version control, allowing the entire team to contribute to the project simultaneously, and Google Docs for sharing notes, plans and meeting minutes.
+We used Git for version control, allowing the entire team to contribute to the project simultaneously, and Google Docs for sharing notes, plans and meeting minutes when designing the prototype.
 \subsection{Current Functionality}
 
 \subsection{Evaluation on Test Application}
