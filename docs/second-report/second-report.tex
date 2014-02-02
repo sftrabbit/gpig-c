@@ -136,12 +136,26 @@ A behavioural view can be used to detail this information, showing the flow of d
 \subsection{Deployment View}
 With view to deployment the HUMS needs to be tailorable, the core system may be running on the same hardware as the data emitter, it may also be geographically distant. Engines may all be on separate machines or may all be together. Figures XXX and XXX show the most main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations , then it can perform under all others.
 
+We also chose to look at deploying the system as a service....
+%% TODO talk about admin centre shizzle
+
 \subsection{Conceptual View}
-%%Class diagrams
+%%Class diagrams WITH KEYS
 
-\section{Interim Prototype}
+\section{Interim Prototype Implementation}
 
+\subsection{Technologies}
+We chose to develop the core of the HUMS prototype using Java, this does restrict the use of the prototype as the JVM is required, however, at this stage we do not see this as a problem since the underline architecture of the system is transferrable across languages.
+All members of our team were familiar with the Java programming language and thus no time was spent having to learn or teach a new language. 
+We did not impose a language restriction when developing the data emitter and various engines as the data being passed between them and the core is language independent, meaning end users are free, even with the prototype, to implement engines in whatever languages they see fit. For the prototype we used Java and XXX when creating the engines, again language team members are familiar with, and allowing to show off the versatility of the system.
+We chose to use Google App Engine to host the database for the prototype, again wanting to show the versatility of the system, and how easily it can incorporate popular technologies. The prototype could easily be extended to work with other database technologies simply by implementing an interface within the data abstraction layer.
 
+We created a prototype admin centre to show how the HUMS could be run as a service, allowing users to integrate their system, viewing and editing it online. The admin centre was developed using HTML, JavaScript and CSS in order to create a prototype realistically simulating the required behaviour.
+
+We used Git for version control, allowing the entire team to contribute to the project simultaneously, and Google Docs for sharing notes, plans and meeting minutes.
+\subsection{Current Functionality}
+
+\subsection{Evaluation on Test Application}
 
 \section{Team Structure}
 
