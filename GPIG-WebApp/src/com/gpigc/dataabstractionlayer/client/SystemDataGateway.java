@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gpig.client;
+package com.gpigc.dataabstractionlayer.client;
 
 import java.util.Date;
 import java.util.List;

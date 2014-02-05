@@ -12,10 +12,10 @@ import org.apache.http.ParseException;
 import org.junit.Test;
 
 import com.google.gwt.dev.util.collect.HashMap;
-import com.gpig.client.FailedToReadFromDatastoreException;
-import com.gpig.client.FailedToWriteToDatastoreException;
-import com.gpig.client.GWTSystemDataGateway;
-import com.gpig.client.EmitterSystemState;
+import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
+import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
+import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
+import com.gpigc.dataabstractionlayer.client.GWTSystemDataGateway;
 
 public class GWTSystemDataGatewayTest {
 

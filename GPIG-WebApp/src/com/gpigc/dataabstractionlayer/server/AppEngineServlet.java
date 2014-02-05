@@ -1,4 +1,4 @@
-package com.gpig.server;
+package com.gpigc.dataabstractionlayer.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.gpig.client.QueryResult;
-import com.gpig.client.EmitterSystemState;
-import com.gpig.client.SensorState;
+import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
+import com.gpigc.dataabstractionlayer.client.QueryResult;
+import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
-import static com.gpig.server.DatabaseField.*;
+import static com.gpigc.dataabstractionlayer.server.DatabaseField.*;
 
 /**
  * Interacts with the App Engine datastore to read and write data based on

@@ -1,4 +1,4 @@
-package com.gpig.client;
+package com.gpigc.dataabstractionlayer.client;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
-import static com.gpig.client.DataJSONAttribute.*;
+import static com.gpigc.dataabstractionlayer.client.DataJSONAttribute.*;
 
 /**
  * The result of querying the database
