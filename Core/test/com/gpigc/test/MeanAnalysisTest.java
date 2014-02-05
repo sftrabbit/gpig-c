@@ -14,10 +14,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.gpig.client.FailedToReadFromDatastoreException;
-import com.gpig.client.QueryResult;
-import com.gpig.client.SensorState;
-import com.gpig.client.SystemDataGateway;
+import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
+import com.gpigc.dataabstractionlayer.client.QueryResult;
+import com.gpigc.dataabstractionlayer.client.SensorState;
+import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.core.analysis.Result;
 import com.gpigc.core.analysis.engine.MeanAnalysis;
 

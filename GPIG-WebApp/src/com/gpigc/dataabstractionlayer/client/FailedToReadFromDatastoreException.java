@@ -1,4 +1,4 @@
-package com.gpig.client;
+package com.gpigc.dataabstractionlayer.client;
 
 /**
  * The Exception thrown when the execution of a query on the database fails.

@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.gpig.client.EmitterSystemState;
+import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
 /**
  * @author Tom Davies

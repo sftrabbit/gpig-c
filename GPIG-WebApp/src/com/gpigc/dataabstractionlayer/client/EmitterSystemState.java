@@ -1,4 +1,4 @@
-package com.gpig.client;
+package com.gpigc.dataabstractionlayer.client;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -14,7 +14,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import static com.gpig.client.DataJSONAttribute.*;
+
+import static com.gpigc.dataabstractionlayer.client.DataJSONAttribute.*;
 
 /**
  * Wraps up the state of a data emitter system that has been read at one point 

@@ -1,4 +1,4 @@
-package com.gpig.server;
+package com.gpigc.dataabstractionlayer.server;
 
 /**
  * The keys used for the database fields and keys.

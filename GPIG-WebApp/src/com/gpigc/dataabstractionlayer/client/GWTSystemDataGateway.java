@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gpig.client;
+package com.gpigc.dataabstractionlayer.client;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,7 +24,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import static com.gpig.server.DatabaseField.*;
+import static com.gpigc.dataabstractionlayer.server.DatabaseField.*;
 
 /**
  * An implementation of SystemDataGateway that uses a Google App Engine

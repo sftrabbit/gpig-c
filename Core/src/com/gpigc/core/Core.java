@@ -5,8 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.gpig.client.GWTSystemDataGateway;
-import com.gpig.client.SystemDataGateway;
+import com.gpigc.dataabstractionlayer.client.GWTSystemDataGateway;
+import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.core.analysis.AnalysisController;
 import com.gpigc.core.datainput.DataInputServer;
 

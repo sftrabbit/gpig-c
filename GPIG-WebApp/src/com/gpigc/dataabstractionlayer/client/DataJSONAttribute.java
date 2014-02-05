@@ -1,4 +1,4 @@
-package com.gpig.client;
+package com.gpigc.dataabstractionlayer.client;
 
 /**
  * The keys used when reading or writing JSON

@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gpig.client.SystemDataGateway;
+import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.core.eventnotify.EventNotify;
 import com.gpigc.core.eventnotify.InvalidEventNotifyException;
 

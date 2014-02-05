@@ -14,8 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.gpig.client.QueryResult;
-import com.gpig.client.SensorState;
+import com.gpigc.dataabstractionlayer.client.QueryResult;
+import com.gpigc.dataabstractionlayer.client.SensorState;
 
 public class QueryResultTest {
 

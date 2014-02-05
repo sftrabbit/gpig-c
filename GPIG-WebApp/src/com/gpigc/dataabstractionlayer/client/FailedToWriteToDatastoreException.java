@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gpig.client;
+package com.gpigc.dataabstractionlayer.client;
 
 /**
  * The exception thrown the execution of a post to the database fails, including

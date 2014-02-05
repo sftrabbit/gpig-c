@@ -2,7 +2,7 @@ package com.gpigc.core.analysis;
 
 import java.util.List;
 
-import com.gpig.client.SystemDataGateway;
+import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 /**
  * Provides the basic functionality and abstract methods that all analysis engines require
