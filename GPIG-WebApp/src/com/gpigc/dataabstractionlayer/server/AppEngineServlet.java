@@ -154,7 +154,11 @@ public class AppEngineServlet extends HttpServlet {
 					.getProperty(DB_TIMESTAMP.getKey()).toString())), result
 					.getProperty(VALUE.getKey()).toString()));
 			QueryResult queryResult = new QueryResult(systemID, sensorData);
-			resp.getWriter().println(queryResult.toJSON());
+			if (req.getParameter("callback") != null) {
+				resp.getWriter().println(req.getParameter("callback") + "(" + queryResult.toJSON() + ");");
+			} else {
+				resp.getWriter().println(queryResult.toJSON());
+			}
 			resp.setStatus(HttpServletResponse.SC_CREATED);
 		}
 	}
