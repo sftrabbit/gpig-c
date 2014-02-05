@@ -11,18 +11,41 @@ import com.gpig.client.SystemDataGateway;
 import com.gpigc.core.eventnotify.EventNotify;
 import com.gpigc.core.eventnotify.InvalidEventNotifyException;
 
+/**
+ * Interacts with the core application, performing analysis on the data persisted to the database.
+ * 
+ * @author GPIGC
+ */
 public class AnalysisController {
 
 	private List<AnalysisEngine> engines;
 	
 	private SystemDataGateway database;
 	
+	/**
+	 * Initialises analysis controller
+	 * 
+	 * @param database	Passes database abstraction layer in as a dependency
+	 * @throws MalformedURLException
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
 	public AnalysisController(SystemDataGateway database) throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		this.database = database;
 		engines = new ArrayList<AnalysisEngine>();
 		instantiateEngines();
 	}
 
+	/**
+	 * Performs analysis on a given system
+	 * 
+	 * @param systemId	The ID of the system to perform analysis upon
+	 */
 	public void systemUpdate(String systemId) {
 		for(AnalysisEngine engine : engines) {
 			List<String> associatedSystems = engine.getAssociatedSystems();
@@ -32,6 +55,12 @@ public class AnalysisController {
 		}
 	}
 
+	/**
+	 * Performs post processing on the analysis result object 
+	 * 
+	 * @param engineName	Name of the analysis engine that has analysed the data
+	 * @param result		The result of the analysis.
+	 */
 	private void processResult(String engineName, Result result) {
 		//database.write(engineName, result);
 		// TODO write back data
@@ -43,6 +72,18 @@ public class AnalysisController {
 		System.out.println("Bitches need to notify: " + result.getDataToSave().toString());
 	}
 
+	/**
+	 * Performs class loading of analysis engines allowing for runtime additions
+	 * 
+	 * @throws MalformedURLException
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
 	private void instantiateEngines() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		File folder = new File("/"+System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
