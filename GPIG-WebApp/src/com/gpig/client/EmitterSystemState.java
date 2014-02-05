@@ -31,7 +31,7 @@ public class EmitterSystemState {
 	/**
 	 * @param systemID  The system this data is about
 	 * @param timestamp The time that this data was received
-	 * @param sensorReadings The state of this system, i.e. the values of 0 or
+	 * @param payload The state of this system, i.e. the values of 0 or
 	 * more sensors at the given time
 	 */
 	public EmitterSystemState(String systemID, Date timestamp,

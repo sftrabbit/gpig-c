@@ -115,7 +115,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gpig.client.SystemDataGateway#write(com.gpig.client.SystemData)
+	 * @see com.gpig.client.SystemDataGateway#write(com.gpig.client.EmitterSystemState)
 	 */
 	@Override
 	public void write(EmitterSystemState data)
@@ -136,4 +136,16 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 			throw new FailedToWriteToDatastoreException(e.getMessage());
 		}
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.gpig.client.SystemDataGateway#write(com.gpig.client.EmitterSystemState)
+	 */
+	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException{
+		for(EmitterSystemState state: data){
+			write(state);
+		}
+	}
+
 }

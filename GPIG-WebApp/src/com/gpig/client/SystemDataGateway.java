@@ -4,6 +4,7 @@
 package com.gpig.client;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * The interface to any datastore
@@ -40,4 +41,11 @@ public interface SystemDataGateway {
 	 */
 	public void write(EmitterSystemState data) throws FailedToWriteToDatastoreException;
 
+	/**
+	 * Writes a batch of data to the datastore
+	 * 
+	 * @param data The data to be written
+	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
+	 */
+	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException;
 }
