@@ -132,7 +132,7 @@ public class AppEngineServlet extends HttpServlet {
 				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 				return;
 			}
-			writeResponse(systemID, resp, results);
+			writeResponse(systemID, resp, results, req.getParameter("callback"));
 			resp.setStatus(HttpServletResponse.SC_OK);
 		} else {
 			resp.getWriter().println("No System");
@@ -143,7 +143,7 @@ public class AppEngineServlet extends HttpServlet {
 	 * Writes the HTTPResponse for a GET request
 	 */
 	private void writeResponse(String systemID, HttpServletResponse resp,
-			List<Entity> results) throws IOException {
+			List<Entity> results, String jscallback) throws IOException {
 
 		ArrayList<SensorState> sensorData = new ArrayList<>();
 		for (Entity result : results) {
@@ -154,8 +154,8 @@ public class AppEngineServlet extends HttpServlet {
 					.getProperty(DB_TIMESTAMP.getKey()).toString())), result
 					.getProperty(VALUE.getKey()).toString()));
 			QueryResult queryResult = new QueryResult(systemID, sensorData);
-			if (req.getParameter("callback") != null) {
-				resp.getWriter().println(req.getParameter("callback") + "(" + queryResult.toJSON() + ");");
+			if (jscallback != null) {
+				resp.getWriter().println(jscallback + "(" + queryResult.toJSON() + ");");
 			} else {
 				resp.getWriter().println(queryResult.toJSON());
 			}
