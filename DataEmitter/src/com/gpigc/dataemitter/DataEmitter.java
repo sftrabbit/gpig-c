@@ -2,6 +2,7 @@ package com.gpigc.dataemitter;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,6 +38,8 @@ public class DataEmitter implements Runnable {
 				System.out.println("GPIG-C server is not running.");
 			} else if (cause instanceof AppNotRunningException) {
 				System.out.println("Application to monitor is not running.");
+			} else if (cause instanceof SocketException) {
+				System.out.println("GPIG-C server stopped running.");
 			} else {
 				throw e;
 			}
