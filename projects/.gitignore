@@ -1,0 +1,7 @@
+*/bin/*
+*.DS_STORE
+*.DS_Store
+*.prefs
+
+GPIG-WebApp/.settings/com.google.appengine.eclipse.core.prefs
+.project
