@@ -11,7 +11,7 @@ import com.gpigc.core.analysis.AnalysisController;
 import com.gpigc.core.datainput.DataInputServer;
 
 public class Core {
-	protected final static String DB_SERVLET_URI = "http://localhost/";
+	protected final static String DB_SERVLET_URI = "http://gpigc-webapp.appspot.com/gpigc-webapp";
 	public static void main(String args[]) throws IOException, InterruptedException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
 	{
 		SystemDataGateway database = null;
