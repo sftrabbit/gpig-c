@@ -145,6 +145,10 @@ public class AppEngineServlet extends HttpServlet {
 	private void writeResponse(String systemID, HttpServletResponse resp,
 			List<Entity> results, String jscallback) throws IOException {
 
+		if (jscallback != null) {
+			resp.getWriter().println(jscallback + "(");
+		}
+
 		ArrayList<SensorState> sensorData = new ArrayList<>();
 		for (Entity result : results) {
 			String sensorID = result.getKey().getParent().getName();
@@ -154,12 +158,11 @@ public class AppEngineServlet extends HttpServlet {
 					.getProperty(DB_TIMESTAMP.getKey()).toString())), result
 					.getProperty(VALUE.getKey()).toString()));
 			QueryResult queryResult = new QueryResult(systemID, sensorData);
-			if (jscallback != null) {
-				resp.getWriter().println(jscallback + "(" + queryResult.toJSON() + ");");
-			} else {
-				resp.getWriter().println(queryResult.toJSON());
-			}
-			resp.setStatus(HttpServletResponse.SC_CREATED);
+			resp.getWriter().println(queryResult.toJSON());
+		}
+
+		if (jscallback != null) {
+			resp.getWriter().println(")");
 		}
 	}
 
