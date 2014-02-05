@@ -157,9 +157,9 @@ public class AppEngineServlet extends HttpServlet {
 							.toString())), new Date(Long.parseLong(result
 					.getProperty(DB_TIMESTAMP.getKey()).toString())), result
 					.getProperty(VALUE.getKey()).toString()));
-			QueryResult queryResult = new QueryResult(systemID, sensorData);
-			resp.getWriter().println(queryResult.toJSON());
 		}
+		QueryResult queryResult = new QueryResult(systemID, sensorData);
+		resp.getWriter().println(queryResult.toJSON());
 
 		if (jscallback != null) {
 			resp.getWriter().println(");");
