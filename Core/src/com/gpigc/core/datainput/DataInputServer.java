@@ -61,18 +61,20 @@ public class DataInputServer extends Thread {
 				systemIds.add(data.getSystemId());
 			}
 
-			try {
-				database.write(systemStates);
-				
-				for (String systemId : systemIds) {
-					analysisController.systemUpdate(systemId);
+			if (!systemStates.isEmpty()) {
+				try {
+					database.write(systemStates);
+					
+					for (String systemId : systemIds) {
+						analysisController.systemUpdate(systemId);
+					}
+				} catch (FailedToWriteToDatastoreException e) {
+					System.out.println("Failed to write to database. Discarding data.");
 				}
-			} catch (FailedToWriteToDatastoreException e) {
-				System.out.println("Failed to write to database. Discarding data.");
 			}
 
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
 		}
