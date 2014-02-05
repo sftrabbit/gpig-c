@@ -11,6 +11,7 @@
 
 # Allow PDF images in docs
 !/docs/*/images/*.pdf
+!/docs/*/images/*/*.pdf
 
 # Horrible OSX stuff
 .DS_Store
