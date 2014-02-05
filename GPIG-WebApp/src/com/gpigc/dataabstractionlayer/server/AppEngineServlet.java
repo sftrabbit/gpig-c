@@ -162,7 +162,7 @@ public class AppEngineServlet extends HttpServlet {
 		}
 
 		if (jscallback != null) {
-			resp.getWriter().println(")");
+			resp.getWriter().println(");");
 		}
 	}
 
