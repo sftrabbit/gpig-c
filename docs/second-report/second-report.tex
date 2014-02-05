@@ -89,7 +89,8 @@ When designing the HUMS we identified four different views of of the system whic
 \subsection{Module View}
 Having determined the quality attributes of the HUMS and the tactics which can be employed in order to achieve a high utility of these qualities a conceptual view can be formed. The conceptual diagram shown in figure \ref{fig:moduleDiagram} depicts the modules of the HUMS and the interactions between these modules at a high level.
 
-\begin{figure}[h!]
+%%TODO this diagram doesn't show the core or have a key
+\begin{figure}[ht!]
 \includegraphics[width=15cm]{images/moduleDiagram.pdf}
 \caption{The module diagram of the HUMS}
 \label{fig:moduleDiagram}
@@ -118,6 +119,32 @@ With view to deployment the HUMS needs to be tailorable, the core system may be 
 %% TODO talk about admin centre shizzle
 
 \subsection{Conceptual View}
+\subsubsection{Data Input Layer}
+\subsubsection{Data Abstraction Layer}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width= 5cm]{images/DataAbstractionLayer/packageDiagram.png}
+\caption{Package diagram of the data abstraction layer}
+\label{fig:dataAbstractionPackage}
+\end{figure}
+
+The data abstraction layer, shown in figure \ref{fig:dataAbstractionPackage}, contains the following classes:
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width= 7.5cm]{images/DataAbstractionLayer/systemDataGateway.png}
+\includegraphics[width= 7cm]{images/DataAbstractionLayer/queryResult.pdf}
+\includegraphics[width= 8cm]{images/DataAbstractionLayer/sensorState.pdf}
+\includegraphics[width= 6.5cm]{images/DataAbstractionLayer/dataJsonAttribute.pdf}
+
+\caption{Conceptual diagrams of the classes within the data abstraction layer}
+\label{fig:dataAbstractionPackage}
+\end{figure}
+
+\subsubsection{Analysis Controller}
+\subsubsection{Notification Generator}
+
 %%Class diagrams WITH KEYS
 
 \section{Interim Prototype Implementation}
@@ -140,7 +167,6 @@ We used Git for version control, allowing the entire team to contribute to the p
 \section{Team Structure}
 
 \section{Risk register}
-
 A risk assessment has been performed as part of the initial report to ensure the team is aware of any problems which could later arise, and to provide a guide as to how to react when such problems occur. The hazards (risks) have been identified and classified based upon team members' past experiences in similar projects and group discussion. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are listed in the table below.
 
 \input{risk-register}
