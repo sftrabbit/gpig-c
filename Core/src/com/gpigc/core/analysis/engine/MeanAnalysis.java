@@ -55,7 +55,7 @@ public class MeanAnalysis extends AnalysisEngine {
 	private double computeMean(List<SensorState> sensorStates) {
 		double total = 0;
 		for (SensorState sensorState : sensorStates) {
-			total += Integer.parseInt(sensorState.getValue());
+			total += Double.parseDouble(sensorState.getValue());
 		}
 		return total / (double) sensorStates.size();
 	}
