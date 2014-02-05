@@ -91,7 +91,7 @@ Having determined the quality attributes of the HUMS and the tactics which can b
 
 %%TODO this diagram doesn't show the core or have a key
 \begin{figure}[ht!]
-\includegraphics[width=15cm]{images/moduleDiagram.pdf}
+\includegraphics[width=13cm]{images/moduleDiagram.pdf}
 \caption{The module diagram of the HUMS}
 \label{fig:moduleDiagram}
 \end{figure}
@@ -113,7 +113,7 @@ A behavioural view can be used to detail this information, showing the flow of d
 %%Input Diagram WITH KEY
 
 \subsection{Deployment View}
-With view to deployment the HUMS needs to be tailorable, the core system may be running on the same hardware as the data emitter, it may also be geographically distant. Engines may all be on separate machines or may all be together. Figures \hl{XXX and XXX} show the most main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
+With view to deployment the HUMS needs to be tailorable, the core system may be running on the same hardware as the data emitter, it may also be geographically distant. Engines may all be on separate machines or may all be together. Figures \hl{XXX and XXX} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
 \hl{We also chose to look at deploying the system as a service....}
 %% TODO talk about admin centre shizzle
@@ -124,7 +124,13 @@ With view to deployment the HUMS needs to be tailorable, the core system may be 
 
 The data abstraction layer, shown in figure \ref{fig:dataAbstractionPackage}, contains the following classes:
 \begin{description}
-\item [System Data Gateway] 
+\item [System Data Gateway]  An interface used to abstract the datastore implementation details from the rest of the application. An implementation of this interface will provide ways to read and write from the chosen datastore, meaning the rest of the system is not concerned with the datastore implementation. When interfacing with a datastore the end user will be required to implement this interface.
+\item [EmitterSystemState] An object representing the data received from a data emitter at a particular time. The state object holds the ID of the end user's system and the creation timestamp along with a map of sensor IDs against the value of the sensor at that particular time. A map was used to represent the sensors and values so that the end user is free the send data from as many or as few sensors at a time, reducing the number of writes to the database. For serialisation this object includes methods to convert to and from JSON.
+\item [DataJSONAttribute] 
+\item [SensorState] An object representing the state of a particular system sensor. A sensor has an ID, a value and two timestamps, one specifying the time the sensor value was added to the database and the other the time the value was created.
+\item [QueryResult] An object representing the result of a database query, containing the ID of the end user's system to which the data relates and a list of sensor states pulled from the database.
+
+
 \end{description}
 
 \begin{figure}[ht!]
