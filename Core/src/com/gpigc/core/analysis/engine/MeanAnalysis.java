@@ -7,9 +7,9 @@ import java.util.Map;
 
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.analysis.Result;
-import com.gpig.client.FailedToReadFromDatastoreException;
-import com.gpig.client.SensorState;
-import com.gpig.client.SystemDataGateway;
+import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
+import com.gpigc.dataabstractionlayer.client.SensorState;
+import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 public class MeanAnalysis extends AnalysisEngine {
 

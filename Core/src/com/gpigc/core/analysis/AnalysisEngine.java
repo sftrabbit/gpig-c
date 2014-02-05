@@ -2,7 +2,7 @@ package com.gpigc.core.analysis;
 
 import java.util.List;
 
-import com.gpig.client.SystemDataGateway;
+import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 public abstract class AnalysisEngine {
 	
