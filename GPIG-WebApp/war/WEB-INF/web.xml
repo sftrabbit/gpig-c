@@ -7,7 +7,7 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>AppEngineServlet</servlet-name>
-		<servlet-class>com.gpig.server.AppEngineServlet</servlet-class>
+		<servlet-class>com.gpigc.dataabstractionlayer.server.AppEngineServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AppEngineServlet</servlet-name>
