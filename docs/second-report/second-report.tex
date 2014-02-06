@@ -34,7 +34,7 @@
 
 \section{Glossary}
 
-\begin{description}
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx}]
 	\item[HUMS] Health and usage monitoring system(s).
 	\item[The system] The HUMS we are designing and developing.
 	\item[Customer] Thales.
@@ -145,9 +145,9 @@ The data abstraction layer, shown in figure \ref{fig:dataAbstractionPackage}, co
 \label{fig:dataAbstractionPackage}
 \end{figure}
 
-\subsubsection{Analysis Layer}
+\subsubsection{Analysis Component}
 
-The analysis layer, shown in figure \ref{fig:dataAnalysisLayer}, contains the following classes:
+The analysis component, shown in figure \ref{fig:dataAnalysisComponent}, contains the following classes:
 \begin{description}
 \item [Analysis Controller] An object that coordinates all analysis of sensor data. The object interfaces with the data input layer, receiving a system ID when analysis is required. Once analysis has been carried out the controller processes the results and triggers notifications where appropriate. Analysis engines are associated with the analysis controller by class loading allowing for users to add and remove analysis engines at run-time.
 \item [Analysis Engine] An abstract class that implements the basic functionality and defines the methods required of an implemented analysis engine. Each engine has a list of associated systems. The implementation of the analyse method interfaces with database abstraction layer to retrieve the appropriate sensor data and then performs the desired analysis. whose sensors data is analysed by the engine and implement the analysis method that returns a result object. When creating their own analysis engines the end user will be required to extend this class, implement the abstract methods and define what constitutes an event.
@@ -163,8 +163,8 @@ The analysis layer, shown in figure \ref{fig:dataAnalysisLayer}, contains the fo
 \includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
 \includegraphics[width= 6cm]{images/Analysis/EventNotify.png}
 \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
-\caption{Conceptual diagrams of the analysis layer classes, using UML 2 notation}
-\label{fig:dataAnalysisLayer}
+\caption{Conceptual diagrams of the analysis component classes, using UML 2 notation}
+\label{fig:dataAnalysisComponent}
 \end{figure}
 
 \subsubsection{Notification Generator}
