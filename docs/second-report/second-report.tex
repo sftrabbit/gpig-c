@@ -187,7 +187,23 @@ We used Git for version control, allowing the entire team to contribute to the p
 
 \subsection{Current Functionality}
 
-\subsection{Testing}
+\subsection{Testing} 
+
+We created and implemented a test plan that laid out our key ideas with respect to verifying our that solution fulfilled its requirements. With a view to tracing the evolution from requirements to implementation to testing, we allocated tests IDs and references to their associated implementation components and requirement IDs. We defined our plan, where appropriate, in terms of each module within the system and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower-level requisite requirements: acceptance testing, system testing, integration testing and unit testing. % Does it make sense to have system/acceptance testing within a module? Given we are using a plugin architecture, I am not sure. TD
+
+% TODO We probably need something about overall system & acceptance testing. These are mainly the white/black/grey box tests in the first report, e.g. NRF.9, "The system must cope with up to 2000 data input re- quests per second per HUMS instance."
+
+\begin{description}
+\item[Data Emitter]
+\item[Data Input Layer]
+\item[Data Abstraction Layer] % Should this be talking about the future, since it's a "plan", or is it ok take about testing the prototype retrospectively?
+The data abstraction layer is the interface between the specific datastore implementation and the rest of the system. Given it's high throughput and importance to the function of the HUMS as a whole, it's key attributes are availability and performance. When considering integration testing, the data abstraction layer interfaces with a wide selection of modules, including the datastore, the data input layer, the analysis controller and the reports engine. These modules can potentially need to read from the datastore, write to it, or both. To test these interfaces, we referred to requirements pertaining to the storage of data, \textbf{FR.3} to \textbf{FR.10}. At the unit testing level, focus was on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
+\item[Analysis Controller]
+\item[Analysis Engine]
+\item[Notification Generator]
+\item[Notification Engine]
+\item[Reports Engine]
+\end{description}
 
 \subsection{Evaluation on Test Application}
 
