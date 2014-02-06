@@ -127,7 +127,7 @@ The data abstraction layer, shown in figure \ref{fig:dataAbstractionPackage}, co
 \begin{description}
 \item [System Data Gateway]  An interface used to abstract the datastore implementation details from the rest of the application. An implementation of this interface will provide ways to read and write from the chosen datastore, meaning the rest of the system is not concerned with the datastore implementation. When interfacing with a datastore the end user will be required to implement this interface.
 \item [EmitterSystemState] An object representing the data received from a data emitter at a particular time. The state object holds the ID of the end user's system and the creation timestamp along with a map of sensor IDs against the value of the sensor at that particular time. A map was used to represent the sensors and values so that the end user is free the send data from as many or as few sensors at a time, reducing the number of writes to the database. For serialisation this object includes methods to convert to and from JSON.
-\item [DataJSONAttribute] 
+\item [DataJSONAttribute] An enumeration that wraps up the keys used to look up values in the JSON serialisations of the EmitterSystemState and QueryResult classes.
 \item [SensorState] An object representing the state of a particular system sensor. A sensor has an ID, a value and two timestamps, one specifying the time the sensor value was added to the database and the other the time the value was created.
 \item [QueryResult] An object representing the result of a database query, containing the ID of the end user's system to which the data relates and a list of sensor states pulled from the database.
 
@@ -182,6 +182,7 @@ We chose to use Google App Engine to host the database for the prototype, again 
 We created a prototype admin centre to show how the HUMS could be run as a service, allowing users to integrate their system, viewing and editing it online. The admin centre was developed using HTML, JavaScript and CSS in order to create a prototype realistically simulating the required behaviour.
 
 We used Git for version control, allowing the entire team to contribute to the project simultaneously, and Google Docs for sharing notes, plans and meeting minutes when designing the prototype.
+
 \subsection{Current Functionality}
 
 \subsection{Testing}
