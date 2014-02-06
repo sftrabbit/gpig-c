@@ -143,17 +143,26 @@ The data abstraction layer, shown in figure \ref{fig:dataAbstractionPackage}, co
 \label{fig:dataAbstractionPackage}
 \end{figure}
 
-\subsubsection{Analysis Controller}
+\subsubsection{Analysis Layer}
+
+The analysis layer, shown in figure \ref{fig:dataAnalysisLayer}, contains the following classes:
+\begin{description}
+\item [Analysis Controller] An object that coordinates all analysis of sensor data. The object interfaces with the data input layer, receiving a system ID when analysis is required. Once analysis has been carried out the controller processes the results and triggers notifications where appropriate. Analysis engines are associated with the analysis controller by class loading allowing for users to add and remove analysis engines at run-time.
+\item [Analysis Engine] An abstract class that implements the basic functionality and defines the methods required of an implemented analysis engine. Each engine has a list of associated systems. The implementation of the analyse method interfaces with database abstraction layer to retrieve the appropriate sensor data and then performs the desired analysis. whose sensors data is analysed by the engine and implement the analysis method that returns a result object. When creating their own analysis engines the end user will be required to extend this class, implement the abstract methods and define what constitutes an event.
+\item [Mean Analysis] An object that extends the analysis engine class and implements mean analysis. When called by the analysis controller, sensor data is retrieved for all associated systems and mean analysis is performed. If any mean values fall outside of the acceptable bounds then a notification is raised.
+\item [Result] An object representing the result of the analysis carried out by the chosen analysis engine. The object contains a map of any data to be saved back to the database and a flag indicating whether a notification needs to be triggered. For serialisation the data to be saved to the database is stored in a map of string key-values. When implementing their own analysis engine the end user will be able to specify what data is to be saved back to the database.
+\item [Event Notify] An object representing a notification, containing the name of the analysis engine that triggered the notification, the ID of the system that the notification applies to and the result object from the analysis engine that triggered the notification.
+\end{description}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width= 9.5cm]{images/Analysis/AnalysisController.png}
 \includegraphics[width= 5cm]{images/Analysis/Result.png}
-\includegraphics[width= 11cm]{images/Analysis/AnalysisEngine.png}
+\includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
 \includegraphics[width= 6cm]{images/Analysis/EventNotify.png}
 \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
 \caption{Conceptual diagrams of the analysis layer classes, using UML 2 notation}
-\label{fig:dataAbstractionPackage}
+\label{fig:dataAnalysisLayer}
 \end{figure}
 
 \subsubsection{Notification Generator}

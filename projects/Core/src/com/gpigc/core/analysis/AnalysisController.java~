@@ -69,7 +69,7 @@ public class AnalysisController {
 		} catch (InvalidEventNotifyException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Notification triggered: " + result.getDataToSave().toString());
+		System.out.println("Bitches need to notify: " + result.getDataToSave().toString());
 	}
 
 	/**
