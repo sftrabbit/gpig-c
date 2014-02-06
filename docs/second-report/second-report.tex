@@ -36,23 +36,22 @@
 
 \begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx}]
 	\item[HUMS] Health and usage monitoring system(s).
-	\item[Customer] Thales. 
+	\item[The system] The HUMS we are designing and developing.
+	\item[Customer] Thales.
 	\item[Consumer] The recipient organisation of the system.
 	\item[(End) User] An individual or organisation using the system.
-	\item[Client] A piece of computer hardware or software which accesses a
-	              service made available by the HUMS system.
-	\item[The System] The HUMS we are designing and developing.
-	\item[Event] A point of interest flagged up by an analysis system, which
-	             may result in a notification.
-	\item[Data input client] Anything that provides data to the HUMS through
-	                         the input interface.
-	\item[Data output client] Anything that receives data from the HUMS
-	                          through the reporting or notification interfaces.
-	\item[Notification] A message sent by the system as a result of an event
-	                    being fired.
-	\item[Report] A message sent by the system as a result of a request from 				a user. 
-	\item[HUMS Instance] One installation or occurrence of the system for a
-	                     specific consumer.
+	\item[HUMS instance] One installation or occurrence of the system for a specific consumer.
+	\item[Client] A piece of computer hardware or software which accesses a service made available by the HUMS.
+	\item[Data input client] Anything that provides data to the HUMS through the input interface.
+	\item[Data output client] Anything that receives data from the HUMS through the reporting or notification interfaces.
+	\item[Analysis] The processing performed on data within the HUMS.
+	\item[Event] A point of interest flagged up by an analysis system, which may result in a notification.
+	\item[Notification] A message sent by the system as a result of an event being fired.
+	\item[Alerting] The process of generating and delivering notifications.
+	\item[Report] A message sent by the system as a result of a request from a user.
+	\item[Auditing] The process of generating and returning reports.
+	\item[Sensor] A single data-producing source that is monitored by the HUMS.
+	\item[System ID] The identifier given to a group of sensors which are, for example, co-located or of the same type.
 \end{description}
 
 \section{Requirements Refinement}
@@ -67,14 +66,16 @@ When examining the HUMS non-functional requirements the following system quality
 	\textit{
 		Availability, Performance, Modifiability, Security, Testability, Usability}
 	\end{center}
-Of these availability, performance, security and usability can be observed and measured, the others are unobservable however steps can still be taken to maximise their utility.
+Of these, availability, performance, security and usability can be observed and measured, the others are unobservable though steps can still be taken to maximise their utility.
+Of these availability, performance, security and usability can be observed and measured, the others are unobservable however steps can still be taken to maximise their utility. For the prototype implementation, at this stage, usability and security have not been heavily considered, however in the real system they would be of high importance.
+
 %Maybe go into more detail if space
-Availability defines how ready the system is to be used, and is normally the percentage of downtime over a specified timeframe. The desired utility of the quality attribute within the HUMS, as defined by the non functional requirements, is  99.9\% per month. Since lack of availability is often linked to faults occurring, fault detection and recovery tactics, such as use of runtime exceptions, redundancy through backups and transactions, could be employed in order to achieve the desired level of availability. 
+Availability defines how ready the system is to be used, and is normally the percentage of downtime over a specified timeframe. The desired utility of the quality attribute within the HUMS, as defined by the non-functional requirements, is  99.9\% per month. Since lack of availability is often linked to faults occurring, fault detection and recovery tactics (such as the use of runtime exceptions, redundancy through backups and transactions) could be employed in order to achieve the desired level of availability. 
 
 The performance of a system is normally measured by its latency and throughput. The HUMS is required to dispatch notifications through the notification generator after events have been triggered by the analysis controller, with a latency less than 5ms, the system is 
 also required to be able to support multiple data output clients. Tactics such as reducing overhead though careful use of data structures and prioritising events can help reduce latency, at least for the most important events, defined by the end user. It may also be possible to add concurrency, such that multiple notification threads are used when demand for notifications and reports are high, reducing the bottleneck created at the notification generator.
 
-Modifiability is one of the most important qualities of the HUMS, though not measurable, lack of modifiability can increase the cost and time taken to complete the project. The HUMS will initially be built to tackle a single domain, software, however, will in the future be required to work on embedded systems, mechanical systems, electrical systems and even people. In order to ensure these changes are as efficient as possible the initial system 
+Modifiability is one of the most important qualities of the HUMS, though not measurable, lack of modifiability can increase the cost and time taken to complete the project. The HUMS will initially be built to tackle a single domain (software), however will in the future be required to work on embedded systems, mechanical systems, electrical systems and even people. In order to ensure these changes are as efficient as possible the initial system 
 must be modifiable. Tactics that can be used to increase the modifiability of the system include using small modules within the system, decreasing the coupling between those modules and increasing the cohesion. In order to achieve low coupling  the HUMS uses interfaces between modules and restricts dependencies, such that the majority of modules can be swapped out without large changes to the overall system.
 
 \subsection{System Views}
@@ -83,11 +84,11 @@ When designing the HUMS we identified four different views of of the system whic
 \item[Module View] The required software modules and relationships between them at a high level.
 \item[Behavioural View] The flow of data and dynamic actions within the system.
 \item[Deployment View] How modules are geographically positioned.
-\item[Conceptual View] Class Diagrams, showing a concrete implementation of the functionality.
+\item[Conceptual View] Class diagrams, showing a concrete implementation of the functionality.
 \end{description}
 
 \subsection{Module View}
-Having determined the quality attributes of the HUMS and the tactics which can be employed in order to achieve a high utility of these qualities a conceptual view can be formed. The conceptual diagram shown in figure \ref{fig:moduleDiagram} depicts the modules of the HUMS and the interactions between these modules at a high level.
+Having determined the quality attributes of the HUMS and the tactics which can be employed in order to achieve a high utility of these qualities, a conceptual view can be formed. The conceptual diagram shown in figure \ref{fig:moduleDiagram} depicts the modules of the HUMS and the interactions between these modules at a high level.
 
 %%TODO this diagram doesn't show the core or have a key
 \begin{figure}[ht!]
@@ -97,18 +98,18 @@ Having determined the quality attributes of the HUMS and the tactics which can b
 \end{figure}
 
 \begin{description}
-\item[Data Emitter]  Sends data to the system core in a standard format, may be included within the HUMS or created by the end user.
+\item[Data Emitter]  Sends data to the system core in a standard format. May be included within the HUMS or created by the end user.
 \item[Data Input Layer] Receives data from a data emitter and sends it to the data abstraction layer. Alerts the analysis controller that new data was received.
 \item[Data Abstraction Layer] Handles all interaction with the database, such that if the database was to be altered, only this layer would need to change.
-\item[Analysis Controller] Alert the analysis engines when new data has arrived, pulling the required data from the data abstraction layer. If an analysis engine determines an event has occurred within the data then the analysis controller forwards that event to the notification generator
- \item[Analysis Engine] Analyses the data looking for trends, it a trend is found an event is returned to the analysis controller. Analysis engines may be included in the HUMS or created by the end user.
+\item[Analysis Controller] Alert the analysis engines when new data has arrived, pulling the required data from the data abstraction layer. If an analysis engine determines an event has occurred within the data then the analysis controller forwards that event to the notification generator.
+ \item[Analysis Engine] Analyses the data looking for trends, if a trend is found an event is returned to the analysis controller. Analysis engines may be included in the HUMS or created by the end user.
  \item[Notification Generator] Receives events from the analysis controller, defines an abstract notification and sends it to the appropriate notification engine.
  \item[Notification Engine] Receives an abstract notification from the notification generator and creates a concrete notification, for example an email or triggering a change in system behaviour. Notification engines may be included in the HUMS or created by the end user.
   \item[Reports Engine] Pulls data from the data abstraction layer and formats it into a report, for example a PDF or graph. Reports engines may be included in the HUMS or created by the end user.
 \end{description}
 
 \subsection{Behavioural View}
-The module view shows how modules of the system are connected, however, does not fully represent the interactions between components and the dynamic actions of the system.
+The module view shows how modules of the system are connected, however does not fully represent the interactions between components and the dynamic actions of the system.
 A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \hl{XXX} shows the behavioural model of the HUMS, detailing how the HUMS goes from receiving data from a data emitter to generating a notification.
 %%Input Diagram WITH KEY
 
@@ -144,7 +145,28 @@ The data abstraction layer, shown in figure \ref{fig:dataAbstractionPackage}, co
 \label{fig:dataAbstractionPackage}
 \end{figure}
 
-\subsubsection{Analysis Controller}
+\subsubsection{Analysis Layer}
+
+The analysis layer, shown in figure \ref{fig:dataAnalysisLayer}, contains the following classes:
+\begin{description}
+\item [Analysis Controller] An object that coordinates all analysis of sensor data. The object interfaces with the data input layer, receiving a system ID when analysis is required. Once analysis has been carried out the controller processes the results and triggers notifications where appropriate. Analysis engines are associated with the analysis controller by class loading allowing for users to add and remove analysis engines at run-time.
+\item [Analysis Engine] An abstract class that implements the basic functionality and defines the methods required of an implemented analysis engine. Each engine has a list of associated systems. The implementation of the analyse method interfaces with database abstraction layer to retrieve the appropriate sensor data and then performs the desired analysis. whose sensors data is analysed by the engine and implement the analysis method that returns a result object. When creating their own analysis engines the end user will be required to extend this class, implement the abstract methods and define what constitutes an event.
+\item [Mean Analysis] An object that extends the analysis engine class and implements mean analysis. When called by the analysis controller, sensor data is retrieved for all associated systems and mean analysis is performed. If any mean values fall outside of the acceptable bounds then a notification is raised.
+\item [Result] An object representing the result of the analysis carried out by the chosen analysis engine. The object contains a map of any data to be saved back to the database and a flag indicating whether a notification needs to be triggered. For serialisation the data to be saved to the database is stored in a map of string key-values. When implementing their own analysis engine the end user will be able to specify what data is to be saved back to the database.
+\item [Event Notify] An object representing a notification, containing the name of the analysis engine that triggered the notification, the ID of the system that the notification applies to and the result object from the analysis engine that triggered the notification.
+\end{description}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width= 9.5cm]{images/Analysis/AnalysisController.png}
+\includegraphics[width= 5cm]{images/Analysis/Result.png}
+\includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
+\includegraphics[width= 6cm]{images/Analysis/EventNotify.png}
+\includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
+\caption{Conceptual diagrams of the analysis layer classes, using UML 2 notation}
+\label{fig:dataAnalysisLayer}
+\end{figure}
+
 \subsubsection{Notification Generator}
 
 %%Class diagrams WITH KEYS
@@ -152,7 +174,7 @@ The data abstraction layer, shown in figure \ref{fig:dataAbstractionPackage}, co
 \section{Interim Prototype Implementation}
 
 \subsection{Technologies}
-We chose to develop the core of the HUMS prototype using Java, this does restrict its use, as the JVM is required, however, at this stage we do not see this as a problem since the underlying architecture of the system is transferable across languages.
+We chose to develop the core of the HUMS prototype using Java. This does restrict its use, as the JVM is required, however at this stage we do not see this as a problem since the underlying architecture of the system is transferable across languages.
 All members of our team were familiar with the Java programming language and thus no time was spent having to learn or teach a new language. 
 We did not impose a language restriction when developing the data emitter and various engines as the data being passed between them and the core is language independent, meaning end users are free, even with the prototype, to implement engines in any language they see fit. For the prototype we used Java and \hl{XXX} when creating the engines, languages team members are familiar with, allowing us to show off the versatility of the system.
 We chose to use Google App Engine to host the database for the prototype, again wanting to show the versatility of the system, and how easily it can easily incorporate popular technologies. The prototype could easily be extended to work with other database technologies simply by implementing an interface within the data abstraction layer.
@@ -169,7 +191,7 @@ We used Git for version control, allowing the entire team to contribute to the p
 \section{Team Structure}
 
 \section{Risk register}
-A risk assessment has been performed as part of the initial report to ensure the team is aware of any problems which could later arise, and to provide a guide as to how to react when such problems occur. The hazards (risks) have been identified and classified based upon team members' past experiences in similar projects and group discussion. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are listed in the table below.
+A risk assessment has been performed as part of the \hl{initial} report to ensure the team is aware of any problems which could later arise, and to provide a guide as to how to react when such problems occur. The hazards (risks) have been identified and classified based upon team members' past experiences in similar projects and group discussion. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are listed in the table below.
 
 \input{risk-register}
 
