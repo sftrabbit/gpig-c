@@ -175,13 +175,13 @@ The analysis component, shown in figure \ref{fig:dataAnalysisComponent}, contain
 
 \subsection{Technologies}
 We chose to develop the core of the HUMS prototype in Java. Using a standard Java compiler we can generate bytecode that can be executed directly in all environments that support a Java Virtual Machine (JVM), including various operating systems and the x86, x86-64 and ARM CPU architectures, making it highly portable between both desktop, server and embedded systems. % REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
-Whilst there may potentially exist deployment platforms are not supported, at this stage, we do not see this as a problem since the underlying architecture of the system is transferable across languages.
+Whilst there may potentially exist deployment platforms that are not supported, at this stage, we do not see this as a problem since the underlying architecture of the system is transferable across languages.
 
 All members of our team were familiar with the Java programming language and thus no time was spent having to get the team up to speed on a new language. 
 
-We did not impose a language restriction when developing the data emitter and various engines as the data being passed between them and the core are language independent, meaning end users are free, even with the prototype, to implement engines in any language they see fit. For the prototype we used Java and \hl{XXX} when creating the engines, languages team members are familiar with, allowing us to show off the versatility of the system.
+We did not impose a language restriction when developing the data emitter and various engines as the data being passed between them and the core are language independent, meaning end users are free, even with the prototype, to implement engines in any language they see fit. For the prototype we used both Java and PHP when creating the engines, languages team members are familiar with, allowing us to show off the versatility of the system.
 
-We chose to use Google App Engine to host the database for the prototype, again wanting to show the versatility of the system, displaying how easily it can incorporate existing technologies as modules. The prototype could easily be extended to work with other database technologies simply by implementing an interface within the data abstraction layer.
+We chose to use Google App Engine to host the database for the prototype, again wanting to show the versatility of the system, displaying how easily it can incorporate existing, popular technologies as modules. The prototype could easily be extended to work with other database technologies simply by implementing an interface within the data abstraction layer.
 
 We created a prototype admin centre to show how the HUMS could be run as a service, allowing users to easily interact with their system, viewing data and modifying settings online, through a web browser. The admin centre was developed using the Bootstrap front-end web framework, including HTML, JavaScript and CSS in order to create a prototype realistically simulating an interface to the HUMS that is accessible on desktop computers, laptops and mobile devices alike.
 
