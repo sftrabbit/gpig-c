@@ -21,7 +21,7 @@ Auxiliary directories:
 Projects
 --------
 
-- **Admin Centre** - A web interface for administrating a GPIG-C system.
+- **Admin Centre** - A web interface for administering a GPIG-C system.
 - **Core** - The core GPIG-C system, responsible for receiving data, storing
   and analysing it, and sending out notifications.
 - **Data Emitter** - Contains wrappers for various applications that need to be
