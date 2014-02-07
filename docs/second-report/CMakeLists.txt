@@ -2,9 +2,6 @@ set(WORD_COUNT_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/01-introduction.tex
     ${CMAKE_CURRENT_SOURCE_DIR}/02-glossary.tex
     ${CMAKE_CURRENT_SOURCE_DIR}/03-requirements.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/04-architecture.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/05-prototype.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/06-team.tex
     ${CMAKE_CURRENT_SOURCE_DIR}/07-riskregister.tex
     ${CMAKE_CURRENT_SOURCE_DIR}/08-communication.tex
     )
@@ -28,9 +25,6 @@ add_latex_document(second-report.tex
                    01-introduction.tex
                    02-glossary.tex
                    03-requirements.tex
-                   04-architecture.tex
-                   05-prototype.tex
-                   06-team.tex
                    07-riskregister.tex
                    08-communication.tex
                    CONFIGURE wc.tex

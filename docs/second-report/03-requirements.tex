@@ -9,41 +9,31 @@ since the initial report, and the reasons for these.
 
 \subsubsection{Sensing Data}
 \label{sec:requirements-functional-sensing}
+\begin{description}
+  \item[\fr{1.1}] The system shall provide an API for data input.
 
-\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
-  \hline \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
+  \item[\fr{1.2}] The data input API shall require an identifier for
+  the system being monitored.
 
-  \hline \fr{1.1} & The system shall provide an API for data input & \\
+  \item[\fr{1.3}] The data input API shall require data to be
+  timestampe.
 
-  \hline \fr{1.2} & The data input API shall require an identifier for
-  the system being monitored & \textbf{Unit Testing:} Attempt to send
-  unidentified data to the system and verify that it fails. \\
-
-  \hline \fr{1.3} & The data input API shall require data to be
-  timestamped & \textbf{Unit Testing:} Attempt to send untimestamped
-  data to the system and verify that it fails.\\
-
-  \hline \fr{1.4} & The data input API shall allow data input clients
+  \item[\fr{1.4}] The data input API shall allow data input clients
   to send key/value store ``payload'', which will then be made
-  available to the analysis engine & \textbf{Unit Testing:} Attempt to
-  send a payload to the API and verify that it is then stored.\\
+  available to the analysis engine.
 
-  \hline \fr{1.5} & A collection of common components of sensors shall
-  be provided & \\
+  \item[\fr{1.5}] A collection of common components of sensors shall
+  be provided.
 
-  \hline \fr{1.6} & An example, working, data input client shall be
-  available for users & \\
+  \item[\fr{1.6}] An example, working, data input client shall be
+  available for users.
 
-  \hline \fr{2.1} & Data input clients shall timestamp data before
-  sending it to the system & \textbf{Unit Testing:} Record some data
-  using the provided input clients, and verify that it is
-  timestamped.\\
+  \item[\fr{2.1}]Data input clients shall timestamp data before
+  sending it to the system.
 
-  \hline \fr{2.2} & Timestamps shall be taken immediately when the
-  data is gathered & \textbf{Unit Testing:} Record some data using the
-  provided input clients, and verify that the timestamps are correct \\
-  \hline
-\end{longtable}
+  \item[\fr{2.2}] Timestamps shall be taken immediately when the
+  data is gathered.
+\end{description}
 
 \fr{1.1}, \fr{1.2}, \fr{1.3}, and \fr{1.4} expand upon \fr{1} by
 specifying how the clients will send data to the system, and what sort
@@ -61,24 +51,17 @@ should reflect.
 \subsubsection{Storing Data}
 \label{sec:requirements-functional-storing}
 
-\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
- \hline \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
-
- \hline \fr{3.1} & The system shall access and modify data through a
+\begin{description}
+ \item[\fr{3.1}] The system shall access and modify data through a
  database accessor so that the database used can easily be changed
- according to need & \textbf{Code Inspection:} Verify that all
- database access is through the abstraction layer. \\
+ according to need.
 
- \hline \fr{4.1} & The system shall store per-system configuration in
- the database & \textbf{Unit Testing:} Verify that configuration can
- be stored and recovered. \\
+ \item[\fr{4.1}] The system shall store per-system configuration in
+ the database.
 
- \hline \fr{4.2} & The system shall allow authorised users to modify
- configuration & \textbf{Unit Testing:} Verify that only with a valid
- authentication token can configuration be mutated. \\
-
- \hline
-\end{longtable}
+ \item[\fr{4.2}] The system shall allow authorised users to modify
+ configuration. 
+\end{description}
 
 \fr{3.1} refines \fr{3} by specifying how the data is to be stored and
 later accessed in a way which allows the system to cope with different
@@ -95,37 +78,27 @@ settings are to be defined and stored.
 \subsubsection{Analysing Data}
 \label{sec:requirements-functional-analysing}
 
-\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
- \hline \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
+\begin{description}
+ \item[\fr{11.1}] The system shall provide a data analysis API.
 
- \hline \fr{11.1} & The system shall provide a data analysis API & \\
+ \item[\fr{11.2}] The system shall provide a simple analysis engine
+ in the form of a rules engine.
 
- \hline \fr{11.2} & The system shall provide a simple analysis engine
- in the form of a rules engine & \\
+ \item[\fr{11.3}] The data input API shall notify the analysis
+ system when new data is received.
 
- \hline \fr{11.3} & The data input API shall notify the analysis
- system when new data is received & \textbf{Unit Testing:} Send data
- to the input API and verify that the analysis system is notified. \\
+ \item[\fr{11.4}] The database accessor shall allow the analysis
+ system to request the last several records.
 
- \hline \fr{11.4} & The database accessor shall allow the analysis
- system to request the last several records & \textbf{Code
-   Inspection:} Verify that the abstraction layer provides this
- functionality. \\
+ \item[\fr{11.5}] The database accessor shall allow the analysis
+ system to request records between two timestamps.
 
- \hline \fr{11.5} & The database accessor shall allow the analysis
- system to request records between two timestamps & \textbf{Code
-   Inspection:} Verify that the abstraction layer provides this
- functionality. \\
+ \item[\fr{12.1}] The system shall allow the user to define their
+ own events.
 
- \hline \fr{12.1} & The system shall allow the user to define their
- own events & \textbf{Unit Testing:} Attempt to define custom events
- and verify that this succeeds. \\
-
- \hline \fr{12.2} & The system shall allow the user to define when any
- particular event is triggered & \textbf{Unit Testing:} Customise when
- an event is triggered and verify that this has taken effect. \\
- \hline
-\end{longtable}
+ \item[\fr{12.2}] The system shall allow the user to define when any
+ particular event is triggered.
+\end{description}
 
 \fr{11.2} is essentially the content of the low-fidelity prototype of
 the admin centre that we provided to the customer, and refines \fr{11}
@@ -145,28 +118,19 @@ total control over where events are triggered.
 \subsubsection{Reporting Data}
 \label{sec:requirements-functional-feedback}
 
-\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
- \hline \cellcolor{titleColor}\textbf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
+\begin{description}
+ \item[\fr{20}] The system shall allow analysis results to be sent
+ to the data input API.
 
- \hline \fr{20} & The system shall allow analysis results to be sent
- to the data input API & \textbf{Implementation:} Attempt to implement
- an analysis engine which sends a result to the data input API. \\
+ \item[\fr{21}] The system shall allow for reports to change the way
+ in which data is sensed.
 
- \hline \fr{21} & The system shall allow for reports to change the way
- in which data is sensed & \textbf{Unit Testing:} Construct such a
- report and verify that the sensing system is modified appropriately. \\
+ \item[\fr{22}] The system shall allow notifications to be sent back
+ to the system being monitored.
 
- \hline \fr{22} & The system shall allow notifications to be sent back
- to the system being monitored & \textbf{Implementation:} Attempt to
- implement an analysis engine which sends notifications to the
- monitored system. \\
-
- \hline \fr{23} & The admin centre of the system shall allow users to
- specify how notifications are handled. & \textbf{Unit Testing:}
- Verify that users can mutate notification handlers, and that these
- changes are stored. \\
- \hline
-\end{longtable}
+ \item[\fr{23}] The admin centre of the system shall allow users to
+ specify how notifications are handled. 
+\end{description}
 
 These requirements do not appear in the prior report at all, and were
 discovered to be necessary following feedback from the customer

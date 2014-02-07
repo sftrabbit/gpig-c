@@ -45,9 +45,413 @@ Friday, 14th February 2014
 \input{01-introduction}
 \input{02-glossary}
 \input{03-requirements}
-\input{04-architecture}
-\input{05-prototype}
-\input{06-team}
+\section{System Architecture}
+\label{sec:architecture}
+
+\subsection{Quality Attributes}
+\label{sec:architecture-quality}
+
+Quality attributes are defined in order to ensure architectural decisions 
+made when creating the system architecture not only provide the required 
+functionality, but also produce a system meeting the expectations of all 
+stakeholders. For example the system may be expected to meet certain 
+security standards or availability levels. Explicitly defining these quality 
+attributes before concretely designing a system allows for the correct tactics 
+and patterns to be adopted in order to maximise the utility of important 
+qualities.
+
+When examining the HUMS non-functional requirements the following system 
+quality attributes were identified:
+	\begin{center}
+	\textit{ Flexibility, Availability, Performance, Modifiability, Security, Testability, Usability}
+	\end{center}
+For the prototype implementation, at this stage, usability and security have not been heavily considered, however in the real system they would be of high importance.
+
+Flexibility is important to the HUMS as it is to be used across multiple domains, meaning it cannot be to specific. Following a plugin architecture means the system can remain general and flexible however can include domain specific elements, such as analysis engines, creating a software product line, where the core of the HUMS can be shared across all domains.
+
+Modifiability is also an important quality of the HUMS, though not 
+measurable, lack of modifiability can increase the cost and time taken to 
+complete the project. The HUMS will initially be built to tackle a single domain 
+(software), however will in the future be required to work on embedded 
+systems, mechanical systems, electrical systems and even people. In order to 
+ensure these changes are as efficient as possible the initial system 
+must be modifiable. Tactics that can be used to increase the modifiability of the 
+system include using small modules within the system, decreasing the 
+coupling between those modules and increasing the cohesion. In order to 
+achieve low coupling  the HUMS uses interfaces between modules and 
+restricts dependencies, such that the majority of modules can be swapped out 
+without large changes to the overall system.
+
+Availability defines how ready the system is to be used, and is normally the 
+percentage of downtime over a specified timeframe. The desired utility of the 
+quality attribute within the HUMS, as defined by the non-functional 
+requirements, is  99.9\% per month. Since lack of availability is often linked to 
+faults occurring, fault detection and recovery tactics (such as the use of 
+runtime exceptions, redundancy through backups and transactions) could be 
+employed in order to achieve the desired level of availability. 
+
+The performance of a system is normally measured by its latency and 
+throughput. The HUMS is required to dispatch notifications through the 
+notification generator after events have been triggered by the analysis 
+controller, with a latency less than 5ms, the system is 
+also required to be able to support multiple data output clients. Tactics such as 
+reducing overhead though careful use of data structures and prioritising events 
+can help reduce latency, at least for the most important events, defined by the 
+end user. It may also be possible to add concurrency, such that multiple 
+notification threads are used when demand for notifications and reports are 
+high, reducing the bottleneck created at the notification generator.
+
+In in order to ensure the HUMS is testable we followed the test driven development methodology where possible, writing and planning the tests before writing the code, passing tests means code performs the expected functionality. In addition to this we also ensured defined how each requirement of the system would be tested and created a comprehensive test plan, detailing integration, system, unit and acceptance testing.
+
+\subsection{System Views}
+\label{sec:architecture-views}
+
+When designing the HUMS we identified four different views of of the
+system which must be documented:
+
+\begin{description}
+  \item[Module View] The required software modules and relationships
+    between them at a high level.
+
+  \item[Behavioural View] The flow of data and dynamic actions within
+    the system.
+
+  \item[Deployment View] How modules are geographically positioned.
+
+  \item[Conceptual View] Class diagrams, showing a concrete
+    implementation of the functionality.
+\end{description}
+
+\subsection{Module View}
+\label{sec:architecture-moduleview}
+
+Having determined the quality attributes of the HUMS and the tactics
+which can be employed in order to achieve a high utility of these
+qualities, a conceptual view can be formed. The conceptual diagram
+shown in figure \ref{fig:moduleDiagram} depicts the modules of the
+HUMS and the interactions between these modules at a high level.
+
+%%TODO this diagram doesn't show the core or have a key
+
+\begin{figure}[ht!]
+  \includegraphics[width=13cm]{images/moduleDiagram.pdf}
+  \caption{The module diagram of the HUMS}
+  \label{fig:moduleDiagram}
+\end{figure}
+
+\begin{description}
+  \item[Data Emitter] Sends data to the system core in a standard
+    format. May be included within the HUMS or created by the end
+    user.
+
+  \item[Data Input Layer] Receives data from a data emitter and sends
+    it to the data abstraction layer. Alerts the analysis controller
+    that new data was received.
+
+  \item[Data Abstraction Layer] Handles all interaction with the
+    database, such that if the database was to be altered, only this
+    layer would need to change.
+
+  \item[Analysis Controller] Alert the analysis engines when new data
+    has arrived, pulling the required data from the data abstraction
+    layer. If an analysis engine determines an event has occurred
+    within the data then the analysis controller forwards that event
+    to the notification generator.
+
+  \item[Analysis Engine] Analyses the data looking for trends, if a
+    trend is found an event is returned to the analysis
+    controller. Analysis engines may be included in the HUMS or
+    created by the end user.
+
+  \item[Notification Generator] Receives events from the analysis
+    controller, defines an abstract notification and sends it to the
+    appropriate notification engine.
+
+  \item[Notification Engine] Receives an abstract notification from
+    the notification generator and creates a concrete notification,
+    for example an email or triggering a change in system
+    behaviour. Notification engines may be included in the HUMS or
+    created by the end user.
+
+  \item[Reports Engine] Pulls data from the data abstraction layer and
+    formats it into a report, for example a PDF or graph. Reports
+    engines may be included in the HUMS or created by the end user.
+\end{description}
+
+\subsection{Behavioural View}
+
+The module view shows how modules of the system are connected, however
+does not fully represent the interactions between components and the
+dynamic actions of the system. A behavioural view can be used to
+detail this information, showing the flow of data and events within
+the HUMS. Figure \hl{XXX} shows the behavioural model of the HUMS,
+detailing how the HUMS goes from receiving data from a data emitter to
+generating a notification.
+
+%%Input Diagram WITH KEY
+
+\subsection{Deployment View}
+
+With view to deployment the HUMS needs to be tailorable, the core
+system may be running on the same hardware as the data emitter, it may
+also be geographically distant. Engines may all be on separate
+machines or may all be together. Figures \hl{XXX and XXX} show the
+main scenarios for deployment of the HUMS, with a view that if the
+system architecture can perform under these situations, then it can
+perform under all others.
+
+\hl{We also chose to look at deploying the system as a service....}
+
+%% TODO talk about admin centre shizzle
+
+\subsection{Conceptual View}
+
+\subsubsection{Data Input Layer}
+
+The data input layer, shown in figure \ref{fig:dataInputLayer},
+contains the following classes:
+
+\begin{description}
+  \item[DataInputServer] An object which starts up a multithreaded
+    server to receive connections, and which periodically processes
+    received data by sending it off to the database and notifying the
+    analysis component. It accesses these by having references to them
+    passed in upon creation.
+
+  \item[ProtoReceiver] Listens on a socket for inbound connections,
+    and then hands them off to a new ProtoMultiReceiver, running in a
+    new thread, for processing. It also maintains a thread-safe
+    concurrent queue, which all of the receivers write to, and the
+    server reads (and removes) from. This use of multithreading
+    enables multiple clients to send data at the same time easily, and
+    the use of a queue ensures that data is inserted into the database
+    in the order in which it is received.
+
+  \item[ProtoMultiReceiver] Receives data from a particular data input
+    client, writing received data to the queue.
+\end{description}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=6.2cm]{images/DataInputLayer/DataInputServer.png}
+  \includegraphics[width=8.3cm]{images/DataInputLayer/ProtoReceiver.png}
+  \includegraphics[width=9.5cm]{images/DataInputLayer/ProtoMultiReceiver.png}
+  \caption{Conceptual diagrams of the data input layer classes, using UML 2 notation}
+  \label{fig:dataInputLayer}
+\end{figure}
+
+\subsubsection{Data Abstraction Layer}
+
+The data abstraction layer, shown in figure
+\ref{fig:dataAbstractionPackage}, contains the following classes:
+
+\begin{description}
+  \item [System Data Gateway] An interface used to abstract the
+    datastore implementation details from the rest of the
+    application. An implementation of this interface will provide ways
+    to read and write from the chosen datastore, meaning the rest of the
+    system is not concerned with the datastore implementation. When
+    interfacing with a datastore the end user will be required to
+    implement this interface.
+
+  \item [EmitterSystemState] An object representing the data received
+    from a data emitter at a particular time. The state object holds
+    the ID of the end user's system and the creation timestamp along
+    with a map of sensor IDs against the value of the sensor at that
+    particular time. A map was used to represent the sensors and
+    values so that the end user is free the send data from as many or
+    as few sensors at a time, reducing the number of writes to the
+    database. For serialisation this object includes methods to
+    convert to and from JSON.
+
+  \item [DataJSONAttribute] An enumeration that wraps up the keys used
+    to look up values in the JSON serialisations of the
+    EmitterSystemState and QueryResult classes.
+
+  \item [SensorState] An object representing the state of a particular
+    system sensor. A sensor has an ID, a value and two timestamps, one
+    specifying the time the sensor value was added to the database and
+    the other the time the value was created.
+
+  \item [QueryResult] An object representing the result of a database
+    query, containing the ID of the end user's system to which the
+    data relates and a list of sensor states pulled from the database.
+\end{description}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width= 9.5cm]{images/DataAbstractionLayer/systemDataGateway.png}
+  \includegraphics[width= 5cm]{images/DataAbstractionLayer/dataJsonAttribute.pdf}
+  \includegraphics[width= 7cm]{images/DataAbstractionLayer/queryResult.pdf}
+  \includegraphics[width= 7cm]{images/DataAbstractionLayer/sensorState.pdf}
+  \includegraphics[width= 9cm]{images/DataAbstractionLayer/emitterSystemState.pdf}
+  \caption{Conceptual diagrams of the data abstraction layer classes, using UML 2 notation}
+  \label{fig:dataAbstractionPackage}
+\end{figure}
+
+\subsubsection{Analysis Component}
+
+The analysis component, shown in figure
+\ref{fig:dataAnalysisComponent}, contains the following classes:
+
+\begin{description}
+  \item [Analysis Controller] An object that coordinates all analysis of
+    sensor data. The object interfaces with the data input layer,
+    receiving a system ID when analysis is required. Once analysis has
+    been carried out the controller processes the results and triggers
+    notifications where appropriate. Analysis engines are associated
+    with the analysis controller by class loading allowing for users to
+    add and remove analysis engines at run-time.
+
+  \item [Analysis Engine] An abstract class that implements the basic
+    functionality and defines the methods required of an implemented
+    analysis engine. Each engine has a list of associated systems. The
+    implementation of the analyse method interfaces with the database
+    abstraction layer to retrieve the appropriate sensor data and then
+    performs the desired analysis. Once analysis is complete the engine 
+    returns a result object. When creating their own analysis 
+    engines the end user will be required to extend this class, implement 
+    the abstract methods and define what constitutes an event.
+
+  \item [Mean Analysis] An object that extends the analysis engine
+    class and implements mean analysis. When called by the analysis
+    controller, sensor data is retrieved for all associated systems
+    and mean analysis is performed. If a mean value fall outside of
+    the acceptable bounds then a notification is raised.
+
+  \item [Result] An object representing the result of the analysis
+    carried out by the chosen analysis engine. The object contains a
+    map of any data to be saved back to the database and a flag
+    indicating whether a notification needs to be triggered. For
+    serialisation the data to be saved to the database is stored in a
+    map of string key-values. When implementing their own analysis
+    engine the end user will be able to specify what data is to be
+    saved back to the database.
+
+  \item [Event Notify] An object representing a notification,
+    containing the name of the analysis engine that triggered the
+    notification, the ID of the system that the notification applies
+    to and the result object from the analysis engine that triggered
+    the notification.
+\end{description}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width= 9.5cm]{images/Analysis/AnalysisController.png}
+  \includegraphics[width= 5cm]{images/Analysis/Result.png}
+  \includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
+  \includegraphics[width= 6cm]{images/Analysis/EventNotify.png}
+  \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
+  \caption{Conceptual diagrams of the analysis component classes, using UML 2 notation}
+  \label{fig:dataAnalysisComponent}
+\end{figure}
+
+\subsubsection{Notification Generator}
+
+\section{Interim Prototype Implementation}
+
+\subsection{Technologies}
+
+We chose to develop the core of the HUMS prototype in Java. Java can
+be compiled to bytecode that can be executed directly in all
+environments that support a Java Virtual Machine, including various
+operating systems and the x86, x86-64 and ARM CPU architectures,
+making it highly portable between both desktop, server and embedded
+systems.
+
+% REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
+
+Whilst there may exist deployment platforms that are not supported, at
+this stage, we do not see this as a problem since the underlying
+architecture of the system is transferable across languages.
+
+All members of our team were familiar with the Java programming
+language and thus no time was spent having to get the team up to speed
+on a new language. We did not impose a language restriction when
+developing the data emitter and various engines as the data being
+passed between them and the core are language independent, meaning end
+users are free, even with the prototype, to implement engines in any
+language they see fit. For the prototype we used both Java and
+JavaScript when creating the engines, languages team members are
+familiar with, allowing us to show off the versatility of the system.
+
+We chose to use Google App Engine to host the prototype's database
+module, displaying how easily it can incorporate existing, popular
+technologies as plugins. The prototype could easily be extended to
+work with other database technologies simply by implementing an
+interface within the data abstraction layer.
+
+We created a prototype admin centre to show how the HUMS could be
+managed remotely, viewing data and modifying settings online, through
+a web browser, whilst running as a service. The admin centre was
+developed using the Bootstrap front-end web framework, including HTML,
+JavaScript and CSS, in order to create a prototype realistically
+simulating an interface to the HUMS that is accessible on desktop
+computers, laptops and mobile devices alike.
+
+% TODO Mockito and Joe & Michaels process reading thing - do we need to cite these?
+We used various Java libraries to support our prototype, saving us development time and providing a robust codebase. For testing we used the Mockito framework to allow us to verify elements of our codebase in isolation, by offering a concise way to mock out dependancies. To interrogate the state of the test application provided by the Customer, we used the SIGAR cross-platform system information API to query the vital parameters of the process, including CPU utilisation and memory footprint.
+
+We used Git for version control, allowing the entire team to
+contribute to the project simultaneously, whilst keeping a reversible
+history of all alterations made by each person.
+
+\subsection{Current Functionality}
+
+\subsection{Testing} 
+
+We created and implemented a test plan that laid out our key ideas
+with respect to verifying our that solution fulfilled its
+requirements. With a view to tracing the evolution from requirements
+to implementation to testing, we allocated tests IDs and references to
+their associated implementation components and requirement IDs. We
+defined our plan, where appropriate, in terms of each module within
+the system and what specific, testable attributes that module must
+have to fulfil its requirements. We also further deconstructed the
+testing into various levels of abstraction, mapping the higher level
+requirements to their lower-level requisite requirements: acceptance
+testing, system testing, integration testing and unit
+testing.
+
+% Does it make sense to have system/acceptance testing within a
+% module? Given we are using a plugin architecture, I am not sure. TD
+
+% TODO We probably need something about overall system & acceptance
+% testing. These are mainly the white/black/grey box tests in the
+% first report, e.g. NRF.9, "The system must cope with up to 2000 data
+% input re- quests per second per HUMS instance."
+
+\begin{description}
+  \item[Data Emitter]
+  \item[Data Input Layer]
+  \item[Data Abstraction Layer] Given the high throughput and
+    importance of storage to the function of the HUMS as a whole,the
+    data abstraction layer's key attributes are availability and
+    performance. When considering integration testing, the data
+    abstraction layer interfaces with a wide selection of modules,
+    including the datastore, the data input layer, the analysis
+    controller and the reports engine. To test these interfaces, we
+    referred to requirements pertaining to the storage of data,
+    \textbf{FR.3} to \textbf{FR.10}, for guidance.
+    % Should this be talking about the future, since it's a "plan", or
+    % is it ok take about testing the prototype retrospectively?
+
+    % Maybe referring to requirements is too much like system testing?
+
+    At the unit testing level, focus was on the comparably complex,
+    well defined module-internal functions, such as the generation and
+    parsing of the JSON serialisation of objects.
+  \item[Analysis Controller]
+  \item[Analysis Engine]
+  \item[Notification Generator]
+  \item[Notification Engine]
+  \item[Reports Engine]
+\end{description}
+
+\subsection{Evaluation on Test Application}
+
+\section{Team Structure}
+
 \input{07-riskregister}
 \input{08-communication}
 
