@@ -451,6 +451,30 @@ testing.
 \subsection{Evaluation on Test Application}
 
 \section{Team Structure}
+\label{sec:team}
+
+\subsection{Developmental Subteams}
+\label{sec:team-subteams}
+
+For the development of the prototype we split into three subteams,
+concentrating on the different areas of the system. We then collaborated to
+produce the reporting backend.
+
+\begin{description}
+  \item[Team Sense] implemented the data emitter for the test application,
+    by producing reusable monitoring components. They also implemented the data
+    input API as a multithreaded server, in order to meet requirements
+    regarding simultaneous usage.
+
+  \item[Team Store] implemented the database abstraction interface, and also a
+    concrete implementation using Google Appengine as a backing store. The API
+    was kept generic in order to meet requirements regarding flexibility of
+    database implementation.
+
+  \item[Team Analyse] implemented the analysis controller, and the analysis
+    engine API. The engine API was implemented to be very sparse so that a large
+    number of different concrete implementations could be supplied.
+\end{description}
 
 \input{07-riskregister}
 \input{08-communication}
