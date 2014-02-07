@@ -20,7 +20,7 @@ import expr.Variable;
  * 
  * @author GPIG-C
  */
-public class ExpressionAnanlysis extends AnalysisEngine {
+public class ExpressionAnalysis extends AnalysisEngine {
 
 	private static final int ONE_VALUE_PER_SENSOR = 1;
 
@@ -51,7 +51,7 @@ public class ExpressionAnanlysis extends AnalysisEngine {
 	 * @param database The database to use
 	 * @param notify Whether to notify the user on analysis
 	 */
-	public ExpressionAnanlysis(
+	public ExpressionAnalysis(
 			String name, 
 			String expression, 
 			List<String> associatedSystems, 
