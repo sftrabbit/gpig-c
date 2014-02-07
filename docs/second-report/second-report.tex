@@ -197,7 +197,8 @@ We created and implemented a test plan that laid out our key ideas with respect 
 \item[Data Emitter]
 \item[Data Input Layer]
 \item[Data Abstraction Layer] % Should this be talking about the future, since it's a "plan", or is it ok take about testing the prototype retrospectively?
-The data abstraction layer is the interface between the specific datastore implementation and the rest of the system. Given it's high throughput and importance to the function of the HUMS as a whole, it's key attributes are availability and performance. When considering integration testing, the data abstraction layer interfaces with a wide selection of modules, including the datastore, the data input layer, the analysis controller and the reports engine. These modules can potentially need to read from the datastore, write to it, or both. To test these interfaces, we referred to requirements pertaining to the storage of data, \textbf{FR.3} to \textbf{FR.10}. At the unit testing level, focus was on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
+Given the high throughput and importance of storage to the function of the HUMS as a whole,the data abstraction layer's key attributes are availability and performance. When considering integration testing, the data abstraction layer interfaces with a wide selection of modules, including the datastore, the data input layer, the analysis controller and the reports engine. To test these interfaces, we referred to requirements pertaining to the storage of data, \textbf{FR.3} to \textbf{FR.10}, for guidance. % Maybe referring to requirements is too much like system testing?
+ At the unit testing level, focus was on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
 \item[Analysis Controller]
 \item[Analysis Engine]
 \item[Notification Generator]
