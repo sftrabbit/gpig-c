@@ -51,7 +51,7 @@ Friday, 14th February 2014
 \subsection{Quality Attributes}
 \label{sec:architecture-quality}
 
-Quality attributes are defined in order to ensure architectural decisions 
+Quality attributes are defined in order to ensure the architectural decisions 
 made when creating the system architecture not only provide the required 
 functionality, but also produce a system meeting the expectations of all 
 stakeholders. For example the system may be expected to meet certain 
@@ -63,13 +63,19 @@ qualities.
 When examining the HUMS non-functional requirements the following system 
 quality attributes were identified:
 	\begin{center}
-	\textit{ Flexibility, Availability, Performance, Modifiability, Security, Testability, Usability}
+	\textit{
+		Flexibility, Availability, Performance, Modifiability, Security, Testability, 
+Usability}
 	\end{center}
-For the prototype implementation, at this stage, usability and security have not been heavily considered, however in the real system they would be of high importance.
+Of these availability, performance, security and usability can be observed and 
+measured, the others are unobservable however steps can still be taken to 
+maximise their utility. For the prototype implementation, at this stage, usability 
+and security have not been heavily considered, however in the real system 
+they would be of high importance.
 
-Flexibility is important to the HUMS as it is to be used across multiple domains, meaning it cannot be to specific. Following a plugin architecture means the system can remain general and flexible however can include domain specific elements, such as analysis engines, creating a software product line, where the core of the HUMS can be shared across all domains.
+Flexibility is important to the HUMS as it is to be used across multiple domains, meaning it cannot be to specific. Following a plugin architecture means the system can remain general and flexible however can include domain specific elements, such as analysis engines. This in effect creates a software product line, where the core of the HUMS can be shared across all domains.
 
-Modifiability is also an important quality of the HUMS, though not 
+Modifiability is also an important qualities of the HUMS, though not 
 measurable, lack of modifiability can increase the cost and time taken to 
 complete the project. The HUMS will initially be built to tackle a single domain 
 (software), however will in the future be required to work on embedded 
@@ -82,6 +88,7 @@ achieve low coupling  the HUMS uses interfaces between modules and
 restricts dependencies, such that the majority of modules can be swapped out 
 without large changes to the overall system.
 
+%Maybe go into more detail if space
 Availability defines how ready the system is to be used, and is normally the 
 percentage of downtime over a specified timeframe. The desired utility of the 
 quality attribute within the HUMS, as defined by the non-functional 
@@ -101,7 +108,7 @@ end user. It may also be possible to add concurrency, such that multiple
 notification threads are used when demand for notifications and reports are 
 high, reducing the bottleneck created at the notification generator.
 
-In in order to ensure the HUMS is testable we followed the test driven development methodology where possible, writing and planning the tests before writing the code, passing tests means code performs the expected functionality. In addition to this we also ensured defined how each requirement of the system would be tested and created a comprehensive test plan, detailing integration, system, unit and acceptance testing.
+In in order to ensure the HUMS is testable we followed test driven development, where possible writing and planning the tests before writing the code, meaning that when the tests pass the code performs the expected functionality. In addition to this we also ensured defined how each requirement of the system would be tested and created a comprehensive test plan, detailing integration, system 
 
 \subsection{System Views}
 \label{sec:architecture-views}
