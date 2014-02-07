@@ -276,7 +276,7 @@ The analysis component, shown in figure
   \item [Analysis Engine] An abstract class that implements the basic
     functionality and defines the methods required of an implemented
     analysis engine. Each engine has a list of associated systems. The
-    implementation of the analyse method interfaces with database
+    implementation of the analyse method interfaces with the database
     abstraction layer to retrieve the appropriate sensor data and then
     performs the desired analysis. Once analysis is complete the engine 
     returns a result object. When creating their own analysis 
@@ -286,7 +286,7 @@ The analysis component, shown in figure
   \item [Mean Analysis] An object that extends the analysis engine
     class and implements mean analysis. When called by the analysis
     controller, sensor data is retrieved for all associated systems
-    and mean analysis is performed. If any mean values fall outside of
+    and mean analysis is performed. If a mean value fall outside of
     the acceptable bounds then a notification is raised.
 
   \item [Result] An object representing the result of the analysis
