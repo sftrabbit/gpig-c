@@ -28,7 +28,7 @@ Walker}
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
 \newcommand{\fr}[1]{\textbf{FR.#1}}
-
+\newcommand{\frit}[1]{\textit{FR.#1}}
 \begin{document}
 
 \begin{center}
@@ -66,7 +66,7 @@ When examining the HUMS non-functional requirements the following
 system 
 quality attributes were identified:
 	\begin{center}
-	\textit{ Flexibility, Availability, Performance, Modifiability, Security, 
+	\textit{ Flexibility, Performance, Modifiability, Security, 
 Testability, Usability}
 	\end{center}
 For the prototype implementation, at this stage, usability and security 
@@ -97,17 +97,6 @@ achieve low coupling  the HUMS uses interfaces between modules and
 restricts dependencies, such that the majority of modules can be 
 swapped out 
 without large changes to the overall system.
-
-%Maybe go into more detail if space
-Availability defines how ready the system is to be used, and is normally the 
-percentage of downtime over a specified timeframe. The desired utility of the 
-quality attribute within the HUMS, as defined by the non-functional 
-requirements, is  99.9\% per month. Since lack of availability is often 
-linked to 
-faults occurring, fault detection and recovery tactics (such as the use of 
-runtime exceptions, redundancy through backups and transactions) 
-could be 
-employed in order to achieve the desired level of availability. 
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch notifications through the 
