@@ -1,0 +1,106 @@
+\section{Interim Prototype Implementation}
+\label{sec:prototype}
+
+\subsection{Technologies}
+\label{sec:prototype-technologies}
+
+We chose to develop the core of the HUMS prototype in Java. Java can
+be compiled to bytecode that can be executed directly in all
+environments that support a Java Virtual Machine, including various
+operating systems and the x86, x86-64 and ARM CPU architectures,
+making it highly portable between both desktop, server and embedded
+systems.
+
+% REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
+
+Whilst there may exist deployment platforms that are not supported, at
+this stage, we do not see this as a problem since the underlying
+architecture of the system is transferable across languages.
+
+All members of our team were familiar with the Java programming
+language and thus no time was spent having to get the team up to speed
+on a new language. We did not impose a language restriction when
+developing the data emitter and various engines as the data being
+passed between them and the core are language independent, meaning end
+users are free, even with the prototype, to implement engines in any
+language they see fit. For the prototype we used both Java and
+JavaScript when creating the engines, languages team members are
+familiar with, allowing us to show off the versatility of the system.
+
+We chose to use Google App Engine to host the prototype's database
+module, displaying how easily it can incorporate existing, popular
+technologies as plugins. The prototype could easily be extended to
+work with other database technologies simply by implementing an
+interface within the data abstraction layer.
+
+We created a prototype admin centre to show how the HUMS could be
+managed remotely, viewing data and modifying settings online, through
+a web browser, whilst running as a service. The admin centre was
+developed using the Bootstrap front-end web framework, including HTML,
+JavaScript and CSS, in order to create a prototype realistically
+simulating an interface to the HUMS that is accessible on desktop
+computers, laptops and mobile devices alike.
+
+We used Git for version control, allowing the entire team to
+contribute to the project simultaneously, whilst keeping a reversible
+history of all alterations made by each person.
+
+\subsection{Current Functionality}
+\label{sec:prototype-functionality}
+
+\subsection{Testing} 
+\label{sec:prototype-testing}
+
+We created and implemented a test plan that laid out our key ideas
+with respect to verifying our that solution fulfilled its
+requirements. With a view to tracing the evolution from requirements
+to implementation to testing, we allocated tests IDs and references to
+their associated implementation components and requirement IDs. We
+defined our plan, where appropriate, in terms of each module within
+the system and what specific, testable attributes that module must
+have to fulfil its requirements. We also further deconstructed the
+testing into various levels of abstraction, mapping the higher level
+requirements to their lower-level requisite requirements: acceptance
+testing, system testing, integration testing and unit
+testing.
+
+For the analysis engine, we created a unit test to check each aspect of the engine. We utilised mockito, which is a framework for testing which allows emulation of results from methods. The particular analysis engine which we tested was the mean engine. The aim of this engine, which is part of the pre-defined engine set for our HUMS system, is to check set of values has a mean which lies within some user defined bounds. Therefore, our test cases setup to test that the mean values were valid. This meant using a pre-defined set of values to ensure the mean which the system calculated matched the true mean. Our test cases also dealt with the checking of means in and outside of bounds, as well as the cases where invalid data or system IDs were sent into the analysis engine.
+
+% Does it make sense to have system/acceptance testing within a
+% module? Given we are using a plugin architecture, I am not sure. TD
+
+% TODO We probably need something about overall system & acceptance
+% testing. These are mainly the white/black/grey box tests in the
+% first report, e.g. NRF.9, "The system must cope with up to 2000 data
+% input re- quests per second per HUMS instance."
+
+\begin{description}
+  \item[Data Emitter]
+  \item[Data Input Layer]
+  \item[Data Abstraction Layer] Given the high throughput and
+    importance of storage to the function of the HUMS as a whole,the
+    data abstraction layer's key attributes are availability and
+    performance. When considering integration testing, the data
+    abstraction layer interfaces with a wide selection of modules,
+    including the datastore, the data input layer, the analysis
+    controller and the reports engine. To test these interfaces, we
+    referred to requirements pertaining to the storage of data,
+    \textbf{FR.3} to \textbf{FR.10}, for guidance.
+    % Should this be talking about the future, since it's a "plan", or
+    % is it ok take about testing the prototype retrospectively?
+
+    % Maybe referring to requirements is too much like system testing?
+
+    At the unit testing level, focus was on the comparably complex,
+    well defined module-internal functions, such as the generation and
+    parsing of the JSON serialisation of objects.
+  \item[Analysis Controller]
+  \item[Analysis Engine]
+  \item[Notification Generator]
+  \item[Notification Engine]
+  \item[Reports Engine]
+\end{description}
+
+\subsection{Evaluation on Test Application}
+\label{sec:prototype-evaluation}
+
