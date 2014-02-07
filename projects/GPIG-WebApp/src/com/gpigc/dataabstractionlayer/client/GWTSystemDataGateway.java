@@ -111,41 +111,56 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 			throw new FailedToReadFromDatastoreException(e.getMessage());
 		}
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gpig.client.SystemDataGateway#write(com.gpig.client.EmitterSystemState)
+	 * @see
+	 * com.gpig.client.SystemDataGateway#write(com.gpig.client.EmitterSystemState
+	 * )
 	 */
 	@Override
 	public void write(EmitterSystemState data)
 			throws FailedToWriteToDatastoreException {
 		try {
-			HttpClient client = new DefaultHttpClient();
-			HttpPost post = new HttpPost(dbServletUri);
-
-			StringEntity entity = new StringEntity(data.toJSON());
-			post.setEntity(entity);
-			HttpResponse response;
-			response = client.execute(post);
-			if (response.getStatusLine().getStatusCode() != HttpServletResponse.SC_CREATED)
-				throw new FailedToWriteToDatastoreException(
-						"Failed to Write to DB, Response was "
-								+ response.getStatusLine().getStatusCode());
+			writeJSON(data.toJSON());
 		} catch (IOException e) {
 			throw new FailedToWriteToDatastoreException(e.getMessage());
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.gpig.client.SystemDataGateway#write(com.gpig.client.EmitterSystemState)
+	 * @see
+	 * com.gpig.client.SystemDataGateway#write(com.gpig.client.EmitterSystemState
+	 * )
 	 */
-	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException{
-		for(EmitterSystemState state: data){
-			write(state);
+	public void write(List<EmitterSystemState> data)
+			throws FailedToWriteToDatastoreException {
+		try {
+			writeJSON(createJSONArray(data));
+		} catch (IOException e) {
+			throw new FailedToWriteToDatastoreException(e.getMessage());
 		}
+	}
+
+	private String createJSONArray(List<EmitterSystemState> data) {
+		return null;
+	}
+
+	private void writeJSON(String json)
+			throws FailedToWriteToDatastoreException, IOException {
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(dbServletUri);
+		StringEntity entity = new StringEntity(json);
+		post.setEntity(entity);
+		HttpResponse response;
+		response = client.execute(post);
+		if (response.getStatusLine().getStatusCode() != HttpServletResponse.SC_CREATED)
+			throw new FailedToWriteToDatastoreException(
+					"Failed to Write to DB, Response was "
+							+ response.getStatusLine().getStatusCode());
 	}
 
 }
