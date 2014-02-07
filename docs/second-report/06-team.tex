@@ -1,0 +1,90 @@
+\section{Team Structure}
+\label{sec:team}
+
+As in the initial report, we use the following acronyms for team members:
+
+\begin{tabular}{ p{4cm} p{4cm} p{4cm} p{4cm} }
+  \textbf{AJF}-Adam Fahie &
+  \textbf{AIF}-Andrew Fairbairn &
+  \textbf{TF}-Anthony Free &
+  \textbf{TD}-Tom Davies \\
+  \textbf{JM}-Joseph Mansfield &
+  \textbf{RT}-Rosy Tucker &
+  \textbf{MW}-Michael Walker & \\
+\end{tabular}
+
+Before beginning the second stage, we ascertained which modules everyone had in
+the second half of the Autumn and the first half of the Spring terms, which we
+then considered as we assigned tasks to people.
+
+\subsection{Strengths and Weaknesses}
+\label{sec:team-strengths}
+
+To aid in deciding which technologies to use in the design and implementation
+of the solution, we established what the strengths and weaknesses of each team
+member were,
+
+\begin{longtable}[H]{|p{2cm}|p{8cm}|p{5cm}|}
+  \hline \cellcolor{titleColor}\textbf{Initials} &
+  \cellcolor{titleColor}\textbf{Experience} &
+  \cellcolor{titleColor}\textbf{Weaknesses}\\
+
+  \hline AJF
+  & Java, C, Ruby, Spring, Hibernate, Gradle, Design Patterns, Tomcat, JBoss,
+  Git, SQL
+  & Web Development, NoSQL, UI/UX, Technical Writing \\
+
+  \hline AIF
+  & Java, C++, Python, Javascript, PHP, UI/UX, Web Development, NoSQL, SQL
+  & Spring, Technical Writing \\
+
+  \hline TF
+  & PHP, Javascript, Java, VB, C, Linux, MDE Developer, Git, SQL
+  & UI/UX, Technical Writing \\
+
+  \hline TD
+  & Java, C, Python, Scala, Android, Swing, Machine Learning, SQL
+  & NoSQL, Web Development, Git \\
+
+  \hline JM
+  & C, C++, Java, Python, UI/UX, Android, Web Development, Git, SQL
+  & Hardware, NoSQL \\
+
+  \hline RT
+  & Java, C, Objective C, Javascript, Android, iOS, Swing, Design Patterns,
+  Google AppEngine, HCI, NoSQL, SQL
+  & Spring, Git \\
+
+  \hline MW
+  & C, Java, Python, Git
+  & UX/UX, Technical Writing, Concurrency \\
+  \hline
+\end{longtable}
+
+As can be clearly seen, everyone in the team is proficient with Java, and thus
+it was a natural implementation choice for the prototype.
+
+\subsection{Developmental Subteams}
+\label{sec:team-subteams}
+
+For the development of the prototype we split into three subteams,
+concentrating on the different areas of the system. We then collaborated to
+produce the reporting backend.
+
+\begin{description}
+  \item[Team Sense] implemented the data emitter for the test application,
+    by producing reusable monitoring components. They also implemented the data
+    input API as a multithreaded server, in order to meet requirements
+    regarding simultaneous usage. (JM and MW)
+
+  \item[Team Store] implemented the database abstraction interface, and also a
+    concrete implementation using Google Appengine as a backing store. The API
+    was kept generic in order to meet requirements regarding flexibility of
+    database implementation. (TD and RT)
+
+  \item[Team Analyse] implemented the analysis controller, and the analysis
+    engine API. The engine API was implemented to be very sparse so that a large
+    number of different concrete implementations could be supplied. (AJF, AIF,
+    and TF)
+\end{description}
+
