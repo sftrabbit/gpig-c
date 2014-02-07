@@ -17,7 +17,7 @@ set(LATEX_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/docs")
 
 add_latex_document(second-report.tex
                    BIBFILES report-refs.bib
-                   INPUTS title.tex wc.tex
+                   INPUTS wc.tex
                    01-introduction.tex
                    02-glossary.tex
                    03-requirements.tex
