@@ -100,26 +100,32 @@ public class EmitterSystemState {
 		Map<String, String> payload = new HashMap<>();
 		parser.nextToken(); // Returns a start of object token
 		System.out.println("Object start token = " + parser.getCurrentToken());
-		while (parser.nextToken() != JsonToken.END_OBJECT) {
+		parser.nextToken();
+		while (parser.getCurrentToken() != JsonToken.END_OBJECT) {
 			System.out.println("Last token = " + parser.getCurrentToken());
 			String jsonKey = parser.getCurrentName();
 			System.out.println("Key = " + jsonKey);
 			if (jsonKey.equals(JSON_SYSTEM_ID.getKey())) {
 				parser.nextToken(); // Move to value
 				systemID = parser.getText();
+				System.out.println("System ID = " + parser.getText());
+				parser.nextToken();
 				continue;
 			}
 			if (jsonKey.equals(JSON_CREATION_TIMESTAMP.getKey())) {
 				parser.nextToken(); // Move to value
 				System.out.println(parser.getValueAsString());
 				timeStamp = new Date(parser.getLongValue());
+				parser.nextToken();
 				continue;
 			}
 			if (jsonKey.equals(JSON_PAYLOAD.getKey())) {
 				parser.nextToken(); // Start array
-				while (parser.nextToken() == JsonToken.START_OBJECT)
+				System.out.println("Sensor start array = " + parser.getCurrentToken());
+				while (parser.nextToken() == JsonToken.START_OBJECT) {
 					// Start object
 					parseSensor(parser, payload);
+				}
 				continue;
 			}
 			throw new IllegalArgumentException("Unrecognised JSON key: "
@@ -148,18 +154,20 @@ public class EmitterSystemState {
 				if (sensorID != null)// Shouldn't have already seen a sensor ID
 					throw new IllegalArgumentException("Duplicate "+ JSON_SENSOR_ID);
 				sensorID = jsonValue;
+				System.out.println("Sensor ID = " + sensorID);
 				continue;
 			}
 			if (jsonKey.equals(JSON_VALUE.getKey())) {
 				if (sensorValue != null) // Shouldn't have already seen a sensor value
 					throw new IllegalArgumentException("Duplicate "+ JSON_VALUE);
 				sensorValue = jsonValue;
+				System.out.println("Sensor value = " + sensorValue);
 				continue;
 			}
 			throw new IllegalArgumentException(
 					"Unrecognised JSON sensor key: " + jsonKey);
 		}
-
+		System.out.println("Left sensor loop on " + parser.getCurrentToken());
 		// Write values to the payload map
 		if (sensorID != null && sensorValue != null) {
 			payload.put(sensorID, sensorValue);
