@@ -176,6 +176,38 @@ perform under all others.
 \subsubsection{Data Input Layer}
 \label{sec:architecture-conceptualview-input}
 
+The data input layer, shown in figure \ref{fig:dataInputLayer},
+contains the following classes:
+
+\begin{description}
+  \item[DataInputServer] An object which starts up a multithreaded
+    server to receive connections, and which periodically processes
+    received data by sending it off to the database and notifying the
+    analysis component. It accesses these by having references to them
+    passed in upon creation.
+
+  \item[ProtoReceiver] Listens on a socket for inbound connections,
+    and then hands them off to a new ProtoMultiReceiver, running in a
+    new thread, for processing. It also maintains a thread-safe
+    concurrent queue, which all of the receivers write to, and the
+    server reads (and removes) from. This use of multithreading
+    enables multiple clients to send data at the same time easily, and
+    the use of a queue ensures that data is inserted into the database
+    in the order in which it is received.
+
+  \item[ProtoMultiReceiver] Receives data from a particular data input
+    client, writing received data to the queue.
+\end{description}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=7cm]{images/DataInputLayer/DataInputServer.png}
+  \includegraphics[width=12cm]{images/DataInputLayer/ProtoReceiver.png}
+  \includegraphics[width=12cm]{images/DataInputLayer/ProtoMultiReceiver.png}
+  \caption{Conceptual diagrams of the data input layer classes, using UML 2 notation}
+  \label{fig:dataInputLayer}
+\end{figure}
+
 \subsubsection{Data Abstraction Layer}
 \label{sec:architecture-conceptulview-abstraction}
 
