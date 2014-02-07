@@ -451,6 +451,47 @@ testing.
 \subsection{Evaluation on Test Application}
 
 \section{Team Structure}
+\label{sec:team}
+
+Before beginning the second stage, we ascertained which modules everyone had in
+the second half of the Autumn and the first half of the Spring terms, which we
+then considered as we assigned tasks to people.
+
+\subsection{Developmental Subteams}
+\label{sec:team-subteams}
+
+As in the initial report, we use the following acronyms for team members:
+
+\begin{tabular}{ p{4cm} p{4cm} p{4cm} p{4cm} }
+  \textbf{AJF}-Adam Fahie &
+  \textbf{AIF}-Andrew Fairbairn &
+  \textbf{TF}-Anthony Free &
+  \textbf{TD}-Tom Davies \\
+  \textbf{JM}-Joseph Mansfield &
+  \textbf{RT}-Rosy Tucker &
+  \textbf{MW}-Michael Walker & \\
+\end{tabular}
+
+For the development of the prototype we split into three subteams,
+concentrating on the different areas of the system. We then collaborated to
+produce the reporting backend.
+
+\begin{description}
+  \item[Team Sense] implemented the data emitter for the test application,
+    by producing reusable monitoring components. They also implemented the data
+    input API as a multithreaded server, in order to meet requirements
+    regarding simultaneous usage. (JM and MW)
+
+  \item[Team Store] implemented the database abstraction interface, and also a
+    concrete implementation using Google Appengine as a backing store. The API
+    was kept generic in order to meet requirements regarding flexibility of
+    database implementation. (TD and RT)
+
+  \item[Team Analyse] implemented the analysis controller, and the analysis
+    engine API. The engine API was implemented to be very sparse so that a large
+    number of different concrete implementations could be supplied. (AJF, AIF,
+    and TF)
+\end{description}
 
 \input{07-riskregister}
 \input{08-communication}
