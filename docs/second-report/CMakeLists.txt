@@ -1,6 +1,13 @@
 set(WORD_COUNT_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/second-report.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/risk-register.tex)
+    ${CMAKE_CURRENT_SOURCE_DIR}/01-introduction.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/02-glossary.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/03-requirements.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/04-architecture.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/05-prototype.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/06-team.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/07-riskregister.tex
+    ${CMAKE_CURRENT_SOURCE_DIR}/08-communication.tex
+    )
 
 set(TEXCOUNT_COMMAND
     ${CMAKE_SOURCE_DIR}/tools/texcount/texcount.pl)
