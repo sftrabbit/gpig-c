@@ -179,7 +179,7 @@ HUMS and the interactions between these modules at a high level.
 
   \item[Data Abstraction Layer] Handles all interaction with the
     database, such that if the database was to be altered, only this
-    layer would need to be added to.
+    layer would need to change.
 
   \item[Analysis Controller] Alert the analysis engines when new data
     has arrived, pulling the required data from the data abstraction
@@ -392,8 +392,7 @@ operating systems and the x86, x86-64 and ARM CPU architectures,
 making it highly portable between both desktop, server and embedded
 systems.
 
-% REF: http://www.oracle.com/technetwork/java/javase/
-config-417990.html
+% REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
 
 Whilst there may exist deployment platforms that are not supported, at
 this stage, we do not see this as a problem since the underlying
@@ -463,7 +462,8 @@ testing.
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
-% input re- quests per second per HUMS instance."   
+% input re- quests per second per HUMS instance."
+
 \begin{description}
   \item[Data Emitter]
   \item[Data Input Layer]
