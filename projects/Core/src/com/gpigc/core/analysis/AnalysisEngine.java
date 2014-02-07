@@ -62,10 +62,10 @@ public abstract class AnalysisEngine {
 	public abstract Result analyse();
 
 	/**
-	 * Gets sensor states for system sensors associated with the mean analysis engine
+	 * Gets sensor states for system sensors associated with the analysis engine
 	 * 
 	 * @param numValues The number of values to return for each sensor
-	 * @return	A list of sensor states for all systems associated with the mean analysis engine
+	 * @return	A list of sensor states for all systems associated with the analysis engine
 	 */
 	protected List<SensorState> getSensorStates(int numValues) {
 		List<SensorState> sensorStates = new ArrayList<SensorState>();
