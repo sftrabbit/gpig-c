@@ -18,12 +18,13 @@ import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
+import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.analysis.Result;
 import com.gpigc.core.analysis.engine.MeanAnalysis;
 
 public class MeanAnalysisTest {
 	
-	private MeanAnalysis meanAnalysis;
+	private AnalysisEngine meanAnalysis;
 	private Result result;
 	
 	@Mock
@@ -77,7 +78,8 @@ public class MeanAnalysisTest {
 	}
 
 	private void withNoSensorData() throws FailedToReadFromDatastoreException {
-		Mockito.when(database.readMostRecent("1", 10)).thenThrow(new FailedToReadFromDatastoreException("Failed"));
+		Mockito.when(database.readMostRecent("1", 10))
+			.thenThrow(new FailedToReadFromDatastoreException("Failed"));
 	}
 
 	private void thenNotificationIsTriggered() {
@@ -85,11 +87,15 @@ public class MeanAnalysisTest {
 	}
 
 	private void givenOneSystem() {
-		meanAnalysis = new MeanAnalysis(database);
+		List<String> systemIDs = new ArrayList<String>();
+		systemIDs.add("1");
+		meanAnalysis = new MeanAnalysis(systemIDs, database);
 	}
 	
-	private void addSensorValues(int numberOfRecords) throws FailedToReadFromDatastoreException {
-		Mockito.when(database.readMostRecent("1", 10)).thenReturn(createQueryResult(numberOfRecords));
+	private void addSensorValues(int numberOfRecords) 
+			throws FailedToReadFromDatastoreException {
+		Mockito.when(database.readMostRecent("1", 10))
+			.thenReturn(createQueryResult(numberOfRecords));
 	}
 
 	private void whenTheMeanOfTheValuesAreCalculated() {
@@ -109,7 +115,11 @@ public class MeanAnalysisTest {
 	private QueryResult createQueryResult(int numberOfRecords) {
 		List<SensorState> sensorStates = new ArrayList<SensorState>();	
 		for(Integer i = 1; i < (numberOfRecords + 1); i ++) {
-			sensorStates.add(new SensorState(i.toString(), new Date(), new Date(), i.toString()));
+			sensorStates.add(new SensorState(
+					i.toString(), 
+					new Date(), 
+					new Date(), 
+					i.toString()));
 		}
 		QueryResult queryResult = new QueryResult("1", sensorStates);
 		return queryResult;
