@@ -19,6 +19,7 @@ add_latex_document(second-report.tex
                    BIBFILES report-refs.bib
                    INPUTS risklevel-table.tex risk-register.tex
                    riskass-table.tex title.tex wc.tex
+                   requirements-refinement.tex
                    CONFIGURE wc.tex
                    IMAGE_DIRS images
                    DEFAULT_PDF

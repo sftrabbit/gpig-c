@@ -1,0 +1,177 @@
+\section{Requirements Refinement}
+\label{sec:requirements}
+
+In this section, we shall discuss the changes to the requirements
+since the initial report, and the reasons for these.
+
+\subsection{Functional Requirements}
+\label{sec:requirements-functional}
+
+\subsubsection{Sensing Data}
+\label{sec:requirements-functional-sensing}
+
+\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
+  \hline \cellcolor{titleColor}\textBf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
+
+  \hline \fr{1.1} & The system shall provide an API for data input & \\
+
+  \hline \fr{1.2} & The data input API shall require an identifier for
+  the system being monitored & \textbf{Unit Testing:} Attempt to send
+  unidentified data to the system and verify that it fails. \\
+
+  \hline \fr{1.3} & The data input API shall require data to be
+  timestamped & \textbf{Unit Testing:} Attempt to send untimestamped
+  data to the system and verify that it fails.\\
+
+  \hline \fr{1.4} & The data input API shall allow data input clients
+  to send key/value store ``payload'', which will then be made
+  available to the analysis engine & \textbf{Unit Testing:} Attempt to
+  send a payload to the API and verify that it is then stored.\\
+
+  \hline \fr{1.5} & A collection of common components of sensors shall
+  be provided & \\
+
+  \hline \fr{1.6} & An example, working, data input client shall be
+  available for users & \\
+
+  \hline \fr{2.1} & Data input clients shall timestamp data before
+  sending it to the system & \textbf{Unit Testing:} Record some data
+  using the provided input clients, and verify that it is
+  timestamped.\\
+
+  \hline \fr{2.2} & Timestamps shall be taken immediately when the
+  data is gathered & \textbf{Unit Testing:} Record some data using the
+  provided input clients, and verify that the timestamps are correct \\
+  \hline
+\end{longtable}
+
+\fr{1.1}, \fr{1.2}, \fr{1.3}, and \fr{1.4} expand upon \fr{1} by
+specifying how the clients will send data to the system, and what sort
+of data is required. In our implementation of a data input client for
+the test application, we found this to be a flexible and easy-to-use
+architecture for gathering data. \fr{1.5} and \fr{1.6} fulfil the
+requirement of tailorability of input sources, by providing users with
+a way to write their own data input client easily, if they so choose.
+
+\fr{2} requires that data be timestamped, but doesn’t specify which
+part of the system does this. \fr{2.1} and \fr{2.2} assign this
+responsibility to the data input clients, and mandate when timestamps
+should reflect.
+
+\subsubsection{Storing Data}
+\label{sec:requirements-functional-storing}
+
+\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
+ \hline \cellcolor{titleColor}\textBf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
+
+ \hline \fr{3.1} & The system shall access and modify data through a
+ database accessor so that the database used can easily be changed
+ according to need & \textbf{Code Inspection:} Verify that all
+ database access is through the abstraction layer. \\
+
+ \hline \fr{4.1} & The system shall store per-system configuration in
+ the database & \textbf{Unit Testing:} Verify that configuration can
+ be stored and recovered. \\
+
+ \hline \fr{4.2} & The system shall allow authorised users to modify
+ configuration & \textbf{Unit Testing:} Verify that only with a valid
+ authentication token can configuration be mutated. \\
+
+ \hline
+\end{longtable}
+
+\fr{3.1} refines \fr{3} by specifying how the data is to be stored and
+later accessed in a way which allows the system to cope with different
+demands. Allowing the database to be changed without needing to
+rewrite the rest of the system means that the system could just as
+easily run in a very space-constrained environment, or with highly
+structured data, as in a space-abundant environment, or with
+loosely-structured data.
+
+\fr{4.1} and \fr{4.2} allow the functionality in \fr{4}, \fr{6},
+\fr{8}, \fr{9}, and \fr{10} to be implemented, by specifying how these
+settings are to be defined and stored.
+
+\subsubsection{Analysing Data}
+\label{sec:requirements-functional-analysing}
+
+\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
+ \hline \cellcolor{titleColor}\textBf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
+
+ \hline \fr{11.1} & The system shall provide a data analysis API & \\
+
+ \hline \fr{11.2} & The system shall provide a simple analysis engine
+ in the form of a rules engine & \\
+
+ \hline \fr{11.3} & The data input API shall notify the analysis
+ system when new data is received & \textbf{Unit Testing:} Send data
+ to the input API and verify that the analysis system is notified. \\
+
+ \hline \fr{11.4} & The database accessor shall allow the analysis
+ system to request the last several records & \textbf{Code
+   Inspection:} Verify that the abstraction layer provides this
+ functionality. \\
+
+ \hline \fr{11.5} & The database accessor shall allow the analysis
+ system to request records between two timestamps & \textbf{Code
+   Inspection:} Verify that the abstraction layer provides this
+ functionality. \\
+
+ \hline \fr{12.1} & The system shall allow the user to define their
+ own events & \textbf{Unit Testing:} Attempt to define custom events
+ and verify that this succeeds. \\
+
+ \hline \fr{12.2} & The system shall allow the user to define when any
+ particular event is triggered & \textbf{Unit Testing:} Customise when
+ an event is triggered and verify that this has taken effect. \\
+ \hline
+\end{longtable}
+
+\fr{11.2} is essentially the content of the low-fidelity prototype of
+the admin centre that we provided to the customer, and refines \fr{11}
+by providing a simple way for customers to detect events. For
+nontrivial analysis, however, the customer requires the ability to use
+their own analysis engines, and it is for this that \fr{11.1}
+provides. Naturally, \fr{11.2} would be implemented on top of
+this. \fr{11.3} allows analysis to happen on demand, without a need
+for the analysis engine to needlessly poll the database asking for new
+data, and \fr{11.4} and \fr{11.5} constrain the database accessor by
+specifying how the analysis engine can retrieve data from it.
+
+\fr{12.1} and \fr{12.2} refine \fr{12} by specifying that the user can
+control events down to the level of creating their own, and having
+total control over where events are triggered.
+
+\subsubsection{Reporting Data}
+\label{sec:requirements-functional-feedback}
+
+\begin{longtable}[H]{|p{1.5cm}|p{6cm}|p{7.5cm}|}
+ \hline \cellcolor{titleColor}\textBf{ID} & \cellcolor{titleColor}\textbf{Description} & \cellcolor{titleColor}\textbf{Verification}\\
+
+ \hline \fr{20} & The system shall allow analysis results to be sent
+ to the data input API & \textbf{Implementation:} Attempt to implement
+ an analysis engine which sends a result to the data input API. \\
+
+ \hline \fr{21} & The system shall allow for reports to change the way
+ in which data is sensed & \textbf{Unit Testing:} Construct such a
+ report and verify that the sensing system is modified appropriately. \\
+
+ \hline \fr{22} & The system shall allow notifications to be sent back
+ to the system being monitored & \textbf{Implementation:} Attempt to
+ implement an analysis engine which sends notifications to the
+ monitored system. \\
+
+ \hline \fr{23} & The admin centre of the system shall allow users to
+ specify how notifications are handled. & \textbf{Unit Testing:}
+ Verify that users can mutate notification handlers, and that these
+ changes are stored. \\
+ \hline
+\end{longtable}
+
+These requirements do not appear in the prior report at all, and were
+discovered to be necessary following feedback from the customer
+regarding the ability of the system to feed back the results of
+analysis into itself. It was felt that our architecture did not make
+it clear whether this was possible or not, and so we produced these
+requirements, in consultation with the customer, to ensure clarity and
+to remove any potential misunderstandings.
