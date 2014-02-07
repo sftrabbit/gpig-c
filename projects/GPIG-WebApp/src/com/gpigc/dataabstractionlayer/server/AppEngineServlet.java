@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -45,11 +48,17 @@ public class AppEngineServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		EmitterSystemState systemData;
+		List<EmitterSystemState> systemState = new ArrayList<>();
 
 		// Attempt to parse the request body
 		try {
-			systemData = EmitterSystemState.parseJSON(req.getReader());
+			JsonFactory f = new JsonFactory();
+			JsonParser parser = f.createParser(req.getReader());
+			parser.nextToken(); // Returns a start of object token
+			while (parser.nextToken() != JsonToken.END_ARRAY) {
+				systemState.add(EmitterSystemState.readTokens(parser));
+			}
+			parser.close();
 		} catch (Exception e) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
 					"Failed to parse JSON: " + e.getMessage());
@@ -57,18 +66,23 @@ public class AppEngineServlet extends HttpServlet {
 			return;
 		}
 
-		// Get the Datastore
 		DatastoreService datastoreService = DatastoreServiceFactory
 				.getDatastoreService();
+		
+		List<Entity> allEntities = new ArrayList<>();
+		
+		for (EmitterSystemState state : systemState) {
 
-		Date dataBaseTimestamp = new Date();
-		resp.getWriter().println(
-				systemData.getSystemID() + "    " + systemData.getTimeStamp()
-						+ "       " + systemData.getSensorReadings());
-
-		resp.getWriter().println(
-				datastoreService.put(createEntities(systemData,
-						dataBaseTimestamp)));
+			Date dataBaseTimestamp = new Date();
+			resp.getWriter().println(
+					state.getSystemID() + "    " + state.getTimeStamp()
+							+ "       " + state.getSensorReadings());
+			List<Entity> stateEntities = createEntities(state,
+					dataBaseTimestamp);
+			allEntities.addAll(stateEntities);
+			resp.getWriter().println(stateEntities);
+		}
+		datastoreService.put(allEntities);
 		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 

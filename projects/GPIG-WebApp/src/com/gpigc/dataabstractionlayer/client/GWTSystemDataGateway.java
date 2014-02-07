@@ -4,6 +4,7 @@
 package com.gpigc.dataabstractionlayer.client;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+
+import static com.gpigc.dataabstractionlayer.client.DataJSONAttribute.JSON_PAYLOAD;
 import static com.gpigc.dataabstractionlayer.server.DatabaseField.*;
 
 /**
@@ -105,7 +110,6 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 			String responseBody = EntityUtils.toString(response.getEntity(),
 					"UTF-8");
 			System.out.println("Response Body: " + responseBody);
-
 			return QueryResult.parseJSON(responseBody);
 		} catch (ParseException | IOException e) {
 			throw new FailedToReadFromDatastoreException(e.getMessage());
@@ -145,8 +149,24 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 		}
 	}
 
-	private String createJSONArray(List<EmitterSystemState> data) {
-		return null;
+	/**
+	 * @param data A list of emitter states
+	 * @return A JSON list of emitter states
+	 * @throws IOException
+	 */
+	private String createJSONArray(List<EmitterSystemState> data) throws IOException {
+		StringWriter writer = new StringWriter();
+		JsonFactory factory = new JsonFactory();
+		JsonGenerator gen = factory.createGenerator(writer);
+		gen.writeStartObject();
+		gen.writeArrayFieldStart(JSON_PAYLOAD.getKey());
+		for (EmitterSystemState state : data) {
+			gen.writeRaw(state.toJSON());
+		}
+		gen.writeEndArray();
+		gen.writeEndObject();
+		gen.close();
+		return writer.toString();
 	}
 
 	private void writeJSON(String json)

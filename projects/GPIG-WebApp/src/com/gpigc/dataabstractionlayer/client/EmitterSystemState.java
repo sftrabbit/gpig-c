@@ -80,13 +80,24 @@ public class EmitterSystemState {
 	 */
 	public static EmitterSystemState parseJSON(Reader reader)
 			throws JsonParseException, IOException, ParseException {
+		JsonFactory f = new JsonFactory();
+		JsonParser parser = f.createParser(reader);
+		EmitterSystemState state = readTokens(parser);
+		parser.close();
+		return state;
+	}
 
+	/**
+	 * @param parser A JSON parser
+	 * @return An EmitterSystemState
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	public static EmitterSystemState readTokens(JsonParser parser) 
+			throws JsonParseException, IOException {
 		String systemID = null;
 		Date timeStamp = null;
 		Map<String, String> payload = new HashMap<>();
-
-		JsonFactory f = new JsonFactory();
-		JsonParser parser = f.createParser(reader);
 		parser.nextToken(); // Returns a start of object token
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getCurrentName();
@@ -110,8 +121,8 @@ public class EmitterSystemState {
 			throw new IllegalArgumentException("Unrecognised JSON key: "
 					+ jsonKey);
 		}
-		parser.close();
-		return new EmitterSystemState(systemID, timeStamp, payload);
+		EmitterSystemState state = new EmitterSystemState(systemID, timeStamp, payload);
+		return state;
 	}
 
 	/**
