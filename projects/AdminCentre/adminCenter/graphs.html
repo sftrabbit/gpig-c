@@ -112,7 +112,7 @@
             ]
         };
         $.ajax({
-            url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&NumRecords="+(MAX_POINTS*2)+"&callback=?",
+            url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+MAX_POINTS+"&callback=?",
             dataType: "jsonp",
             success: function(graphData) {
                 graphData.Records.reverse();
@@ -134,7 +134,7 @@
 
         function refreshChart() {
             $.ajax({
-                url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&NumRecords="+(REFRESH_SECONDS*2)+"&callback=?",
+                url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+REFRESH_SECONDS+"&callback=?",
                 dataType: "jsonp",
                 success: function(graphData) {
                     graphData.Records.reverse();
