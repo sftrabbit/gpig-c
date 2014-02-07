@@ -101,7 +101,8 @@ public class EmitterSystemState {
 		parser.nextToken(); // Returns a start of object token
 		System.out.println("Object start token = " + parser.getCurrentToken());
 		parser.nextToken();
-		while (parser.getCurrentToken() != JsonToken.END_OBJECT) {
+		while (parser.getCurrentToken() != JsonToken.END_OBJECT &&
+				parser.getCurrentToken() != JsonToken.END_ARRAY) {
 			System.out.println("Last main loop token = " + parser.getCurrentToken());
 			String jsonKey = parser.getCurrentName();
 			System.out.println("Key = " + jsonKey);
@@ -126,7 +127,6 @@ public class EmitterSystemState {
 					// Start object
 					parseSensor(parser, payload);
 				}
-				parser.nextToken(); // End array
 				continue;
 			}
 			throw new IllegalArgumentException("Unrecognised JSON key: "

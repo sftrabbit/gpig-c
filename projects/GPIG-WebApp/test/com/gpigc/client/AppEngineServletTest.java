@@ -28,6 +28,7 @@ public class AppEngineServletTest {
 		StringReader reader = new StringReader(json);
 		List<EmitterSystemState> states = 
 				servlet.parseJSON(reader);
+		assertEquals(3, states.size());
 		assertEquals("TestSystemID0", states.get(0).getSystemID());
 		assertEquals("Blue", states.get(2).getSensorReadings().get("Test1"));
 	}
