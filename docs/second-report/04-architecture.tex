@@ -278,11 +278,10 @@ The analysis component, shown in figure
     analysis engine. Each engine has a list of associated systems. The
     implementation of the analyse method interfaces with database
     abstraction layer to retrieve the appropriate sensor data and then
-    performs the desired analysis. whose sensors data is analysed by
-    the engine and implement the analysis method that returns a result
-    object. When creating their own analysis engines the end user will
-    be required to extend this class, implement the abstract methods
-    and define what constitutes an event.
+    performs the desired analysis. Once analysis is complete the engine 
+    returns a result object. When creating their own analysis 
+    engines the end user will be required to extend this class, implement 
+    the abstract methods and define what constitutes an event.
 
   \item [Mean Analysis] An object that extends the analysis engine
     class and implements mean analysis. When called by the analysis
