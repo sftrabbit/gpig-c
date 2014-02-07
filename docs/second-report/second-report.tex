@@ -473,8 +473,17 @@ testing.
 % input re- quests per second per HUMS instance."
 
 \begin{description}
-  \item[Data Emitter]
-  \item[Data Input Layer]
+  \item[Data Emitter] As the purpose of the data emitter is to run
+    continuously, monitoring a system and reporting on it, we completed
+    inspection testing to verify that data was reported, fulfilling \fr{1.2},
+    \fr{1.3}, and \fr{1.4} along with running the program for several hours to
+    verify that it continued to function.
+
+  \item[Data Input Layer] For the data input layer, it is essential that large
+    amounts of data can be received in parallel. We verified this by
+    inspection testing, and also by running multiple clients simultaneously and
+    verifying that the data from both was recorded, thus verifying \fr{1.2}.
+
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
@@ -490,7 +499,6 @@ testing.
   \item[Notification Generator]
   \item[Notification Engine]
   \item[Reports Engine]
-
  \end{description}
  \subsubsection{Traceability Matrix}
 
