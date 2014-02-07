@@ -28,7 +28,7 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 
-import static com.gpigc.dataabstractionlayer.client.DataJSONAttribute.JSON_PAYLOAD;
+import static com.gpigc.dataabstractionlayer.client.DataJSONAttribute.JSON_STATES;
 import static com.gpigc.dataabstractionlayer.server.DatabaseField.*;
 
 /**
@@ -159,9 +159,9 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 		JsonFactory factory = new JsonFactory();
 		JsonGenerator gen = factory.createGenerator(writer);
 		gen.writeStartObject();
-		gen.writeArrayFieldStart(JSON_PAYLOAD.getKey());
+		gen.writeArrayFieldStart(JSON_STATES.getKey());
 		for (EmitterSystemState state : data) {
-			gen.writeRaw(state.toJSON());
+			gen.writeRawValue(state.toJSON());
 		}
 		gen.writeEndArray();
 		gen.writeEndObject();

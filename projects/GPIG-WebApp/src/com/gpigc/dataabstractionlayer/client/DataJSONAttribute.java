@@ -12,6 +12,7 @@ public enum DataJSONAttribute {
 	JSON_CREATION_TIMESTAMP("CreationTimestamp"),
 	JSON_DB_TIMESTAMP("DatabaseTimestamp"),
 	JSON_VALUE("Value"),
+	JSON_STATES("States"),
 	JSON_PAYLOAD("Sensors"),
 	JSON_RECORD_KEY("Records");
 	
