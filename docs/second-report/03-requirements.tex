@@ -1,60 +1,46 @@
 \section{Requirements Refinement}
 \label{sec:requirements}
-
-In this section, we shall discuss the changes to the requirements
-since the initial report, and the reasons for these.
+After feedback from the initial report the original requirements have been altered and, where possible, refined as detailed below.
 
 \subsection{Functional Requirements}
 \label{sec:requirements-functional}
+Below are the refinements to the existing functional requirements, based on customer feedback and the design designs made in the previous report.
 
-\subsubsection{Sensing Data}
-\label{sec:requirements-functional-sensing}
-\begin{description}
-  \item[\fr{1.1}] The system shall provide an API for data input.
-
-  \item[\fr{1.2}] The data input API shall require an identifier for
-  the system being monitored.
-
-  \item[\fr{1.3}] The data input API shall require data to be
-  timestampe.
-
-  \item[\fr{1.4}] The data input API shall allow data input clients
-  to send key/value store ``payload'', which will then be made
-  available to the analysis engine.
-
-  \item[\fr{1.5}] A collection of common components of sensors shall
-  be provided.
-
-  \item[\fr{1.6}] An example, working, data input client shall be
-  available for users.
-
-  \item[\fr{2.1}]Data input clients shall timestamp data before
-  sending it to the system.
-
-  \item[\fr{2.2}] Timestamps shall be taken immediately when the
-  data is gathered.
-\end{description}
-
-\fr{1.1}, \fr{1.2}, \fr{1.3}, and \fr{1.4} expand upon \fr{1} by
-specifying how the clients will send data to the system, and what sort
-of data is required. In our implementation of a data input client for
-the test application, we found this to be a flexible and easy-to-use
-architecture for gathering data. \fr{1.5} and \fr{1.6} fulfil the
-requirement of tailorability of input sources, by providing users with
-a way to write their own data input client easily, if they so choose.
-
-\fr{2} requires that data be timestamped, but doesn’t specify which
-part of the system does this. \fr{2.1} and \fr{2.2} assign this
-responsibility to the data input clients, and mandate when timestamps
+\frit{1} is refined to specify how data emitters will send data to the system, and the type of data required. When creating a data emitter for the test application, we found this to be a flexible and easy-to-use architecture for gathering data. 
+\frit{2} required data to be timestamped, but didn't specify how these timestamps were to be produced, \frit{2.1} and \frit{2.2} assign this
+responsibility to the data emitter, and mandate when timestamps
 should reflect.
 
-\subsubsection{Storing Data}
-\label{sec:requirements-functional-storing}
 
-\begin{description}
- \item[\fr{3.1}] The system shall access and modify data through a
- database accessor so that the database used can easily be changed
- according to need.
+\begin{description}[leftmargin=2cm]
+	%%FR1
+  	\item[\fr{1}]  Data emitters shall be able to push correctly structured data 	to the system.
+	\begin{description}
+		 \item[\fr{1.1}] The system shall provide an API for data input.
+
+		  \item[\fr{1.2}] The data input API shall require an identifier for
+ 		 the system being monitored.
+
+ 		 \item[\fr{1.3}] The data input API shall require data to be
+ 		 timestamped.
+
+ 		 \item[\fr{1.4}] The data input API shall allow data emitters
+ 		 to send the IDs of sensors and their values to the HUMS, which will 		then be made available to the analysis engine.
+
+ 		 \item[\fr{1.5}] A data emitter, designed to extract data from the given 		test application shall be provided.
+	\end{description}
+	%%FR2
+	\item[\fr{2}]  The system shall allocate a timestamp to new data.
+		\begin{description}
+	 		 \item[\fr{2.1}]Data input clients shall timestamp data before
+ 			 sending it to the system.
+ 			 \item[\fr{2.2}] Timestamps shall be collected when data is sent 			to storage.
+		 \end{description}
+	%%FR3
+	 \item[\fr{3}] The system shall store correctly structured data.
+	 	\begin{description}
+	 		\item[\fr{3.1}] The system shall access and modify data 				through a database accessor so that the database used can 			easily be changed according to need.
+	  \end{description}
 
  \item[\fr{4.1}] The solution shall store per-system configuration in
  a file.
