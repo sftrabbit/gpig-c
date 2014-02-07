@@ -17,9 +17,10 @@ set(LATEX_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/docs")
 
 add_latex_document(second-report.tex
                    BIBFILES report-refs.bib
-                   INPUTS risklevel-table.tex risk-register.tex
-                   riskass-table.tex title.tex wc.tex
-                   requirements-refinement.tex
+                   INPUTS title.tex wc.tex
+                   introduction.tex glossary.tex requirements.tex
+                   architecture.tex prototype.tex team.tex
+                   riskregister.tex communication.tex
                    CONFIGURE wc.tex
                    IMAGE_DIRS images
                    DEFAULT_PDF
