@@ -124,6 +124,7 @@ public class EmitterSystemState {
 					parseSensor(parser, payload);
 				}
 				parser.nextToken(); // End array
+				System.out.println("End sensor array = " + parser.getCurrentToken());
 				continue;
 			}
 			throw new IllegalArgumentException("Unrecognised JSON key: "
