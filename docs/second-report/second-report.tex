@@ -16,7 +16,8 @@
 
 \definecolor{titleColor}{RGB}{138,201,242}
 \pagestyle{fancy}
-\lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M Walker}
+\lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M 
+Walker}
 \chead{}
 \rhead{GPIG-C}
 \cfoot{\vspace{-0.6cm} \thepage}
@@ -56,59 +57,80 @@ made when creating the system architecture not only provide the required
 functionality, but also produce a system meeting the expectations of all 
 stakeholders. For example the system may be expected to meet certain 
 security standards or availability levels. Explicitly defining these quality 
-attributes before concretely designing a system allows for the correct tactics 
+attributes before concretely designing a system allows for the correct 
+tactics 
 and patterns to be adopted in order to maximise the utility of important 
 qualities.
 
-When examining the HUMS non-functional requirements the following system 
+When examining the HUMS non-functional requirements the following 
+system 
 quality attributes were identified:
 	\begin{center}
-	\textit{
-		Flexibility, Availability, Performance, Modifiability, Security, Testability, 
-Usability}
+	\textit{ Flexibility, Availability, Performance, Modifiability, Security, 
+Testability, Usability}
 	\end{center}
-Of these availability, performance, security and usability can be observed and 
-measured, the others are unobservable however steps can still be taken to 
-maximise their utility. For the prototype implementation, at this stage, usability 
-and security have not been heavily considered, however in the real system 
-they would be of high importance.
+For the prototype implementation, at this stage, usability and security 
+have not been heavily considered, however in the real system they 
+would be of high importance.
 
-Flexibility is important to the HUMS as it is to be used across multiple domains, meaning it cannot be to specific. Following a plugin architecture means the system can remain general and flexible however can include domain specific elements, such as analysis engines. This in effect creates a software product line, where the core of the HUMS can be shared across all domains.
+Flexibility is important to the HUMS as it is to be used across multiple 
+domains, meaning it cannot be to specific. Following a plugin 
+architecture means the system can remain general and flexible however 
+can include domain specific elements, such as analysis engines, 
+creating a software product line, where the core of the HUMS can be 
+shared across all domains.
 
 Modifiability is also an important qualities of the HUMS, though not 
 measurable, lack of modifiability can increase the cost and time taken to 
-complete the project. The HUMS will initially be built to tackle a single domain 
+complete the project. The HUMS will initially be built to tackle a single 
+domain 
 (software), however will in the future be required to work on embedded 
-systems, mechanical systems, electrical systems and even people. In order to 
+systems, mechanical systems, electrical systems and even people. In 
+order to 
 ensure these changes are as efficient as possible the initial system 
-must be modifiable. Tactics that can be used to increase the modifiability of the 
+must be modifiable. Tactics that can be used to increase the modifiability 
+of the 
 system include using small modules within the system, decreasing the 
-coupling between those modules and increasing the cohesion. In order to 
+coupling between those modules and increasing the cohesion. In order 
+to 
 achieve low coupling  the HUMS uses interfaces between modules and 
-restricts dependencies, such that the majority of modules can be swapped out 
+restricts dependencies, such that the majority of modules can be 
+swapped out 
 without large changes to the overall system.
 
 %Maybe go into more detail if space
 Availability defines how ready the system is to be used, and is normally the 
 percentage of downtime over a specified timeframe. The desired utility of the 
 quality attribute within the HUMS, as defined by the non-functional 
-requirements, is  99.9\% per month. Since lack of availability is often linked to 
+requirements, is  99.9\% per month. Since lack of availability is often 
+linked to 
 faults occurring, fault detection and recovery tactics (such as the use of 
-runtime exceptions, redundancy through backups and transactions) could be 
+runtime exceptions, redundancy through backups and transactions) 
+could be 
 employed in order to achieve the desired level of availability. 
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch notifications through the 
 notification generator after events have been triggered by the analysis 
 controller, with a latency less than 5ms, the system is 
-also required to be able to support multiple data output clients. Tactics such as 
-reducing overhead though careful use of data structures and prioritising events 
-can help reduce latency, at least for the most important events, defined by the 
+also required to be able to support multiple data output clients. Tactics 
+such as 
+reducing overhead though careful use of data structures and prioritising 
+events 
+can help reduce latency, at least for the most important events, defined 
+by the 
 end user. It may also be possible to add concurrency, such that multiple 
-notification threads are used when demand for notifications and reports are 
+notification threads are used when demand for notifications and reports 
+are 
 high, reducing the bottleneck created at the notification generator.
 
-In in order to ensure the HUMS is testable we followed test driven development, where possible writing and planning the tests before writing the code, meaning that when the tests pass the code performs the expected functionality. In addition to this we also ensured defined how each requirement of the system would be tested and created a comprehensive test plan, detailing integration, system 
+In in order to ensure the HUMS is testable we followed the test driven 
+development methodology where possible, writing and planning the tests 
+before writing the code, passing tests means code performs the 
+expected functionality. In addition to this we also ensured defined how 
+each requirement of the system would be tested and created a 
+comprehensive test plan, detailing integration, system, unit and 
+acceptance testing.
 
 \subsection{System Views}
 \label{sec:architecture-views}
@@ -187,7 +209,8 @@ HUMS and the interactions between these modules at a high level.
 
 \subsection{Behavioural View}
 
-The module view shows how modules of the system are connected, however
+The module view shows how modules of the system are connected, 
+however
 does not fully represent the interactions between components and the
 dynamic actions of the system. A behavioural view can be used to
 detail this information, showing the flow of data and events within
@@ -243,7 +266,8 @@ contains the following classes:
   \includegraphics[width=6.2cm]{images/DataInputLayer/DataInputServer.png}
   \includegraphics[width=8.3cm]{images/DataInputLayer/ProtoReceiver.png}
   \includegraphics[width=9.5cm]{images/DataInputLayer/ProtoMultiReceiver.png}
-  \caption{Conceptual diagrams of the data input layer classes, using UML 2 notation}
+  \caption{Conceptual diagrams of the data input layer classes, using 
+UML 2 notation}
   \label{fig:dataInputLayer}
 \end{figure}
 
@@ -292,7 +316,8 @@ The data abstraction layer, shown in figure
   \includegraphics[width= 7cm]{images/DataAbstractionLayer/queryResult.pdf}
   \includegraphics[width= 7cm]{images/DataAbstractionLayer/sensorState.pdf}
   \includegraphics[width= 9cm]{images/DataAbstractionLayer/emitterSystemState.pdf}
-  \caption{Conceptual diagrams of the data abstraction layer classes, using UML 2 notation}
+  \caption{Conceptual diagrams of the data abstraction layer classes, 
+using UML 2 notation}
   \label{fig:dataAbstractionPackage}
 \end{figure}
 
@@ -349,7 +374,8 @@ The analysis component, shown in figure
   \includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
   \includegraphics[width= 6cm]{images/Analysis/EventNotify.png}
   \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
-  \caption{Conceptual diagrams of the analysis component classes, using UML 2 notation}
+  \caption{Conceptual diagrams of the analysis component classes, using 
+UML 2 notation}
   \label{fig:dataAnalysisComponent}
 \end{figure}
 
@@ -366,7 +392,8 @@ operating systems and the x86, x86-64 and ARM CPU architectures,
 making it highly portable between both desktop, server and embedded
 systems.
 
-% REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
+% REF: http://www.oracle.com/technetwork/java/javase/
+config-417990.html
 
 Whilst there may exist deployment platforms that are not supported, at
 this stage, we do not see this as a problem since the underlying
@@ -376,7 +403,8 @@ All members of our team were familiar with the Java programming
 language and thus no time was spent having to get the team up to speed
 on a new language. We did not impose a language restriction when
 developing the data emitter and various engines as the data being
-passed between them and the core are language independent, meaning end
+passed between them and the core are language independent, meaning 
+end
 users are free, even with the prototype, to implement engines in any
 language they see fit. For the prototype we used both Java and
 JavaScript when creating the engines, languages team members are
@@ -391,10 +419,22 @@ interface within the data abstraction layer.
 We created a prototype admin centre to show how the HUMS could be
 managed remotely, viewing data and modifying settings online, through
 a web browser, whilst running as a service. The admin centre was
-developed using the Bootstrap front-end web framework, including HTML,
+developed using the Bootstrap front-end web framework, including 
+HTML,
 JavaScript and CSS, in order to create a prototype realistically
 simulating an interface to the HUMS that is accessible on desktop
 computers, laptops and mobile devices alike.
+
+% TODO Mockito and Joe & Michaels process reading thing - do we 
+need to cite these?
+We used various Java libraries to support our prototype, saving us 
+development time and providing a robust codebase. For testing we used 
+the Mockito framework to allow us to verify elements of our codebase in 
+isolation, by offering a concise way to mock out dependancies. To 
+interrogate the state of the test application provided by the Customer, we 
+used the SIGAR cross-platform system information API to query the vital 
+parameters of the process, including CPU utilisation and memory 
+footprint.
 
 We used Git for version control, allowing the entire team to
 contribute to the project simultaneously, whilst keeping a reversible
@@ -420,7 +460,8 @@ testing.
 % Does it make sense to have system/acceptance testing within a
 % module? Given we are using a plugin architecture, I am not sure. TD
 
-% TODO We probably need something about overall system & acceptance
+% TODO We probably need something about overall system & 
+acceptance
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
 % input re- quests per second per HUMS instance."
@@ -429,22 +470,19 @@ testing.
   \item[Data Emitter]
   \item[Data Input Layer]
   \item[Data Abstraction Layer] Given the high throughput and
-    importance of storage to the function of the HUMS as a whole,the
+    importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
-    performance. When considering integration testing, the data
-    abstraction layer interfaces with a wide selection of modules,
-    including the datastore, the data input layer, the analysis
-    controller and the reports engine. To test these interfaces, we
-    referred to requirements pertaining to the storage of data,
-    \textbf{FR.3} to \textbf{FR.10}, for guidance.
-    % Should this be talking about the future, since it's a "plan", or
-    % is it ok take about testing the prototype retrospectively?
-
-    % Maybe referring to requirements is too much like system testing?
-
-    At the unit testing level, focus was on the comparably complex,
-    well defined module-internal functions, such as the generation and
-    parsing of the JSON serialisation of objects.
+    performance. We
+    referred to the requirements pertaining to the storage of data,
+    \textbf{FR.3.1} to \textbf{FR.4.2}, for guidance for our integration 
+    testing. We completed an inspection test to verify \textbf{FR.3.1}, 
+    and multiple test cases in the GWTSystemDataGatewayTest class 
+    were used
+    to verify \textbf{FR.4.1} and \textbf{FR.4.2}. At the unit testing level as 
+    part of TDD, 
+    we focussed on the comparably complex, well defined module-internal 
+    functions, such as the generation and parsing of the JSON 
+    serialisation of objects.
   \item[Analysis Controller]
   \item[Analysis Engine]
   \item[Notification Generator]

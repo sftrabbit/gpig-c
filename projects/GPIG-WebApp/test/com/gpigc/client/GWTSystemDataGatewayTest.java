@@ -1,7 +1,5 @@
 package com.gpigc.client;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,14 +16,16 @@ import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.GWTSystemDataGateway;
 
 public class GWTSystemDataGatewayTest {
-
-	
 	
 	private static final String testSystemID = "TestSystemID";
 	
 	@Test
-	public void test() throws FailedToReadFromDatastoreException, URISyntaxException, ParseException, IOException, FailedToWriteToDatastoreException {
-		GWTSystemDataGateway gateway = new GWTSystemDataGateway(new URI("http://gpigc-webapp.appspot.com/gpigc-webapp"));
+	public void test() throws FailedToReadFromDatastoreException, 
+								URISyntaxException, 
+								ParseException, 
+								IOException, FailedToWriteToDatastoreException {
+		GWTSystemDataGateway gateway = new GWTSystemDataGateway(
+				new URI("http://gpigc-webapp.appspot.com/gpigc-webapp"));
 		//gateway.readMostRecent(testSystemID, 10);
 		//gateway.readBetween(testSystemID, new Date(1), new Date(2));
 		Map<String,String> payload = new HashMap<String,String>();
