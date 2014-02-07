@@ -468,6 +468,9 @@ testing.
 % Does it make sense to have system/acceptance testing within a
 % module? Given we are using a plugin architecture, I am not sure. TD
 
+For the analysis engine, we created a unit test to check each aspect of the engine. We utilised mockito, which is a framework for testing which allows emulation of results from methods. The particular analysis engine which we tested was the mean engine. The aim of this engine, which is part of the pre-defined engine set for our HUMS system, is to check set of values has a mean which lies within some user defined bounds. Therefore, our test cases setup to test that the mean values were valid. This meant using a pre-defined set of values to ensure the mean which the system calculated matched the true mean. Our test cases also dealt with the checking of means in and outside of bounds, as well as the cases where invalid data or system IDs were sent into the analysis engine.
+
+
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
