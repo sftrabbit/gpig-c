@@ -13,7 +13,8 @@ import org.junit.Test;
 public class ExpressionAnalysisTest {
 
 	/**
-	 * Test method for {@link com.gpigc.core.analysis.engine.ExpressionAnalysis#analyse()}.
+	 * Test method for 
+	 * {@link com.gpigc.core.analysis.engine.ExpressionAnalysis#analyse()}.
 	 */
 	@Test
 	public void testAnalyse() {
