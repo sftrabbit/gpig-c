@@ -98,26 +98,22 @@ public class EmitterSystemState {
 		String systemID = null;
 		Date timeStamp = null;
 		Map<String, String> payload = new HashMap<>();
-		parser.nextToken(); // Returns a start of object token
-		System.out.println("Object start token = " + parser.getCurrentToken());
 		parser.nextToken();
-		while (parser.getCurrentToken() != JsonToken.END_OBJECT &&
-				parser.getCurrentToken() != JsonToken.END_ARRAY) {
+		while (parser.getCurrentToken() != JsonToken.END_OBJECT) {
 			System.out.println("Last main loop token = " + parser.getCurrentToken());
+			parser.nextToken(); // Get key
 			String jsonKey = parser.getCurrentName();
 			System.out.println("Key = " + jsonKey);
 			if (jsonKey.equals(JSON_SYSTEM_ID.getKey())) {
 				parser.nextToken(); // Move to value
-				systemID = parser.getText();
-				System.out.println("System ID = " + parser.getText());
-				parser.nextToken();
+				systemID = parser.getValueAsString();
+				System.out.println("System ID = " + systemID);
 				continue;
 			}
 			if (jsonKey.equals(JSON_CREATION_TIMESTAMP.getKey())) {
 				parser.nextToken(); // Move to value
 				System.out.println(parser.getValueAsString());
 				timeStamp = new Date(parser.getLongValue());
-				parser.nextToken();
 				continue;
 			}
 			if (jsonKey.equals(JSON_PAYLOAD.getKey())) {
@@ -127,6 +123,7 @@ public class EmitterSystemState {
 					// Start object
 					parseSensor(parser, payload);
 				}
+				parser.nextToken(); // End array
 				continue;
 			}
 			throw new IllegalArgumentException("Unrecognised JSON key: "

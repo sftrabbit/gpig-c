@@ -90,10 +90,10 @@ public class AppEngineServlet extends HttpServlet {
 		JsonParser parser = f.createParser(reader);
 		parser.nextToken(); // Returns a start of object token
 		System.out.println("Start of object = " + parser.getCurrentToken());
-		parser.nextToken(); // Sensors key
+		parser.nextToken(); // States key
 		System.out.println("Sensors key = " + parser.getCurrentToken());
-		parser.nextToken(); // Start array
-		while (parser.getCurrentToken() != JsonToken.END_ARRAY) {
+		while (parser.nextToken() != JsonToken.END_ARRAY) {
+			System.out.println("Last token for state start = " + parser.getCurrentToken());
 			systemState.add(EmitterSystemState.readTokens(parser));
 		}
 		parser.close();
