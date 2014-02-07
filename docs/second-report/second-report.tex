@@ -454,9 +454,8 @@ history of all alterations made by each person.
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
 with respect to verifying our that solution fulfilled its
-requirements. With a view to tracing the evolution from requirements
-to implementation to testing, we allocated tests IDs and references to
-their associated implementation components and requirement IDs. We
+requirements. In this section we given the mapping between each
+test and its associated requirement. We
 defined our plan, where appropriate, in terms of each module within
 the system and what specific, testable attributes that module must
 have to fulfil its requirements. We also further deconstructed the
@@ -467,9 +466,6 @@ testing.
 
 % Does it make sense to have system/acceptance testing within a
 % module? Given we are using a plugin architecture, I am not sure. TD
-
-For the analysis engine, we created a unit test to check each aspect of the engine. We utilised mockito, which is a framework for testing which allows emulation of results from methods. The particular analysis engine which we tested was the mean engine. The aim of this engine, which is part of the pre-defined engine set for our HUMS system, is to check set of values has a mean which lies within some user defined bounds. Therefore, our test cases setup to test that the mean values were valid. This meant using a pre-defined set of values to ensure the mean which the system calculated matched the true mean. Our test cases also dealt with the checking of means in and outside of bounds, as well as the cases where invalid data or system IDs were sent into the analysis engine.
-
 
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
@@ -482,25 +478,21 @@ For the analysis engine, we created a unit test to check each aspect of the engi
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
-    performance. We
-    referred to the requirements pertaining to the storage of data,
-    \textbf{FR.3.1} to \textbf{FR.4.2}, for guidance for our integration 
-    testing. We completed an inspection test to verify \textbf{FR.3.1}, 
-    and multiple test cases in the GWTSystemDataGatewayTest class 
-    were used
-    to verify \textbf{FR.4.1} and \textbf{FR.4.2}. At the unit testing level as 
-    part of TDD, 
-    we focussed on the comparably complex, well defined module-internal 
-    functions, such as the generation and parsing of the JSON 
-    serialisation of objects.
+    performance. We completed an inspection test to verify \textbf{FR.3.1}, 
+    and used the GWTSystemDataGatewayTest class 
+    to verify \textbf{FR.4.2}. At the unit testing level, as 
+    part of TDD,  we focussed on the comparably complex, well defined 
+    module-internal functions, such as the generation and parsing of the 
+    JSON serialisation of objects.
   \item[Analysis Controller]
   \item[Analysis Engine]
+  For the analysis engine, we created a unit test to check each aspect of the engine. We utilised mockito, which is a framework for testing which allows emulation of results from methods. The particular analysis engine which we tested was the mean engine. The aim of this engine, which is part of the pre-defined engine set for our HUMS system, is to check set of values has a mean which lies within some user defined bounds. Therefore, our test cases setup to test that the mean values were valid. This meant using a pre-defined set of values to ensure the mean which the system calculated matched the true mean. Our test cases also dealt with the checking of means in and outside of bounds, as well as the cases where invalid data or system IDs were sent into the analysis engine.
   \item[Notification Generator]
   \item[Notification Engine]
   \item[Reports Engine]
-  \end{description}
- \subsubsection{Traceability Matrix}
 
+ \end{description}
+ \subsubsection{Traceability Matrix}
 
 \subsection{Evaluation on Test Application}
 
