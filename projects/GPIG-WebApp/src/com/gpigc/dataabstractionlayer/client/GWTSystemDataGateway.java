@@ -154,7 +154,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 * @return A JSON list of emitter states
 	 * @throws IOException
 	 */
-	private String createJSONArray(List<EmitterSystemState> data) throws IOException {
+	public String createJSONArray(List<EmitterSystemState> data) throws IOException {
 		StringWriter writer = new StringWriter();
 		JsonFactory factory = new JsonFactory();
 		JsonGenerator gen = factory.createGenerator(writer);

@@ -1,6 +1,7 @@
 package com.gpigc.dataabstractionlayer.server;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -48,17 +50,11 @@ public class AppEngineServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		List<EmitterSystemState> systemState = new ArrayList<>();
+		List<EmitterSystemState> systemState;
 
 		// Attempt to parse the request body
 		try {
-			JsonFactory f = new JsonFactory();
-			JsonParser parser = f.createParser(req.getReader());
-			parser.nextToken(); // Returns a start of object token
-			while (parser.nextToken() != JsonToken.END_ARRAY) {
-				systemState.add(EmitterSystemState.readTokens(parser));
-			}
-			parser.close();
+			systemState = parseJSON(req.getReader());
 		} catch (Exception e) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
 					"Failed to parse JSON: " + e.getMessage());
@@ -84,6 +80,23 @@ public class AppEngineServlet extends HttpServlet {
 		}
 		datastoreService.put(allEntities);
 		resp.setStatus(HttpServletResponse.SC_CREATED);
+	}
+
+	public List<EmitterSystemState> parseJSON(Reader reader) 
+			throws IOException, JsonParseException {
+		System.out.println("Reader = " + reader);
+		List<EmitterSystemState> systemState = new ArrayList<>();
+		JsonFactory f = new JsonFactory();
+		JsonParser parser = f.createParser(reader);
+		parser.nextToken(); // Returns a start of object token
+		System.out.println("Start of object = " + parser.getLastClearedToken());
+		parser.nextToken(); // Sensors key
+		System.out.println("Sensors key = " + parser.getLastClearedToken());
+		while (parser.nextToken() != JsonToken.END_ARRAY) {
+			systemState.add(EmitterSystemState.readTokens(parser));
+		}
+		parser.close();
+		return systemState;
 	}
 
 	private ArrayList<Entity> createEntities(EmitterSystemState systemData,

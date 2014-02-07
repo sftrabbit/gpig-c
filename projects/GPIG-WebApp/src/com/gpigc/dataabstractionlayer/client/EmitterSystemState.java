@@ -99,8 +99,11 @@ public class EmitterSystemState {
 		Date timeStamp = null;
 		Map<String, String> payload = new HashMap<>();
 		parser.nextToken(); // Returns a start of object token
+		System.out.println("Object start token = " + parser.getLastClearedToken());
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
+			System.out.println("Last token = " + parser.getLastClearedToken());
 			String jsonKey = parser.getCurrentName();
+			System.out.println("Key = " + jsonKey);
 			if (jsonKey.equals(JSON_SYSTEM_ID.getKey())) {
 				parser.nextToken(); // Move to value
 				systemID = parser.getText();
