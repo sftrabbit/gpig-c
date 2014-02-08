@@ -458,7 +458,6 @@ HTML, JavaScript and CSS, in order to create a prototype realistically
 simulating an interface to the HUMS that is accessible on desktop
 computers, laptops and mobile devices alike.
 
-
 We used various Java libraries to support our prototype, saving us 
 development time and providing a robust codebase. For testing we used 
 the Mockito framework to allow us to verify elements of our codebase in 
@@ -488,6 +487,28 @@ The data emitter designed to emit data about the JVM, records the CPU and memory
 
 A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided, including provided storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system, in the next phase of the project the admin centre will be functional.
 
+\subsection{Evaluation of Prototype Solution for Sample Applications}
+\label{sec:prototype-evaluation}
+
+\subsubsection{Customer Test Application -- No. 1}
+The Customer provided an example application to monitor as part of the
+evaluation of our prototype. With this in mind, we created a monitoring 
+package for our prototype solution that can monitor a native application
+or one executing on the JVM. We utilised Java Management 
+Extensions (JMX) to sample the memory utilisation of the application and
+created a process monitoring class which monitors the total
+CPU usage of the application. The Mean Analysis Engine computes a 
+rolling average of each value. This average is then read 
+by the reporting system and displayed live in the admin centre.
+
+% TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
+
+\subsubsection{Earthquake}
+We also created our own sample application: monitoring earthquakes 
+through the USGS Earthquake Hazards Program API. The HUMS
+can collect live data from the API, store it and plot the location of any
+detected earthquakes in the admin centre live.
+
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
 with respect to verifying our that solution fulfilled its
@@ -508,6 +529,7 @@ testing.
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
 % input re- quests per second per HUMS instance."
+% Also talk about what we can't test since not everything is implemented
 
 \begin{description}
 
@@ -551,24 +573,6 @@ testing.
   
  \end{description}
  \subsubsection{Traceability Matrix}
-
-\subsection{Monitoring of Test Application using the prototype solution}
-\label{sec:prototype-evaluation}
-
-The Customer provided an example application to monitor as part of the
-evaluation of our prototype. With this in mind, we created a monitoring 
-package for our prototype solution that can monitor a native application
-or one executing on the JVM. We utilised Java Management 
-Extensions (JMX) to sample the memory utilisation of the an application.
-We also created a process monitoring class which monitors the total
-CPU usage of the application.
-
-Once the memory and CPU usage of the test application has been sampled,
-it is logged in the Google App Engine datastore and the Mean Analysis 
-Engine computes a rolling average of each value. This average is then read 
-by the reporting system and displayed live in the admin centre.
-
-% TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
 
 \input{06-team}
 
