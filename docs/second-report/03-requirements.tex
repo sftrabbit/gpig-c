@@ -79,19 +79,31 @@ should reflect.
  		in the form of a rules engine.
 	\end{description}
 	
-	\item[\fr{8}]After the sending of a notification for an event of a particular 		type, no more notifications for an event of that type will be sent 				during the cool down period.	\item[\fr{9}]The system shall dispatch an event to a notification generator 		when a specified data pattern in detected.	\item[\fr{7}] The HUMS must interface with reports engines, allowing 			them to pull reports.	\item[\fr{11}] The system shall provide basic examples of notification 			engines to work with the test application.	\item[\fr{12}] The system shall allow for notifications to change the way in 		which data is sensed.
+	\item[\fr{8}]After the sending of a notification for an event of a particular 		type, no more notifications for an event of that type will be sent 				during the cool down period.
+	\item[\fr{9}]The system shall dispatch an event to a notification generator 		when a specified data pattern in detected.
+	\item[\fr{7}] The HUMS must interface with reports engines, allowing 			them to pull reports.
+	\item[\fr{11}] The system shall provide basic examples of notification 			engines to work with the test application.
+	\item[\fr{12}] The system shall allow for notifications to change the way in 		which data is sensed.
 	 \item[\fr{13}] The system shall allow notifications to be sent back to the 		system being monitored.
 \end{description}
 
 \subsection{Non-Functional Requirements}
-Non-function requirements remain remain the same, however, \nfrit{14} has been added in order to clarify that data can be sent and stored in any format, enforcing that the consumers system will not have to conform to the HUMS. It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements specific to the prototype, as functional requirements require the datastore to be changeable meaning, in the general case, no requirements about the ability of the datastore are verifiable.
-\begin{description}\item[\nfr{1}] The HUMS shall be able to receive hardware changes without loss of previously stored data.\item[\nfr{2}]  Users shall be provided with documentation detailing how to use the system.\item[\nfr{3}] When running externally on servers, the system must be accessible to end users in multiplegeographic locations.\item[\nfr{4}]  The system shall only accept data from an input client providing valid credentials. 
+Non-function requirements remain remain the same, however, \nfrit{14} has been added in order to clarify that data can be sent and stored in any format, enforcing that the consumers system will not have to conform to the HUMS. It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements specific to the prototype, as functional requirements require the datastore to be changeable meaning, in the general case, requirements about the abilities of the datastore are not verifiable.
+\begin{description}
+\item[\nfr{1}] The HUMS shall be able to receive hardware changes without loss of previously stored data.
+\item[\nfr{2}]  Users shall be provided with documentation detailing how to use the system.
+\item[\nfr{3}] When running externally on servers, the system must be accessible to end users in multiple
+geographic locations.
+\item[\nfr{4}]  The system shall only accept data from an input client providing valid credentials. 
 \item[\nfr{5}] The system shall store data according to the relevant industry security standards. 
 \item[\nfr{6}]  The system shall be tested to ensure all requirements are met before deployment.
-\item[\nfr{7}] The customer will complete acceptance testing before the system is deployed.\item[\nfr{8}] The system must be able to support at least 5 output clients per HUMS instance. 
+\item[\nfr{7}] The customer will complete acceptance testing before the system is deployed.
+\item[\nfr{8}] The system must be able to support at least 5 output clients per HUMS instance. 
 \item[\nfr{9}]  The system must cope with up to 2000 data input requests per second per HUMS instance. 
-\item[\nfr{10}] The system must be available for no less than 99.9\% of each month.\item[\nfr{11}]  Data must be backed up within 24 hours of having been made available to the system.
- \item[\nfr{12}] Timestamps applied by the system must be accurate to within 5ms of UTC.\item[\nfr{13}]  The system shall dispatch notifications within 5ms of the event being triggered.
+\item[\nfr{10}] The system must be available for no less than 99.9\% of each month.
+\item[\nfr{11}]  Data must be backed up within 24 hours of having been made available to the system.
+ \item[\nfr{12}] Timestamps applied by the system must be accurate to within 5ms of UTC.
+\item[\nfr{13}]  The system shall dispatch notifications within 5ms of the event being triggered.
 \item[\nfr{14}] The system shall support storing data without requiring specific schemata.
 \end{description}
 
