@@ -12,7 +12,8 @@
 \usepackage{longtable}
 \usepackage{parskip}
 \usepackage{soul}
-\usepackage[small,compact]{titlesec} 
+\usepackage[small,compact]{titlesec}
+\usepackage[justification=centering]{caption}
 
 \definecolor{titleColor}{RGB}{138,201,242}
 \pagestyle{fancy}
@@ -209,11 +210,11 @@ with all the interactions and links between them. The messages sent between
 different parts are shown and labelled with numbers to represent the
 chronological order in which they occur.
 
-\begin{figure}[ht!]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=14cm]{images/communicationDiagram.png}
-  \caption{Communication diagram showing message flow through the system, using 
-UML 2 notation}
+  \caption{Communication diagram showing a behavioural view of message flow
+through the system, using UML 2 notation}
   \label{fig:communicationDiagram}
 \end{figure}
 
