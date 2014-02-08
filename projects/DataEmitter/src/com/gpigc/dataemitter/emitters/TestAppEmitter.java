@@ -2,7 +2,6 @@ package com.gpigc.dataemitter.emitters;
 
 import java.io.IOException;
 
-import com.gpigc.dataemitter.comms.DataSender;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor;
 import com.gpigc.dataemitter.monitors.ProcessMonitor;
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.MonitorJvmException;
