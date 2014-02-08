@@ -11,15 +11,20 @@ Below are the refinements to the existing functional requirements, based on cust
 responsibility to the data emitter, and mandate when timestamps
 should reflect.
 
+\frit{3} is refined by specifying how the data is to be stored, allowing the end user to choose the technology of their choice, allowing the database to be changed without needing to alter other HUMs modules means that the system could just easily move across domains.
 
-\begin{description}[leftmargin=2cm]
+\frit{4} was modified such that the previous requirements \frit{4}, \frit{6}, \frit{9}, and \frit{10} can all be expressed as refinements, With the configuration file containing all end user settings. The new \frit{5} and \frit{6} enforce that the  functionality that the system must provide as a result of the data in the configuration file.
+
+\frit{7}, previously \frit{12}, is refined to define how data will be analysed for events. It is identified that there must be an API allowing analysis engines, either created by the consumer or included with the HUMS, to extract received data and produce events. 
+
+\begin{description}[leftmargin=1.3cm, itemsep=0.3cm]
 	%%FR1
-  	\item[\fr{1}]  Data emitters shall be able to push correctly structured data 	to the system.
+  	\item[\fr{1}]  Data emitters shall be able to push correctly structured data 	to the HUMS.
 	\begin{description}
-		 \item[\fr{1.1}] The system shall provide an API for data input.
+		 \item[\fr{1.1}] The HUMS shall provide an API for data input.
 
 		  \item[\fr{1.2}] The data input API shall require an identifier for
- 		 the system being monitored.
+ 		 the HUMS being monitored.
 
  		 \item[\fr{1.3}] The data input API shall require data to be
  		 timestamped.
@@ -30,76 +35,48 @@ should reflect.
  		 \item[\fr{1.5}] A data emitter, designed to extract data from the given 		test application shall be provided.
 	\end{description}
 	%%FR2
-	\item[\fr{2}]  The system shall allocate a timestamp to new data.
-		\begin{description}
-	 		 \item[\fr{2.1}]Data input clients shall timestamp data before
- 			 sending it to the system.
- 			 \item[\fr{2.2}] Timestamps shall be collected when data is sent 			to storage.
-		 \end{description}
+	\item[\fr{2}]  The HUMS shall allocate a timestamp to new data.
+	\begin{description}
+	 	 \item[\fr{2.1}]Data input clients shall timestamp data before
+ 		sending it to the HUMS.
+		
+ 		 \item[\fr{2.2}] Timestamps shall be collected when data is sent 			to storage.
+	\end{description}
 	%%FR3
-	 \item[\fr{3}] The system shall store correctly structured data.
-	 	\begin{description}
-	 		\item[\fr{3.1}] The system shall access and modify data 				through a database accessor so that the database used can 			easily be changed according to need.
+	 \item[\fr{3}] The HUMS shall store correctly structured data.
+	 \begin{description}
+	 	\item[\fr{3.1}] The end user shall integrate their chosen database 		technology with the HUMS
+	 	\item[\fr{3.2}] The HUMS shall use a database abstraction layer, 		allowing the database component to be easily changed according to 		need.
 	  \end{description}
+	%%FR4
+	 \item[\fr{4}] The HUMS shall an store end user system configuration 	file.
+	 \begin{description}
+	  	\item[\fr{4.1}] The HUMS shall allow authorised users to modify
+ 		configuration files. 
+		 \item[\fr{4.2}] The HUMS shall allow the consumer to define a 			low storage threshold.
+		  \item[\fr{4.3}] The HUMS shall allow the consumer to set an expiry 		time on data.
+		  \item[\fr{4.4}]  The HUMS shall allow the user to define that, 			upon reaching their defined data storage quota, new data is no 			longer added.
+		 \item[\fr{4.5}] The HUMS shall allow the user to de- fine that, upon 		reaching their defined data storage limit, old data is deleted to make 		room for new data.
+	\end{description}
+	%%FR5
+	 \item[\fr{5}] The HUMS shall send a notification when the consumers 	defined low storage threshold is reached.
+	  \item[\fr{6}] The HUMS must store no more data records than the 		consumers defined storage quota.
+	\item[\fr{7}]Events shall be triggered in response to new data that 		matches a pattern that the consumer has specified.
+	  \begin{description}
+	  
+		 \item[\fr{7.1}]  The HUMS shall allow the consumer to specify what 		 patterns of data will produce events.
+		  
+		 \item[\fr{7.2}] The HUMS shall allow the user to define their
+ 		own events.
+		
+ 		\item[\fr{7.3}] The HUMS shall provide an analysis API, allowing 			analysis engines to extract and analyse data.
+		
+		\item[\fr{7.4}] Events shall be created by analysis engines.
 
- \item[\fr{4.1}] The solution shall store per-system configuration in
- a file.
-
- \item[\fr{4.2}] The system shall allow authorised users to modify
- configuration. 
+ 		\item[\fr{7.5}] The HUMS shall provide a simple analysis engine
+ 		in the form of a rules engine.
+	\end{description}
 \end{description}
-
-\fr{3.1} refines \fr{3} by specifying how the data is to be stored and
-later accessed in a way which allows the system to cope with different
-demands. Allowing the database to be changed without needing to
-rewrite the rest of the system means that the system could just as
-easily run in a very space-constrained environment, or with highly
-structured data, as in a space-abundant environment, or with
-loosely-structured data.
-
-\fr{4.1} and \fr{4.2} allow the functionality in \fr{4}, \fr{6},
-\fr{8}, \fr{9}, and \fr{10} to be implemented, by specifying how these
-settings are to be defined and stored.
-
-\subsubsection{Analysing Data}
-\label{sec:requirements-functional-analysing}
-
-\begin{description}
- \item[\fr{11.1}] The system shall provide a data analysis API.
-
- \item[\fr{11.2}] The system shall provide a simple analysis engine
- in the form of a rules engine.
-
- \item[\fr{11.3}] The data input API shall notify the analysis
- system when new data is received.
-
- \item[\fr{11.4}] The database accessor shall allow the analysis
- system to request the last several records.
-
- \item[\fr{11.5}] The database accessor shall allow the analysis
- system to request records between two timestamps.
-
- \item[\fr{12.1}] The system shall allow the user to define their
- own events.
-
- \item[\fr{12.2}] The system shall allow the user to define when any
- particular event is triggered.
-\end{description}
-
-\fr{11.2} is essentially the content of the low-fidelity prototype of
-the admin centre that we provided to the customer, and refines \fr{11}
-by providing a simple way for customers to detect events. For
-nontrivial analysis, however, the customer requires the ability to use
-their own analysis engines, and it is for this that \fr{11.1}
-provides. Naturally, \fr{11.2} would be implemented on top of
-this. \fr{11.3} allows analysis to happen on demand, without a need
-for the analysis engine to needlessly poll the database asking for new
-data, and \fr{11.4} and \fr{11.5} constrain the database accessor by
-specifying how the analysis engine can retrieve data from it.
-
-\fr{12.1} and \fr{12.2} refine \fr{12} by specifying that the user can
-control events down to the level of creating their own, and having
-total control over where events are triggered.
 
 \subsubsection{Reporting Data}
 \label{sec:requirements-functional-feedback}
