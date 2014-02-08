@@ -64,18 +64,25 @@ stakeholders. For example the system may be expected to meet certain
 security standards or availability levels. Explicitly defining these quality 
 attributes before concretely designing a system allows for the correct 
 tactics and patterns to be adopted in order to maximise the utility of important 
-qualities.
-
-When examining the HUMS non-functional requirements the following 
-system 
-quality attributes were identified:
+qualities. When examining the HUMS non-functional requirements the 
+following system quality attributes were identified:
 	\begin{center}
 	\textit{Flexibility, Performance, Modifiability, Security, 
 Testability, Usability}
 	\end{center}
 For the prototype implementation, at this stage, usability and security 
 have not been heavily considered, however in the real system they 
-would be of high importance.
+would be of high importance. Security is a key aspect of any nontrivial HUMS, 
+as data being monitored must be both secret and safe. It must be impossible 
+for an unauthorised user to either insert or remove data from the system, and 
+so all data would need to be stored according to relevant security standards 
+(e.g., encryption and password protection for personal data covered by the 
+Data Protection Act). Additionally, data in transit between emitters and the data 
+input API must be protected, which can be achieved using a symmetric-key 
+encryption system, which is well supported by many programming languages. 
+Determining who has the rights to access which data would fall under the 
+purview of an individual customer, who would manage access rights using the 
+configuration front-end of our system.
 
 Flexibility is important to the HUMS as it is to be used across multiple 
 domains, meaning it cannot be to specific. Following a plugin 
@@ -101,17 +108,6 @@ achieve low coupling  the HUMS uses interfaces between modules and
 restricts dependencies, such that the majority of modules can be 
 swapped out 
 without large changes to the overall system.
-
-Security is a key aspect of any nontrivial HUMS, as data being monitored must
-be both secret and safe. It must be impossible for an unauthorised user to
-either insert or remove data from the system, and so all data would need to be
-stored according to relevant security standards (e.g., encryption and password
-protection for personal data covered by the Data Protection Act). Additionally,
-data in transit between emitters and the data input API must be protected,
-which can be achieved using a symmetric-key encryption system, which is well
-supported by many programming languages. Determining who has the rights to
-access which data would fall under the purview of an individual customer, who
-would manage access rights using the configuration front-end of our system.
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch notifications through the 
@@ -214,11 +210,14 @@ HUMS and the interactions between these modules at a high level.
 
 \subsection{Behavioural View}
 
-The module view shows how modules of the system are connected, however does not
-fully represent the interactions between components and the dynamic actions of
+The module view shows how modules of the system are connected, however 
+does not
+fully represent the interactions between components and the dynamic actions 
+of
 the system. A behavioural view can be used to detail this information, showing
 the flow of data and events within the HUMS. Figure
-\ref{fig:CommunicationDiagram} shows a communication diagram of the HUMS,
+\ref{fig:CommunicationDiagram} shows a communication diagram of the 
+HUMS,
 detailing how the HUMS goes from receiving data from a data emitter to
 generating a notification. The different objects in the system are shown, along
 with all the interactions and links between them. The messages sent between
@@ -228,7 +227,8 @@ chronological order in which they occur.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=14cm]{images/CommunicationDiagram.png}
-  \caption{Communication diagram showing a behavioural view of message flow
+  \caption{Communication diagram showing a behavioural view of message 
+flow
 through the system, using UML 2 notation}
   \label{fig:CommunicationDiagram}
 \end{figure}
@@ -248,7 +248,8 @@ these situations, then it can perform under all others.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentDistributed.png}
-  \caption{Deployment diagram showing HUMS spread across multiple systems}
+  \caption{Deployment diagram showing HUMS spread across multiple 
+systems}
   \label{fig:DeploymentDistributed}
 \end{figure}
 
@@ -302,7 +303,8 @@ contains the following classes:
   \centering
   \includegraphics[width=6.2cm]{images/DataInputLayer/DataInputServer.png}
   \includegraphics[width=8.3cm]{images/DataInputLayer/ProtoReceiver.png}
-  \includegraphics[width=9.5cm]{images/DataInputLayer/ProtoMultiReceiver.png}
+  \includegraphics[width=9.5cm]{images/DataInputLayer/
+ProtoMultiReceiver.png}
   \caption{Conceptual diagrams of the data input layer classes, using 
 UML 2 notation}
   \label{fig:dataInputLayer}
@@ -348,11 +350,14 @@ The data abstraction layer, shown in figure
 
 \begin{figure}[ht!]
   \centering
-  \includegraphics[width= 9.5cm]{images/DataAbstractionLayer/systemDataGateway.png}
-  \includegraphics[width= 5cm]{images/DataAbstractionLayer/dataJsonAttribute.pdf}
+  \includegraphics[width= 9.5cm]{images/DataAbstractionLayer/
+systemDataGateway.png}
+  \includegraphics[width= 5cm]{images/DataAbstractionLayer/
+dataJsonAttribute.pdf}
   \includegraphics[width= 7cm]{images/DataAbstractionLayer/queryResult.pdf}
   \includegraphics[width= 7cm]{images/DataAbstractionLayer/sensorState.pdf}
-  \includegraphics[width= 9cm]{images/DataAbstractionLayer/emitterSystemState.pdf}
+  \includegraphics[width= 9cm]{images/DataAbstractionLayer/
+emitterSystemState.pdf}
   \caption{Conceptual diagrams of the data abstraction layer classes, 
 using UML 2 notation}
   \label{fig:dataAbstractionPackage}
@@ -450,8 +455,10 @@ Upon determining to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested,
 tools with which we could easily implement data input clients for further
-systems. As the test program is a Java program, we had to connect to its JVM to
-query the heap usage, as the operating system would just report the size of the
+systems. As the test program is a Java program, we had to connect to its JVM 
+to
+query the heap usage, as the operating system would just report the size of 
+the
 JVM heap. We settled on using Sigar for process monitoring, and JMX for
 monitoring heap usage.
 
@@ -531,7 +538,17 @@ testing.
     JSON serialisation of objects.
   \item[Analysis Controller]
   \item[Analysis Engine]
-  For the analysis engine, we created a unit test to check each aspect of the engine. We utilised Mockito, which is a framework for testing which allows emulation of results from methods. The particular analysis engine which we tested was the mean engine. The aim of this engine, which is part of the pre-defined engine set for our HUMS system, is to check set of values has a mean which lies within some user defined bounds. Therefore, our test cases setup to test that the mean values were valid. This meant using a pre-defined set of values to ensure the mean which the system calculated matched the true mean. Our test cases also dealt with the checking of means in and outside of bounds, as well as the cases where invalid data or system IDs were sent into the analysis engine.
+  For the analysis engine, we created a unit test to check each aspect of the 
+engine. We utilised Mockito, which is a framework for testing which allows 
+emulation of results from methods. The particular analysis engine which we 
+tested was the mean engine. The aim of this engine, which is part of the pre-
+defined engine set for our HUMS system, is to check set of values has a mean 
+which lies within some user defined bounds. Therefore, our test cases setup to 
+test that the mean values were valid. This meant using a pre-defined set of 
+values to ensure the mean which the system calculated matched the true 
+mean. Our test cases also dealt with the checking of means in and outside of 
+bounds, as well as the cases where invalid data or system IDs were sent into 
+the analysis engine.
   \item[Notification Generator]
   \item[Notification Engine]
   \item[Reports Engine]
