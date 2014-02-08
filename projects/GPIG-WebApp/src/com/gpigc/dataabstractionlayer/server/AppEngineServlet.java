@@ -96,6 +96,10 @@ public class AppEngineServlet extends HttpServlet {
 		System.out.println("Start array = " + parser.getCurrentToken());
 		while (parser.getCurrentToken() != JsonToken.END_ARRAY) {
 			System.out.println(">>>>> Last token for state start = " + parser.getCurrentToken() + "should be start array or end of last object");
+			parser.nextToken(); // Start object
+			if (parser.getCurrentToken().equals(JsonToken.END_ARRAY)) {
+				System.out.println("STOP");
+			}
 			systemState.add(EmitterSystemState.readTokens(parser));
 		}
 		parser.close();

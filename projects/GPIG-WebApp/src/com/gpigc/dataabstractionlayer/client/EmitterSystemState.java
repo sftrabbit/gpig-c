@@ -98,7 +98,6 @@ public class EmitterSystemState {
 		String systemID = null;
 		Date timeStamp = null;
 		Map<String, String> payload = new HashMap<>();
-		parser.nextToken(); // Start object
 		while (parser.getCurrentToken() != JsonToken.END_OBJECT) {
 			System.out.println("Start main loop token = " + parser.getCurrentToken() + " (should be start object or previous value)");
 			parser.nextToken(); // Get key
