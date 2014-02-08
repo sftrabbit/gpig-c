@@ -1,24 +1,21 @@
 \section{Requirements Refinement}
 \label{sec:requirements}
-After feedback from the initial report the original requirements have been altered and, where possible, refined as detailed below.
+After feedback from the initial report the original requirements have been altered and, where possible, refined.
 
 \subsection{Functional Requirements}
 \label{sec:requirements-functional}
-Below are the refinements to the existing functional requirements, based on customer feedback and the design designs made in the previous report.
+Below the existing functional requirements are refined, based on customer feedback and the design designs made in the previous report.
 
-\frit{1} is refined to specify how data emitters will send data to the system, and the type of data required. When creating a data emitter for the test application, we found this to be a flexible and easy-to-use architecture for gathering data. 
+\frit{1} is refined to specify how data emitters will send data to the system, and the type of data required. 
 \frit{2} required data to be timestamped, but didn't specify how these timestamps were to be produced, \frit{2.1} and \frit{2.2} assign this
-responsibility to the data emitter, and mandate when timestamps
-should reflect.
+responsibility to the data emitter and consumer system, and mandate when timestamps should be created.
 
-\frit{3} is refined by specifying how the data is to be stored, allowing the end user to choose the technology of their choice, allowing the database to be changed without needing to alter other HUMs modules means that the system could just easily move across domains.
+\frit{3} is refined by specifying how the data is to be stored, allowing the end user to choose the technology of their choice, meaning the database can be changed without needing to alter other HUMs modules, making it easy to move the HUMS across domains.
+\frit{4} was modified such that the previous requirements \frit{4}, \frit{6}, \frit{9}, and \frit{10} can all be expressed as refinements, with the configuration file containing all end user settings. The new \frit{5} and \frit{6} enforce the  functionality that the HUMS must provide as a result of the data in the configuration file.
 
-\frit{4} was modified such that the previous requirements \frit{4}, \frit{6}, \frit{9}, and \frit{10} can all be expressed as refinements, With the configuration file containing all end user settings. The new \frit{5} and \frit{6} enforce that the  functionality that the system must provide as a result of the data in the configuration file.
+\frit{7}, previously \frit{12}, is refined to define how data will be analysed for events. It is identified that there must be an API allowing analysis engines, either created by the consumer or included with the HUMS, to extract stored data and produce events. 
 
-\frit{7}, previously \frit{12}, is refined to define how data will be analysed for events. It is identified that there must be an API allowing analysis engines, either created by the consumer or included with the HUMS, to extract received data and produce events. 
-
-\frit{9} to \frit{13} do not appear in the previous report, and were discovered to be necessary following feedback from the customer regarding the ability of the system to allow the output of analysis to effect the monitored system. It was felt that our architecture did not make it clear whether this was possible or not, therefore these requirements were added, in consultation with the customer, to ensure clarity.
-
+\frit{9} to \frit{13} do not appear in the previous report, and were discovered to be necessary following feedback from the customer regarding the ability of the system to allow the output of analysis to effect the monitored system. It was felt that our architecture did not make it clear whether this was possible or not, therefore these requirements were added as clarification.
 \begin{description}[leftmargin=1.3cm, itemsep=0.3cm]
 	%%FR1
   	\item[\fr{1}]  Data emitters shall be able to push correctly structured data 	to the HUMS.
