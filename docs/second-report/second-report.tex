@@ -549,18 +549,23 @@ testing.
  \end{description}
  \subsubsection{Traceability Matrix}
 
-\subsection{Evaluation on Test Application}
+\subsection{Monitoring of Test Application using the prototype solution}
 \label{sec:prototype-evaluation}
-% connects to JVM using JMX, launches monitoring tool and monitors JVM memory, cpu usage (processmonitor.java) checks total cpu time of the process based upon difference in time between two time intervals, 
-In order to evalute or system with respect to the provided test application, 
-we have created a monitoring package for our prototype specifically for the 
-test application. We are utilising the Java Management Extensions (JMX) 
-Technology to obtain a measure of the memory utilised by the application. 
-We have also created a process monitoring class which monitors the total
- cpu usage of the application. This is achieved by 
- measuring the difference in total cpu usage time between two points in 
- time. These results are then taken, and can be graphed and monitored.
 
+The Customer provided an example application to monitor as part of the
+evaluation of our prototype. With this in mind, we created a monitoring 
+package for our prototype solution that can monitor a native application
+or one executing on the JVM. We utilised Java Management 
+Extensions (JMX) to sample the memory utilisation of the an application.
+We also created a process monitoring class which monitors the total
+CPU usage of the application.
+
+Once the memory and CPU usage of the test application has been sampled,
+it is logged in the Google App Engine datastore and the Mean Analysis 
+Engine computes a rolling average of each value. This average is then read 
+by the reporting system and displayed live in the admin centre.
+
+% TODO Talk about performance or meeting the requirements?
 
 \input{06-team}
 
