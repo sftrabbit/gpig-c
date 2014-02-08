@@ -391,8 +391,36 @@ UML 2 notation}
   \label{fig:dataAnalysisComponent}
 \end{figure}
 
-\subsubsection{Notification Generator}
+\subsubsection{Notification Component}
 
+The notification component, shown in figure
+\ref{fig:notificationComponent}, contains the following classes:
+
+\begin{description}
+  \item [Notification Generator] An object that coordinates generating and
+    sending of notifications. The object interfaces with the analysis
+    controller, receiving an event object when analysis engines specify that
+    notifications should be sent. Notifications are then generated and sent by
+    appropriate notification engines. Notification engines are associated with
+    the notification generator by class loading allowing for users to add and
+    remove notification engines at run-time.
+
+  \item [Notification Engine] An abstract class that implements the basic
+    functionality and defines the methods required of an implemented
+    notification engine. Each engine has a list of associated systems, and 
+    features a cool down system to ensure that notifications are not sent
+    more then once during a specified period of time. When creating their
+    own notification engines the end user will be required to extend this
+    class, implement the abstract methods and define how a notification
+    is sent.
+
+  \item [Email Notification] An object that extends the notification engine
+    class and implements email notifications. When called by the notification
+    generator, an email notification is sent to the specified recipient, and 
+    contains the specified notification subject and further notification
+    information.
+\end{description}
+ 
 \begin{figure}[ht!]
   \centering
   \includegraphics[width= 7cm]{images/Notification/NotificationGenerator.png}
@@ -509,21 +537,21 @@ testing.
 \begin{description}
   \item[Data Emitter] As the purpose of the data emitter is to run
     continuously, monitoring a system and reporting on it, we completed
-    inspection testing to verify that data was reported, fulfilling \fr{1.2},
-    \fr{1.3}, and \fr{1.4} along with running the program for several hours to
+    inspection testing to verify that data was reported, fulfilling \frit{1.2},
+    \frit{1.3}, and \frit{1.4} along with running the program for several hours to
     verify that it continued to function.
 
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
     inspection testing, and also by running multiple clients simultaneously and
-    verifying that the data from both was recorded, thus verifying \fr{1.2}.
+    verifying that the data from both was recorded, thus verifying \frit{1.2}.
 
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
-    performance. We completed an inspection test to verify \textbf{FR.3.1}, 
+    performance. We completed an inspection test to verify \frit{3.1}, 
     and used the GWTSystemDataGatewayTest class 
-    to verify \textbf{FR.4.2}. At the unit testing level, as 
+    to verify \frit{4.2}. At the unit testing level, as 
     part of TDD,  we focussed on the comparably complex, well defined 
     module-internal functions, such as the generation and parsing of the 
     JSON serialisation of objects.
@@ -542,6 +570,7 @@ bounds, as well as the cases where invalid data or system IDs were sent into
 the analysis engine.
   \item[Notification Generator]
   \item[Notification Engine]
+  \hl{Cooldown period in} \frit{8}
   \item[Reports Engine]
  \end{description}
  \subsubsection{Traceability Matrix}
