@@ -1,5 +1,6 @@
 package com.gpigc.dataemitter.emitters;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.gpigc.dataemitter.comms.DataSender;
@@ -21,10 +22,13 @@ public abstract class Emitter implements Callable<Void> {
 		setup();
 		
 		while (continueRunning()) {
-			SystemData data = collectData();
+			List<SystemData> dataList = collectData();
 
-			if (data != null) {
-				sender.send(data);
+			if (dataList != null) {
+				for (SystemData data : dataList) {
+					System.out.println("Sending earthquake: " + data.getDatum(0).getValue());
+					sender.send(data);
+				}
 			}
 			
 			Thread.sleep(collectionInterval);
@@ -43,5 +47,5 @@ public abstract class Emitter implements Callable<Void> {
 	
 	public abstract void setup() throws Exception;
 	
-	public abstract SystemData collectData() throws Exception;
+	public abstract List<SystemData> collectData() throws Exception;
 }
