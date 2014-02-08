@@ -15,6 +15,7 @@
 \usepackage[small,compact]{titlesec}
 \usepackage[justification=centering]{caption}
 
+\definecolor{reqColor}{RGB}{80,80,120}
 \definecolor{titleColor}{RGB}{138,201,242}
 \pagestyle{fancy}
 \lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M 
@@ -28,9 +29,9 @@ Walker}
 \renewcommand{\headrulewidth}{0.4pt} % Add rules below header
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-\newcommand{\fr}[1]{\textbf{FR.#1}}
+\newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
 \newcommand{\frit}[1]{\textit{FR.#1}}
-\newcommand{\nfr}[1]{\textbf{NFR.#1}}
+\newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
 \newcommand{\nfrit}[1]{\textit{NFR.#1}}
 
 \begin{document}
