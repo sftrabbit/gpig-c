@@ -462,15 +462,7 @@ Doing this also had the benefit of providing us with established, well-tested,
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
-To communicate between the code and the other modules, we serialised objects
-to send them over a network connection. We used JSON and Protocol Buffers.
-For connections that require data to be serialised to text, we used JSON since
-it is human readable and maps well to our internal representation of objects
-in Java. To read and write JSON we used the Jackson library, since it offers
-a high-performance streaming API. When there was no such restriction on the 
-format of the transmitted data, we used Google Protocol Buffers since they offer 
-high-performance as is necessary for the potentially high-volume connections 
-between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
+To communicate between the code and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high-performance as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
@@ -492,7 +484,7 @@ development time and providing a robust codebase. For testing we used
 the Mockito framework to allow us to verify elements of our codebase in 
 isolation, by offering a concise way to mock out dependancies. To 
 interrogate the state of the test application provided by the Customer, we 
-used the Sigar cross-platform system information API and JMX to query the 
+used the SIGAR cross-platform system information API and JMX to query the 
 vital parameters of the process, including CPU utilisation and memory 
 footprint.
 
@@ -566,10 +558,7 @@ testing.
   For the analysis engine, we created a unit test to check each aspect of the 
   engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
   for testing which allows mocking of results from methods of a dependancy 
-  class to restrict the possible source of failure of a test as narrow as possible. 
-  This was especially useful for potentially flakey tests, such as connecting over 
-  a network that may not be available at test time and database access. Our unit 
-  tests covered valid, extreme, missing values were sent to the analysis engine.
+  class to restrict the possible source of failure of a test as narrow as possible. This was especially useful for potentially flakey tests, such as connecting over a network that may not be available at test time and database access. Our unit tests covered valid, extreme, missing values were sent to the analysis engine.
 
   \item[Notification Generator] % No tests written for this
   
@@ -582,8 +571,8 @@ testing.
 
 \subsubsection{Traceability Matrix}
 
-\begin{longtable}[H]{|l|p{6cm}|p{3cm}|}
-  \hline \cellcolor{titleColor} ID & \cellcolor{titleColor} Test Class & \cellcolor{titleColor} Test \\
+\begin{longtable}[H]{| p{2.3cm} | p{2.7cm} | p{7cm}|}
+  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Test Cases}\\
   \hline \fr{1.1.1} & & \\
   \hline \fr{1.1.2} & & \\
   \hline \fr{1.1.3} & & \\
@@ -630,6 +619,7 @@ testing.
   \hline \nfr{14}   & & \\
   \hline
 \end{longtable}
+>>>>>>> 1d234855b5ec69e346b93ceb9b3d712afe98eecb
 
 \subsection{Monitoring of Test Application using the prototype solution}
 \label{sec:prototype-evaluation}
