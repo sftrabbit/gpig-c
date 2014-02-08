@@ -5,14 +5,25 @@ import org.apache.commons.mail.*;
 
 import com.gpigc.core.notification.NotificationEngine;
 
+/**
+ * Email notification engine providing a way of sending an email to the specified recipient
+ * 
+ * @author GPIGC
+ */
 public class Email extends NotificationEngine {
 
+	/**
+	 * Initialises the email notification engine
+	 */
 	public Email() {
 		 associatedSystems = new ArrayList<String>();
 		 associatedSystems.add("1");
 		 engineName = "EmailNotification1";
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gpigc.core.notification.NotificationEngine#send(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void send(String recepient, String subject, String message) {
 		SimpleEmail email = new SimpleEmail();
 		email.setHostName("smtp.gmail.com");

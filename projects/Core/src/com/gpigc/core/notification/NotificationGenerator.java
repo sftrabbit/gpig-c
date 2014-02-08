@@ -8,15 +8,37 @@ import java.util.ArrayList;
 import java.util.List;
 import com.gpigc.core.event.Event;
 
+/**
+ * Generates and sends notifications from event objects
+ * 
+ * @author GPIGC
+ */
 public class NotificationGenerator {
 
 	private List<NotificationEngine> engines;
 
+	/**
+	 * Initialises the notification generator
+	 * 
+	 * @throws MalformedURLException
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
 	public NotificationGenerator() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		engines = new ArrayList<NotificationEngine>();
 		instantiateEngines();
 	}
 
+	/**
+	 * Generates notifications based on a given event
+	 * 
+	 * @param event The event object containing information about the result
+	 */
 	public void generate(Event event) {
 		String systemId = event.getSystemId();
 		for (NotificationEngine engine : engines) {
@@ -30,6 +52,18 @@ public class NotificationGenerator {
 		}
 	}
 
+	/**
+	 * Performs class loading of notification engines allowing for runtime additions
+	 * 
+	 * @throws MalformedURLException
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
 	private void instantiateEngines() throws MalformedURLException,	ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		File folder = new File("/" + System.getProperty("user.dir") + "/src/com/gpigc/core/notification/engine");
 		File[] listOfFiles = folder.listFiles();
