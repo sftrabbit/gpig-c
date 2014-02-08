@@ -2,7 +2,7 @@ package com.gpigc.dataemitter.emitters;
 
 import com.gpigc.proto.Protos.SystemData;
 
-public class _StubEmitter_ extends Emitter {
+public class EarthEmitter extends Emitter {
 
 	@Override
 	public Void setup() throws Exception {
@@ -15,5 +15,4 @@ public class _StubEmitter_ extends Emitter {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
