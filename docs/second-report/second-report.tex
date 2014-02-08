@@ -372,11 +372,11 @@ The analysis component, shown in figure
     engine the end user will be able to specify what data is to be
     saved back to the database.
 
-  \item [Event Notify] An object representing a notification,
+  \item [Event] An object representing an event,
     containing the name of the analysis engine that triggered the
-    notification, the ID of the system that the notification applies
+    event, the ID of the system that the event applies
     to and the result object from the analysis engine that triggered
-    the notification.
+    the event.
 \end{description}
 
 \begin{figure}[ht!]
@@ -384,7 +384,7 @@ The analysis component, shown in figure
   \includegraphics[width= 9.5cm]{images/Analysis/AnalysisController.png}
   \includegraphics[width= 5cm]{images/Analysis/Result.png}
   \includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
-  \includegraphics[width= 6cm]{images/Analysis/EventNotify.png}
+  \includegraphics[width= 6cm]{images/Analysis/Event.png}
   \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
   \caption{Conceptual diagrams of the analysis component classes, using 
 UML 2 notation}
@@ -392,6 +392,16 @@ UML 2 notation}
 \end{figure}
 
 \subsubsection{Notification Generator}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width= 7cm]{images/Notification/NotificationGenerator.png}
+  \includegraphics[width= 5cm]{images/Notification/NotificationEngine.png}
+  \includegraphics[width= 4.5cm]{images/Notification/EmailNotification.png}
+  \caption{Conceptual diagrams of the notification component classes, using 
+UML 2 notation}
+  \label{fig:notificationComponent}
+\end{figure}
 
 \section{Interim Prototype Implementation}
 
@@ -402,9 +412,7 @@ be compiled to bytecode that can be executed directly in all
 environments that support a Java Virtual Machine, including various
 operating systems and the x86, x86-64 and ARM CPU architectures,
 making it highly portable between both desktop, server and embedded
-systems.
-
-% REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
+systems. % REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
 
 Whilst there may exist deployment platforms that are not supported, at
 this stage, we do not see this as a problem since the underlying
@@ -426,6 +434,16 @@ Doing this also had the benefit of providing us with established, well-tested,
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
+To communicate between the code and the other modules, we serialised objects
+to send them over a network connection. We used JSON and Protocol Buffers.
+For connections that require data to be serialised to text, we used JSON since
+it is human readable and maps well to our internal representation of objects
+in Java. To read and write JSON we used the Jackson library, since it offers
+a high-performance streaming API. When there was no such restriction on the 
+format of the transmitted data, we used Google Protocol Buffers since they offer 
+high-performance as is necessary for the potentially high-volume connections 
+between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
+
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
 technologies as plugins. The prototype could easily be extended to
@@ -446,8 +464,8 @@ development time and providing a robust codebase. For testing we used
 the Mockito framework to allow us to verify elements of our codebase in 
 isolation, by offering a concise way to mock out dependancies. To 
 interrogate the state of the test application provided by the Customer, we 
-used the SIGAR cross-platform system information API to query the vital 
-parameters of the process, including CPU utilisation and memory 
+used the Sigar cross-platform system information API and JMX to query the 
+vital parameters of the process, including CPU utilisation and memory 
 footprint.
 
 We used Git for version control, allowing the entire team to
@@ -492,57 +510,65 @@ testing.
 % input re- quests per second per HUMS instance."
 
 \begin{description}
+
   \item[Data Emitter] As the purpose of the data emitter is to run
-    continuously, monitoring a system and reporting on it, we completed
-    inspection testing to verify that data was reported, fulfilling \fr{1.2},
-    \fr{1.3}, and \fr{1.4} along with running the program for several hours to
-    verify that it continued to function.
+    continuously, monitoring a system and reporting on it, thereby
+    fulfilling \frit{1.2}. We completed inspection testing to verify 
+    that data was reported, along with running the program for 
+    several hours to verify that it continued to function.
 
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
     inspection testing, and also by running multiple clients simultaneously and
-    verifying that the data from both was recorded, thus verifying \fr{1.2}.
+    verifying that the data from both was recorded, thus verifying \frit{1.2}
+    and \nfrit{9}.
 
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
-    performance. We completed an inspection test to verify \textbf{FR.3.1}, 
-    and used the GWTSystemDataGatewayTest class 
-    to verify \textbf{FR.4.2}. At the unit testing level, as 
-    part of TDD,  we focussed on the comparably complex, well defined 
-    module-internal functions, such as the generation and parsing of the 
-    JSON serialisation of objects.
-  \item[Analysis Controller]
+    performance. We completed an inspection test and used the 
+    GWTSystemDataGatewayTest class to verify \frit{3.2}. At the unit 
+    testing level, as  part of TDD, we focussed on the comparably complex,
+    well defined module-internal functions, such as the generation and 
+    parsing of the JSON serialisation of objects.
+    
+  \item[Analysis Controller] % No tests written for this
+  
   \item[Analysis Engine]
   For the analysis engine, we created a unit test to check each aspect of the 
-engine. We utilised Mockito, which is a framework for testing which allows 
-emulation of results from methods. The particular analysis engine which we 
-tested was the mean engine. The aim of this engine, which is part of the pre-
-defined engine set for our HUMS system, is to check set of values has a mean 
-which lies within some user defined bounds. Therefore, our test cases setup to 
-test that the mean values were valid. This meant using a pre-defined set of 
-values to ensure the mean which the system calculated matched the true 
-mean. Our test cases also dealt with the checking of means in and outside of 
-bounds, as well as the cases where invalid data or system IDs were sent into 
-the analysis engine.
-  \item[Notification Generator]
-  \item[Notification Engine]
-  \item[Reports Engine]
+  engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
+  for testing which allows mocking of results from methods of a dependancy 
+  class to restrict the possible source of failure of a test as narrow as possible. 
+  This was especially useful for potentially flakey tests, such as connecting over 
+  a network that may not be available at test time and database access. Our unit 
+  tests covered valid, extreme, missing values were sent to the analysis engine.
+
+  \item[Notification Generator] % No tests written for this
+  
+  \item[Notification Engine] % No tests written for this
+  
+  \item[Reports Engine] % No tests written for this
+  
  \end{description}
  \subsubsection{Traceability Matrix}
 
-\subsection{Evaluation on Test Application}
+\subsection{Monitoring of Test Application using the prototype solution}
 \label{sec:prototype-evaluation}
-% connects to JVM using JMX, launches monitoring tool and monitors JVM memory, cpu usage (processmonitor.java) checks total cpu time of the process based upon difference in time between two time intervals, 
-In order to evaluate or system with respect to the provided test application, 
-we have created a monitoring package for our prototype specifically for the 
-test application. We are utilising the Java Management Extensions (JMX) 
-Technology to obtain a measure of the memory utilised by the application. 
-We have also created a process monitoring class which monitors the total
- cpu usage of the application. This is achieved by 
- measuring the difference in total cpu usage time between two points in 
- time. These results are then taken, and can be graphed and monitored.
 
+The Customer provided an example application to monitor as part of the
+evaluation of our prototype. With this in mind, we created a monitoring 
+package for our prototype solution that can monitor a native application
+or one executing on the JVM. We utilised Java Management 
+Extensions (JMX) to sample the memory utilisation of the an application.
+We also created a process monitoring class which monitors the total
+CPU usage of the application.
+
+Once the memory and CPU usage of the test application has been sampled,
+it is logged in the Google App Engine datastore and the Mean Analysis 
+Engine computes a rolling average of each value. This average is then read 
+by the reporting system and displayed live in the admin centre.
+
+% TODO Talk about performance or meeting the requirements?
 
 \input{06-team}
 
