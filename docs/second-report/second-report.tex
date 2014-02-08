@@ -415,8 +415,7 @@ language and thus no time was spent having to get the team up to speed
 on a new language. We did not impose a language restriction when
 developing the data emitter and various engines as the data being
 passed between them and the core are language independent, meaning 
-end
-users are free, even with the prototype, to implement engines in any
+end users are free, even with the prototype, to implement engines in any
 language they see fit. For the prototype we used both Java and
 JavaScript when creating the engines, languages team members are
 familiar with, allowing us to show off the versatility of the system.
@@ -425,10 +424,7 @@ Upon determining to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested,
 tools with which we could easily implement data input clients for further
-systems. As the test program is a Java program, we had to connect to its JVM 
-to query the heap usage, as the operating system would just report the size of 
-the JVM heap. We settled on using Sigar for process monitoring, and JMX for
-monitoring heap usage.
+systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using Sigar for process monitoring, and JMX for monitoring heap usage.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
@@ -440,13 +436,10 @@ We created a prototype admin centre to show how the HUMS could be
 managed remotely, viewing data and modifying settings online, through
 a web browser, whilst running as a service. The admin centre was
 developed using the Bootstrap front-end web framework, including 
-HTML,
-JavaScript and CSS, in order to create a prototype realistically
+HTML, JavaScript and CSS, in order to create a prototype realistically
 simulating an interface to the HUMS that is accessible on desktop
 computers, laptops and mobile devices alike.
 
-% TODO Mockito and Joe & Michaels process reading thing - do we 
-need to cite these?
 We used various Java libraries to support our prototype, saving us 
 development time and providing a robust codebase. For testing we used 
 the Mockito framework to allow us to verify elements of our codebase in 
