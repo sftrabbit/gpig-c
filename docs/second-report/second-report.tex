@@ -62,8 +62,7 @@ functionality, but also produce a system meeting the expectations of all
 stakeholders. For example the system may be expected to meet certain 
 security standards or availability levels. Explicitly defining these quality 
 attributes before concretely designing a system allows for the correct 
-tactics 
-and patterns to be adopted in order to maximise the utility of important 
+tactics and patterns to be adopted in order to maximise the utility of important 
 qualities.
 
 When examining the HUMS non-functional requirements the following 
@@ -248,14 +247,14 @@ these situations, then it can perform under all others.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentDistributed.png}
-  \caption{CAPTION HERE}
+  \caption{Deployment diagram showing HUMS spread across multiple systems}
   \label{fig:DeploymentDistributed}
 \end{figure}
 
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=12.5cm]{images/DeploymentIsolated.png}
-  \caption{CAPTION HERE}
+  \caption{Deployment diagram showing HUMS on one system}
   \label{fig:DeploymentIsolated}
 \end{figure}
 
@@ -265,7 +264,7 @@ these situations, then it can perform under all others.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentService.png}
-  \caption{CAPTION HERE}
+  \caption{Deployment diagram showing HUMS as a multi-user service}
   \label{fig:DeploymentService}
 \end{figure}
 
@@ -445,6 +444,15 @@ users are free, even with the prototype, to implement engines in any
 language they see fit. For the prototype we used both Java and
 JavaScript when creating the engines, languages team members are
 familiar with, allowing us to show off the versatility of the system.
+
+Upon determining to monitor CPU and heap usage, we began to investigate
+technologies that would allow us to do so, rather than reinvent the wheel.
+Doing this also had the benefit of providing us with established, well-tested,
+tools with which we could easily implement data input clients for further
+systems. As the test program is a Java program, we had to connect to its JVM to
+query the heap usage, as the operating system would just report the size of the
+JVM heap. We settled on using Sigar for process monitoring, and JMX for
+monitoring heap usage.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular

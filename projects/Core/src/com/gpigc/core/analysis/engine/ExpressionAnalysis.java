@@ -9,10 +9,12 @@ import java.util.Map;
 
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.analysis.Result;
+import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 import expr.Parser;
+import expr.SyntaxException;
 import expr.Variable;
 
 /**
@@ -78,16 +80,18 @@ public class ExpressionAnalysis extends AnalysisEngine {
 		try {
 			List<SensorState> sensorStates = getSensorStates(ONE_VALUE_PER_SENSOR);
 			if (error) 
-				throw new Exception(
+				throw new FailedToReadFromDatastoreException(
 						"Couldn't load sensor states from DB during analysis");
 			for (SensorState sensorState : sensorStates) {
 				variables.get(sensorState.getSensorID())
 					.setValue(Double.parseDouble(sensorState.getValue()));
 			}
-			Double value = parser.parseString(exprStr).value();
-			dataToSave.put(getEngineName() + " value", value.toString());
-		} catch (Exception e) {
-			dataToSave.put(ERROR, getEngineName() + ": " + e.getMessage());
+			double value = parser.parseString(exprStr).value();
+			dataToSave.put(getEngineName() + " value", ""+value);
+		} catch (FailedToReadFromDatastoreException | SyntaxException e) {
+			dataToSave.put(ERROR, getEngineName() + " in error: " + 
+					e.getClass().getCanonicalName() + ", " + 
+					e.getMessage());
 		}
 		return new Result(dataToSave, notify);
 	}
