@@ -519,15 +519,26 @@ Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
 CPU usage of the application. The Mean Analysis Engine computes a 
 rolling average of each value. This average is then read 
-by the reporting system and displayed live in the admin centre.
+by the reporting system and displayed live in the admin centre, as shown
+in \ref{fig:graphing}.
 
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=10cm]{images/graphing.png}
+  \caption{A screenshot of the live graphing of the state of the Customer 
+  Test Application}
+  \label{fig:graphing}
+\end{figure}
 
 \subsubsection{Earthquake}
 We also created our own sample application: monitoring earthquakes 
 through the USGS Earthquake Hazards Program API. The HUMS
 can collect live data from the API, store it and plot the location of any
-detected earthquakes on a map of the world in the admin centre live.
+detected earthquakes on a map of the world in the admin centre live,
+as showing in %TODO.
+
+% TODO Add screenshot
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
@@ -550,6 +561,10 @@ between each requirement and its associated test.
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
 % input re- quests per second per HUMS instance."
 % Also talk about what we can't test since not everything is implemented
+
+To system test
+
+Below, the testing for each module is listed
 
 \begin{description}
 
@@ -593,12 +608,12 @@ between each requirement and its associated test.
 
 \subsubsection{Traceability Matrix}
 
-\begin{longtable}[H]{| p{2.3cm} | p{12cm}|}
-  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class}\\
-  \hline \fr{3.1}   & com\-.gpigc\-.client\-.GWTSystemDataGatewayTest \\
-  \hline \fr{3.2}   & com\-.gpigc\-.client\-.SystemDataTest, com\-.gpigc\-.client\-.EmitterSystemStateTest, com\-.gpigc\-.client\-.QueryResultTest\\
-  \hline \fr{7.2}   & com\-.gpigc\-.test\-.ExpressionAnalysisTest \\
-  \hline \fr{11}    & com\-.gpigc\-.test\-.EmailNotificationTest \\
+\begin{longtable}[H]{| p{2.3cm} | p{8cm}| p{4cm}|}
+  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Strategy}\\
+  \hline \fr{3.1}   & com\-.gpigc\-.client\-.GWTSystemDataGatewayTest &  \\
+  \hline \fr{3.2}   & com\-.gpigc\-.client\-.SystemDataTest, com\-.gpigc\-.client	\-.EmitterSystemStateTest, com\-.gpigc\-.client\-.QueryResultTest & \\
+  \hline \fr{7.2}   & com\-.gpigc\-.test\-.ExpressionAnalysisTest  & \\
+  \hline \fr{11}    & com\-.gpigc\-.test\-.EmailNotificationTest  & \\
   \hline
 \end{longtable}
 
