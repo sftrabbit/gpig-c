@@ -119,11 +119,11 @@ each requirement of the system would be tested and created a
 comprehensive test plan, detailing integration, system, unit and 
 acceptance testing.
 
-\subsection{System Views}
+\section{System Views}
 \label{sec:architecture-views}
 
 When designing the HUMS we identified four different views of of the
-system which must be documented:
+system which must be documented, taking inspiration from the Hofmeister approach to software architecture:  %%CITE Hofmeister, Nord & Soni, Applied Software Architecture, Addison Wesley.
 
 \begin{description}
   \item[Module View] The required software modules and relationships
@@ -132,7 +132,7 @@ system which must be documented:
   \item[Behavioural View] The flow of data and dynamic actions within
     the system.
 
-  \item[Deployment View] How modules are geographically positioned.
+  \item[Execution View] How modules are geographically positioned.
 
   \item[Conceptual View] Class diagrams, showing a concrete
     implementation of the functionality.
@@ -214,16 +214,15 @@ through the system, using UML 2 notation}
 
 %%Input Diagram WITH KEY
 
-\subsection{Deployment View}
+\subsection{Execution View}
+With view to deployment and execution, the HUMS needs to be tailorable, the core system may be running on the same hardware as the data emitter, it may also be geographically distant, engines may also be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-With view to deployment the HUMS needs to be tailorable, the core
-system may be running on the same hardware as the data emitter, it may
-also be geographically distant. Engines may all be on separate
-machines or may all be together. Figures \ref{fig:DeploymentDistributed}
-and \ref{fig:DeploymentIsolated} show the main scenarios for deployment
-of the HUMS, with a view that if the system architecture can perform under
-these situations, then it can perform under all others.
+Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personal, as opposed to developers. This deployment possibility gave the team the idea of creating a system as service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. 
+This is shown in figure \ref{fig:DeploymentService}, and is made possible by associating sensor data with a system ID.
+For administrating the HUMS as a service, a hosted admin
+centre will be created, which allows users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
 
+Figure \ref{fig:DeploymentIsolated} shows we we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and  all module existing on the same device.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentDistributed.png}
@@ -239,23 +238,12 @@ systems}
   \label{fig:DeploymentIsolated}
 \end{figure}
 
-We have also chosen to consider providing the system as a service, where
-multiple customers can simultaneously use a single storage, analysis, and
-notification server. This is shown in figure \ref{fig:DeploymentService}, and
-is made possible by associating sensor data with a system ID.
-
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentService.png}
   \caption{Deployment diagram showing HUMS as a multi-user service}
   \label{fig:DeploymentService}
 \end{figure}
-
-For administrating the HUMS as a service, we have produced a prototype ``Admin
-Center'', which allows users to specify analysis and reporting behaviours using
-a simple rules engine-like interface. Users can define their own events and how
-they should be handled, view all of the registered input clients, pull reports,
-and view live graphs of data.
 
 \subsection{Conceptual View}
 The Conceptual View is a description of the the entire system in terms of it's individual components, for example, classes in an object-oriented design.
