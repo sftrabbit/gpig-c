@@ -55,7 +55,7 @@ public class ExpressionAnalysisTest {
 		ExpressionAnalysis analysis = new ExpressionAnalysis(
 				"Test Engine", 
 				EXPRESSION, 
-				Arrays.asList(new String[]{SENSOR_A, SENSOR_B}), 
+				Arrays.asList(new String[]{SYSTEM}), 
 				database, 
 				false);
 		Result result = analysis.analyse();
