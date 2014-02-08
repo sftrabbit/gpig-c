@@ -1,6 +1,9 @@
 package com.gpigc.dataemitter.emitters;
 
+import java.util.List;
+
 import com.gpigc.dataemitter.monitors.EarthquakeMonitor;
+import com.gpigc.dataemitter.monitors.EarthquakeMonitor.Earthquake;
 import com.gpigc.proto.Protos.SystemData;
 
 public class EarthEmitter extends Emitter {
@@ -19,6 +22,18 @@ public class EarthEmitter extends Emitter {
 
 	@Override
 	public SystemData collectData() throws Exception {
-		return null;
+		SystemData.Builder dataBuilder = SystemData.newBuilder().setSystemId("2")
+				.setTimestamp(System.nanoTime());
+		
+		List<Earthquake> earthquakes = earthquakeMonitor.getNewEarthquakes();
+		for (Earthquake earthquake : earthquakes) {
+			SystemData.Datum earthquakeDatum = SystemData.Datum.newBuilder()
+					.setKey("EQ")
+					.setValue(earthquake.toString())
+					.build();
+			dataBuilder.addDatum(earthquakeDatum);
+		}
+		
+		return dataBuilder.build();
 	}
 }
