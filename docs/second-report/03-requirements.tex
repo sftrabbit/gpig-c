@@ -19,19 +19,18 @@ responsibility to the data emitter and consumer system, and mandate when timesta
 \begin{description}[leftmargin=1.3cm, itemsep=0.3cm]
 	%%FR1
   	\item[\fr{1}]  Data emitters shall be able to push correctly structured data 	to the HUMS.
-	\begin{description}
+	\begin{description}[leftmargin=1.3cm]
 		 \item[\fr{1.1}] The HUMS shall provide an API for data input.
+		\begin{description}
+			  \item[\fr{1.1.1}] The data input API shall require an identifier 				for the HUMS being monitored.
 
-		  \item[\fr{1.2}] The data input API shall require an identifier for
- 		 the HUMS being monitored.
+ 			 \item[\fr{1.1.2}] The data input API shall require data to be
+ 		 	timestamped.
 
- 		 \item[\fr{1.3}] The data input API shall require data to be
- 		 timestamped.
-
- 		 \item[\fr{1.4}] The data input API shall allow data emitters
- 		 to send the IDs of sensors and their values to the HUMS, which will 			then be made available to the analysis engine.
-
- 		 \item[\fr{1.5}] A data emitter, designed to extract data from the given 		test application shall be provided.
+ 			 \item[\fr{1.1.3}] The data input API shall allow data emitters
+ 		 	to send the IDs of sensors and their values to the HUMS, 				which will 	then be made available to the analysis engine.
+		\end{description}
+ 		 \item[\fr{1.2}] A data emitter, designed to extract data from the given 		test application shall be provided.
 	\end{description}
 	%%FR2
 	\item[\fr{2}]  The HUMS shall allocate a timestamp to new data.
@@ -78,14 +77,14 @@ responsibility to the data emitter and consumer system, and mandate when timesta
 	
 	\item[\fr{8}]After the sending of a notification for an event of a particular 		type, no more notifications for an event of that type will be sent 				during the cool down period.
 	\item[\fr{9}]The system shall dispatch an event to a notification generator 		when a specified data pattern in detected.
-	\item[\fr{7}] The HUMS must interface with reports engines, allowing 			them to pull reports.
+	\item[\fr{10}] The HUMS must interface with reports engines, allowing 			them to pull reports.
 	\item[\fr{11}] The system shall provide basic examples of notification 			engines to work with the test application.
 	\item[\fr{12}] The system shall allow for notifications to change the way in 		which data is sensed.
 	 \item[\fr{13}] The system shall allow notifications to be sent back to the 		system being monitored.
 \end{description}
 
 \subsection{Non-Functional Requirements}
-Non-function requirements remain remain the same, however, \nfrit{14} has been added in order to clarify that data can be sent and stored in any format, enforcing that the consumers system will not have to conform to the HUMS. It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements specific to the prototype, as functional requirements require the datastore to be changeable meaning, in the general case, requirements about the abilities of the datastore are not verifiable.
+Non-function requirements remain the same, however, \nfrit{14} has been added in order to clarify that data can be sent and stored in any format, enforcing that the consumers system will not have to conform to the HUMS. It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements specific to the prototype, as functional requirements require the datastore to be changeable meaning, in the general case, requirements about the abilities of the datastore are not verifiable.
 \begin{description}
 \item[\nfr{1}] The HUMS shall be able to receive hardware changes without loss of previously stored data.
 \item[\nfr{2}]  Users shall be provided with documentation detailing how to use the system.
