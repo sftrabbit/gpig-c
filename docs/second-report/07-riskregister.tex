@@ -4,13 +4,16 @@
 A risk assessment has been performed as part of the interim
 report to ensure the team is aware of any problems which could later
 arise, and to provide a guide as to how to react when such problems
-occur. The hazards (risks) have been identified and classified based
-upon team members' past experiences in similar projects and group
-discussion. The areas these hazards impact were then analysed, as well
-as the probability of occurrence. These are then weighted so that we
-can identify the risks which are likely to have the greatest
-detrimental effect on the project. The likelihood score (LS), impact
-score (IS) and risk matrix score (RS) are listed in the table below.
+occur. The hazards (risks) have been identified by examining the 
+current literature \cite{boehm1991software,jones1998minimizing}, drawing upon team members' past experiences and group 
+discussion. Classification of the identified hazards, their impact on the system and their probability of occurrence is performed 
+in accordance with the Risk Management Guide for Information Technology 
+Systems \cite{stoneburner2002risk}. The areas these hazards impact were then analysed, as 
+well as the probability of occurrence. These are then weighted so 
+that we can identify the risks which are likely to 
+have the greatest detrimental effect on the project. The likelihood 
+score (LS), impact score (IS) and risk matrix score (RS) are listed 
+in the table below.
 
 \begin{longtable}[H]{| p{0.7cm} | p{2cm} | p{0.3cm} | p{0.3cm} | p{2.4cm} | p{4.1cm} | p{3cm} | p{0.4cm} |}
   \hline
@@ -22,40 +25,38 @@ score (IS) and risk matrix score (RS) are listed in the table below.
   \cellcolor{titleColor}\textbf{Mitigation} &
   \cellcolor{titleColor}\textbf{Contingency} &
   \cellcolor{titleColor}\textbf{RS}\\
-
+  
   \hline \textbf{R.1}
   & Loss of team member(s)
   & 6
   & 3
-  & Deadline failure
+  & internal and/or deadline failure
   & Ensure that no work relating to the project is outside of team
   version control. Use of scrum methodology proactively aids work
   reallocation, ensuring team members are aware of all assigned work.
   & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension.
   & 18 \\
-
-  \hline \textbf{R.2}
-  & Team member under-performance
-  & 4
-  & 4
-  & Deadline failure and low standard of deliverables
-  & Establish skills of team as a whole early on. Establish skills of
-  individual members early on and allocate work accordingly.
-  & Re-allocation of roles to better suit member strengths.
-  & 16 \\
-
-  \hline \textbf{R.3}
-  & Short or long term loss of resources
-  & 2
-  & 5
-  & Deadline failure and loss of code base
-  & Use of version control. Code-base and history is distributed across developers.
-  & If remote repository (GitHub) is lost, local checkouts/university
-  backups can be used to regain access to resources.
-  & 10 \\
-
-  \hline \textbf{R.4}
-  & Misinterpreta\-tion of requirements
+  
+  \hline \textbf{R.}
+  & Personnel under performance
+  & 6
+  & 3
+  & internal and/or deadline failure
+  & Team strengths and weaknesses identified and work assigned appropriately, slack built into the schedule to account for under performance
+  & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension.
+  & 18 \\
+  
+  \hline \textbf{R.}
+  & Unrealistic schedules
+  & 
+  & 
+  & Required functionality missing from deliverables, excessive pressures detrimental to team moral
+  & Draw upon team members development experiences along with their strengths and weaknesses when planning work. Plan agreed to by all team members.
+  & Reassess schedule if it proves to be unrealistic, possible need to push deadline back
+  & \\
+  
+  \hline \textbf{R.}
+  & Development of incorrect functionality
   & 3
   & 4
   & Deliverables that are not valid
@@ -64,43 +65,35 @@ score (IS) and risk matrix score (RS) are listed in the table below.
   customer and developers are content.
   & Changes to requirements must result in re-negotiated deadlines.
   & 12 \\
-
-  \hline \textbf{R.5}
-  & Slow response to customer queries
-  & 3
-  & 5
-  & Deadline failure and low standard of deliverables
-  & Communication of issues well in advance of any deadlines.
-  & Depending on time available to deadline, contingency is either to
-  wait - or to implement best solution as decided by the team without
-  receiving customer communication.
-  & 15 \\
-
-  \hline \textbf{R.6}
-  & Failure to produce required system functionality
-  & 2
-  & 5
-  & Wasted time and loss of marks
-  & Verification of requirements by customer. Testing of system, to
-  ensure all agreed upon requirements are met.
-  &
-  & 10 \\
-
-  \hline \textbf{R.7}
-  & Missing internal team deadlines
-  & 5
-  & 3
-  & Project falls behind due to missing dependencies
-  & Perform critical path analysis to identify tasks that take the
-  longest amount of time and tasks that are prerequisites to
-  others. Assign greater team effort to these areas if it seems likely
-  to result in a deadline miss, or halt in progress elsewhere in the
-  project.
-  & Greater team effort on area of deadline miss, to accelerate its
-  completion.
-  & 15 \\
-
-  \hline \textbf{R.8}
+  
+  \hline \textbf{R.}
+  & Developing poor user interface for interacting with the HUMS
+  & 
+  & 
+  & Poor user experience, loss of confidence in the solution
+  & Continuous, iterative development process, regularly incorporating users feedback
+  & 
+  & \\
+  
+  \hline \textbf{R.}
+  & Adding more functionality than necessary
+  & 
+  & 
+  & Additional, unnecessary functionality, possible deadline miss
+  & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
+  & 
+  & \\
+  
+  \hline \textbf{R.}
+  & Deprecation of required Google App Engine functionality
+  & 
+  & 
+  & Unable to deliver required functionality
+  & Research pending deprecations to ensure required functionality will be supported
+  & Move to another key-store database (relatively simple)
+  & \\
+  
+  \hline \textbf{R.}
   & System performance required unattainable
   & 2
   & 4
@@ -111,62 +104,80 @@ score (IS) and risk matrix score (RS) are listed in the table below.
   performance.
   & All of, or combination of: optimisation of code, use of faster
   hardware, use of faster networks
-  & 8 \\
-
-  \hline \textbf{R.9}
-  & Design incomplete
-  & 2
-  & 5
-  & Deadline failure and/or low standard of deliverables and/or late
-  submission
-  & Critical path analysis of roles. Allocation of roles to areas of
-  strength for each team member where possible. 
-  &
-  & 10 \\
-
-  \hline \textbf{R.10}
-  & Design infeasible
-  & 2
-  & 5
-  & Deadline failure and/or low standard of deliverables
-  & Careful consideration of each aspect of the system design prior to
-  commencement of work. Design to be agreed by the team as a whole,
-  with any areas of issues addressed. Identify areas of worry before
-  commencement of work, and put mitigation in place or choose an
-  alternative solution.
-  & Abandonment of work completed thus far. Restart required.
-  & 10 \\
-
-  \hline \textbf{R.11}
-  & Database implementation choice does not give required performance
-  & 3
-  & 3
-  & Database queries fail or take too long
-  & Careful selection and comparison of database technologies.
-  & Perform new comparison of database technologies, utilise new
-  database technology of possible. Implementation of query
-  optimisations and/or database optimisations if appropriate.
-  & 9 \\
-
-  \hline \textbf{R.12}
-  & System verification failure
-  & 2
-  & 5
-  & Low standard of deliverables
-  & Test system with unit tests throughout to ensure verification of
-  requirements.
-  & Re-implementation of affected parts of the system.
-  & 10 \\
-
-  \hline \textbf{R.13}
-  & System validation failure
-  & 2
-  & 5
-  & Invalid deliverables and/or deadline miss
-  & Verify all requirements with the customer, before implementation
-  starts on the system.
-  & Re-implementation of affected parts of the system.
-  & 10 \\
+  & 8 \\    
+  
+  \hline \textbf{R.}
+  & Stock analysis components computing incorrect values
+  & 
+  & 
+  & Failing to meet fundamental requirements, customer loses confidence in the system
+  & Adopting a test driven approach to development throughout the development process
+  & Re-engineering of failing components
+  & \\
+  
+  \hline \textbf{R.}
+  & GitHub becomes unavailable for a prolonged period of time
+  & 
+  & 
+  & Difficulty merging work from different developers machines
+  & Distributed nature of Git means little work would be lost
+  & Host our own git server within the Computer Science Department
+  & \\ 
+  
+  \hline \textbf{R.}
+  & Malicious destruction of code repository on GitHub
+  & 
+  & 
+  & 
+  & Two-step authentication used on GitHub, distributed nature of Git means little work would be lost
+  & Host our own git server within the Computer Science Department
+  & \\  
+  
+  \hline \textbf{R.}
+  & Communication link to Google App Engine fails
+  & 
+  & 
+  & Loss of service to users, loss of confidence in the system
+  & A final commercial version would use the premium Google service which guarantees an uptime of 99.9\% (\textit{NRF10})
+  & Additional data abstraction layer could be built to interface with another database service
+  & \\
+  
+  \hline \textbf{R.}
+  & Data interception between our application and App Engine 
+  & 
+  & 
+  & Loss of confidence in the system
+  & A final system would encrypt traffic between our system and App Engine, currently just sending (non-sensitive) test data
+  & Additional penetration testing to identify security flaws
+  & \\
+  
+  \hline \textbf{R.}
+  & Data write/read times to/from App Engine too slow
+  & 
+  & 
+  & Will not be able to meet capacity requirement \textit{NFR9}
+  & Load testing of system throughout development to ensure \textit{NFR9}
+  & Re-engineering of system, possible need to switch datastore
+  & \\
+  
+  \hline \textbf{R.}
+  & Implementation does not facilitate data storage for a variety of systems
+  & 
+  & 
+  & Failure to meet key modifiability requirements 
+  & Adoption of a key-value database allows us the flexibility to store a variety of data
+  & 
+  & \\  
+  
+  \hline \textbf{R.}
+  & Time pressures limiting amount of development time
+  & 
+  & 
+  & Missing deadline, low quality deliverables
+  & Define scope of work early, commit to complete requirements and allocate work to sprints 
+  & Reduce functionality required and/or notify customer of later delivery
+  & \\
+  
   \hline
 \end{longtable}       
 
