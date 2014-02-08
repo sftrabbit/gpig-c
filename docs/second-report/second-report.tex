@@ -84,45 +84,32 @@ Determining who has the rights to access which data would fall under the
 purview of an individual customer, who would manage access rights using the 
 configuration front-end of our system.
 
-Flexibility is important to the HUMS as it is to be used across multiple 
+Flexibility is important to the HUMS as it is too be used across multiple 
 domains, meaning it cannot be to specific. Following a plugin 
 architecture means the system can remain general and flexible however 
 can include domain specific elements, such as analysis engines, 
-creating a software product line, where the core of the HUMS can be 
+creating a software product line where the core of the HUMS can be 
 shared across all domains.
 
 Modifiability is also an important qualities of the HUMS, though not 
 measurable, lack of modifiability can increase the cost and time taken to 
 complete the project. The HUMS will initially be built to tackle a single 
-domain 
-(software), however will in the future be required to work on embedded 
+domain (software), however will in the future be required to work on embedded 
 systems, mechanical systems, electrical systems and even people. In 
-order to 
-ensure these changes are as efficient as possible the initial system 
+order to ensure these changes are as efficient as possible the initial system 
 must be modifiable. Tactics that can be used to increase the modifiability 
-of the 
-system include using small modules within the system, decreasing the 
+of the system include using small modules within the system, decreasing the 
 coupling between those modules and increasing the cohesion. In order 
-to 
-achieve low coupling  the HUMS uses interfaces between modules and 
+to achieve low coupling  the HUMS uses interfaces between modules and 
 restricts dependencies, such that the majority of modules can be 
-swapped out 
-without large changes to the overall system.
+swapped out without large changes to the overall system.
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch notifications through the 
 notification generator after events have been triggered by the analysis 
 controller, with a latency less than 5ms, the system is 
 also required to be able to support multiple data output clients. Tactics 
-such as 
-reducing overhead though careful use of data structures and prioritising 
-events 
-can help reduce latency, at least for the most important events, defined 
-by the 
-end user. It may also be possible to add concurrency, such that multiple 
-notification threads are used when demand for notifications and reports 
-are 
-high, reducing the bottleneck created at the notification generator.
+such as reducing overhead though careful use of data structures and prioritising events can help reduce latency, at least for the most important events, defined by the end user. It may also be possible to add concurrency, such that multiple notification threads are used when demand for notifications and reports are high, reducing the bottleneck created at the notification generator.
 
 In in order to ensure the HUMS is testable we followed the test driven 
 development methodology where possible, writing and planning the tests 
@@ -458,10 +445,8 @@ technologies that would allow us to do so, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested,
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM 
-to
-query the heap usage, as the operating system would just report the size of 
-the
-JVM heap. We settled on using Sigar for process monitoring, and JMX for
+to query the heap usage, as the operating system would just report the size of 
+the JVM heap. We settled on using Sigar for process monitoring, and JMX for
 monitoring heap usage.
 
 We chose to use Google App Engine to host the prototype's database
