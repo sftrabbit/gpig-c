@@ -1,5 +1,7 @@
 package com.gpigc.dataemitter.emitters;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gpigc.dataemitter.monitors.EarthquakeMonitor;
@@ -21,22 +23,24 @@ public class EarthEmitter extends Emitter {
 	}
 
 	@Override
-	public SystemData collectData() throws Exception {
-		SystemData.Builder dataBuilder = SystemData.newBuilder().setSystemId("2")
-				.setTimestamp(System.nanoTime());
+	public List<SystemData> collectData() throws Exception {
+		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
 		
 		List<Earthquake> earthquakes = earthquakeMonitor.getNewEarthquakes();
 		if (earthquakes.size() > 0) {
 			for (Earthquake earthquake : earthquakes) {
 				SystemData.Datum earthquakeDatum = SystemData.Datum.newBuilder()
 						.setKey("EQ")
-						.setValue(earthquake.toString())
+						.setValue(earthquake.toCsv())
 						.build();
-				dataBuilder.addDatum(earthquakeDatum);
+				SystemData data = SystemData.newBuilder().setSystemId("2")
+						.setTimestamp(earthquake.getTime())
+						.addDatum(earthquakeDatum)
+						.build();
+				dataList.add(data);
 			}
-			
-			return dataBuilder.build();
 		}
-		return null;
+		
+		return dataList;
 	}
 }
