@@ -6,6 +6,7 @@ public class _StubEmitter_ extends Emitter {
 
 	public _StubEmitter_() {
 		super(0);
+		System.out.println("StubEmitter");
 	}
 
 	@Override
