@@ -422,10 +422,7 @@ Upon determining to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested,
 tools with which we could easily implement data input clients for further
-systems. As the test program is a Java program, we had to connect to its JVM 
-to query the heap usage, as the operating system would just report the size of 
-the JVM heap. We settled on using Sigar for process monitoring, and JMX for
-monitoring heap usage.
+systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
 To communicate between the code and the other modules, we serialised objects
 to send them over a network connection. We used JSON and Protocol Buffers.
@@ -451,8 +448,6 @@ HTML, JavaScript and CSS, in order to create a prototype realistically
 simulating an interface to the HUMS that is accessible on desktop
 computers, laptops and mobile devices alike.
 
-% TODO Mockito and Joe & Michaels process reading thing - do we 
-% need to cite these?
 
 We used various Java libraries to support our prototype, saving us 
 development time and providing a robust codebase. For testing we used 
