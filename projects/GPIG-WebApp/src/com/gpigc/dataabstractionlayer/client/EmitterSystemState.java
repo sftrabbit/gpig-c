@@ -102,7 +102,7 @@ public class EmitterSystemState {
 		while (parser.getCurrentToken() != JsonToken.END_OBJECT) {
 			System.out.println("Start main loop token = " + parser.getCurrentToken() + " (should be start object or previous value)");
 			parser.nextToken(); // Get key
-			String jsonKey = parser.getCurrentName();
+			String jsonKey = parser.getText();
 			System.out.println("Key = " + jsonKey);
 			if (jsonKey.equals(JSON_SYSTEM_ID.getKey())) {
 				systemID = parser.nextTextValue();
@@ -125,6 +125,7 @@ public class EmitterSystemState {
 				}
 				System.out.println("End sensor array = " + parser.getCurrentToken());
 				parser.nextToken();
+				System.out.println("End state = " + parser.getText() + " should be '}'");
 				continue;
 			}
 			throw new IllegalArgumentException("Unrecognised JSON key: "
@@ -147,7 +148,7 @@ public class EmitterSystemState {
 		String sensorValue = null;
 		System.out.println("In parse sensor :" + parser.getCurrentToken());
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
-			String jsonKey = parser.getCurrentName();
+			String jsonKey = parser.getText();
 			String jsonValue = parser.nextTextValue();
 			System.out.println("Sensor key = " + jsonKey);
 			System.out.println("Sensor value = " + jsonValue);
