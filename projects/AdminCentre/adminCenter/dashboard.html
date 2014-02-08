@@ -1,0 +1,229 @@
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="../css/modern-business.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/admin.css" rel="stylesheet">
+    <link href="../css/custom-gpig.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Admin Home</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul id="nbarstart" class="nav navbar-nav navbar-right"></ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12 center-block block-top-buffer button-header">
+            <h1>HUMS <small> Dashboard</small></h1>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">  <!-- Table Row -->
+        <div class="col-sm-12 center-block block-top-buffer">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Monitoring</h3>
+                </div>
+                <div class="panel-body">
+	                <div class="row">
+	                	<div class="col-md-3">
+	                		<div id="gauges"></div>
+	                	</div>
+	                	<div class="col-md-9" style="height:500px">
+	                		<div id="map" style="height:100%;width:100%"></div>
+	                	</div>
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /.container -->
+
+<div class="container">
+
+    <hr>
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; GPIG-C 2014</p>
+            </div>
+        </div>
+    </footer>
+
+</div><!-- /.container -->
+
+<!-- JavaScript -->
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/modern-business.js"></script>
+<script src="js/admin-navbar.js"></script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    // Configuration
+    var REFRESH_SECONDS = 10;
+    var RECORD_TYPE = "CPU";
+    var SYSTEM_ID = "1";
+
+    // Initialise
+  	google.load('visualization', '1.0', {'packages':['gauge']});
+  	google.setOnLoadCallback(drawChart);
+    var options = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom:75, yellowTo: 90,
+      minorTicks: 5
+    };
+    var data, chart;
+    function setData(value) {
+    	data = new google.visualization.arrayToDataTable([
+	      	['Label', 'Value'],
+	      	[RECORD_TYPE, value],
+	    ]);
+    }
+  	function drawChart() {
+  		setData(0);
+        chart = new google.visualization.Gauge(document.getElementById('gauges'));
+        refreshChart();
+  	}
+    // End initialisation
+
+  	function refreshChart() {
+	    $.ajax({
+	        url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords=1&callback=?",
+	        dataType: "jsonp",
+	        success: function(graphData) {
+	            $.each(graphData.Records, function(key, item) {
+	                if (item.SensorID == RECORD_TYPE) {
+	                    setData(item.Value);
+	                }
+	            });
+	        }
+	    });
+        chart.draw(data, options);
+  	}
+  	//DISABLED setInterval(refreshChart, REFRESH_SECONDS * 1000);
+</script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jQgEtsdQmRQtyOXp6VDwoDla2rN4FbE&sensor=false"></script>
+<script type="text/javascript">
+    // Configuration
+    var RECORD_TYPE_EQ = "EQ";
+    var SYSTEM_ID_EQ = "2";
+    var MAX_POINTS = 50;
+
+    function initialize() {
+        var mapOptions = {
+          	center: new google.maps.LatLng(15, 0),
+          	mapTypeId: google.maps.MapTypeId.ROADMAP,
+          	zoom: 2,
+          	panControl: false,
+			zoomControl: true,
+			mapTypeControl: false,
+			scaleControl: false,
+			streetViewControl: false,
+			overviewMapControl: false,
+		    zoomControlOptions: {
+		        style: google.maps.ZoomControlStyle.LARGE,
+		        position: google.maps.ControlPosition.RIGHT_BOTTOM
+		    },
+          	styles: [
+          				{stylers:[
+          						{visibility:"off"}
+          						]},
+          				{featureType:"water", stylers:[
+          											{visibility:"on"},
+          											{color:"#d4d4d4"}
+          											]},
+          				{featureType:"landscape", stylers:[
+          												{visibility:"on"},
+          												{color:"#e5e3df"}
+          												]}
+      				]
+        };
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        var eqData = {};
+		var eqCircle;
+		var infoWindow = new google.maps.InfoWindow();
+
+		function addMapData(mapData) {
+            mapData.Records.reverse();
+            $.each(mapData.Records, function(key, item) {
+                if (item.SensorID == RECORD_TYPE_EQ && !(item.CreationTimestamp in eqData)) {
+                    if (eqData.length >= MAX_POINTS) {
+                        eqData.shift();
+                    }
+                    var bits = item.Value.split(",");
+                    addMapPoint(item.CreationTimestamp, bits[0], bits[1], bits[2]);
+                }
+            });
+        }
+
+		function addMapPoint(ts, magnitude, latitude, longitude) {
+            eqData[ts] = {"magnitude": parseFloat(magnitude), "location": new google.maps.LatLng(latitude, longitude)};
+		    var earthquake = {
+		      	strokeColor: '#FF0000',
+		      	strokeOpacity: 0.7,
+		      	strokeWeight: 1,
+		      	fillColor: '#FF0000',
+		      	fillOpacity: 0.3,
+		      	map: map,
+		      	clickable: true,
+		      	center: eqData[ts].location,
+		      	radius: eqData[ts].magnitude * 100000,
+		      	infoWindowIndex: ts
+		    };
+		    eqCircle = new google.maps.Circle(earthquake);
+		    google.maps.event.addListener(eqCircle, 'click', (function(eqCircle, ts) {
+		        return function() {
+		            infoWindow.setContent("Magnitude: "+magnitude+"<br>"+latitude+", "+longitude);
+		            infoWindow.setPosition(eqCircle.getCenter());
+		            infoWindow.open(map);
+		        }
+		      })(eqCircle, ts));
+		}
+
+        function refreshMap() {
+            $.ajax({
+                url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID_EQ+"&SensorID="+RECORD_TYPE_EQ+"&NumRecords="+MAX_POINTS+"&callback=?",
+                dataType: "jsonp",
+                success: addMapData
+            });
+        }
+        refreshMap();
+        //DISABLEDsetInterval(refreshMap, REFRESH_SECONDS * 1000);
+
+    }
+ 	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+</body>
+</html>
