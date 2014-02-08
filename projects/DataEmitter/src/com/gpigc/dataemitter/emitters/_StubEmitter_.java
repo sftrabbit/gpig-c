@@ -1,14 +1,19 @@
 package com.gpigc.dataemitter.emitters;
 
-public class _StubEmitter_ implements Emitter {
+import com.gpigc.proto.Protos.SystemData;
+
+public class _StubEmitter_ extends Emitter {
 
 	@Override
-	public Void call() throws Exception {
+	public Void setup() throws Exception {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void stop() {
+	public SystemData collectData() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

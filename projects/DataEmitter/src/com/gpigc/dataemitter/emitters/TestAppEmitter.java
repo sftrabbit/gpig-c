@@ -17,50 +17,40 @@ import com.gpigc.proto.Protos.SystemData;
  * launched. It locates the JVM process running b.jar, connects to it and
  * monitors information such as its CPU and memory usage.
  */
-public class TestAppEmitter implements Emitter {
+public class TestAppEmitter extends Emitter {
 	private static final String TEST_APP_NAME = "b.jar";
-	protected static String CORE_HOST = "localhost";
-	protected static int CORE_PORT = 8000;
 	protected static int DELAY_BEFORE_MONITOR = 4500;
-	protected static final int MONITOR_INTERVAL = 1000;
 
 	protected boolean running = true;
+	private JavaVirtualMachineMonitor jvmMonitor;
+	private ProcessMonitor processMonitor;
 
 	@Override
-	public Void call() throws MonitorJvmException, ProcessMonitorException,
-			InterruptedException, IOException {
-
-		DataSender sender = new DataSender(CORE_HOST, CORE_PORT);
-
-		JavaVirtualMachineMonitor jvmMonitor = new JavaVirtualMachineMonitor(
+	public Void setup() throws Exception {
+		jvmMonitor = new JavaVirtualMachineMonitor(
 				TEST_APP_NAME);
 		long pid = jvmMonitor.getProcessId();
 
-		ProcessMonitor processMonitor = new ProcessMonitor(pid);
+		processMonitor = new ProcessMonitor(pid);
 		Thread.sleep(DELAY_BEFORE_MONITOR);
-
-		while (running) {
-			SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
-					.setKey("CPU")
-					.setValue(String.valueOf(processMonitor.getCpuLoad()))
-					.build();
-			SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
-					.setKey("Mem")
-					.setValue(String.valueOf(jvmMonitor.getUsedMemory()))
-					.build();
-			SystemData data = SystemData.newBuilder().setSystemId("1")
-					.setTimestamp(System.nanoTime()).addDatum(cpuDatum)
-					.addDatum(memoryDatum).build();
-
-			sender.send(data);
-
-			Thread.sleep(MONITOR_INTERVAL);
-		}
-
+		
 		return null;
 	}
 
-	public void stop() {
-		running = false;
+	@Override
+	public SystemData collectData() throws MonitorJvmException, ProcessMonitorException,
+			InterruptedException, IOException {
+		SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
+				.setKey("CPU")
+				.setValue(String.valueOf(processMonitor.getCpuLoad()))
+				.build();
+		SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
+				.setKey("Mem")
+				.setValue(String.valueOf(jvmMonitor.getUsedMemory()))
+				.build();
+		SystemData data = SystemData.newBuilder().setSystemId("1")
+				.setTimestamp(System.nanoTime()).addDatum(cpuDatum)
+				.addDatum(memoryDatum).build();
+		return data;
 	}
 }
