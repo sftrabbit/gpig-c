@@ -1,8 +1,6 @@
 package com.gpigc.core.notification.engine;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.mail.*;
 
 import com.gpigc.core.notification.NotificationEngine;

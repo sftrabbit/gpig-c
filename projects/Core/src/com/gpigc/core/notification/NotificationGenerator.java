@@ -6,9 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.gpigc.core.event.Event;
 
 public class NotificationGenerator {
