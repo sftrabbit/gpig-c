@@ -412,9 +412,7 @@ be compiled to bytecode that can be executed directly in all
 environments that support a Java Virtual Machine, including various
 operating systems and the x86, x86-64 and ARM CPU architectures,
 making it highly portable between both desktop, server and embedded
-systems.
-
-% REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
+systems. % REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
 
 Whilst there may exist deployment platforms that are not supported, at
 this stage, we do not see this as a problem since the underlying
@@ -425,8 +423,7 @@ language and thus no time was spent having to get the team up to speed
 on a new language. We did not impose a language restriction when
 developing the data emitter and various engines as the data being
 passed between them and the core are language independent, meaning 
-end
-users are free, even with the prototype, to implement engines in any
+end users are free, even with the prototype, to implement engines in any
 language they see fit. For the prototype we used both Java and
 JavaScript when creating the engines, languages team members are
 familiar with, allowing us to show off the versatility of the system.
@@ -435,10 +432,17 @@ Upon determining to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested,
 tools with which we could easily implement data input clients for further
-systems. As the test program is a Java program, we had to connect to its JVM 
-to query the heap usage, as the operating system would just report the size of 
-the JVM heap. We settled on using Sigar for process monitoring, and JMX for
-monitoring heap usage.
+systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
+
+To communicate between the code and the other modules, we serialised objects
+to send them over a network connection. We used JSON and Protocol Buffers.
+For connections that require data to be serialised to text, we used JSON since
+it is human readable and maps well to our internal representation of objects
+in Java. To read and write JSON we used the Jackson library, since it offers
+a high-performance streaming API. When there was no such restriction on the 
+format of the transmitted data, we used Google Protocol Buffers since they offer 
+high-performance as is necessary for the potentially high-volume connections 
+between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
@@ -450,20 +454,18 @@ We created a prototype admin centre to show how the HUMS could be
 managed remotely, viewing data and modifying settings online, through
 a web browser, whilst running as a service. The admin centre was
 developed using the Bootstrap front-end web framework, including 
-HTML,
-JavaScript and CSS, in order to create a prototype realistically
+HTML, JavaScript and CSS, in order to create a prototype realistically
 simulating an interface to the HUMS that is accessible on desktop
 computers, laptops and mobile devices alike.
 
-% TODO Mockito and Joe & Michaels process reading thing - do we 
-need to cite these?
+
 We used various Java libraries to support our prototype, saving us 
 development time and providing a robust codebase. For testing we used 
 the Mockito framework to allow us to verify elements of our codebase in 
 isolation, by offering a concise way to mock out dependancies. To 
 interrogate the state of the test application provided by the Customer, we 
-used the SIGAR cross-platform system information API to query the vital 
-parameters of the process, including CPU utilisation and memory 
+used the Sigar cross-platform system information API and JMX to query the 
+vital parameters of the process, including CPU utilisation and memory 
 footprint.
 
 We used Git for version control, allowing the entire team to
@@ -471,6 +473,17 @@ contribute to the project simultaneously, whilst keeping a reversible
 history of all alterations made by each person.
 
 \subsection{Current Functionality}
+
+The provided data emitter looks for a JVM executing the sample application, and
+begins recording its CPU and memory usage, reporting to the data input API
+every second. A period of four seconds are allowed to elapse before the first
+report, in order for the CPU usage readings to stabilise.
+
+The data input system as currently implemented supports multiple simultaneous
+connections from input clients, although we did not investigate how many the
+prototype could handle. Upon receipt, the data is put into a queue, which is
+periodically processed by the data input server, by adding each entry to the
+database and notifying the analysis engine.
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
