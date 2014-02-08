@@ -26,14 +26,17 @@ public class EarthEmitter extends Emitter {
 				.setTimestamp(System.nanoTime());
 		
 		List<Earthquake> earthquakes = earthquakeMonitor.getNewEarthquakes();
-		for (Earthquake earthquake : earthquakes) {
-			SystemData.Datum earthquakeDatum = SystemData.Datum.newBuilder()
-					.setKey("EQ")
-					.setValue(earthquake.toString())
-					.build();
-			dataBuilder.addDatum(earthquakeDatum);
+		if (earthquakes.size() > 0) {
+			for (Earthquake earthquake : earthquakes) {
+				SystemData.Datum earthquakeDatum = SystemData.Datum.newBuilder()
+						.setKey("EQ")
+						.setValue(earthquake.toString())
+						.build();
+				dataBuilder.addDatum(earthquakeDatum);
+			}
+			
+			return dataBuilder.build();
 		}
-		
-		return dataBuilder.build();
+		return null;
 	}
 }
