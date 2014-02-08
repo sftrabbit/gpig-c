@@ -99,6 +99,17 @@ restricts dependencies, such that the majority of modules can be
 swapped out 
 without large changes to the overall system.
 
+Security is a key aspect of any nontrivial HUMS, as data being monitored must
+be both secret and safe. It must be impossible for an unauthorised user to
+either insert or remove data from the system, and so all data would need to be
+stored according to relevant security standards (e.g., encryption and password
+protection for personal data covered by the Data Protection Act). Additionally,
+data in transit between emitters and the data input API must be protected,
+which can be achieved using a symmetric-key encryption system, which is well
+supported by many programming languages. Determining who has the rights to
+access which data would fall under the purview of an individual customer, who
+would manage access rights using the configuration front-end of our system.
+
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch notifications through the 
 notification generator after events have been triggered by the analysis 
