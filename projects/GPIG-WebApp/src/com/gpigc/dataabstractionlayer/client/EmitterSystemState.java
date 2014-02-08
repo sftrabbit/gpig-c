@@ -149,8 +149,6 @@ public class EmitterSystemState {
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getText();
 			String jsonValue = parser.nextTextValue();
-			System.out.println("Sensor key = " + jsonKey);
-			System.out.println("Sensor value = " + jsonValue);
 			if (jsonKey.equals(JSON_SENSOR_ID.getKey())) {
 				if (sensorID != null)// Shouldn't have already seen a sensor ID
 					throw new IllegalArgumentException("Duplicate "+ JSON_SENSOR_ID);
