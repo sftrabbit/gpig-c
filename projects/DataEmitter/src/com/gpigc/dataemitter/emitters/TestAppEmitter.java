@@ -17,23 +17,27 @@ import com.gpigc.proto.Protos.SystemData;
  * monitors information such as its CPU and memory usage.
  */
 public class TestAppEmitter extends Emitter {
+	
 	private static final String TEST_APP_NAME = "b.jar";
+	protected static final int COLLECTION_INTERVAL = 1000;
 	protected static int DELAY_BEFORE_MONITOR = 4500;
 
 	protected boolean running = true;
 	private JavaVirtualMachineMonitor jvmMonitor;
 	private ProcessMonitor processMonitor;
+	
+	public TestAppEmitter() {
+		super(COLLECTION_INTERVAL);
+	}
 
 	@Override
-	public Void setup() throws Exception {
+	public void setup() throws Exception {
 		jvmMonitor = new JavaVirtualMachineMonitor(
 				TEST_APP_NAME);
 		long pid = jvmMonitor.getProcessId();
 
 		processMonitor = new ProcessMonitor(pid);
 		Thread.sleep(DELAY_BEFORE_MONITOR);
-		
-		return null;
 	}
 
 	@Override

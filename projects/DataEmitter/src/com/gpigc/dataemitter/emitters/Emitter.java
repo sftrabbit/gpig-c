@@ -7,13 +7,13 @@ import com.gpigc.proto.Protos.SystemData;
 
 public abstract class Emitter implements Callable<Void> {
 	private boolean running = true;
+	private int collectionInterval;
 	protected static String CORE_HOST = "localhost";
 	protected static int CORE_PORT = 8000;
-	protected static final int MONITOR_INTERVAL = 1000;
 	
-	public abstract Void setup() throws Exception;
-	
-	public abstract SystemData collectData() throws Exception;
+	public Emitter(int collectionInterval) {
+		this.collectionInterval = collectionInterval;
+	}
 	
 	public Void call() throws Exception {
 		DataSender sender = new DataSender(CORE_HOST, CORE_PORT);
@@ -25,7 +25,7 @@ public abstract class Emitter implements Callable<Void> {
 
 			sender.send(data);
 			
-			Thread.sleep(MONITOR_INTERVAL);
+			Thread.sleep(collectionInterval);
 		}
 
 		return null;
@@ -38,4 +38,8 @@ public abstract class Emitter implements Callable<Void> {
 	private boolean continueRunning() {
 		return running;
 	}
+	
+	public abstract void setup() throws Exception;
+	
+	public abstract SystemData collectData() throws Exception;
 }
