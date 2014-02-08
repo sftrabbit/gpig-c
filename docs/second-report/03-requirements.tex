@@ -1,34 +1,57 @@
 \section{Requirements Refinement}
 \label{sec:requirements}
-After feedback from the initial report the original requirements have been altered and, where possible, refined.
+After feedback from the initial report the original requirements have been 
+altered and, where possible, refined.
 
 \subsection{Functional Requirements}
 \label{sec:requirements-functional}
-Below the existing functional requirements are refined, based on customer feedback and the design designs made in the previous report.
+Below the existing functional requirements are refined, based on customer 
+feedback and the design designs made in the previous report.
 
-\frit{1} is refined to specify how data emitters will send data to the system, and the type of data required. 
-\frit{2} required data to be timestamped, but didn't specify how these timestamps were to be produced, \frit{2.1} and \frit{2.2} assign this
-responsibility to the data emitter and consumer system, and mandate when timestamps should be created.
+\frit{1} is refined to specify how data emitters will send data to the system, 
+and the type of data required. 
+\frit{2} required data to be timestamped, but didn't specify how these 
+timestamps were to be produced, \frit{2.1} and \frit{2.2} assign this
+responsibility to the data emitter and consumer system, and mandate when 
+timestamps should be created.
 
-\frit{3} is refined by specifying how the data is to be stored, allowing the end user to choose the technology of their choice, meaning the database can be changed without needing to alter other HUMs modules, making it easy to move the HUMS across domains.
-\frit{4} was modified such that the previous requirements \frit{4}, \frit{6}, \frit{9}, and \frit{10} can all be expressed as refinements, with the configuration file containing all end user settings. The new \frit{5} and \frit{6} enforce the  functionality that the HUMS must provide as a result of the data in the configuration file.
+\frit{3} is refined by specifying how the data is to be stored, allowing the end 
+user to choose the technology of their choice, meaning the database can be 
+changed without needing to alter other HUMs modules, making it easy to 
+move the HUMS across domains.
+\frit{4} was modified such that the previous requirements \frit{4}, \frit{6}, 
+\frit{9}, and \frit{10} can all be expressed as refinements, with the 
+configuration file containing all end user settings. The new \frit{5} and \frit{6} 
+enforce the  functionality that the HUMS must provide as a result of the data 
+in the configuration file.
 
-\frit{7}, previously \frit{12}, is refined to define how data will be analysed for events. It is identified that there must be an API allowing analysis engines, either created by the consumer or included with the HUMS, to extract stored data and produce events. 
+\frit{7}, previously \frit{12}, is refined to define how data will be analysed for 
+events. It is identified that there must be an API allowing analysis engines, 
+either created by the consumer or included with the HUMS, to extract stored 
+data and produce events. 
 
-\frit{9} to \frit{13} do not appear in the previous report, and were discovered to be necessary following feedback from the customer regarding the ability of the system to allow the output of analysis to effect the monitored system. It was felt that our architecture did not make it clear whether this was possible or not, therefore these requirements were added as clarification.
+\frit{9} to \frit{13} do not appear in the previous report, and were discovered 
+to be necessary following feedback from the customer regarding the ability 
+of the system to allow for explicit feedback: the output of analysis must be able to affect the monitored system. 
+It was felt that our architecture did not make it clear whether this was 
+possible or not, therefore these requirements were added as clarification.
 \begin{description}
 	%%FR1
-  	\item[\fr{1}]  Data emitters shall be able to push correctly structured data 	to the HUMS.
+  	\item[\fr{1}]  Data emitters shall be able to push correctly structured 
+data 	to the HUMS.
 	\begin{description}[leftmargin=1.3cm]
 		 \item[\fr{1.1}] The HUMS shall provide an API for data input.
 		\begin{description}
-			  \item[\fr{1.1.1}] The data input API shall require an ID				for the consumer system.
+			  \item[\fr{1.1.1}] The data input API shall require an ID	
+			for the consumer system.
  			 \item[\fr{1.1.2}] The data input API shall require data to be
  		 	timestamped.
  			 \item[\fr{1.1.3}] The data input API shall allow data emitters
- 		 	to send sensor IDs and their values to the HUMS, 					which will 	then be made available to the analysis engine.
+ 		 	to send sensor IDs and their values to the HUMS, 		
+			which will 	then be made available to the analysis engine.
 		\end{description}
- 		 \item[\fr{1.2}] A data emitter, extracting data from the given 		test application shall be provided.
+ 		 \item[\fr{1.2}] A data emitter, extracting data from the given 	
+	test application shall be provided.
 	\end{description}
 	%%FR2
 	\item[\fr{2}]  The HUMS shall allocate a timestamp to new data.
@@ -36,59 +59,95 @@ responsibility to the data emitter and consumer system, and mandate when timesta
 	 	 \item[\fr{2.1}]Data input clients shall timestamp data before
  		sending it to the HUMS.
 		
- 		 \item[\fr{2.2}] Timestamps shall be collected when data is sent 			to storage.
+ 		 \item[\fr{2.2}] Timestamps shall be collected when data is sent 	
+		to storage.
 	\end{description}
 	%%FR3
 	 \item[\fr{3}] The HUMS shall store correctly structured data.
 	 \begin{description}
-	 	\item[\fr{3.1}] The end user shall integrate their chosen database 			technology with the HUMS
-	 	\item[\fr{3.2}] The HUMS shall use a database abstraction layer, 			allowing the database component to be easily changed according to 			need.
+	 	\item[\fr{3.1}] The end user shall integrate their chosen database 
+			technology with the HUMS
+	 	\item[\fr{3.2}] The HUMS shall use a database abstraction layer, 
+			allowing the database component to be easily changed 
+according to 			need.
 	  \end{description}
 	%%FR4
-	 \item[\fr{4}] The HUMS shall an store end user system configuration 			file.
+	 \item[\fr{4}] The HUMS shall an store end user system configuration 
+			file.
 	 \begin{description}
 	  	\item[\fr{4.1}] The HUMS shall allow authorised users to modify
  		configuration files. 
-		 \item[\fr{4.2}] The HUMS shall allow the consumer to define a 				low storage threshold.
-		  \item[\fr{4.3}] The HUMS shall allow the consumer to set an expiry 			time on data.
-		  \item[\fr{4.4}]  The HUMS shall allow the user to define that, 				upon reaching their defined data storage quota, new data is no 				longer added.
-		 \item[\fr{4.5}] The HUMS shall allow the user to de- fine that, upon 			reaching their defined data storage limit, old data is deleted to 			make room for new data.
+		 \item[\fr{4.2}] The HUMS shall allow the consumer to define a 	
+			low storage threshold.
+		  \item[\fr{4.3}] The HUMS shall allow the consumer to set an 
+			expiry time on data.
+		  \item[\fr{4.4}]  The HUMS shall allow the user to define that, 
+			upon reaching their defined data storage quota, new data is 
+			no longer added.
+		 \item[\fr{4.5}] The HUMS shall allow the user to define that, 
+			upon reaching their defined data storage limit, old data is 
+			deleted to make room for new data.
 	\end{description}
 	%%FR5
-	 \item[\fr{5}] The HUMS shall send a notification when the consumers 		low storage threshold is reached.
-	  \item[\fr{6}] The HUMS must store no more data records than the 			consumers defined storage quota.
-	\item[\fr{7}]Events shall be triggered in response to data a customer 			specified pattern.
+	 \item[\fr{5}] The HUMS shall send a notification when the consumers 
+		low storage threshold is reached.
+	  \item[\fr{6}] The HUMS must store no more data records than the 	
+		consumers defined storage quota.
+	\item[\fr{7}]Events shall be triggered in response to data matching a pattern 
+	specified by the consumer.
 		  \begin{description}
-			 \item[\fr{7.1}]  The HUMS shall allow the user to specify 				what data patterns will produce events.
+			 \item[\fr{7.1}]  The HUMS shall allow the user to specify 	
+			what data patterns will produce events.
 			 \item[\fr{7.2}] The HUMS shall allow the user to define their
  			own events.
 		
- 			\item[\fr{7.3}] The HUMS shall provide an API, 						allowing analysis engines to extract stored data.
+ 			\item[\fr{7.3}] The HUMS shall provide an API, 			
+			allowing analysis engines to extract stored data.
 		
 			\item[\fr{7.4}] Events shall be created by analysis engines.
 
- 			\item[\fr{7.5}] The HUMS shall provide a simple analysis 				engine in the form of a rules engine.
+ 			\item[\fr{7.5}] The HUMS shall provide a simple analysis 	
+			engine in the form of a rules engine.
 	\end{description}
 	
-	\item[\fr{8}]After the sending of a notification for an event of a particular 		type, no more notifications for an event of that type will be sent 				during the cool down period.
-	\item[\fr{9}]The HUMS shall dispatch an event when a specified data 	pattern in detected.
-	\item[\fr{10}] The HUMS must interface with reports engines, allowing 			them to pull reports.
-	\item[\fr{11}] The HUMS shall provide basic notification 					engines to work with the test application.
-	\item[\fr{12}] The system shall allow for notifications to change the way in 		which data is sensed.
-	 \item[\fr{13}] The system shall allow notifications to be sent back to the 		system being monitored.
+	\item[\fr{8}]After the sending of a notification for an event of a particular 
+		type, no more notifications for an event of that type will be 	
+		sent during the cool down period.
+	\item[\fr{9}]The HUMS shall dispatch an event when a specified data 
+		pattern in detected.
+	\item[\fr{10}] The HUMS must interface with reports engines, allowing 
+		them to pull reports.
+	\item[\fr{11}] The HUMS shall provide basic notification 			
+		engines to work with the test application.
+	\item[\fr{12}] The system shall allow for notifications to change the way 
+		in which data is sensed.
+	 \item[\fr{13}] The system shall allow notifications to be sent back to 
+		the system being monitored.
 \end{description}
 
 \subsection{Non-Functional Requirements}
-Non-function requirements remain similar, however, \nfrit{14} has been added in order to clarify that data can be sent and stored in any format, enforcing that the consumers system will not have to conform to the HUMS. 
-\nfrit{6} has been refined to more concretely detail the testing strategies to be used when validating that requirements have been met.
-It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements specific to the prototype as the functional requirements require the datastore to be changeable meaning, in the general case, requirements about the abilities of the datastore are not verifiable.
+Non-function requirements remain similar, however, \nfrit{14} has been 
+added in order to clarify that data can be sent and stored in any format, 
+enforcing that the consumers system will not have to conform to the HUMS. 
+\nfrit{6} has been refined to more concretely detail the testing strategies to 
+be used when validating that requirements have been met.
+It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements 
+specific to the prototype as the functional requirements mandate that the 
+datastore be changeable, meaning, in the general case, requirements 
+about the abilities of the datastore are not verifiable.
 \begin{description}
-	\item[\nfr{1}] The HUMS shall receive hardware changes without loss of 	previously stored data.
-	\item[\nfr{2}]  Users shall be provided with documentation detailing how 	to use the HUMS.
-	\item[\nfr{3}] The HUMS must be accessible to end users in multiple 		geographic locations.
-	\item[\nfr{4}]  The HUMS shall only accept data from an input client 		providing valid credentials. 
-	\item[\nfr{5}] The HUMS shall store data according to the relevant 		industry security standards. 
-	\item[\nfr{6}]  The HUMS shall be tested to ensure all requirements are 	met before deployment.
+	\item[\nfr{1}] The HUMS shall receive hardware changes without loss 
+	of previously stored data.
+	\item[\nfr{2}]  Users shall be provided with documentation detailing 
+	how 	to use the HUMS.
+	\item[\nfr{3}] The HUMS must be accessible to end users in multiple 	
+	geographic locations.
+	\item[\nfr{4}]  The HUMS shall only accept data from an input client 	
+	providing valid credentials. 
+	\item[\nfr{5}] The HUMS shall store data according to the relevant 	
+	industry security standards. 
+	\item[\nfr{6}]  The HUMS shall be tested to ensure all requirements are 
+	met before deployment.
 	\begin{description}
 	\item[\nfr{6.1}]  The HUMS shall be tested using unit testing.
 	\item[\nfr{6.2}]  The HUMS shall be tested using integration testing.
@@ -96,13 +155,21 @@ It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements 
 	\item[\nfr{6.4}]  The HUMS shall be tested using inspection.
 	\item[\nfr{6.5}]  The HUMS shall be tested using acceptance testing.
 	\end{description}
-	\item[\nfr{7}] The customer will complete acceptance testing before the 	system is deployed.
-	\item[\nfr{8}] The system must be able to support at least 5 output clients 	per HUMS instance. 
-	\item[\nfr{9}]  The system must cope with up to 2000 data input requests 	per second per HUMS instance. 
-	\item[\nfr{10}] The system must be available for no less than 99.9\% of 	each month.
-	\item[\nfr{11}]  Data must be backed up within 24 hours of having been 	made available to the system.
-	 \item[\nfr{12}] Timestamps applied by the system must be accurate to 	within 5ms of UTC.
-	\item[\nfr{13}]  The system shall dispatch notifications within 5ms of the 	event being triggered.
-	\item[\nfr{14}] The system shall support storing data without requiring 	specific schemata.
+	\item[\nfr{7}] The customer will complete acceptance testing before the 
+	system is deployed.
+	\item[\nfr{8}] The system must be able to support at least 5 output 
+	clients per HUMS instance. 
+	\item[\nfr{9}]  The system must cope with up to 2000 data input 
+	requests per second per HUMS instance. 
+	\item[\nfr{10}] The system must be available for no less than 99.9\% of 
+	each month.
+	\item[\nfr{11}]  Data must be backed up within 24 hours of having been 
+	made available to the system.
+	 \item[\nfr{12}] Timestamps applied by the system must be accurate to 
+	within 5ms of UTC.
+	\item[\nfr{13}]  The system shall dispatch notifications within 5ms of the 
+	event being triggered.
+	\item[\nfr{14}] The system shall support storing data without requiring 
+	specific schemata.
 \end{description}
 
