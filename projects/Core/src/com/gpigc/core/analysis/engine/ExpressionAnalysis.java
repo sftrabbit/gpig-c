@@ -23,6 +23,11 @@ import expr.Variable;
  * @author GPIG-C
  */
 public class ExpressionAnalysis extends AnalysisEngine {
+
+	public ExpressionAnalysis(List<String> associatedSystems, SystemDataGateway database) {
+		super("ExpressionAnalysis1", associatedSystems, database);
+	}
+
 // TODO Enable once we can find the sensors for every system associated with this engine
 //
 //	private static final int ONE_VALUE_PER_SENSOR = 1;
