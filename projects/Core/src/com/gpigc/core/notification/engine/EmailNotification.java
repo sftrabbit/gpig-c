@@ -10,12 +10,12 @@ import com.gpigc.core.notification.NotificationEngine;
  * 
  * @author GPIGC
  */
-public class Email extends NotificationEngine {
+public class EmailNotification extends NotificationEngine {
 
 	/**
 	 * Initialises the email notification engine
 	 */
-	public Email() {
+	public EmailNotification() {
 		 associatedSystems = new ArrayList<String>();
 		 associatedSystems.add("1");
 		 engineName = "EmailNotification1";
