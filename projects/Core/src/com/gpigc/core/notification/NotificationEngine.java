@@ -9,6 +9,8 @@ public abstract class NotificationEngine {
 	protected String engineName;
 	protected List<String> associatedSystems;
 	protected boolean recentlySent;
+
+	private static final int COOLDOWN_MINS = 10;
  
 	public List<String> getAssociatedSystems() {
 		return associatedSystems;
@@ -32,7 +34,7 @@ public abstract class NotificationEngine {
 				recentlySent = false;
 			}
 			
-		}, 600000);
+		}, COOLDOWN_MINS * 60 * 1000);
 	}
 
 	public abstract void send(String recepient, String subject, String message);
