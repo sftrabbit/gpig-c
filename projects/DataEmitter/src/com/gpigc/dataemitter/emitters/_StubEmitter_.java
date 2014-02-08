@@ -1,14 +1,20 @@
 package com.gpigc.dataemitter.emitters;
 
-public class _StubEmitter_ implements Emitter {
+import com.gpigc.proto.Protos.SystemData;
 
-	@Override
-	public Void call() throws Exception {
-		return null;
+public class _StubEmitter_ extends Emitter {
+
+	public _StubEmitter_() {
+		super(0);
 	}
 
 	@Override
-	public void stop() {
+	public void setup() throws Exception {
+	}
+
+	@Override
+	public SystemData collectData() throws Exception {
+		return null;
 	}
 
 }

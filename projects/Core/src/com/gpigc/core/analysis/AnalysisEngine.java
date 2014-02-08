@@ -70,7 +70,7 @@ public abstract class AnalysisEngine {
 	protected List<SensorState> getSensorStates(int numValues) {
 		List<SensorState> sensorStates = new ArrayList<SensorState>();
 		for (String systemId : associatedSystems) {
-			sensorStates.addAll(readSensorStateFromDatabase(systemId,numValues));
+			sensorStates.addAll(readSensorStateFromDatabase(systemId, numValues));
 		}
 		return sensorStates;
 	}

@@ -101,6 +101,8 @@ public class AnalysisController {
 			ClassNotFoundException, InstantiationException,
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException {
+		List<String> systemIds = new ArrayList<String>();
+		systemIds.add("1");
 		File folder = new File("/" + System.getProperty("user.dir")
 				+ "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
@@ -109,9 +111,9 @@ public class AnalysisController {
 					"com.gpigc.core.analysis.engine."
 							+ listOfFiles[i].getName().substring(0,
 									listOfFiles[i].getName().lastIndexOf('.')))
-					.getConstructor(SystemDataGateway.class);
+					.getConstructor(List.class, SystemDataGateway.class);
 			AnalysisEngine engine = (AnalysisEngine) constructor
-					.newInstance(database);
+					.newInstance(systemIds, database);
 			engines.add(engine);
 		}
 	}
