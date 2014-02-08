@@ -82,6 +82,7 @@ public class EmitterSystemState {
 			throws JsonParseException, IOException, ParseException {
 		JsonFactory f = new JsonFactory();
 		JsonParser parser = f.createParser(reader);
+		parser.nextToken(); // Returns a start of object token
 		EmitterSystemState state = readTokens(parser);
 		parser.close();
 		return state;
