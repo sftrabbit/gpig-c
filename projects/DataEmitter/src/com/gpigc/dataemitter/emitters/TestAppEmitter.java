@@ -1,6 +1,8 @@
 package com.gpigc.dataemitter.emitters;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor;
 import com.gpigc.dataemitter.monitors.ProcessMonitor;
@@ -41,7 +43,7 @@ public class TestAppEmitter extends Emitter {
 	}
 
 	@Override
-	public SystemData collectData() throws MonitorJvmException, ProcessMonitorException,
+	public List<SystemData> collectData() throws MonitorJvmException, ProcessMonitorException,
 			InterruptedException, IOException {
 		SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
 				.setKey("CPU")
@@ -54,6 +56,8 @@ public class TestAppEmitter extends Emitter {
 		SystemData data = SystemData.newBuilder().setSystemId("1")
 				.setTimestamp(System.nanoTime()).addDatum(cpuDatum)
 				.addDatum(memoryDatum).build();
-		return data;
+		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
+		dataList.add(data);
+		return dataList;
 	}
 }

@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/tools.jar"/>
 	<classpathentry kind="lib" path="lib/protobuf.jar"/>
 	<classpathentry kind="lib" path="lib/proto.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

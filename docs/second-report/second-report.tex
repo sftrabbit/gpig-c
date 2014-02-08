@@ -391,8 +391,36 @@ UML 2 notation}
   \label{fig:dataAnalysisComponent}
 \end{figure}
 
-\subsubsection{Notification Generator}
+\subsubsection{Notification Component}
 
+The notification component, shown in figure
+\ref{fig:notificationComponent}, contains the following classes:
+
+\begin{description}
+  \item [Notification Generator] An object that coordinates generating and
+    sending of notifications. The object interfaces with the analysis
+    controller, receiving an event object when analysis engines specify that
+    notifications should be sent. Notifications are then generated and sent by
+    appropriate notification engines. Notification engines are associated with
+    the notification generator by class loading allowing for users to add and
+    remove notification engines at run-time.
+
+  \item [Notification Engine] An abstract class that implements the basic
+    functionality and defines the methods required of an implemented
+    notification engine. Each engine has a list of associated systems, and 
+    features a cool down system to ensure that notifications are not sent
+    more then once during a specified period of time. When creating their
+    own notification engines the end user will be required to extend this
+    class, implement the abstract methods and define how a notification
+    is sent.
+
+  \item [Email Notification] An object that extends the notification engine
+    class and implements email notifications. When called by the notification
+    generator, an email notification is sent to the specified recipient, and 
+    contains the specified notification subject and further notification
+    information.
+\end{description}
+ 
 \begin{figure}[ht!]
   \centering
   \includegraphics[width= 7cm]{images/Notification/NotificationGenerator.png}
@@ -535,17 +563,63 @@ testing.
   \item[Notification Generator] % No tests written for this
   
   \item[Notification Engine] % No tests written for this
-  
+  \hl{Cooldown period in} \frit{8}
+
   \item[Reports Engine] % No tests written for this
   
  \end{description}
- \subsubsection{Traceability Matrix}
-\begin{table}[!ht]
-\begin{tabular}{| p{2.3cm} | p{2.7cm} | p{3.5cm}| p{4.5cm}| }
-\hline
-\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Test Cases} & \textbf{Traceability} \\ \hline
-\end{tabular}
-\end{table}
+
+\subsubsection{Traceability Matrix}
+
+\begin{longtable}[H]{| p{2.3cm} | p{2.7cm} | p{7cm}|}
+  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Test Cases}\\
+  \hline \fr{1.1.1} & & \\
+  \hline \fr{1.1.2} & & \\
+  \hline \fr{1.1.3} & & \\
+  \hline \fr{1.2}   & & \\
+  \hline \fr{2.1}   & & \\
+  \hline \fr{2.2}   & & \\
+  \hline \fr{3.1}   & & \\
+  \hline \fr{3.2}   & & \\
+  \hline \fr{4.1}   & & \\
+  \hline \fr{4.2}   & & \\
+  \hline \fr{4.3}   & & \\
+  \hline \fr{4.4}   & & \\
+  \hline \fr{4.5}   & & \\
+  \hline \fr{5}     & & \\
+  \hline \fr{6}     & & \\
+  \hline \fr{7.1}   & & \\
+  \hline \fr{7.2}   & & \\
+  \hline \fr{7.3}   & & \\
+  \hline \fr{7.4}   & & \\
+  \hline \fr{7.5}   & & \\
+  \hline \fr{8}     & & \\
+  \hline \fr{9}     & & \\
+  \hline \fr{10}    & & \\
+  \hline \fr{11}    & & \\
+  \hline \fr{12}    & & \\
+  \hline \fr{13}    & & \\
+  \hline \nfr{1}    & & \\
+  \hline \nfr{2}    & & \\
+  \hline \nfr{3}    & & \\
+  \hline \nfr{4}    & & \\
+  \hline \nfr{5}    & & \\
+  \hline \nfr{6.1}  & & \\
+  \hline \nfr{6.2}  & & \\
+  \hline \nfr{6.3}  & & \\
+  \hline \nfr{6.4}  & & \\
+  \hline \nfr{6.5}  & & \\
+  \hline \nfr{7}    & & \\
+  \hline \nfr{8}    & & \\
+  \hline \nfr{9}    & & \\
+  \hline \nfr{10}   & & \\
+  \hline \nfr{11}   & & \\
+  \hline \nfr{12}   & & \\
+  \hline \nfr{13}   & & \\
+  \hline \nfr{14}   & & \\
+  \hline
+\end{longtable}
+>>>>>>> 1d234855b5ec69e346b93ceb9b3d712afe98eecb
 
 \subsection{Monitoring of Test Application using the prototype solution}
 \label{sec:prototype-evaluation}
