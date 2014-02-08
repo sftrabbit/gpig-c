@@ -260,8 +260,10 @@ systems}
   \label{fig:DeploymentIsolated}
 \end{figure}
 
-\hl{We also chose to look at deploying the system as a service ....}
-.... in figure \ref{fig:DeploymentService}
+We have also chosen to consider providing the system as a service, where
+multiple customers can simultaneously use a single storage, analysis, and
+notification server. This is shown in figure \ref{fig:DeploymentService}, and
+is made possible by associating sensor data with a system ID.
 
 \begin{figure}[!ht]
   \centering
@@ -270,7 +272,11 @@ systems}
   \label{fig:DeploymentService}
 \end{figure}
 
-%% TODO talk about admin centre shizzle
+For administrating the HUMS as a service, we have produced a prototype ``Admin
+Center'', which allows users to specify analysis and reporting behaviours using
+a simple rules engine-like interface. Users can define their own events and how
+they should be handled, view all of the registered input clients, pull reports,
+and view live graphs of data.
 
 \subsection{Conceptual View}
 
@@ -552,7 +558,9 @@ the analysis engine.
  \subsubsection{Traceability Matrix}
 
 \subsection{Evaluation on Test Application}
-
+\label{sec:prototype-evaluation}
+% connects to JVM using JMX, launches monitoring tool and monitors JVM memory, cpu usage (processmonitor.java) checks total cpu time of the process based upon difference in time between two time intervals, 
+In order to evalute or system with respect to the provided test application, we have created a monitoring package for our prototype specifically for the test application. We are utilising the Java Management Extensions (JMX) Technology to obtain a measure of the memory utilised by the application. We have also created a process monitoring class which monitors the total cpu usage of the application. This is achieved by measuring the difference in total cpu usage time between two points in time. These results are then taken, and can be graphed and monitored.
 
 
 \input{06-team}
