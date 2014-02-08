@@ -20,18 +20,15 @@ public class EarthquakeMonitor {
 	}
 
 	public List<Earthquake> getNewEarthquakes() {
+		System.out.println("Getting new earthquakes");
 		HttpURLConnection connection = null;
 		try {
+			System.setProperty("http.agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36");
+			
 			connection = (HttpURLConnection) url
 					.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoInput(true);
-			connection.setDoOutput(true);
-
-			DataOutputStream wr = new DataOutputStream(
-					connection.getOutputStream());
-			wr.flush();
-			wr.close();
 
 			// Get Response
 			InputStream is = connection.getInputStream();
