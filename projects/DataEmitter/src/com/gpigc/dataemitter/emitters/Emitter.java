@@ -23,7 +23,9 @@ public abstract class Emitter implements Callable<Void> {
 		while (continueRunning()) {
 			SystemData data = collectData();
 
-			sender.send(data);
+			if (data != null) {
+				sender.send(data);
+			}
 			
 			Thread.sleep(collectionInterval);
 		}
