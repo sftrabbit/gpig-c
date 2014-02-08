@@ -82,6 +82,7 @@ public class EmitterSystemState {
 			throws JsonParseException, IOException, ParseException {
 		JsonFactory f = new JsonFactory();
 		JsonParser parser = f.createParser(reader);
+		parser.nextToken(); // Returns a start of object token
 		EmitterSystemState state = readTokens(parser);
 		parser.close();
 		return state;
@@ -98,33 +99,24 @@ public class EmitterSystemState {
 		String systemID = null;
 		Date timeStamp = null;
 		Map<String, String> payload = new HashMap<>();
-		parser.nextToken();
-		while (parser.getCurrentToken() != JsonToken.END_OBJECT) {
-			System.out.println("Last main loop token = " + parser.getCurrentToken());
+		while (parser.getCurrentToken() != JsonToken.END_OBJECT) { // should be start object or previous value
 			parser.nextToken(); // Get key
-			String jsonKey = parser.getCurrentName();
-			System.out.println("Key = " + jsonKey);
+			String jsonKey = parser.getText();
 			if (jsonKey.equals(JSON_SYSTEM_ID.getKey())) {
-				parser.nextToken(); // Move to value
-				systemID = parser.getValueAsString();
-				System.out.println("System ID = " + systemID);
+				systemID = parser.nextTextValue();
 				continue;
 			}
 			if (jsonKey.equals(JSON_CREATION_TIMESTAMP.getKey())) {
-				parser.nextToken(); // Move to value
-				System.out.println(parser.getValueAsString());
-				timeStamp = new Date(parser.getLongValue());
+				long longTimestamp = parser.nextLongValue(Long.MIN_VALUE);
+				timeStamp = new Date(longTimestamp);
 				continue;
 			}
 			if (jsonKey.equals(JSON_PAYLOAD.getKey())) {
 				parser.nextToken(); // Start array
-				System.out.println("Sensor start array = " + parser.getCurrentToken());
 				while (parser.nextToken() == JsonToken.START_OBJECT) {
-					// Start object
 					parseSensor(parser, payload);
 				}
-				parser.nextToken(); // End array
-				System.out.println("End sensor array = " + parser.getCurrentToken());
+				parser.nextToken(); // End object
 				continue;
 			}
 			throw new IllegalArgumentException("Unrecognised JSON key: "
@@ -146,27 +138,23 @@ public class EmitterSystemState {
 		String sensorID = null;
 		String sensorValue = null;
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
-			String jsonKey = parser.getCurrentName();
-			parser.nextToken(); // Move to value
-			String jsonValue = parser.getText();
+			String jsonKey = parser.getText();
+			String jsonValue = parser.nextTextValue();
 			if (jsonKey.equals(JSON_SENSOR_ID.getKey())) {
 				if (sensorID != null)// Shouldn't have already seen a sensor ID
 					throw new IllegalArgumentException("Duplicate "+ JSON_SENSOR_ID);
 				sensorID = jsonValue;
-				System.out.println("Sensor ID = " + sensorID);
 				continue;
 			}
 			if (jsonKey.equals(JSON_VALUE.getKey())) {
 				if (sensorValue != null) // Shouldn't have already seen a sensor value
 					throw new IllegalArgumentException("Duplicate "+ JSON_VALUE);
 				sensorValue = jsonValue;
-				System.out.println("Sensor value = " + sensorValue);
 				continue;
 			}
 			throw new IllegalArgumentException(
 					"Unrecognised JSON sensor key: " + jsonKey);
 		}
-		System.out.println("Left sensor loop on " + parser.getCurrentToken());
 		// Write values to the payload map
 		if (sensorID != null && sensorValue != null) {
 			payload.put(sensorID, sensorValue);

@@ -20,6 +20,8 @@ execute_process(COMMAND ${TEXCOUNT_COMMAND} ${TEXCOUNT_ARGS}
 
 set(LATEX_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/docs")
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/images DESTINATION ${CMAKE_BINARY_DIR}/bin/docs)
+
 add_latex_document(second-report.tex
                    BIBFILES report-refs.bib
                    INPUTS wc.tex

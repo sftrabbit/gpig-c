@@ -15,6 +15,7 @@
 \usepackage[small,compact]{titlesec}
 \usepackage[justification=centering]{caption}
 
+\definecolor{reqColor}{RGB}{80,80,120}
 \definecolor{titleColor}{RGB}{138,201,242}
 \pagestyle{fancy}
 \lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M 
@@ -28,8 +29,11 @@ Walker}
 \renewcommand{\headrulewidth}{0.4pt} % Add rules below header
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
-\newcommand{\fr}[1]{\textbf{FR.#1}}
+\newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
 \newcommand{\frit}[1]{\textit{FR.#1}}
+\newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
+\newcommand{\nfrit}[1]{\textit{NFR.#1}}
+
 \begin{document}
 
 \begin{center}
@@ -59,8 +63,7 @@ functionality, but also produce a system meeting the expectations of all
 stakeholders. For example the system may be expected to meet certain 
 security standards or availability levels. Explicitly defining these quality 
 attributes before concretely designing a system allows for the correct 
-tactics 
-and patterns to be adopted in order to maximise the utility of important 
+tactics and patterns to be adopted in order to maximise the utility of important 
 qualities.
 
 When examining the HUMS non-functional requirements the following 
@@ -98,6 +101,17 @@ achieve low coupling  the HUMS uses interfaces between modules and
 restricts dependencies, such that the majority of modules can be 
 swapped out 
 without large changes to the overall system.
+
+Security is a key aspect of any nontrivial HUMS, as data being monitored must
+be both secret and safe. It must be impossible for an unauthorised user to
+either insert or remove data from the system, and so all data would need to be
+stored according to relevant security standards (e.g., encryption and password
+protection for personal data covered by the Data Protection Act). Additionally,
+data in transit between emitters and the data input API must be protected,
+which can be achieved using a symmetric-key encryption system, which is well
+supported by many programming languages. Determining who has the rights to
+access which data would fall under the purview of an individual customer, who
+would manage access rights using the configuration front-end of our system.
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch notifications through the 
@@ -147,15 +161,16 @@ system which must be documented:
 Having determined the quality attributes of the HUMS and the tactics
 which can be employed in order to achieve a high utility of these
 qualities, a conceptual view can be formed. The conceptual diagram
-shown in figure \ref{fig:moduleDiagram} depicts the modules of the
+shown in figure \ref{fig:ComponentDiagram} depicts the modules of the
 HUMS and the interactions between these modules at a high level.
 
 %%TODO this diagram doesn't show the core or have a key
 
-\begin{figure}[ht!]
-  \includegraphics[width=13cm]{images/moduleDiagram.pdf}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=14cm]{images/ComponentDiagram.png}
   \caption{The module diagram of the HUMS}
-  \label{fig:moduleDiagram}
+  \label{fig:ComponentDiagram}
 \end{figure}
 
 \begin{description}
@@ -203,7 +218,7 @@ The module view shows how modules of the system are connected, however does not
 fully represent the interactions between components and the dynamic actions of
 the system. A behavioural view can be used to detail this information, showing
 the flow of data and events within the HUMS. Figure
-\ref{fig:communicationDiagram} shows a communication diagram of the HUMS,
+\ref{fig:CommunicationDiagram} shows a communication diagram of the HUMS,
 detailing how the HUMS goes from receiving data from a data emitter to
 generating a notification. The different objects in the system are shown, along
 with all the interactions and links between them. The messages sent between
@@ -212,10 +227,10 @@ chronological order in which they occur.
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=14cm]{images/communicationDiagram.png}
+  \includegraphics[width=14cm]{images/CommunicationDiagram.png}
   \caption{Communication diagram showing a behavioural view of message flow
 through the system, using UML 2 notation}
-  \label{fig:communicationDiagram}
+  \label{fig:CommunicationDiagram}
 \end{figure}
 
 %%Input Diagram WITH KEY
@@ -225,12 +240,34 @@ through the system, using UML 2 notation}
 With view to deployment the HUMS needs to be tailorable, the core
 system may be running on the same hardware as the data emitter, it may
 also be geographically distant. Engines may all be on separate
-machines or may all be together. Figures \hl{XXX and XXX} show the
-main scenarios for deployment of the HUMS, with a view that if the
-system architecture can perform under these situations, then it can
-perform under all others.
+machines or may all be together. Figures \ref{fig:DeploymentDistributed}
+and \ref{fig:DeploymentIsolated} show the main scenarios for deployment
+of the HUMS, with a view that if the system architecture can perform under
+these situations, then it can perform under all others.
 
-\hl{We also chose to look at deploying the system as a service....}
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10cm]{images/DeploymentDistributed.png}
+  \caption{Deployment diagram showing HUMS spread across multiple systems}
+  \label{fig:DeploymentDistributed}
+\end{figure}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=12.5cm]{images/DeploymentIsolated.png}
+  \caption{Deployment diagram showing HUMS on one system}
+  \label{fig:DeploymentIsolated}
+\end{figure}
+
+\hl{We also chose to look at deploying the system as a service ....}
+.... in figure \ref{fig:DeploymentService}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10cm]{images/DeploymentService.png}
+  \caption{Deployment diagram showing HUMS as a multi-user service}
+  \label{fig:DeploymentService}
+\end{figure}
 
 %% TODO talk about admin centre shizzle
 
@@ -408,6 +445,15 @@ users are free, even with the prototype, to implement engines in any
 language they see fit. For the prototype we used both Java and
 JavaScript when creating the engines, languages team members are
 familiar with, allowing us to show off the versatility of the system.
+
+Upon determining to monitor CPU and heap usage, we began to investigate
+technologies that would allow us to do so, rather than reinvent the wheel.
+Doing this also had the benefit of providing us with established, well-tested,
+tools with which we could easily implement data input clients for further
+systems. As the test program is a Java program, we had to connect to its JVM to
+query the heap usage, as the operating system would just report the size of the
+JVM heap. We settled on using Sigar for process monitoring, and JMX for
+monitoring heap usage.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
