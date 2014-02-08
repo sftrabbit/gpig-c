@@ -372,11 +372,11 @@ The analysis component, shown in figure
     engine the end user will be able to specify what data is to be
     saved back to the database.
 
-  \item [Event Notify] An object representing a notification,
+  \item [Event] An object representing an event,
     containing the name of the analysis engine that triggered the
-    notification, the ID of the system that the notification applies
+    event, the ID of the system that the event applies
     to and the result object from the analysis engine that triggered
-    the notification.
+    the event.
 \end{description}
 
 \begin{figure}[ht!]
@@ -384,7 +384,7 @@ The analysis component, shown in figure
   \includegraphics[width= 9.5cm]{images/Analysis/AnalysisController.png}
   \includegraphics[width= 5cm]{images/Analysis/Result.png}
   \includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
-  \includegraphics[width= 6cm]{images/Analysis/EventNotify.png}
+  \includegraphics[width= 6cm]{images/Analysis/Event.png}
   \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
   \caption{Conceptual diagrams of the analysis component classes, using 
 UML 2 notation}
@@ -392,6 +392,16 @@ UML 2 notation}
 \end{figure}
 
 \subsubsection{Notification Generator}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width= 7cm]{images/Notification/NotificationGenerator.png}
+  \includegraphics[width= 5cm]{images/Notification/NotificationEngine.png}
+  \includegraphics[width= 4.5cm]{images/Notification/EmailNotification.png}
+  \caption{Conceptual diagrams of the notification component classes, using 
+UML 2 notation}
+  \label{fig:notificationComponent}
+\end{figure}
 
 \section{Interim Prototype Implementation}
 
