@@ -5,8 +5,8 @@ altered and, where possible, refined.
 
 \subsection{Functional Requirements}
 \label{sec:requirements-functional}
-Below the existing functional requirements are refined, based on customer 
-feedback and the design designs made in the previous report.
+Below, the existing functional requirements are refined, based on customer 
+feedback and the design decisions made in the previous report.
 
 \frit{1} is refined to specify how data emitters will send data to the system, 
 and the type of data required. 
@@ -17,7 +17,7 @@ timestamps should be created.
 
 \frit{3} is refined by specifying how the data is to be stored, allowing the end 
 user to choose the technology of their choice, meaning the database can be 
-changed without needing to alter other HUMs modules, making it easy to 
+changed without needing to alter other HUMS modules, making it easy to 
 move the HUMS across domains.
 \frit{4} was modified such that the previous requirements \frit{4}, \frit{6}, 
 \frit{9}, and \frit{10} can all be expressed as refinements, with the 
@@ -48,17 +48,16 @@ data 	to the HUMS.
  		 	timestamped.
  			 \item[\fr{1.1.3}] The data input API shall allow data emitters
  		 	to send sensor IDs and their values to the HUMS, 		
-			which will 	then be made available to the analysis engine.
+			which will then be made available to the analysis engine.
 		\end{description}
  		 \item[\fr{1.2}] A data emitter, extracting data from the given 	
-	test application shall be provided.
+	test application, shall be provided.
 	\end{description}
 	%%FR2
 	\item[\fr{2}]  The HUMS shall allocate a timestamp to new data.
 	\begin{description}
 	 	 \item[\fr{2.1}]Data input clients shall timestamp data before
  		sending it to the HUMS.
-		
  		 \item[\fr{2.2}] Timestamps shall be collected when data is sent 	
 		to storage.
 	\end{description}
@@ -66,14 +65,14 @@ data 	to the HUMS.
 	 \item[\fr{3}] The HUMS shall store correctly structured data.
 	 \begin{description}
 	 	\item[\fr{3.1}] The end user shall integrate their chosen database 
-			technology with the HUMS
+			technology with the HUMS.
 	 	\item[\fr{3.2}] The HUMS shall use a database abstraction layer, 
 			allowing the database component to be easily changed 
-according to 			need.
+                                according to needs.
 	  \end{description}
 	%%FR4
-	 \item[\fr{4}] The HUMS shall an store end user system configuration 
-			file.
+	 \item[\fr{4}] The HUMS shall store end user system configuration 
+			files.
 	 \begin{description}
 	  	\item[\fr{4.1}] The HUMS shall allow authorised users to modify
  		configuration files. 
@@ -81,7 +80,7 @@ according to 			need.
 			low storage threshold.
 		  \item[\fr{4.3}] The HUMS shall allow the consumer to set an 
 			expiry time on data.
-		  \item[\fr{4.4}]  The HUMS shall allow the user to define that, 
+		  \item[\fr{4.4}] The HUMS shall allow the user to define that, 
 			upon reaching their defined data storage quota, new data is 
 			no longer added.
 		 \item[\fr{4.5}] The HUMS shall allow the user to define that, 
@@ -89,10 +88,10 @@ according to 			need.
 			deleted to make room for new data.
 	\end{description}
 	%%FR5
-	 \item[\fr{5}] The HUMS shall send a notification when the consumers 
+	 \item[\fr{5}] The HUMS shall send a notification when the consumer's 
 		low storage threshold is reached.
 	  \item[\fr{6}] The HUMS must store no more data records than the 	
-		consumers defined storage quota.
+		consumer's defined storage quota.
 	\item[\fr{7}]Events shall be triggered in response to data matching a pattern 
 	specified by the consumer.
 		  \begin{description}
@@ -100,12 +99,9 @@ according to 			need.
 			what data patterns will produce events.
 			 \item[\fr{7.2}] The HUMS shall allow the user to define their
  			own events.
-		
  			\item[\fr{7.3}] The HUMS shall provide an API, 			
 			allowing analysis engines to extract stored data.
-		
 			\item[\fr{7.4}] Events shall be created by analysis engines.
-
  			\item[\fr{7.5}] The HUMS shall provide a simple analysis 	
 			engine in the form of a rules engine.
 	\end{description}
@@ -114,11 +110,11 @@ according to 			need.
 		type, no more notifications for an event of that type will be 	
 		sent during the cool down period.
 	\item[\fr{9}]The HUMS shall dispatch an event when a specified data 
-		pattern in detected.
+		pattern is detected.
 	\item[\fr{10}] The HUMS must interface with reports engines, allowing 
 		them to pull reports.
 	\item[\fr{11}] The HUMS shall provide basic notification 			
-		engines to work with the test application.
+		engines to work with the \hl{test application}. % should we refer to this in the requirements?
 	\item[\fr{12}] The system shall allow for notifications to change the way 
 		in which data is sensed.
 	 \item[\fr{13}] The system shall allow notifications to be sent back to 
@@ -126,11 +122,11 @@ according to 			need.
 \end{description}
 
 \subsection{Non-Functional Requirements}
-Non-function requirements remain similar, however, \nfrit{14} has been 
+Non-function requirements remain similar, however \nfrit{14} has been 
 added in order to clarify that data can be sent and stored in any format, 
-enforcing that the consumers system will not have to conform to the HUMS. 
-\nfrit{6} has been refined to more concretely detail the testing strategies to 
-be used when validating that requirements have been met.
+enforcing that the consumer's system will not have to conform to a format
+dictated by the HUMS. \nfrit{6} has been refined to more concretely detail the
+testing strategies to be used when validating that requirements have been met.
 It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements 
 specific to the prototype as the functional requirements mandate that the 
 datastore be changeable, meaning, in the general case, requirements 
@@ -167,7 +163,7 @@ about the abilities of the datastore are not verifiable.
 	made available to the system.
 	 \item[\nfr{12}] Timestamps applied by the system must be accurate to 
 	within 5ms of UTC.
-	\item[\nfr{13}]  The system shall dispatch notifications within 5ms of the 
+	\item[\nfr{13}]  The system shall dispatch notifications within 5ms of an 
 	event being triggered.
 	\item[\nfr{14}] The system shall support storing data without requiring 
 	specific schemata.

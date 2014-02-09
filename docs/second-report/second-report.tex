@@ -84,14 +84,14 @@ Determining who has the rights to access which data would fall under the
 purview of an individual customer, who would manage access rights using the 
 configuration front-end of our system.
 
-Flexibility is important to the HUMS as it is too be used across multiple 
-domains, meaning it cannot be to specific. Following a plugin 
+Flexibility is important to the HUMS as it is to be used across multiple 
+domains, meaning it cannot be too specific. Following a plugin 
 architecture means the system can remain general and flexible however 
 can include domain specific elements, such as analysis engines, 
 creating a software product line where the core of the HUMS can be 
 shared across all domains.
 
-Modifiability is also an important qualities of the HUMS, though not 
+Modifiability is also an important quality of the HUMS and, though not 
 measurable, lack of modifiability can increase the cost and time taken to 
 complete the project. The HUMS will initially be built to tackle a single 
 domain (software), however will in the future be required to work on embedded 
@@ -107,14 +107,18 @@ swapped out without large changes to the overall system.
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch notifications through the 
 notification generator after events have been triggered by the analysis 
-controller, with a latency less than 5ms, the system is 
-also required to be able to support multiple data output clients. Tactics 
-such as reducing overhead though careful use of data structures and prioritising events can help reduce latency, at least for the most important events, defined by the end user. It may also be possible to add concurrency, such that multiple notification threads are used when demand for notifications and reports are high, reducing the bottleneck created at the notification generator.
+controller, with a latency less than 5ms. The system is also required to be
+able to support multiple data output clients. Tactics such as reducing
+overhead though careful use of data structures and prioritising events can
+help reduce latency, at least for the most important events, defined by the
+end user. It may also be possible to add concurrency, such that multiple
+notification threads are used when demand for notifications and reports are
+high, reducing the bottleneck created at the notification generator.
 
 In in order to ensure the HUMS is testable we followed the test driven 
-development methodology where possible, writing and planning the tests 
-before writing the code, passing tests means code performs the 
-expected functionality. In addition to this we also ensured defined how 
+development (TDD) methodology where possible, writing and planning the tests 
+before writing the code, so passing tests means code performs the 
+expected functionality. In addition to this we also defined how 
 each requirement of the system would be tested and created a 
 comprehensive test plan, detailing integration, system, unit and 
 acceptance testing.
@@ -122,8 +126,9 @@ acceptance testing.
 \section{System Views}
 \label{sec:architecture-views}
 
-When designing the HUMS we identified four different views of of the
-system which must be documented, taking inspiration from the Hofmeister approach to software architecture:  %%CITE Hofmeister, Nord & Soni, Applied Software Architecture, Addison Wesley.
+When designing the HUMS we identified four different views of the
+system which must be documented, taking inspiration from the
+\hl{Hofmeister approach to software architecture}: %%CITE Hofmeister, Nord & Soni, Applied Software Architecture, Addison Wesley.
 
 \begin{description}
   \item[Module View] The required software modules and relationships
@@ -147,7 +152,7 @@ qualities, a conceptual view can be formed. The conceptual diagram
 shown in figure \ref{fig:ComponentDiagram} depicts the modules of the
 HUMS and the interactions between these modules at a high level.
 
-%%TODO this diagram doesn't show the core or have a key
+%%TODO this diagram doesn't have a key
 
 \begin{figure}[!ht]
   \centering
@@ -157,7 +162,7 @@ HUMS and the interactions between these modules at a high level.
 \end{figure}
 
 \begin{description}
-  \item[Core] A collection of modules that must be run on one system, including the Data Input Layer, Analysis Controller, Data Abstraction Layer and Notification Generator. Additional modules can be integrated on the same system or connected over a network interface.
+  \item[Core] A collection of modules that must be run on one system, including the Data Input Layer, Analysis Controller, Data Abstraction Layer and Notification Generator. Additional modules can be integrated on the same system or connected over a network interface. % the names in this item should probably be all lowercase to be consistent with other items
 
   \item[Data Emitter] Sends data to the system core in a standard
     format. May be included within the HUMS or created by the end
@@ -177,13 +182,13 @@ HUMS and the interactions between these modules at a high level.
     within the data then the analysis controller forwards that event
     to the notification generator.
 
-  \item[Analysis Engine] Analyses the data looking for trends, if a
+  \item[Analysis Engine] Analyses the data looking for trends. If a
     trend is found an event is returned to the analysis
     controller. Analysis engines may be included in the HUMS or
     created by the end user.
 
   \item[Notification Generator] Receives events from the analysis
-    controller, defines an abstract notification and sends it to the
+    controller, defines an abstract notification, and sends it to the
     appropriate notification engine.
 
   \item[Notification Engine] Receives an abstract notification from
@@ -193,7 +198,7 @@ HUMS and the interactions between these modules at a high level.
     created by the end user.
 
   \item[Reports Engine] Pulls data from the data abstraction layer and
-    formats it into a report, for example a PDF or graph. Reports
+    formats it into a report, for example a PDF or graph. Report
     engines may be included in the HUMS or created by the end user.
 \end{description}
 
@@ -215,14 +220,14 @@ through the system, using UML 2 notation}
 %%Input Diagram WITH KEY
 
 \subsection{Execution View}
-With view to deployment and execution, the HUMS needs to be tailorable, the core system may be running on the same hardware as the data emitter, it may also be geographically distant, engines may also be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
+With a view to deployment and execution, the HUMS needs to be tailorable. The core system may be running on the same hardware as the data emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personal, as opposed to developers. This deployment possibility gave the team the idea of creating a system as service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. 
+Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. 
 This is shown in figure \ref{fig:DeploymentService}, and is made possible by associating sensor data with a system ID.
-For administrating the HUMS as a service, a hosted admin
-centre will be created, which allows users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
+For administering the HUMS as a service, a hosted admin
+centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
 
-Figure \ref{fig:DeploymentIsolated} shows we we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and  all module existing on the same device.
+Figure \ref{fig:DeploymentIsolated} shows we we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentDistributed.png}
@@ -238,6 +243,9 @@ systems}
   \label{fig:DeploymentIsolated}
 \end{figure}
 
+%
+% THIS FIGURE IS NOT REFERENCED ANYWHERE!!
+%
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentService.png}
@@ -246,7 +254,7 @@ systems}
 \end{figure}
 
 \subsection{Conceptual View}
-The Conceptual View is a description of the the entire system in terms of it's individual components, for example, classes in an object-oriented design.
+The conceptual view is a description of the the entire system in terms of its individual components, for example classes in an object-oriented design.
 
 \subsubsection{Data Input Layer}
 
@@ -289,7 +297,7 @@ The data abstraction layer, shown in figure
 \ref{fig:dataAbstractionPackage}, contains the following classes:
 
 \begin{description}
-  \item [System Data Gateway] An interface used to abstract the
+  \item [SystemDataGateway] An interface used to abstract the
     datastore implementation details from the rest of the
     application. An implementation of this interface will provide ways
     to read and write from the chosen datastore, meaning the rest of the
@@ -302,7 +310,7 @@ The data abstraction layer, shown in figure
     the ID of the end user's system and the creation timestamp along
     with a map of sensor IDs against the value of the sensor at that
     particular time. A map was used to represent the sensors and
-    values so that the end user is free the send data from as many or
+    values so that the end user is free to send data from as many or
     as few sensors at a time, reducing the number of writes to the
     database. For serialisation this object includes methods to
     convert to and from JSON.
@@ -314,7 +322,7 @@ The data abstraction layer, shown in figure
   \item [SensorState] An object representing the state of a particular
     system sensor. A sensor has an ID, a value and two timestamps, one
     specifying the time the sensor value was added to the database and
-    the other the time the value was created.
+    the other the time the actual value was sensed or created.
 
   \item [QueryResult] An object representing the result of a database
     query, containing the ID of the end user's system to which the
@@ -339,7 +347,7 @@ The analysis component, shown in figure
 \ref{fig:dataAnalysisComponent}, contains the following classes:
 
 \begin{description}
-  \item [Analysis Controller] An object that coordinates all analysis of
+  \item [AnalysisController] An object that coordinates all analysis of
     sensor data. The object interfaces with the data input layer,
     receiving a system ID when analysis is required. Once analysis has
     been carried out the controller processes the results and triggers
@@ -347,7 +355,7 @@ The analysis component, shown in figure
     with the analysis controller by class loading allowing for users to
     add and remove analysis engines at run-time.
 
-  \item [Analysis Engine] An abstract class that implements the basic
+  \item [AnalysisEngine] An abstract class that implements the basic
     functionality and defines the methods required of an implemented
     analysis engine. Each engine has a list of associated systems. The
     implementation of the analyse method interfaces with the database
@@ -357,11 +365,11 @@ The analysis component, shown in figure
     engines the end user will be required to extend this class, implement 
     the abstract methods and define what constitutes an event.
 
-  \item [Mean Analysis] An object that extends the analysis engine
+  \item [MeanAnalysis] An object that extends the analysis engine
     class and implements mean analysis. When called by the analysis
     controller, sensor data is retrieved for all associated systems
-    and mean analysis is performed. If a mean value fall outside of
-    the acceptable bounds then a notification is raised.
+    and mean analysis is performed. If a mean value falls outside of
+    the acceptable bounds then a flag is set to generate a notification.
 
   \item [Result] An object representing the result of the analysis
     carried out by the chosen analysis engine. The object contains a
@@ -375,7 +383,7 @@ The analysis component, shown in figure
   \item [Event] An object representing an event,
     containing the name of the analysis engine that triggered the
     event, the ID of the system that the event applies
-    to and the result object from the analysis engine that triggered
+    to, and the result object from the analysis engine that triggered
     the event.
 \end{description}
 
@@ -397,7 +405,7 @@ The notification component, shown in figure
 \ref{fig:notificationComponent}, contains the following classes:
 
 \begin{description}
-  \item [Notification Generator] An object that coordinates generating and
+  \item [NotificationGenerator] An object that coordinates generating and
     sending of notifications. The object interfaces with the analysis
     controller, receiving an event object when analysis engines specify that
     notifications should be sent. Notifications are then generated and sent by
@@ -405,16 +413,16 @@ The notification component, shown in figure
     the notification generator by class loading allowing for users to add and
     remove notification engines at run-time.
 
-  \item [Notification Engine] An abstract class that implements the basic
+  \item [NotificationEngine] An abstract class that implements the basic
     functionality and defines the methods required of an implemented
     notification engine. Each engine has a list of associated systems, and 
     features a cool down system to ensure that notifications are not sent
     more then once during a specified period of time. When creating their
     own notification engines the end user will be required to extend this
-    class, implement the abstract methods and define how a notification
+    class, implement the abstract methods, and define how a notification
     is sent.
 
-  \item [Email Notification] An object that extends the notification engine
+  \item [EmailNotification] An object that extends the notification engine
     class and implements email notifications. When called by the notification
     generator, an email notification is sent to the specified recipient, and 
     contains the specified notification subject and further notification
@@ -458,7 +466,7 @@ familiar with, allowing us to show off the versatility of the system.
 
 Upon determining to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
-Doing this also had the benefit of providing us with established, well-tested,
+Doing this also had the benefit of providing us with established, well-tested
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
@@ -491,24 +499,28 @@ We used Git for version control, allowing the entire team to
 contribute to the project simultaneously, whilst keeping a reversible
 history of all alterations made by each person.
 
+\subsection{Source}
+
+The source for our prototype implementation can be accessed \hl{(instructions here)}
+
 \subsection{Current Functionality}
 For the interim prototype we chose to firmly follow the planned architecture, producing a core system linking to example engines, emitters and data stores, focussing on interacting with the provided test application.
 
-The core of the HUMS is fully functional allowing for data emitters to send data to the data input layer using protocol buffers, chosen in preference to HTTP requests due to the lower latency. The data input layer, as currently implemented, supports multiple simultaneous connections from input clients, although we have yet to investigate how many the prototype could handle. Upon receipt, the data is put into a queue, which is periodically processed by the data input server, by adding each entry to the database and notifying the analysis engine. The analysis controller allows for dynamic loading of analysis engines, allowing them to be altered at runtime and requests data to be passed to the appropriate engine, decoupling the analysis engines from the data abstraction layer. The data abstraction layer provides a simple interface to be implemented by the consumer and includes an example implementation, interfacing with Google App Engine using HTTP requests to a remote servlet. The notification generator allows notification engines to be dynamically loaded and passes event object to the notification engines.
+The core of the HUMS is fully functional, allowing for data emitters to send data to the data input layer using protocol buffers, chosen in preference to HTTP requests due to the lower latency. The data input layer, as currently implemented, supports multiple simultaneous connections from input clients, although we have yet to investigate how many the prototype could handle. Upon receipt, the data is put into a queue, which is periodically processed by the data input server, by adding each entry to the database and notifying the analysis controller. The analysis controller allows for dynamic loading of analysis engines, allowing them to be altered at runtime and requests data to be passed to the appropriate engine, decoupling the analysis engines from the data abstraction layer. The data abstraction layer provides a simple interface to be implemented by the consumer and includes an example implementation, interfacing with Google App Engine using HTTP requests to a remote servlet. The notification generator also allows notification engines to be dynamically loaded and passes event objects to them.
 
-Currently there are two data emitters built in to the system, demoing its flexibility, the first extract and emits data about the JVM, recording CPU and memory usage, the second extracts and emits live data about earthquake activity from the USGS earthquake hazards program API \cite{usgs}.
+Currently there are two data emitters for use with the system. Demoing its flexibility, the first extracts and emits data about the JVM, recording CPU and memory usage, and the second extracts and emits live data about earthquake activity from the USGS earthquake hazards program API \cite{usgs}.
 
-The data emitter designed to emit data about the JVM, records the CPU and memory usage and sends these through the data input API every second. A period of four seconds are allowed to elapse before the first send, allowing the CPU usage readings to stabilise. The data emitter created to relay live data about earthquake activity fetches data every minute from the USGS earthquake hazards program API and submits it to the data input API.
+The data emitter designed to emit data about the JVM records the CPU and memory usage and sends these through the data input API every second. A period of four seconds is allowed to elapse before the first send, allowing the CPU usage readings to stabilise. The data emitter created to relay live data about earthquake activity fetches data every minute from the USGS earthquake hazards program API and submits it to the data input API.
 
 %%Paragraph about analysis plugin 
 
-When the notification generator receives an event, it selects the appropriate notification engines for that event and uses them to create and send a notification. Currently, a single notification engine has been developed which sends an email to an email address configured by the user. For the test application, an email will be dispatched when CPU usage exceeds a predefined limit. For the earthquake monitoring application, an email is sent when a significant earthquake occurs.
+When the notification generator receives an event, it selects the appropriate notification engines for that event and uses them to create and send a notification. Currently, a single notification engine has been developed which sends an email to an email address configured by the user. For the test application, an email will be dispatched when CPU usage exceeds a predefined limit. \hl{For the earthquake monitoring application, an email is sent when a significant earthquake occurs.} % TODO!
 
 %% Paragraph about reports plugins
 
-A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided, including provided storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system, in the next phase of the project the admin centre will be functional.
+A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided -- including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
 
-\subsection{Evaluation of Prototype Solution for Sample Applications}
+\subsection{Evaluation of the Prototype Solution for Sample Applications}
 \label{sec:prototype-evaluation}
 
 \subsubsection{Customer Test Application -- No. 1}
@@ -518,10 +530,13 @@ package for our prototype solution that can monitor a native application
 or one executing on the JVM. We utilised Java Management 
 Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
-CPU usage of the application. The Mean Analysis Engine computes a 
-rolling average of each value. This average is then read 
+CPU usage of the application. The mean analysis engine computes a 
+rolling average of each value. \hl{This average is then read 
 by the reporting system and displayed live in the admin centre, as shown
-in \ref{fig:graphing}.
+in figure} \ref{fig:graphing}. %% It's not the mean that's displayed, it's the raw values - and the current screenshot is of Nyan cat not of the test application!
+
+\paragraph{Instructions for Replicating Results}
+\hl{Todo. Maybe also include more concrete results, e.g. types of values obtained from it and values obtained through analysis}
 
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
 \begin{figure}[htbp!]
@@ -536,26 +551,26 @@ in \ref{fig:graphing}.
 We also created our own sample application: monitoring earthquakes 
 through the USGS Earthquake Hazards Program API. The HUMS
 can collect live data from the API, store it and plot the location of any
-detected earthquakes on a map of the world in the admin centre live,
-as showing in %TODO.
+detected earthquakes on a map of the world in the admin centre,
+\hl{as shown in figure} %TODO.
 
 % TODO Add screenshot
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
-with respect to verifying our that solution fulfilled its
-requirements. In this section we given the mapping between each
+with respect to verifying that our solution fulfilled its
+requirements. In this section we give the mapping between each
 test and its associated requirement. We
 defined our plan, where appropriate, in terms of each module within
 the system and what specific, testable attributes that module must
 have to fulfil its requirements. We also further deconstructed the
 testing into various levels of abstraction, mapping the higher level
-requirements to their lower-level requisite requirements: acceptance
+requirements to their lower level requisite requirements: acceptance
 testing, system testing, integration testing and unit
 testing.
 
 The traceability matrix in the section below shows the mapping 
-between each requirement and its associated test.
+between each requirement and its associated test. % Move this down a section?
 
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
@@ -563,13 +578,13 @@ between each requirement and its associated test.
 % input re- quests per second per HUMS instance."
 % Also talk about what we can't test since not everything is implemented
 
-To system test
+\hl{To system test}
 
-Below, the testing for each module is listed
+\hl{Below, the testing for each module is listed}
 
 \begin{description}
 
-  \item[Data Emitter] As the purpose of the data emitter is to run
+  \item[Data Emitter] The purpose of the data emitter is to run
     continuously, monitoring a system and reporting on it, thereby
     fulfilling \frit{1.2}. We completed inspection testing to verify 
     that data was reported, along with running the program for 
@@ -590,20 +605,20 @@ Below, the testing for each module is listed
     well defined module-internal functions, such as the generation and 
     parsing of the JSON serialisation of objects.
     
-  \item[Analysis Controller] % No tests written for this
+  \item[Analysis Controller] \hl{No tests written for this}
   
   \item[Analysis Engine]
   For the analysis engine, we created a unit test to check each aspect of the 
   engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
   for testing which allows mocking of results from methods of a dependancy 
-  class to restrict the possible source of failure of a test as narrow as possible. This was especially useful for potentially flakey tests, such as connecting over a network that may not be available at test time and database access. Our unit tests covered valid, extreme, missing values were sent to the analysis engine.
+  class to restrict the possible source of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme, \hl{missing values were sent to the analysis engine.} % No idea what point is trying to be made here?
 
-  \item[Notification Generator] % No tests written for this
+  \item[Notification Generator] \hl{No tests written for this}
   
-  \item[Notification Engine] % No tests written for this
+  \item[Notification Engine] \hl{No tests written for this}
   \hl{Cooldown period in} \frit{8}
 
-  \item[Reports Engine] % No tests written for this
+  \item[Reports Engine] \hl{No tests written for this}
   
  \end{description}
 
