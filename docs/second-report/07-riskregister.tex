@@ -30,20 +30,20 @@ in the table below.
   & Loss of team member(s)
   & 6
   & 3
-  & internal and/or deadline failure
+  & Internal and/or deadline failure
   & Ensure that no work relating to the project is outside of team
-  version control. Use of scrum methodology proactively aids work
-  reallocation, ensuring team members are aware of all assigned work.
-  & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension.
+  version control; use of scrum methodology proactively aids work
+  reallocation, ensuring team members are aware of all assigned work
+  & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension
   & 18 \\
   
   \hline \textbf{R.2}
   & Personnel under performance
   & 6
   & 3
-  & internal and/or deadline failure
+  & Internal and/or deadline failure
   & Team strengths and weaknesses identified and work assigned appropriately, slack built into the schedule to account for under performance
-  & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension.
+  & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension
   & 18 \\
   
   \hline \textbf{R.3}
@@ -70,7 +70,7 @@ in the table below.
   & 
   & Additional, unnecessary functionality, possible deadline miss
   & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
-  & 
+  & \hl{???}
   & \\
   
   \hline \textbf{R.6}
@@ -84,25 +84,25 @@ in the table below.
   
   
   \hline \textbf{R.7}
-  & Comms link to Google App Engine fails
+  & Communic-ations link to Google App Engine fails
   & 
   & 
   & Loss of service to users, loss of confidence in the system
-  & A final commercial version would use the premium Google service which guarantees an uptime of 99.9\% (\nfrit10)
+  & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
   & Additional data abstraction layer could be built to interface with another database service
   & \\
   
   \hline \textbf{R.8}
-  & Data interception between our application and App Engine 
+  & Data interception between our application and Google App Engine 
   & 
   & 
   & Loss of confidence in the system
-  & A final system would encrypt traffic between our system and App Engine, currently just sending (non-sensitive) test data
+  & A final system would encrypt traffic between our system and Google App Engine, currently just sending (non-sensitive) test data
   & Additional penetration testing to identify security flaws
   & \\
   
   \hline \textbf{R.9}
-  & Data write/read times to/from App Engine too slow
+  & Data write/read times to/from Google App Engine too slow
   & 
   & 
   & Create a task backlog: gradual increase in load until system
@@ -112,19 +112,19 @@ in the table below.
   & \\
   
   \hline \textbf{R.10}
-  & Implementation does not facilitate data storage for a variety of systems
+  & Implemen-tation does not facilitate data storage for a variety of systems
   & 
   & 
   & Failure to meet key modifiability requirements 
   & Adoption of a key-value database allows us the flexibility to store a variety of data
-  & Examination of data we are struggling to store and implement additional data gateway for it
+  & Examination of data we are struggling to store and implementation of additional data gateway for it
   & \\  
   
   \hline \textbf{R.11}
   & System performance required unattainable
   & 2
   & 4
-  & Could cause 
+  & \hl{Could cause }
   & Choice of implementation or choice of utilised hardware must offer
   enough in the way of performance to facilitate acceptable system
   performance.
@@ -133,7 +133,7 @@ in the table below.
   & 8 \\    
   
   \hline \textbf{R.12}
-  & Stock analysis components computing incorrect values
+  & Included analysis components computing incorrect values
   & 
   & 
   & Failing to meet fundamental requirements, customer loses confidence in the system
@@ -165,7 +165,7 @@ in the table below.
   & GitHub becomes unavailable for a prolonged period of time
   & 
   & 
-  & Difficulty merging work from different developers machines
+  & Difficulty merging work from different developers' machines
   & Distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
   & \\ 
@@ -174,7 +174,7 @@ in the table below.
   & Malicious destruction of code repository on GitHub
   & 
   & 
-  &
+  & \hl{???}
   & Two-step authentication used on GitHub, distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
   & \\    
