@@ -502,7 +502,7 @@ The data emitter designed to emit data about the JVM, records the CPU and memory
 
 %%Paragraph about analysis plugin 
 
-%% Paragraph about notification plugins
+When the notification generator receives an event, it selects the appropriate notification engines for that event and uses them to create and send a notification. Currently, a single notification engine has been developed which sends an email to an email address configured by the user. For the test application, an email will be dispatched when CPU usage exceeds a predefined limit. For the earthquake monitoring application, an email is sent when a significant earthquake occurs.
 
 %% Paragraph about reports plugins
 
