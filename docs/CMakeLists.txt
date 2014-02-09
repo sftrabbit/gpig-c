@@ -1,4 +1,4 @@
-include("${CMAKE_MODULE_PATH}/UseLATEX.cmake")
+include(UseLATEX)
 
 add_subdirectory(initial-report)
 add_subdirectory(second-report)
