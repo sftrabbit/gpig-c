@@ -1,11 +1,26 @@
-set(WORD_COUNT_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/01-introduction.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/02-glossary.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/03-requirements.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/06-team.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/07-riskregister.tex
-    ${CMAKE_CURRENT_SOURCE_DIR}/08-communication.tex
-    )
+set(CONTENT_FILES
+    01-introduction.tex
+    02-glossary.tex
+    03-requirements.tex
+    06-team.tex
+    07-riskregister.tex
+    08-communication.tex)
+
+set(INPUT_FILES
+    ${WORD_COUNT_FILES}
+    wc.tex)
+
+set(IMAGE_DIRS
+    images
+    images/Analysis
+    images/DataAbstractionLayer
+    images/DataInputLayer
+    images/Notification)
+
+foreach(CONTENT_FILE ${CONTENT_FILES})
+	set(WORD_COUNT_FILES ${WORD_COUNT_FILES}
+	    ${CMAKE_CURRENT_SOURCE_DIR}/${CONTENT_FILE})
+endforeach()
 
 set(TEXCOUNT_COMMAND
     ${CMAKE_SOURCE_DIR}/tools/texcount/texcount.pl)
@@ -20,18 +35,10 @@ execute_process(COMMAND ${TEXCOUNT_COMMAND} ${TEXCOUNT_ARGS}
 
 set(LATEX_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin/docs")
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/images DESTINATION ${CMAKE_BINARY_DIR}/bin/docs)
-
 add_latex_document(second-report.tex
                    BIBFILES report-refs.bib
-                   INPUTS wc.tex
-                   01-introduction.tex
-                   02-glossary.tex
-                   03-requirements.tex
-                   06-team.tex
-                   07-riskregister.tex
-                   08-communication.tex
+                   INPUTS ${INPUT_FILES}
                    CONFIGURE wc.tex
-                   IMAGE_DIRS images
+                   IMAGE_DIRS ${IMAGE_DIRS}
                    DEFAULT_PDF
                    MANGLE_TARGET_NAMES)
