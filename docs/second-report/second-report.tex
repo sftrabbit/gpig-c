@@ -520,15 +520,26 @@ Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
 CPU usage of the application. The Mean Analysis Engine computes a 
 rolling average of each value. This average is then read 
-by the reporting system and displayed live in the admin centre.
+by the reporting system and displayed live in the admin centre, as shown
+in \ref{fig:graphing}.
 
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=10cm]{images/graphing.png}
+  \caption{A screenshot of the live graphing of the state of the Customer 
+  Test Application}
+  \label{fig:graphing}
+\end{figure}
 
 \subsubsection{Earthquake}
 We also created our own sample application: monitoring earthquakes 
 through the USGS Earthquake Hazards Program API. The HUMS
 can collect live data from the API, store it and plot the location of any
-detected earthquakes on a map of the world in the admin centre live.
+detected earthquakes on a map of the world in the admin centre live,
+as showing in %TODO.
+
+% TODO Add screenshot
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
@@ -543,14 +554,18 @@ requirements to their lower-level requisite requirements: acceptance
 testing, system testing, integration testing and unit
 testing.
 
-% Does it make sense to have system/acceptance testing within a
-% module? Given we are using a plugin architecture, I am not sure. TD
+The traceability matrix in the section below shows the mapping 
+between each requirement and its associated test.
 
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
 % input re- quests per second per HUMS instance."
 % Also talk about what we can't test since not everything is implemented
+
+To system test
+
+Below, the testing for each module is listed
 
 \begin{description}
 
@@ -594,52 +609,12 @@ testing.
 
 \subsubsection{Traceability Matrix}
 
-\begin{longtable}[H]{| p{2.3cm} | p{2.7cm} | p{7cm}|}
-  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Test Cases}\\
-  \hline \fr{1.1.1} & & \\
-  \hline \fr{1.1.2} & & \\
-  \hline \fr{1.1.3} & & \\
-  \hline \fr{1.2}   & & \\
-  \hline \fr{2.1}   & & \\
-  \hline \fr{2.2}   & & \\
-  \hline \fr{3.1}   & & \\
-  \hline \fr{3.2}   & & \\
-  \hline \fr{4.1}   & & \\
-  \hline \fr{4.2}   & & \\
-  \hline \fr{4.3}   & & \\
-  \hline \fr{4.4}   & & \\
-  \hline \fr{4.5}   & & \\
-  \hline \fr{5}     & & \\
-  \hline \fr{6}     & & \\
-  \hline \fr{7.1}   & & \\
-  \hline \fr{7.2}   & & \\
-  \hline \fr{7.3}   & & \\
-  \hline \fr{7.4}   & & \\
-  \hline \fr{7.5}   & & \\
-  \hline \fr{8}     & & \\
-  \hline \fr{9}     & & \\
-  \hline \fr{10}    & & \\
-  \hline \fr{11}    & & \\
-  \hline \fr{12}    & & \\
-  \hline \fr{13}    & & \\
-  \hline \nfr{1}    & & \\
-  \hline \nfr{2}    & & \\
-  \hline \nfr{3}    & & \\
-  \hline \nfr{4}    & & \\
-  \hline \nfr{5}    & & \\
-  \hline \nfr{6.1}  & & \\
-  \hline \nfr{6.2}  & & \\
-  \hline \nfr{6.3}  & & \\
-  \hline \nfr{6.4}  & & \\
-  \hline \nfr{6.5}  & & \\
-  \hline \nfr{7}    & & \\
-  \hline \nfr{8}    & & \\
-  \hline \nfr{9}    & & \\
-  \hline \nfr{10}   & & \\
-  \hline \nfr{11}   & & \\
-  \hline \nfr{12}   & & \\
-  \hline \nfr{13}   & & \\
-  \hline \nfr{14}   & & \\
+\begin{longtable}[H]{| p{2.3cm} | p{8cm}| p{4cm}|}
+  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Strategy}\\
+  \hline \fr{3.1}   & com\-.gpigc\-.client\-.GWTSystemDataGatewayTest &  \\
+  \hline \fr{3.2}   & com\-.gpigc\-.client\-.SystemDataTest, com\-.gpigc\-.client	\-.EmitterSystemStateTest, com\-.gpigc\-.client\-.QueryResultTest & \\
+  \hline \fr{7.2}   & com\-.gpigc\-.test\-.ExpressionAnalysisTest  & \\
+  \hline \fr{11}    & com\-.gpigc\-.test\-.EmailNotificationTest  & \\
   \hline
 \end{longtable}
 
