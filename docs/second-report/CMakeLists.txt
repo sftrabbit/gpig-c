@@ -1,3 +1,4 @@
+# List files that will be included into the report
 set(INPUT_FILES
     01-introduction.tex
     02-glossary.tex
@@ -6,16 +7,21 @@ set(INPUT_FILES
     07-riskregister.tex
     08-communication.tex)
 
+# List files that contain content that should be word-counted
 set(CONTENT_FILES
     second-report.tex
     ${INPUT_FILES})
 
+# List directories that contain images
 set(IMAGE_DIRS
     images
     images/Analysis
     images/DataAbstractionLayer
     images/DataInputLayer
     images/Notification)
+
+
+### Let everything after here do its thing
 
 foreach(CONTENT_FILE ${CONTENT_FILES})
 	set(WORD_COUNT_FILES ${WORD_COUNT_FILES}
