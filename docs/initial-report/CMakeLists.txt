@@ -1,3 +1,4 @@
+# List all files that will be included by main tex file
 set(INPUT_FILES
     admin-roles.tex
     func-req-table.tex
@@ -10,10 +11,12 @@ set(INPUT_FILES
     nfunc-req-table.tex
     riskass-table.tex)
 
+# List all files that should be word-counted
 set(CONTENT_FILES
     initial-report.tex
     risk-register.tex)
 
+# List directories containing images
 set(IMAGE_DIRS
     images)
 

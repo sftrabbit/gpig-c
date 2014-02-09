@@ -1,4 +1,4 @@
-# List files that will be included into the report
+# List all files that are included by main tex file
 set(INPUT_FILES
     01-introduction.tex
     02-glossary.tex
@@ -7,12 +7,12 @@ set(INPUT_FILES
     07-riskregister.tex
     08-communication.tex)
 
-# List files that contain content that should be word-counted
+# List all files that should be word-counted
 set(CONTENT_FILES
     second-report.tex
     ${INPUT_FILES})
 
-# List directories that contain images
+# List directories containing images
 set(IMAGE_DIRS
     images
     images/Analysis
