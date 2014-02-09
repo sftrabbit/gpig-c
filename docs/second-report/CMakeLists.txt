@@ -7,7 +7,7 @@ set(CONTENT_FILES
     08-communication.tex)
 
 set(INPUT_FILES
-    ${WORD_COUNT_FILES}
+    ${CONTENT_FILES}
     wc.tex)
 
 set(IMAGE_DIRS
