@@ -1,0 +1,54 @@
+apply plugin: 'java'
+
+buildDir = "../../build"
+libsDirName = "bin"
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src', 'build/src']
+			exclude 'com/gpigc/dataemitter/DataEmitter.java'
+		}
+	}
+	test {
+		java {
+			srcDir 'test'
+		}
+	}
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+['EarthEmitter', 'TestAppEmitter'].each() { value ->
+	task "${value}Copy" (type: Copy) {
+		from 'src/com/gpigc/dataemitter'
+		into "${buildDir}/src"
+		include "DataEmitter.java"
+		filter(ReplaceTokens, tokens: [StubEmitter: value],
+		       beginToken: '_', endToken: '_')
+	}
+}
+
+def buildCommon = {
+	from sourceSets.main.output
+
+	dependencies {
+		compile fileTree(dir: 'lib', include: '**/*.jar')
+	}
+
+	manifest {
+		attributes 'Main-Class': 'org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader',
+		           'Rsrc-Main-Class': 'com.gpigc.dataemitter.DataEmitter',
+		           'Class-Path': '.',
+		           'Rsrc-Class-Path': './'
+	}
+
+	from zipTree('lib/jar-in-jar-loader.zip')
+}
+
+['EarthEmitter', 'TestAppEmitter'].each() { value ->
+	task "build${value}" (type: Jar, dependsOn: "${value}Copy") {
+		configure buildCommon
+		archiveName = "${value}.jar"
+	}
+}

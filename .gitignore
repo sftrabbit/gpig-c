@@ -1,6 +1,8 @@
 build/
 bin/
 
+.gradle
+
 # LaTeX outputs
 *.log
 *.aux
