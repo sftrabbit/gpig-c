@@ -15,6 +15,7 @@ public class EarthEmitter extends Emitter {
 
 	public EarthEmitter() {
 		super(COLLECTION_INTERVAL);
+		System.out.println("EarthEmitter");
 	}
 
 	@Override

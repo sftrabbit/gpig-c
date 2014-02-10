@@ -6,7 +6,7 @@ libsDirName = "bin"
 sourceSets {
 	main {
 		java {
-			srcDirs = ['src', 'build/src']
+			srcDirs = ['src', "${buildDir}/src"]
 			exclude 'com/gpigc/dataemitter/DataEmitter.java'
 		}
 	}

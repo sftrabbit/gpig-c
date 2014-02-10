@@ -30,6 +30,7 @@ public class TestAppEmitter extends Emitter {
 	
 	public TestAppEmitter() {
 		super(COLLECTION_INTERVAL);
+		System.out.println("TestAppEmitter");
 	}
 
 	@Override
