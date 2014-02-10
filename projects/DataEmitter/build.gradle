@@ -3,6 +3,8 @@ apply plugin: 'java'
 buildDir = "../../build"
 libsDirName = "bin"
 
+def emitters = ['EarthEmitter', 'TestAppEmitter']
+
 sourceSets {
 	main {
 		java {
@@ -19,7 +21,7 @@ sourceSets {
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
-['EarthEmitter', 'TestAppEmitter'].each() { value ->
+emitters.each() { value ->
 	task "${value}Copy" (type: Copy) {
 		from 'src/com/gpigc/dataemitter'
 		into "${buildDir}/src"
@@ -46,7 +48,7 @@ def buildCommon = {
 	from zipTree('lib/jar-in-jar-loader.zip')
 }
 
-['EarthEmitter', 'TestAppEmitter'].each() { value ->
+emitters.each() { value ->
 	task "build${value}" (type: Jar, dependsOn: "${value}Copy") {
 		configure buildCommon
 		archiveName = "${value}.jar"
