@@ -659,13 +659,13 @@ Below, the testing within each module is described:
 
 % Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
 
-\hl{The traceability matrix shows the mapping from each requirement to its test.} % Finish table - TODO: TD
+\hl{The traceability matrix below shows the mapping from each requirement to its test:} % Finish table - TODO: TD
 
-\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{2cm}| p{2.8cm}|}
-  \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Cases}\\
-  \hline \fr{1.2}   & ? & ? & ?\\
-  \hline \fr{2.1}   & ? & ? & ?\\
-  \hline \fr{2.2}   & ? & ? & ?\\
+\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
+  \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Details}\\
+  \hline \fr{1.2}   & N/A & Inspection, Alpha & Verify by observing output in admin centre\\
+  \hline \fr{2.1}   & SystemDataTest & Unit & Verify existence of timestamp\\
+  \hline \fr{2.2}   & EmitterSystemStateTest & Unit & Verify existence of timestamp\\
   \hline \fr{3.1}   & GWTSystemDataGatewayTest & Unit & Valid values\\
   \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON\\
   \hline \fr{7.1}   & ?  & ? & ? \\
