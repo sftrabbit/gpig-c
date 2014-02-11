@@ -642,7 +642,7 @@ Below, the testing within each module is described:
    confirming that notifications are only triggered when appropriate and  
    only the relevant analysis engines are used for a given system. 
    Class loading was used to load analysis engines for the prototype, 
-   this was confirmed to be working via inspection and integration testing.
+   this was confirmed to be working via inspection and integration te1,168sting.
   
   \item[Analysis Engine]
    For the analysis engine, we created a unit test to check each aspect of the 
@@ -655,7 +655,11 @@ Below, the testing within each module is described:
    to the analysis engine.
 
   \item[Notification Generator] For the notification generator, we created 
-	multiple unit tests to verify functionality as per \frit{8}.
+	multiple unit tests to verify functionality as per \frit{8}. Mockito was 
+	used to isolate the class, allowing for a true unit test. The initial 
+	test ensured that a notification is generated when analysis has indicated 
+	it. The second test ensured that notifications were only sent once, to 
+	avoid spamming users.	 
   
   \item[Notification Engine] The functionality of the email notification 
 	engine is tested using a unit test. The test uses the notification engine 
