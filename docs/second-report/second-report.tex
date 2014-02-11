@@ -30,6 +30,7 @@ Walker}
 \renewcommand{\headrulewidth}{0.4pt} % Add rules below header
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
+\newcommand{\conreq}[1]{\textcolor{reqColor}{\textbf{CR.#1}}}
 \newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
 \newcommand{\frit}[1]{\textit{FR.#1}}
 \newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
@@ -163,7 +164,7 @@ HUMS and the interactions between these modules at a high level.
 \end{figure}
 
 \begin{description}
-  \item[Core] A collection of modules that must be run on one system, including the Data Input Layer, Analysis Controller, Data Abstraction Layer and Notification Generator. Additional modules can be integrated on the same system or connected over a network interface. % the names in this item should probably be all lowercase to be consistent with other items
+  \item[Core] A collection of modules that must be run on one system, including the data input layer, analysis controller, data abstraction layer, and notification generator. Additional modules can be integrated on the same system or connected over a network interface.
 
   \item[Data Emitter] Sends data to the system core in a standard
     format. May be included within the HUMS or created by the end
@@ -531,7 +532,7 @@ When the notification generator receives an event, it selects the appropriate no
 
 %% Paragraph about reports plugins
 
-A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided; including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
+A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided; including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality and --- apart from the reporting examples --- does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
 
 \subsection{Evaluation of the Prototype Solution for Sample Applications}
 \label{sec:prototype-evaluation}
@@ -544,21 +545,27 @@ or one executing on the JVM. We utilised Java Management
 Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
-rolling average of each value, and causes an email to be sent if this value
-becomes too high. The raw values are read by the reporting system and 
-displayed live in the admin centre, \hl{as shown in} figure~\ref{fig:graphing}. %% the current screenshot is of Nyan cat not of the test application!
+rolling average of values, and causes an email to be sent if this value
+becomes too high, as shown in figure \ref{fig:alerting}. The raw memory
+values are read by the reporting system and displayed live in the admin
+centre, as shown in figure~\ref{fig:graphing}. The graph shows a value from
+every 10 seconds, and automatically updates with the latest values.
 
 % Mean - email
 % Raw values - graph
 
-\paragraph{Instructions for Replicating Results}
-\hl{Todo. Maybe also include more concrete results, e.g. types of values obtained from it and values obtained through analysis}
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=7cm]{images/TestApplicationCPUAlert.png}
+  \caption{A screenshot of an emailnotification  sent by the mean analysis engine}
+  \label{fig:alerting}
+\end{figure}
 
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=10cm]{images/graphing.png}
-  \caption{A screenshot of the live graphing of the state of the Customer 
+  \includegraphics[width=12cm]{images/TestApplicationMemoryGraph.png}
+  \caption{A screenshot of the live graphing of the memory usage of the Customer 
   Test Application}
   \label{fig:graphing}
 \end{figure}
@@ -570,6 +577,9 @@ can collect live data from the API, store it and plot the location of any
 detected earthquakes on a map of the world in the admin centre, as shown
 in figure~\ref{fig:plotearthquakes}. We felt that using a map to display
 data was a useful and innovative addition.
+
+\subsubsection{Instructions for Running and Replicating Results}
+\hl{Todo - instructions for running the system as a whole: jars and stuff}
 
 \begin{figure}[htbp!]
   \centering
@@ -591,9 +601,6 @@ requirements to their lower level requisite requirements: acceptance
 testing, system testing, integration testing and unit
 testing.
 
-The traceability matrix in the section below shows the mapping 
-between each requirement and its associated test. % Move this down a section?
-
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
@@ -602,7 +609,7 @@ between each requirement and its associated test. % Move this down a section?
 
 \hl{To system test}
 
-\hl{Below, the testing for each module is listed}
+Below, the testing within each module is described:
 
 \begin{description}
 
@@ -628,20 +635,24 @@ between each requirement and its associated test. % Move this down a section?
     parsing of the JSON serialisation of objects.
     
   \item[Analysis Controller] The analysis controller is responsible for 
-	coordinating analysis engines and triggering notifications. Due to 
-	the central role played by the analysis controller in the analysis 
-	pipeline we identified its key attributes as performance and testability. 
-	We utilised Mockito to provide completely isolated unit tests, 
-	confirming that notifications are only triggered when appropriate and  
-	only the relevant analysis engines are used for a given system. 
-	Class loading was used to load analysis engines for the prototype, 
-	this was confirmed to be working via inspection and integration testing.
+   coordinating analysis engines and triggering notifications. Due to 
+   the central role played by the analysis controller in the analysis 
+   pipeline we identified its key attributes as performance and testability. 
+   We utilised Mockito to provide completely isolated unit tests, 
+   confirming that notifications are only triggered when appropriate and  
+   only the relevant analysis engines are used for a given system. 
+   Class loading was used to load analysis engines for the prototype, 
+   this was confirmed to be working via inspection and integration testing.
   
   \item[Analysis Engine]
-  For the analysis engine, we created a unit test to check each aspect of the 
-  engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
-  for testing which allows mocking of results from methods of a dependancy 
-  class to restrict the possible source of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the analysis engine.
+   For the analysis engine, we created a unit test to check each aspect of the 
+   engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
+   for testing which allows mocking of results from methods of a dependancy 
+   class to restrict the possible source of failure of a test to be as narrow as 
+   possible. This was especially useful for potentially flakey areas, such as 
+   database access or connecting over a network that may not be available at 
+   test time. Our unit tests covered valid, extreme and null values being sent 
+   to the analysis engine.
 
   \item[Notification Generator] \hl{No tests written for this}
   \hl{Cooldown period in} \frit{8}
@@ -649,18 +660,27 @@ between each requirement and its associated test. % Move this down a section?
   \item[Notification Engine]
   The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
 
-  \item[Reports Engine] \hl{No tests written for this}
-  
+  \item[Reports Engine] We tested the Reports Engine by inspection since it is a prototype and does not require significant automated testing at this stage.
+
  \end{description}
 
 \subsubsection{Traceability Matrix}
 
-\begin{longtable}[H]{| p{2.3cm} | p{8cm}| p{4cm}|}
-  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Strategy}\\
-  \hline \fr{3.1}   & com\-.gpigc\-.client\-.GWTSystemDataGatewayTest &  \\
-  \hline \fr{3.2}   & com\-.gpigc\-.client\-.SystemDataTest, com\-.gpigc\-.client	\-.EmitterSystemStateTest, com\-.gpigc\-.client\-.QueryResultTest & \\
-  \hline \fr{7.2}   & com\-.gpigc\-.test\-.ExpressionAnalysisTest  & \\
-  \hline \fr{11}    & com\-.gpigc\-.test\-.EmailNotificationTest  & \\
+% Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
+The traceability matrix below shows the mapping from each requirement to its test:
+
+\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
+  \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Details}\\
+  \hline \fr{1.2}   & N/A & Inspection, Alpha & Verify by observing output in admin centre\\
+  \hline \fr{2.1}   & SystemDataTest & Unit & Verify existence of timestamp\\
+  \hline \fr{2.2}   & EmitterSystemStateTest & Unit & Verify existence of timestamp\\
+  \hline \fr{3.1}   & GWTSystemDataGatewayTest & Unit & Valid values\\
+  \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON\\
+  \hline \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Inspection,\newline Unit & Check notification flag is set and queried to control notifications\\
+  \hline \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of events \\
+  \hline \fr{9}   & AnalysisControllerTest & Unit & Verify dispatch of events \\
+  \hline \fr{12}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
+  \hline \nfr{6}    & N/A  & Inspection & Verify existence of all test levels \\
   \hline
 \end{longtable}
 

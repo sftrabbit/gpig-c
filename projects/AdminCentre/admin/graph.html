@@ -49,7 +49,7 @@
         <div class="col-sm-12 center-block block-top-buffer">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">CPU Graph</h3>
+                    <h3 class="panel-title">Memory Graph</h3>
                 </div>
                 <div class="panel-body">
                     <canvas id="graph"></canvas>
@@ -84,10 +84,11 @@
     $(function(){
 
         // Configuration
-        var REFRESH_SECONDS = 5;
+        var REFRESH_SECONDS = 10;
         var MAX_POINTS = 50;
-        var RECORD_TYPE = "CPU";
+        var RECORD_TYPE = "Mem";
         var SYSTEM_ID = "1";
+        var FREQUENCY = 10; // 1 to 59
 
         // Initialise
         var relative = $("#graph").parent();
@@ -95,9 +96,9 @@
         var chart = new Chart($("#graph").get(0).getContext("2d"));
         var options = {
             scaleOverride: true,
-            scaleSteps: 10,
-            scaleStepWidth: 10,
-            scaleStartValue: 0
+            scaleSteps: 20,
+            scaleStepWidth: 1000000,
+            scaleStartValue: 170000000
         }
         var data = {
             labels : [],
@@ -112,18 +113,20 @@
             ]
         };
         $.ajax({
-            url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+MAX_POINTS+"&callback=?",
+            url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+(MAX_POINTS*FREQUENCY)+"&callback=?",
             dataType: "jsonp",
             success: function(graphData) {
                 graphData.Records.reverse();
                 $.each(graphData.Records, function(key, item) {
                     if (item.SensorID == RECORD_TYPE) {
-                        if (data.labels.length >= MAX_POINTS) {
-                            data.labels.shift();
-                            data.datasets[0].data.shift();
+                        if (!(new Date(item.CreationTimestamp).getUTCSeconds() % FREQUENCY)) {
+                            if (data.labels.length >= MAX_POINTS) {
+                                data.labels.shift();
+                                data.datasets[0].data.shift();
+                            }
+                            data.labels.push(parseDate(item.CreationTimestamp));
+                            data.datasets[0].data.push(parseFloat(item.Value));
                         }
-                        data.labels.push(parseDate(item.CreationTimestamp));
-                        data.datasets[0].data.push(parseFloat(item.Value));
                     }
                 });
                 chart.Line(data, options);
@@ -134,25 +137,27 @@
 
         function refreshChart() {
             $.ajax({
-                url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+REFRESH_SECONDS+"&callback=?",
+                url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+(REFRESH_SECONDS*FREQUENCY)+"&callback=?",
                 dataType: "jsonp",
                 success: function(graphData) {
                     graphData.Records.reverse();
                     $.each(graphData.Records, function(key, item) {
                         if (item.SensorID == RECORD_TYPE && (data.labels.indexOf(parseDate(item.CreationTimestamp)) == -1)) {
-                            if (data.labels.length >= MAX_POINTS) {
-                                data.labels.shift();
-                                data.datasets[0].data.shift();
+                            if (!(new Date(item.CreationTimestamp).getUTCSeconds() % FREQUENCY)) {
+                                if (data.labels.length >= MAX_POINTS) {
+                                    data.labels.shift();
+                                    data.datasets[0].data.shift();
+                                }
+                                data.labels.push(parseDate(item.CreationTimestamp));
+                                data.datasets[0].data.push(parseFloat(item.Value));
                             }
-                            data.labels.push(parseDate(item.CreationTimestamp));
-                            data.datasets[0].data.push(parseFloat(item.Value));
                         }
                     });
                     chart.Line(data, options);
                 }
             });
         }
-        //DISABLEDsetInterval(refreshChart, REFRESH_SECONDS * 1000);
+        setInterval(refreshChart, REFRESH_SECONDS * 1000);
 
         function parseDate(input) {
             var date = new Date(input);
