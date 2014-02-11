@@ -33,5 +33,15 @@ public class AppEngineServletTest {
 		assertEquals("Blue", states.get(2).getSensorReadings().get("Test1"));
 		assertEquals("TestSystemID3", states.get(3).getSystemID());
 	}
-
+	
+	@Test
+	public void testParseJSONTwo() throws JsonParseException, IOException {
+		String json = "{\"States\":[{\"SystemID\":\"1\",\"CreationTimestamp\":2462230871816,\"Sensors\":[{\"SensorID\":\"Mem\",\"Value\":\"37935888\"},{\"SensorID\":\"CPU\",\"Value\":\"0.5\"}]},{\"SystemID\":\"1\",\"CreationTimestamp\":2463237414448,\"Sensors\":[{\"SensorID\":\"Mem\",\"Value\":\"37935888\"},{\"SensorID\":\"CPU\",\"Value\":\"0.0\"}]}]}";
+		System.out.println("JSON string = " + json);
+		AppEngineServlet servlet = new AppEngineServlet();
+		StringReader reader = new StringReader(json);
+		List<EmitterSystemState> states = 
+				servlet.parseJSON(reader);
+		assertEquals("1", states.get(0).getSystemID());
+	}
 }

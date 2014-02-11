@@ -1,21 +1,12 @@
 \section{Risk register}
 \label{sec:riskregister}
 
-A risk assessment has been performed as part of the interim
-report to ensure the team is aware of any problems which could later
-arise, and to provide a guide as to how to react when such problems
-occur. The hazards (risks) have been identified by examining the 
-current literature \cite{boehm1991software,jones1998minimizing}, drawing upon team members' past experiences and group 
-discussion. Classification of the identified hazards, their impact on the system and their probability of occurrence is performed 
-in accordance with the Risk Management Guide for Information Technology 
-Systems \cite{stoneburner2002risk}. The areas these hazards impact were then analysed, as 
-well as the probability of occurrence. These are then weighted so 
-that we can identify the risks which are likely to 
-have the greatest detrimental effect on the project. The likelihood 
-score (LS), impact score (IS) and risk matrix score (RS) are listed 
-in the table below.
+A risk assessment has been performed, based on the design decisions made though out the initial and interim phases of the project, ensuring team members are aware how to react when problems when they occur.
 
-\begin{longtable}[H]{| p{0.65cm} | p{2cm} | p{0.3cm} | p{0.3cm} | p{2.4cm} | p{3cm} | p{2.7cm} | p{0.4cm} |}
+The hazards (risks) have been identified by examining the 
+current literature \cite{boehm1991software,jones1998minimizing}, drawing upon team members' past experiences and group discussion. Classification of the identified hazards, their impact on the system and their probability of occurrence is performed in accordance with the Risk Management Guide for Information Technology Systems \cite{stoneburner2002risk}. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are listed in the table below.
+
+\begin{longtable}[H]{| p{0.65cm} | p{2cm} | p{0.3cm} | p{0.3cm} | p{2.7cm} | p{3cm} | p{2.6cm} | p{0.4cm} |}
   \hline
   \cellcolor{titleColor}\textbf{Risk ID} &
   \cellcolor{titleColor}\textbf{Risk} &
@@ -27,174 +18,164 @@ in the table below.
   \cellcolor{titleColor}\textbf{RS}\\
   
   \hline \textbf{R.1}
-  & Loss of team member(s)
+  & Loss of team member(s).
   & 6
   & 3
-  & Internal and/or deadline failure
-  & Ensure that no work relating to the project is outside of team
-  version control; use of scrum methodology proactively aids work
-  reallocation, ensuring team members are aware of all assigned work
-  & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension
+  & Internal/external deadline failure.
+  & Ensure all team project work is under version control.
+ 
+  Use scrum methodology to proactively aids work reallocation, ensuring team members are aware of all assigned work.
+  & Reallocate work across remaining team members, possibly notifying the customer and obtaining a deadline extension.
   & 18 \\
   
   \hline \textbf{R.2}
-  & Team member under performance
+  & Team member(s) under performance.
   & 6
   & 3
-  & Internal and/or deadline failure
-  & Team strengths and weaknesses identified and work assigned appropriately, slack built into the schedule to account for under performance
-  & Reallocation of work across remaining team members, may have to notify customer and possible deadline extension
+  & Internal/external deadline failure.
+  & Identify team member strengths and weaknesses and assign work accordingly. 
+  
+  Build slack into the schedule to allow for under performance.
+  & Reallocate work across remaining team members, possibly notifying the customer and obtaining a deadline extension.
   & 18 \\
   
   \hline \textbf{R.3}
-  & Time pressures limiting amount of development time
+  & Time pressures limiting amount of development time.
   & 6
   & 4
-  & Missing deadline, not fulfilling requirements, low quality deliverables
-  & Define scope of work early, commit to complete requirements and allocate work to sprints 
-  & Reduce functionality required and/or notify customer of later delivery
-  & 24\\
+  & Internal/external deadline failure.
+  
+  Not fulfilling requirements.
+  
+  Low quality deliverables.
+  & Define scope of interim prototype early, commit to fulfilling requirements and allocate work to sprints.
+  & Reduce functionality required and/or notify customer of later delivery.
+  & 24 \\
   
   \hline \textbf{R.4}
-  & Developing user interface that does not satisfy users requirements
+  & Developed admin centre does not satisfy requirements.
   & 3
   & 3
-  & Poor user experience, loss of confidence in the solution
-  & Continuous, iterative development process, regularly incorporating users feedback on interface
-  & Redevelop user interface
+  & Poor user experience.
+  
+  Loss of confidence in HUMS.
+  & Continuous, iterative development process, regularly incorporating users feedback on the admin centre.
+  & Redevelop admin centre.
   & 9\\
   
   \hline \textbf{R.5}
-  & Adding more functionality than necessary
-  & 4
+  & Deprecation of required Google AppEngine functionality.
   & 3
-  & Additional, unnecessary functionality, possible deadline miss
-  & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
-  & Refocus team, prioritise required functionality, and only implement additional features once the prototype is complete.
+  & 4
+
+  & Unable to deliver required functionality.
+  
+  Loss of confidence in HUMS.
+  & Research pending deprecations to ensure required functionality will be supported.
+  & Migrate to another key-store database.
   & 12\\
   
   \hline \textbf{R.6}
-  & Deprecation of required Google App Engine functionality
+  & Communications link to Google AppEngine fails.
   & 3
   & 4
-  & Unable to deliver required functionality
-  & Research pending deprecations to ensure required functionality will be supported
-  & Move to another key-store database (relatively simple)
+  & Loss of service to users.
+  Loss of confidence in the HUMS.
+  & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
+  & Additional data abstraction layer could be built to interface with another database service such as Heroku.
   & 12\\
-  
   
   \hline \textbf{R.7}
-  & Short team failure of communication link to Google App Engine
-  & 3
-  & 4
-  & Short term loss of service to users, loss of confidence in the system
-  & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
-  & Additional data abstraction layer could be built to interface with another database service if App Engine proves to be unreliable
-  & 12\\
-
-  \hline \textbf{R.8}
-  & Prolonged failure of communication link to Google App Engine 
-  & 5
-  & 2
-  & Prolonged loss of service to users, loss of confidence in the system, possible failure to meet \nfrit10 and \nfrit13
-  & As above
-  & As above
-  & 10\\
-  
-  \hline \textbf{R.9}
-  & Data interception between our application and Google App Engine 
+  & Data interception between our application and Google App Engine.
   & 3
   & 2
-  & Loss of confidence in the system
-  & A final system would encrypt traffic between our system and Google App Engine, currently just sending (non-sensitive) test data
-  & Additional penetration testing to identify security flaws
+  & Loss of confidence in the HUMS.
+  & A final system would encrypt traffic between the HUMS and Google AppEngine, currently just sending (non-sensitive) test data.
+  & Additional penetration testing to identify security flaws.
   & 6\\
   
-  \hline \textbf{R.10}
-  & Data write/read times to/from Google App Engine too slow
+  \hline \textbf{R.8}
+  & Data write/read times to and from Google AppEngine are too slow.
   & 2
   & 5
   & Create a task backlog: gradual increase in load until system
-  is non-operational (failure to meet capacity requirement \nfrit9)
-  & Load testing of system throughout development to ensure \nfrit9
-  & Re-engineering of system, possible need to switch datastore
+  is non-operational (failure to meet capacity requirement \nfrit9).
+  & Load test the HUMS throughout development to ensure \nfrit9.
+  & Reengineer HUMS, possibly switching datastore.
   & 10\\
   
-  \hline \textbf{R.11}
-  & Implemen-tation does not facilitate data storage for a variety of systems
+  \hline \textbf{R.9}
+  & HUMS does not facilitate data storage for a variety of systems.
   & 3
   & 5
-  & Failure to meet key modifiability requirements 
-  & Adoption of a key-value database allows us the flexibility to store a variety of data
-  & Examination of data we are struggling to store and implementation of additional data gateway for it
+  & Failure to meet key modifiability and flexibility requirements.
+  & Adopt a key-value datastore allowing the flexibility to store a variety of data.
+  & Examine difficult data and implement an additional SystemDataGateway,
+  interfacing with a datastore capable of handling the data.
   & 15\\  
   
-  \hline \textbf{R.12}
-  & System performance required unattainable
-  & 2
+  \hline \textbf{R.10}
+  & Deprecation of required Google App Engine functionality.
+  & 3
   & 4
-  & Lead to failure to meet performance requirements 
-  & Choice of implementation or choice of utilised hardware must offer
-  enough in the way of performance to facilitate acceptable system
-  performance.
-  & All of, or combination of: optimisation of code, use of faster
-  hardware, use of faster networks
-  & 8 \\    
+  & Required HUMS performance is unattainable.
   
-  \hline \textbf{R.13}
-  & Included analysis components computing incorrect values
+  Unable to deliver required functionality.
+  & Research pending deprecations to ensure required functionality will be supported.
+  & Move to another key-store database (relatively simple).
+  & 12\\
+  
+  \hline \textbf{R.11}
+  & Included analysis components computing incorrect values.
   & 2
   & 5
-  & Failing to meet fundamental requirements, customer loses confidence in the system
-  & Adopting a test driven approach to development throughout the development process
-  & Re-engineering of failing components
+  & Failing to meet fundamental requirements.
+  
+  Loss of confidence in the HUMS.
+  & Adopt a test driven approach to development throughout the process
+  ensuring expectations are met.
+  & Re-engineer failing components.
   & 10\\
   
-  \hline \textbf{R.14}
-  & Analysis component computation too slow
+  \hline \textbf{R.12}
+  & Included Analysis component computation too slow.
   & 3
   & 4
   & Creates an analysis task backlog: gradual increase in load until system
-  is non-operational
-  & Load testing of analysis component throughout development, code optimisations 
-  & Re-engineering of analysis components
+  is non-operational.
+  & Load test analysis components throughout development.
+  
+    Optimise code.
+  & Re-engineer analysis components.
   & 12\\  
   
-  \hline \textbf{R.15}
-  & Notification computation too slow
+  \hline \textbf{R.13}
+  & Notification computation too slow.
   & 2
   & 4
   & Creates a notification backlog: gradual increase in load until system
-  is non-operational, failure to meet \nfrit13 and \frit9
-  & Load testing of notification component throughout development, code optimisations 
-  & Re-engineering of notification system
+  is non-operational.
+  & Load test notification components throughout development.
+ 
+  Optimise code.
+  & Re-engineer notification system.
   & 8\\
   
-  \hline \textbf{R.16}
-  & GitHub becomes unavailable for a prolonged period of time
+  \hline \textbf{R.14}
+  & GitHub becomes unavailable for a prolonged period of time.
   & 2
   & 2
-  & Difficulty merging work from different developers' machines
-  & Distributed nature of Git means little work would be lost
-  & Host our own git server within the Computer Science Department
+  & Difficulty merging work from different machines.
+  & Distributed nature of Git means little work would be lost.
+  & Host our own git server within the Computer Science Department.
   & 4\\ 
-  
-  \hline \textbf{R.17}
-  & Malicious destruction of code repository on GitHub
-  & 2
-  & 2
-  & Little impact as most developers computers would hold a near full copy of the central repository
-  & Two-step authentication used on GitHub, distributed nature of Git means little work would be lost
-  & Host our own git server within the Computer Science Department
-  & 4\\    
-    
-  \hline
+    \hline
 \end{longtable}       
 
 The likelihood score defines probability of something occurring. Utilising
 \textit{Kents Words of Estimative Probability}\cite{kent1966strategic}, with
 `certain' weighted $7$ and `impossible' weighted $1$.
-
+\hl{Should this be a long table below?}
 \begin{longtable}[H]{|c|c|l|c|c|c|c|c|}
   \cline{4-8} \multicolumn{3}{c|}{} & \multicolumn{5}{ c| }{Impact Score (Least$\rightarrow$Most)} \\
   \cline{4-8} \multicolumn{3}{c|}{} & 1 & 2 & 3 & 4 & 5 \\

@@ -223,10 +223,9 @@ through the system, using UML 2 notation}
 \subsection{Execution View}
 With a view to deployment and execution, the HUMS needs to be tailorable. The core system may be running on the same hardware as the data emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. 
-This is shown in figure \ref{fig:DeploymentService}, and is made possible by associating sensor data with a system ID.
-For administering the HUMS as a service, a hosted admin
-centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
+Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
+
+This deployment of our HUMS as a SaaS is shown in figure \ref{fig:DeploymentService}. For administering the HUMS as a service, a hosted admin centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
 
 Figure \ref{fig:DeploymentIsolated} shows how we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
 \begin{figure}[!ht]
@@ -465,13 +464,24 @@ language they see fit. For the prototype we used both Java and
 JavaScript when creating the engines---languages that team members are
 familiar with---allowing us to show off the versatility of the system.
 
-Upon determining to monitor CPU and heap usage, we began to investigate
+Upon deciding to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
+An alternative we considered was simply querying the existing features provided
+by the operating system and JVM to access this data, however this would have
+not been portable across different operating systems, or to embedded systems
+with poor support for launching new processes.
+
 To communicate between the core and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high performance, as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
+
+We initially considered using HTTP rather than Google Prototol Buffers for
+communcation between the data input layer and the core, however we determined
+that sending multiple HTTP requests a second would have significant overhead,
+and so we instead opted for a persistent connection and a more lightweight
+protocol.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
@@ -490,15 +500,17 @@ computers, laptops and mobile devices alike.
 We used various Java libraries to support our prototype, saving us 
 development time and providing a robust codebase. For testing we used 
 the Mockito framework to allow us to verify elements of our codebase in 
-isolation, by offering a concise way to mock out dependancies. To 
-interrogate the state of the test application provided by the Customer, we 
-used the SIGAR cross-platform system information API and JMX to query the 
-vital parameters of the process, including CPU utilisation and memory 
-footprint.
+isolation, by offering a concise way to mock out dependancies.
 
 We used Git for version control, allowing the entire team to
 contribute to the project simultaneously, whilst keeping a reversible
-history of all alterations made by each person.
+history of all alterations made by each person. We considered using a
+centralised version control system, such as Subversion, but decided that the
+benefits provided by a decentralised system, such as Git, for working
+independently and then combining work would outweigh the potential
+disadvantages of there being no managing server. As we used GitHub for the
+canonical copy of the work, we incorporated many of the benefits of centralised
+version control anyway.
 
 \subsection{Source}
 
@@ -534,7 +546,7 @@ created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
 rolling average of each value, and causes an email to be sent if this value
 becomes too high. The raw values are read by the reporting system and 
-displayed live in the admin centre, \hl{as shown in }figure~\ref{fig:graphing}. %% the current screenshot is of Nyan cat not of the test application!
+displayed live in the admin centre, \hl{as shown in} figure~\ref{fig:graphing}. %% the current screenshot is of Nyan cat not of the test application!
 
 % Mean - email
 % Raw values - graph
@@ -555,7 +567,9 @@ displayed live in the admin centre, \hl{as shown in }figure~\ref{fig:graphing}. 
 We also created our own sample application: monitoring earthquakes 
 through the USGS Earthquake Hazards Program API. The HUMS
 can collect live data from the API, store it and plot the location of any
-detected earthquakes on a map of the world in the admin centre, as shown in figure~\ref{fig:plotearthquakes}.
+detected earthquakes on a map of the world in the admin centre, as shown
+in figure~\ref{fig:plotearthquakes}. We felt that using a map to display
+data was a useful and innovative addition.
 
 \begin{figure}[htbp!]
   \centering
@@ -613,13 +627,21 @@ between each requirement and its associated test. % Move this down a section?
     well defined module-internal functions, such as the generation and 
     parsing of the JSON serialisation of objects.
     
-  \item[Analysis Controller] \hl{No tests written for this}
+  \item[Analysis Controller] The analysis controller is responsible for 
+	coordinating analysis engines and triggering notifications. Due to 
+	the central role played by the analysis controller in the analysis 
+	pipeline we identified its key attributes as performance and testability. 
+	We utilised Mockito to provide completely isolated unit tests, 
+	confirming that notifications are only triggered when appropriate and  
+	only the relevant analysis engines are used for a given system. 
+	Class loading was used to load analysis engines for the prototype, 
+	this was confirmed to be working via inspection and integration testing.
   
   \item[Analysis Engine]
   For the analysis engine, we created a unit test to check each aspect of the 
   engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
   for testing which allows mocking of results from methods of a dependancy 
-  class to restrict the possible source of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme, \hl{missing values were sent to the analysis engine.} % No idea what point is trying to be made here?
+  class to restrict the possible source of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the analysis engine.
 
   \item[Notification Generator] \hl{No tests written for this}
   \hl{Cooldown period in} \frit{8}
@@ -627,7 +649,7 @@ between each requirement and its associated test. % Move this down a section?
   \item[Notification Engine]
   The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
 
-  \item[Reports Engine] \hl{No tests written for this}
+  \item[Reports Engine] We tested the Reports Engine by inspection since it is a prototype and does not require significant automated testing at this stage.
   
  \end{description}
 
