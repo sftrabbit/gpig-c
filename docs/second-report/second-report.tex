@@ -30,6 +30,7 @@ Walker}
 \renewcommand{\headrulewidth}{0.4pt} % Add rules below header
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
 
+\newcommand{\conreq}[1]{\textcolor{reqColor}{\textbf{CR.#1}}}
 \newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
 \newcommand{\frit}[1]{\textit{FR.#1}}
 \newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
@@ -546,22 +547,22 @@ created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
 rolling average of each value, and causes an email to be sent if this value
 becomes too high. The raw values are read by the reporting system and 
-displayed live in the admin centre, \hl{as shown in} figure~\ref{fig:graphing}. %% the current screenshot is of Nyan cat not of the test application!
+displayed live in the admin centre, as shown in figure~\ref{fig:graphing}.
 
 % Mean - email
 % Raw values - graph
 
-\paragraph{Instructions for Replicating Results}
-\hl{Todo. Maybe also include more concrete results, e.g. types of values obtained from it and values obtained through analysis}
-
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=10cm]{images/graphing.png}
-  \caption{A screenshot of the live graphing of the state of the Customer 
+  \includegraphics[width=13cm]{images/TestApplicationMemoryGraph.png}
+  \caption{A screenshot of the live graphing of the memory usage of the Customer 
   Test Application}
   \label{fig:graphing}
 \end{figure}
+
+\paragraph{Instructions for Replicating Results}
+\hl{Todo. Maybe also include more concrete results, e.g. types of values obtained from it and values obtained through analysis}
 
 \subsubsection{Earthquake}
 We also created our own sample application: monitoring earthquakes 

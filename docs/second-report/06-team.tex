@@ -119,9 +119,29 @@ figure XXX, the key for the Gantt chart is displayed in figure YYY.}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{1.2cm}|p{6.6cm}|p{1.2cm}|p{1.2cm}|p{2.4cm}|p{1.6cm}|}
+\begin{tabular}{|p{0.6cm}|p{5.7cm}|p{1.1cm}|p{1.1cm}|p{2.4cm}|p{3.3cm}|}
 	\hline
 	\textbf{ID} & \textbf{Task Name} & \textbf{Start} & \textbf{Finish} & \textbf{Dependencies} & \textbf{Asignees} \\ \hline
-	\textbf{$1$} & Task Name & Start & Finish & Dependencies & Asignees \\ \hline
+	1 & Further requirements engineering & 07/11 & 08/11 &  & All \\ \hline
+	2 & Discussions with stakeholders & 07/11 & 09/11 &  & RT \\ \hline
+	3 & Generate additional use cases & 09/11 & 09/11 & 1 & All \\ \hline
+	4 & Database software decision & 08/11 & 08/11 &  & AJF,AIF \\ \hline
+	5 & Decision on tools and languages & 07/11 & 08/11 &  & AJF \\ \hline
+	6 & Software development infrastructure & 09/11 & 10/11 & 3 & AJF,AIF,JM \\ \hline
+	7 & Sprint planning & 10/11 & 11/11 & 3-4 & All \\ \hline
+	8 & Software development & 11/11 & 25/11 & 5 & All \\ \hline
+	9 & Database development & 11/11 & 25/11 & 5 & AJF,AIF,MW \\ \hline
+	10 & Testing & 11/11 & 25/11 & 5 & AJF,TF,AIF,TD,MW \\ \hline
+	11 & Demo to customer & 25/11 & 26/11 & 6-8 & RT \\ \hline
+	12 & Review customer feedback & 25/11 & 26/11 & 6-8 & All \\ \hline
+	13 & Sprint planning & 26/11 & 27/11 & 12 & All \\ \hline
+	14 & Software development & 27/11 & 22/01 & 13 & All \\ \hline
+	15 & Database development & 07/01 & 22/01 & 13 & All \\ \hline
+	16 & Testing & 22/01 & 29/01 & 14-15 & AJF,AIF,MW \\ \hline
+	17 & Demo to customer & 29/01 & 30/01 & 14-15 & AJF,TF,AIF,TD,MW \\ \hline
+	18 & Review customer feedback & 29/01 & 30/01 & 17 & RT \\ \hline
+	19 & Sprint planning & 30/01 & 31/01 & 18 & All \\ \hline
+	20 & Contingency & 31/01 & 13/02 &  & All \\ \hline
+	21 & Produce interim report & 10/11 & 14/02 & 3-6 & All \\ \hline
 \end{tabular}
 \end{table}
