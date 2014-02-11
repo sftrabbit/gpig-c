@@ -78,7 +78,7 @@ public class MeanAnalysisTest {
 	}
 
 	private void withNoSensorData() throws FailedToReadFromDatastoreException {
-		Mockito.when(database.readMostRecent("1", 10))
+		Mockito.when(database.readMostRecent("1", "CPU", 10))
 			.thenThrow(new FailedToReadFromDatastoreException("Failed"));
 	}
 
@@ -94,7 +94,7 @@ public class MeanAnalysisTest {
 	
 	private void addSensorValues(int numberOfRecords) 
 			throws FailedToReadFromDatastoreException {
-		Mockito.when(database.readMostRecent("1", 10))
+		Mockito.when(database.readMostRecent("1", "CPU", 10))
 			.thenReturn(createQueryResult(numberOfRecords));
 	}
 
