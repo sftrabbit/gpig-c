@@ -113,10 +113,15 @@ the three sub-teams, and working as part of our three teams, again split the
  
 Dependencies between tasks were extracted, to enable critical path analysis of the project. 
 This allowed us to ensure that for each task, the prerequisite task would be completed 
-prior to the next task commencing. \hl{The workflow can be seen in the Gantt chart displayed in 
-figure XXX, the key for the Gantt chart is displayed in figure YYY.}
+prior to the next task commencing. The workflow can be seen in the Gantt chart displayed in 
+figure \ref{fig:gantt}, the key for the Gantt chart is displayed in table \ref{tab:gantt}.
 
-\includegraphics[scale=0.48]{images/GanttChart.png}
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=0.48]{images/GanttChart.png}
+  \caption{Gantt chart for system development}
+  \label{fig:gantt}
+\end{figure}
 
 \begin{table}[H]
 \centering
@@ -145,4 +150,6 @@ figure XXX, the key for the Gantt chart is displayed in figure YYY.}
 	20 & Contingency & 31/01 & 13/02 &  & All \\ \hline
 	21 & Produce interim report & 10/11 & 14/02 & 3-6 & All \\ \hline
 \end{tabular}
+\caption{Gantt chart key}
+\label{tab:gantt}
 \end{table}
