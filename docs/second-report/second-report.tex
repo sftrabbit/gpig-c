@@ -163,7 +163,7 @@ HUMS and the interactions between these modules at a high level.
 \end{figure}
 
 \begin{description}
-  \item[Core] A collection of modules that must be run on one system, including the Data Input Layer, Analysis Controller, Data Abstraction Layer and Notification Generator. Additional modules can be integrated on the same system or connected over a network interface. % the names in this item should probably be all lowercase to be consistent with other items
+  \item[Core] A collection of modules that must be run on one system, including the data input layer, analysis controller, data abstraction layer, and notification generator. Additional modules can be integrated on the same system or connected over a network interface.
 
   \item[Data Emitter] Sends data to the system core in a standard
     format. May be included within the HUMS or created by the end
@@ -591,9 +591,6 @@ requirements to their lower level requisite requirements: acceptance
 testing, system testing, integration testing and unit
 testing.
 
-The traceability matrix in the section below shows the mapping 
-between each requirement and its associated test. % Move this down a section?
-
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
@@ -660,6 +657,8 @@ Below, the testing within each module is described:
 \subsubsection{Traceability Matrix}
 
 % Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
+
+\hl{The traceability matrix shows the mapping from each requirement to its test.} % Finish table - TODO: TD
 
 \begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{2.5cm}| p{2.5cm}|}
   \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Cases}\\
