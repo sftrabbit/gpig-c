@@ -159,7 +159,11 @@ HUMS and the interactions between these modules at a high level.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=14cm]{images/ComponentDiagram.png}
-  \caption{The module diagram of the HUMS}
+<<<<<<< HEAD
+  \caption{The module/context diagram of the HUMS}
+=======
+  \caption{The module diagram of the HUMS. Components shown in green are those provided as part of the GPIG-C system. Components shown in blue have default implementations provided as part of the system, but may be added to or replaced by the consumer.}
+>>>>>>> e549f897b6bf6fe0d5028bfde356573bd31c9859
   \label{fig:ComponentDiagram}
 \end{figure}
 
@@ -244,9 +248,6 @@ systems}
   \label{fig:DeploymentIsolated}
 \end{figure}
 
-%
-% THIS FIGURE IS NOT REFERENCED ANYWHERE!!
-%
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentService.png}
@@ -646,8 +647,7 @@ Below, the testing within each module is described:
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
     inspection testing, and also by running multiple clients simultaneously and
-    verifying that the data from both was recorded, thus verifying \frit{1.2}
-    and \nfrit{9}.
+    verifying that the data from both was recorded, thus verifying \frit{1.2}.
 
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
@@ -713,8 +713,7 @@ Table~\ref{tab:traceability} shows the existing tests used to verify the impleme
   \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON\\
   \hline \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Inspection,\newline Unit & Check notification flag is set and queried to control notifications\\
   \hline \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of events \\
-  \hline \fr{9}   & AnalysisControllerTest, \newline EmailNotificationTest & Unit & Verify dispatch of events \\
-  \hline \fr{12}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
+  \hline \fr{11}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
   \hline \nfr{6}    & N/A  & Inspection & Verify existence of all test levels \\
   \hline
   \end{tabular}

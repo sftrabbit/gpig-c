@@ -6,28 +6,28 @@ altered and, where possible, refined.
 \subsection{Functional Requirements}
 \label{sec:requirements-functional}
 Below, the existing functional requirements are refined, based on customer 
-feedback and the design decisions made in the previous report.
+feedback and design decisions made in the previous report.
 
 \frit{1} is refined to specify how data emitters will send data to the system, 
 and the type of data required. 
 \frit{2} required data to be timestamped, but didn't specify how these 
 timestamps were to be produced, \frit{2.1} and \frit{2.2} assign this
-responsibility to the data emitter and consumer system, and mandate when 
+responsibility to the data emitter and consumer system, mandating when 
 timestamps should be created.
 
 \frit{3} is refined by specifying how the data is to be stored, allowing the end 
 user to choose the technology of their choice, meaning the database can be 
-changed without needing to alter other HUMS modules, making it easy to 
-move the HUMS across domains.
+changed without needing to alter other modules, making it easy to 
+port the HUMS across domains.
 \frit{4} was modified such that the previous requirements \frit{4}, \frit{6}, 
 \frit{9}, and \frit{10} can all be expressed as refinements, with the 
-configuration file containing all end user settings. The new \frit{5} and \frit{6} 
-enforce the  functionality that the HUMS must provide as a result of the data 
+configuration files containing all end user settings. The new \frit{5} and \frit{6} 
+enforce the  functionality the HUMS must provide as a result of the data 
 in the configuration file.
 
 \frit{7}, previously \frit{12}, is refined to define how data will be analysed for 
 events. It identifies that there must be an API allowing analysis engines, 
-either created by the consumer or included with the HUMS, to extract stored 
+either created by the Consumer or included with the HUMS, to extract stored 
 data and produce events. 
 
 \frit{9} to \frit{12} do not appear in the previous report, and were discovered 
@@ -48,7 +48,7 @@ data 	to the HUMS.
  		 	timestamped.
  			 \item[\fr{1.1.3}] The data input API shall allow data emitters
  		 	to send sensor IDs and their values to the HUMS, 		
-			which will then be made available to the analysis engine.
+			which will then be made available to an analysis engine.
 		\end{description}
  		 \item[\fr{1.2}] A data emitter, extracting data from the given 	
 	test application, shall be provided.
@@ -120,12 +120,12 @@ data 	to the HUMS.
 \end{description}
 
 \subsection{Non-Functional Requirements}
-Non-function requirements remain similar, however \nfrit{14} has been 
+Non-functional requirements remain similar, however \nfrit{14} has been 
 added in order to clarify that data can be sent and stored in any format, 
 enforcing that the consumer's system will not have to conform to a format
 dictated by the HUMS. \nfrit{6} has been refined to more concretely detail the
 testing strategies to be used when validating that requirements have been met.
-It is also recognised that \nfrit{5}, \nfrit{9} and \nfrit{11} are requirements 
+It is also recognised that \nfrit{5} and \nfrit{11} are requirements 
 specific to the prototype as the functional requirements mandate that the 
 datastore be changeable, meaning, in the general case, requirements 
 about the abilities of the datastore are not verifiable.
@@ -153,17 +153,15 @@ about the abilities of the datastore are not verifiable.
 	system is deployed.
 	\item[\nfr{8}] The system must be able to support at least 5 output 
 	clients per HUMS instance. 
-	\item[\nfr{9}]  The system must cope with up to 2000 data input 
-	requests per second per HUMS instance. 
-	\item[\nfr{10}] The system must be available for no less than 99.9\% of 
+	\item[\nfr{9}] The system must be available for no less than 99.9\% of 
 	each month.
-	\item[\nfr{11}]  Data must be backed up within 24 hours of having been 
+	\item[\nfr{10}]  Data must be backed up within 24 hours of having been 
 	made available to the system.
-	 \item[\nfr{12}] Timestamps applied by the system must be accurate to 
+	 \item[\nfr{11}] Timestamps applied by the system must be accurate to 
 	within 5ms of UTC.
-	\item[\nfr{13}]  The system shall dispatch notifications within 5ms of an 
+	\item[\nfr{12}]  The system shall dispatch notifications within 5ms of an 
 	event being triggered.
-	\item[\nfr{14}] The system shall support storing data without requiring 
+	\item[\nfr{13}] The system shall support storing data without requiring 
 	specific schemata.
 \end{description}
 
