@@ -28,6 +28,12 @@ public class ExpressionAnalysis extends AnalysisEngine {
 		super("ExpressionAnalysis1", associatedSystems, database);
 	}
 
+	@Override
+	public Result analyse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 // TODO Enable once we can find the sensors for every system associated with this engine
 //
 //	private static final int ONE_VALUE_PER_SENSOR = 1;
