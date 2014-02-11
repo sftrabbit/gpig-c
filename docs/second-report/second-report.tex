@@ -545,17 +545,24 @@ or one executing on the JVM. We utilised Java Management
 Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
-rolling average of each value, and causes an email to be sent if this value
-becomes too high. The raw values are read by the reporting system and 
-displayed live in the admin centre, as shown in figure~\ref{fig:graphing}.
+rolling average of values, and causes an email to be sent if this value
+becomes too high, as shown in figure \ref{fig:alerting}. The raw memory values are read by the reporting system and 
+displayed live in the admin centre, as shown in figure~\ref{fig:graphing}. The graph shows a value from every 10 seconds, and automatically updates with the latest values.
 
 % Mean - email
 % Raw values - graph
 
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=7cm]{images/TestApplicationCPUAlert.png}
+  \caption{A screenshot of an emailnotification  sent by the mean analysis engine}
+  \label{fig:alerting}
+\end{figure}
+
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=13cm]{images/TestApplicationMemoryGraph.png}
+  \includegraphics[width=12cm]{images/TestApplicationMemoryGraph.png}
   \caption{A screenshot of the live graphing of the memory usage of the Customer 
   Test Application}
   \label{fig:graphing}
