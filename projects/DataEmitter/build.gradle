@@ -35,14 +35,26 @@ def buildCommon = {
 	from sourceSets.main.output
 
 	dependencies {
-		compile fileTree(dir: 'lib', include: '**/*.jar')
+		compile fileTree(dir: 'lib', include: '*.jar')
+	}
+	
+	into('lib') {
+		include '*.jar'
+        from 'lib'
+    }
+    
+    def jarList = []
+	new File("lib").eachFile() { file->  
+		if (file.name.endsWith('.jar')) {
+    		jarList << "lib/" + file.getName()
+    	}
 	}
 
 	manifest {
 		attributes 'Main-Class': 'org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader',
 		           'Rsrc-Main-Class': 'com.gpigc.dataemitter.DataEmitter',
 		           'Class-Path': '.',
-		           'Rsrc-Class-Path': './'
+		           'Rsrc-Class-Path': "./ ${jarList.join(' ')}"
 	}
 
 	from zipTree('lib/jar-in-jar-loader.zip')
