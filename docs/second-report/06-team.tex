@@ -123,33 +123,29 @@ figure \ref{fig:gantt}, the key for the Gantt chart is displayed in table \ref{t
   \label{fig:gantt}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|p{0.6cm}|p{5.7cm}|p{1.1cm}|p{1.1cm}|p{2.4cm}|p{3.3cm}|}
+
+\begin{longtable}{|p{0.6cm}|p{5.7cm}|p{1.35cm}|p{1.35cm}|p{1.8cm}|p{1.5cm}|}
 	\hline
-	\rowcolor{titleColor}\textbf{ID} & \textbf{Task Name} & \textbf{Start} & \textbf{Finish} & \textbf{Dependencies} & \textbf{Asignees} \\ \hline
-	1 & Further requirements engineering & 07/11 & 08/11 &  & All \\ \hline
-	2 & Discussions with stakeholders & 07/11 & 09/11 &  & RT \\ \hline
-	3 & Generate additional use cases & 09/11 & 09/11 & 1 & All \\ \hline
-	4 & Database software decision & 08/11 & 08/11 &  & AJF,AIF \\ \hline
-	5 & Decision on tools and languages & 07/11 & 08/11 &  & AJF \\ \hline
-	6 & Software development infrastructure & 09/11 & 10/11 & 3 & AJF,AIF,JM \\ \hline
-	7 & Sprint planning & 10/11 & 11/11 & 3-4 & All \\ \hline
-	8 & Software development & 11/11 & 25/11 & 5 & All \\ \hline
-	9 & Database development & 11/11 & 25/11 & 5 & AJF,AIF,MW \\ \hline
-	10 & Testing & 11/11 & 25/11 & 5 & AJF,TF,AIF,TD,MW \\ \hline
-	11 & Demo to customer & 25/11 & 26/11 & 6-8 & RT \\ \hline
-	12 & Review customer feedback & 25/11 & 26/11 & 6-8 & All \\ \hline
-	13 & Sprint planning & 26/11 & 27/11 & 12 & All \\ \hline
-	14 & Software development & 27/11 & 22/01 & 13 & All \\ \hline
-	15 & Database development & 07/01 & 22/01 & 13 & All \\ \hline
-	16 & Testing & 22/01 & 29/01 & 14-15 & AJF,AIF,MW \\ \hline
-	17 & Demo to customer & 29/01 & 30/01 & 14-15 & AJF,TF,AIF,TD,MW \\ \hline
-	18 & Review customer feedback & 29/01 & 30/01 & 17 & RT \\ \hline
-	19 & Sprint planning & 30/01 & 31/01 & 18 & All \\ \hline
-	20 & Contingency & 31/01 & 13/02 &  & All \\ \hline
-	21 & Produce interim report & 10/11 & 14/02 & 3-6 & All \\ \hline
-\end{tabular}
-\caption{Gantt chart key}
-\label{tab:gantt}
-\end{table}
+	\rowcolor{titleColor} \textbf{ID} & \textbf{Task Name} & \textbf{Start} & \textbf{Finish} & \textbf{Dependant on} & \textbf{Asignees} \\ \hline
+	1 & Further requirements engineering & Autumn 5 & Autumn 5 &  & Team \\ \hline
+	2 & Discussions with stakeholders & Autumn 6 & Autumn 6 & 1 & RT \\ \hline
+	3 & Generate additional use cases & Autumn 6 & Autumn 6 & 2 & Team \\ \hline
+	4 & Database software decision & Autumn 6 &  Autumn 6 &  3 & RT,TD \\ \hline
+	5 & Decision on tools and languages & Autumn 6 & Autumn 6 & 3 & AJF, TD, JM \\ \hline
+	6 & Software development infrastructure & Autumn 6 & Autumn 6 & 3 & AJF, AIF, JM \\ \hline
+	7 & Sprint planning & Autumn 6 & Autumn 6 & 6 & Team \\ \hline
+	8 & Initial software development & Autumn 7 & Autumn 10 & 7 & Team \\ \hline
+	9 & Database development & Autumn 7 & Autumn 10 & 7 & RT,TD \\ \hline
+	10 & Testing & Autumn 7 & Spring 1 & 7 & TD, AJF, MW \\ \hline
+	11 & Demo to customer & Spring 1 & Spring 1 & 10 & Team \\ \hline
+	12 & Review customer feedback & Spring 1 & Spring 2 & 11 & Team\\ \hline
+	13 & Sprint planning & Spring 2 & Spring 2 & 12 & RT \\ \hline
+	14 & Further software development & Spring 2 &  Spring 4& 13 & Team \\ \hline
+	15 & Further database development & Spring 2 & Spring 4 & 13 & RT,TD \\ \hline
+	16 & Testing & Spring 2 & Spring 4 & 13 & Team \\ \hline
+	17 & Demo to customer & Spring 5 & Spring 5 & 16 & Team \\ \hline
+	18 & Review customer feedback & Spring 5 & Spring 5 & 17 & RT \\ \hline
+	19 & Contingency & Spring 6 & Spring 6 &  & Team \\ \hline
+	20 & Produce interim report & Autumn 8 & Spring 6 & & Team \\ \hline
+\end{longtable}
+
