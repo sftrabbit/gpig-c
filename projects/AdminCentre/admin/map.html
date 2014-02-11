@@ -82,7 +82,7 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jQgEtsdQmRQtyOXp6VDwoDla2rN4FbE&sensor=false"></script>
 <script type="text/javascript">
     // Configuration
-    var REFRESH_SECONDS = 10;
+    var REFRESH_SECONDS = 120;
     var MAX_POINTS = 50;
     var RECORD_TYPE = "EQ";
     var SYSTEM_ID = "2";
@@ -169,7 +169,7 @@
             });
         }
         refreshMap();
-        //DISABLEDsetInterval(refreshMap, REFRESH_SECONDS * 1000);
+        setInterval(refreshMap, REFRESH_SECONDS * 1000);
 
     }
  	google.maps.event.addDomListener(window, 'load', initialize);
