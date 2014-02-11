@@ -159,7 +159,11 @@ HUMS and the interactions between these modules at a high level.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=14cm]{images/ComponentDiagram.png}
+<<<<<<< HEAD
   \caption{The module/context diagram of the HUMS}
+=======
+  \caption{The module diagram of the HUMS. Components shown in green are those provided as part of the GPIG-C system. Components shown in blue have default implementations provided as part of the system, but may be added to or replaced by the consumer.}
+>>>>>>> e549f897b6bf6fe0d5028bfde356573bd31c9859
   \label{fig:ComponentDiagram}
 \end{figure}
 
@@ -589,16 +593,23 @@ data was a useful and innovative addition.
 \end{figure}
 
 \subsubsection{Instructions for Running and Replicating Results}
-Once the source has been obtained, it can be run as follows: \hl{Todo - instructions for running the system as a whole: jars and stuff. Joe?}
+Once the source has been obtained, it can be run as follows: \hl{Todo - instructions for running the system as a whole: jars and stuff. Joe? I've got stuff going below but FOR THE LOVE OF GOD update the jar filenames and parameters, plus any OS restrictions before completing the document.}
 
+Customer Test Application -- No. 1:
 \begin{enumerate}
-  \item Run X with parameters Y, Z in W
-  \item Observe result
-  \item ????
-  \item PROFIT
+  \item Run \verb+java -jar custTestAppLauncher.jar+
+  \item Observe collected data on \verb+http://www.gpigc.co.uk/admin/map.html+
 \end{enumerate}
 
-The test application memory graph can be viewed at \textit{http://www.gpigc.co.uk/admin/graph.html} and the earthquake map can be viewed at \textit{http://www.gpigc.co.uk/admin/map.html}.
+Earthquake Monitor:
+\begin{enumerate}
+  \item Run \verb+java -jar earthquakeLauncher.jar+
+  \item Observe collected data on \verb+http://www.gpigc.co.uk/admin/graph.html+
+\end{enumerate}
+
+\hl{All running Customer Test Application or Earthquake Monitor instances will send data to the same HUMS instance, and so data from multiple instances of the same example application will be interleaved in the admin centre live view. With this in mind, we recommend only running one instance of each application at a time.} % TODO Verify this
+
+The test application memory graph can be viewed at \verb+http://www.gpigc.co.uk/admin/graph.html+ and the earthquake map can be viewed at \verb+http://www.gpigc.co.uk/admin/map.html+.
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
