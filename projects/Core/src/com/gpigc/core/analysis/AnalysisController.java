@@ -76,12 +76,14 @@ public class AnalysisController {
 	private void processResult(String engineName, Result result, String systemId) {
 		// database.write(engineName, result);
 		// TODO write back data
-		if (result.isNotify()) {
-			Event event = new Event(result, engineName, systemId);
-			notificationGenerator.generate(event);
-
-			System.out.println("Notification triggered: "
-					+ result.getDataToSave().toString());
+		if (result != null) {
+			if (result.isNotify()) {
+				Event event = new Event(result, engineName, systemId);
+				notificationGenerator.generate(event);
+	
+				System.out.println("Notification triggered: "
+						+ result.getDataToSave().toString());
+			}
 		}
 	}
 

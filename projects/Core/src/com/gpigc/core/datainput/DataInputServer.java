@@ -70,6 +70,7 @@ public class DataInputServer extends Thread {
 					}
 				} catch (FailedToWriteToDatastoreException e) {
 					System.out.println("Failed to write to database. Discarding data.");
+					System.out.println(e);
 				}
 			}
 
