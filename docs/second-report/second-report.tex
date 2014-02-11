@@ -29,6 +29,7 @@ Walker}
 
 \renewcommand{\headrulewidth}{0.4pt} % Add rules below header
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\specialcell}[2][l]{\begin{tabular}[#1]{l@{}l@{}}#2\end{tabular}}
 
 \newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
 \newcommand{\frit}[1]{\textit{FR.#1}}
@@ -654,17 +655,19 @@ Below, the testing within each module is described:
   The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
 
   \item[Reports Engine] We tested the Reports Engine by inspection since it is a prototype and does not require significant automated testing at this stage.
-  
+
  \end{description}
 
 \subsubsection{Traceability Matrix}
 
-\begin{longtable}[H]{| p{2.3cm} | p{8cm}| p{4cm}|}
-  \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Strategy}\\
-  \hline \fr{3.1}   & com\-.gpigc\-.client\-.GWTSystemDataGatewayTest &  \\
-  \hline \fr{3.2}   & com\-.gpigc\-.client\-.SystemDataTest, com\-.gpigc\-.client	\-.EmitterSystemStateTest, com\-.gpigc\-.client\-.QueryResultTest & \\
-  \hline \fr{7.2}   & com\-.gpigc\-.test\-.ExpressionAnalysisTest  & \\
-  \hline \fr{11}    & com\-.gpigc\-.test\-.EmailNotificationTest  & \\
+% Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
+
+\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{2.5cm}| p{2.5cm}|}
+  \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Cases}\\
+  \hline \fr{3.1}   & GWTSystemDataGatewayTest & Unit & Extreme values\\
+  \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Unit &\\
+  \hline \fr{7.2}   & ExpressionAnalysisTest  &a &\\
+  \hline \fr{11}    & EmailNotificationTest  & Inspection &\\
   \hline
 \end{longtable}
 
