@@ -53,7 +53,7 @@ in the table below.
   & Missing deadline, not fulfilling requirements, low quality deliverables
   & Define scope of work early, commit to complete requirements and allocate work to sprints 
   & Reduce functionality required and/or notify customer of later delivery
-  & \\
+  & 24\\
   
   \hline \textbf{R.4}
   & Developing user interface that does not satisfy users requirements
@@ -62,7 +62,7 @@ in the table below.
   & Poor user experience, loss of confidence in the solution
   & Continuous, iterative development process, regularly incorporating users feedback on interface
   & Redevelop user interface
-  & \\
+  & 9\\
   
   \hline \textbf{R.5}
   & Adding more functionality than necessary
@@ -71,7 +71,7 @@ in the table below.
   & Additional, unnecessary functionality, possible deadline miss
   & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
   & Refocus team, prioritise required functionality, and only implement additional features once the prototype is complete.
-  & \\
+  & 12\\
   
   \hline \textbf{R.6}
   & Deprecation of required Google App Engine functionality
@@ -80,7 +80,7 @@ in the table below.
   & Unable to deliver required functionality
   & Research pending deprecations to ensure required functionality will be supported
   & Move to another key-store database (relatively simple)
-  & \\
+  & 12\\
   
   
   \hline \textbf{R.7}
@@ -90,7 +90,7 @@ in the table below.
   & Short term loss of service to users, loss of confidence in the system
   & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
   & Additional data abstraction layer could be built to interface with another database service if App Engine proves to be unreliable
-  & \\
+  & 12\\
 
   \hline \textbf{R.8}
   & Prolonged failure of communication link to Google App Engine 
@@ -99,7 +99,7 @@ in the table below.
   & Prolonged loss of service to users, loss of confidence in the system, possible failure to meet \nfrit10 and \nfrit13
   & As above
   & As above
-  & \\
+  & 10\\
   
   \hline \textbf{R.9}
   & Data interception between our application and Google App Engine 
@@ -108,7 +108,7 @@ in the table below.
   & Loss of confidence in the system
   & A final system would encrypt traffic between our system and Google App Engine, currently just sending (non-sensitive) test data
   & Additional penetration testing to identify security flaws
-  & \\
+  & 6\\
   
   \hline \textbf{R.10}
   & Data write/read times to/from Google App Engine too slow
@@ -118,7 +118,7 @@ in the table below.
   is non-operational (failure to meet capacity requirement \nfrit9)
   & Load testing of system throughout development to ensure \nfrit9
   & Re-engineering of system, possible need to switch datastore
-  & \\
+  & 10\\
   
   \hline \textbf{R.11}
   & Implemen-tation does not facilitate data storage for a variety of systems
@@ -127,7 +127,7 @@ in the table below.
   & Failure to meet key modifiability requirements 
   & Adoption of a key-value database allows us the flexibility to store a variety of data
   & Examination of data we are struggling to store and implementation of additional data gateway for it
-  & \\  
+  & 15\\  
   
   \hline \textbf{R.12}
   & System performance required unattainable
@@ -148,7 +148,7 @@ in the table below.
   & Failing to meet fundamental requirements, customer loses confidence in the system
   & Adopting a test driven approach to development throughout the development process
   & Re-engineering of failing components
-  & \\
+  & 10\\
   
   \hline \textbf{R.14}
   & Analysis component computation too slow
@@ -158,7 +158,7 @@ in the table below.
   is non-operational
   & Load testing of analysis component throughout development, code optimisations 
   & Re-engineering of analysis components
-  & \\  
+  & 12\\  
   
   \hline \textbf{R.15}
   & Notification computation too slow
@@ -168,7 +168,7 @@ in the table below.
   is non-operational, failure to meet \nfrit13 and \frit9
   & Load testing of notification component throughout development, code optimisations 
   & Re-engineering of notification system
-  & \\
+  & 8\\
   
   \hline \textbf{R.16}
   & GitHub becomes unavailable for a prolonged period of time
@@ -177,7 +177,7 @@ in the table below.
   & Difficulty merging work from different developers' machines
   & Distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
-  & \\ 
+  & 4\\ 
   
   \hline \textbf{R.17}
   & Malicious destruction of code repository on GitHub
@@ -186,7 +186,7 @@ in the table below.
   & Little impact as most developers computers would hold a near full copy of the central repository
   & Two-step authentication used on GitHub, distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
-  & \\    
+  & 4\\    
     
   \hline
 \end{longtable}       
