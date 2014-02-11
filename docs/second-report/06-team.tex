@@ -105,47 +105,24 @@ Quality Assurance   &   Ensure cohesion between system modules, analysing perfor
 
 \section{Development Plan}
 
-As a team we considered the scope of the project which was to be undertaken.
- As a result of this we divided the work to be undertaken into specific tasks.
- Once the work to be undertaken was identified, the work was evenly split across 
-the three sub-teams, and working as part of our three teams, again split the 
- tasks between us to ensure an equal workload.
- 
-Dependencies between tasks were extracted, to enable critical path analysis of the project. 
-This allowed us to ensure that for each task, the prerequisite task would be completed 
-prior to the next task commencing. The workflow can be seen in the Gantt chart displayed in 
-figure \ref{fig:gantt}, the key for the Gantt chart is displayed in table \ref{tab:gantt}.
+As a team we considered the scope of the project which was to be undertaken. As a result of this we divided the work to be undertaken into specific tasks. Once the work to be undertaken was identified, the work was evenly split across the sub-teams.
+Before beginning development the team, as a whole, updated and extended the previous Gantt chart based on customer feedback.
+Figure \ref{fig:ganttInterim}  shows the plan for the interim phase of the project, beginning with reviewing feedback from the previous report.
+Figure \ref{fig:ganttFinal}  shows the plan for the final phase of the project, and more specifically identifies areas of the prototype to be refined.
 
-\begin{figure}[htbp!]
+Dependencies between tasks were examined allowing for a critical path through the project to be identified, showing the longest path through the project and the earliest point at which individual tasks can be started.
+This critical path analysis ensures that all work can be completed on time and that time is being used efficiently. 
+
+\begin{figure}[ht!]
   \centering
-  \includegraphics[scale=0.48]{images/GanttChart.png}
-  \caption{Gantt chart for system development}
-  \label{fig:gantt}
+  \includegraphics[width= 15cm]{images/GantInterim.pdf}
+  \caption{Gantt chart for the interim phase of the project, purple shows the critical path.}
+  \label{fig:ganttInterim}
 \end{figure}
 
-
-\begin{longtable}{|p{0.6cm}|p{5.7cm}|p{1.35cm}|p{1.35cm}|p{1.8cm}|p{1.5cm}|}
-	\hline
-	\rowcolor{titleColor} \textbf{ID} & \textbf{Task Name} & \textbf{Start} & \textbf{Finish} & \textbf{Dependant on} & \textbf{Asignees} \\ \hline
-	1 & Further requirements engineering & Autumn 5 & Autumn 5 &  & Team \\ \hline
-	2 & Discussions with stakeholders & Autumn 6 & Autumn 6 & 1 & RT \\ \hline
-	3 & Generate additional use cases & Autumn 6 & Autumn 6 & 2 & Team \\ \hline
-	4 & Database software decision & Autumn 6 &  Autumn 6 &  3 & RT,TD \\ \hline
-	5 & Decision on tools and languages & Autumn 6 & Autumn 6 & 3 & AJF, TD, JM \\ \hline
-	6 & Software development infrastructure & Autumn 6 & Autumn 6 & 3 & AJF, AIF, JM \\ \hline
-	7 & Sprint planning & Autumn 6 & Autumn 6 & 6 & Team \\ \hline
-	8 & Initial software development & Autumn 7 & Autumn 10 & 7 & Team \\ \hline
-	9 & Database development & Autumn 7 & Autumn 10 & 7 & RT,TD \\ \hline
-	10 & Testing & Autumn 7 & Spring 1 & 7 & TD, AJF, MW \\ \hline
-	11 & Demo to customer & Spring 1 & Spring 1 & 10 & Team \\ \hline
-	12 & Review customer feedback & Spring 1 & Spring 2 & 11 & Team\\ \hline
-	13 & Sprint planning & Spring 2 & Spring 2 & 12 & RT \\ \hline
-	14 & Further software development & Spring 2 &  Spring 4& 13 & Team \\ \hline
-	15 & Further database development & Spring 2 & Spring 4 & 13 & RT,TD \\ \hline
-	16 & Testing & Spring 2 & Spring 4 & 13 & Team \\ \hline
-	17 & Demo to customer & Spring 5 & Spring 5 & 16 & Team \\ \hline
-	18 & Review customer feedback & Spring 5 & Spring 5 & 17 & RT \\ \hline
-	19 & Contingency & Spring 6 & Spring 6 &  & Team \\ \hline
-	20 & Produce interim report & Autumn 8 & Spring 6 & & Team \\ \hline
-\end{longtable}
-
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width= 12cm]{images/GantFinal.pdf}
+  \caption{Gantt chart for the final phase of the project, purple shows the critical path.}
+  \label{fig:ganttFinal}
+\end{figure}

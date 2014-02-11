@@ -478,8 +478,8 @@ with poor support for launching new processes.
 
 To communicate between the core and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high performance, as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
 
-We initially considered using HTTP rather than Google Prototol Buffers for
-communcation between the data input layer and the core, however we determined
+We initially considered using HTTP rather than Google Protocol Buffers for
+communication between the data input layer and the core, however we determined
 that sending multiple HTTP requests a second would have significant overhead,
 and so we instead opted for a persistent connection and a more lightweight
 protocol.
@@ -491,12 +491,19 @@ work with other database technologies simply by implementing an
 interface within the data abstraction layer.
 
 We created a prototype admin centre to show how the HUMS could be
-managed remotely, viewing data and modifying settings online, through
-a web browser, whilst running as a service. The admin centre was
+managed remotely, viewing data and modifying settings online through
+a web browser, whilst running as a service. The admin centre, shown in figure \ref{fig:admin} was
 developed using the Bootstrap front-end web framework, including 
 HTML, JavaScript and CSS, in order to create a prototype realistically
 simulating an interface to the HUMS that is accessible on desktop
 computers, laptops and mobile devices alike.
+
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=15cm]{images/admin.pdf}
+  \caption{A screenshot of the admin centre homepage}
+  \label{fig:admin}
+\end{figure}
 
 We used various Java libraries to support our prototype, saving us 
 development time and providing a robust codebase. For testing we used 
@@ -585,7 +592,23 @@ data was a useful and innovative addition.
 \end{figure}
 
 \subsubsection{Instructions for Running and Replicating Results}
-Once the source has been obtained, it can be run in a couple of ways. \hl{Todo - instructions for running the system as a whole: jars and stuff}
+Once the source has been obtained, it can be run as follows: \hl{Todo - instructions for running the system as a whole: jars and stuff. Joe? I've got stuff going below but FOR THE LOVE OF GOD update the jar filenames and parameters, plus any OS restrictions before completing the document.}
+
+Customer Test Application -- No. 1:
+\begin{enumerate}
+  \item Run \verb+java -jar custTestAppLauncher.jar+
+  \item Observe collected data on \verb+http://www.gpigc.co.uk/admin/map.html+
+\end{enumerate}
+
+Earthquake Monitor:
+\begin{enumerate}
+  \item Run \verb+java -jar earthquakeLauncher.jar+
+  \item Observe collected data on \verb+http://www.gpigc.co.uk/admin/graph.html+
+\end{enumerate}
+
+\hl{All running Customer Test Application or Earthquake Monitor instances will send data to the same HUMS instance, and so data from multiple instances of the same example application will be interleaved in the admin centre live view. With this in mind, we recommend only running one instance of each application at a time.} % TODO Verify this
+
+The test application memory graph can be viewed at \verb+http://www.gpigc.co.uk/admin/graph.html+ and the earthquake map can be viewed at \verb+http://www.gpigc.co.uk/admin/map.html+.
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
@@ -606,7 +629,9 @@ testing.
 % input re- quests per second per HUMS instance."
 % Also talk about what we can't test since not everything is implemented
 
-\hl{To system test}
+\hl{For system testing, we completed inspection testing, and deployed our system across various networked machines and verified that the HUMS acted as expected. A more thorough system testing stage will be completed for later, higher fidelity, iterations of the prototype.
+
+For acceptance testing, we sent the Customer various iterations of our prototype, and we expect that the feedback from this report will fold back into our acceptance testing.} % Can someone else help expand on this?
 
 Below, the testing within each module is described:
 
@@ -673,12 +698,13 @@ Below, the testing within each module is described:
 
  \end{description}
 
-\subsubsection{Traceability Matrix}
+\subsubsection{Traceability Table}
 
-% Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
-The traceability matrix below shows the mapping from each requirement to its test:
+Table~\ref{tab:traceability} shows the existing tests used to verify the implementation of the requirements in the system.
 
-\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
+\begin{table}[H]
+\centering
+\begin{tabular}{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
   \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Details}\\
   \hline \fr{1.2}   & N/A & Inspection, Alpha & Verify by observing output in admin centre\\
   \hline \fr{2.1}   & SystemDataTest & Unit & Verify existence of timestamp\\
@@ -691,7 +717,10 @@ The traceability matrix below shows the mapping from each requirement to its tes
   \hline \fr{12}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
   \hline \nfr{6}    & N/A  & Inspection & Verify existence of all test levels \\
   \hline
-\end{longtable}
+  \end{tabular}
+  \caption{The traceability table showing the mapping from each requirement to its existing tests}
+  \label{tab:traceability}
+\end{table}
 
 \input{06-team}
 
