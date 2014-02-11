@@ -48,8 +48,8 @@ in the table below.
   
   \hline \textbf{R.3}
   & Time pressures limiting amount of development time
-  & 
-  & 
+  & 6
+  & 4
   & Missing deadline, not fulfilling requirements, low quality deliverables
   & Define scope of work early, commit to complete requirements and allocate work to sprints 
   & Reduce functionality required and/or notify customer of later delivery
@@ -57,8 +57,8 @@ in the table below.
   
   \hline \textbf{R.4}
   & Developing user interface that does not satisfy users requirements
-  & 
-  & 
+  & 3
+  & 3
   & Poor user experience, loss of confidence in the solution
   & Continuous, iterative development process, regularly incorporating users feedback on interface
   & Redevelop user interface
@@ -66,8 +66,8 @@ in the table below.
   
   \hline \textbf{R.5}
   & Adding more functionality than necessary
-  & 
-  & 
+  & 4
+  & 3
   & Additional, unnecessary functionality, possible deadline miss
   & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
   & \hl{???}
@@ -75,8 +75,8 @@ in the table below.
   
   \hline \textbf{R.6}
   & Deprecation of required Google App Engine functionality
-  & 
-  & 
+  & 3
+  & 4
   & Unable to deliver required functionality
   & Research pending deprecations to ensure required functionality will be supported
   & Move to another key-store database (relatively simple)
@@ -84,9 +84,9 @@ in the table below.
   
   
   \hline \textbf{R.7}
-  & Communic-ations link to Google App Engine fails
-  & 
-  & 
+  & Commun-ications link to Google App Engine fails
+  & 3
+  & 4
   & Loss of service to users, loss of confidence in the system
   & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
   & Additional data abstraction layer could be built to interface with another database service
@@ -94,8 +94,8 @@ in the table below.
   
   \hline \textbf{R.8}
   & Data interception between our application and Google App Engine 
-  & 
-  & 
+  & 3
+  & 2
   & Loss of confidence in the system
   & A final system would encrypt traffic between our system and Google App Engine, currently just sending (non-sensitive) test data
   & Additional penetration testing to identify security flaws
@@ -103,8 +103,8 @@ in the table below.
   
   \hline \textbf{R.9}
   & Data write/read times to/from Google App Engine too slow
-  & 
-  & 
+  & 2
+  & 5
   & Create a task backlog: gradual increase in load until system
   is non-operational (failure to meet capacity requirement \nfrit9)
   & Load testing of system throughout development to ensure \nfrit9
@@ -113,8 +113,8 @@ in the table below.
   
   \hline \textbf{R.10}
   & Implemen-tation does not facilitate data storage for a variety of systems
-  & 
-  & 
+  & 3
+  & 5
   & Failure to meet key modifiability requirements 
   & Adoption of a key-value database allows us the flexibility to store a variety of data
   & Examination of data we are struggling to store and implementation of additional data gateway for it
@@ -134,8 +134,8 @@ in the table below.
   
   \hline \textbf{R.12}
   & Included analysis components computing incorrect values
-  & 
-  & 
+  & 2
+  & 5
   & Failing to meet fundamental requirements, customer loses confidence in the system
   & Adopting a test driven approach to development throughout the development process
   & Re-engineering of failing components
@@ -143,8 +143,8 @@ in the table below.
   
   \hline \textbf{R.13}
   & Analysis component computation too slow
-  & 
-  & 
+  & 3
+  & 4
   & Creates an analysis task backlog: gradual increase in load until system
   is non-operational
   & Load testing of analysis component throughout development, code optimisations 
@@ -153,8 +153,8 @@ in the table below.
   
   \hline \textbf{R.14}
   & Notification computation too slow
-  & 
-  & 
+  & 2
+  & 4
   & Creates a notification backlog: gradual increase in load until system
   is non-operational
   & Load testing of notification component throughout development, code optimisations 
@@ -163,8 +163,8 @@ in the table below.
   
   \hline \textbf{R.15}
   & GitHub becomes unavailable for a prolonged period of time
-  & 
-  & 
+  & 2
+  & 2
   & Difficulty merging work from different developers' machines
   & Distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
@@ -172,8 +172,8 @@ in the table below.
   
   \hline \textbf{R.16}
   & Malicious destruction of code repository on GitHub
-  & 
-  & 
+  & 2
+  & 2
   & \hl{???}
   & Two-step authentication used on GitHub, distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
