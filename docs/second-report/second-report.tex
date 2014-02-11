@@ -667,8 +667,7 @@ Below, the testing within each module is described:
 \subsubsection{Traceability Matrix}
 
 % Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
-
-\hl{The traceability matrix below shows the mapping from each requirement to its test:} % Finish table - TODO: TD
+The traceability matrix below shows the mapping from each requirement to its test:
 
 \begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
   \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Details}\\
@@ -678,11 +677,10 @@ Below, the testing within each module is described:
   \hline \fr{3.1}   & GWTSystemDataGatewayTest & Unit & Valid values\\
   \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON\\
   \hline \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Inspection,\newline Unit & Check notification flag is set and queried to control notifications\\
-  \hline \fr{7.2}   & ExpressionAnalysisTest  & ? & ? \\
-  \hline \fr{7.4}   & ?  & ? & ? \\
-  \hline \fr{9}   & ?  & ? & ? \\
-  \hline \fr{11}    & EmailNotificationTest  & ? & ? \\
-  \hline \nfr{6}    & N/A  & Inspection & N/A \\
+  \hline \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of events \\
+  \hline \fr{9}   & AnalysisControllerTest & Unit & Verify dispatch of events \\
+  \hline \fr{12}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
+  \hline \nfr{6}    & N/A  & Inspection & Verify existence of all test levels \\
   \hline
 \end{longtable}
 
