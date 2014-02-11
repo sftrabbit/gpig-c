@@ -175,7 +175,7 @@ HUMS and the interactions between these modules at a high level.
     database, such that if the database was to be altered, only this
     layer would need to change.
 
-  \item[Analysis Controller] Alert the analysis engines when new data
+  \item[Analysis Controller] Alert analysis engines when new data
     has arrived, pulling the required data from the data abstraction
     layer. If an analysis engine determines an event has occurred
     within the data then the analysis controller forwards that event
@@ -205,7 +205,7 @@ HUMS and the interactions between these modules at a high level.
 
 The module view shows how modules of the system are connected, however 
 does not fully represent the interactions between components and the dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the 
-HUMS, detailing how the HUMS goes from receiving data from a data emitter to generating a notification. The different objects in the system are shown, along with all the interactions and links between them. The messages sent between different parts are shown and labelled with numbers to represent the chronological order in which they occur.
+HUMS, detailing how the HUMS receives data from a data emitter and generates a notification. The different objects in the system are shown, along with all the interactions and links between them. The messages sent between different modules are shown and labelled with numbers to represent the chronological order in which they occur.
 
 \begin{figure}[!ht]
   \centering
@@ -225,7 +225,7 @@ Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system 
 
 This deployment of our HUMS as a SaaS is shown in figure \ref{fig:DeploymentService}. For administering the HUMS as a service, a hosted admin centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
 
-Figure \ref{fig:DeploymentIsolated} shows how we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
+Figure \ref{fig:DeploymentIsolated} shows how we envision the prototype HUMS being deployed at this stage, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentDistributed.png}
@@ -257,18 +257,18 @@ The data input layer, shown in figure \ref{fig:dataInputLayer},
 contains the following classes:
 
 \begin{description}
-  \item[DataInputServer] An object which starts up a multithreaded
-    server to receive connections, and which periodically processes
-    received data by sending it off to the database and notifying the
-    analysis component. It accesses these by having references to them
+  \item[DataInputServer] An object which starts a multithreaded
+    server to receive connections, and periodically processes
+    received data by sending it to the datastore and notifying the
+    analysis controller. It accesses these by having references to them
     passed in upon creation.
 
   \item[ProtoReceiver] Listens on a socket for inbound connections,
     and then hands them off to a new ProtoMultiReceiver, running in a
     new thread, for processing. It also maintains a thread-safe
-    concurrent queue, which all of the receivers write to, and the
-    server reads (and removes) from. This use of multithreading
-    enables multiple clients to send data at the same time easily, and
+    concurrent queue, which all receivers write to, and the
+    server reads (and removes) from. Use of multithreading
+    enables multiple clients to send data at the same time easily, satisfying \nfrit{8}, and
     the use of a queue ensures that data is inserted into the database
     in the order in which it is received.
 
@@ -301,12 +301,12 @@ The data abstraction layer, shown in figure
     implement this interface.
 
   \item [EmitterSystemState] An object representing the data received
-    from a data emitter at a particular time. The state object holds
+    from a data emitter at a particular time. This object holds
     the ID of the end user's system and the creation timestamp along
     with a map of sensor IDs against the value of the sensor at that
     particular time. A map was used to represent the sensors and
-    values so that the end user is free to send data from as many or
-    as few sensors at a time, reducing the number of writes to the
+    values so that the end user is free to send data from any number of 
+    sensors at a time, reducing the number of writes to the
     database. For serialisation this object includes methods to
     convert to and from JSON.
 
