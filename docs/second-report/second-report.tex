@@ -551,7 +551,7 @@ created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
 rolling average of each value, and causes an email to be sent if this value
 becomes too high. The raw values are read by the reporting system and 
-displayed live in the admin centre, \hl{as shown in }figure~\ref{fig:graphing}. %% the current screenshot is of Nyan cat not of the test application!
+displayed live in the admin centre, \hl{as shown in} figure~\ref{fig:graphing}. %% the current screenshot is of Nyan cat not of the test application!
 
 % Mean - email
 % Raw values - graph
@@ -630,7 +630,15 @@ between each requirement and its associated test. % Move this down a section?
     well defined module-internal functions, such as the generation and 
     parsing of the JSON serialisation of objects.
     
-  \item[Analysis Controller] \hl{No tests written for this}
+  \item[Analysis Controller] The analysis controller is responsible for 
+	coordinating analysis engines and triggering notifications. Due to 
+	the central role played by the analysis controller in the analysis 
+	pipeline we identified its key attributes as performance and testability. 
+	We utilised Mockito to provide completely isolated unit tests, 
+	confirming that notifications are only triggered when appropriate and  
+	only the relevant analysis engines are used for a given system. 
+	Class loading was used to load analysis engines for the prototype, 
+	this was confirmed to be working via inspection and integration testing.
   
   \item[Analysis Engine]
   For the analysis engine, we created a unit test to check each aspect of the 
