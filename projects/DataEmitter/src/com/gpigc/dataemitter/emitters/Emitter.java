@@ -26,7 +26,6 @@ public abstract class Emitter implements Callable<Void> {
 
 			if (dataList != null) {
 				for (SystemData data : dataList) {
-					System.out.println("Sending earthquake: " + data.getDatum(0).getValue());
 					sender.send(data);
 				}
 			}
