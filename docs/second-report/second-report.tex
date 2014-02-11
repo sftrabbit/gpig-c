@@ -654,13 +654,19 @@ Below, the testing within each module is described:
    test time. Our unit tests covered valid, extreme and null values being sent 
    to the analysis engine.
 
-  \item[Notification Generator] \hl{No tests written for this}
-  \hl{Cooldown period in} \frit{8}
+  \item[Notification Generator] For the notification generator, we created 
+	multiple unit tests to verify functionality as per \frit{8}.
   
-  \item[Notification Engine]
-  The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
+  \item[Notification Engine] The functionality of the email notification 
+	engine is tested using a unit test. The test uses the notification engine 
+	to send a message to a certain recipient with a given subject and message, 
+	then verifies that the email was successfully sent and received by checking 
+	the inbox of the specified recipient and inspecting the message to ensure 
+	that it contains the correct information.
 
-  \item[Reports Engine] We tested the Reports Engine by inspection since it is a prototype and does not require significant automated testing at this stage.
+  \item[Reports Engine] We tested the Reports Engine by inspection since it 
+	is a prototype and does not require significant automated testing at this 
+	stage.
 
  \end{description}
 
