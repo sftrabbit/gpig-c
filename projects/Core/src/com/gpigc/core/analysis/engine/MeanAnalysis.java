@@ -22,6 +22,8 @@ public class MeanAnalysis extends AnalysisEngine {
 	public static final int TEN_RECORDS = 10;
 	private static final String MEAN = "Mean";
 
+	private static final String SENSOR_ID = "CPU";
+
 	/**
 	 * Initialised the mean analysis engine
 	 * 
@@ -39,7 +41,7 @@ public class MeanAnalysis extends AnalysisEngine {
 	 */
 	public Result analyse() {
 		error = false;
-		List<SensorState> sensorStates = getSensorStates(TEN_RECORDS);
+		List<SensorState> sensorStates = getSensorStates(SENSOR_ID, TEN_RECORDS);
 		Double mean = computeMean(sensorStates);
 		return computeResult(mean.toString());
 	}

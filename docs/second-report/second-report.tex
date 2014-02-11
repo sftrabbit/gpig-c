@@ -1,5 +1,6 @@
 \documentclass[10pt,a4paper]{article}
 
+
 \usepackage[margin=3cm]{geometry}
 \usepackage[UKenglish]{babel}
 \usepackage{enumitem}
@@ -47,9 +48,9 @@ Friday, 14th February 2014
 
 \vspace{0.3cm}
 \rule{\textwidth}{0.4pt}
-
 \input{02-glossary}
 \input{01-introduction}
+
 \input{03-requirements}
 \section{System Architecture}
 \label{sec:architecture}
@@ -128,7 +129,7 @@ acceptance testing.
 
 When designing the HUMS we identified four different views of the
 system which must be documented, taking inspiration from the
-\hl{Hofmeister approach to software architecture}: %%CITE Hofmeister, Nord & Soni, Applied Software Architecture, Addison Wesley.
+Hofmeister\cite{hof1999} approach to software architecture:
 
 \begin{description}
   \item[Module View] The required software modules and relationships
@@ -227,7 +228,7 @@ This is shown in figure \ref{fig:DeploymentService}, and is made possible by ass
 For administering the HUMS as a service, a hosted admin
 centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
 
-Figure \ref{fig:DeploymentIsolated} shows we we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
+Figure \ref{fig:DeploymentIsolated} shows how we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentDistributed.png}
@@ -341,7 +342,7 @@ using UML 2 notation}
   \label{fig:dataAbstractionPackage}
 \end{figure}
 
-\subsubsection{Analysis Component}
+\subsubsection{Analysis Components}
 
 The analysis component, shown in figure
 \ref{fig:dataAnalysisComponent}, contains the following classes:
@@ -399,7 +400,7 @@ UML 2 notation}
   \label{fig:dataAnalysisComponent}
 \end{figure}
 
-\subsubsection{Notification Component}
+\subsubsection{Notification Components}
 
 The notification component, shown in figure
 \ref{fig:notificationComponent}, contains the following classes:
@@ -461,8 +462,8 @@ developing the data emitter and various engines as the data being
 passed between them and the core are language independent, meaning 
 end users are free, even with the prototype, to implement engines in any
 language they see fit. For the prototype we used both Java and
-JavaScript when creating the engines, languages team members are
-familiar with, allowing us to show off the versatility of the system.
+JavaScript when creating the engines---languages that team members are
+familiar with---allowing us to show off the versatility of the system.
 
 Upon determining to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
@@ -470,7 +471,7 @@ Doing this also had the benefit of providing us with established, well-tested
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
-To communicate between the code and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high-performance as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
+To communicate between the core and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high performance, as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
@@ -518,7 +519,7 @@ When the notification generator receives an event, it selects the appropriate no
 
 %% Paragraph about reports plugins
 
-A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided -- including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
+A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided; including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
 
 \subsection{Evaluation of the Prototype Solution for Sample Applications}
 \label{sec:prototype-evaluation}
@@ -531,9 +532,12 @@ or one executing on the JVM. We utilised Java Management
 Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
-rolling average of each value. \hl{This average is then read 
-by the reporting system and displayed live in the admin centre, as shown
-in figure} \ref{fig:graphing}. %% It's not the mean that's displayed, it's the raw values - and the current screenshot is of Nyan cat not of the test application!
+rolling average of each value, and causes an email to be sent if this value
+becomes too high. The raw values are read by the reporting system and 
+displayed live in the admin centre, \hl{as shown in }figure~\ref{fig:graphing}. %% the current screenshot is of Nyan cat not of the test application!
+
+% Mean - email
+% Raw values - graph
 
 \paragraph{Instructions for Replicating Results}
 \hl{Todo. Maybe also include more concrete results, e.g. types of values obtained from it and values obtained through analysis}
@@ -551,10 +555,14 @@ in figure} \ref{fig:graphing}. %% It's not the mean that's displayed, it's the r
 We also created our own sample application: monitoring earthquakes 
 through the USGS Earthquake Hazards Program API. The HUMS
 can collect live data from the API, store it and plot the location of any
-detected earthquakes on a map of the world in the admin centre,
-\hl{as shown in figure} %TODO.
+detected earthquakes on a map of the world in the admin centre, as shown in figure~\ref{fig:plotearthquakes}.
 
-% TODO Add screenshot
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=10cm]{images/plotearthquakes.png}
+  \caption{A screenshot of the admin centre for our live earthquake monitoring HUMS prototype}
+  \label{fig:plotearthquakes}
+\end{figure}
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
@@ -614,9 +622,10 @@ between each requirement and its associated test. % Move this down a section?
   class to restrict the possible source of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme, \hl{missing values were sent to the analysis engine.} % No idea what point is trying to be made here?
 
   \item[Notification Generator] \hl{No tests written for this}
-  
-  \item[Notification Engine] \hl{No tests written for this}
   \hl{Cooldown period in} \frit{8}
+  
+  \item[Notification Engine]
+  The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
 
   \item[Reports Engine] \hl{No tests written for this}
   

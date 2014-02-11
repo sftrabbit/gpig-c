@@ -1,10 +1,10 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard</title>
+    <title>Maps</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.css" rel="stylesheet">
@@ -40,7 +40,7 @@
 
     <div class="row">
         <div class="col-lg-12 center-block block-top-buffer button-header">
-            <h1>HUMS <small> Dashboard</small></h1>
+            <h1>HUMS <small> Map</small></h1>
         </div>
     </div>
     <hr>
@@ -49,17 +49,10 @@
         <div class="col-sm-12 center-block block-top-buffer">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Monitoring</h3>
+                    <h3 class="panel-title">Earthquake Map</h3>
                 </div>
                 <div class="panel-body">
-	                <div class="row">
-	                	<div class="col-md-3">
-	                		<div id="gauges"></div>
-	                	</div>
-	                	<div class="col-md-9" style="height:500px">
-	                		<div id="map" style="height:100%;width:100%"></div>
-	                	</div>
-	                </div>
+                    <div id="map"></div>
                 </div>
             </div>
         </div>
@@ -86,63 +79,20 @@
 <script src="../js/modern-business.js"></script>
 <script src="js/admin-navbar.js"></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-    // Configuration
-    var REFRESH_SECONDS = 10;
-    var RECORD_TYPE = "CPU";
-    var SYSTEM_ID = "1";
-
-    // Initialise
-  	google.load('visualization', '1.0', {'packages':['gauge']});
-  	google.setOnLoadCallback(drawChart);
-    var options = {
-      width: 400, height: 120,
-      redFrom: 90, redTo: 100,
-      yellowFrom:75, yellowTo: 90,
-      minorTicks: 5
-    };
-    var data, chart;
-    function setData(value) {
-    	data = new google.visualization.arrayToDataTable([
-	      	['Label', 'Value'],
-	      	[RECORD_TYPE, value],
-	    ]);
-    }
-  	function drawChart() {
-  		setData(0);
-        chart = new google.visualization.Gauge(document.getElementById('gauges'));
-        refreshChart();
-  	}
-    // End initialisation
-
-  	function refreshChart() {
-	    $.ajax({
-	        url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords=1&callback=?",
-	        dataType: "jsonp",
-	        success: function(graphData) {
-	            $.each(graphData.Records, function(key, item) {
-	                if (item.SensorID == RECORD_TYPE) {
-	                    setData(item.Value);
-	                }
-	            });
-	        }
-	    });
-        chart.draw(data, options);
-  	}
-  	//DISABLED setInterval(refreshChart, REFRESH_SECONDS * 1000);
-</script>
-
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jQgEtsdQmRQtyOXp6VDwoDla2rN4FbE&sensor=false"></script>
 <script type="text/javascript">
     // Configuration
-    var RECORD_TYPE_EQ = "EQ";
-    var SYSTEM_ID_EQ = "2";
+    var REFRESH_SECONDS = 10;
     var MAX_POINTS = 50;
+    var RECORD_TYPE = "EQ";
+    var SYSTEM_ID = "2";
 
     function initialize() {
+        var relative = $("#map").parent();
+        $("#map").css({"width": relative.width() * 0.9, "height": relative.width() * 0.5, "margin": "0 auto"});
+
         var mapOptions = {
-          	center: new google.maps.LatLng(15, 0),
+          	center: new google.maps.LatLng(20, 0),
           	mapTypeId: google.maps.MapTypeId.ROADMAP,
           	zoom: 2,
           	panControl: false,
@@ -177,7 +127,7 @@
 		function addMapData(mapData) {
             mapData.Records.reverse();
             $.each(mapData.Records, function(key, item) {
-                if (item.SensorID == RECORD_TYPE_EQ && !(item.CreationTimestamp in eqData)) {
+                if (item.SensorID == RECORD_TYPE && !(item.CreationTimestamp in eqData)) {
                     if (eqData.length >= MAX_POINTS) {
                         eqData.shift();
                     }
@@ -213,7 +163,7 @@
 
         function refreshMap() {
             $.ajax({
-                url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID_EQ+"&SensorID="+RECORD_TYPE_EQ+"&NumRecords="+MAX_POINTS+"&callback=?",
+                url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+MAX_POINTS+"&callback=?",
                 dataType: "jsonp",
                 success: addMapData
             });

@@ -38,7 +38,7 @@ in the table below.
   & 18 \\
   
   \hline \textbf{R.2}
-  & Personnel under performance
+  & Team member under performance
   & 6
   & 3
   & Internal and/or deadline failure
@@ -48,83 +48,92 @@ in the table below.
   
   \hline \textbf{R.3}
   & Time pressures limiting amount of development time
-  & 
-  & 
+  & 6
+  & 4
   & Missing deadline, not fulfilling requirements, low quality deliverables
   & Define scope of work early, commit to complete requirements and allocate work to sprints 
   & Reduce functionality required and/or notify customer of later delivery
-  & \\
+  & 24\\
   
   \hline \textbf{R.4}
   & Developing user interface that does not satisfy users requirements
-  & 
-  & 
+  & 3
+  & 3
   & Poor user experience, loss of confidence in the solution
   & Continuous, iterative development process, regularly incorporating users feedback on interface
   & Redevelop user interface
-  & \\
+  & 9\\
   
   \hline \textbf{R.5}
   & Adding more functionality than necessary
-  & 
-  & 
+  & 4
+  & 3
   & Additional, unnecessary functionality, possible deadline miss
   & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
-  & \hl{???}
-  & \\
+  & Refocus team, prioritise required functionality, and only implement additional features once the prototype is complete.
+  & 12\\
   
   \hline \textbf{R.6}
   & Deprecation of required Google App Engine functionality
-  & 
-  & 
+  & 3
+  & 4
   & Unable to deliver required functionality
   & Research pending deprecations to ensure required functionality will be supported
   & Move to another key-store database (relatively simple)
-  & \\
+  & 12\\
   
   
   \hline \textbf{R.7}
-  & Communic-ations link to Google App Engine fails
-  & 
-  & 
-  & Loss of service to users, loss of confidence in the system
+  & Short team failure of communication link to Google App Engine
+  & 3
+  & 4
+  & Short term loss of service to users, loss of confidence in the system
   & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
-  & Additional data abstraction layer could be built to interface with another database service
-  & \\
-  
+  & Additional data abstraction layer could be built to interface with another database service if App Engine proves to be unreliable
+  & 12\\
+
   \hline \textbf{R.8}
+  & Prolonged failure of communication link to Google App Engine 
+  & 5
+  & 2
+  & Prolonged loss of service to users, loss of confidence in the system, possible failure to meet \nfrit10 and \nfrit13
+  & As above
+  & As above
+  & 10\\
+  
+  \hline \textbf{R.9}
   & Data interception between our application and Google App Engine 
-  & 
-  & 
+  & 3
+  & 2
   & Loss of confidence in the system
   & A final system would encrypt traffic between our system and Google App Engine, currently just sending (non-sensitive) test data
   & Additional penetration testing to identify security flaws
-  & \\
+  & 6\\
   
-  \hline \textbf{R.9}
+  \hline \textbf{R.10}
   & Data write/read times to/from Google App Engine too slow
-  & 
-  & 
+  & 2
+  & 5
   & Create a task backlog: gradual increase in load until system
   is non-operational (failure to meet capacity requirement \nfrit9)
   & Load testing of system throughout development to ensure \nfrit9
   & Re-engineering of system, possible need to switch datastore
-  & \\
+  & 10\\
   
-  \hline \textbf{R.10}
+  \hline \textbf{R.11}
   & Implemen-tation does not facilitate data storage for a variety of systems
-  & 
-  & 
+  & 3
+  & 5
   & Failure to meet key modifiability requirements 
   & Adoption of a key-value database allows us the flexibility to store a variety of data
   & Examination of data we are struggling to store and implementation of additional data gateway for it
-  & \\  
+  & 15\\  
   
-  \hline \textbf{R.11}
+  \hline \textbf{R.12}
   & System performance required unattainable
   & 2
   & 4
-  & \hl{Could cause }
+  & Lead to failure to meet performance requirements 
   & Choice of implementation or choice of utilised hardware must offer
   enough in the way of performance to facilitate acceptable system
   performance.
@@ -132,52 +141,52 @@ in the table below.
   hardware, use of faster networks
   & 8 \\    
   
-  \hline \textbf{R.12}
+  \hline \textbf{R.13}
   & Included analysis components computing incorrect values
-  & 
-  & 
+  & 2
+  & 5
   & Failing to meet fundamental requirements, customer loses confidence in the system
   & Adopting a test driven approach to development throughout the development process
   & Re-engineering of failing components
-  & \\
+  & 10\\
   
-  \hline \textbf{R.13}
+  \hline \textbf{R.14}
   & Analysis component computation too slow
-  & 
-  & 
+  & 3
+  & 4
   & Creates an analysis task backlog: gradual increase in load until system
   is non-operational
   & Load testing of analysis component throughout development, code optimisations 
   & Re-engineering of analysis components
-  & \\  
-  
-  \hline \textbf{R.14}
-  & Notification computation too slow
-  & 
-  & 
-  & Creates a notification backlog: gradual increase in load until system
-  is non-operational
-  & Load testing of notification component throughout development, code optimisations 
-  & Re-engineering of notification system
-  & \\
+  & 12\\  
   
   \hline \textbf{R.15}
+  & Notification computation too slow
+  & 2
+  & 4
+  & Creates a notification backlog: gradual increase in load until system
+  is non-operational, failure to meet \nfrit13 and \frit9
+  & Load testing of notification component throughout development, code optimisations 
+  & Re-engineering of notification system
+  & 8\\
+  
+  \hline \textbf{R.16}
   & GitHub becomes unavailable for a prolonged period of time
-  & 
-  & 
+  & 2
+  & 2
   & Difficulty merging work from different developers' machines
   & Distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
-  & \\ 
+  & 4\\ 
   
-  \hline \textbf{R.16}
+  \hline \textbf{R.17}
   & Malicious destruction of code repository on GitHub
-  & 
-  & 
-  & \hl{???}
+  & 2
+  & 2
+  & Little impact as most developers computers would hold a near full copy of the central repository
   & Two-step authentication used on GitHub, distributed nature of Git means little work would be lost
   & Host our own git server within the Computer Science Department
-  & \\    
+  & 4\\    
     
   \hline
 \end{longtable}       

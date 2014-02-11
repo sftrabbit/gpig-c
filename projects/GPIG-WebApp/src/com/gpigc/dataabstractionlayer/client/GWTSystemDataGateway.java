@@ -59,12 +59,15 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 * int)
 	 */
 	@Override
-	public QueryResult readMostRecent(String systemID, int numRecords)
+	public QueryResult readMostRecent(String systemID, String sensorID, int numRecords)
 			throws FailedToReadFromDatastoreException {
 		try {
 			// Set up the get
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair(SYSTEM_ID.getKey(), systemID));
+			if(sensorID != null)
+				params.add(new BasicNameValuePair(SENSOR_ID.getKey(), sensorID));
+			
 			params.add(new BasicNameValuePair(NUM_RECORDS.getKey(), numRecords + ""));
 			URI uri = new URI(dbServletUri + "?"
 					+ URLEncodedUtils.format(params, "utf-8"));
@@ -83,7 +86,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 * .Date, java.util.Date)
 	 */
 	@Override
-	public QueryResult readBetween(String systemID, Date start, Date end)
+	public QueryResult readBetween(String systemID, String sensorID, Date start, Date end)
 			throws FailedToReadFromDatastoreException {
 		try {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -91,6 +94,9 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 			params.add(new BasicNameValuePair(START_TIME.getKey(), start.getTime()
 					+ ""));
 			params.add(new BasicNameValuePair(END_TIME.getKey(), end.getTime() + ""));
+			if(sensorID != null)
+				params.add(new BasicNameValuePair(SENSOR_ID.getKey(), sensorID));
+			
 			URI uri = new URI(dbServletUri + "?"
 					+ URLEncodedUtils.format(params, "utf-8"));
 			HttpGet get = new HttpGet(uri);

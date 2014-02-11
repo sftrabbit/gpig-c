@@ -117,4 +117,8 @@ public class AnalysisController {
 			engines.add(engine);
 		}
 	}
+
+	public void setAnalysisEngines(List<AnalysisEngine> engines) {
+		this.engines = engines;
+	}
 }

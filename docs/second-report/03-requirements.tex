@@ -26,11 +26,11 @@ enforce the  functionality that the HUMS must provide as a result of the data
 in the configuration file.
 
 \frit{7}, previously \frit{12}, is refined to define how data will be analysed for 
-events. It is identified that there must be an API allowing analysis engines, 
+events. It identifies that there must be an API allowing analysis engines, 
 either created by the consumer or included with the HUMS, to extract stored 
 data and produce events. 
 
-\frit{9} to \frit{13} do not appear in the previous report, and were discovered 
+\frit{9} to \frit{12} do not appear in the previous report, and were discovered 
 to be necessary following feedback from the customer regarding the ability 
 of the system to allow for explicit feedback: the output of analysis must be able to affect the monitored system. 
 It was felt that our architecture did not make it clear whether this was 
@@ -113,11 +113,9 @@ data 	to the HUMS.
 		pattern is detected.
 	\item[\fr{10}] The HUMS must interface with reports engines, allowing 
 		them to pull reports.
-	\item[\fr{11}] The HUMS shall provide basic notification 			
-		engines to work with the \hl{test application}. % should we refer to this in the requirements?
-	\item[\fr{12}] The system shall allow for notifications to change the way 
+	\item[\fr{11}] The system shall allow for notifications to change the way 
 		in which data is sensed.
-	 \item[\fr{13}] The system shall allow notifications to be sent back to 
+	 \item[\fr{12}] The system shall allow notifications to be sent back to 
 		the system being monitored.
 \end{description}
 
