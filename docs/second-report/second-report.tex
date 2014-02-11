@@ -471,7 +471,18 @@ Doing this also had the benefit of providing us with established, well-tested
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
+An alternative we considered was simply querying the existing features provided
+by the operating system and JVM to access this data, however this would have
+not been portable across different operating systems, or to embedded systems
+with poor support for launching new processes.
+
 To communicate between the core and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high performance, as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
+
+We initially considered using HTTP rather than Google Prototol Buffers for
+communcation between the data input layer and the core, however we determined
+that sending multiple HTTP requests a second would have significant overhead,
+and so we instead opted for a persistent connection and a more lightweight
+protocol.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
@@ -498,7 +509,13 @@ footprint.
 
 We used Git for version control, allowing the entire team to
 contribute to the project simultaneously, whilst keeping a reversible
-history of all alterations made by each person.
+history of all alterations made by each person. We considered using a
+centralised version control system, such as Subversion, but decided that the
+benefits provided by a decentralised system, such as Git, for working
+independently and then combining work would outweigh the potential
+disadvantages of there being no managing server. As we used GitHub for the
+canonical copy of the work, we incorporated many of the benefits of centralised
+version control anyway.
 
 \subsection{Source}
 
@@ -613,7 +630,15 @@ between each requirement and its associated test. % Move this down a section?
     well defined module-internal functions, such as the generation and 
     parsing of the JSON serialisation of objects.
     
-  \item[Analysis Controller] \hl{No tests written for this}
+  \item[Analysis Controller] The analysis controller is responsible for 
+	coordinating analysis engines and triggering notifications. Due to 
+	the central role played by the analysis controller in the analysis 
+	pipeline we identified its key attributes as performance and testability. 
+	We utilised Mockito to provide completely isolated unit tests, 
+	confirming that notifications are only triggered when appropriate and  
+	only the relevant analysis engines are used for a given system. 
+	Class loading was used to load analysis engines for the prototype, 
+	this was confirmed to be working via inspection and integration testing.
   
   \item[Analysis Engine]
   For the analysis engine, we created a unit test to check each aspect of the 
