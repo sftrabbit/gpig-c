@@ -70,7 +70,7 @@ in the table below.
   & 3
   & Additional, unnecessary functionality, possible deadline miss
   & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
-  & Prioritise required functionality, and only implement additional features once the prototype is complete.
+  & Refocus team, prioritise required functionality, and only implement additional features once the prototype is complete.
   & \\
   
   \hline \textbf{R.6}
@@ -84,15 +84,24 @@ in the table below.
   
   
   \hline \textbf{R.7}
-  & Commun-ications link to Google App Engine fails
+  & Short team failure of communication link to Google App Engine
   & 3
   & 4
-  & Loss of service to users, loss of confidence in the system
+  & Short term loss of service to users, loss of confidence in the system
   & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
-  & Additional data abstraction layer could be built to interface with another database service
+  & Additional data abstraction layer could be built to interface with another database service if App Engine proves to be unreliable
+  & \\
+
+  \hline \textbf{R.8}
+  & Prolonged failure of communication link to Google App Engine 
+  & 5
+  & 2
+  & Prolonged loss of service to users, loss of confidence in the system, possible failure to meet \nfrit10 and \nfrit13
+  & As above
+  & As above
   & \\
   
-  \hline \textbf{R.8}
+  \hline \textbf{R.9}
   & Data interception between our application and Google App Engine 
   & 3
   & 2
@@ -101,7 +110,7 @@ in the table below.
   & Additional penetration testing to identify security flaws
   & \\
   
-  \hline \textbf{R.9}
+  \hline \textbf{R.10}
   & Data write/read times to/from Google App Engine too slow
   & 2
   & 5
@@ -111,7 +120,7 @@ in the table below.
   & Re-engineering of system, possible need to switch datastore
   & \\
   
-  \hline \textbf{R.10}
+  \hline \textbf{R.11}
   & Implemen-tation does not facilitate data storage for a variety of systems
   & 3
   & 5
@@ -120,7 +129,7 @@ in the table below.
   & Examination of data we are struggling to store and implementation of additional data gateway for it
   & \\  
   
-  \hline \textbf{R.11}
+  \hline \textbf{R.12}
   & System performance required unattainable
   & 2
   & 4
@@ -132,7 +141,7 @@ in the table below.
   hardware, use of faster networks
   & 8 \\    
   
-  \hline \textbf{R.12}
+  \hline \textbf{R.13}
   & Included analysis components computing incorrect values
   & 2
   & 5
@@ -141,7 +150,7 @@ in the table below.
   & Re-engineering of failing components
   & \\
   
-  \hline \textbf{R.13}
+  \hline \textbf{R.14}
   & Analysis component computation too slow
   & 3
   & 4
@@ -151,17 +160,17 @@ in the table below.
   & Re-engineering of analysis components
   & \\  
   
-  \hline \textbf{R.14}
+  \hline \textbf{R.15}
   & Notification computation too slow
   & 2
   & 4
   & Creates a notification backlog: gradual increase in load until system
-  is non-operational
+  is non-operational, failure to meet \nfrit13 and \frit9
   & Load testing of notification component throughout development, code optimisations 
   & Re-engineering of notification system
   & \\
   
-  \hline \textbf{R.15}
+  \hline \textbf{R.16}
   & GitHub becomes unavailable for a prolonged period of time
   & 2
   & 2
@@ -170,7 +179,7 @@ in the table below.
   & Host our own git server within the Computer Science Department
   & \\ 
   
-  \hline \textbf{R.16}
+  \hline \textbf{R.17}
   & Malicious destruction of code repository on GitHub
   & 2
   & 2
