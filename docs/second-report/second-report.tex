@@ -163,7 +163,7 @@ HUMS and the interactions between these modules at a high level.
 \end{figure}
 
 \begin{description}
-  \item[Core] A collection of modules that must be run on one system, including the Data Input Layer, Analysis Controller, Data Abstraction Layer and Notification Generator. Additional modules can be integrated on the same system or connected over a network interface. % the names in this item should probably be all lowercase to be consistent with other items
+  \item[Core] A collection of modules that must be run on one system, including the data input layer, analysis controller, data abstraction layer, and notification generator. Additional modules can be integrated on the same system or connected over a network interface.
 
   \item[Data Emitter] Sends data to the system core in a standard
     format. May be included within the HUMS or created by the end
@@ -591,9 +591,6 @@ requirements to their lower level requisite requirements: acceptance
 testing, system testing, integration testing and unit
 testing.
 
-The traceability matrix in the section below shows the mapping 
-between each requirement and its associated test. % Move this down a section?
-
 % TODO We probably need something about overall system & acceptance
 % testing. These are mainly the white/black/grey box tests in the
 % first report, e.g. NRF.9, "The system must cope with up to 2000 data
@@ -649,11 +646,13 @@ between each requirement and its associated test. % Move this down a section?
   \item[Notification Engine]
   The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
 
-  \item[Reports Engine] \hl{No tests written for this}
+  \item[Reports Engine] We tested the Reports Engine by inspection since it is a prototype and does not require significant automated testing at this stage.
   
  \end{description}
 
 \subsubsection{Traceability Matrix}
+
+The traceability matrix shows the mapping from each requirement to its test.
 
 \begin{longtable}[H]{| p{2.3cm} | p{8cm}| p{4cm}|}
   \hline\rowcolor{titleColor} \textbf{Requirement ID} & \textbf{Test Class} & \textbf{Strategy}\\

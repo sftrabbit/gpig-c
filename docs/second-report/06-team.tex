@@ -16,7 +16,7 @@ As in the initial report, we use the following acronyms for team members:
 Before beginning this stage of the project, we ascertained which university modules team members were studying, in order to spread the work load evenly and reduce the risk of team members' under performance due to other commitments. We also assessed the strengths and weaknesses of each team member, aiding in the selection of technologies and task assignment, as shown in table \ref{tab:skills}. Table \ref{tab:skills} shows that all team members are proficient with Java, and thus it was a natural implementation choice for the prototype.
 
 All team members contributed to the design of the HUMS architecture, however, when implementing the prototype the team divided into three sub-teams, each assigned to different modules and requirements for the system.
-The sub-teams were organised such that team members with similar skills and knowledge were placed together, encouraging low coupling and rapid development of individual modules, without worrying about the state of the overall system. The tasks assigned to each sub-team are shown below, reporting and notification engines were not assigned to any particular sub-team, meaning all team members were able to contribute to designs, encouraging creativity.
+The sub-teams were organised such that team members with similar skills and knowledge were placed together, encouraging low coupling and rapid development of individual modules, without worrying about the state of the overall system. The tasks assigned to each sub-team are shown below, reporting and notification engines were not assigned to any particular sub-team, meaning all team members were able to contribute to designs, encouraging creativity. The revised roles of each team member, due to this new structure, are shown in table \ref{tab:roles}, with a member of each team taking on a quality assurance and design role, ensuring a high quality of work from all team members.
 
 \begin{description}
   \item[Team Sense  (JM and MW)] Create a data emitter for the test application, by producing reusable monitoring components.and implement the data input API as a multithreaded server, in order to meet requirements  regarding simultaneous usage.
@@ -25,10 +25,6 @@ The sub-teams were organised such that team members with similar skills and know
 
   \item[Team Analyse (AJF, AIF, and TF)] Implement the analysis controller and the analysis engine API. The engine API was implemented to be very sparse so that a large number of different concrete implementations could be supplied. 
 \end{description}
-
-Other than the introduction of subteams for development, the team organisation
-did not change from the first phase, as we found that the previously allocated
-roles worked well.
 
 \begin{table}[H]
 \centering
@@ -70,6 +66,41 @@ roles worked well.
 \end{tabular}
 \caption{The identified strengths and weaknesses of team members}
 \label{tab:skills}
+\end{table}
+
+\begin{table}
+\begin{tabular}[H]{ | p{3.5cm} | p{8.5cm} | p{2cm} |}
+\hline
+\rowcolor{titleColor}\textbf{Role}
+&  \textbf{Description} 
+& \textbf{Assignees} \\ \hline
+
+Product Owner & Represent the interests of the customer, identifying key quality attributes & RT \\ \hline
+
+Scrum Master  &   Ensuring Scrum process is followed by all team members, and ensuring good inter-team communication.            		& RT           				\\ \hline
+Editor  &   Review and format documentation. & JM,TD,RT \\ \hline
+
+Software Architect  &  Ensures requirements are met, and software is consistent. & JM \\ \hline
+
+Requirements Analyst  &   Identification of customer needs and requirements.  & Team \\ \hline
+
+Developer &   Developing software to agreed standards. &  Team     \\ \hline
+
+UX/UI Designer    &   Accessibility, UI/UX	& JM,RT,AIF    \\ \hline
+
+Security    &   Advising on relevant security standards and protocols. & TF,MW  \\ \hline
+
+Penetration Tester & Test HUMS for exploits and security weaknesses. &TF, MW \\ \hline
+
+Software Tester &   Creating or assisting in the creation of tests. & Team  	 \\ \hline
+
+Risk Manager &   Identify key risks and mitigation strategies though out the project .  & TF, AJF \\ \hline
+
+Database Admin &   Design of database strategies and schemas. & RT, TD                   \\ \hline
+Quality Assurance   &   Ensure cohesion between system modules, analysing performance and enforcing quality standards.  & JM, RT, AIF \\ \hline
+\end{tabular}
+\caption{The revised roles of team members}
+\label{tab:roles}
 \end{table}
 
 \subsubsection{Time Management}
