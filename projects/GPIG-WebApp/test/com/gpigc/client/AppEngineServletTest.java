@@ -44,5 +44,4 @@ public class AppEngineServletTest {
 				servlet.parseJSON(reader);
 		assertEquals("1", states.get(0).getSystemID());
 	}
-
 }
