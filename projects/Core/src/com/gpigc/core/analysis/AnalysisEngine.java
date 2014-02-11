@@ -67,10 +67,10 @@ public abstract class AnalysisEngine {
 	 * @param numValues The number of values to return for each sensor
 	 * @return	A list of sensor states for all systems associated with the analysis engine
 	 */
-	protected List<SensorState> getSensorStates(int numValues) {
+	protected List<SensorState> getSensorStates(String sensorId, int numValues) {
 		List<SensorState> sensorStates = new ArrayList<SensorState>();
 		for (String systemId : associatedSystems) {
-			sensorStates.addAll(readSensorStateFromDatabase(systemId, numValues));
+			sensorStates.addAll(readSensorStateFromDatabase(systemId, sensorId, numValues));
 		}
 		return sensorStates;
 	}
@@ -82,9 +82,9 @@ public abstract class AnalysisEngine {
 	 * @param numValues The number of values to return for each sensor
 	 * @return			A list of the 10 most recent sensors states
 	 */
-	private List<SensorState> readSensorStateFromDatabase(String systemId,int numValues) {
+	private List<SensorState> readSensorStateFromDatabase(String systemId, String sensorId, int numValues) {
 		try {
-			return database.readMostRecent(systemId, numValues).getRecords();
+			return database.readMostRecent(systemId, sensorId, numValues).getRecords();
 		} catch (FailedToReadFromDatastoreException e) {
 			error = true;
 			System.out.println("Failed to find any sensor data for the system with ID: " + systemId);

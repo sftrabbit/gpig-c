@@ -48,9 +48,9 @@ Friday, 14th February 2014
 
 \vspace{0.3cm}
 \rule{\textwidth}{0.4pt}
-
 \input{02-glossary}
 \input{01-introduction}
+
 \input{03-requirements}
 \section{System Architecture}
 \label{sec:architecture}
@@ -462,8 +462,8 @@ developing the data emitter and various engines as the data being
 passed between them and the core are language independent, meaning 
 end users are free, even with the prototype, to implement engines in any
 language they see fit. For the prototype we used both Java and
-JavaScript when creating the engines, languages team members are
-familiar with, allowing us to show off the versatility of the system.
+JavaScript when creating the engines---languages that team members are
+familiar with---allowing us to show off the versatility of the system.
 
 Upon determining to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
@@ -471,7 +471,7 @@ Doing this also had the benefit of providing us with established, well-tested
 tools with which we could easily implement data input clients for further
 systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
 
-To communicate between the code and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high-performance as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
+To communicate between the core and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high performance, as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
@@ -519,7 +519,7 @@ When the notification generator receives an event, it selects the appropriate no
 
 %% Paragraph about reports plugins
 
-A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided -- including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
+A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided; including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
 
 \subsection{Evaluation of the Prototype Solution for Sample Applications}
 \label{sec:prototype-evaluation}
