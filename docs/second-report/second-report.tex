@@ -223,10 +223,9 @@ through the system, using UML 2 notation}
 \subsection{Execution View}
 With a view to deployment and execution, the HUMS needs to be tailorable. The core system may be running on the same hardware as the data emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. 
-This is shown in figure \ref{fig:DeploymentService}, and is made possible by associating sensor data with a system ID.
-For administering the HUMS as a service, a hosted admin
-centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
+Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
+
+This deployment of our HUMS as a SaaS is shown in figure \ref{fig:DeploymentService}. For administering the HUMS as a service, a hosted admin centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
 
 Figure \ref{fig:DeploymentIsolated} shows how we envision the prototype HUMS being deployed, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
 \begin{figure}[!ht]
@@ -568,7 +567,9 @@ displayed live in the admin centre, \hl{as shown in} figure~\ref{fig:graphing}. 
 We also created our own sample application: monitoring earthquakes 
 through the USGS Earthquake Hazards Program API. The HUMS
 can collect live data from the API, store it and plot the location of any
-detected earthquakes on a map of the world in the admin centre, as shown in figure~\ref{fig:plotearthquakes}.
+detected earthquakes on a map of the world in the admin centre, as shown
+in figure~\ref{fig:plotearthquakes}. We felt that using a map to display
+data was a useful and innovative addition.
 
 \begin{figure}[htbp!]
   \centering
