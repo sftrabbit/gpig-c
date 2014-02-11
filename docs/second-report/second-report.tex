@@ -686,10 +686,11 @@ Below, the testing within each module is described:
 
 \subsubsection{Traceability Table}
 
-% Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
-The traceability matrix below shows the mapping from each requirement to its test:
+Table~\ref{tab:traceability} shows the existing tests used to verify the implementation of the requirements in the system.
 
-\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
+\begin{table}[H]
+\centering
+\begin{tabular}{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
   \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Details}\\
   \hline \fr{1.2}   & N/A & Inspection, Alpha & Verify by observing output in admin centre\\
   \hline \fr{2.1}   & SystemDataTest & Unit & Verify existence of timestamp\\
@@ -702,7 +703,10 @@ The traceability matrix below shows the mapping from each requirement to its tes
   \hline \fr{12}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
   \hline \nfr{6}    & N/A  & Inspection & Verify existence of all test levels \\
   \hline
-\end{longtable}
+  \end{tabular}
+  \caption{The traceability table showing the mapping from each requirement to its existing tests}
+  \label{tab:traceability}
+\end{table}
 
 \input{06-team}
 
