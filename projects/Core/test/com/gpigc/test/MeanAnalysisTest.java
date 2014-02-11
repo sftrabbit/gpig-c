@@ -11,8 +11,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.*;
 
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
@@ -78,7 +78,7 @@ public class MeanAnalysisTest {
 	}
 
 	private void withNoSensorData() throws FailedToReadFromDatastoreException {
-		Mockito.when(database.readMostRecent("1", "CPU", 10))
+		when(database.readMostRecent("1", "CPU", 10))
 			.thenThrow(new FailedToReadFromDatastoreException("Failed"));
 	}
 
@@ -94,7 +94,7 @@ public class MeanAnalysisTest {
 	
 	private void addSensorValues(int numberOfRecords) 
 			throws FailedToReadFromDatastoreException {
-		Mockito.when(database.readMostRecent("1", "CPU", 10))
+		when(database.readMostRecent("1", "CPU", 10))
 			.thenReturn(createQueryResult(numberOfRecords));
 	}
 
