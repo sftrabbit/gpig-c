@@ -6,7 +6,7 @@ A risk assessment has been performed, based on the design decisions made though 
 The hazards (risks) have been identified by examining the 
 current literature \cite{boehm1991software,jones1998minimizing}, drawing upon team members' past experiences and group discussion. Classification of the identified hazards, their impact on the system and their probability of occurrence is performed in accordance with the Risk Management Guide for Information Technology Systems \cite{stoneburner2002risk}. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are listed in the table below.
 
-\begin{longtable}[H]{| p{0.65cm} | p{2cm} | p{0.3cm} | p{0.3cm} | p{2.7cm} | p{3cm} | p{2.6cm} | p{0.4cm} |}
+\begin{longtable}[H]{| p{0.6cm} | p{2.2cm} | p{0.26cm} | p{0.26cm} | p{2.7cm} | p{3cm} | p{2.6cm} | p{0.4cm} |}
   \hline
   \cellcolor{titleColor}\textbf{Risk ID} &
   \cellcolor{titleColor}\textbf{Risk} &
@@ -76,7 +76,7 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & 12\\
   
   \hline \textbf{R.6}
-  & Communications link to Google AppEngine fails.
+  & Comms link to Google AppEngine fails.
   & 3
   & 4
   & Loss of service to users.
@@ -176,12 +176,12 @@ The likelihood score defines probability of something occurring. Utilising
 \textit{Kents Words of Estimative Probability}\cite{kent1966strategic}, with
 `certain' weighted $7$ and `impossible' weighted $1$.
 
-\begin{tabular}[H]{|c|c|l|c|c|c|c|c|}
+\begin{tabular}[H]{|p{1.45cm}|c|l|c|c|c|c|p{1.77cm}|}
   \cline{4-8} \multicolumn{3}{c|}{} & \multicolumn{5}{ c| }{Impact Score (Least$\rightarrow$Most)} \\
   \cline{4-8} \multicolumn{3}{c|}{} & 1 & 2 & 3 & 4 & 5 \\
   \cline{4-8} \multicolumn{3}{c|}{} & Negligible& Minor & Moderate& Major & Catastrophic \\
 
-  \hline \multirow{7}{*}{Likelihood Score} & 7 & Certain & 7 & 14 & 21 & 28 & 35 \\
+  \hline \multirow{7}{*}{Likelihood} & 7 & Certain & 7 & 14 & 21 & 28 & 35 \\
 
   \cline{2-8} & 6 & Almost certain & 6 & 12 & 18 & 24 & 30 \\
   \cline{2-8} & 5 & Probable& 5 & 10 & 15 & 20 & 25 \\
@@ -192,7 +192,7 @@ The likelihood score defines probability of something occurring. Utilising
   \hline
 \end{tabular}
 
-\begin{longtable}[H]{ | p{2cm} | p{4cm} | p{8.5cm} | }
+\begin{longtable}[H]{ | p{2cm} | p{3cm} | p{8.5cm} | }
   \hline
   \cellcolor{titleColor}\textbf{Score} &
   \cellcolor{titleColor}\textbf{Risk Level} &
