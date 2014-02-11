@@ -31,16 +31,22 @@ public class NotificationGeneratorTest {
 	}
 
 	@Test
-	public void notificationIsSentOnce() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public void notificationIsSentOnce() throws MalformedURLException,
+			ClassNotFoundException, InstantiationException,
+			IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
 		givenNotificationGenerator();
 		andMockedEngine();
 		withRecentlySentSetTo(false);
 		whenAnEventIsGenerated();
 		thenANotificationIsSent();
 	}
-	
+
 	@Test
-	public void notificationIsNotRepeatedlySent() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public void notificationIsNotRepeatedlySent() throws MalformedURLException,
+			ClassNotFoundException, InstantiationException,
+			IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
 		givenNotificationGenerator();
 		andMockedEngine();
 		withRecentlySentSetTo(true);
@@ -48,37 +54,43 @@ public class NotificationGeneratorTest {
 		thenANotificationIsNotSent();
 	}
 
-	private void givenNotificationGenerator() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	private void givenNotificationGenerator() throws MalformedURLException,
+			ClassNotFoundException, InstantiationException,
+			IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
 		notificationGenerator = new NotificationGenerator();
 		List<NotificationEngine> engines = new ArrayList<NotificationEngine>();
 		engines.add(notificationEngine);
 		notificationGenerator.setEngines(engines);
 	}
-	
+
 	private void andMockedEngine() {
 		List<String> associatedSystems = new ArrayList<String>();
 		associatedSystems.add("1");
-		when(notificationEngine.getAssociatedSystems()).thenReturn(associatedSystems);
+		when(notificationEngine.getAssociatedSystems()).thenReturn(
+				associatedSystems);
 	}
-	
+
 	private void withRecentlySentSetTo(boolean recentlySent) {
 		when(notificationEngine.getRecentlySent()).thenReturn(recentlySent);
 	}
-	
+
 	private void whenAnEventIsGenerated() {
 		notificationGenerator.generate(createEvent());
 	}
-	
+
 	private void thenANotificationIsSent() {
-		verify(notificationEngine, times(1)).send(anyString(), anyString(), anyString());
+		verify(notificationEngine, times(1)).send(anyString(), anyString(),
+				anyString());
 	}
-	
+
 	private void thenANotificationIsNotSent() {
-		verify(notificationEngine, times(0)).send(anyString(), anyString(), anyString());
+		verify(notificationEngine, times(0)).send(anyString(), anyString(),
+				anyString());
 	}
-	
+
 	private Event createEvent() {
-		Map<String,String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("mean", "Some mean value");
 		return new Event(new Result(map, true), "", "1");
 	}
