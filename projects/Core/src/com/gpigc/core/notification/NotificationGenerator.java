@@ -52,6 +52,10 @@ public class NotificationGenerator {
 		}
 	}
 
+	public void setEngines(List<NotificationEngine> engines) {
+		this.engines = engines;
+	}
+	
 	/**
 	 * Performs class loading of notification engines allowing for runtime additions
 	 * 

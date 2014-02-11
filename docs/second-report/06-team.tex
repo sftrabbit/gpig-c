@@ -16,7 +16,7 @@ As in the initial report, we use the following acronyms for team members:
 Before beginning this stage of the project, we ascertained which university modules team members were studying, in order to spread the work load evenly and reduce the risk of team members' under performance due to other commitments. We also assessed the strengths and weaknesses of each team member, aiding in the selection of technologies and task assignment, as shown in table \ref{tab:skills}. Table \ref{tab:skills} shows that all team members are proficient with Java, and thus it was a natural implementation choice for the prototype.
 
 All team members contributed to the design of the HUMS architecture, however, when implementing the prototype the team divided into three sub-teams, each assigned to different modules and requirements for the system.
-The sub-teams were organised such that team members with similar skills and knowledge were placed together, encouraging low coupling and rapid development of individual modules, without worrying about the state of the overall system. The tasks assigned to each sub-team are shown below, reporting and notification engines were not assigned to any particular sub-team, meaning all team members were able to contribute to designs, encouraging creativity. The revised roles of each team member, due to this new structure, are shown in table \ref{tab:roles}, with a member of each team taking on a quality assurance and design role, ensuring a high quality of work from all team members.
+The sub-teams were organised such that team members with similar skills and knowledge were placed together, encouraging low coupling and rapid development of individual modules, without worrying about the state of the overall system. The tasks assigned to each sub-team are shown below, reporting and notification engines were not assigned to any particular sub-team, meaning all team members were able to contribute to designs, encouraging creativity. The roles of each team member, revised from the initial report due to this new structure, are shown in table \ref{tab:roles}. A member of each sub-team has taken on a quality assurance and design role, ensuring a high quality of work from all team members.
 
 \begin{description}
   \item[Team Sense  (JM and MW)] Create a data emitter for the test application, by producing reusable monitoring components.and implement the data input API as a multithreaded server, in order to meet requirements  regarding simultaneous usage.
@@ -103,7 +103,8 @@ Quality Assurance   &   Ensure cohesion between system modules, analysing perfor
 \label{tab:roles}
 \end{table}
 
-\subsubsection{Time Management}
+\section{Development Plan}
+
 As a team we considered the scope of the project which was to be undertaken.
  As a result of this we divided the work to be undertaken into specific tasks.
  Once the work to be undertaken was identified, the work was evenly split across 
@@ -112,10 +113,15 @@ the three sub-teams, and working as part of our three teams, again split the
  
 Dependencies between tasks were extracted, to enable critical path analysis of the project. 
 This allowed us to ensure that for each task, the prerequisite task would be completed 
-prior to the next task commencing. \hl{The workflow can be seen in the Gantt chart displayed in 
-figure XXX, the key for the Gantt chart is displayed in figure YYY.}
+prior to the next task commencing. The workflow can be seen in the Gantt chart displayed in 
+figure \ref{fig:gantt}, the key for the Gantt chart is displayed in table \ref{tab:gantt}.
 
-\includegraphics[scale=0.48]{images/GanttChart.png}
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[scale=0.48]{images/GanttChart.png}
+  \caption{Gantt chart for system development}
+  \label{fig:gantt}
+\end{figure}
 
 
 \begin{longtable}{|p{0.6cm}|p{5.7cm}|p{1.35cm}|p{1.35cm}|p{1.8cm}|p{1.5cm}|}
@@ -142,3 +148,4 @@ figure XXX, the key for the Gantt chart is displayed in figure YYY.}
 	19 & Contingency & Spring 6 & Spring 6 &  & Team \\ \hline
 	20 & Produce interim report & Autumn 8 & Spring 6 & & Team \\ \hline
 \end{longtable}
+

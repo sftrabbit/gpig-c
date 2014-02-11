@@ -513,10 +513,6 @@ disadvantages of there being no managing server. As we used GitHub for the
 canonical copy of the work, we incorporated many of the benefits of centralised
 version control anyway.
 
-\subsection{Source}
-
-The source for our prototype implementation can be accessed \hl{(instructions here)}
-
 \subsection{Current Functionality}
 For the interim prototype we chose to firmly follow the planned architecture, producing a core system linking to example engines, emitters and data stores, focussing on interacting with the provided test application.
 
@@ -528,11 +524,14 @@ The data emitter designed to emit data about the JVM records the CPU and memory 
 
 %%Paragraph about analysis plugin 
 
-When the notification generator receives an event, it selects the appropriate notification engines for that event and uses them to create and send a notification. Currently, a single notification engine has been developed which sends an email to an email address configured by the user. For the test application, an email will be dispatched when CPU usage exceeds a predefined limit. \hl{For the earthquake monitoring application, an email is sent when a significant earthquake occurs.} % TODO!
+When the notification generator receives an event, it selects the appropriate notification engines for that event and uses them to create and send a notification. Currently, a single notification engine has been developed which sends an email to an email address configured by the user. This is demonstrated for the test application, where an email will be dispatched when CPU usage exceeds a predefined limit.
 
 %% Paragraph about reports plugins
 
-A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided; including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality, however does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
+A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided; including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality and --- apart from the reporting examples --- does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
+
+\subsection{Source}
+The source for our prototype implementation can be accessed online at \textit{http://git.gpigc.co.uk} and cloned using Git from \textit{http://git.gpigc.co.uk/gpig-c.git}. The username required is \textit{gpigc} with the password \textit{moustache}.
 
 \subsection{Evaluation of the Prototype Solution for Sample Applications}
 \label{sec:prototype-evaluation}
@@ -545,24 +544,30 @@ or one executing on the JVM. We utilised Java Management
 Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
-rolling average of each value, and causes an email to be sent if this value
-becomes too high. The raw values are read by the reporting system and 
-displayed live in the admin centre, as shown in figure~\ref{fig:graphing}.
+rolling average of values, and causes an email to be sent if this value
+becomes too high, as shown in figure \ref{fig:alerting}. The raw memory
+values are read by the reporting system and displayed live in the admin
+centre, as shown in figure~\ref{fig:graphing}. The graph shows a value from
+every 10 seconds, and automatically updates with the latest values.
 
 % Mean - email
 % Raw values - graph
 
+\begin{figure}[htbp!]
+  \centering
+  \includegraphics[width=7cm]{images/TestApplicationCPUAlert.png}
+  \caption{A screenshot of an email notification sent by the mean analysis engine}
+  \label{fig:alerting}
+\end{figure}
+
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
 \begin{figure}[htbp!]
   \centering
-  \includegraphics[width=13cm]{images/TestApplicationMemoryGraph.png}
+  \includegraphics[width=12cm]{images/TestApplicationMemoryGraph.png}
   \caption{A screenshot of the live graphing of the memory usage of the Customer 
   Test Application}
   \label{fig:graphing}
 \end{figure}
-
-\paragraph{Instructions for Replicating Results}
-\hl{Todo. Maybe also include more concrete results, e.g. types of values obtained from it and values obtained through analysis}
 
 \subsubsection{Earthquake}
 We also created our own sample application: monitoring earthquakes 
@@ -578,6 +583,9 @@ data was a useful and innovative addition.
   \caption{A screenshot of the admin centre for our live earthquake monitoring HUMS prototype}
   \label{fig:plotearthquakes}
 \end{figure}
+
+\subsubsection{Instructions for Running and Replicating Results}
+Once the source has been obtained, it can be run in a couple of ways. \hl{Todo - instructions for running the system as a whole: jars and stuff}
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
@@ -645,32 +653,51 @@ Below, the testing within each module is described:
    test time. Our unit tests covered valid, extreme and null values being sent 
    to the analysis engine.
 
-  \item[Notification Generator] \hl{No tests written for this}
-  \hl{Cooldown period in} \frit{8}
+  \item[Notification Generator] For the notification generator, we created 
+	multiple unit tests to verify functionality as per \frit{8}. Mockito was 
+	used to isolate the class, allowing for a true unit test. The initial 
+	test ensured that a notification is generated when analysis has indicated 
+	it. The second test ensured that notifications were only sent once, to 
+	avoid spamming users.	 
   
-  \item[Notification Engine]
-  The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
+  \item[Notification Engine] The functionality of the email notification 
+	engine is tested using a unit test. The test uses the notification engine 
+	to send a message to a certain recipient with a given subject and message, 
+	then verifies that the email was successfully sent and received by checking 
+	the inbox of the specified recipient and inspecting the message to ensure 
+	that it contains the correct information.
 
-  \item[Reports Engine] We tested the Reports Engine by inspection since it is a prototype and does not require significant automated testing at this stage.
+  \item[Reports Engine] We tested the Reports Engine by inspection since it 
+	is a prototype and does not require significant automated testing at this 
+	stage.
 
  \end{description}
 
 \subsubsection{Traceability Matrix}
 
 % Met Requirement IDs. How we show we've met them and what the test did, what cases, what we plan to test, kind of testing
+The traceability matrix below shows the mapping from each requirement to its test:
 
-\hl{The traceability matrix shows the mapping from each requirement to its test.} % Finish table - TODO: TD
-
-\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{2.5cm}| p{2.5cm}|}
-  \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Cases}\\
-  \hline \fr{3.1}   & GWTSystemDataGatewayTest & Unit & Extreme values\\
-  \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Unit &\\
-  \hline \fr{7.2}   & ExpressionAnalysisTest  &a &\\
-  \hline \fr{11}    & EmailNotificationTest  & Inspection &\\
+\begin{longtable}[H]{| p{1.5cm} | p{5cm}| p{1.8cm}| p{4.8cm}|}
+  \hline\rowcolor{titleColor} \textbf{Req. ID} & \textbf{Test Classes} & \textbf{Type} & \textbf{Details}\\
+  \hline \fr{1.2}   & N/A & Inspection, Alpha & Verify by observing output in admin centre\\
+  \hline \fr{2.1}   & SystemDataTest & Unit & Verify existence of timestamp\\
+  \hline \fr{2.2}   & EmitterSystemStateTest & Unit & Verify existence of timestamp\\
+  \hline \fr{3.1}   & GWTSystemDataGatewayTest & Unit & Valid values\\
+  \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON\\
+  \hline \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Inspection,\newline Unit & Check notification flag is set and queried to control notifications\\
+  \hline \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of events \\
+  \hline \fr{9}   & AnalysisControllerTest, \newline EmailNotificationTest & Unit & Verify dispatch of events \\
+  \hline \fr{12}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
+  \hline \nfr{6}    & N/A  & Inspection & Verify existence of all test levels \\
   \hline
 \end{longtable}
 
 \input{06-team}
+
+% TODO:
+% -> highlight changes in risk register and development plan - needs to be "appropriately reviewed and revised when necessary"
+% -> evidence that the risks have been considered in the planning of the development
 
 \input{07-riskregister}
 \input{08-communication}
