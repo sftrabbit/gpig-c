@@ -70,7 +70,7 @@ in the table below.
   & 3
   & Additional, unnecessary functionality, possible deadline miss
   & Ensure a clear, shared vision of the prototype system and collective ownership with open communication
-  & \hl{???}
+  & Refocus team, working on the agreed functionality and requirements.
   & \\
   
   \hline \textbf{R.6}
@@ -84,12 +84,21 @@ in the table below.
   
   
   \hline \textbf{R.7}
-  & Commun-ications link to Google App Engine fails
+  & Short team failure of communication link to Google App Engine
   & 3
   & 4
-  & Loss of service to users, loss of confidence in the system
+  & Short term loss of service to users, loss of confidence in the system
   & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit10)
-  & Additional data abstraction layer could be built to interface with another database service
+  & Additional data abstraction layer could be built to interface with another database service if App Engine proves to be unreliable
+  & \\
+
+  \hline \textbf{R.7}
+  & Prolonged failure of communication link to Google App Engine 
+  & 5
+  & 2
+  & Prolonged loss of service to users, loss of confidence in the system, possible failure to meet \nfrit10 and \nfrit13
+  & As above
+  & As above
   & \\
   
   \hline \textbf{R.8}
@@ -156,7 +165,7 @@ in the table below.
   & 2
   & 4
   & Creates a notification backlog: gradual increase in load until system
-  is non-operational
+  is non-operational, failure to meet \nfrit13 and \frit9
   & Load testing of notification component throughout development, code optimisations 
   & Re-engineering of notification system
   & \\
