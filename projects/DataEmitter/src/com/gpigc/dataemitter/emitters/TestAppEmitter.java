@@ -2,6 +2,7 @@ package com.gpigc.dataemitter.emitters;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor;
@@ -55,7 +56,7 @@ public class TestAppEmitter extends Emitter {
 				.setValue(String.valueOf(jvmMonitor.getUsedMemory()))
 				.build();
 		SystemData data = SystemData.newBuilder().setSystemId("1")
-				.setTimestamp(System.nanoTime()).addDatum(cpuDatum)
+				.setTimestamp(new Date().getTime()).addDatum(cpuDatum)
 				.addDatum(memoryDatum).build();
 		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
 		dataList.add(data);
