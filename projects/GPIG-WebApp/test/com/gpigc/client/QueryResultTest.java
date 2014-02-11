@@ -26,17 +26,7 @@ public class QueryResultTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		String systemID = "SomeSystemTestID";
-		List<SensorState> records = new ArrayList<>();
-		records.add(new SensorState(
-				"SensorA", new Date(14334L), new Date(14231L), "SensorAValue"));
-		records.add(new SensorState(
-				"SensorB", new Date(15000L), new Date(15001L), "SensorBValue"));
-		records.add(new SensorState(
-				"SensorC", new Date(100898L), new Date(100891L), "SensorCValue"));
-		records.add(new SensorState(
-				"SensorD", new Date(133712L), new Date(133719L), "SensorDValue"));
-		testData = new QueryResult(systemID, records);
+
 	}
 
 	/**
@@ -55,8 +45,17 @@ public class QueryResultTest {
 	 */
 	@Test
 	public void testJSON() throws JsonParseException, IOException, ParseException {
-		String systemID = testData.getSystemID();
-		List<SensorState> records = testData.getRecords();
+		String systemID = "SomeSystemTestID";
+		List<SensorState> records = new ArrayList<>();
+		records.add(new SensorState(
+				"SensorA", new Date(14334L), new Date(14231L), "SensorAValue"));
+		records.add(new SensorState(
+				"SensorB", new Date(15000L), new Date(15001L), "SensorBValue"));
+		records.add(new SensorState(
+				"SensorC", new Date(100898L), new Date(100891L), "SensorCValue"));
+		records.add(new SensorState(
+				"SensorD", new Date(133712L), new Date(133719L), "SensorDValue"));
+		testData = new QueryResult(systemID, records);
 		QueryResult parsedData = QueryResult.parseJSON(
 				new StringReader(testData.toJSON()));
 		assertEquals(systemID, parsedData.getSystemID());
