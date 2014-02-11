@@ -614,9 +614,10 @@ between each requirement and its associated test. % Move this down a section?
   class to restrict the possible source of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme, \hl{missing values were sent to the analysis engine.} % No idea what point is trying to be made here?
 
   \item[Notification Generator] \hl{No tests written for this}
-  
-  \item[Notification Engine] \hl{No tests written for this}
   \hl{Cooldown period in} \frit{8}
+  
+  \item[Notification Engine]
+  The functionality of the email notification engine is tested using a unit test. The test uses the notification engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information.
 
   \item[Reports Engine] \hl{No tests written for this}
   
