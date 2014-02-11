@@ -602,7 +602,7 @@ between each requirement and its associated test. % Move this down a section?
 
 \hl{To system test}
 
-\hl{Below, the testing for each module is listed}
+Below, the testing within each module is described:
 
 \begin{description}
 
@@ -628,20 +628,24 @@ between each requirement and its associated test. % Move this down a section?
     parsing of the JSON serialisation of objects.
     
   \item[Analysis Controller] The analysis controller is responsible for 
-	coordinating analysis engines and triggering notifications. Due to 
-	the central role played by the analysis controller in the analysis 
-	pipeline we identified its key attributes as performance and testability. 
-	We utilised Mockito to provide completely isolated unit tests, 
-	confirming that notifications are only triggered when appropriate and  
-	only the relevant analysis engines are used for a given system. 
-	Class loading was used to load analysis engines for the prototype, 
-	this was confirmed to be working via inspection and integration testing.
+   coordinating analysis engines and triggering notifications. Due to 
+   the central role played by the analysis controller in the analysis 
+   pipeline we identified its key attributes as performance and testability. 
+   We utilised Mockito to provide completely isolated unit tests, 
+   confirming that notifications are only triggered when appropriate and  
+   only the relevant analysis engines are used for a given system. 
+   Class loading was used to load analysis engines for the prototype, 
+   this was confirmed to be working via inspection and integration testing.
   
   \item[Analysis Engine]
-  For the analysis engine, we created a unit test to check each aspect of the 
-  engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
-  for testing which allows mocking of results from methods of a dependancy 
-  class to restrict the possible source of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the analysis engine.
+   For the analysis engine, we created a unit test to check each aspect of the 
+   engine as per \frit{7.1} and \frit{7.4}. We utilised Mockito, a framework 
+   for testing which allows mocking of results from methods of a dependancy 
+   class to restrict the possible source of failure of a test to be as narrow as 
+   possible. This was especially useful for potentially flakey areas, such as 
+   database access or connecting over a network that may not be available at 
+   test time. Our unit tests covered valid, extreme and null values being sent 
+   to the analysis engine.
 
   \item[Notification Generator] \hl{No tests written for this}
   \hl{Cooldown period in} \frit{8}
