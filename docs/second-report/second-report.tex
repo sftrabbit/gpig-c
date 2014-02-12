@@ -354,7 +354,7 @@ The analysis components of the HUMS, shown in figure
     functionality and defines the methods required of an implemented
     analysis engine. The analyse method interfaces with the database
     abstraction layer to retrieve the appropriate sensor data and then
-    performs the desired analysis,returning a result object. When creating 
+    performs the desired analysis, returning a result object. When creating 
     their own analysis engines the end user will be required to extend 
     this class, implement the abstract methods and define what 
     constitutes an event.
@@ -364,7 +364,7 @@ The analysis components of the HUMS, shown in figure
     a given window. When called by the analysis controller, sensor 
     data is retrieved for all associated systems and mean analysis 
     is performed. If a mean value falls outside of the defined acceptable 
-    bounds then a notification is generated.
+    bounds then a flag is set to generate a notification.
 
 % TODO DO we even need this object? Surely this is just an event
   \item [Result] \hl{An object representing the result of the analysis
@@ -401,14 +401,14 @@ contain the following classes:
   \item [NotificationGenerator] An object that coordinates the generating and
     sending of notifications. The object interfaces with the analysis
     controller, receiving an event object when analysis engines specify that
-    notifications should be sent. Notifications are then generated and sent to
+    notifications should be sent. Notifications are then generated and sent by
     the registered notification engines. Notification engines are associated with
     the notification generator by class loading allowing for users to add and
     remove notification engines at run-time.
 
   \item [NotificationEngine] An abstract class implementing the basic
     functionality and defining that a notification engine instance must
-    override. Notification Engines feature a cool down system ensuring 
+    override. Notification engines feature a cool down system ensuring 
     notifications are not sent more then once during a specified period of 
     time.
 
