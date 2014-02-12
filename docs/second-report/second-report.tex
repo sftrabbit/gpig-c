@@ -457,26 +457,39 @@ Upon deciding to monitor CPU and heap usage, we began to investigate
 technologies that would allow us to do so, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested
 tools with which we could easily implement data input clients for further
-systems. As the test program is a Java program, we had to connect to its JVM to query the heap usage, as the operating system would just report the size of the JVM heap. We settled on using SIGAR for process monitoring, and JMX for monitoring heap usage.
+systems. As the test program is a Java program, we had to connect to its 
+JVM to query the heap usage, as the operating system would just report the 
+size of the JVM heap. We settled on using SIGAR for process monitoring, 
+and JMX for monitoring heap usage. An alternative we considered was 
+simply querying the existing features provided by the operating system 
+and JVM to access this data, however this would have not been portable 
+across different operating systems, or to embedded systems with poor 
+support for launching new processes.
 
-An alternative we considered was simply querying the existing features provided
-by the operating system and JVM to access this data, however this would have
-not been portable across different operating systems, or to embedded systems
-with poor support for launching new processes.
-
-To communicate between the core and the other modules, we serialised objects to send them over a network connection. We used JSON and Protocol Buffers. For connections that require data to be serialised to text, we used JSON since it is human readable and maps well to our internal representation of objects in Java. To read and write JSON we used the Jackson library, since it offers a high-performance streaming API. When there was no such restriction on the format of the transmitted data, we used Google Protocol Buffers since they offer high performance, as is necessary for the potentially high-volume connections between the Core and the other modules, such as the Data Emitter and the Analysis Engines.
-
-We initially considered using HTTP rather than Google Protocol Buffers for
-communication between the data input layer and the core, however we determined
-that sending multiple HTTP requests a second would have significant overhead,
-and so we instead opted for a persistent connection and a more lightweight
-protocol.
+To communicate between the core and the other modules, we serialised 
+objects to send them over a network connection, using JSON and 
+Protocol Buffers. For connections that require data to be serialised to text, 
+we used JSON since it is human readable and maps well to our internal 
+representation of objects in Java. To read and write JSON we used the 
+Jackson library, since it offers a high-performance streaming API. When 
+there was no such restriction on the format of the transmitted data, 
+therefore Google Protocol Buffers we used since they offer high 
+performance. This performance may be necessary for the potentially 
+high-volume connections between the Core and the other modules, 
+such as data emitters and analysis engines. We initially considered 
+using HTTP rather than Google Protocol Buffers for communication 
+between the data input layer and the core, however we determined
+that sending multiple HTTP requests a second would have significant 
+overhead, and so we instead opted for a persistent connection and a 
+more lightweight protocol.
 
 We chose to use Google App Engine to host the prototype's database
 module, displaying how easily it can incorporate existing, popular
-technologies as plugins. The prototype could easily be extended to
+datastore technologies. The prototype could easily be extended to
 work with other database technologies simply by implementing an
-interface within the data abstraction layer.
+interface within the data abstraction layer. Google App Engine was chosen
+as opposed to a local datastore as it allowed for the prototype to
+easily interface with the admin centre.
 
 We created a prototype admin centre to show how the HUMS could be
 managed remotely, viewing data and modifying settings online through
@@ -511,22 +524,58 @@ version control anyway.
 \subsection{Current Functionality}
 For the interim prototype we chose to firmly follow the planned architecture, producing a core system linking to example engines, emitters and data stores, focussing on interacting with the provided test application.
 
-The core of the HUMS is fully functional, allowing for data emitters to send data to the data input layer using protocol buffers, chosen in preference to HTTP requests due to the lower latency. The data input layer, as currently implemented, supports multiple simultaneous connections from input clients, although we have yet to investigate how many the prototype could handle. Upon receipt, the data is put into a queue, which is periodically processed by the data input server, by adding each entry to the database and notifying the analysis controller. The analysis controller allows for dynamic loading of analysis engines, allowing them to be altered at runtime and requests data to be passed to the appropriate engine, decoupling the analysis engines from the data abstraction layer. The data abstraction layer provides a simple interface to be implemented by the consumer and includes an example implementation, interfacing with Google App Engine using HTTP requests to a remote servlet. The notification generator also allows notification engines to be dynamically loaded and passes event objects to them.
+The core of the HUMS is fully functional, allowing for data emitters to send data 
+to the data input layer using protocol buffers, chosen in preference to HTTP 
+requests due to the lower latency. The data input layer, as currently 
+implemented, supports multiple simultaneous connections from input clients, 
+although we have yet to investigate how many the prototype could handle. 
+Upon receipt, the data is put into a queue, which is periodically processed by 
+the data input server, by adding each entry to the database and notifying the 
+analysis controller. The analysis controller allows for dynamic loading of 
+analysis engines, allowing them to be altered at runtime and requests data to 
+be passed to the appropriate engine, decoupling the analysis engines from the 
+data abstraction layer. The data abstraction layer provides a simple interface to 
+be implemented by the consumer and includes an example implementation, 
+interfacing with Google App Engine using HTTP requests to a remote servlet. 
+The notification generator also allows notification engines to be dynamically 
+loaded and passes event objects to them.
 
-Currently there are two data emitters for use with the system. Demoing its flexibility, the first extracts and emits data about the JVM, recording CPU and memory usage, and the second extracts and emits live data about earthquake activity from the USGS earthquake hazards program API \cite{usgs}.
+Currently there are two data emitters for use with the HUMS. Demonstrating its 
+flexibility. The first extracts and emits data about the JVM, recording CPU and 
+memory usage, and the second extracts and emits live data about earthquake 
+activity from the USGS earthquake hazards program API \cite{usgs}.
 
-The data emitter designed to emit data about the JVM records the CPU and memory usage and sends these through the data input API every second. A period of four seconds is allowed to elapse before the first send, allowing the CPU usage readings to stabilise. The data emitter created to relay live data about earthquake activity fetches data every minute from the USGS earthquake hazards program API and submits it to the data input API.
+The data emitter designed to emit data about the JVM records the CPU and 
+memory usage of the application and sends these through the data input API 
+every second. A period of four seconds is allowed to elapse before the first 
+send, allowing the CPU usage readings to stabilise. The data emitter created to 
+relay live data about earthquake activity fetches data every minute from the 
+USGS earthquake hazards program API and submits it to the data input API.
 
 %%Paragraph about analysis plugin 
 
-When the notification generator receives an event, it selects the appropriate notification engines for that event and uses them to create and send a notification. Currently, a single notification engine has been developed which sends an email to an email address configured by the user. This is demonstrated for the test application, where an email will be dispatched when CPU usage exceeds a predefined limit.
+When the notification generator receives an event, it selects the appropriate 
+notification engines for that event and uses them to create and send  
+notifications. Currently, a single notification engine has been developed which 
+sends an email to an email address configured by the user. This is 
+demonstrated for the test application, where an email will be dispatched when 
+CPU usage exceeds a predefined limit.
 
 %% Paragraph about reports plugins
 
-A prototype admin centre was created for this stage of the project to demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided; including storage, analysis, notification and reporting tools. Currently the prototype admin centre mocks functionality and --- apart from the reporting examples --- does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be functional.
+A prototype admin centre was created for this stage of the project to 
+demonstrate how the HUMS could be public facing as a SaaS, allowing for any 
+company or individual to, for a fee, use the facilities provided; including 
+storage, analysis, notification and reporting tools. Currently the prototype 
+admin centre mocks functionality and --- apart from the reporting examples --- 
+does not actually integrate with the system. We envisage that in the next phase 
+of the project the admin centre will be functional.
 
 \subsection{Source}
-The source for our prototype implementation can be accessed online at \verb+http://git.gpigc.co.uk+ and cloned using Git from \verb+http://git.gpigc.co.uk/gpig-c.git+. The username required is \verb+gpigc+ with the password \verb+moustache+.
+The source for our prototype implementation can be accessed online at \verb
++http://git.gpigc.co.uk+ and cloned using Git from \verb+http://git.gpigc.co.uk/
+gpig-c.git+. The username required is \verb+gpigc+ with the password \verb
++moustache+.
 
 \subsection{Evaluation of the Prototype Solution for Sample Applications}
 \label{sec:prototype-evaluation}
@@ -640,7 +689,7 @@ Below, the testing within each module is described:
     importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
     performance. We completed an inspection test and used the 
-    GWTSystemDataGatewayTest class to verify \frit{3.2}. At the unit 
+    GWTSystemDataGatewayTest class to verify \frit{3.1}. At the unit 
     testing level, as  part of TDD, we focussed on the comparably complex,
     well defined module-internal functions, such as the generation and 
     parsing of the JSON serialisation of objects.
@@ -696,8 +745,7 @@ Table~\ref{tab:traceability} shows the existing tests used to verify the impleme
   \hline \fr{1.2}   & N/A & Inspection, Alpha & Verify by observing output in admin centre\\
   \hline \fr{2.1}   & SystemDataTest & Unit & Verify existence of timestamp\\
   \hline \fr{2.2}   & EmitterSystemStateTest & Unit & Verify existence of timestamp\\
-  \hline \fr{3.1}   & GWTSystemDataGatewayTest & Unit & Valid values\\
-  \hline \fr{3.2}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON\\
+  \hline \fr{3.1}   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON\\
   \hline \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Inspection,\newline Unit & Check notification flag is set and queried to control notifications\\
   \hline \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of events \\
   \hline \fr{11}    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
