@@ -573,13 +573,14 @@ We chose to add our reporting tools to the admin centre in the form of a map
 and a graph, each of which is updated live, to be used with test applications as shown in figures~\ref{fig:alerting} and~\ref{fig:graphing}.
 
 \subsection{Source}
+\label{sec:source}
 The source for our prototype implementation can be accessed online at \verb+http://git.gpigc.co.uk+ and cloned using Git from \verb+http://git.gpigc.co.uk/gpig-c.git+. The username required is \verb+gpigc+ with the password hint being ``\verb+It's right under your nose+'', and the password itself being ``\verb+moustache+''.
 
 \subsection{Evaluation of the Prototype Solution for Sample Applications}
 \label{sec:prototype-evaluation}
 
 \subsubsection{Customer Test Application -- No. 1}
-The Customer provided an example application to monitor as part of the
+The customer provided an example application to monitor as part of the
 evaluation of our prototype. With this in mind, we created a monitoring 
 package for our prototype solution that can monitor a native application
 or one executing on the JVM. We utilised Java Management 
@@ -646,7 +647,9 @@ Earthquake Monitor:
 The test application memory graph can be viewed at 
 \verb+http://www.gpigc.co.uk/admin/graph.html+ and the earthquake 
 map can be viewed at \verb+http://www.gpigc.co.uk/admin/map.html+. 
-The HUMS must be running in order to view live changes.
+The HUMS must be running in order to view live changes, and the user name
+and password required for access is the same as described in section
+\ref{sec:source}.
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
@@ -669,7 +672,7 @@ testing.
 
 For system testing, we completed inspection testing, and deployed our system across various networked machines and verified that the HUMS acted as expected. A more thorough system testing stage will be completed for later, higher fidelity, iterations of the prototype.
 
-For acceptance testing, we sent the Customer various iterations of our prototype, and we expect that the feedback from this report will fold back into our acceptance testing.
+For acceptance testing, we sent the customer various iterations of our prototype, and we expect that the feedback from this report will fold back into our acceptance testing.
 
 Below, the testing within each module is described:
 
