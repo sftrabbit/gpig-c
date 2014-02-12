@@ -1,0 +1,8 @@
+#!/bin/sh
+
+TEX_FILE="second-report.tex";
+WC_FILE="wc.tex";
+
+WC=`detex $TEX_FILE | wc -w | tr -d ' '`
+echo "$WC" > $WC_FILE;
+echo "Word Count: $WC, written to $WC_FILE";
