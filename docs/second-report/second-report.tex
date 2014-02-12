@@ -1,6 +1,5 @@
 \documentclass[10pt,a4paper]{article}
 
-
 \usepackage[margin=3cm]{geometry}
 \usepackage[UKenglish]{babel}
 \usepackage{enumitem}
@@ -151,8 +150,6 @@ qualities, a module view can be formed. The component diagram
 shown in figure \ref{fig:ComponentDiagram} depicts the modules of the
 HUMS and the interactions between these modules at a high level.
 
-%%TODO this diagram doesn't have a key
-
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=14cm]{images/ComponentDiagram.png}
@@ -211,12 +208,9 @@ HUMS, detailing how the HUMS receives data from a data emitter and generates a n
   \centering
   \includegraphics[width=14cm]{images/CommunicationDiagram.png}
   \caption{Communication diagram showing a behavioural view of message 
-flow
-through the system, using UML 2 notation}
+flow through the system, using UML 2 notation}
   \label{fig:CommunicationDiagram}
 \end{figure}
-
-%%Input Diagram WITH KEY
 
 \subsection{Execution View}
 With a view to deployment and execution, the HUMS needs to be tailorable. The core system may be running on the same hardware as the data emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
@@ -437,7 +431,7 @@ be compiled to bytecode that can be executed directly in all
 environments that support a Java Virtual Machine, including various
 operating systems and the x86, x86-64 and ARM CPU architectures,
 making it highly portable between both desktop, server and embedded
-systems. % REF: http://www.oracle.com/technetwork/java/javase/config-417990.html
+systems \cite{javasupport}.
 
 Whilst there may exist deployment platforms that are not supported, at
 this stage, we do not see this as a problem since the underlying
@@ -593,9 +587,6 @@ values are read by the reporting system and displayed live in the admin
 centre, as shown in figure~\ref{fig:graphing}. The graph shows a value from
 every 10 seconds, and automatically updates with the latest values.
 
-% Mean - email
-% Raw values - graph
-
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=7cm]{images/TestApplicationCPUAlert.png}
@@ -604,6 +595,7 @@ every 10 seconds, and automatically updates with the latest values.
 \end{figure}
 
 % TODO Talk about performance or meeting the requirements - we've not implemented quite a few things such as feedback?
+
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=12cm]{images/TestApplicationMemoryGraph.png}
@@ -688,7 +680,7 @@ Below, the testing within each module is described:
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
     inspection testing, and also by running multiple clients simultaneously and
-    verifying that the data from both was recorded, thus verifying \frit{1.2}.
+    verifying that the data from both was recorded, thus verifying \frit{1.1}.
 
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
@@ -763,7 +755,7 @@ Table~\ref{tab:traceability} shows the existing tests used to verify the impleme
 
 \input{06-team}
 
-% TODO:
+% TODO - based on mark scheme!
 % -> highlight changes in risk register and development plan - needs to be "appropriately reviewed and revised when necessary"
 % -> evidence that the risks have been considered in the planning of the development
 
