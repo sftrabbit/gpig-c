@@ -60,7 +60,8 @@ public class AnalysisController {
 		for (AnalysisEngine engine : engines) {
 			List<String> associatedSystems = engine.getAssociatedSystems();
 			if (associatedSystems.contains(systemId)) {
-				processResult(engine.getEngineName(), engine.analyse(), systemId);
+				processResult(engine.getEngineName(), engine.analyse(),
+						systemId);
 			}
 		}
 	}
@@ -80,7 +81,7 @@ public class AnalysisController {
 			if (result.isNotify()) {
 				Event event = new Event(result, engineName, systemId);
 				notificationGenerator.generate(event);
-	
+
 				System.out.println("Notification triggered: "
 						+ result.getDataToSave().toString());
 			}
@@ -105,7 +106,7 @@ public class AnalysisController {
 			InvocationTargetException, NoSuchMethodException, SecurityException {
 		List<String> systemIds = new ArrayList<String>();
 		systemIds.add("1");
-		File folder = new File("/" + System.getProperty("user.dir")
+		File folder = new File(System.getProperty("user.dir")
 				+ "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
@@ -114,8 +115,8 @@ public class AnalysisController {
 							+ listOfFiles[i].getName().substring(0,
 									listOfFiles[i].getName().lastIndexOf('.')))
 					.getConstructor(List.class, SystemDataGateway.class);
-			AnalysisEngine engine = (AnalysisEngine) constructor
-					.newInstance(systemIds, database);
+			AnalysisEngine engine = (AnalysisEngine) constructor.newInstance(
+					systemIds, database);
 			engines.add(engine);
 		}
 	}
