@@ -406,20 +406,16 @@ contain the following classes:
     the notification generator by class loading allowing for users to add and
     remove notification engines at run-time.
 
-  \item [NotificationEngine] An abstract class that implements the basic
-    functionality and defines the methods required of an implemented
-    notification engine. Each engine has a list of associated systems, and 
-    features a cool down system to ensure that notifications are not sent
-    more then once during a specified period of time. When creating their
-    own notification engines the end user will be required to extend this
-    class, implement the abstract methods, and define how a notification
-    is sent.
+  \item [NotificationEngine] An abstract class implementing the basic
+    functionality and defining that a notification engine instance must
+    override. Notification Engines feature a cool down system ensuring 
+    notifications are not sent more then once during a specified period of 
+    time.
 
-  \item [EmailNotification] An object that extends the notification engine
-    class and implements email notifications. When called by the notification
-    generator, an email notification is sent to the specified recipient, and 
-    contains the specified notification subject and further notification
-    information.
+  \item [EmailNotification] An extension of the notification engine
+    class which notifies via email. When called by the notification
+    generator, an email notification is sent to the specified recipient, 
+    containing the notification subject and any further information.
 \end{description}
  
 \begin{figure}[ht!]
@@ -427,7 +423,7 @@ contain the following classes:
   \includegraphics[width= 7cm]{images/Notification/NotificationGenerator.png}
   \includegraphics[width= 5cm]{images/Notification/NotificationEngine.png}
   \includegraphics[width= 4.5cm]{images/Notification/EmailNotification.png}
-  \caption{Conceptual diagrams of the notification component classes, using 
+  \caption{Conceptual diagram of the notification component classes, using 
 UML 2 notation}
   \label{fig:notificationComponent}
 \end{figure}
