@@ -15,7 +15,7 @@ echo "pid=$CORE_PID"
 sleep 1
 
 echo -n "Starting the data emitter (TestAppEmitter.jar)... "
-(while true; do sleep 10000; done) | java -jar TestAppEmitter.jar > /dev/null 2>&1 &
+(while true; do sleep 10000; done) | LD_LIBRARY_PATH=. java -jar TestAppEmitter.jar > /dev/null 2>&1 &
 EMIT_PID=$!
 echo "pid=$EMIT_PID"
 
