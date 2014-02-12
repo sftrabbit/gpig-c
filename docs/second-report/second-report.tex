@@ -338,42 +338,41 @@ using UML 2 notation}
 
 \subsubsection{Analysis Components}
 
-The analysis component, shown in figure
-\ref{fig:dataAnalysisComponent}, contains the following classes:
+The analysis components of the HUMS, shown in figure
+\ref{fig:dataAnalysisComponent}, contain the following classes:
 
 \begin{description}
   \item [AnalysisController] An object that coordinates all analysis of
-    sensor data. The object interfaces with the data input layer,
-    receiving a system ID when analysis is required. Once analysis has
-    been carried out the controller processes the results and triggers
+    sensor data, interfacing with the data input layer by
+    receiving a system ID when analysis is required. Once analysis is
+    complete, the controller processes the results and triggers
     notifications where appropriate. Analysis engines are associated
     with the analysis controller by class loading allowing for users to
     add and remove analysis engines at run-time.
 
   \item [AnalysisEngine] An abstract class that implements the basic
     functionality and defines the methods required of an implemented
-    analysis engine. Each engine has a list of associated systems. The
-    implementation of the analyse method interfaces with the database
+    analysis engine. The analyse method interfaces with the database
     abstraction layer to retrieve the appropriate sensor data and then
-    performs the desired analysis. Once analysis is complete the engine 
-    returns a result object. When creating their own analysis 
-    engines the end user will be required to extend this class, implement 
-    the abstract methods and define what constitutes an event.
+    performs the desired analysis,returning a result object. When creating 
+    their own analysis engines the end user will be required to extend 
+    this class, implement the abstract methods and define what 
+    constitutes an event.
 
-  \item [MeanAnalysis] An object that extends the analysis engine
-    class and implements mean analysis. When called by the analysis
-    controller, sensor data is retrieved for all associated systems
-    and mean analysis is performed. If a mean value falls outside of
-    the acceptable bounds then a flag is set to generate a notification.
+  \item [MeanAnalysis] An analysis engine implementation which 
+    computes a rolling average over values read from a sensor over
+    a given window. When called by the analysis controller, sensor 
+    data is retrieved for all associated systems and mean analysis 
+    is performed. If a mean value falls outside of the defined acceptable 
+    bounds then a notification is generated.
 
-  \item [Result] An object representing the result of the analysis
-    carried out by the chosen analysis engine. The object contains a
-    map of any data to be saved back to the database and a flag
-    indicating whether a notification needs to be triggered. For
-    serialisation the data to be saved to the database is stored in a
-    map of string key-values. When implementing their own analysis
-    engine the end user will be able to specify what data is to be
-    saved back to the database.
+% TODO DO we even need this object? Surely this is just an event
+  \item [Result] \hl{An object representing the result of the analysis
+    carried out by an analysis engine, containing a
+    map between keys and values to be saved back to the database 
+    and a flag indicating whether a notification needs to be triggered.
+    When implementing their own analysis engine the Consumer will 
+    be able to specify what data is to be saved back to the database.}
 
   \item [Event] An object representing an event,
     containing the name of the analysis engine that triggered the
@@ -389,22 +388,21 @@ The analysis component, shown in figure
   \includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
   \includegraphics[width= 6cm]{images/Analysis/Event.png}
   \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
-  \caption{Conceptual diagrams of the analysis component classes, using 
+  \caption{Conceptual diagram of the analysis component classes, using 
 UML 2 notation}
   \label{fig:dataAnalysisComponent}
 \end{figure}
 
 \subsubsection{Notification Components}
 
-The notification component, shown in figure
-\ref{fig:notificationComponent}, contains the following classes:
-
+Notification components, shown in figure \ref{fig:notificationComponent}, 
+contain the following classes:
 \begin{description}
-  \item [NotificationGenerator] An object that coordinates generating and
+  \item [NotificationGenerator] An object that coordinates the generating and
     sending of notifications. The object interfaces with the analysis
     controller, receiving an event object when analysis engines specify that
-    notifications should be sent. Notifications are then generated and sent by
-    appropriate notification engines. Notification engines are associated with
+    notifications should be sent. Notifications are then generated and sent to
+    the registered notification engines. Notification engines are associated with
     the notification generator by class loading allowing for users to add and
     remove notification engines at run-time.
 
