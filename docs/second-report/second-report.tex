@@ -121,7 +121,7 @@ each requirement of the system would be tested, producing a
 comprehensive test plan, detailing integration, system, unit and 
 acceptance testing.
 
-\section{System Views}
+\subsection{System Views}
 \label{sec:architecture-views}
 
 When designing the HUMS we identified four different views of the
@@ -141,7 +141,7 @@ Hofmeister\cite{hof1999} approach to software architecture:
     implementation of the functionality.
 \end{description}
 
-\subsection{Module View}
+\subsubsection{Module View}
 \label{sec:architecture-moduleview}
 
 Having determined the quality attributes of the HUMS and the tactics
@@ -198,7 +198,7 @@ HUMS and the interactions between these modules at a high level.
     engines may be included in the HUMS or created by the end user.
 \end{description}
 
-\subsection{Behavioural View}
+\subsubsection{Behavioural View}
 
 The module view shows how modules of the system are connected, however 
 does not fully represent the interactions between components and the dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the 
@@ -212,7 +212,7 @@ flow through the system, using UML 2 notation}
   \label{fig:CommunicationDiagram}
 \end{figure}
 
-\subsection{Execution View}
+\subsubsection{Execution View}
 With a view to deployment and execution, the HUMS needs to be tailorable. The core system may be running on the same hardware as the data emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
 Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
@@ -242,10 +242,10 @@ systems}
   \label{fig:DeploymentService}
 \end{figure}
 
-\subsection{Conceptual View}
+\subsubsection{Conceptual View}
 The conceptual view is a description of the the entire system in terms of its individual components, for example classes in an object-oriented design.
 
-\subsubsection{Data Input Layer}
+\subsubsection*{Data Input Layer}
 
 The data input layer, shown in figure \ref{fig:dataInputLayer},
 contains the following classes:
@@ -280,7 +280,7 @@ UML 2 notation}
   \label{fig:dataInputLayer}
 \end{figure}
 
-\subsubsection{Data Abstraction Layer}
+\subsubsection*{Data Abstraction Layer}
 
 The data abstraction layer, shown in figure
 \ref{fig:dataAbstractionPackage}, contains the following classes:
@@ -330,7 +330,7 @@ using UML 2 notation}
   \label{fig:dataAbstractionPackage}
 \end{figure}
 
-\subsubsection{Analysis Components}
+\subsubsection*{Analysis Components}
 
 The analysis components of the HUMS, shown in figure
 \ref{fig:dataAnalysisComponent}, contain the following classes:
@@ -387,7 +387,7 @@ UML 2 notation}
   \label{fig:dataAnalysisComponent}
 \end{figure}
 
-\subsubsection{Notification Components}
+\subsubsection*{Notification Components}
 
 Notification components, shown in figure \ref{fig:notificationComponent}, 
 contain the following classes:
