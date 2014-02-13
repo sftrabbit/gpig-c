@@ -89,6 +89,8 @@
         var RECORD_TYPE = "Mem";
         var SYSTEM_ID = "1";
         var FREQUENCY = 10; // 1 to 59
+        var ROUND_SCALE = 1000;
+        var STEPS_SCALE = 20;
 
         // Initialise
         var relative = $("#graph").parent();
@@ -96,10 +98,10 @@
         var chart = new Chart($("#graph").get(0).getContext("2d"));
         var options = {
             scaleOverride: true,
-            scaleSteps: 20,
-            scaleStepWidth: 1000000,
-            scaleStartValue: 170000000
+            scaleSteps: STEPS_SCALE
         }
+        var min = Number.MAX_VALUE;
+        var max = Number.MIN_VALUE;
         var data = {
             labels : [],
             datasets : [
@@ -116,19 +118,7 @@
             url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+(MAX_POINTS*FREQUENCY)+"&callback=?",
             dataType: "jsonp",
             success: function(graphData) {
-                graphData.Records.reverse();
-                $.each(graphData.Records, function(key, item) {
-                    if (item.SensorID == RECORD_TYPE) {
-                        if (!(new Date(item.CreationTimestamp).getUTCSeconds() % FREQUENCY)) {
-                            if (data.labels.length >= MAX_POINTS) {
-                                data.labels.shift();
-                                data.datasets[0].data.shift();
-                            }
-                            data.labels.push(parseDate(item.CreationTimestamp));
-                            data.datasets[0].data.push(parseFloat(item.Value));
-                        }
-                    }
-                });
+                addItems(graphData.Records);
                 chart.Line(data, options);
                 options.animation = false;
             }
@@ -140,19 +130,7 @@
                 url: "http://gpigc-webapp.appspot.com/gpigc-webapp?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+(REFRESH_SECONDS*FREQUENCY)+"&callback=?",
                 dataType: "jsonp",
                 success: function(graphData) {
-                    graphData.Records.reverse();
-                    $.each(graphData.Records, function(key, item) {
-                        if (item.SensorID == RECORD_TYPE && (data.labels.indexOf(parseDate(item.CreationTimestamp)) == -1)) {
-                            if (!(new Date(item.CreationTimestamp).getUTCSeconds() % FREQUENCY)) {
-                                if (data.labels.length >= MAX_POINTS) {
-                                    data.labels.shift();
-                                    data.datasets[0].data.shift();
-                                }
-                                data.labels.push(parseDate(item.CreationTimestamp));
-                                data.datasets[0].data.push(parseFloat(item.Value));
-                            }
-                        }
-                    });
+                    addItems(graphData.Records);
                     chart.Line(data, options);
                 }
             });
@@ -162,6 +140,30 @@
         function parseDate(input) {
             var date = new Date(input);
             return ("0" + date.getUTCDate()).slice(-2) + "/" + ("0" + (date.getUTCMonth() + 1)).slice(-2) + "/" + date.getUTCFullYear() + " " + ("0" + date.getUTCHours()).slice(-2) + ":" + ("0" + date.getUTCMinutes()).slice(-2) + ":" + ("0" + date.getUTCSeconds()).slice(-2);
+        }
+
+        function addItems(items) {
+            items.reverse();
+            $.each(items, function(key, item) {
+                if (item.SensorID == RECORD_TYPE && (data.labels.indexOf(parseDate(item.CreationTimestamp)) == -1)) {
+                    if (!(new Date(item.CreationTimestamp).getUTCSeconds() % FREQUENCY)) {
+                        if (data.labels.length >= MAX_POINTS) {
+                            data.labels.shift();
+                            data.datasets[0].data.shift();
+                        }
+                        var value = parseFloat(item.Value)
+                        var thisMin = Math.floor(value / ROUND_SCALE) * ROUND_SCALE;
+                        var thisMax = Math.ceil(value / ROUND_SCALE) * ROUND_SCALE;
+                        if (thisMin < min) min = thisMin;
+                        if (thisMax > max) max = thisMax;
+                        data.labels.push(parseDate(item.CreationTimestamp));
+                        data.datasets[0].data.push(value);
+                    }
+                }
+            });
+            var stepWidth = Math.round(((max - min) / (STEPS_SCALE - 2)) / ROUND_SCALE) * ROUND_SCALE;
+            options.scaleStepWidth = stepWidth;
+            options.scaleStartValue = min - stepWidth;
         }
     });
 </script>
