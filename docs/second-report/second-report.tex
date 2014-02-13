@@ -88,7 +88,7 @@ configuration front-end of the System.
 Flexibility is important as the HUMS is designed to be used in multiple 
 domains. Adopting a plugin architecture allows the System to be used with
 arbitrary Consumer Systems. A particular Instance can include domain-specific
-components, such as custom Analysis engines. This gives a software product line
+components, such as custom analysis engines. This gives a software product line
 for which the core of the HUMS can be shared across all domains.
 
 Modifiability is also an important quality of the HUMS and, although not 
@@ -106,7 +106,7 @@ be swapped out without significant changes to the overall system.
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch Notifications through the 
-Notification generator after Events have been triggered by the Analysis 
+Notification generator after Events have been triggered by the analysis 
 controller, with a latency of less than 5~ms. The System is also required to be
 able to support multiple data output Clients. Methods such as reducing
 overhead though careful use of data structures and prioritising Events can
@@ -126,9 +126,9 @@ acceptance testing.
 \subsection{System Views}
 \label{sec:architecture-views}
 
-When designing the HUMS we identified four different views of the
-system which must be documented, taking inspiration from the
-Hofmeister\cite{hof1999} approach to software architecture:
+When designing the HUMS, we identified four views of the System which must be
+documented, taking inspiration from the Hofmeister\cite{hof1999} approach to
+software architecture:
 
 \begin{description}
   \item[Module View] The required software modules and relationships
@@ -137,17 +137,17 @@ Hofmeister\cite{hof1999} approach to software architecture:
   \item[Behavioural View] The flow of data and dynamic actions within
     the system.
 
-  \item[Execution View] How modules are geographically positioned.
+  \item[Execution View] The deployment and geographical distribution of modules.
 
-  \item[Conceptual View] Class diagrams, showing a concrete
-    implementation of the functionality.
+  \item[Conceptual View] Class diagrams, showing a concrete object-oriented
+    design of the system modules.
 \end{description}
 
 \subsubsection{Module View}
 \label{sec:architecture-moduleview}
 
 Having determined the quality attributes of the HUMS and the tactics
-which can be employed in order to achieve a high utility of these
+which can be employed to achieve a high possession of these
 qualities, a module view can be formed. The component diagram
 shown in figure \ref{fig:ComponentDiagram} depicts the modules of the
 HUMS and the interactions between these modules at a high level.
@@ -160,30 +160,30 @@ HUMS and the interactions between these modules at a high level.
 \end{figure}
 
 \begin{description}
-  \item[Core] A collection of modules that must be run on one machine, including the data input layer, analysis controller, data abstraction layer, and notification generator. Additional modules can be integrated on the same machine or connected over a network interface.
+  \item[Core] A collection of modules that must be run on a single machine, including the data input layer, analysis controller, data abstraction layer, and Notification generator. Additional modules can be integrated on the same machine or connected over a network interface.
 
-  \item[Data Emitter] Sends data to the system core in a standard
-    format. May be included within the HUMS or created by the end
-    user.
+  \item[Data Emitter] Sends data to the System core in a standard
+    format. Should be tailored to the Consumer System it is extracting data
+    from. May be part of the Consumer System itself.
 
-  \item[Data Input Layer] Receives data from a data emitter and sends
+  \item[Data Input Layer] Receives data from a Data Emitter and sends
     it to the data abstraction layer. Alerts the analysis controller
     that new data was received.
 
   \item[Data Abstraction Layer] Handles all interaction with the
-    database, such that if the database was to be altered, only this
+    database, such that if the database were to be altered, only this
     layer would need to change.
 
-  \item[Analysis Controller] Alert analysis engines when new data
+  \item[Analysis Controller] Alerts analysis engines when new data
     has arrived, pulling the required data from the data abstraction
     layer. If an analysis engine determines an event has occurred
     within the data then the analysis controller forwards that event
     to the notification generator.
 
   \item[Analysis Engine] Analyses the data looking for trends. If a
-    trend is found an event is returned to the analysis
-    controller. Analysis engines may be included in the HUMS or
-    created by the end user.
+    trend is found, an Event is returned to the analysis
+    controller. Analysis engines will be included with the HUMS, but the
+    Consumer may also provide custom engines.
 
   \item[Notification Generator] Receives events from the analysis
     controller, defines an abstract notification, and sends it to the
@@ -192,19 +192,20 @@ HUMS and the interactions between these modules at a high level.
   \item[Notification Engine] Receives an abstract notification from
     the notification generator and creates a concrete notification,
     for example an email or triggering a change in system
-    behaviour. Notification engines may be included in the HUMS or
-    created by the end user.
+    behaviour. Notification engines will be included with the HUMS, but the
+    Consumer may also provide custom engines.
 
   \item[Reports Engine] Pulls data from the data abstraction layer and
-    formats it into a report, for example a PDF or graph. Report
-    engines may be included in the HUMS or created by the end user.
+    formats it into a report, such as a PDF document or graph. Report
+    engines will be included with the HUMS, but the Consumer may also provide
+    custom engines.
 \end{description}
 
 \subsubsection{Behavioural View}
 
-The module view shows how modules of the system are connected, however 
-does not fully represent the interactions between components and the dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the 
-HUMS, detailing how the HUMS receives data from a data emitter and generates a notification. The different objects in the system are shown, along with all the interactions and links between them. The messages sent between different modules are shown and labelled with numbers to represent the chronological order in which they occur.
+The module view shows how modules of the system are connected, but does not
+however fully represent the interactions between components and the dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the 
+HUMS, detailing how the HUMS receives data from a Data Emitter and generates a Notification. The different objects in the System are shown, along with all the interactions and links between them. The messages sent between different modules are shown and labelled with numbers to represent the chronological order in which they occur.
 
 \begin{figure}[!ht]
   \centering
@@ -215,37 +216,38 @@ flow through the system, using UML 2 notation}
 \end{figure}
 
 \subsubsection{Execution View}
-With a view to deployment and execution, the HUMS needs to be tailorable. The core system may be running on the same hardware as the data emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
+The HUMS needs to be tailorable to various deployment and execution strategies. The core system may be running on the same hardware as the Data Emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), where multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
+Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), whereby multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
 
-This deployment of our HUMS as a SaaS is shown in figure \ref{fig:DeploymentService}. For administering the HUMS as a service, a hosted admin centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own events and how they should be handled, view all of the registered input clients, pull reports, and view live graphs of data.
+This deployment of our HUMS as a SaaS is shown in figure \ref{fig:DeploymentService}. For administering the HUMS as a service, a hosted admin centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own Events and how they should be handled, view all of the registered Clients, pull Reports, and view live visualisations of data.
 
 Figure \ref{fig:DeploymentIsolated} shows how we envision the prototype HUMS being deployed at this stage, with all modules on the same machine. It also shows how the system will be deployed on an embedded system, with configuration files being created manually, without an admin centre, and all modules existing on the same device.
+
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentDistributed.png}
-  \caption{Deployment diagram showing HUMS spread across multiple 
-systems}
+  \caption{Deployment diagram showing the HUMS spread across multiple 
+devices}
   \label{fig:DeploymentDistributed}
 \end{figure}
 
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=12.5cm]{images/DeploymentIsolated.png}
-  \caption{Deployment diagram showing HUMS on one system}
+  \caption{Deployment diagram showing the HUMS on a single isolated device}
   \label{fig:DeploymentIsolated}
 \end{figure}
 
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=10cm]{images/DeploymentService.png}
-  \caption{Deployment diagram showing HUMS as a multi-user service}
+  \caption{Deployment diagram showing the HUMS as a multi-user service}
   \label{fig:DeploymentService}
 \end{figure}
 
 \subsubsection{Conceptual View}
-The conceptual view is a description of the the entire system in terms of its individual components, for example classes in an object-oriented design.
+The conceptual view is a description of the System in terms of its individual components, for example classes in an object-oriented design.
 
 \subsubsection*{Data Input Layer}
 
@@ -277,7 +279,7 @@ contains the following classes:
   \includegraphics[width=6.2cm]{images/DataInputLayer/DataInputServer.png}
   \includegraphics[width=8.3cm]{images/DataInputLayer/ProtoReceiver.png}
   \includegraphics[width=9.5cm]{images/DataInputLayer/ProtoMultiReceiver.png}
-  \caption{Conceptual diagrams of the data input layer classes, using 
+  \caption{Conceptual diagrams of the data input layer classes in 
 UML 2 notation}
   \label{fig:dataInputLayer}
 \end{figure}
@@ -293,16 +295,16 @@ The data abstraction layer, shown in figure
     application. An implementation of this interface will provide ways
     to read and write from the chosen datastore, meaning the rest of the
     system is not concerned with the datastore implementation. When
-    interfacing with a datastore the end user will be required to
+    interfacing with a datastore, the end user will be required to
     implement this interface.
 
   \item [EmitterSystemState] An object representing the data received
-    from a data emitter at a particular time. This object holds
-    the ID of the end user's system and the creation timestamp along
-    with a map of sensor IDs against the value of the sensor at that
+    from a Data Emitter at a particular time. This object holds
+    the System ID of the Consumer System and the creation timestamp along
+    with a map of Sensor IDs against the value of the sensor at that
     particular time. A map was used to represent the sensors and
-    values so that the end user is free to send data from any number of 
-    sensors at a time, reducing the number of writes to the
+    values so that the Client is free to send data from any number of 
+    Sensors at a time, reducing the number of writes to the
     database. For serialisation this object includes methods to
     convert to and from JSON.
 
@@ -311,13 +313,13 @@ The data abstraction layer, shown in figure
     EmitterSystemState and QueryResult classes.
 
   \item [SensorState] An object representing the state of a particular
-    system sensor. A sensor has an ID, a value and two timestamps, one
-    specifying the time the sensor value was added to the database and
+    system Sensor. A Sensor has a Sensor ID, a value and two timestamps. One
+    timestamp specifies the time the Sensor value was added to the database and
     the other the time the actual value was sensed or created.
 
   \item [QueryResult] An object representing the result of a database
-    query, containing the ID of the end user's system to which the
-    data relates and a list of sensor states pulled from the database.
+    query, containing the System ID of the Consumer System to which the
+    data relates and a list of Sensor states pulled from the database.
 \end{description}
 
 \begin{figure}[ht!]
@@ -340,39 +342,39 @@ The analysis components of the HUMS, shown in figure
 \begin{description}
   \item [AnalysisController] An object that coordinates all analysis of
     sensor data, interfacing with the data input layer by
-    receiving a system ID when analysis is required. Once analysis is
+    receiving a System ID when analysis is required. Once analysis is
     complete, the controller processes the results and triggers
-    notifications where appropriate. Analysis engines are associated
+    Notifications where appropriate. Analysis engines are associated
     with the analysis controller by class loading allowing for users to
     add and remove analysis engines at run-time.
 
   \item [AnalysisEngine] An abstract class that implements the basic
     functionality and defines the methods required of an implemented
-    analysis engine. The analyse method interfaces with the database
+    analysis engine. The \texttt{analyse}} method interfaces with the database
     abstraction layer to retrieve the appropriate sensor data and then
     performs the desired analysis, returning a result object. When creating 
-    their own analysis engines the end user will be required to extend 
+    their own analysis engines, the End User will be required to extend 
     this class, implement the abstract methods and define what 
-    constitutes an event.
+    constitutes an Event.
 
   \item [MeanAnalysis] An analysis engine implementation which 
-    computes a rolling average over values read from a sensor over
+    computes a rolling average over values read from a Sensor over
     a given window. When called by the analysis controller, sensor 
     data is retrieved for all associated systems and mean analysis 
     is performed. If a mean value falls outside of the defined acceptable 
-    bounds then a flag is set to generate a notification.
+    bounds then a flag is set to generate a Notification.
 
 % TODO DO we even need this object? Surely this is just an event
-  \item [Result] \hl{An object representing the result of the analysis
+  \item [Result] An object representing the result of the analysis
     carried out by an analysis engine, containing a
     map between keys and values to be saved back to the database 
-    and a flag indicating whether a notification needs to be triggered.
+    and a flag indicating whether a Notification needs to be triggered.
     When implementing their own analysis engine the consumer will 
-    be able to specify what data is to be saved back to the database.}
+    be able to specify what data is to be saved back to the database.
 
-  \item [Event] An object representing an event,
+  \item [Event] An object representing an Event,
     containing the name of the analysis engine that triggered the
-    event, the ID of the system that the event applies
+    Event, the System ID of the Consumer System that the event corresponds
     to, and the result object from the analysis engine that triggered
     the event.
 \end{description}
@@ -384,14 +386,14 @@ The analysis components of the HUMS, shown in figure
   \includegraphics[width= 12cm]{images/Analysis/AnalysisEngine.png}
   \includegraphics[width= 6cm]{images/Analysis/Event.png}
   \includegraphics[width= 8cm]{images/Analysis/MeanAnalysis.png}
-  \caption{Conceptual diagram of the analysis component classes, using 
+  \caption{Conceptual diagram of the analysis component classes in
 UML 2 notation}
   \label{fig:dataAnalysisComponent}
 \end{figure}
 
 \subsubsection*{Notification Components}
 
-Notification components, shown in figure \ref{fig:notificationComponent}, 
+The Notification components, shown in figure \ref{fig:notificationComponent}, 
 contain the following classes:
 \begin{description}
   \item [NotificationGenerator] An object that coordinates the generating and
@@ -419,7 +421,7 @@ contain the following classes:
   \includegraphics[width= 7cm]{images/Notification/NotificationGenerator.png}
   \includegraphics[width= 5cm]{images/Notification/NotificationEngine.png}
   \includegraphics[width= 4.5cm]{images/Notification/EmailNotification.png}
-  \caption{Conceptual diagram of the notification component classes, using 
+  \caption{Conceptual diagram of the notification component classes in
 UML 2 notation}
   \label{fig:notificationComponent}
 \end{figure}
