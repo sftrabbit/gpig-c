@@ -17,7 +17,7 @@ import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 public class MeanAnalysis extends AnalysisEngine {
 
 	private static final double LOWER_BOUND = 0.0;
-	private static final double UPPER_BOUND = 3.0;
+	private static final double UPPER_BOUND = 0.5;
 	
 	public static final int TEN_RECORDS = 10;
 	private static final String MEAN = "Mean";
