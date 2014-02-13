@@ -175,9 +175,7 @@ HUMS and the interactions between these modules at a high level.
 
 \subsubsection{Behavioural View}
 
-The module view shows how modules of the system are connected, but does not
-however fully represent the interactions between components and the dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the 
-HUMS, detailing how the HUMS receives data from a Data Emitter and generates a Notification. The different objects in the System are shown, along with all the interactions and links between them. The messages sent between different modules are shown and labelled with numbers to represent the chronological order in which they occur.
+The module view shows how components of the system are connected, but does not fully represent the interactions between these components and dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the HUMS, detailing how the HUMS receives data from a Data Emitter and generates a Notification. The different objects in the System are shown, along with all the interactions and links between them. The messages sent between different modules are shown and labelled with numbers to represent the chronological order in which they occur.
 
 \begin{figure}[!ht]
   \centering
@@ -188,9 +186,9 @@ flow through the system, using UML 2 notation}
 \end{figure}
 
 \subsubsection{Execution View}
-The HUMS needs to be tailorable to various deployment and execution strategies. The core system may be running on the same hardware as the Data Emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
+The HUMS needs to be tailorable to various deployment and execution strategies. The core system may be running on the same hardware as the Data Emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main HUMS deployment scenarios, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), whereby multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
+Figure \ref{fig:DeploymentDistributed} abstractly shows how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personnel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), whereby multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
 
 This deployment of our HUMS as a SaaS is shown in figure \ref{fig:DeploymentService}. For administering the HUMS as a service, a hosted admin centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own Events and how they should be handled, view all of the registered Clients, pull Reports, and view live visualisations of data.
 
