@@ -70,38 +70,25 @@ Testability, Usability}
 At this stage of the development, usability and security 
 have not yet been heavily considered. However, in the final System they 
 would be of high importance. Security is a key aspect of any HUMS, 
-as data being monitored must be both confidential and safe. It must be impossible for an unauthorised user to insert or remove data from the System, meaning data would need to be stored according to relevant security standards  (e.g., encryption and password protection for personal data covered by the Data Protection Act). Additionally, data in transit between Data Emitters and the HUMS must be protected, which can be achieved using a symmetric-key encryption protocol. Such protocols are well supported by many programming languages. Specifying data access permissions for Users would fall under the purview of the Consumer organisation, who would manage these permissions using the 
-configuration front-end of the System.
+as data being monitored must be both confidential and safe. It must be impossible for an unauthorised user to insert or remove data from the System, meaning data would need to be stored according to relevant security standards  (e.g., encryption and password protection for personal data covered by the Data Protection Act). Data in transit between Data Emitters and the HUMS must be protected, which can be achieved using a symmetric-key encryption protocol. Such protocols are well supported by many programming languages. Specifying data access permissions for Users would fall under the purview of the Consumer organisation, who would manage these permissions using the configuration front-end of the System.
 
-Flexibility is important as the HUMS is designed to be used in multiple 
+Flexibility is important as the HUMS must be portable across multiple 
 domains. Adopting a plugin architecture allows the System to be used with
-arbitrary Consumer Systems. A particular Instance can include domain-specific
-components, such as custom analysis engines. This gives a software product line
-for which the core of the HUMS can be shared across all domains.
+arbitrary Consumer Systems. A particular Instance can include domain-specific components, such as custom analysis engines. This gives a software product line for which the core of the HUMS can be shared across all domains.
 
 Modifiability is also an important quality of the HUMS and, although not 
 measurable, lack of modifiability can increase the cost and time taken to 
 complete the project. The HUMS will initially be built to tackle a single 
-domain (software aplications), but will however in the future be required to
-work in such domains as embedded systems, mechanical systems, electrical systems,
-and even living systems. To ensure the application of these changes are
-as efficient as possible, the initial System must be modifiable. Approaches that
-can be used to increase the modifiability of the system include designing a
-modular architecture, decoupling those modules from each other, and increasing
-overall system cohesion. To achieve low coupling, the HUMS can use interfaces
-between modules, restricting dependencies, such that the majority of modules can
-be swapped out without significant changes to the overall system.
+domain (software applications), but will however in the future be required to
+work in such domains as embedded systems, mechanical systems, electrical systems, and even living systems. To ensure the application of these changes are as efficient as possible, the initial System must be modifiable. Tactics that can be used to increase the modifiability of the system include designing a modular architecture, decoupling those modules from each other, and increasing overall system cohesion. To achieve low coupling, the HUMS can use interfaces between modules, restricting dependencies, such that the majority of modules can be swapped out without significant changes to the overall system.
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch Notifications through the 
 Notification generator after Events have been triggered by the analysis 
-controller, with a latency of less than 5~ms. The System is also required to be
-able to support multiple data output Clients. Methods such as reducing
+controller, with a latency of less than 5~ms. The System is also required to be able to support multiple Data Output Clients. Methods such as reducing
 overhead though careful use of data structures and prioritising Events can
-help to reduce latency, at least for the most important Events as defined by the
-End User. The System may also utilise concurrency, such that multiple
-Notification threads are used when demand for Notifications and Reports are
-high, reducing the bottleneck created at the Notification generator.
+help to reduce latency, at least for the most important Events as defined by the End User. The System may also utilise concurrency, such that multiple
+Notification threads are used when demand for Notifications and Reports are high, reducing the bottleneck created at the Notification generator.
 
 In in order to ensure the HUMS is testable we follow the test driven 
 development (TDD) methodology where possible, writing and planning tests 
@@ -114,9 +101,7 @@ acceptance testing.
 \subsection{System Views}
 \label{sec:architecture-views}
 
-When designing the HUMS, we identified four views of the System which must be
-documented, taking inspiration from the Hofmeister\cite{hof1999} approach to
-software architecture:
+When designing the HUMS, we identified four views of the System which must be documented, taking inspiration from the Hofmeister\cite{hof1999} approach to software architecture:
 
 \begin{description}
   \item[Module View] The required software modules and relationships
@@ -135,7 +120,7 @@ software architecture:
 \label{sec:architecture-moduleview}
 
 Having determined the quality attributes of the HUMS and the tactics
-which can be employed to achieve a high possession of these
+which can be employed to achieve a high utility of these
 qualities, a module view can be formed. The component diagram
 shown in figure \ref{fig:ComponentDiagram} depicts the modules of the
 HUMS and the interactions between these modules at a high level.
@@ -143,7 +128,7 @@ HUMS and the interactions between these modules at a high level.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=14cm]{images/ComponentDiagram.png}
-  \caption{The module diagram of the HUMS. Components shown in green are those provided as part of the GPIG-C system. Components shown in blue have default implementations provided as part of the system, but may be added to or replaced by the consumer.}
+  \caption{The module diagram of the HUMS. Components shown in blue are those provided as part of the GPIG-C HUMS. Components shown in green have default implementations provided as part of the system, but may be added to or replaced by the consumer.}
   \label{fig:ComponentDiagram}
 \end{figure}
 
@@ -155,11 +140,11 @@ HUMS and the interactions between these modules at a high level.
     from. May be part of the Consumer System itself.
 
   \item[Data Input Layer] Receives data from a Data Emitter and sends
-    it to the data abstraction layer. Alerts the analysis controller
+    it to the data abstraction layer, alerting the analysis controller
     that new data was received.
 
   \item[Data Abstraction Layer] Handles all interaction with the
-    database, such that if the database were to be altered, only this
+    database, such that if the database were to be altered only this
     layer would need to change.
 
   \item[Analysis Controller] Alerts analysis engines when new data
@@ -168,10 +153,10 @@ HUMS and the interactions between these modules at a high level.
     within the data then the analysis controller forwards that event
     to the notification generator.
 
-  \item[Analysis Engine] Analyses the data looking for trends. If a
-    trend is found, an Event is returned to the analysis
-    controller. Analysis engines will be included with the HUMS, but the
-    Consumer may also provide custom engines.
+  \item[Analysis Engine] Analyses data looking for trends. If a
+    trend is identified, an Event is returned to the analysis
+    controller. Analysis engines will be included with the HUMS, however, the
+    Consumer may also create custom engines.
 
   \item[Notification Generator] Receives events from the analysis
     controller, defines an abstract notification, and sends it to the
@@ -185,15 +170,12 @@ HUMS and the interactions between these modules at a high level.
 
   \item[Reports Engine] Pulls data from the data abstraction layer and
     formats it into a report, such as a PDF document or graph. Report
-    engines will be included with the HUMS, but the Consumer may also provide
-    custom engines.
+    engines will be included with the HUMS, however, the Consumer may also create custom engines.
 \end{description}
 
 \subsubsection{Behavioural View}
 
-The module view shows how modules of the system are connected, but does not
-however fully represent the interactions between components and the dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the 
-HUMS, detailing how the HUMS receives data from a Data Emitter and generates a Notification. The different objects in the System are shown, along with all the interactions and links between them. The messages sent between different modules are shown and labelled with numbers to represent the chronological order in which they occur.
+The module view shows how components of the system are connected, but does not fully represent the interactions between these components and dynamic actions of the system. A behavioural view can be used to detail this information, showing the flow of data and events within the HUMS. Figure \ref{fig:CommunicationDiagram} shows a communication diagram of the HUMS, detailing how the HUMS receives data from a Data Emitter and generates a Notification. The different objects in the System are shown, along with all the interactions and links between them. The messages sent between different modules are shown and labelled with numbers to represent the chronological order in which they occur.
 
 \begin{figure}[!ht]
   \centering
@@ -204,9 +186,9 @@ flow through the system, using UML 2 notation}
 \end{figure}
 
 \subsubsection{Execution View}
-The HUMS needs to be tailorable to various deployment and execution strategies. The core system may be running on the same hardware as the Data Emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main scenarios for deployment of the HUMS, with a view that if the system architecture can perform under these situations, then it can perform under all others.
+The HUMS needs to be tailorable to various deployment and execution strategies. The core system may be running on the same hardware as the Data Emitter or it may be geographically distant; engines may be on separate machines or may all be together. Figures \ref{fig:DeploymentDistributed} and \ref{fig:DeploymentIsolated} show the main HUMS deployment scenarios, with a view that if the system architecture can perform under these situations, then it can perform under all others.
 
-Figure \ref{fig:DeploymentDistributed} shows abstractly how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), whereby multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
+Figure \ref{fig:DeploymentDistributed} abstractly shows how the consumer system could be geographically distant to the HUMS core, engines and datastore. It also shows how a remote admin centre could be used, allowing configuration files to be created at a high level by business personnel, as opposed to developers. This deployment possibility gave the team the idea of creating a system as a service (SaaS), whereby multiple customers can simultaneously use a single storage, analysis, and notification server. We felt this was an innovate addition to the HUMS concept as it removes some of the complexity for consumers in setting up and managing their systems, and allows the benefits of cloud computing to be utilised.
 
 This deployment of our HUMS as a SaaS is shown in figure \ref{fig:DeploymentService}. For administering the HUMS as a service, a hosted admin centre will be created, allowing users to specify analysis and reporting behaviours using a simple rules engine-like interface. Users can define their own Events and how they should be handled, view all of the registered Clients, pull Reports, and view live visualisations of data.
 
@@ -632,8 +614,7 @@ An additional shell script named \hl{FIX}\verb+launch-eq.sh+ exists to run the c
 Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/graph.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/map.html}.
 
 \subsection{Testing} 
-We created and implemented a test plan that laid out our key ideas
-with respect to verifying that our solution fulfilled its
+We created and implemented a test plan for verifying that our solution fulfilled its
 requirements. In this section we give the mapping between each
 test and its associated requirement. We
 defined our plan, where appropriate, in terms of each module within
@@ -654,7 +635,7 @@ For system testing, we completed inspection testing, and deployed our system acr
 
 For acceptance testing, we sent the customer various iterations of our prototype, and we expect that the feedback from this report will fold back into our acceptance testing.
 
-Below, the testing within each module is described:
+The testing of each module is described below:
 
 \begin{description}
 
@@ -663,7 +644,7 @@ Below, the testing within each module is described:
     continuously, monitoring a system and reporting on it, thereby
     fulfilling \frit{1.2}. We completed inspection testing to verify 
     that data was reported, along with running the program for 
-    several hours to verify that it continued to function.
+    several hours to verify that it continued to function correctly.
 
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
@@ -674,15 +655,15 @@ Below, the testing within each module is described:
     importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
     performance. We completed an inspection test and used the 
-    GWTSystemDataGatewayTest class to verify \frit{3.1}. At the unit 
+    \texttt{GWTSystemDataGatewayTest} class to verify \frit{3.1}. At the unit 
     testing level, as  part of TDD, we focussed on the comparably complex,
     well defined module-internal functions, such as the generation and 
     parsing of the JSON serialisation of objects.
     
   \item[Analysis Controller] Due to the central role played by the 
-  analysis controller in the analysis pipeline we identified its key 
+  analysis controller, we identified its key 
   attributes as performance and testability. We utilised Mockito to 
-  provide completely isolated unit tests, confirming that notifications 
+  provide isolated unit tests, confirming that notifications 
   are only triggered when appropriate, satisfying \frit{7} and \frit{9}, and 
   that only the relevant analysis engines are used for a given system, 
   satisfying \frit{7.3}. Class loading was used to load analysis engines for 
@@ -702,7 +683,7 @@ Below, the testing within each module is described:
 	multiple unit tests to verify functionality as per \frit{8}. Mockito was 
 	used to isolate the class, allowing for a true unit test. The initial 
 	test ensured that a notification is generated when analysis has indicated 
-	it. The second test ensured that notifications were only sent once, to 
+	it. The second test ensured that notifications were only sent once to 
 	avoid spamming users.	 
   
   \item[Notification Engine] The functionality of the email notification 
@@ -714,14 +695,13 @@ Below, the testing within each module is described:
 	information, satisfying \frit{9}.
 
   \item[Reports Engine] We tested the Reports Engine by inspection since it 
-	is a prototype and does not require significant automated testing at this 
-	stage.
+	does not require significant automated testing at this stage.
 
  \end{description}
 
 \subsubsection{Traceability Table}
 
-Table~\ref{tab:traceability} shows the existing tests used to verify the implementation of the requirements in the system.
+Table~\ref{tab:traceability} shows the existing tests used to verify the implementation of system requirements.
 
 \begin{table}[H]
 \centering

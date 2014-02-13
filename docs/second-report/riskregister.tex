@@ -1,10 +1,10 @@
 \section{Risk register}
 \label{sec:riskregister}
 
-A risk assessment has been performed, based on the design decisions made throughout the initial and interim phases of the project, ensuring team members are aware how to react to problems when they occur. After feedback from the customer we took extra time to ensure both technical and procedural risks were identified early on. The risks from the Initial Report were reviewed and updated to reflect the more technical aspects of implementation. Risks relating to specific components were added, and some existing team planning risks were merged.
+A risk assessment has been performed, based on design decisions made throughout the initial and interim phases of the project, ensuring team members are able to react to and correct problems when they occur. After feedback from the Customer, we took extra time to ensure both technical and procedural risks were identified early on. The risks from the Initial Report were reviewed and updated to reflect the more technical aspects of implementation. Risks relating to specific components were added, and some existing team planning risks were merged.
 
-The hazards (risks) have been identified by examining the 
-current literature \cite{boehm1991software,jones1998minimizing}, drawing upon team members' past experiences and group discussion. Classification of the identified hazards, their impact on the system and their probability of occurrence is performed in accordance with the Risk Management Guide for Information Technology Systems \cite{stoneburner2002risk}. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are listed in the table below.
+The hazards and risks have been identified by examining the 
+current literature \cite{boehm1991software,jones1998minimizing}, drawing upon team members' past experiences and group discussion. Classification of the identified hazards, their impact on the system, and their probability of occurrence is performed in accordance with the Risk Management Guide for Information Technology Systems \cite{stoneburner2002risk}. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS), and risk matrix score (RS) are listed in the table below.
 
 \begin{longtable}[H]{| p{0.6cm} | p{2.2cm} | p{0.26cm} | p{0.26cm} | p{2.7cm} | p{3cm} | p{2.6cm} | p{0.4cm} |}
   \hline
@@ -24,18 +24,18 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & Internal/external deadline failure.
   & Ensure all team project work is under version control.
  
-  Use scrum methodology to proactively aids work reallocation, ensuring team members are aware of all assigned work.
+  Use scrum methodology to proactively aid work reallocation, ensuring team members are aware of all assigned work.
   & Reallocate work across remaining team members, possibly notifying the customer and obtaining a deadline extension.
   & 18 \\
   
   \hline \textbf{R.2}
-  & Team member(s) under performance.
+  & Team member(s) under performing.
   & 6
   & 3
   & Internal/external deadline failure.
   & Identify team member strengths and weaknesses and assign work accordingly. 
   
-  Build slack into the schedule to allow for under performance.
+  Build contingency time into the schedule to allow for under performance.
   & Reallocate work across remaining team members, possibly notifying the customer and obtaining a deadline extension.
   & 18 \\
   
@@ -116,17 +116,6 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & 15\\  
   
   \hline \textbf{R.10}
-  & Deprecation of required Google App Engine functionality.
-  & 3
-  & 4
-  & Required HUMS performance is unattainable.
-  
-  Unable to deliver required functionality.
-  & Research pending deprecations to ensure required functionality will be supported.
-  & Move to another key-store database (relatively simple).
-  & 12\\
-  
-  \hline \textbf{R.11}
   & Included analysis components computing incorrect values.
   & 2
   & 5
@@ -138,7 +127,7 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & Re-engineer failing components.
   & 10\\
   
-  \hline \textbf{R.12}
+  \hline \textbf{R.11}
   & Included Analysis component computation too slow.
   & 3
   & 4
@@ -150,7 +139,7 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & Re-engineer analysis components.
   & 12\\  
   
-  \hline \textbf{R.13}
+  \hline \textbf{R.12}
   & Notification computation too slow.
   & 2
   & 4
@@ -162,7 +151,7 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & Re-engineer notification system.
   & 8\\
   
-  \hline \textbf{R.14}
+  \hline \textbf{R.13}
   & GitHub becomes unavailable for a prolonged period of time.
   & 2
   & 2
@@ -173,8 +162,8 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
     \hline
 \end{longtable}       
 
-The likelihood score defines probability of something occurring. Utilising
-\textit{Kents Words of Estimative Probability}\cite{kent1966strategic}, with
+The likelihood score defines the probability of something occurring.
+\textit{Kents Words of Estimative Probability}\cite{kent1966strategic} is utilised, with
 `certain' weighted $7$ and `impossible' weighted $1$.
 
 \input{impacttable}
