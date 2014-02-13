@@ -100,8 +100,6 @@
             scaleOverride: true,
             scaleSteps: STEPS_SCALE
         }
-        var min = Number.MAX_VALUE;
-        var max = Number.MIN_VALUE;
         var data = {
             labels : [],
             datasets : [
@@ -143,6 +141,8 @@
         }
 
         function addItems(items) {
+            var min = Number.MAX_VALUE;
+            var max = Number.MIN_VALUE;
             items.reverse();
             $.each(items, function(key, item) {
                 if (item.SensorID == RECORD_TYPE && (data.labels.indexOf(parseDate(item.CreationTimestamp)) == -1)) {
