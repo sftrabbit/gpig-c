@@ -6,19 +6,18 @@ After feedback from the Initial Report, previously identified requirements have 
 \label{sec:requirements-functional}
 Below, existing functional requirements have been refined based on Customer feedback and design decisions made since the previous report.
 
-\frit{1} has been refined to specify how Data Emitters will send data to the System and the type of data required. Previously, \frit{2} required data to be timestamped, but didn't specify how timestamps were produced. \frit{2.1} assigns this responsibility to a Data Emitter.
+\frit{1} has been refined to specify how Data Emitters will send data to the System and the type of data required. Previously, \frit{2} required data to be timestamped, but did not specify how timestamps were produced. \frit{2.1} assigns this responsibility to a Data Emitter.
 
 \frit{3} has been refined to specify how data is to be stored, allowing the Consumer to choose the technology of their choice. This means that the database can be changed without needing to alter other modules, making it easy to port the HUMS across domains.
 \frit{4} has been modified such that the previous requirements, \frit{4}, \frit{6}, \frit{9}, and \frit{10}, can all be expressed as refinements, with 
 configuration files containing all Consumer System settings. The new \frit{5} and \frit{6} enforce the functionality the HUMS must provide as a result of configuration.
 
-\frit{7}, has been refined to define how data will be analysed for Events, specifying that there must be an API allowing Analysis engines, either created by the Consumer or included with the HUMS, to extract stored data
+\frit{7}, has been refined to define how data will be analysed for Events, specifying that there must be an API allowing analysis engines, either created by the Consumer or included with the HUMS, to extract stored data
 and produce Events. 
 
-\frit{9} to \frit{12} do not appear in the previous report, and were determined 
+\frit{11} does not appear in the previous report, and was determined 
 to be necessary following feedback from the Customer regarding the ability 
-of the system to allow for explicit feedback: the output of Analysis must be able to feedback to the Consumer System. It was felt that our architecture did not make it clear whether this was possible. These requirements were therefore added as clarification.
-
+of the system to allow for explicit feedback: the output of analysis must be able to feedback to the Consumer System. It was felt that previously our architecture did not make it clear whether this was possible.
 \begin{description}
 	%%FR1
   	\item[\fr{1}]  Data Emitters shall be able to push correctly structured 
@@ -28,7 +27,7 @@ data to the HUMS.
 		\begin{description}
 			  \item[\fr{1.1.1}] The Input Interface shall require a System ID that uniquely identifies the Consumer System.
  			 \item[\fr{1.1.2}] The Input Interface shall require input data to be timestamped.
- 			 \item[\fr{1.1.3}] The Input Interface shall allow Data Emitters to send Sensor IDs and their values to the HUMS, to be made available to an Analysis engine.
+ 			 \item[\fr{1.1.3}] The Input Interface shall allow Data Emitters to send Sensor IDs and their values to the HUMS, to be made available to an analysis engine.
 		\end{description}
  		 \item[\fr{1.2}] A Data Emitter for extracting data from the given 	
 	test application shall be provided.
@@ -65,26 +64,27 @@ data to the HUMS.
 		storage limit is reached.
 	  \item[\fr{6}] The HUMS must store no more data records than the 	
 		Consumer-defined storage quota.
-	\item[\fr{7}] Events shall be triggered in response to data matching Analysis 
+	\item[\fr{7}] Events shall be triggered in response to data matching analysis 
 	rules specified by a User.
 		  \begin{description}
 			 \item[\fr{7.1}]  The HUMS shall allow the User to specify 	
-			which Analysis rules will produce Events.
+			which analysis rules will produce Events.
 			 \item[\fr{7.2}] The HUMS shall allow the User to define their
  			own Events.
  			\item[\fr{7.3}] The HUMS shall provide an API, 			
-			allowing Analysis engines to fetch stored data.
-			\item[\fr{7.4}] Events shall be identified by Analysis engines.
- 			\item[\fr{7.5}] The HUMS shall provide a simple Analysis 	
+			allowing analysis engines to fetch stored data.
+			\item[\fr{7.4}] Events shall be identified by analysis engines.
+ 			\item[\fr{7.5}] The HUMS shall provide a simple analysis 	
 			engine in the form of a rules engine.
 	\end{description}
 	
 	\item[\fr{8}] After dispatching a Notification for an Event of a particular 
 		type, no more Notifications for an Event of that type will be 	
 		sent during a User-specified cool down period.
-			\item[\fr{8.1}] The HUMS shall allow the User to specify a cool down
-				period for particular Events.
-	\item[\fr{9}] The HUMS shall identify an Event when a specified Analysis 
+		  \begin{description}
+			\item[\fr{8.1}] The HUMS shall allow the User to specify a cool down period for particular Events.
+			  \end{description}
+	\item[\fr{9}] The HUMS shall identify an Event when a specified analysis 
 		rule is matched.
 	\item[\fr{10}] The HUMS must interface with Report engines, allowing 
 		them to pull Reports.
@@ -111,8 +111,8 @@ of the datastore are unverifiable.
 	their geographic location.
 	\item[\nfr{4}]  The HUMS shall only accept data from a Client of the Input
 	Interface providing valid credentials.
-	\item[\nfr{5}] The HUMS shall store data according to the \hl{relevant
-	industry security standards}.
+	\item[\nfr{5}] The HUMS shall allow data to be stored according to the relevant
+	industry security standards.
 	\item[\nfr{6}]  The HUMS shall be tested to ensure all requirements are 
 	met before deployment.
 	\begin{description}
@@ -140,13 +140,13 @@ of the datastore are unverifiable.
 The constraint requirements have been modified to include external dependencies identified due to design decisions made throughout the previous phase of the project, including dependancies on technology choices. Previous constraints restricting the schema of data stored in the HUMS have been removed, as feedback suggested that this should not be the responsibility of the Consumer.
 \begin{description}
 	\item[\conreq{1}] The System will be presented with valid credentials by the Consumer's Data Emitters.
-	\item[\conreq{2}] \hl{Valid Clients of the Output Interfaces of the System will be specified by the Consumer.}
+	\item[\conreq{2}] The Consumer will specify valid Clients of the HUMS Output Interfaces.
 	\item[\conreq{3}] The hardware that the System runs on will be capable of running a Java Virtual Machine.
 	\item[\conreq{4}] The System and the Consumer System will be connected to the same network.
 	\item[\conreq{5}] The Customer will provide two test applications throughout development.
 	\item[\conreq{6}] The Customer will receive an Interim Report detailing project progress no later than 14/02/2014.
 	\item[\conreq{7}] The Customer will receive a Final Report detailing the proposed system no later than 28/05/2014. 
 	\item[\conreq{8}] The Customer will be presented with a prototype of the System on 30/05/2014.
-	\item[\conreq{9}] \hl{The development team will be comprised of seven software engineers.}
+	\item[\conreq{9}] The development team will be comprised of seven software engineers.
 \end{description}
 
