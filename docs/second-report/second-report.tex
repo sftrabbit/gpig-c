@@ -70,7 +70,7 @@ Testability, Usability}
 At this stage of the development, usability and security 
 have not yet been heavily considered. However, in the final System they 
 would be of high importance. Security is a key aspect of any HUMS, 
-as data being monitored must be both confidential and safe. It must be impossible for an unauthorised user to insert or remove data from the System, meaning data would need to be stored according to relevant security standards  (e.g., encryption and password protection for personal data covered by the Data Protection Act). Data in transit between Data Emitters and the HUMS must be protected, which can be achieved using a symmetric-key encryption protocol. Such protocols are well supported by many programming languages. Specifying data access permissions for Users would fall under the purview of the Consumer organisation, who would manage these permissions using the configuration front-end of the System.
+as data being monitored must be both confidential and safe. It must be impossible for an unauthorised user to insert or remove data from the System, meaning data would need to be stored according to relevant security standards  (e.g., encryption and password protection for personal data covered by the Data Protection Act). Data in transit between Data Emitters and the HUMS must be protected, which can be achieved using an encryption protocol. Such protocols are well supported by many programming languages. Specifying data access permissions for Users would fall under the purview of the Consumer organisation, who would manage these permissions using the configuration front-end of the System.
 
 Flexibility is important as the HUMS must be portable across multiple 
 domains. Adopting a plugin architecture allows the System to be used with
@@ -497,7 +497,7 @@ version control anyway.
 For the interim prototype, we chose to firmly follow the planned architecture, producing a core system linking to example engines, Data Emitters and data stores, focussing on interacting with the provided test application.
 
 The core of the HUMS is fully functional, allowing for Data Emitters to send data to the data input layer using Protocol Buffers, chosen in preference to HTTP requests due to the lower latency. The data input layer, as currently 
-implemented, supports multiple simultaneous connections from input clients, although we have yet to investigate how many the prototype could handle. Upon receipt, the data is put into a queue, which is periodically processed by the data input server, by adding each entry to the database and notifying the analysis controller. The analysis controller allows for dynamic loading of analysis engines, allowing them to be altered at runtime and requests data to be passed to the appropriate engine, decoupling the analysis engines from the data abstraction layer. The data abstraction layer provides a simple interface to be implemented by the Consumer and includes an example implementation, interfacing with Google App Engine using HTTP requests to a remote servlet. The Notification generator also allows Notification engines to be dynamically loaded and passes Event objects to them.
+implemented, supports multiple simultaneous connections from input clients, although we have yet to investigate how many the prototype could handle. Upon receipt, the data is put into a queue, which is periodically processed by the data input server, by adding each entry to the database and notifying the analysis controller. The analysis controller allows for dynamic loading of analysis engines, allowing them to be altered at runtime and requests data to be passed to the appropriate engine, decoupling the analysis engines from the data abstraction layer. Having considered the identified risks around the datastore, the data abstraction layer provides a simple interface to be implemented by the Consumer and includes an example implementation, interfacing with Google App Engine using HTTP requests to a remote servlet. The Notification generator also allows Notification engines to be dynamically loaded and passes Event objects to them.
 
 Currently there are two Data Emitters for use with the HUMS, demonstrating its flexibility. The first extracts and emits data about the JVM, recording CPU and memory usage, and the second extracts and emits live data about earthquake activity from the USGS Earthquake Hazards Program API \cite{usgs}.
 
@@ -572,13 +572,13 @@ data was a useful and innovative addition.
 \end{figure}
 
 \subsubsection{Instructions for Running and Replicating Results}
-The source code has been compiled and packaged into an easy to run distribution, which can be obtained from \hl{FIX}\verb+http://www.gpigc.co.uk/dist.tar.gz+. The user name and password to access this and any other resources on this domain are the same as described in section \ref{sec:source}.
+The source code has been compiled and packaged into an easy to run distribution, which can be obtained from \verb+http://www.gpigc.co.uk/dist.tar.gz+. The user name and password to access this and any other resources on this domain are the same as described in section \ref{sec:source}.
 
-Once extracted, the shell script \verb+launch.sh+ can be run to correctly start the different components and the Customer Test Application. At this stage the distribution only runs on Linux-based systems. This is because development was primarily conducted on Linux, and many target systems for the HUMS are Unix based. Running from source works successfully across multiple platforms so in future we expect to create a distribution which also does this.
+Once extracted, the shell script \verb+launch-ta.sh+ can be run to correctly start the different components and the Customer Test Application. At this stage the distribution only runs on Linux-based systems. This is because development was primarily conducted on Linux, and many target systems for the HUMS are Unix based. Running from source works successfully across multiple platforms so in future we expect to create a distribution which also does this.
 
-An additional shell script named \hl{FIX}\verb+launch-eq.sh+ exists to run the components of the system with our own earthquake monitor test application. Running the system with either shell script requires an internet connection so that the current implementation of the datastore can be accessed.
+An additional shell script named \verb+launch-eq.sh+ exists to run the components of the system with our own earthquake monitor test application. Running the system with either shell script requires an internet connection so that the current implementation of the datastore can be accessed.
 
-Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/graph.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/map.html}.
+Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/graph.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/map.html}. The prototype SaaS website is also available at  \texttt{http://www.\\*gpigc.co.uk}.
 
 \subsection{Testing} 
 We created and implemented a test plan for verifying that our solution fulfilled its
@@ -592,12 +592,6 @@ requirements to their lower level requisite requirements: acceptance
 testing, system testing, integration testing and unit
 testing.
 
-% TODO We probably need something about overall system & acceptance
-% testing. These are mainly the white/black/grey box tests in the
-% first report, e.g. NRF.9, "The system must cope with up to 2000 data
-% input re- quests per second per HUMS instance."
-% Also talk about what we can't test since not everything is implemented
-
 For system testing, we completed inspection testing, and deployed our system across various networked machines and verified that the HUMS acted as expected. A more thorough system testing stage will be completed for later, higher fidelity, iterations of the prototype.
 
 For acceptance testing, we sent the customer various iterations of our prototype, and we expect that the feedback from this report will fold back into our acceptance testing.
@@ -606,7 +600,6 @@ The testing of each module is described below:
 
 \begin{description}
 
-% TODO Verify the requirement IDs in the section below
   \item[Data Emitter] The purpose of the data emitter is to run
     continuously, monitoring a system and reporting on it, thereby
     fulfilling \frit{1.2}. We completed inspection testing to verify 
@@ -616,7 +609,7 @@ The testing of each module is described below:
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
     inspection testing, and also by running multiple clients simultaneously and
-    verifying that the data from both was recorded, thus verifying \frit{1.1}.
+    checking that the data from both was recorded, thus verifying \frit{1.1}.
 
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
@@ -631,9 +624,8 @@ The testing of each module is described below:
   analysis controller, we identified its key 
   attributes as performance and testability. We utilised Mockito to 
   provide isolated unit tests, confirming that notifications 
-  are only triggered when appropriate, satisfying \frit{7} and \frit{9}, and 
-  that only the relevant analysis engines are used for a given system, 
-  satisfying \frit{7.3}. Class loading was used to load analysis engines for 
+  are only triggered when appropriate, satisfying \frit{7} and \frit{9}.
+  Class loading was used to load analysis engines for 
   the prototype, this was confirmed to be working via inspection and 
   integration testing.
   
@@ -689,9 +681,6 @@ Table~\ref{tab:traceability} shows the existing tests used to verify the impleme
 \end{table}
 
 \input{team}
-
-% TODO - based on mark scheme!
-% -> evidence that the risks have been considered in the planning of the development
 
 \input{riskregister}
 \input{communication}
