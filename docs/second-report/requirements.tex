@@ -117,24 +117,25 @@ data to the HUMS.
 \subsection{Non-Functional Requirements}
 Non-functional requirements remain similar, however \nfrit{14} has been 
 added in order to clarify that data can be sent and stored in any format, 
-enforcing that the consumer's system will not have to conform to a format
-dictated by the HUMS. \nfrit{6} has been refined to more concretely detail the
+enforcing that the Consumer System will not need to conform to a format
+dictated by the HUMS. \nfrit{6} has been refined to more concretely specify the
 testing strategies to be used when validating that requirements have been met.
 It is also recognised that \nfrit{5} and \nfrit{11} are requirements 
 specific to the prototype as the functional requirements mandate that the 
-datastore be changeable, meaning, in the general case, requirements 
-about the abilities of the datastore are not verifiable.
+datastore be changeable. That is, in the general case, requirements 
+of the datastore are unverifiable.
+
 \begin{description}
-	\item[\nfr{1}] The HUMS shall receive hardware changes without loss 
+	\item[\nfr{1}] The HUMS shall undergo hardware modifications without loss 
 	of previously stored data.
-	\item[\nfr{2}]  Users shall be provided with documentation detailing 
-	how 	to use the HUMS.
-	\item[\nfr{3}] The HUMS must be accessible to end users in multiple 	
-	geographic locations.
-	\item[\nfr{4}]  The HUMS shall only accept data from an input client 	
-	providing valid credentials. 
-	\item[\nfr{5}] The HUMS shall store data according to the relevant 	
-	industry security standards. 
+	\item[\nfr{2}] Users shall be provided with documentation detailing 
+	how to use the HUMS.
+	\item[\nfr{3}] The HUMS must be accessible to End Users regardless of
+	their geographic location.
+	\item[\nfr{4}]  The HUMS shall only accept data from a Client of the Input
+	Interface providing valid credentials.
+	\item[\nfr{5}] The HUMS shall store data according to the \hl{relevant
+	industry security standards}.
 	\item[\nfr{6}]  The HUMS shall be tested to ensure all requirements are 
 	met before deployment.
 	\begin{description}
@@ -144,19 +145,19 @@ about the abilities of the datastore are not verifiable.
 	\item[\nfr{6.4}]  The HUMS shall be tested using inspection.
 	\item[\nfr{6.5}]  The HUMS shall be tested using acceptance testing.
 	\end{description}
-	\item[\nfr{7}] The customer will complete acceptance testing before the 
-	system is deployed.
-	\item[\nfr{8}] The system must be able to support at least 5 output 
-	clients per HUMS instance. 
-	\item[\nfr{9}] The system must be available for no less than 99.9\% of 
+	\item[\nfr{7}] The Customer will complete acceptance testing before the 
+	System is deployed.
+	\item[\nfr{8}] The System must be able to support at least 5 Clients of the 
+	Output Interface per HUMS Instance. 
+	\item[\nfr{9}] The System must be available for no less than 99.9\% of 
 	each month.
-	\item[\nfr{10}]  Data must be backed up within 24 hours of having been 
-	made available to the system.
+	\item[\nfr{10}] Data must be backed up within 24 hours of having been 
+	made available to the System.
 	 \item[\nfr{11}] Timestamps applied by the system must be accurate to 
-	within 5ms of UTC.
-	\item[\nfr{12}]  The system shall dispatch notifications within 5ms of an 
-	event being triggered.
-	\item[\nfr{13}] The system shall support storing data without requiring 
+	within 5~ms of UTC.
+	\item[\nfr{12}]  The System shall dispatch Notifications within 5~ms of an 
+	Event being triggered.
+	\item[\nfr{13}] The System shall support storing data without requiring 
 	specific schemata.
 \end{description}
 
