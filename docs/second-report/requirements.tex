@@ -12,13 +12,12 @@ Below, existing functional requirements have been refined based on Customer feed
 \frit{4} has been modified such that the previous requirements, \frit{4}, \frit{6}, \frit{9}, and \frit{10}, can all be expressed as refinements, with 
 configuration files containing all Consumer System settings. The new \frit{5} and \frit{6} enforce the functionality the HUMS must provide as a result of configuration.
 
-\frit{7}, has been refined to define how data will be analysed for Events, specifying that there must be an API allowing Analysis engines, either created by the Consumer or included with the HUMS, to extract stored data
+\frit{7}, has been refined to define how data will be analysed for Events, specifying that there must be an API allowing analysis engines, either created by the Consumer or included with the HUMS, to extract stored data
 and produce Events. 
 
-\frit{9} to \frit{12} do not appear in the previous report, and were determined 
+\frit{11} does not appear in the previous report, and was determined 
 to be necessary following feedback from the Customer regarding the ability 
-of the system to allow for explicit feedback: the output of Analysis must be able to feedback to the Consumer System. It was felt that our architecture did not make it clear whether this was possible. These requirements were therefore added as clarification.
-
+of the system to allow for explicit feedback: the output of analysis must be able to feedback to the Consumer System. It was felt that previously our architecture did not make it clear whether this was possible.
 \begin{description}
 	%%FR1
   	\item[\fr{1}]  Data Emitters shall be able to push correctly structured 
@@ -82,8 +81,9 @@ data to the HUMS.
 	\item[\fr{8}] After dispatching a Notification for an Event of a particular 
 		type, no more Notifications for an Event of that type will be 	
 		sent during a User-specified cool down period.
-			\item[\fr{8.1}] The HUMS shall allow the User to specify a cool down
-				period for particular Events.
+		  \begin{description}
+			\item[\fr{8.1}] The HUMS shall allow the User to specify a cool down period for particular Events.
+			  \end{description}
 	\item[\fr{9}] The HUMS shall identify an Event when a specified Analysis 
 		rule is matched.
 	\item[\fr{10}] The HUMS must interface with Report engines, allowing 
