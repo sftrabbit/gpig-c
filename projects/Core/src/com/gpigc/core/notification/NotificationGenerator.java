@@ -1,6 +1,10 @@
 package com.gpigc.core.notification;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -49,12 +53,18 @@ public class NotificationGenerator {
 			List<String> associatedSystems = engine.getAssociatedSystems();
 			if (associatedSystems.contains(systemId)
 					&& !engine.getRecentlySent()) {
-				String recepient = "sftrabbit@gmail.com";
-				String subject = "Notification: CPU usage too high!";
-				String message = "CPU usage of system " + systemId
-						+ " has exceeded threshold! Value: "
-						+ event.getResult().getDataToSave().get("Mean");
-				engine.send(recepient, subject, message);
+				try {
+					BufferedReader br = new BufferedReader(new FileReader("email.txt"));
+					String recipient = br.readLine();
+				
+					String subject = "Notification: CPU usage too high!";
+					String message = "CPU usage of system " + systemId
+							+ " has exceeded threshold! Value: "
+							+ event.getResult().getDataToSave().get("Mean");
+					engine.send(recipient, subject, message);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
