@@ -1,11 +1,11 @@
 # List all files that are included by main tex file
 set(INPUT_FILES
-    01-introduction.tex
-    02-glossary.tex
-    03-requirements.tex
-    06-team.tex
-    07-riskregister.tex
-    08-communication.tex)
+    introduction.tex
+    glossary.tex
+    requirements.tex
+    team.tex
+    riskregister.tex
+    communication.tex)
 
 # List all files that should be word-counted
 set(CONTENT_FILES
