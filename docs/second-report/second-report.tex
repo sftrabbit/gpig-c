@@ -575,7 +575,7 @@ and a graph, each of which is updated live, to be used with test applications as
 
 \subsection{Source}
 \label{sec:source}
-The source for our prototype implementation can be accessed online at \texttt{http://git.gpigc.co.uk} and cloned using Git from \texttt{http://git.gpigc.co.uk/gpig-c.git}. The username and the password hint are \texttt{gpigc} and ``It's right under your nose''\footnote{Password is \texttt{moustache}}.
+The source for our prototype implementation can be accessed online at \texttt{http://git.gpigc.co.uk} and cloned using Git from \texttt{http://git.gpigc.co.uk/gpig-c.git}. The username is \texttt{gpigc} and the password hint is ``It's right under your nose''\footnote{Password is \texttt{moustache}}.
 
 \subsection{Prototype Evaluation}
 \label{sec:prototype-evaluation}
@@ -628,11 +628,11 @@ data was a useful and innovative addition.
 \end{figure}
 
 \subsubsection{Instructions for Running and Replicating Results}
-The source code has been compiled and packaged into an easy to run distribution, which can be obtained from \hl{FIX}\verb+http://www.gpigc.co.uk/dist.tar.gz+. The user name and password to access this and any other resources on this domain is the same as described in section \ref{sec:source}.
+The source code has been compiled and packaged into an easy to run distribution, which can be obtained from \hl{FIX}\verb+http://www.gpigc.co.uk/dist.tar.gz+. The user name and password to access this and any other resources on this domain are the same as described in section \ref{sec:source}.
 
 Once extracted, the shell script \verb+launch.sh+ can be run to correctly start the different components and the Customer Test Application. At this stage the distribution only runs on Linux-based systems. This is because development was primarily conducted on Linux, and many target systems for the HUMS are Unix based. Running from source works successfully across multiple platforms so in future we expect to create a distribution which also does this.
 
-An additional shell script named \hl{FIX}\verb+launch-eq.sh+ exists to run the components of the system with our own earthquake monitor test application. An internet connection is required for this to run as the data is accessed from an online source.
+An additional shell script named \hl{FIX}\verb+launch-eq.sh+ exists to run the components of the system with our own earthquake monitor test application. Running the system with either shell script requires an internet connection so that the current implementation of the datastore can be accessed.
 
 Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/graph.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/map.html}.
 
