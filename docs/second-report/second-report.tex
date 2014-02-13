@@ -523,10 +523,10 @@ canonical copy of the repository, we incorporated many of the benefits of centra
 version control anyway.
 
 \subsection{Current Functionality}
-For the interim prototype we chose to firmly follow the planned architecture, producing a core system linking to example engines, emitters and data stores, focussing on interacting with the provided test application.
+For the interim prototype, we chose to firmly follow the planned architecture, producing a core system linking to example engines, Data Emitters and data stores, focussing on interacting with the provided test application.
 
-The core of the HUMS is fully functional, allowing for data emitters to send data 
-to the data input layer using protocol buffers, chosen in preference to HTTP 
+The core of the HUMS is fully functional, allowing for Data Emitters to send data 
+to the data input layer using Protocol Buffers, chosen in preference to HTTP 
 requests due to the lower latency. The data input layer, as currently 
 implemented, supports multiple simultaneous connections from input clients, 
 although we have yet to investigate how many the prototype could handle. 
@@ -536,36 +536,36 @@ analysis controller. The analysis controller allows for dynamic loading of
 analysis engines, allowing them to be altered at runtime and requests data to 
 be passed to the appropriate engine, decoupling the analysis engines from the 
 data abstraction layer. The data abstraction layer provides a simple interface to 
-be implemented by the consumer and includes an example implementation, 
+be implemented by the Consumer and includes an example implementation, 
 interfacing with Google App Engine using HTTP requests to a remote servlet. 
-The notification generator also allows notification engines to be dynamically 
-loaded and passes event objects to them.
+The Notification generator also allows Notification engines to be dynamically 
+loaded and passes Event objects to them.
 
-Currently there are two data emitters for use with the HUMS. Demonstrating its 
+Currently there are two Data Emitters for use with the HUMS, demonstrating its 
 flexibility. The first extracts and emits data about the JVM, recording CPU and 
 memory usage, and the second extracts and emits live data about earthquake 
 activity from the USGS earthquake hazards program API \cite{usgs}.
 
-The data emitter designed to emit data about the JVM records the CPU and 
+The Data Emitter designed to emit data about the JVM records the CPU and 
 memory usage of the application and sends these through the data input API 
 every second. A period of four seconds is allowed to elapse before the first 
-send, allowing the CPU usage readings to stabilise. The data emitter created to 
+send, allowing the CPU usage readings to stabilise. The Data Emitter created to 
 relay live data about earthquake activity fetches data every minute from the 
 USGS earthquake hazards program API and submits it to the data input API.
 
 %%Paragraph about analysis plugin 
 
-When the notification generator receives an event, it selects the appropriate 
-notification engines for that event and uses them to create and send  
-notifications. Currently, a single notification engine has been developed which 
-sends an email to an email address configured by the user. This is 
+When the notification generator receives an Event, it selects the appropriate 
+notification engines for that Event and uses them to create and send  
+Notifications. Currently, a single notification engine has been developed which 
+sends an email to an email address configured by the User. This is 
 demonstrated for the test application, where an email will be dispatched when 
 CPU usage exceeds a predefined limit.
 
 A prototype admin centre was created for this stage of the project to 
 demonstrate how the HUMS could be public facing as a SaaS, allowing for any 
-company or individual to, for a fee, use the facilities provided; including 
-storage, analysis, notification and reporting tools. Currently the prototype 
+company or individual to, for a fee, use the facilities provided. This service includes
+storage, analysis, notification, and reporting tools. Currently the prototype 
 admin centre mocks functionality and --- apart from the reporting examples --- 
 does not actually integrate with the system. We envisage that in the next phase 
 of the project the admin centre will be fully functional and will interact with the rest of the HUMS modules where appropriate.
@@ -575,9 +575,9 @@ and a graph, each of which is updated live, to be used with test applications as
 
 \subsection{Source}
 \label{sec:source}
-The source for our prototype implementation can be accessed online at \verb+http://git.gpigc.co.uk+ and cloned using Git from \verb+http://git.gpigc.co.uk/gpig-c.git+. The username required is \verb+gpigc+ with the password hint being ``\verb+It's right under your nose+'', and the password itself being ``\verb+moustache+''.
+The source for our prototype implementation can be accessed online at \texttt{http://git.gpigc.co.uk} and cloned using Git from \texttt{http://git.gpigc.co.uk/gpig-c.git}. The username and password required is \texttt{gpigc} and \texttt{moustache}.
 
-\subsection{Evaluation of the Prototype Solution for Sample Applications}
+\subsection{Prototype Evaluation}
 \label{sec:prototype-evaluation}
 
 \subsubsection{Customer Test Application -- No. 1}
