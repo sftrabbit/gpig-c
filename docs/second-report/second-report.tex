@@ -637,8 +637,7 @@ An additional shell script named \hl{FIX}\verb+launch-eq.sh+ exists to run the c
 Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/graph.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/map.html}.
 
 \subsection{Testing} 
-We created and implemented a test plan that laid out our key ideas
-with respect to verifying that our solution fulfilled its
+We created and implemented a test plan for verifying that our solution fulfilled its
 requirements. In this section we give the mapping between each
 test and its associated requirement. We
 defined our plan, where appropriate, in terms of each module within
@@ -659,7 +658,7 @@ For system testing, we completed inspection testing, and deployed our system acr
 
 For acceptance testing, we sent the customer various iterations of our prototype, and we expect that the feedback from this report will fold back into our acceptance testing.
 
-Below, the testing within each module is described:
+The testing of each module is described below:
 
 \begin{description}
 
@@ -668,7 +667,7 @@ Below, the testing within each module is described:
     continuously, monitoring a system and reporting on it, thereby
     fulfilling \frit{1.2}. We completed inspection testing to verify 
     that data was reported, along with running the program for 
-    several hours to verify that it continued to function.
+    several hours to verify that it continued to function correctly.
 
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
@@ -679,15 +678,15 @@ Below, the testing within each module is described:
     importance of storage to the function of the HUMS as a whole, the
     data abstraction layer's key attributes are availability and
     performance. We completed an inspection test and used the 
-    GWTSystemDataGatewayTest class to verify \frit{3.1}. At the unit 
+    \texttt{GWTSystemDataGatewayTest} class to verify \frit{3.1}. At the unit 
     testing level, as  part of TDD, we focussed on the comparably complex,
     well defined module-internal functions, such as the generation and 
     parsing of the JSON serialisation of objects.
     
   \item[Analysis Controller] Due to the central role played by the 
-  analysis controller in the analysis pipeline we identified its key 
+  analysis controller, we identified its key 
   attributes as performance and testability. We utilised Mockito to 
-  provide completely isolated unit tests, confirming that notifications 
+  provide isolated unit tests, confirming that notifications 
   are only triggered when appropriate, satisfying \frit{7} and \frit{9}, and 
   that only the relevant analysis engines are used for a given system, 
   satisfying \frit{7.3}. Class loading was used to load analysis engines for 
@@ -707,7 +706,7 @@ Below, the testing within each module is described:
 	multiple unit tests to verify functionality as per \frit{8}. Mockito was 
 	used to isolate the class, allowing for a true unit test. The initial 
 	test ensured that a notification is generated when analysis has indicated 
-	it. The second test ensured that notifications were only sent once, to 
+	it. The second test ensured that notifications were only sent once to 
 	avoid spamming users.	 
   
   \item[Notification Engine] The functionality of the email notification 
@@ -719,14 +718,13 @@ Below, the testing within each module is described:
 	information, satisfying \frit{9}.
 
   \item[Reports Engine] We tested the Reports Engine by inspection since it 
-	is a prototype and does not require significant automated testing at this 
-	stage.
+	does not require significant automated testing at this stage.
 
  \end{description}
 
 \subsubsection{Traceability Table}
 
-Table~\ref{tab:traceability} shows the existing tests used to verify the implementation of the requirements in the system.
+Table~\ref{tab:traceability} shows the existing tests used to verify the implementation of system requirements.
 
 \begin{table}[H]
 \centering
