@@ -5,12 +5,18 @@ set(INPUT_FILES
     requirements.tex
     team.tex
     riskregister.tex
-    communication.tex)
+    communication.tex
+    impacttable.tex)
 
 # List all files that should be word-counted
 set(CONTENT_FILES
     second-report.tex
-    ${INPUT_FILES})
+    introduction.tex
+    glossary.tex
+    requirements.tex
+    team.tex
+    riskregister.tex
+    communication.tex)
 
 # List directories containing images
 set(IMAGE_DIRS
