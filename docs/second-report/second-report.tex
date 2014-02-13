@@ -544,14 +544,14 @@ loaded and passes Event objects to them.
 Currently there are two Data Emitters for use with the HUMS, demonstrating its 
 flexibility. The first extracts and emits data about the JVM, recording CPU and 
 memory usage, and the second extracts and emits live data about earthquake 
-activity from the USGS earthquake hazards program API \cite{usgs}.
+activity from the USGS Earthquake Hazards Program API \cite{usgs}.
 
 The Data Emitter designed to emit data about the JVM records the CPU and 
 memory usage of the application and sends these through the data input API 
 every second. A period of four seconds is allowed to elapse before the first 
 send, allowing the CPU usage readings to stabilise. The Data Emitter created to 
 relay live data about earthquake activity fetches data every minute from the 
-USGS earthquake hazards program API and submits it to the data input API.
+USGS Earthquake Hazards Program API and submits it to the data input API.
 
 %%Paragraph about analysis plugin 
 
@@ -580,25 +580,25 @@ The source for our prototype implementation can be accessed online at \texttt{ht
 \subsection{Prototype Evaluation}
 \label{sec:prototype-evaluation}
 
-\subsubsection{Customer Test Application -- No. 1}
+\subsubsection{Customer Test Application \#1}
 \label{sec:testapp}
-The customer provided an example application to monitor as part of the
+The customer provided an example Consumer System application to monitor as part of the
 evaluation of our prototype. With this in mind, we created a monitoring 
 package for our prototype solution that can monitor a native application
 or one executing on the JVM. We utilised Java Management 
 Extensions (JMX) to sample the memory utilisation of the application and
 created a process monitoring class which monitors the total
 CPU usage of the application. The mean analysis engine computes a 
-rolling average of values, and causes an email to be sent if this value
+rolling average of values, and dispatches an email if this value
 becomes too high, as shown in figure \ref{fig:alerting}. The raw memory
 values are read by the reporting system and displayed live in the admin
-centre, as shown in figure~\ref{fig:graphing}. The graph shows a value from
+centre, as shown in figure~\ref{fig:graphing}. The graph shows a value
 every 10 seconds, and automatically updates with the latest values.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=7cm]{images/TestApplicationCPUAlert.png}
-  \caption{A screenshot of an email notification sent by the mean analysis engine}
+  \caption{A screenshot of an email Notification sent by the mean analysis engine}
   \label{fig:alerting}
 \end{figure}
 
@@ -612,11 +612,11 @@ every 10 seconds, and automatically updates with the latest values.
   \label{fig:graphing}
 \end{figure}
 
-\subsubsection{Earthquake}
-We also created our own sample application: monitoring earthquakes 
+\subsubsection{Earthquake Monitor}
+We also created our own sample application which monitors earthquakes 
 through the USGS Earthquake Hazards Program API. The HUMS
 can collect live data from the API, store it and plot the location of any
-detected earthquakes on a map of the world in the admin centre, as shown
+detected earthquakes on a map of Earth in the admin centre, as shown
 in figure~\ref{fig:plotearthquakes}. We felt that using a map to display
 data was a useful and innovative addition.
 
@@ -628,13 +628,13 @@ data was a useful and innovative addition.
 \end{figure}
 
 \subsubsection{Instructions for Running and Replicating Results}
-We have compiled and packaged our source code into an easy to run distribution, which can be obtained from \hl{FIX}\verb+http://www.gpigc.co.uk/dist.tar.gz+. The user name and password to access this and any other resources on this domain is the same as described in section \ref{sec:source}.
+The source code has been compiled and packaged into an easy to run distribution, which can be obtained from \hl{FIX}\verb+http://www.gpigc.co.uk/dist.tar.gz+. The user name and password to access this and any other resources on this domain is the same as described in section \ref{sec:source}.
 
-Once extracted, the shell script \verb+launch.sh+ can be run to correctly start the different components and the Customer Test Application. At this stage the distribution only runs on Linux-based systems. This is because development was primarily conducted on Linux, and a lot of target systems for the HUMS are Unix based. Running from source works successfully across multiple platforms so in future we expect to create a distribution which can also do this.
+Once extracted, the shell script \verb+launch.sh+ can be run to correctly start the different components and the Customer Test Application. At this stage the distribution only runs on Linux-based systems. This is because development was primarily conducted on Linux, and many target systems for the HUMS are Unix based. Running from source works successfully across multiple platforms so in future we expect to create a distribution which also does this.
 
 An additional shell script named \hl{FIX}\verb+launch-eq.sh+ exists to run the components of the system with our own earthquake monitor test application. An internet connection is required for this to run as the data is accessed from an online source.
 
-Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/map.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/graph.html}.
+Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/graph.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/map.html}.
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
