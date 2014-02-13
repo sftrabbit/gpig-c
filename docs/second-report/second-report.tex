@@ -627,28 +627,13 @@ data was a useful and innovative addition.
 \end{figure}
 
 \subsubsection{Instructions for Running and Replicating Results}
-Once the source has been obtained, it can be run as follows: \hl{Todo - instructions for running the system as a whole: jars and stuff. Joe? I've got stuff going below but FOR THE LOVE OF GOD update the jar filenames and parameters, plus any OS restrictions before completing the document.}
+We have compiled and packaged our source code into an easy to run distribution, which can be obtained from \hl{FIX}\verb+http://www.gpigc.co.uk/dist.tar.gz+. The user name and password to access this and any other resources on this domain is the same as described in section \ref{sec:source}.
 
-Customer Test Application -- No. 1:
-\begin{enumerate}
-  \item Run \verb+java -jar custTestAppLauncher.jar+
-  \item Observe collected data on \verb+http://www.gpigc.co.uk/admin/map.html+
-\end{enumerate}
+Once extracted, the shell script \verb+launch.sh+ can be run to correctly start the different components and the Customer Test Application. At this stage the distribution only runs on Linux-based systems. This is because development was primarily conducted on Linux, and a lot of target systems for the HUMS are Unix based. Running from source works successfully across multiple platforms so in future we expect to create a distribution which can also do this.
 
-Earthquake Monitor:
-\begin{enumerate}
-  \item Run \verb+java -jar earthquakeLauncher.jar+
-  \item Observe collected data on \verb+http://www.gpigc.co.uk/admin/graph.html+
-\end{enumerate}
+An additional shell script named \hl{FIX}\verb+launch-eq.sh+ exists to run the components of the system with our own earthquake monitor test application. An internet connection is required for this to run as the data is accessed from an online source.
 
-\hl{All running Customer Test Application or Earthquake Monitor instances will send data to the same HUMS instance, and so data from multiple instances of the same example application will be interleaved in the admin centre live view. With this in mind, we recommend only running one instance of each application at a time.} % TODO Verify this
-
-The test application memory graph can be viewed at 
-\verb+http://www.gpigc.co.uk/admin/graph.html+ and the earthquake 
-map can be viewed at \verb+http://www.gpigc.co.uk/admin/map.html+. 
-The HUMS must be running in order to view live changes, and the user name
-and password required for access is the same as described in section
-\ref{sec:source}.
+Data collected from the Customer Test Application can be observed at \texttt{http://www.gpigc.co.uk/\\*admin/map.html}, and data collected by our earthquake monitor can be observed at \texttt{http://www.\\*gpigc.co.uk/admin/graph.html}.
 
 \subsection{Testing} 
 We created and implemented a test plan that laid out our key ideas
