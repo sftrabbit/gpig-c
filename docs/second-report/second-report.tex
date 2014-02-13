@@ -60,29 +60,17 @@ Friday, 14th February 2014
 
 Quality attributes are defined in order to ensure the architectural decisions 
 made not only provide the required functionality, but also produce a system
-meeting the expectations of all 
-stakeholders. For example, the System may be expected to meet certain 
-security standards or availability levels. Explicitly defining these quality 
-attributes before concretely designing the HUMS allows for the correct 
-architectural patterns and development tactics to be adopted in order to maximise these important qualities.
+meeting the expectations of all stakeholders. For example, the System may be expected to meet certain security standards or availability levels. Explicitly defining these quality attributes before concretely designing the HUMS allows for the correct architectural patterns and development tactics to be adopted in order to maximise these important qualities.
 When examining the HUMS's non-functional requirements the 
 following system quality attributes were identified:
 	\begin{center}
 	\textit{Flexibility, Performance, Modifiability, Security, 
 Testability, Usability}
 	\end{center}
-At this stage of development, usability and security 
+At this stage of the development, usability and security 
 have not yet been heavily considered. However, in the final System they 
 would be of high importance. Security is a key aspect of any HUMS, 
-as data being monitored must be both confidential and safe. It must be impossible 
-for an unauthorised user to insert or remove data from the System, meaning data
-would need to be stored according to relevant security standards 
-(e.g., encryption and password protection for personal data covered by the 
-Data Protection Act). Additionally, data in transit between Data Emitters and the
-HUMS must be protected, which can be achieved using a symmetric-key 
-encryption protocol. Such protocols are well supported by many programming
-languages. Specifying data access permissions for Users would fall under the 
-purview of the Consumer organisation, who would manage these permissions using the 
+as data being monitored must be both confidential and safe. It must be impossible for an unauthorised user to insert or remove data from the System, meaning data would need to be stored according to relevant security standards  (e.g., encryption and password protection for personal data covered by the Data Protection Act). Additionally, data in transit between Data Emitters and the HUMS must be protected, which can be achieved using a symmetric-key encryption protocol. Such protocols are well supported by many programming languages. Specifying data access permissions for Users would fall under the purview of the Consumer organisation, who would manage these permissions using the 
 configuration front-end of the System.
 
 Flexibility is important as the HUMS is designed to be used in multiple 
