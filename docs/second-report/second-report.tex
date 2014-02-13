@@ -615,7 +615,7 @@ The testing of each module is described below:
   \item[Data Input Layer] For the data input layer, it is essential that large
     amounts of data can be received in parallel. We verified this by
     inspection testing, and also by running multiple clients simultaneously and
-    verifying that the data from both was recorded, thus verifying \frit{1.1}.
+    checking that the data from both was recorded, thus verifying \frit{1.1}.
 
   \item[Data Abstraction Layer] Given the high throughput and
     importance of storage to the function of the HUMS as a whole, the
@@ -630,9 +630,8 @@ The testing of each module is described below:
   analysis controller, we identified its key 
   attributes as performance and testability. We utilised Mockito to 
   provide isolated unit tests, confirming that notifications 
-  are only triggered when appropriate, satisfying \frit{7} and \frit{9}, and 
-  that only the relevant analysis engines are used for a given system, 
-  satisfying \frit{7.3}. Class loading was used to load analysis engines for 
+  are only triggered when appropriate, satisfying \frit{7} and \frit{9}.
+  Class loading was used to load analysis engines for 
   the prototype, this was confirmed to be working via inspection and 
   integration testing.
   
