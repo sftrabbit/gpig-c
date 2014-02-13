@@ -24,7 +24,7 @@ public class EmailNotification extends NotificationEngine {
 	/* (non-Javadoc)
 	 * @see com.gpigc.core.notification.NotificationEngine#send(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void send(String recepient, String subject, String message) {
+	public void send(String recipient, String subject, String message) {
 		SimpleEmail email = new SimpleEmail();
 		email.setHostName("smtp.gmail.com");
 		email.setSmtpPort(465);
@@ -34,7 +34,7 @@ public class EmailNotification extends NotificationEngine {
 			email.setFrom("gpigc.alerts@gmail.com");
 			email.setSubject(subject);
 			email.setMsg(message);
-			email.addTo(recepient);
+			email.addTo(recipient);
 			email.send();
 			setRecentlySent();
 		} catch (EmailException e) {
