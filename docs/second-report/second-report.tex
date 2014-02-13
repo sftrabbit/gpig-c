@@ -426,36 +426,38 @@ UML 2 notation}
   \label{fig:notificationComponent}
 \end{figure}
 
-\section{Interim Prototype Implementation}
+\section{Prototype Implementation}
 \label{sec:prototype}
 
 \subsection{Technologies}
 
-We chose to develop the core of the HUMS prototype in Java. Java can
-be compiled to bytecode that can be executed directly in all
-environments that support a Java Virtual Machine, including various
+We chose to develop the core of the HUMS prototype in Java. Java is typically
+compiled to a bytecode that can be executed withina Java Virtual Machine (JMV).
+Many environments support the Java Virtual Machine, including various
 operating systems and the x86, x86-64 and ARM CPU architectures,
-making it highly portable between both desktop, server and embedded
+making it highly portable between desktop, server and embedded
 systems \cite{javasupport}.
 
 Whilst there may exist deployment platforms that are not supported, at
 this stage, we do not see this as a problem since the underlying
-architecture of the system is transferable across languages.
+architecture of the system is transferable to other languages.
 
-All members of our team were familiar with the Java programming
+All members of our team are familiar with the Java programming
 language and thus no time was spent having to get the team up to speed
 on a new language. We did not impose a language restriction when
-developing the data emitter and various engines as the data being
+developing the Data Emitter and various engines as the data being
 passed between them and the core are language independent, meaning 
-end users are free, even with the prototype, to implement engines in any
-language they see fit. For the prototype we used both Java and
+End Users are free, even with the prototype, to implement engines in any
+language or with any tool they see fit. For the prototype, we used both Java and
 JavaScript when creating the engines---languages that team members are
 familiar with---allowing us to show off the versatility of the system.
 
-Upon deciding to monitor CPU and heap usage, we began to investigate
-technologies that would allow us to do so, rather than reinvent the wheel.
+For a particular example Consumer System used for testing (section
+\ref{sec:testapp}), it was required that the System monitor CPU and memory usage.
+In order to do this, we began to investigate
+technologies that provided this functionality, rather than reinvent the wheel.
 Doing this also had the benefit of providing us with established, well-tested
-tools with which we could easily implement data input clients for further
+tools with which we could easily implement data input Clients for further
 systems. As the test program is a Java program, we had to connect to its 
 JVM to query the heap usage, as the operating system would just report the 
 size of the JVM heap. We settled on using SIGAR for process monitoring, 
@@ -472,11 +474,12 @@ we used JSON since it is human readable and maps well to our internal
 representation of objects in Java. To read and write JSON we used the 
 Jackson library, since it offers a high-performance streaming API. When 
 there was no such restriction on the format of the transmitted data, 
-therefore Google Protocol Buffers we used since they offer high 
-performance. This performance may be necessary for the potentially 
+Google Protocol Buffers was used as it serialises objects to a binary format
+that can easily be streamed to a TCP connection.
+This performance may be necessary for the potentially 
 high-volume connections between the Core and the other modules, 
-such as data emitters and analysis engines. We initially considered 
-using HTTP rather than Google Protocol Buffers for communication 
+such as Data Emitters and analysis engines. We initially considered 
+using HTTP with JSON rather than Google Protocol Buffers for communication 
 between the data input layer and the core, however we determined
 that sending multiple HTTP requests a second would have significant 
 overhead, and so we instead opted for a persistent connection and a 
@@ -492,11 +495,10 @@ easily interface with the admin centre.
 
 We created a prototype admin centre to show how the HUMS could be
 managed remotely, viewing data and modifying settings online through
-a web browser, whilst running as a service. The admin centre, shown in figure \ref{fig:admin} was
-developed using the Bootstrap front-end web framework, including 
-HTML, JavaScript and CSS, in order to create a prototype realistically
-simulating an interface to the HUMS that is accessible on desktop
-computers, laptops and mobile devices alike.
+a web browser. The admin centre, shown in figure \ref{fig:admin} was
+developed using the Bootstrap front-end web framework, in order to create
+a prototype realistically simulating an interface to the HUMS that is accessible
+on desktop computers, laptops and mobile devices alike.
 
 \begin{figure}[htbp!]
   \centering
@@ -517,7 +519,7 @@ centralised version control system, such as Subversion, but decided that the
 benefits provided by a decentralised system, such as Git, for working
 independently and then combining work would outweigh the potential
 disadvantages of there being no managing server. As we used GitHub for the
-canonical copy of the work, we incorporated many of the benefits of centralised
+canonical copy of the repository, we incorporated many of the benefits of centralised
 version control anyway.
 
 \subsection{Current Functionality}
