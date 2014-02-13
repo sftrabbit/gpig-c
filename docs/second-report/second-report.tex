@@ -534,14 +534,21 @@ flexibility. The first extracts and emits data about the JVM, recording CPU and
 memory usage, and the second extracts and emits live data about earthquake 
 activity from the USGS Earthquake Hazards Program API \cite{usgs}.
 
-The Data Emitter designed to emit data about the JVM records the CPU and 
-memory usage of the application and sends these through the data input API 
+The Data Emitter that is designed to emit data about the JVM records the CPU 
+and memory usage of the application and sends these through the data input API 
 every second. A period of four seconds is allowed to elapse before the first 
 send, allowing the CPU usage readings to stabilise. The Data Emitter created to 
 relay live data about earthquake activity fetches data every minute from the 
 USGS Earthquake Hazards Program API and submits it to the data input API.
 
-%%Paragraph about analysis plugin 
+The analysis controller reacts to updates from the Data Emitter and initiates
+the analysis to be performed by appropriate analysis engines. At this stage
+there is a single analysis engine which simply fetches the last ten CPU records
+from the database and calculates the mean average of them. It checks whether
+this value is within acceptable specified bounds and if not causes a notification
+to be generated in the next stage. Work is in progress on a more generic rules
+engine plugin that evaluates expressions that the End User specifies, but this
+is not yet functional.
 
 When the notification generator receives an Event, it selects the appropriate 
 notification engines for that Event and uses them to create and send  
