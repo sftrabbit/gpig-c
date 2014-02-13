@@ -80,7 +80,7 @@ Modifiability is also an important quality of the HUMS and, although not
 measurable, lack of modifiability can increase the cost and time taken to 
 complete the project. The HUMS will initially be built to tackle a single 
 domain (software applications), but will however in the future be required to
-work in such domains as embedded systems, mechanical systems, electrical systems, and even living systems. To ensure the application of these changes are as efficient as possible, the initial System must be modifiable. Tatics that can be used to increase the modifiability of the system include designing a modular architecture, decoupling those modules from each other, and increasing overall system cohesion. To achieve low coupling, the HUMS can use interfaces between modules, restricting dependencies, such that the majority of modules can be swapped out without significant changes to the overall system.
+work in such domains as embedded systems, mechanical systems, electrical systems, and even living systems. To ensure the application of these changes are as efficient as possible, the initial System must be modifiable. Tactics that can be used to increase the modifiability of the system include designing a modular architecture, decoupling those modules from each other, and increasing overall system cohesion. To achieve low coupling, the HUMS can use interfaces between modules, restricting dependencies, such that the majority of modules can be swapped out without significant changes to the overall system.
 
 The performance of a system is normally measured by its latency and 
 throughput. The HUMS is required to dispatch Notifications through the 
@@ -120,7 +120,7 @@ When designing the HUMS, we identified four views of the System which must be do
 \label{sec:architecture-moduleview}
 
 Having determined the quality attributes of the HUMS and the tactics
-which can be employed to achieve a high possession of these
+which can be employed to achieve a high utility of these
 qualities, a module view can be formed. The component diagram
 shown in figure \ref{fig:ComponentDiagram} depicts the modules of the
 HUMS and the interactions between these modules at a high level.
@@ -128,7 +128,7 @@ HUMS and the interactions between these modules at a high level.
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=14cm]{images/ComponentDiagram.png}
-  \caption{The module diagram of the HUMS. Components shown in blue are those provided as part of the GPIG-C system. Components shown in green have default implementations provided as part of the system, but may be added to or replaced by the consumer.}
+  \caption{The module diagram of the HUMS. Components shown in blue are those provided as part of the GPIG-C HUMS. Components shown in green have default implementations provided as part of the system, but may be added to or replaced by the consumer.}
   \label{fig:ComponentDiagram}
 \end{figure}
 
@@ -140,11 +140,11 @@ HUMS and the interactions between these modules at a high level.
     from. May be part of the Consumer System itself.
 
   \item[Data Input Layer] Receives data from a Data Emitter and sends
-    it to the data abstraction layer. Alerts the analysis controller
+    it to the data abstraction layer, alerting the analysis controller
     that new data was received.
 
   \item[Data Abstraction Layer] Handles all interaction with the
-    database, such that if the database were to be altered, only this
+    database, such that if the database were to be altered only this
     layer would need to change.
 
   \item[Analysis Controller] Alerts analysis engines when new data
@@ -153,10 +153,10 @@ HUMS and the interactions between these modules at a high level.
     within the data then the analysis controller forwards that event
     to the notification generator.
 
-  \item[Analysis Engine] Analyses the data looking for trends. If a
-    trend is found, an Event is returned to the analysis
-    controller. Analysis engines will be included with the HUMS, but the
-    Consumer may also provide custom engines.
+  \item[Analysis Engine] Analyses data looking for trends. If a
+    trend is identified, an Event is returned to the analysis
+    controller. Analysis engines will be included with the HUMS, however, the
+    Consumer may also create custom engines.
 
   \item[Notification Generator] Receives events from the analysis
     controller, defines an abstract notification, and sends it to the
@@ -170,8 +170,7 @@ HUMS and the interactions between these modules at a high level.
 
   \item[Reports Engine] Pulls data from the data abstraction layer and
     formats it into a report, such as a PDF document or graph. Report
-    engines will be included with the HUMS, but the Consumer may also provide
-    custom engines.
+    engines will be included with the HUMS, however, the Consumer may also create custom engines.
 \end{description}
 
 \subsubsection{Behavioural View}
