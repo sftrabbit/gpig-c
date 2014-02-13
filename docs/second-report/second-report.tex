@@ -495,60 +495,26 @@ version control anyway.
 \subsection{Current Functionality}
 For the interim prototype, we chose to firmly follow the planned architecture, producing a core system linking to example engines, Data Emitters and data stores, focussing on interacting with the provided test application.
 
-The core of the HUMS is fully functional, allowing for Data Emitters to send data 
-to the data input layer using Protocol Buffers, chosen in preference to HTTP 
-requests due to the lower latency. The data input layer, as currently 
-implemented, supports multiple simultaneous connections from input clients, 
-although we have yet to investigate how many the prototype could handle. 
-Upon receipt, the data is put into a queue, which is periodically processed by 
-the data input server, by adding each entry to the database and notifying the 
-analysis controller. The analysis controller allows for dynamic loading of 
-analysis engines, allowing them to be altered at runtime and requests data to 
-be passed to the appropriate engine, decoupling the analysis engines from the 
-data abstraction layer. The data abstraction layer provides a simple interface to 
-be implemented by the Consumer and includes an example implementation, 
-interfacing with Google App Engine using HTTP requests to a remote servlet. 
-The Notification generator also allows Notification engines to be dynamically 
-loaded and passes Event objects to them.
+The core of the HUMS is fully functional, allowing for Data Emitters to send data to the data input layer using Protocol Buffers, chosen in preference to HTTP requests due to the lower latency. The data input layer, as currently 
+implemented, supports multiple simultaneous connections from input clients, although we have yet to investigate how many the prototype could handle. Upon receipt, the data is put into a queue, which is periodically processed by the data input server, by adding each entry to the database and notifying the analysis controller. The analysis controller allows for dynamic loading of analysis engines, allowing them to be altered at runtime and requests data to be passed to the appropriate engine, decoupling the analysis engines from the data abstraction layer. The data abstraction layer provides a simple interface to be implemented by the Consumer and includes an example implementation, interfacing with Google App Engine using HTTP requests to a remote servlet. The Notification generator also allows Notification engines to be dynamically loaded and passes Event objects to them.
 
-Currently there are two Data Emitters for use with the HUMS, demonstrating its 
-flexibility. The first extracts and emits data about the JVM, recording CPU and 
-memory usage, and the second extracts and emits live data about earthquake 
-activity from the USGS Earthquake Hazards Program API \cite{usgs}.
+Currently there are two Data Emitters for use with the HUMS, demonstrating its flexibility. The first extracts and emits data about the JVM, recording CPU and memory usage, and the second extracts and emits live data about earthquake activity from the USGS Earthquake Hazards Program API \cite{usgs}.
 
-The Data Emitter that is designed to emit data about the JVM records the CPU 
-and memory usage of the application and sends these through the data input API 
-every second. A period of four seconds is allowed to elapse before the first 
-send, allowing the CPU usage readings to stabilise. The Data Emitter created to 
-relay live data about earthquake activity fetches data every minute from the 
-USGS Earthquake Hazards Program API and submits it to the data input API.
+The Data Emitter that is designed to emit data about the JVM records the CPU and memory usage of the application and sends these through the data input API every second. A period of four seconds is allowed to elapse before the first send, allowing the CPU usage readings to stabilise. The Data Emitter created to relay live data about earthquake activity fetches data every minute from the USGS Earthquake Hazards Program API and submits it to the data input API.
 
-The analysis controller reacts to updates from the Data Emitter and initiates
-the analysis to be performed by appropriate analysis engines. At this stage
-there is a single analysis engine which simply fetches the last ten CPU records
-from the database and calculates the mean average of them. It checks whether
-this value is within acceptable specified bounds and if not causes a notification
-to be generated in the next stage. Work is in progress on a more generic rules
-engine plugin that evaluates expressions that the End User specifies, but this
-is not yet functional.
+The analysis controller reacts to updates from a Data Emitter and initiates
+data analysis through appropriate analysis engines. Currently
+there is a single analysis engine which simply fetches the last ten CPU records from the database and calculates the mean average of them. It checks whether this average is within the specified acceptable bounds and if not, causes a notification to be generated. Work is in progress on a more generic rules engine plugin that evaluates expressions specified by the End User, but this is not yet fully functional.
 
 When the notification generator receives an Event, it selects the appropriate 
 notification engines for that Event and uses them to create and send  
-Notifications. Currently, a single notification engine has been developed which 
-sends an email to an email address configured by the User. This is 
-demonstrated for the test application, where an email will be dispatched when 
-CPU usage exceeds a predefined limit.
+Notifications. Currently, a single notification engine has been developed which sends an email to an email address configured by the User. This is 
+demonstrated for the test application, where an email will be dispatched when CPU usage exceeds a predefined limit.
 
 A prototype admin centre was created for this stage of the project to 
-demonstrate how the HUMS could be public facing as a SaaS, allowing for any 
-company or individual to, for a fee, use the facilities provided. This service includes
-storage, analysis, notification, and reporting tools. Currently the prototype 
-admin centre mocks functionality and --- apart from the reporting examples --- 
-does not actually integrate with the system. We envisage that in the next phase 
-of the project the admin centre will be fully functional and will interact with the rest of the HUMS modules where appropriate.
+demonstrate how the HUMS could be public facing as a SaaS, allowing for any company or individual to, for a fee, use the facilities provided. This service includes storage, analysis, notification, and reporting tools. Currently the prototype admin centre mocks functionality and --- apart from the reporting examples --- does not actually integrate with the system. We envisage that in the next phase of the project the admin centre will be fully functional and will interact with the rest of the HUMS modules where appropriate.
 
-We chose to add our reporting tools to the admin centre in the form of a map
-and a graph, each of which is updated live, to be used with test applications as shown in figures~\ref{fig:alerting} and~\ref{fig:graphing}.
+We chose to add our reporting tools to the admin centre in the form of a map and a graph, each of which is updated live, to be used with test applications as shown in figures~\ref{fig:alerting} and~\ref{fig:graphing}.
 
 \subsection{Source}
 \label{sec:source}
