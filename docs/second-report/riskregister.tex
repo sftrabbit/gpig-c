@@ -1,9 +1,7 @@
 \section{Risk register}
 \label{sec:riskregister}
 
-A risk assessment has been performed, based on the design decisions made throughout the initial and interim phases of the project, ensuring team members are aware how to react to problems when they occur.
-
-After feedback from the customer we took extra time to ensure both technical and procedural risks were identified early on.
+A risk assessment has been performed, based on the design decisions made throughout the initial and interim phases of the project, ensuring team members are aware how to react to problems when they occur. After feedback from the customer we took extra time to ensure both technical and procedural risks were identified early on. The risks from the initial report were reviewed and updated to reflect the more technical aspects of implementation. Risks relating to specific components were added, and some existing team planning risks were merged.
 
 The hazards (risks) have been identified by examining the 
 current literature \cite{boehm1991software,jones1998minimizing}, drawing upon team members' past experiences and group discussion. Classification of the identified hazards, their impact on the system and their probability of occurrence is performed in accordance with the Risk Management Guide for Information Technology Systems \cite{stoneburner2002risk}. The areas these hazards impact were then analysed, as well as the probability of occurrence. These are then weighted so that we can identify the risks which are likely to have the greatest detrimental effect on the project. The likelihood score (LS), impact score (IS) and risk matrix score (RS) are listed in the table below.
@@ -82,6 +80,7 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & 3
   & 4
   & Loss of service to users.
+
   Loss of confidence in the HUMS.
   & A final commercial version would use the premium Google service which guarantees an uptime of at least 99.95\% (\nfrit{9})
   & Additional data abstraction layer could be built to interface with another database service such as Heroku.
@@ -169,7 +168,7 @@ current literature \cite{boehm1991software,jones1998minimizing}, drawing upon te
   & 2
   & Difficulty merging work from different machines.
   & Distributed nature of Git means little work would be lost.
-  & Host our own git server within the Computer Science Department.
+  & Host our own Git server within the Computer Science Department.
   & 4\\ 
     \hline
 \end{longtable}       
