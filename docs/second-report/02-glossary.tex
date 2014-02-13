@@ -1,21 +1,25 @@
 \section{Glossary}
 \label{sec:glossary}
 
-\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx}]
-	\item[HUMS/The System] Health and usage monitoring system we are designing and developing.
-	\item[Customer] Thales.
-	\item[Consumer] The recipient organisation of the system.
-	\item[(End) User] An individual or organisation using the system.
-	\item[HUMS instance] One installation or occurrence of the system for a specific consumer.
-	\item[Client] A piece of computer hardware or software which accesses a service made available by the HUMS.
-	\item[Data emitter] Anything that provides data to the HUMS through the input interface.
-	\item[Data output client] Anything that receives data from the HUMS through the reporting or notification interfaces.
-	\item[Analysis] The processing performed on data within the HUMS.
-	\item[Event] A point of interest flagged up by an analysis system, which may result in a notification.
-	\item[Notification] A message sent by the system as a result of an event being fired.
-	\item[Alerting] The process of generating and delivering notifications.
-	\item[Report] A message sent by the system as a result of a request from a user.
-	\item[Auditing] The process of generating and returning reports.
-	\item[Sensor] A single data-producing source that is monitored by the HUMS through a data emitter.
-	\item[System ID] The identifier given to a group of sensors which are, for example, co-located or of the same type.
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},itemsep=0.1cm]
+	\item[The HUMS/System] The health and usage monitoring system being developed
+	\item[(HUMS) Instance] A particular deployment of the System
+	\vspace{0.2cm}
+	\item[Customer] Thales, the organisation that has commissioned the System
+	\item[Consumer] An organisation that makes use of the System
+	\item[(End) User] An individual that uses the System within a Consumer organisation
+	\vspace{0.2cm}
+	\item[Client] Computer hardware or software that interfaces with an Instance
+	\item[Input Interface] The interface through which data is supplied to an Instance
+	\item[Data Emitter] A Client that provides data to an Instance through the Input Interface
+	\item[Output Interface] The interfaces through which reports and notifications are dispatched
+	\item[Data Output Client] A Client that receives data from an Instance through an Output Interface
+	\vspace{0.2cm}
+	\item[Analysis] The processing of data performed by the System
+	\item[Event] A point of interest identified by Analysis
+	\item[Notification] A message dispatched by the System when an Event is fired
+	\item[Report] A message produced by the System by request of a User
+	\vspace{0.2cm}
+	\item[Sensor] A source of data to be monitored by the System
+	\item[System ID] A unique identifier given to each Client of a particular Instance.
 \end{description}
