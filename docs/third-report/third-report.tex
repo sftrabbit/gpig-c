@@ -1,6 +1,6 @@
 \documentclass[10pt,a4paper]{article}
 
-\usepackage[margin=3cm]{geometry}
+\usepackage[margin=1in]{geometry}
 \usepackage[UKenglish]{babel}
 \usepackage{enumitem}
 \usepackage{calc}
@@ -15,8 +15,23 @@
 \usepackage[small,compact]{titlesec}
 \usepackage[justification=centering]{caption}
 
+
 \definecolor{reqColor}{RGB}{80,80,120}
 \definecolor{titleColor}{RGB}{138,201,242}
+
+
+\newcommand{\tableformat}[4]{
+\begin{table}[h]
+\centering
+  \rowcolors{2}{gray!10} {white}
+\begin{tabular}{#1}
+  \hline
+  \rowcolor[gray]{0.9} #2
+\end{tabular}
+\caption{#3}
+\label{#4}
+\end{table}}
+
 \pagestyle{fancy}
 \lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M 
 Walker}
@@ -34,111 +49,268 @@ Walker}
 \newcommand{\frit}[1]{\textit{FR.#1}}
 \newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
 \newcommand{\nfrit}[1]{\textit{NFR.#1}}
+\newcommand{\qas}[1]{\textcolor{reqColor}{\textbf{QAS.#1}}}
+		
+%%Scenarios
+\newenvironment{scenario}[1]{
+	\newcommand{\source}[1]{##1}
+	\newcommand{\stimulus}[1]{##1}
+	\newcommand{\artifact}[1]{##1}
+	\newcommand{\environment}[1]{##1}
+	\newcommand{\response}[1]{##1}
+	\newcommand{\measure}[1]{##1}
+	\newcommand{\quality}[1]{##1}
+		Quality Attribute Scenario \qas{#1}
+		\begin{description} 
+			\item[Quality:] \quality
+						
+			\item[Source of Stimulus:] \source
+						
+			\item[Stimulus:] \stimulus
+						
+			\item[Artifact:] \artifact
+						
+			\item[Environment:] \environment
+						
+			\item[Response:] \response
+						
+			\item[Response Measure:] \measure			
+		\end{description}
+		}{}
+
 
 \begin{document}
-
 \begin{center}
-{\Large GPIG-C Final Report}
+{\Huge GPIG-C Final Report}
+\vspace*{0.3cm}
 
-Word count: \input{wc}\unskip
-\footnote{\textit{Using TeXCount}}
+Word count: \input{wc} (\textit{using TeXCount})
+\vspace*{0.3cm}
 
 Wednesday, 21st May 2014
 \end{center}
+\vspace*{0.4cm}
+\hrule
+\vspace*{0.4cm}
 
+%-------------------------------------------------------------%
+%----------------------INTRODUCTION -------------------%
+%-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
 This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the development plan presented in the previous report is updated to better represent the division and execution of tasks for this development cycle. The systems requirements are further refined, building on the feedback from the previous report, including a set of external dependancies. The systems architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made, this including examining the quality attributes associated with the system, and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented, using a number of system views deemed to be important. Having determined the architecture of the system the risks associated with this design, and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are discussed.
 
 The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the system. The project is then concluded, and the team reflects on their decisions throughout the project.
+
+%-------------------------------------------------------------%
+%--------------------------GLOSSARY ---------------------%
+%-------------------------------------------------------------%
 \section{Glossary}
 \label{sec:glossary}
 
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},itemsep=0.1cm]
+	\item[The HUMS/System] The health and usage monitoring system being developed
+	\item[(HUMS) Instance] A particular deployment of the System
+	\vspace{0.3cm}
+	\item[Customer] Thales, the organisation that has commissioned the System
+	\item[Consumer] An organisation that makes use of the System
+	\item[Consumer System] The system that a Consumer wishes to monitor
+	\item[(End) User] An individual that uses the System within a Consumer organisation
+	\vspace{0.3cm}
+	\item[Client] Computer hardware or software that interfaces with an Instance
+	\item[Input Interface] The interface through which data is supplied to an Instance
+	\item[Data Emitter] A Client that provides data to an Instance through the Input Interface
+	\item[Output Interface] The interfaces through which reports and notifications are dispatched
+	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
+	\vspace{0.3cm}
+	\item[Event] A trend in data identified by analysis
+	\item[Notification] A message dispatched by the System when an Event is fired
+	\item[Report] A message produced by the System by request of a User
+	\vspace{0.3cm}
+	\item[Sensor] A source of data to be monitored by the System
+	\item[Sensor ID] A unique identifier denoting a particular Sensor
+	\item[System ID] A unique identifier denoting a group of Sensors
+\end{description}
+
+%-------------------------------------------------------------%
+%-------------------DEVELOPMENT PLAN ----------------%
+%-------------------------------------------------------------%
 \section{Development Plan}
 \label{sec:dev_plan}
 
-
+%-------------------------------------------------------------%
+%-------------SYSTEMS ARCHITECTURE----------------%
+%-------------------------------------------------------------%
 \section{Systems Architecture}
 \label{sec:systems_architecture}
+
 
 \subsection{Requirements Refinement}
 \label{sec:requirements}
 
+
 \subsubsection{Functional Requirements}
 \label{sec:functional_requirements}
 
+
 \subsubsection{Non Functional Requirements}
 \label{sec:nonfunctional_requirements}
+
 
 \subsubsection{External Dependancies}
  \label{sec:external_dependancies}
 
 \subsection{Quality Attributes}
 \label{sec:qualities}
+There are a number of attributes associated with the HUMS, these must be considered when creating the system architecture in order to ensure that the architectural decisions being made not providing the desired functionality but that the system meets the needs of all stakeholders, including developers and end users.
+Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality.
+When considering the HUMS, its requirements, and its stakeholders, table \ref{tab:qualities} ranks the qualities associated with the system, and explains why the quality was given that particular ranking. The ranking of qualities, was not done in the previous report, however,  is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. 
+
+\tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
+\hline
+Quality \qquad Attribute & Rank & Reasoning \\
+\hline
+Flexibility & High &  It is important that the HUMS can be used in a range of domains, this has been strongly emphasised by the customer. 
+\\
+Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. 
+\\
+Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
+\\
+Availability & High &  The non functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems, if it was not highly available then end users would lose confidence in it. The HUMS must be at least as available as the average end users system in order to monitor it properly. 
+ \\
+Security & High & Security is highly ranked as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify system data, and data in transit between Data Emitters and the HUMS must be protected.
+\\
+Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5ms. It must also  interface with many Data Emitters and Data Output Clients, meaning it must capable of handling a large number of events quickly. 
+\\
+Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults, and is also likely to increase its availability. 
+\\
+Usability & Low & Usability was not deemed of great importance to the system, as its sub qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for the web interface and admin centre, however, this is only a small part of the HUMS.
+\\
+}{The ranked quality attributes, associated with the HUMS}{tab:qualities}
+
 
 \subsection{Quality Attribute Scenarios}
 \label{sec:scenarios}
+Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimulus. This helps to create goals, which the final implementation can be tested against to determine its quality, and how effective it is at achieving its non functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions, other scenarios where also considered and documented, however, could not be included in this report due to space limitations.
+
+\begin{scenario}{1}
+\end{scenario}
+
+\begin{scenario}{1}
+\end{scenario}
+
+\begin{scenario}{2}
+\end{scenario}
+
+\begin{scenario}{3}
+\end{scenario}
+
+\begin{scenario}{4}
+\end{scenario}
+
+\begin{scenario}{5}
+\end{scenario}
+
+\begin{scenario}{6}
+\end{scenario}
 
 \subsection{Tactics and Patterns}
 \label{sec:tactics}
 
+
 \subsection{System Views}
 \label{sec:views}
 
+%-------------------------------------------------------------%
+%--------------------------RISKS----------------------------%
+%-------------------------------------------------------------%
 \section{Project Risks and Risk Reduction}
 \label{sec:risks}
 
+%-------------------------------------------------------------%
+%----------------------DEVELOPMENT --------------------%
+%-------------------------------------------------------------%
 \section{Development}
 \label{sec:development}
+
 
 \subsection{Sense}
 \label{sec:sense}
 
+
 \subsection{Store}
 \label{sec:store}
+
 
 \subsection{Analyse}
 \label{sec:analyse}
 
+
 \subsection{Report and Notify}
 \label{sec:report}
+
 
 \subsection{Feedback}
 \label{sec:feedback}
 
+%-------------------------------------------------------------%
+%-----------------------PROTOTYPE-----------------------%
+%-------------------------------------------------------------%
 \section{Prototype Implementation Evaluation}
 \label{sec:prototype}
+
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
 
+
 \subsection{Changes Since the Interim Report}
 \label{sec:changes}
+
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
 
+
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
+
 
 \subsection{Evaluation of Admin Centre}
 \label{sec:admin_centre}
 
+
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
+
 
 \subsection{Evaluation of the Earthquake Monitor}
 \label{sec:earthquake}
 
+
 \subsection{Evaluation of \hl{Some new thing}}
 \label{sec:new_thing} %%change this
 
+
+%-------------------------------------------------------------%
+%---------------------COMMUNICATION-------------------%
+%-------------------------------------------------------------%
 \section{Customer Communication}
 \label{sec:customer_comms}
 
+%-------------------------------------------------------------%
+%----------------------CONCLUSION----------------------%
+%-------------------------------------------------------------%
 \section{Conclusion}
+\label{sec:conclusion}
+
+
 \subsection{Summary}
+\label{sec:summary}
+
+
 \subsection{Reflection}
+\label{sec:reflection}
 
 \bibliography{report-refs}
 \bibliographystyle{IEEEtran}
