@@ -1,0 +1,145 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=3cm]{geometry}
+\usepackage[UKenglish]{babel}
+\usepackage{enumitem}
+\usepackage{calc}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{parskip}
+\usepackage{soul}
+\usepackage[small,compact]{titlesec}
+\usepackage[justification=centering]{caption}
+
+\definecolor{reqColor}{RGB}{80,80,120}
+\definecolor{titleColor}{RGB}{138,201,242}
+\pagestyle{fancy}
+\lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M 
+Walker}
+\chead{}
+\rhead{GPIG-C}
+\cfoot{\vspace{-0.6cm} \thepage}
+
+\setlist{nolistsep} % Reduces lots of white space around lists
+
+\renewcommand{\headrulewidth}{0.4pt} % Add rules below header
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\conreq}[1]{\textcolor{reqColor}{\textbf{CR.#1}}}
+\newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
+\newcommand{\frit}[1]{\textit{FR.#1}}
+\newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
+\newcommand{\nfrit}[1]{\textit{NFR.#1}}
+
+\begin{document}
+
+\begin{center}
+{\Large GPIG-C Final Report}
+
+Word count: \input{wc}\unskip
+\footnote{\textit{Using TeXCount}}
+
+Wednesday, 21st May 2014
+\end{center}
+
+\section{Introduction}
+\label{sec:intro}
+This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the development plan presented in the previous report is updated to better represent the division and execution of tasks for this development cycle. The systems requirements are further refined, building on the feedback from the previous report, including a set of external dependancies. The systems architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made, this including examining the quality attributes associated with the system, and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented, using a number of system views deemed to be important. Having determined the architecture of the system the risks associated with this design, and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are discussed.
+
+The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the system. The project is then concluded, and the team reflects on their decisions throughout the project.
+\section{Glossary}
+\label{sec:glossary}
+
+\section{Development Plan}
+\label{sec:dev_plan}
+
+
+\section{Systems Architecture}
+\label{sec:systems_architecture}
+
+\subsection{Requirements Refinement}
+\label{sec:requirements}
+
+\subsubsection{Functional Requirements}
+\label{sec:functional_requirements}
+
+\subsubsection{Non Functional Requirements}
+\label{sec:nonfunctional_requirements}
+
+\subsubsection{External Dependancies}
+ \label{sec:external_dependancies}
+
+\subsection{Quality Attributes}
+\label{sec:qualities}
+
+\subsection{Quality Attribute Scenarios}
+\label{sec:scenarios}
+
+\subsection{Tactics and Patterns}
+\label{sec:tactics}
+
+\subsection{System Views}
+\label{sec:views}
+
+\section{Project Risks and Risk Reduction}
+\label{sec:risks}
+
+\section{Development}
+\label{sec:development}
+
+\subsection{Sense}
+\label{sec:sense}
+
+\subsection{Store}
+\label{sec:store}
+
+\subsection{Analyse}
+\label{sec:analyse}
+
+\subsection{Report and Notify}
+\label{sec:report}
+
+\subsection{Feedback}
+\label{sec:feedback}
+
+\section{Prototype Implementation Evaluation}
+\label{sec:prototype}
+
+\subsection{Interim Implementation Summary}
+\label{sec:interim_summary}
+
+\subsection{Changes Since the Interim Report}
+\label{sec:changes}
+
+\subsection{Evaluation on Test Application 1}
+\label{sec:test_app1}
+
+\subsection{Evaluation on Test Application 2}
+\label{sec:test_app2}
+
+\subsection{Evaluation of Admin Centre}
+\label{sec:admin_centre}
+
+\subsection{Evaluation of the HUMS SaaS}
+\label{sec:hums_saas}
+
+\subsection{Evaluation of the Earthquake Monitor}
+\label{sec:earthquake}
+
+\subsection{Evaluation of \hl{Some new thing}}
+\label{sec:new_thing} %%change this
+
+\section{Customer Communication}
+\label{sec:customer_comms}
+
+\section{Conclusion}
+\subsection{Summary}
+\subsection{Reflection}
+
+\bibliography{report-refs}
+\bibliographystyle{IEEEtran}
+\end{document}
