@@ -12,7 +12,7 @@
 \usepackage{longtable}
 \usepackage{parskip}
 \usepackage{soul}
-\usepackage[small,compact]{titlesec}
+\usepackage[compact]{titlesec}
 \usepackage[justification=centering]{caption}
 
 
@@ -51,41 +51,33 @@ Walker}
 \newcommand{\nfrit}[1]{\textit{NFR.#1}}
 \newcommand{\qas}[1]{\textcolor{reqColor}{\textbf{QAS.#1}}}
 		
+		
+
+
 %%Scenarios
 \newenvironment{scenario}[1]{
-	\newcommand{\source}[1]{##1}
-	\newcommand{\stimulus}[1]{##1}
-	\newcommand{\artifact}[1]{##1}
-	\newcommand{\environment}[1]{##1}
-	\newcommand{\response}[1]{##1}
-	\newcommand{\measure}[1]{##1}
-	\newcommand{\quality}[1]{##1}
-		Quality Attribute Scenario \qas{#1}
-		\begin{description} 
-			\item[Quality:] \quality
-						
-			\item[Source of Stimulus:] \source
-						
-			\item[Stimulus:] \stimulus
-						
-			\item[Artifact:] \artifact
-						
-			\item[Environment:] \environment
-						
-			\item[Response:] \response
-						
-			\item[Response Measure:] \measure			
-		\end{description}
-		}{}
+\newcommand{\source}[1]{\item[Source of Stimulus:] ##1}
+\newcommand{\stimulus}[1]{\item[Stimulus:] ##1}
+\newcommand{\artifact}[1]{\item[Artifact:] ##1}
+\newcommand{\environment}[1]{\item[Environment:] ##1}
+\newcommand{\response}[1]{\item[Response:] ##1}
+\newcommand{\measure}[1]{\item[Response Measure:] ##1}
+\newcommand{\rationale}[1]{\item[Scenario Rationale:] ##1}
+\newcommand{\quality}[1]{\item[Quality:] ##1}
+		\begin{description} [noitemsep]	
+		\item[Scenario ID:] \qas{#1}
+		}{\end{description} \vspace*{0.3cm}
+		}
 
 
 \begin{document}
 \begin{center}
-{\Huge GPIG-C Final Report}
-\vspace*{0.3cm}
+{\vspace*{-0.5cm}
+\Huge GPIG-C Final Report}
+\vspace*{0.2cm}
 
 Word count: \input{wc} (\textit{using TeXCount})
-\vspace*{0.3cm}
+\vspace*{0.1cm}
 
 Wednesday, 21st May 2014
 \end{center}
@@ -108,25 +100,25 @@ The development of the prototype HUMS, demonstrating some of the important featu
 \section{Glossary}
 \label{sec:glossary}
 
-\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},itemsep=0.1cm]
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
-	\vspace{0.3cm}
+	\vspace{0.15cm}
 	\item[Customer] Thales, the organisation that has commissioned the System
 	\item[Consumer] An organisation that makes use of the System
 	\item[Consumer System] The system that a Consumer wishes to monitor
 	\item[(End) User] An individual that uses the System within a Consumer organisation
-	\vspace{0.3cm}
+	\vspace{0.15cm}
 	\item[Client] Computer hardware or software that interfaces with an Instance
 	\item[Input Interface] The interface through which data is supplied to an Instance
 	\item[Data Emitter] A Client that provides data to an Instance through the Input Interface
 	\item[Output Interface] The interfaces through which reports and notifications are dispatched
 	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
-	\vspace{0.3cm}
+	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis
 	\item[Notification] A message dispatched by the System when an Event is fired
 	\item[Report] A message produced by the System by request of a User
-	\vspace{0.3cm}
+	\vspace{0.14cm}
 	\item[Sensor] A source of data to be monitored by the System
 	\item[Sensor ID] A unique identifier denoting a particular Sensor
 	\item[System ID] A unique identifier denoting a group of Sensors
@@ -137,6 +129,11 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Development Plan}
 \label{sec:dev_plan}
+dev
+
+dev
+
+dev
 
 %-------------------------------------------------------------%
 %-------------SYSTEMS ARCHITECTURE----------------%
@@ -162,9 +159,9 @@ The development of the prototype HUMS, demonstrating some of the important featu
 
 \subsection{Quality Attributes}
 \label{sec:qualities}
-There are a number of attributes associated with the HUMS, these must be considered when creating the system architecture in order to ensure that the architectural decisions being made not providing the desired functionality but that the system meets the needs of all stakeholders, including developers and end users.
-Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality.
-When considering the HUMS, its requirements, and its stakeholders, table \ref{tab:qualities} ranks the qualities associated with the system, and explains why the quality was given that particular ranking. The ranking of qualities, was not done in the previous report, however,  is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. 
+A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders.
+Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
+When considering the HUMS, its requirements, and its stakeholders, table \ref{tab:qualities} ranks the qualities associated with the system, and explains why the quality was given that particular ranking. The ranking of qualities, was not done in the previous report, however,  is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Flexibility, and Interoperability.
 
 \tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
 \hline
@@ -172,7 +169,7 @@ Quality \qquad Attribute & Rank & Reasoning \\
 \hline
 Flexibility & High &  It is important that the HUMS can be used in a range of domains, this has been strongly emphasised by the customer. 
 \\
-Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. 
+Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS
 \\
 Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
 \\
@@ -194,31 +191,86 @@ Usability & Low & Usability was not deemed of great importance to the system, as
 Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimulus. This helps to create goals, which the final implementation can be tested against to determine its quality, and how effective it is at achieving its non functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions, other scenarios where also considered and documented, however, could not be included in this report due to space limitations.
 
 \begin{scenario}{1}
-\end{scenario}
-
-\begin{scenario}{1}
+\quality{Flexibility}
+\source{The Customer}
+\stimulus{The Customer wishes to reconfigure the system to monitor mechanical systems.}
+\artifact{HUMS Core}
+\environment{Design Time}
+\response{The System is reconfigured to be comparable with mechanical systems, tested, and deployed.}
+\measure{All work is completed on time and in budget.}
+\rationale{This scenario is important to the customer, as they expect the HUMS to move across domains easily.}
 \end{scenario}
 
 \begin{scenario}{2}
+\quality{Modifiability}
+\source{Developer}
+\stimulus{Wishes to add an additional analysis, reporting, or notification engine to the HUMS.}
+\artifact{HUMS Core}
+\environment{Runtime}
+\response{The new engine is implemented, tested and successfully added to the HUMS, without any loss in service.}
+\measure{No other system elements are affected, and the work is completed within budget.}
+\rationale{This scenario is important to both the HUMS developers and the end users, the HUMS should allow both of these groups to add custom engines to the HUMS system, without affecting other system components.}
 \end{scenario}
 
 \begin{scenario}{3}
+\quality{Security}
+\source{An unknown external Client}
+\stimulus{Attempts to access stored HUMS data or HUMS services.}
+\artifact{HUMS Core}
+\environment{Normal Operation - Online}
+\response{The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.}
+\measure{No HUMS data or services are damaged as a result of the access attempt.}
+\rationale{This scenario shows how the HUMS is expected to behave when a Client attempts access to its services, showing the importance of authenticating Clients and how to HUMS should respond to unauthorised Clients.}
 \end{scenario}
 
 \begin{scenario}{4}
-\end{scenario}
-
-\begin{scenario}{5}
-\end{scenario}
-
-\begin{scenario}{6}
+\quality{Availability}
+\source{Datastore Module}
+\stimulus{The end users registered datastore is unavailable to the HUMS instance}
+\artifact{HUMS System}
+\environment{Runtime}
+\response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
+\measure{End user defined repair time.}
+\rationale{This scenario shows how the HUMS should respond to a datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the end user. If the end users defined datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in degraded mode.}
 \end{scenario}
 
 \subsection{Tactics and Patterns}
 \label{sec:tactics}
+Having identified the key quality attributes for the system, and a set of quality attribute scenarios, the tactics and patterns needed to ensure the desired utility of these attributes can be examined. In this section we focus on those qualities ranked highly in table \ref{tab:qualities}.
 
+\subsubsection{Tactics}
+Below the tactics which appear most suitable for use with the HUMS are summarised.
+\begin{description}
+\item[Flexibility] \hfill
+	\begin{description}[noitemsep]
+	\item[Thing] 
+	\end{description}
+\item[Modifiability] \hfill
+	\begin{description}[noitemsep]
+	\item[Thing] 
+	\end{description}
+\item[Interoperability] \hfill
+	\begin{description}[noitemsep]
+	\item[Thing] 
+	\end{description}
+\item[Availability] \hfill
+	\begin{description}[noitemsep]
+	\item[Thing] 
+	\end{description}
+\item[Security] \hfill
+	\begin{description}[noitemsep]
+	\item[Thing] 
+	\end{description}
+\end{description}
 
-\subsection{System Views}
+\subsubsection{Design Patterns}
+Having determined the tactics implacable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected, which allow these tactics to be realised in the HUMS architecture.
+
+\begin{description}
+\item[Limit Exposure] blah
+\end{description}
+
+\subsection{System Views \hl{Joe and Andy}} 
 \label{sec:views}
 
 %-------------------------------------------------------------%
@@ -230,7 +282,7 @@ Having identified the quality attributes which are important to creating a succe
 %-------------------------------------------------------------%
 %----------------------DEVELOPMENT --------------------%
 %-------------------------------------------------------------%
-\section{Development}
+\section{Development \hl{All}}
 \label{sec:development}
 
 
@@ -256,7 +308,7 @@ Having identified the quality attributes which are important to creating a succe
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
 %-------------------------------------------------------------%
-\section{Prototype Implementation Evaluation}
+\section{Prototype Implementation Evaluation \hl{All}}
 \label{sec:prototype}
 
 
@@ -295,7 +347,7 @@ Having identified the quality attributes which are important to creating a succe
 %-------------------------------------------------------------%
 %---------------------COMMUNICATION-------------------%
 %-------------------------------------------------------------%
-\section{Customer Communication}
+\section{Customer Communication \hl{Someone.... please not me}}
 \label{sec:customer_comms}
 
 %-------------------------------------------------------------%
