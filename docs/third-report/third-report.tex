@@ -17,11 +17,10 @@
 
 
 \definecolor{reqColor}{RGB}{80,80,120}
-\definecolor{titleColor}{RGB}{138,201,242}
 
-
+%%Tables
 \newcommand{\tableformat}[4]{
-\begin{table}[h]
+\begin{table}[H]
 \centering
   \rowcolors{2}{gray!10} {white}
 \begin{tabular}{#1}
@@ -136,28 +135,28 @@ dev
 dev
 
 %-------------------------------------------------------------%
-%-------------SYSTEMS ARCHITECTURE----------------%
+%-------------------REQUIREMENTS----------------------%
 %-------------------------------------------------------------%
-\section{Systems Architecture}
-\label{sec:systems_architecture}
-
-
-\subsection{Requirements Refinement}
+\section{Requirements Refinement}
 \label{sec:requirements}
 
 
-\subsubsection{Functional Requirements}
+\subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
 
-\subsubsection{Non Functional Requirements}
+\subsection{Non Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
 
-\subsubsection{External Dependancies}
+\subsection{External Dependancies}
  \label{sec:external_dependancies}
 
-\subsection{Quality Attributes}
+
+%-------------------------------------------------------------%
+%-----------------------QUALITIES-------------------------%
+%-------------------------------------------------------------%
+\section{Quality Attributes}
 \label{sec:qualities}
 A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders.
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
@@ -185,8 +184,10 @@ Usability & Low & Usability was not deemed of great importance to the system, as
 \\
 }{The ranked quality attributes, associated with the HUMS}{tab:qualities}
 
-
-\subsection{Quality Attribute Scenarios}
+%-------------------------------------------------------------%
+%----------------------SCENARIOS------------------------%
+%-------------------------------------------------------------%
+\section{Quality Attribute Scenarios}
 \label{sec:scenarios}
 Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimulus. This helps to create goals, which the final implementation can be tested against to determine its quality, and how effective it is at achieving its non functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions, other scenarios where also considered and documented, however, could not be included in this report due to space limitations.
 
@@ -234,11 +235,71 @@ Having identified the quality attributes which are important to creating a succe
 \rationale{This scenario shows how the HUMS should respond to a datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the end user. If the end users defined datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in degraded mode.}
 \end{scenario}
 
-\subsection{Tactics and Patterns}
+%-------------------------------------------------------------%
+%--------------------------RISKS----------------------------%
+%-------------------------------------------------------------%
+\section{Project Risks}
+\label{sec:risks}
+It is important to consider the risks of any software project, so that appropriate mitigation can be exercised, so that there are clear contingency plans in place to prevent problems having a large impact of the project, ensuring all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout development. 
+
+Unlike in previous reports, risks have been separated into human risks and technological risks, this distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are shown in table \ref{tab:human_risks} and technical risks are presented in table \ref{tab:tech_risks}.
+Some risks have been modified since the previous report, others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
+
+\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c  }
+{ 	\hline
+  	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
+  	\hline
+  
+ 	R.1 & Loss of team member(s) or team member(s) underperformance & Internal/External deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
+   	R.2 & External pressures (such as other modules) limit the amount of development time & Internal/External deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
+   	R.3 & Customer does not think that the HUMS design correctly fulfils their brief & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
+	R.4 & Work is lost due to human or hardware error & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
+  	\hline
+}
+{The human and business risks associated with this phase of the project}{tab:human_risks}
+
+
+\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c}
+{ 	\hline
+  	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
+  	\hline
+  
+ 	R.5 & Developed admin centre does not satisfy the outlined requirements & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre & 10 & Minor & \textbf{Low} \\
+   	R.6 & Data interception between the HUMS core and registered engines or datastore & Loss of confidence in HUMS. Lost/Corrupted Data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+   	R.7 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability, and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+   	R.8 & Included analysis engines computation too slow & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines & 25 & Moderate & \textbf{Low} \\	
+	R.9 & Included Notification engines too slow & Failure to meet performance targets. Loss of events, end user not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
+  	\hline
+}
+{The technical risks associated with this phase of the project}{tab:tech_risks}
+
+\subsection{Risk Mitigation}
+The following risk reduction techniques have been used throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to these techniques, the tactics and patterns explained later in this report are used to mitigate technical risks which affect the quality of the system.
+\begin{description}
+\item[Scrum:] \hfill
+
+\item[Version Control:] \hfill
+
+\item[Automated Testing:] \hfill
+
+\item[Load/Stress Testing:] \hfill
+
+\item[Load/Stress Testing:] \hfill
+
+\end{description}
+
+%-------------------------------------------------------------%
+%--------------TACTICS / PATTERNS----------------------%
+%-------------------------------------------------------------%
+%   Notes: 									 %
+%  		- Reference risks constantly, lots and lots	 %
+%-------------------------------------------------------------%
+\section{Tactics and Patterns}
 \label{sec:tactics}
 Having identified the key quality attributes for the system, and a set of quality attribute scenarios, the tactics and patterns needed to ensure the desired utility of these attributes can be examined. In this section we focus on those qualities ranked highly in table \ref{tab:qualities}.
 
-\subsubsection{Tactics}
+\subsection{Tactics}
+
 Below the tactics which appear most suitable for use with the HUMS are summarised.
 \begin{description}
 \item[Flexibility] \hfill
@@ -263,44 +324,42 @@ Below the tactics which appear most suitable for use with the HUMS are summarise
 	\end{description}
 \end{description}
 
-\subsubsection{Design Patterns}
+\subsection{Design Patterns}
 Having determined the tactics implacable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected, which allow these tactics to be realised in the HUMS architecture.
 
 \begin{description}
-\item[Limit Exposure] blah
+\item[Pattern] blah
 \end{description}
 
 \subsection{System Views \hl{Joe and Andy}} 
 \label{sec:views}
 
 %-------------------------------------------------------------%
-%--------------------------RISKS----------------------------%
-%-------------------------------------------------------------%
-\section{Project Risks and Risk Reduction}
-\label{sec:risks}
-
-%-------------------------------------------------------------%
 %----------------------DEVELOPMENT --------------------%
+%-------------------------------------------------------------%
+%   Notes: 									 %
+%  		- Reference risks constantly, lots and lots	 %
+%		- Reference requirements and scenarios 	 %
 %-------------------------------------------------------------%
 \section{Development \hl{All}}
 \label{sec:development}
-
+vhvh
 
 \subsection{Sense}
 \label{sec:sense}
-
+vhvhv
 
 \subsection{Store}
 \label{sec:store}
-
+vhvhv
 
 \subsection{Analyse}
 \label{sec:analyse}
-
+vhvhv
 
 \subsection{Report and Notify}
 \label{sec:report}
-
+vhvhvh
 
 \subsection{Feedback}
 \label{sec:feedback}
