@@ -245,7 +245,7 @@ It is important to consider the risks of any software project, so that appropria
 Unlike in previous reports, risks have been separated into human risks and technological risks, this distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are shown in table \ref{tab:human_risks} and technical risks are presented in table \ref{tab:tech_risks}.
 Some risks have been modified since the previous report, others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
 
-\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c  }
+\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c }
 { 	\hline
   	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
   	\hline
@@ -276,16 +276,15 @@ Some risks have been modified since the previous report, others are completely n
 \subsection{Risk Mitigation}
 The following risk reduction techniques have been used throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to these techniques, the tactics and patterns explained later in this report are used to mitigate technical risks which affect the quality of the system.
 \begin{description}
-\item[Scrum:] \hfill
+\item[Scrum:]
+The use of the Scrum as part of our software engineering methodology, as discussed in the initial report, helps to mitigate risks \emph{R.1-3}. The scrum allows team members to be kept up to date on what other team members are working on, and on the state of the project as a whole, making it easier for work to be reallocated across teams members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customers brief.
 
-\item[Version Control:] \hfill
+\item[Version Control:]
+Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, it also prevents large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which caused a problem in the system, or caused the system to not meet stakeholder expectations.
 
-\item[Automated Testing:] \hfill
-
-\item[Load/Stress Testing:] \hfill
-
-\item[Load/Stress Testing:] \hfill
-
+\item[Automated Testing:] 
+Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.5-9}, helping to automatically validate system requirements. 
+Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging.
 \end{description}
 
 %-------------------------------------------------------------%
@@ -364,6 +363,8 @@ vhvhvh
 \subsection{Feedback}
 \label{sec:feedback}
 
+\subsection{Technologies}
+
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
 %-------------------------------------------------------------%
@@ -377,7 +378,6 @@ vhvhvh
 
 \subsection{Changes Since the Interim Report}
 \label{sec:changes}
-
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
