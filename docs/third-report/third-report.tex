@@ -12,6 +12,7 @@
 \usepackage{longtable}
 \usepackage{parskip}
 \usepackage{soul}
+\usepackage{ifthen}
 \usepackage[compact]{titlesec}
 \usepackage[justification=centering]{caption}
 
@@ -45,9 +46,8 @@ Walker}
 
 \newcommand{\conreq}[1]{\textcolor{reqColor}{\textbf{CR.#1}}}
 \newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
-\newcommand{\frit}[1]{\textit{FR.#1}}
+\newcommand{\ed}[1]{\textcolor{reqColor}{\textbf{ED.#1}}}
 \newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
-\newcommand{\nfrit}[1]{\textit{NFR.#1}}
 \newcommand{\qas}[1]{\textcolor{reqColor}{\textbf{QAS.#1}}}
 		
 		
@@ -68,7 +68,21 @@ Walker}
 		}{\end{description} \vspace*{0.3cm}
 		}
 
-
+%%Requirements
+\newenvironment{requirements}{
+\newcommand{\requirement}[3]{\item[\fr{##1}] ##2
+							\ifx&##3&
+							%nothing
+							\else
+								\begin{description}
+									##3
+								\end{description}							
+							\fi
+							}
+		\begin{description}[noitemsep, leftmargin=1.3cm]	
+		}{\end{description} \vspace*{0.3cm}
+		}
+		
 \begin{document}
 \begin{center}
 {\vspace*{-0.5cm}
@@ -89,7 +103,7 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
-This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the development plan presented in the previous report is updated to better represent the division and execution of tasks for this development cycle. The systems requirements are further refined, building on the feedback from the previous report, including a set of external dependancies. The systems architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made, this including examining the quality attributes associated with the system, and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented, using a number of system views deemed to be important. Having determined the architecture of the system the risks associated with this design, and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are discussed.
+This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the systems requirements are further refined, building on the feedback from the previous report, including a set of external dependancies. The systems architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made, this including examining the quality attributes associated with the system, and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented, using a number of system views deemed to be important. Having determined the architecture of the system the risks associated with this design, and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are discussed.
 
 The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the system. The project is then concluded, and the team reflects on their decisions throughout the project.
 
@@ -124,33 +138,92 @@ The development of the prototype HUMS, demonstrating some of the important featu
 \end{description}
 
 %-------------------------------------------------------------%
-%-------------------DEVELOPMENT PLAN ----------------%
-%-------------------------------------------------------------%
-\section{Development Plan}
-\label{sec:dev_plan}
-dev
-
-dev
-
-dev
-
-%-------------------------------------------------------------%
 %-------------------REQUIREMENTS----------------------%
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-
+After feedback from the initial and interim reports, the HUMS requirements have been updated. This included modifying existing requirements and adding additional requirements and refinements. It also included removing the constraint requirement, which were deemed unnecessary by the module leader, and instead identifying the external dependancies of the system.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
+\hl{write about changes -- currently they are unchanged} 
 
+\begin{requirements}
+\requirement{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
+	\requirement{1.1}{The HUMS shall provide an API for data input (the Input Interface).}{
+		\requirement{1.1.1}{The Input Interface shall require a System ID that uniquely identifies the Consumer System.}{}
+		\requirement{1.1.2}{The Input Interface shall require input data to be timestamped.}{}
+		\requirement{1.1.3}{The Input Interface shall allow Data Emitters to send Sensor IDs and their values to the HUMS, to be made available to an analysis engine.}{}
+	}
+	\requirement{1.2}{A Data Emitter for extracting data from the given test application shall be provided.}{}
+}
+\requirement{2}{The HUMS shall allocate a timestamp to new data.}{
+	\requirement{2.1}{Data shall be timestamped before it reaches the HUMS Input Interface.}{}
+	\requirement{2.2}{Timestamps shall be stored alongside the input data.}{}
+}
+\requirement{3}{The HUMS shall store correctly structured data.}{
+	\requirement{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
+}
+\requirement{4}{The HUMS shall store End User configuration files.}{
+	\requirement{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{}
+	\requirement{4.2}{The HUMS shall allow the User to define a storage limit.}{}
+	\requirement{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
+	\requirement{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
+	\requirement{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
+}
+\requirement{5}{The HUMS shall dispatch a Notification when the Consumer?s storage limit is reached.}{}
+\requirement{6}{The HUMS must store no more data records than the Consumer-defined storage quota.}{}
+\requirement{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
+	\requirement{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
+	\requirement{7.2}{The HUMS shall allow the User to define their own Events.}{}
+	\requirement{7.3}{The HUMS shall provide an API, allowing analysis engines to fetch stored data.}{}
+	\requirement{7.4}{Events shall be identified by analysis engines.}{}
+	\requirement{7.5}{The HUMS shall provide a simple analysis engine in the form of a rules engine.}{}
+}
+\requirement{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type will be sent during a User-specified cool down period.}{
+	\requirement{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
+}
+\requirement{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
+\requirement{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
+\requirement{11}{The System shall allow for Notifications to be fed back to the Consumer System to changethe way in which data is sensed.}{}
+\end{requirements}
 
 \subsection{Non Functional Requirements}
 \label{sec:nonfunctional_requirements}
+\hl{write about changes -- currently they are unchanged} 
 
+\begin{requirements}
+\requirement{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
+\requirement{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
+\requirement{3}{The HUMS must be accessible to End Users regardless of their geographic location.}{}
+\requirement{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
+\requirement{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
+\requirement{6}{The HUMS shall be tested to ensure all requirements are met before deployment.}{
+	\requirement{6.1}{The HUMS shall be tested using unit testing.}{}
+	\requirement{6.2}{The HUMS shall be tested using integration testing.}{}
+	\requirement{6.3}{The HUMS shall be tested using system testing.}{}
+	\requirement{6.4}{The HUMS shall be tested using inspection.}{}
+	\requirement{6.5}{The HUMS shall be tested using acceptance testing.}{}
+}
+\requirement{7}{The Customer will complete acceptance testing before the System is deployed.}{}
+\requirement{8}{The System must be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
+\requirement{9}{The System must be available for no less than 99.9\% of each month.}{}
+\requirement{10}{Data must be backed up within 24 hours of having been made available to the System.}{}
+\requirement{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
+\requirement{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
+\requirement{13}{The System shall support storing data without requiring specific schemata.}{}
+\end{requirements}
 
 \subsection{External Dependancies}
  \label{sec:external_dependancies}
+\hl{todo --- write an intro to these, 4 dependancies is probably enough}
+
+ \begin{description}
+ \item[\ed{1}] \hl{todo}
+ \item[\ed{2}] \hl{todo}
+ \item[\ed{3}] \hl{todo}
+ \item[\ed{4}] \hl{todo}
+ \end{description}
 
 
 %-------------------------------------------------------------%
@@ -172,7 +245,7 @@ Modifiability & High & The HUMS will initially be built to tackle a single domai
 \\
 Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
 \\
-Availability & High &  The non functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems, if it was not highly available then end users would lose confidence in it. The HUMS must be at least as available as the average end users system in order to monitor it properly. 
+Availability & High &  The non functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems, if it was not highly available then End Users would lose confidence in it. The HUMS must be at least as available as the average End Users system in order to monitor it properly. 
  \\
 Security & High & Security is highly ranked as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify system data, and data in transit between Data Emitters and the HUMS must be protected.
 \\
@@ -210,7 +283,7 @@ Having identified the quality attributes which are important to creating a succe
 \environment{Runtime}
 \response{The new engine is implemented, tested and successfully added to the HUMS, without any loss in service.}
 \measure{No other system elements are affected, and the work is completed within budget.}
-\rationale{This scenario is important to both the HUMS developers and the end users, the HUMS should allow both of these groups to add custom engines to the HUMS system, without affecting other system components.}
+\rationale{This scenario is important to both the HUMS developers and the End Users, the HUMS should allow both of these groups to add custom engines to the HUMS system, without affecting other system components.}
 \end{scenario}
 
 \begin{scenario}{3}
@@ -227,12 +300,12 @@ Having identified the quality attributes which are important to creating a succe
 \begin{scenario}{4}
 \quality{Availability}
 \source{Datastore Module}
-\stimulus{The end users registered datastore is unavailable to the HUMS instance}
+\stimulus{The End Users registered datastore is unavailable to the HUMS instance}
 \artifact{HUMS System}
 \environment{Runtime}
 \response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
 \measure{End user defined repair time.}
-\rationale{This scenario shows how the HUMS should respond to a datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the end user. If the end users defined datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in degraded mode.}
+\rationale{This scenario shows how the HUMS should respond to a datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the End User. If the End Users defined datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in degraded mode.}
 \end{scenario}
 
 %-------------------------------------------------------------%
@@ -268,7 +341,7 @@ Some risks have been modified since the previous report, others are completely n
    	R.6 & Data interception between the HUMS core and registered engines or datastore & Loss of confidence in HUMS. Lost/Corrupted Data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
    	R.7 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability, and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
    	R.8 & Included analysis engines computation too slow & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines & 25 & Moderate & \textbf{Low} \\	
-	R.9 & Included Notification engines too slow & Failure to meet performance targets. Loss of events, end user not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
+	R.9 & Included Notification engines too slow & Failure to meet performance targets. Loss of events, End User not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
   	\hline
 }
 {The technical risks associated with this phase of the project}{tab:tech_risks}
@@ -299,27 +372,31 @@ Having identified the key quality attributes for the system, and a set of qualit
 
 \subsection{Tactics}
 
-Below the tactics which appear most suitable for use with the HUMS are summarised.
+Below the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Flexibility tactics are not included as they are covered under modifiability and interoperability, as they are complementary. The tactics used are based on the descriptions provided by \hl{ref bass}.
+
 \begin{description}
-\item[Flexibility] \hfill
-	\begin{description}[noitemsep]
-	\item[Thing] 
-	\end{description}
 \item[Modifiability] \hfill
 	\begin{description}[noitemsep]
-	\item[Thing] 
+	\item[Defer Binding Time] Configuration files, runtime registration, and polymorphism can be used to reduce the time taken to make changes, and to allow the End User to modify the system at runtime.
+	\item[Localise Modifications] Steps are to be taken to maintain semantic coherence within the implementation, with the team aiming to produce loosely coupled modules with high cohesion. Modules are to be generalised where possible, allowing them to preform a larger variety of functions without code changes.
+	\item[Prevent Ripple Effect] Communication paths are to be restricted where possible, with the modules which can share data being limited. Information can also be hidden by using private functions where possible, meaning changing implementation details will not affect the public APIs used by the End User.
 	\end{description}
 \item[Interoperability] \hfill
 	\begin{description}[noitemsep]
-	\item[Thing] 
+		\item[Locate] 
+		\item[Managing Interfaces] 
 	\end{description}
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
-	\item[Thing] 
+	\item[Fault Prevention] 
+	\item[Fault Detection] 
+	\item[Fault Recovery] 
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
-	\item[Thing] 
+	\item[Resisting Attacks] 
+	\item[Detecting Attacks] 
+	\item[Recovering From Attacks] 
 	\end{description}
 \end{description}
 
