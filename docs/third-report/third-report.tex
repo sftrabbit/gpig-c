@@ -185,7 +185,8 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 }
 \requirement{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
 \requirement{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
-\requirement{11}{The System shall allow for Notifications to be fed back to the Consumer System to changethe way in which data is sensed.}{}
+\requirement{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
+the way in which data is sensed.}{}
 \end{requirements}
 
 \subsection{Non Functional Requirements}
@@ -383,13 +384,13 @@ Below the tactics which appear most suitable for use with the HUMS are summarise
 	\end{description}
 \item[Interoperability] \hfill
 	\begin{description}[noitemsep]
-		\item[Locate] 
-		\item[Managing Interfaces] 
+		\item[Locate] Services may need to be discovered at runtime.
+		\item[Managing Interfaces]  Complex interactions between the HUMS core and external engines may need to be orchestrated in order to fulfil the required functionality.
 	\end{description}
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
 	\item[Fault Prevention] 
-	\item[Fault Detection] 
+	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/Echo could also be used to ensure external components are correctly registered with the HUMS core.
 	\item[Fault Recovery] 
 	\end{description}
 \item[Security] \hfill
@@ -462,10 +463,6 @@ vhvhvh
 
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
-
-
-\subsection{Evaluation of Admin Centre}
-\label{sec:admin_centre}
 
 
 \subsection{Evaluation of the HUMS SaaS}
