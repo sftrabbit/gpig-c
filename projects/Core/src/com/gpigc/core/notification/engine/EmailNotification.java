@@ -1,8 +1,12 @@
 package com.gpigc.core.notification.engine;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.mail.*;
 
+import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
 
 /**
@@ -12,19 +16,15 @@ import com.gpigc.core.notification.NotificationEngine;
  */
 public class EmailNotification extends NotificationEngine {
 
-	/**
-	 * Initialises the email notification engine
-	 */
-	public EmailNotification() {
-		 associatedSystems = new ArrayList<String>();
-		 associatedSystems.add("1");
-		 engineName = "EmailNotification1";
+
+	public EmailNotification(List<ClientSystem> registeredSystems) {
+		super(registeredSystems);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.gpigc.core.notification.NotificationEngine#send(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void send(String recepient, String subject, String message) {
+	public void send(DataEvent event) {
 		SimpleEmail email = new SimpleEmail();
 		email.setHostName("smtp.gmail.com");
 		email.setSmtpPort(465);
@@ -32,10 +32,14 @@ public class EmailNotification extends NotificationEngine {
 		email.setSSLOnConnect(true);
 		try {
 			email.setFrom("gpigc.alerts@gmail.com");
+			String recepient = event.getData().get("Recepient");
+			String subject = event.getData().get("Subject");
+			String message = event.getData().get("Message");
 			email.setSubject(subject);
 			email.setMsg(message);
 			email.addTo(recepient);
 			email.send();
+			System.out.println("Email Sent");
 			setRecentlySent();
 		} catch (EmailException e) {
 			// TODO Auto-generated catch block

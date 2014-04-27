@@ -115,7 +115,6 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 			response = client.execute(get);
 			String responseBody = EntityUtils.toString(response.getEntity(),
 					"UTF-8");
-			System.out.println("Response Body: " + responseBody);
 			return QueryResult.parseJSON(responseBody);
 		} catch (ParseException | IOException e) {
 			throw new FailedToReadFromDatastoreException(e.getMessage());
@@ -178,7 +177,6 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(dbServletUri);
 		StringEntity entity = new StringEntity(json);
-		System.err.println("JSON is:    " + json);
 		post.setEntity(entity);
 		HttpResponse response;
 		response = client.execute(post);

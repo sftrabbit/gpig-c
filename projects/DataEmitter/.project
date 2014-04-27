@@ -14,4 +14,10 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>gradle</name>
+			<value>file:/usr/Gradle/gradle-1.11/bin</value>
+		</variable>
+	</variableList>
 </projectDescription>

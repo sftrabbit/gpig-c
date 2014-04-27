@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.gpigc.core.analysis.AnalysisEngine;
-import com.gpigc.core.analysis.Result;
+import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
@@ -24,12 +25,14 @@ import expr.Variable;
  */
 public class ExpressionAnalysis extends AnalysisEngine {
 
-	public ExpressionAnalysis(List<String> associatedSystems, SystemDataGateway database) {
-		super("ExpressionAnalysis1", associatedSystems, database);
+	public ExpressionAnalysis(List<ClientSystem> registeredSystems,
+			SystemDataGateway datastore) {
+		super(registeredSystems, datastore);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Result analyse() {
+	public DataEvent analyse(ClientSystem system) {
 		// TODO Auto-generated method stub
 		return null;
 	}

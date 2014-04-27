@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.event.DataEvent;
+
 /**
  * Provides the basic functionality and abstract methods that all notification engines require
  * 
@@ -11,26 +14,16 @@ import java.util.TimerTask;
  */
 public abstract class NotificationEngine {
 
-	protected String engineName;
-	protected List<String> associatedSystems;
 	protected boolean recentlySent;
 
 	private static final int COOLDOWN_MINS = 10;
- 
-	/**
-	 * @return A list of systems ID associated with this instance of the notification engine
-	 */
-	public List<String> getAssociatedSystems() {
-		return associatedSystems;
-	}
 
-	/**
-	 * @return The name of the notification engine
-	 */
-	public String getEngineName() {
-		return engineName;
-	}
+	private final List<ClientSystem> registeredSystems;
 
+
+	public NotificationEngine(List<ClientSystem>registeredSystems){
+		this.registeredSystems = registeredSystems;
+	}
 	/**
 	 * @return Whether a notification has been sent by the engine within the last cooldown period
 	 */
@@ -57,10 +50,11 @@ public abstract class NotificationEngine {
 
 	/**
 	 * Sends a notification
-	 * @param recepient Who the notification is for
-	 * @param subject   What the notification is about
-	 * @param message   Further information about the notification
 	 */
-	public abstract void send(String recepient, String subject, String message);
+	public abstract void send(DataEvent event);
+
+	public List<ClientSystem> getAssociatedSystems() {
+		return registeredSystems;
+	}
 
 }

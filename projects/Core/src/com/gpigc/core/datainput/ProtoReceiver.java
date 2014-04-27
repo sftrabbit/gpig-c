@@ -13,25 +13,21 @@ public class ProtoReceiver extends Thread {
 	protected ServerSocket sock;
 	protected ConcurrentLinkedQueue<SystemData> queue;
 	
-	public ProtoReceiver(ServerSocket sock) throws IOException
-	{
+	public ProtoReceiver(ServerSocket sock) throws IOException{
     	super("ProtoReceiver");
 		this.sock = sock;
 		this.queue = new ConcurrentLinkedQueue<SystemData>();
 	}
 	
-	public ProtoReceiver(int port) throws IOException
-	{
+	public ProtoReceiver(int port) throws IOException{
 		this(new ServerSocket(port));
 	}
 
-	public ProtoReceiver() throws IOException
-	{
+	public ProtoReceiver() throws IOException{
 		this(GPIG_PORT);
 	}
 	
-	public void run()
-	{
+	public void run(){
 		try
 		{
 			while(true)
@@ -44,13 +40,11 @@ public class ProtoReceiver extends Thread {
         }
 	}
 	
-	public ConcurrentLinkedQueue<SystemData> getQueue()
-	{
+	public ConcurrentLinkedQueue<SystemData> getQueue(){
 		return queue;
 	}
 	
-	public void close() throws IOException
-	{
+	public void close() throws IOException{
 		sock.close();
 	}
 }

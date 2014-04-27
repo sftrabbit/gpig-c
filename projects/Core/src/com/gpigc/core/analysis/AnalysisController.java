@@ -3,12 +3,12 @@ package com.gpigc.core.analysis;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
-import com.gpigc.core.event.Event;
+import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationGenerator;
 
 /**
@@ -19,109 +19,72 @@ import com.gpigc.core.notification.NotificationGenerator;
  */
 public class AnalysisController {
 
-	private List<AnalysisEngine> engines;
+	private final List<AnalysisEngine> analysisEngines;
 
-	private SystemDataGateway database;
+	private SystemDataGateway datastore;
 	private NotificationGenerator notificationGenerator;
 
-	/**
-	 * Initialises analysis controller
-	 * 
-	 * @param database
-	 *            Passes database abstraction layer in as a dependency
-	 * @throws MalformedURLException
-	 * @throws ClassNotFoundException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 */
-	public AnalysisController(SystemDataGateway database,
-			NotificationGenerator notificationGenerator)
-			throws MalformedURLException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
-		this.database = database;
+
+	public AnalysisController(SystemDataGateway datastore,
+			NotificationGenerator notificationGenerator, List<ClientSystem> systems) throws ReflectiveOperationException{
+		this.datastore = datastore;
 		this.notificationGenerator = notificationGenerator;
-		engines = new ArrayList<AnalysisEngine>();
-		instantiateEngines();
+		analysisEngines = instantiateEngines(systems);	
+		if(analysisEngines == null)
+			throw new ReflectiveOperationException("Analysis Engines could not be loaded");
 	}
 
 	/**
 	 * Performs analysis on a given system
-	 * 
 	 * @param systemId
 	 *            The ID of the system to perform analysis upon
+	 * @throws FailedToReadFromDatastoreException 
 	 */
-	public void systemUpdate(String systemId) {
-		for (AnalysisEngine engine : engines) {
-			List<String> associatedSystems = engine.getAssociatedSystems();
-			if (associatedSystems.contains(systemId)) {
-				processResult(engine.getEngineName(), engine.analyse(),
-						systemId);
+	public void systemUpdate(String systemID){
+		System.out.println("System Update: " + systemID);
+		for (AnalysisEngine engine : analysisEngines) {
+			if (engine.getRegisteredSystem(systemID) != null) {
+				System.out.println("Engine Registered: " + engine.getClass().getName());
+				DataEvent event = engine.analyse(engine.getRegisteredSystem(systemID));
+				if(event != null && notificationGenerator != null){
+					notificationGenerator.generate(event);
+					System.out.println("Notification triggered: " +engine.getClass().getName());
+				}
 			}
 		}
 	}
 
 	/**
-	 * Performs post processing on the analysis result object
-	 * 
-	 * @param engineName
-	 *            Name of the analysis engine that has analysed the data
-	 * @param result
-	 *            The result of the analysis.
+	 * Class load Analysis engines and register all system with them - for prototype only
+	 * @param systemIDs
+	 * @return engines
 	 */
-	private void processResult(String engineName, Result result, String systemId) {
-		// database.write(engineName, result);
-		// TODO write back data
-		if (result != null) {
-			if (result.isNotify()) {
-				Event event = new Event(result, engineName, systemId);
-				notificationGenerator.generate(event);
-
-				System.out.println("Notification triggered: "
-						+ result.getDataToSave().toString());
-			}
-		}
-	}
-
-	/**
-	 * Performs class loading of analysis engines allowing for runtime additions
-	 * 
-	 * @throws MalformedURLException
-	 * @throws ClassNotFoundException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 */
-	private void instantiateEngines() throws MalformedURLException,
-			ClassNotFoundException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException {
-		List<String> systemIds = new ArrayList<String>();
-		systemIds.add("1");
-		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/analysis/engine");
+	private List<AnalysisEngine> instantiateEngines(List<ClientSystem> systems)  {
+		File folder = new File(System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
-		for (int i = 0; i < listOfFiles.length; i++) {
-			Constructor<?> constructor = Class.forName(
-					"com.gpigc.core.analysis.engine."
-							+ listOfFiles[i].getName().substring(0,
-									listOfFiles[i].getName().lastIndexOf('.')))
-					.getConstructor(List.class, SystemDataGateway.class);
-			AnalysisEngine engine = (AnalysisEngine) constructor.newInstance(
-					systemIds, database);
-			engines.add(engine);
+		List<AnalysisEngine> engines = new ArrayList<>();
+		try {
+			for (int i = 0; i < listOfFiles.length; i++) {
+				Constructor<?> constructor = Class.forName(
+						"com.gpigc.core.analysis.engine."
+								+ listOfFiles[i].getName().substring(0,
+										listOfFiles[i].getName().lastIndexOf('.')))
+										.getConstructor(List.class, SystemDataGateway.class);
+				AnalysisEngine engine;
+				engine = (AnalysisEngine) constructor.newInstance(
+						systems, datastore);
+				engines.add(engine);
+			}
+			return engines;
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException |
+				NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
-	public void setAnalysisEngines(List<AnalysisEngine> engines) {
-		this.engines = engines;
+	public List<AnalysisEngine> getAnalysisEngines() {
+		return analysisEngines;
 	}
 }
