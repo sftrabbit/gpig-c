@@ -132,11 +132,9 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	@Override
 	public void write(EmitterSystemState data)
 			throws FailedToWriteToDatastoreException {
-		try {
-			writeJSON(data.toJSON());
-		} catch (IOException e) {
-			throw new FailedToWriteToDatastoreException(e.getMessage());
-		}
+		List<EmitterSystemState> dataArray = new ArrayList<EmitterSystemState>();
+		dataArray.add(data);
+		write(dataArray);
 	}
 
 	/*
@@ -180,6 +178,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(dbServletUri);
 		StringEntity entity = new StringEntity(json);
+		System.err.println("JSON is:    " + json);
 		post.setEntity(entity);
 		HttpResponse response;
 		response = client.execute(post);

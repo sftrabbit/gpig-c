@@ -84,7 +84,6 @@ public class AppEngineServlet extends HttpServlet {
 
 	public List<EmitterSystemState> parseJSON(Reader reader) 
 			throws IOException, JsonParseException {
-		System.out.println("Reader = " + reader);
 		List<EmitterSystemState> systemState = new ArrayList<>();
 		JsonFactory f = new JsonFactory();
 		JsonParser parser = f.createParser(reader);
