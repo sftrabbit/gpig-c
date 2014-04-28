@@ -36,6 +36,8 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 						" was detected by system: " + system.getSystemID());
 				data.put("Subject", "Earthquake Notification");
 				data.put("Recepient", "gpigc.alerts@gmail.com");
+				data.put("Long", sensorState.getValue().split(",")[2]);
+				data.put("Lat", sensorState.getValue().split(",")[1]);
 				return new DataEvent(data, system);
 			}
 			} catch (FailedToReadFromDatastoreException e) {

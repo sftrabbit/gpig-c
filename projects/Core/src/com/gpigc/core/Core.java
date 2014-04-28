@@ -16,10 +16,10 @@ import com.gpigc.core.datainput.DataInputServer;
 import com.gpigc.core.notification.NotificationGenerator;
 
 public class Core {
-	//public final static String APPENGINE_SERVLET_URI = "http://gpigc-webapp.appspot.com/gpigc-webapp";
+	public final static String APPENGINE_SERVLET_URI = "http://gpigc-webapp.appspot.com/gpigc-webapp";
 	
 	/* Use this one if other instance is kaput */
-	  public final static String APPENGINE_SERVLET_URI = "http://gpigc-beta.appspot.com/gpigc-webapp";
+	//  public final static String APPENGINE_SERVLET_URI = "http://gpigc-beta.appspot.com/gpigc-webapp";
 	 
 
 	public static void main(String args[]) throws IOException,

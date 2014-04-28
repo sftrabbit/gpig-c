@@ -2,6 +2,7 @@ package com.gpigc.core.notification.engine;
 
 import java.util.List;
 
+import twitter4j.GeoLocation;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
@@ -44,6 +45,12 @@ public class TwitterNotificationEngine extends NotificationEngine {
         StatusUpdate statusUpdate = new StatusUpdate(
         		event.getData().get("Message")
              );
+        if(event.getData().containsKey("Long")&& event.getData().containsKey("Lat")){
+        	System.out.println("Setting Location");
+        	statusUpdate.setLocation(
+        			new GeoLocation(Double.parseDouble(event.getData().get("Lat")),
+        					Double.parseDouble(event.getData().get("Long"))));
+        }
         //tweet or update status
         try {
 			Status status = twitter.updateStatus(statusUpdate);
