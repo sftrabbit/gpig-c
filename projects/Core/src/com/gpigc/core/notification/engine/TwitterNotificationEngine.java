@@ -10,7 +10,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
-import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
 

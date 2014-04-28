@@ -10,7 +10,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.ClientSensor;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 
 public class DataEventTest {
@@ -20,7 +21,7 @@ public class DataEventTest {
 	
 	@Before
 	public void before(){
-		testSystem = new ClientSystem("TestSystem", new ArrayList<String>(), null);
+		testSystem = new ClientSystem("TestSystem", new ArrayList<ClientSensor>());
 		testData = new HashMap<String, String>();
 		testData.put("Test", "Value");
 	}

@@ -2,7 +2,7 @@ package com.gpigc.core.event;
 
 import java.util.Map;
 
-import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.ClientSystem;
 
 public class DataEvent {
 	

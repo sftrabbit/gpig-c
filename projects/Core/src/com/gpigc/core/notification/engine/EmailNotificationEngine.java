@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.commons.mail.*;
 
-import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
 

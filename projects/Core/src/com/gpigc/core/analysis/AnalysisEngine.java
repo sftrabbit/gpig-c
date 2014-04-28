@@ -2,6 +2,7 @@ package com.gpigc.core.analysis;
 
 import java.util.List;
 
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
@@ -31,7 +32,7 @@ public abstract class AnalysisEngine {
 
 	public ClientSystem getRegisteredSystem(String systemID){
 		for(ClientSystem system: getAssociatedSystems()){
-			if(system.getSystemID().equals(systemID))
+			if(system.getID().equals(systemID))
 				return system;
 		}
 		return null;

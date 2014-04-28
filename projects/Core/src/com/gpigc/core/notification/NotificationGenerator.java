@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 

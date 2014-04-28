@@ -11,7 +11,6 @@ import java.util.List;
 import com.gpigc.dataabstractionlayer.client.GWTSystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.core.analysis.AnalysisController;
-import com.gpigc.core.analysis.ClientSystem;
 import com.gpigc.core.datainput.DataInputServer;
 import com.gpigc.core.notification.NotificationGenerator;
 
@@ -51,25 +50,27 @@ public class Core {
 	 * @return
 	 */
 	private static ClientSystem getTestAppSystem() {
-		List<String> sensorIDs = new ArrayList<>();
-		sensorIDs.add("CPU");
-		sensorIDs.add("Mem");
-		Map<String,Map<String, Object>> parameters = new HashMap<>();
-		Map<String,Object> lowerBounds = new HashMap<>();
-		lowerBounds.put("CPU", new Integer(10));
-		lowerBounds.put("Mem", new Long(50));
-		parameters.put("LOWER_BOUND", lowerBounds);
-		Map<String,Object> upperBounds = new HashMap<>();
-		upperBounds.put("CPU", new Long(70));
-		upperBounds.put("Mem", new Long(10000));
-		parameters.put("UPPER_BOUND", upperBounds);
-		return new ClientSystem("1", sensorIDs,parameters);
+		List<ClientSensor> sensors = new ArrayList<>();
+		
+		//CPU Sensor
+		Map<SensorParameter, Object> CPUParams = new HashMap<>();
+		CPUParams.put(SensorParameter.LOWER_BOUND, new Integer(10));
+		CPUParams.put(SensorParameter.UPPER_BOUND, new Integer(70));
+		sensors.add(new ClientSensor("CPU", CPUParams));
+		
+		//Memory Sensor
+		Map<SensorParameter, Object> memParams = new HashMap<>();
+		memParams.put(SensorParameter.LOWER_BOUND, new Integer(100));
+		memParams.put(SensorParameter.UPPER_BOUND, new Integer(7000));
+		sensors.add(new ClientSensor("CPU", memParams));
+		return new ClientSystem("1", sensors);
 	}
 
 	private static ClientSystem getDummyEarthApp() {
-		List<String> sensorIDs = new ArrayList<>();
-		sensorIDs.add("EQ");
-		return new ClientSystem("2", sensorIDs,new HashMap<String,Map<String,Object>>());
+		List<ClientSensor> sensors = new ArrayList<>();
+		//EQ Sensor
+		sensors.add(new ClientSensor("EQ", new HashMap<SensorParameter,Object>()));
+		return new ClientSystem("2", sensors);
 	}
 
 	

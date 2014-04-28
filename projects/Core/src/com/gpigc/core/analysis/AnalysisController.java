@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationGenerator;
 

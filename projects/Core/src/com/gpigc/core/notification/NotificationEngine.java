@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 
 /**

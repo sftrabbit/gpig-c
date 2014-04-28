@@ -13,9 +13,11 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gpigc.core.ClientSensor;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Core;
+import com.gpigc.core.SensorParameter;
 import com.gpigc.core.analysis.AnalysisEngine;
-import com.gpigc.core.analysis.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
@@ -33,8 +35,15 @@ public class AnalysisEngineTest {
 	public void before() throws URISyntaxException {
 		//Set up dummy system
 		registeredSystems = new ArrayList<>();
-		registeredSystems.add(new ClientSystem("1", new ArrayList<String>(), null));
-		registeredSystems.get(0).getSensorIDs().add("CPU");
+
+		//Test Sensor
+		Map<SensorParameter, Object> params = new HashMap<>();
+		params.put(SensorParameter.LOWER_BOUND, new Long(10));
+		params.put(SensorParameter.UPPER_BOUND, new Long(70));
+		ArrayList<ClientSensor> sensors = new ArrayList<>();
+		sensors.add(new ClientSensor("TestSensor", params));
+
+		registeredSystems.add(new ClientSystem("1", sensors));
 
 		//Init datastore and dummy engine
 		datastore = new GWTSystemDataGateway(new URI(Core.APPENGINE_SERVLET_URI));
@@ -52,33 +61,33 @@ public class AnalysisEngineTest {
 		assertTrue(analysisEngine.getAssociatedSystems().size() == 1);
 		assertEquals(registeredSystems.get(0),analysisEngine.getAssociatedSystems().get(0));
 	}
-	
+
 	@Test
 	public void testRegisteredSystems(){
-		assertNotNull(analysisEngine.getRegisteredSystem(registeredSystems.get(0).getSystemID()));
+		assertNotNull(analysisEngine.getRegisteredSystem(registeredSystems.get(0).getID()));
 		assertNull(analysisEngine.getRegisteredSystem(""));
 	}
-	
+
 	@Test
 	public void testGetData() throws FailedToReadFromDatastoreException{
 		final int numToGet = 1;
 		pushData(registeredSystems.get(0), numToGet);
-		
-		List<SensorState> states = analysisEngine.getSensorReadings(registeredSystems.get(0).getSystemID(),
-				registeredSystems.get(0).getSensorIDs().get(0), numToGet);
+
+		List<SensorState> states = analysisEngine.getSensorReadings(registeredSystems.get(0).getID(),
+				registeredSystems.get(0).getSensors().get(0).getID(), numToGet);
 		System.out.println(states);
 		assertTrue(states.size() == numToGet);
-		assertEquals(registeredSystems.get(0).getSensorIDs().get(0), states.get(0).getSensorID());
+		assertEquals(registeredSystems.get(0).getSensors().get(0).getID(), states.get(0).getSensorID());
 	}
 
 
 	private void pushData(ClientSystem clientSystem, int numToPush) {
 		for(int i = 0; i < numToPush; i++){
 			Map<String, String> testData = new HashMap<>();
-			testData.put(clientSystem.getSensorIDs().get(0), i + "");
+			testData.put(clientSystem.getSensors().get(0).getID(), i + "");
 			try {
 				datastore.write(
-						new EmitterSystemState(clientSystem.getSystemID(), 
+						new EmitterSystemState(clientSystem.getID(), 
 								new Date(),testData
 								));
 			} catch (FailedToWriteToDatastoreException e) {

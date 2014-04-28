@@ -10,34 +10,30 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gpigc.core.ClientSensor;
+import com.gpigc.core.ClientSystem;
+import com.gpigc.core.SensorParameter;
 import com.gpigc.core.analysis.AnalysisController;
-import com.gpigc.core.analysis.ClientSystem;
 import com.gpigc.core.analysis.engine.MockDB;
-import com.gpigc.core.notification.NotificationGenerator;
 
 public class AnalysisControllerTest {
 
 
 	private List<ClientSystem> systems;
-	private Map<String, Map<String, Object>> parameters;
 
 
 	@Before
 	public void before() throws ReflectiveOperationException {
 		systems = new ArrayList<>();
-
-		//Set up the Params
-		parameters = new HashMap<>();
-		Map<String,Object> param1 = new HashMap<>();
-		param1.put("Sens1", new Long(10));
-		parameters.put("LOWER_BOUND", param1);
-		Map<String,Object> param2 = new HashMap<>();
-		param2.put("Sens1", new Long(50));
-		parameters.put("UPPER_BOUND", param2);
+		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
 		
-		systems.add(new ClientSystem("Test", new ArrayList<String>(),
-				parameters));
-		systems.get(0).getSensorIDs().add("Sens1");
+		//TEST Sensor
+		Map<SensorParameter, Object> params = new HashMap<>();
+		params.put(SensorParameter.LOWER_BOUND, new Long(10));
+		params.put(SensorParameter.UPPER_BOUND, new Long(70));
+		sensors.add(new ClientSensor("TestSensor", params));
+		
+		systems.add(new ClientSystem("Test", sensors));
 	}
 
 

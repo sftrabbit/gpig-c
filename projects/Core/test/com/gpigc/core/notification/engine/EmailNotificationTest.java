@@ -19,7 +19,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.gpigc.core.analysis.ClientSystem;
+import com.gpigc.core.ClientSensor;
+import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
 import com.gpigc.core.notification.engine.EmailNotificationEngine;
@@ -47,7 +48,7 @@ public class EmailNotificationTest {
 		data.put("Subject", "Test email");
 		data.put("Recepient", "gpigc.alerts@gmail.com");
 		DataEvent event = new DataEvent(data, new ClientSystem("TestSystem", 
-						new ArrayList<String>(), new HashMap<String, Map<String, Object>>()));
+						new ArrayList<ClientSensor>()));
 		emailNotification.send(event);
 	}
 
