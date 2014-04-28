@@ -11,11 +11,11 @@ import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
-public class EarthquakeAnalyser extends AnalysisEngine {
+public class EarthquakeAnalysisEngine extends AnalysisEngine {
 
 	private final int NUM_RECORDS = 1;
 	
-	public EarthquakeAnalyser(List<ClientSystem> registeredSystems,
+	public EarthquakeAnalysisEngine(List<ClientSystem> registeredSystems,
 			SystemDataGateway datastore) {
 		super(registeredSystems, datastore);
 	}

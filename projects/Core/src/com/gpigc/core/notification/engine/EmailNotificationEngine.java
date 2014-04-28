@@ -14,10 +14,10 @@ import com.gpigc.core.notification.NotificationEngine;
  * 
  * @author GPIGC
  */
-public class EmailNotification extends NotificationEngine {
+public class EmailNotificationEngine extends NotificationEngine {
 
 
-	public EmailNotification(List<ClientSystem> registeredSystems) {
+	public EmailNotificationEngine(List<ClientSystem> registeredSystems) {
 		super(registeredSystems);
 	}
 

@@ -23,9 +23,9 @@ import expr.Variable;
  * 
  * @author GPIG-C
  */
-public class ExpressionAnalysis extends AnalysisEngine {
+public class ExpressionAnalysisEngine extends AnalysisEngine {
 
-	public ExpressionAnalysis(List<ClientSystem> registeredSystems,
+	public ExpressionAnalysisEngine(List<ClientSystem> registeredSystems,
 			SystemDataGateway datastore) {
 		super(registeredSystems, datastore);
 		// TODO Auto-generated constructor stub

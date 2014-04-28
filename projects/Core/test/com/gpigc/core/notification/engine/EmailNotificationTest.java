@@ -22,7 +22,7 @@ import org.mockito.MockitoAnnotations;
 import com.gpigc.core.analysis.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
-import com.gpigc.core.notification.engine.EmailNotification;
+import com.gpigc.core.notification.engine.EmailNotificationEngine;
 
 public class EmailNotificationTest {
 
@@ -32,7 +32,7 @@ public class EmailNotificationTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		emailNotification = new EmailNotification(new ArrayList<ClientSystem>());
+		emailNotification = new EmailNotificationEngine(new ArrayList<ClientSystem>());
 	}
 
 	@Test

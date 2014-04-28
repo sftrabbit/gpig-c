@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gpigc.core.analysis.ClientSystem;
-import com.gpigc.core.analysis.engine.MeanEngine;
+import com.gpigc.core.analysis.engine.MeanAnalysisEngine;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
@@ -21,7 +21,7 @@ import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 public class MeanEngineTest {
 
-	private MeanEngine meanEngine;
+	private MeanAnalysisEngine meanEngine;
 	private List<ClientSystem> registeredSystems;
 	private SystemDataGateway datastore;
 	private Map<String,Map<String, Object>> parameters ;
@@ -44,7 +44,7 @@ public class MeanEngineTest {
 		registeredSystems.get(0).getSensorIDs().add("Sens1");
 		//Init datastore and engine
 		datastore = new MockDB();
-		meanEngine = new MeanEngine(registeredSystems, datastore);
+		meanEngine = new MeanAnalysisEngine(registeredSystems, datastore);
 		
 	}
 
@@ -53,7 +53,7 @@ public class MeanEngineTest {
 		List<SensorState> states = new ArrayList<>();
 		states.add(new SensorState("Sens1", new Date(6), new Date(5), "10"));
 		states.add(new SensorState("Sens1", new Date(6), new Date(5), "20"));
-		assertEquals(MeanEngine.getMean(states), 15);
+		assertEquals(MeanAnalysisEngine.getMean(states), 15);
 	}
 	
 	@Test

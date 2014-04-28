@@ -11,11 +11,11 @@ import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
-public class MeanEngine extends AnalysisEngine {
+public class MeanAnalysisEngine extends AnalysisEngine {
 
 	private static final int NUM_RECORDS = 10;
 
-	public MeanEngine(List<ClientSystem> registeredSystems,
+	public MeanAnalysisEngine(List<ClientSystem> registeredSystems,
 			SystemDataGateway datastore) {
 		super(registeredSystems, datastore);
 	}
