@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
 import org.junit.Before;
@@ -26,13 +25,7 @@ public class AnalysisControllerTest {
 	public void before() throws ReflectiveOperationException {
 		systems = new ArrayList<>();
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
-		
-		//TEST Sensor
-		Map<SensorParameter, Object> params = new HashMap<>();
-		params.put(SensorParameter.LOWER_BOUND, new Long(10));
-		params.put(SensorParameter.UPPER_BOUND, new Long(70));
-		sensors.add(new ClientSensor("TestSensor", params));
-		
+		sensors.add(new ClientSensor("TestSensor", new HashMap<SensorParameter, Object>()));
 		systems.add(new ClientSystem("Test", sensors));
 	}
 
@@ -40,7 +33,7 @@ public class AnalysisControllerTest {
 	@Test
 	public void testMakeEngines() throws ReflectiveOperationException{
 		AnalysisController analysisController = new AnalysisController(
-				new MockDB(), null,systems); //no exception should be thrown
+				new MockDB("1"), null,systems); //no exception should be thrown
 		assertNotNull(analysisController.getAnalysisEngines());
 		assertTrue(analysisController.getAnalysisEngines().size() != 0);
 	}
@@ -48,7 +41,7 @@ public class AnalysisControllerTest {
 	@Test
 	public void testSystemUpdate() throws ReflectiveOperationException{
 		AnalysisController analysisController = new AnalysisController(
-				new MockDB(), null,systems); //no exception should be thrown
+				new MockDB("1"), null,systems); //no exception should be thrown
 		analysisController.systemUpdate("Test");
 	}
 

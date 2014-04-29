@@ -38,12 +38,13 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 					if(mean > upperBound.longValue()){
 						data.put("Message", "Sensor with ID: " + sensor.getID() + "has exceeded its upper limit. "
 								+ "\nMean value was: " + mean);
+						return new DataEvent(data, system);
 					}
 					if(mean < lowerBound.longValue()){
 						data.put("Message", "Sensor with ID: " + sensor.getID() + "has fallen below its lower limit. "
 								+ "\nMean value was: " + mean);
+						return new DataEvent(data, system);
 					}
-					return new DataEvent(data, system);
 				} catch (FailedToReadFromDatastoreException e) {
 					System.out.println("Could not read data, will try on next update.");
 					e.printStackTrace();

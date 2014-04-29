@@ -13,7 +13,12 @@ import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 public class MockDB implements SystemDataGateway {
 
-	
+	private String dataToUse;
+
+	public MockDB(String dataToUse){
+		this.dataToUse = dataToUse;
+		
+	}
 	public QueryResult readMostRecent(String systemID,String sensorID, int numRecords) 
 			throws FailedToReadFromDatastoreException{
 		return new QueryResult(systemID, getRecords(sensorID,numRecords));
@@ -29,7 +34,7 @@ public class MockDB implements SystemDataGateway {
 	private List<SensorState> getRecords(String sensorID,int num) {
 		List<SensorState> records = new ArrayList<>();
 		for(int i = 0; i < num; i++){
-			records.add(new SensorState(sensorID, new Date(), new Date(), i+""));
+			records.add(new SensorState(sensorID, new Date(), new Date(), dataToUse));
 		}
 		return records;
 	}

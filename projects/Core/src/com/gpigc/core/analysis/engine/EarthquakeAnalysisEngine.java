@@ -1,8 +1,6 @@
 package com.gpigc.core.analysis.engine;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 public class EarthquakeAnalysisEngine extends AnalysisEngine {
 
 	private final int NUM_RECORDS = 1;
+	public final static String EARTHQUAKE_SENSOR_ID = "EQ";
 	
 	public EarthquakeAnalysisEngine(List<ClientSystem> registeredSystems,
 			SystemDataGateway datastore) {
@@ -26,13 +25,13 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 		System.out.println("Analyse -----");
-		if(system.hasSensorWithID("EQ")){
+		if(system.hasSensorWithID(EARTHQUAKE_SENSOR_ID)){
 			try {
 				SensorState sensorState = 
-						getSensorReadings(system.getID(),"EQ", NUM_RECORDS).get(0);
+						getSensorReadings(system.getID(),EARTHQUAKE_SENSOR_ID, NUM_RECORDS).get(0);
 				double magnitude = Double.parseDouble(sensorState.getValue().split(",")[0]);
 				System.out.println("Magnitude: "+ magnitude);
-			if(magnitude > 1.0){
+			if(magnitude >= 1.0){
 				System.out.println(" EarthQuake Over: 1.0 Detected");
 				Map<String,String> data = new HashMap<>();
 				data.put("Message", "Earthquake measuring " + magnitude + 

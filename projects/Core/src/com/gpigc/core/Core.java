@@ -1,11 +1,9 @@
 package com.gpigc.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
 import com.gpigc.dataabstractionlayer.client.GWTSystemDataGateway;
@@ -16,22 +14,19 @@ import com.gpigc.core.notification.NotificationGenerator;
 
 public class Core {
 	public final static String APPENGINE_SERVLET_URI = "http://gpigc-webapp.appspot.com/gpigc-webapp";
-	
+	private static final String CONFIG_FILE_PATH = "config/RegisteredSystems.config";
+
 	/* Use this one if other instance is kaput */
 	//  public final static String APPENGINE_SERVLET_URI = "http://gpigc-beta.appspot.com/gpigc-webapp";
-	 
+
 
 	public static void main(String args[]) throws IOException,
 	IllegalArgumentException, SecurityException, ReflectiveOperationException {
 
 		SystemDataGateway datastore = getDatastore(APPENGINE_SERVLET_URI);
 
-		
-		//TODO load this from a config file ---not hardcoded
-		List<ClientSystem> systemsToMonitor = new ArrayList<>();
-		systemsToMonitor.add(getTestAppSystem());
-		systemsToMonitor.add(getDummyEarthApp());
-		
+		List<ClientSystem> systemsToMonitor = getSystems();
+		System.out.println(systemsToMonitor);
 		if(datastore != null){
 			NotificationGenerator notificationGenerator = new NotificationGenerator(systemsToMonitor);
 			//Create the other engines
@@ -45,35 +40,10 @@ public class Core {
 		}
 	}
 
-	/**
-	 * Get the ClientSystem for the first Test App
-	 * @return
-	 */
-	private static ClientSystem getTestAppSystem() {
-		List<ClientSensor> sensors = new ArrayList<>();
-		
-		//CPU Sensor
-		Map<SensorParameter, Object> CPUParams = new HashMap<>();
-		CPUParams.put(SensorParameter.LOWER_BOUND, new Integer(10));
-		CPUParams.put(SensorParameter.UPPER_BOUND, new Integer(70));
-		sensors.add(new ClientSensor("CPU", CPUParams));
-		
-		//Memory Sensor
-		Map<SensorParameter, Object> memParams = new HashMap<>();
-		memParams.put(SensorParameter.LOWER_BOUND, new Integer(100));
-		memParams.put(SensorParameter.UPPER_BOUND, new Integer(7000));
-		sensors.add(new ClientSensor("CPU", memParams));
-		return new ClientSystem("1", sensors);
+	private static List<ClientSystem> getSystems() throws IOException {
+		ConfigParser parser = new ConfigParser();
+		return parser.parse(new File(CONFIG_FILE_PATH));
 	}
-
-	private static ClientSystem getDummyEarthApp() {
-		List<ClientSensor> sensors = new ArrayList<>();
-		//EQ Sensor
-		sensors.add(new ClientSensor("EQ", new HashMap<SensorParameter,Object>()));
-		return new ClientSystem("2", sensors);
-	}
-
-	
 
 	/**
 	 * Start receiving input from DataEmitters

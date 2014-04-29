@@ -17,7 +17,6 @@ public class ClientSystemTest {
 	private ClientSystem system;
 	private List<ClientSensor> sensors;
 	private String systemID;
-	private Map<String,Map<String, Object>> parameters;
 	
 	@Before
 	public void before() {
@@ -25,10 +24,10 @@ public class ClientSystemTest {
 		sensors = new ArrayList<ClientSensor>();
 		
 		//Test Sensor
-		Map<SensorParameter, Object> CPUParams = new HashMap<>();
-		CPUParams.put(SensorParameter.LOWER_BOUND, new Integer(10));
-		CPUParams.put(SensorParameter.UPPER_BOUND, new Integer(70));
-		sensors.add(new ClientSensor("TestSensor", CPUParams));
+		Map<SensorParameter, Object> params = new HashMap<>();
+		params.put(SensorParameter.LOWER_BOUND, new Integer(10));
+		params.put(SensorParameter.UPPER_BOUND, new Integer(70));
+		sensors.add(new ClientSensor("TestSensor", params));
 		
 		system = new ClientSystem(systemID,sensors);
 	}
@@ -50,5 +49,18 @@ public class ClientSystemTest {
 	public void testEqualsFail() {
 		ClientSystem equalSystem = new ClientSystem(systemID+"2", sensors);
 		assertNotEquals(system, equalSystem);
+	}
+	
+	
+	@Test
+	public void tesHasSensor() {
+		assertTrue(system.hasSensorWithID("TestSensor"));
+		assertFalse(system.hasSensorWithID("Not_a_TestSensor"));
+	}
+	
+	@Test
+	public void teGetSensor() {
+		assertEquals(system.getSensorWithID("TestSensor"), sensors.get(0));
+		assertNull(system.getSensorWithID("Not_a_TestSensor"));
 	}
 }

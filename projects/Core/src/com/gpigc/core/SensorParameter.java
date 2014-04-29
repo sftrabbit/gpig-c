@@ -1,5 +1,9 @@
 package com.gpigc.core;
 
+import java.io.ObjectInputStream.GetField;
+import java.util.EnumSet;
+import java.util.Enumeration;
+
 public enum SensorParameter {
 
 	LOWER_BOUND("LowerBound"),
@@ -27,5 +31,13 @@ public enum SensorParameter {
 	@Override
 	public String toString(){
 		return key;
+	}
+
+	public static boolean isValid(String name) {
+		for(SensorParameter param: SensorParameter.values()){
+			if(param.name().equals(name))
+				return true;
+		}
+		return false;
 	}
 }

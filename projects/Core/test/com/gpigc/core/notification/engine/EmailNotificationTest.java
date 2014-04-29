@@ -33,23 +33,25 @@ public class EmailNotificationTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		emailNotification = new EmailNotificationEngine(new ArrayList<ClientSystem>());
+		emailNotification = new EmailNotificationEngine(new ArrayList<ClientSystem>(),5000);
 	}
 
 	@Test
-	public void emailNotification() {
-		sendAnEmail();
+	public void emailNotificationTest() {
+		assertTrue(sendAnEmail());
 		checkDelivery();
+		assertFalse(sendAnEmail()); //cooldown
+
 	}
 
-	private void sendAnEmail() {
+	private boolean sendAnEmail() {
 		Map<String, String>data = new HashMap<String, String>();
 		data.put("Message", "Test message");
 		data.put("Subject", "Test email");
 		data.put("Recepient", "gpigc.alerts@gmail.com");
 		DataEvent event = new DataEvent(data, new ClientSystem("TestSystem", 
 						new ArrayList<ClientSensor>()));
-		emailNotification.send(event);
+		return emailNotification.send(event);
 	}
 
 	private void checkDelivery() {

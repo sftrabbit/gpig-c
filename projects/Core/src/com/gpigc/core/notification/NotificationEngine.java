@@ -16,13 +16,14 @@ public abstract class NotificationEngine {
 
 	protected boolean recentlySent;
 
-	private static final int COOLDOWN_MINS = 10;
+	private final int COOLDOWN_SECS;
 
 	private final List<ClientSystem> registeredSystems;
 
 
-	public NotificationEngine(List<ClientSystem>registeredSystems){
+	public NotificationEngine(List<ClientSystem>registeredSystems, final int COOLDOWN){
 		this.registeredSystems = registeredSystems;
+		this.COOLDOWN_SECS =COOLDOWN;
 	}
 	/**
 	 * @return Whether a notification has been sent by the engine within the last cooldown period
@@ -45,13 +46,13 @@ public abstract class NotificationEngine {
 				recentlySent = false;
 			}
 			
-		}, COOLDOWN_MINS * 60 * 1000);
+		}, COOLDOWN_SECS * 1000);
 	}
 
 	/**
 	 * Sends a notification
 	 */
-	public abstract void send(DataEvent event);
+	public abstract boolean send(DataEvent event);
 
 	public List<ClientSystem> getAssociatedSystems() {
 		return registeredSystems;

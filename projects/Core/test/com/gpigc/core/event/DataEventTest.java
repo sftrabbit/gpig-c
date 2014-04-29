@@ -27,10 +27,16 @@ public class DataEventTest {
 	}
 	
 	@Test
-	public void testCorrectFields() {
+	public void testGetData() {
 		DataEvent event = new DataEvent(testData, testSystem);
 		assertEquals(testData, event.getData());
+	}
+	
+	@Test
+	public void testGetSystem() {
+		DataEvent event = new DataEvent(testData, testSystem);
 		assertEquals(testSystem, event.getSystem());
 	}
+
 
 }

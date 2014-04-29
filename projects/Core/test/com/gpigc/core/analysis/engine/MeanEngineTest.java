@@ -17,7 +17,6 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.SensorParameter;
 import com.gpigc.core.analysis.engine.MeanAnalysisEngine;
 import com.gpigc.core.event.DataEvent;
-import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
@@ -34,14 +33,14 @@ public class MeanEngineTest {
 
 		//Test Sensor
 		Map<SensorParameter, Object> params = new HashMap<>();
-		params.put(SensorParameter.LOWER_BOUND, new Long(5));
+		params.put(SensorParameter.LOWER_BOUND, new Long(1));
 		params.put(SensorParameter.UPPER_BOUND, new Long(10));
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor("Sens1", params));
 
 		registeredSystems.add(new ClientSystem("TestSystem", sensors));
 		//Init datastore and engine
-		datastore = new MockDB();
+		datastore = new MockDB("4");
 		meanEngine = new MeanAnalysisEngine(registeredSystems, datastore);
 
 	}
@@ -55,7 +54,8 @@ public class MeanEngineTest {
 	}
 
 	@Test
-	public void testAnalyseEventLower() throws FailedToReadFromDatastoreException {
+	public void testAnalyseEventLower() {
+		registeredSystems.get(0).getSensors().get(0).getParameters().put(SensorParameter.LOWER_BOUND, new Long(5));
 		//Mean should be 4;
 		DataEvent event = meanEngine.analyse(registeredSystems.get(0));
 		assertNotNull(event);
@@ -63,13 +63,27 @@ public class MeanEngineTest {
 	}
 
 	@Test
-	public void testAnalyseEventUpper() throws FailedToReadFromDatastoreException {
-		registeredSystems.get(0).getSensors().get(0).getParameters().put(SensorParameter.LOWER_BOUND, new Long(1));
+	public void testAnalyseEventUpper()  {
 		registeredSystems.get(0).getSensors().get(0).getParameters().put(SensorParameter.UPPER_BOUND, new Long(3));
 		//Mean is 4
 		DataEvent event = meanEngine.analyse(registeredSystems.get(0));
 		assertNotNull(event);
 		assertTrue(event.getData().get("Message").contains("exceeded"));
+	}
+	
+	@Test
+	public void testAnalyseNoEvent()  {
+		//Mean should be 4;
+		DataEvent event = meanEngine.analyse(registeredSystems.get(0));
+		assertNull(event);
+	}
+
+	@Test
+	public void testWrongParameters() {
+		//Mean should be 4;
+		registeredSystems.get(0).getSensors().get(0).getParameters().clear();
+		DataEvent event = meanEngine.analyse(registeredSystems.get(0));
+		assertNull(event);
 	}
 
 }
