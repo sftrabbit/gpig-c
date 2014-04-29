@@ -29,7 +29,7 @@ public class ClientSystemTest {
 		params.put(SensorParameter.UPPER_BOUND, new Integer(70));
 		sensors.add(new ClientSensor("TestSensor", params));
 		
-		system = new ClientSystem(systemID,sensors);
+		system = new ClientSystem(systemID,sensors, new ArrayList<String>());
 	}
 	
 	@Test
@@ -41,13 +41,13 @@ public class ClientSystemTest {
 	
 	@Test
 	public void testEqualsPass() {
-		ClientSystem equalSystem = new ClientSystem(systemID, sensors);
+		ClientSystem equalSystem = new ClientSystem(systemID,sensors, new ArrayList<String>());
 		assertEquals(system, equalSystem);
 	}
 	
 	@Test
 	public void testEqualsFail() {
-		ClientSystem equalSystem = new ClientSystem(systemID+"2", sensors);
+		ClientSystem equalSystem = new ClientSystem(systemID+"2", sensors, new ArrayList<String>());
 		assertNotEquals(system, equalSystem);
 	}
 	

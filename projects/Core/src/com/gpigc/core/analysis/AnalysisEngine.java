@@ -13,11 +13,12 @@ public abstract class AnalysisEngine {
 
 	private final List<ClientSystem> associatedSystems;
 	protected final SystemDataGateway datastore;
-
+	public final String name;
+	
 	public AnalysisEngine(List<ClientSystem> registeredSystems, SystemDataGateway datastore){
 		this.associatedSystems = registeredSystems;
 		this.datastore = datastore;
-
+		this.name = this.getClass().getSimpleName();
 	}
 
 	public List<ClientSystem> getAssociatedSystems() {

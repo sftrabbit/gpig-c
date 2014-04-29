@@ -43,7 +43,7 @@ public class AnalysisEngineTest {
 		ArrayList<ClientSensor> sensors = new ArrayList<>();
 		sensors.add(new ClientSensor("TestSensor", params));
 
-		registeredSystems.add(new ClientSystem("1", sensors));
+		registeredSystems.add(new ClientSystem("1", sensors, new ArrayList<String>()));
 
 		//Init datastore and dummy engine
 		datastore = new GWTSystemDataGateway(new URI(Core.APPENGINE_SERVLET_URI));

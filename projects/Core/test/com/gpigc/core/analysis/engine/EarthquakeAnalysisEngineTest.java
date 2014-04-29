@@ -31,8 +31,7 @@ public class EarthquakeAnalysisEngineTest {
 		sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor(EarthquakeAnalysisEngine.EARTHQUAKE_SENSOR_ID,
 				new HashMap<SensorParameter,Object>()));
-		registeredSystems.add(new ClientSystem("TestEarthSystem", 
-				sensors));
+
 	}
 
 	@Test
@@ -60,6 +59,11 @@ public class EarthquakeAnalysisEngineTest {
 	private void setUp(String string) {
 		datastore = new MockDB(string);
 		earthEngine = new EarthquakeAnalysisEngine(registeredSystems, datastore);
+
+		ArrayList<String> registeredEngines = new ArrayList<>();
+		registeredEngines.add(earthEngine.name);
+		registeredSystems.add(new ClientSystem("TestEarthSystem", 
+				sensors, registeredEngines));
 	}
 	
 }

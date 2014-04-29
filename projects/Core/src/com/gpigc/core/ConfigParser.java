@@ -6,13 +6,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
@@ -24,7 +22,7 @@ public class ConfigParser {
 	private final String SENSORS_KEY = "Sensors";
 	private final String SENSOR_ID_KEY = "SensorID";
 	private final String PARAMS_KEY = "Params";
-	private final String Engines_KEY = "Engines";
+	private final String ENGINES_KEY = "Engines";
 
 
 	public ArrayList<ClientSystem> parse(File configFile) throws IOException {
@@ -51,25 +49,27 @@ public class ConfigParser {
 					while (jParser.nextToken() != JsonToken.END_ARRAY) {
 						String systemID = null;
 						List<ClientSensor> sensors = new ArrayList<>();
+						List<String> registeredEngines = new ArrayList<>();
 						while (jParser.nextToken() != JsonToken.END_OBJECT) {
 							String key = jParser.getCurrentName();
-							System.out.println("Current Key: "+ key );
 							if (SYSTEM_ID_KEY.equals(key)) {
 								systemID = jParser.getText();
-								System.out.println("System ID: "+ systemID);
-
+								System.out.println("Registering System: "+ systemID);
 							}
 							if (SENSORS_KEY.equals(key)) {
 								while (jParser.nextToken() != JsonToken.END_ARRAY) {
-									System.out.println("New Sensor");
 									sensors.add(parseSensor(jParser));
-									System.out.println("Added Sensor: " +sensors.size());
 								}
-								System.out.println("End of Sensors");
 							}
-							
+							if (ENGINES_KEY.equals(key)) {
+								while (jParser.nextToken() != JsonToken.END_ARRAY) {
+									if(jParser.getCurrentToken() == JsonToken.VALUE_STRING){
+										registeredEngines.add(jParser.getText());
+									}
+								}
+							}
 						}
-						systems.add(new ClientSystem(systemID, sensors));
+						systems.add(new ClientSystem(systemID, sensors, registeredEngines));
 					}
 
 				}
@@ -99,17 +99,13 @@ public class ConfigParser {
 					String paramkey = jParser.getCurrentName();
 					if(SensorParameter.isValid(paramkey)){
 						jParser.nextToken();
-						System.out.println("ParamKey:" + SensorParameter.valueOf(paramkey));
 						sensorParams.put(SensorParameter.valueOf(paramkey), jParser.getText());
 					}
 				}
 			}
 
 		}
-	
-		System.out.println("Sensor: "+ sensorID + "\n"+ sensorParams);
 		return new ClientSensor(sensorID, sensorParams);
-
 	}
 
 

@@ -20,7 +20,7 @@ public class NotificationEngineTest {
 	public void before() {
 
 		testSystems = new ArrayList<ClientSystem>();
-		testSystems.add(new ClientSystem("TestSystem", new ArrayList<ClientSensor>()));
+		testSystems.add(new ClientSystem("TestSystem", new ArrayList<ClientSensor>(), new ArrayList<String>()));
 		engine = new NotificationEngine(testSystems, 3) {
 			@Override
 			public boolean send(DataEvent event) {

@@ -50,7 +50,7 @@ public class ConfigParserTest {
 		assertNotNull(systems.get(0).getSensors().get(0).getParameters());
 		assertEquals("80",systems.get(0).getSensors().get(0).getParameters().get(SensorParameter.UPPER_BOUND));
 		assertEquals("10",systems.get(0).getSensors().get(0).getParameters().get(SensorParameter.LOWER_BOUND));
-		//assertNotNull(systems.get(0).getValidEngines());
+		assertNotNull(systems.get(0).getRegisteredEngineNames());
 	}
 	
 }

@@ -21,7 +21,7 @@ public class NotificationGeneratorTest {
 		systems = new ArrayList<>();
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor("TestSensor", new HashMap<SensorParameter, Object>()));
-		systems.add(new ClientSystem("Test", sensors));
+		systems.add(new ClientSystem("Test", sensors, new ArrayList<String>()));
 	}
 
 	@Test

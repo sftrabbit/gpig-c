@@ -21,7 +21,7 @@ public class DataEventTest {
 	
 	@Before
 	public void before(){
-		testSystem = new ClientSystem("TestSystem", new ArrayList<ClientSensor>());
+		testSystem = new ClientSystem("TestSystem", new ArrayList<ClientSensor>(), new ArrayList<String>());
 		testData = new HashMap<String, String>();
 		testData.put("Test", "Value");
 	}

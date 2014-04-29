@@ -6,10 +6,12 @@ public class ClientSystem {
 
 	private final String id;
 	private final List<ClientSensor> sensors;
-
-	public ClientSystem(String systemID, List<ClientSensor> sensors){
+	private final List<String> registeredEngineNames;
+	
+	public ClientSystem(String systemID, List<ClientSensor> sensors, List<String> registeredEngineNames){
 		this.id = systemID;
 		this.sensors = sensors;
+		this.registeredEngineNames = registeredEngineNames;
 	}
 
 	@Override
@@ -46,6 +48,10 @@ public class ClientSystem {
 				return sensor;
 		}
 		return null;
+	}
+
+	public List<String> getRegisteredEngineNames() {
+		return registeredEngineNames;
 	}
 
 }

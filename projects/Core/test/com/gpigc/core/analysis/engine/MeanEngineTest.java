@@ -38,11 +38,12 @@ public class MeanEngineTest {
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor("Sens1", params));
 
-		registeredSystems.add(new ClientSystem("TestSystem", sensors));
 		//Init datastore and engine
 		datastore = new MockDB("4");
 		meanEngine = new MeanAnalysisEngine(registeredSystems, datastore);
-
+		ArrayList<String> registeredEngines = new ArrayList<>();
+		registeredEngines.add(meanEngine.name);
+		registeredSystems.add(new ClientSystem("TestSystem", sensors, registeredEngines));
 	}
 
 	@Test
