@@ -33,9 +33,6 @@ public class DataPusher extends AsyncTask<Void,Void,Boolean> {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		Log.d("gpig","Protos:   " + Protos.class);
-		Log.d("gpig","SystemDatum:   " + SystemData.class);
-		Log.d("gpig","Datum:   " + SystemData.Datum.class);
 		
 		List<SystemData.Datum> systemDataDatums = new ArrayList<SystemData.Datum>();
 		for(String key : data.keySet()){
@@ -57,8 +54,8 @@ public class DataPusher extends AsyncTask<Void,Void,Boolean> {
 
 	protected void onPostExecute(Boolean done){
 		if(done)
-			Toast.makeText(context, "Pushed", Toast.LENGTH_LONG);
+			Toast.makeText(context, "Pushed", Toast.LENGTH_LONG).show();
 		else
-			Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG);
+			Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG).show();
 	}
 }
