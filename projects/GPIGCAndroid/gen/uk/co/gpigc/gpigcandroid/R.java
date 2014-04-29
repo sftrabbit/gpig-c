@@ -41,7 +41,7 @@ public final class R {
         public static final int purple_button=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f090011;
+        public static final int action_settings=0x7f090010;
         public static final int container=0x7f090000;
         public static final int engineTempSeek=0x7f09000e;
         public static final int engineTextView=0x7f09000f;
@@ -49,8 +49,7 @@ public final class R {
         public static final int linearLayout2=0x7f09000b;
         public static final int oilSeek=0x7f090009;
         public static final int oilTextView=0x7f09000a;
-        public static final int push=0x7f090007;
-        public static final int pushButton=0x7f090010;
+        public static final int pushButton=0x7f090007;
         public static final int relativeLayout1=0x7f090006;
         public static final int revsSeek=0x7f09000c;
         public static final int revsTextView=0x7f09000d;

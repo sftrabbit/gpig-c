@@ -25,7 +25,7 @@
        android:id="@+id/relativeLayout1"
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
-       android:layout_above="@+id/push"
+       android:layout_above="@+id/pushButton"
        android:layout_below="@+id/textView1"
        android:layout_centerHorizontal="true"
        android:background="@drawable/orange_rounded_background"
