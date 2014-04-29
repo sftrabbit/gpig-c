@@ -60,7 +60,7 @@ public class NotificationGenerator {
 										.getConstructor(List.class, int.class);
 			
 			NotificationEngine engine = (NotificationEngine) constructor
-					.newInstance(getRegisteredSystems(name, systems), 500); //XXX Could have this as a param
+					.newInstance(getRegisteredSystems(name, systems), 30); //XXX Could have this as a param
 			engines.add(engine);
 			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException 
 					| InstantiationException | IllegalAccessException | 
