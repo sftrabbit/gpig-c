@@ -142,7 +142,7 @@
        android:layout_alignParentBottom="true"
        android:layout_alignParentRight="true"
        android:layout_marginTop="10dp"
-       android:background="@color/pink"
+       android:background="@drawable/pink_button"
        android:text="Push"
        android:textColor="#ffffff"
        android:textSize="25sp"
