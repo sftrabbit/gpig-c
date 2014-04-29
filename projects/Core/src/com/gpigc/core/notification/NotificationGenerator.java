@@ -52,14 +52,15 @@ public class NotificationGenerator {
 
 		for (int i = 0; i < listOfFiles.length; i++) {
 			try {
+				String name = listOfFiles[i].getName().substring(0,
+						listOfFiles[i].getName().lastIndexOf('.'));
 			Constructor<?> constructor = Class.forName(
 						"com.gpigc.core.notification.engine."
-								+ listOfFiles[i].getName().substring(0,
-										listOfFiles[i].getName().lastIndexOf('.')))
+								+ name)
 										.getConstructor(List.class, int.class);
 			
 			NotificationEngine engine = (NotificationEngine) constructor
-					.newInstance(systems, 500); //XXX Could have this as a param
+					.newInstance(getRegisteredSystems(name, systems), 500); //XXX Could have this as a param
 			engines.add(engine);
 			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException 
 					| InstantiationException | IllegalAccessException | 
@@ -69,6 +70,18 @@ public class NotificationGenerator {
 			}
 		}
 		return engines;
+	}
+	
+	
+	private List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
+		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
+		for(ClientSystem system : allSystems){
+			if(system.getRegisteredEngineNames().contains(name)){
+				registeredSystems.add(system);
+				System.out.println("Adding Engine: " + name  + "  For System: "+ system.getID());
+			}
+		}
+		return registeredSystems;
 	}
 
 	public List<NotificationEngine> getNotificationEngines() {

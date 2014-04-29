@@ -60,20 +60,21 @@ public class AnalysisController {
 	 * @param systemIDs
 	 * @return engines
 	 */
-	private List<AnalysisEngine> instantiateEngines(List<ClientSystem> systems)  {
+	private List<AnalysisEngine> instantiateEngines(List<ClientSystem> allSystems)  {
 		File folder = new File(System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
 		List<AnalysisEngine> engines = new ArrayList<>();
 		try {
 			for (int i = 0; i < listOfFiles.length; i++) {
+				String name = listOfFiles[i].getName().substring(0,
+						listOfFiles[i].getName().lastIndexOf('.'));
 				Constructor<?> constructor = Class.forName(
 						"com.gpigc.core.analysis.engine."
-								+ listOfFiles[i].getName().substring(0,
-										listOfFiles[i].getName().lastIndexOf('.')))
+								+ name)
 										.getConstructor(List.class, SystemDataGateway.class);
 				AnalysisEngine engine;
 				engine = (AnalysisEngine) constructor.newInstance(
-						systems, datastore);
+						getRegisteredSystems(name, allSystems), datastore);
 				engines.add(engine);
 			}
 			return engines;
@@ -83,6 +84,18 @@ public class AnalysisController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	private List<ClientSystem> getRegisteredSystems(String simpleName, List<ClientSystem> allSystems) {
+		System.out.println("Comparing: " + simpleName);
+		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
+		for(ClientSystem system : allSystems){
+			if(system.getRegisteredEngineNames().contains(simpleName)){
+				registeredSystems.add(system);
+				System.out.println("Adding Engine: " + simpleName  + "  For System: "+ system.getID());
+			}
+		}
+		return registeredSystems;
 	}
 
 	public List<AnalysisEngine> getAnalysisEngines() {

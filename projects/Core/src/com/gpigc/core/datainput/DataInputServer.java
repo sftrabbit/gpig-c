@@ -64,7 +64,7 @@ public class DataInputServer extends Thread {
 			if (!systemStates.isEmpty()) {
 				try {
 					database.write(systemStates);
-					
+					System.out.println("State: "+ systemStates.get(0));
 					for (String systemId : systemIds) {
 						analysisController.systemUpdate(systemId);
 					}
