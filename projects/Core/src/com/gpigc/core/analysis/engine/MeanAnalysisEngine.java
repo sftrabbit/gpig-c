@@ -15,8 +15,6 @@ import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 public class MeanAnalysisEngine extends AnalysisEngine {
 
-	private static final int NUM_RECORDS = 5;
-
 	public MeanAnalysisEngine(List<ClientSystem> registeredSystems,
 			SystemDataGateway datastore) {
 		super(registeredSystems, datastore);
@@ -25,34 +23,37 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 		boolean event = false;
-		//Set up the data
+		// Set up the data
 		Map<String, String> data = new HashMap<>();
 		data.put("Subject", "MeanEngine Notification");
 		data.put("Recepient", "gpigc.alerts@gmail.com");
 		data.put("Message", "");
 
-		//Check the sensors
+		// Check the sensors
 		for (ClientSensor sensor : system.getSensors()) {
-			boolean sensorDone =  checkSensor(sensor,data, system.getID());
-			if(sensorDone)
+			boolean sensorDone = checkSensor(sensor, data, system.getID());
+			if (sensorDone)
 				event = sensorDone;
 		}
-		if(event)
+		if (event)
 			return new DataEvent(data, system);
 		// No event
 		return null;
 	}
 
-	private boolean checkSensor(ClientSensor sensor, Map<String, String> data, String systemID) {
+	private boolean checkSensor(ClientSensor sensor, Map<String, String> data,
+			String systemID) {
 		// Do we have the correct parameters
 		if (hasCorrectKeys(sensor)) {
 			long upperBound = Long.parseLong(sensor.getParameters().get(
 					SensorParameter.UPPER_BOUND));
 			long lowerBound = Long.parseLong(sensor.getParameters().get(
 					SensorParameter.LOWER_BOUND));
+			int numRecords = Integer.parseInt(sensor.getParameters().get(
+					SensorParameter.NUM_RECORDS));
 			try {
-				long mean = getMean(getSensorReadings(systemID,
-						sensor.getID(), NUM_RECORDS));
+				long mean = getMean(getSensorReadings(systemID, sensor.getID(),
+						numRecords));
 				if (mean > upperBound) {
 					data.put("Message", data.get("Message")
 							+ "Sensor with ID: " + sensor.getID()
@@ -68,18 +69,23 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 					return true;
 				}
 			} catch (FailedToReadFromDatastoreException e) {
-				System.out.println("Could not read data, will try on next update.");
+				System.out
+						.println("Could not read data, will try on next update.");
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("System Passed in does not have the correct parameters. Not Analysing");
+			System.out
+					.println("System Passed in does not have the correct parameters. Not Analysing");
 		}
 		return false;
 	}
 
 	private boolean hasCorrectKeys(ClientSensor sensor) {
-		if(sensor.getParameters().containsKey(SensorParameter.LOWER_BOUND)
-				&& sensor.getParameters().containsKey(SensorParameter.UPPER_BOUND))
+		if (sensor.getParameters().containsKey(SensorParameter.LOWER_BOUND)
+				&& sensor.getParameters().containsKey(
+						SensorParameter.UPPER_BOUND)
+				&& sensor.getParameters().containsKey(
+						SensorParameter.NUM_RECORDS))
 			return true;
 
 		return false;

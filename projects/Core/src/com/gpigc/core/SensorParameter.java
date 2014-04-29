@@ -7,8 +7,9 @@ import java.util.Enumeration;
 public enum SensorParameter {
 
 	LOWER_BOUND("LowerBound"),
-	UPPER_BOUND("UpperBound");
-	
+	UPPER_BOUND("UpperBound"),
+	NUM_RECORDS("NumRecords");
+
 	
 	private final String key;
 
