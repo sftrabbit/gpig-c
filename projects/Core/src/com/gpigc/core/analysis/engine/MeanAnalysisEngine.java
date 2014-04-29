@@ -33,7 +33,6 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 
 		//Check the sensors
 		for (ClientSensor sensor : system.getSensors()) {
-			System.out.println("New Sensor: " + sensor.getID());
 			boolean sensorDone =  checkSensor(sensor,data, system.getID());
 			if(sensorDone)
 				event = sensorDone;
@@ -47,7 +46,6 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 	private boolean checkSensor(ClientSensor sensor, Map<String, String> data, String systemID) {
 		// Do we have the correct parameters
 		if (hasCorrectKeys(sensor)) {
-			System.out.println("Correct Params: " + sensor.getID());
 			long upperBound = Long.parseLong(sensor.getParameters().get(
 					SensorParameter.UPPER_BOUND));
 			long lowerBound = Long.parseLong(sensor.getParameters().get(
@@ -55,13 +53,11 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 			try {
 				long mean = getMean(getSensorReadings(systemID,
 						sensor.getID(), NUM_RECORDS));
-				System.out.println("Mean for " + sensor.getID() +" is " + mean);
 				if (mean > upperBound) {
 					data.put("Message", data.get("Message")
 							+ "Sensor with ID: " + sensor.getID()
 							+ " has exceeded its upper limit. "
 							+ "\nMean value was: " + mean + "\n\n");
-					System.out.println("Over Upper Limit: " + sensor.getID());
 					return true;
 				}
 				if (mean < lowerBound) {
@@ -69,7 +65,6 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 							+ "Sensor with ID: " + sensor.getID()
 							+ " has fallen below its lower limit. "
 							+ "\nMean value was: " + mean + "\n\n");
-					System.out.println("Under Lower Limit: " + sensor.getID());
 					return true;
 				}
 			} catch (FailedToReadFromDatastoreException e) {
