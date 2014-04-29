@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="uk.co.gpigc.androidapp.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="GPIG-C\nData Emitter"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#53777A"
+        android:textSize="55sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <Button
+        android:id="@+id/system1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/titleView"
+        android:layout_alignRight="@+id/titleView"
+        android:layout_centerVertical="true"
+        android:background="@drawable/purple_button"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="Car System"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/system2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/system1"
+        android:layout_alignRight="@+id/system1"
+        android:layout_below="@+id/system1"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/orange_button"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="System 2"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/system3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/system2"
+        android:layout_alignRight="@+id/system2"
+        android:layout_below="@+id/system2"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/pink_button"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="System 3"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
