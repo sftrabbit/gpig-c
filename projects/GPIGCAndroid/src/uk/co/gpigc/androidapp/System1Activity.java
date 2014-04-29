@@ -3,6 +3,7 @@ package uk.co.gpigc.androidapp;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 
 import uk.co.gpigc.androidapp.comms.DataPusher;
 import uk.co.gpigc.androidapp.comms.DataSender;
@@ -36,14 +37,23 @@ public class System1Activity extends Activity {
 		final TextView revsTextView = (TextView) findViewById(R.id.revsTextView);
 		final TextView tempTextView = (TextView) findViewById(R.id.engineTextView);
 
+		setUpSeekBars(oilTextView,revsTextView,tempTextView);
+	}
+
+	private void setUpSeekBars(TextView oilTextView, TextView revsTextView,
+			TextView tempTextView) {
 		//Setup SeekBars
-		final SeekBar oilSeek = (SeekBar) findViewById(R.id.oilSeek);
-		final SeekBar revsSeek = (SeekBar) findViewById(R.id.revsSeek);
-		final SeekBar tempSeek = (SeekBar) findViewById(R.id.engineTempSeek);
+		final BarWrapper oilSeek = (BarWrapper) findViewById(R.id.oilSeek);
+		oilSeek.setValidBounds(30, 70);
+		final BarWrapper  revsSeek = (BarWrapper) findViewById(R.id.revsSeek);
+		revsSeek.setValidBounds(800, 6000);
+		final BarWrapper tempSeek = (BarWrapper) findViewById(R.id.engineTempSeek);
+		tempSeek.setValidBounds(40, 100);
+
 		revsSeek.setOnSeekBarChangeListener(new SeekBarListener(revsSeek,revsTextView, REVS_SENSOR_TEXT, "RPM"));
 		oilSeek.setOnSeekBarChangeListener(new SeekBarListener(oilSeek,oilTextView, OIL_SENSOR_TEXT, "PSI"));
 		tempSeek.setOnSeekBarChangeListener(new SeekBarListener(tempSeek,tempTextView, ENGINE_SENSOR_TEXT, "\u00b0C"));
-		
+
 		//Button
 		final Button pushButton = (Button) findViewById(R.id.pushButton);
 		pushButton.setOnClickListener(new OnClickListener() {
@@ -53,11 +63,12 @@ public class System1Activity extends Activity {
 				data.put(OIL_SENSOR_ID, oilSeek.getProgress()+"");
 				data.put(REVS_SENSOR_ID, revsSeek.getProgress()+"");
 				data.put(ENGINE_SENSOR_ID, tempSeek.getProgress()+"");
-				DataPusher pusher = new DataPusher(SYSTEM_ID, data);
+				DataPusher pusher = new DataPusher(getApplicationContext(), SYSTEM_ID, data);
 				pusher.execute();
 			}
 		});
-		
+
+
 	}
 
 	private void updateText(TextView view, String text){
@@ -68,10 +79,12 @@ public class System1Activity extends Activity {
 	class SeekBarListener implements SeekBar.OnSeekBarChangeListener{
 
 		private final TextView view;
-		private String nameText;
-		private String units;
+		private final String nameText;
+		private final String units;
+		private final BarWrapper bar;
 
-		public SeekBarListener(SeekBar bar, TextView view, String nameText, String units){
+		public SeekBarListener(BarWrapper bar, TextView view, String nameText, String units){
+			this.bar = bar;
 			this.view = view;
 			this.nameText = nameText;
 			this.units = units;
@@ -80,7 +93,12 @@ public class System1Activity extends Activity {
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
-			updateText(view, nameText + seekBar.getProgress() + " ("+units+")");
+			updateText(view, nameText + bar.getProgress() + " ("+units+")");
+			if(progress < bar.getLower() || progress > bar.getHigher()){
+				view.setTextColor(getResources().getColor(R.color.purple));
+			}else{
+				view.setTextColor(getResources().getColor(R.color.pink));
+			}
 		}
 
 		@Override

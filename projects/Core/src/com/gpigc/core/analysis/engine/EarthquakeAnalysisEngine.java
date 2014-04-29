@@ -24,15 +24,12 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 
 	@Override
 	public DataEvent analyse(ClientSystem system) {
-		System.out.println("Analyse -----");
 		if(system.hasSensorWithID(EARTHQUAKE_SENSOR_ID)){
 			try {
 				SensorState sensorState = 
 						getSensorReadings(system.getID(),EARTHQUAKE_SENSOR_ID, NUM_RECORDS).get(0);
 				double magnitude = Double.parseDouble(sensorState.getValue().split(",")[0]);
-				System.out.println("Magnitude: "+ magnitude);
 			if(magnitude >= 1.0){
-				System.out.println(" EarthQuake Over: 1.0 Detected");
 				Map<String,String> data = new HashMap<>();
 				data.put("Message", "Earthquake measuring " + magnitude + 
 						" was detected by system: " + system.getID() + ". Time: "

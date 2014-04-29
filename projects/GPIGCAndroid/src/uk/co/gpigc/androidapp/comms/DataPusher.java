@@ -9,19 +9,24 @@ import java.util.Map;
 import com.gpigc.proto.Protos;
 import com.gpigc.proto.Protos.SystemData;
 
+import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class DataPusher extends AsyncTask<Void,Void,Boolean> {
 
 
-	protected static String CORE_HOST = "10.240.188.64"; //TODO me no understand uni network
+	protected static String CORE_HOST = "192.168.44.179"; //TODO whatever ip
 	protected static int CORE_PORT = 8000;
 	private final String systemID;
 	private final Map<String, String> data;
+	private final Context context;
 
-	public DataPusher(String systemID, Map<String, String> data){
+	public DataPusher(Context context, String systemID, Map<String, String> data){
+		this.context = context;
 		this.systemID = systemID;
 		this.data = data;
 	}
@@ -52,9 +57,8 @@ public class DataPusher extends AsyncTask<Void,Void,Boolean> {
 
 	protected void onPostExecute(Boolean done){
 		if(done)
-			Log.d("gpig","Done Sending Data");
+			Toast.makeText(context, "Pushed", Toast.LENGTH_LONG);
 		else
-			Log.d("gpig","Error Sending Data");
-
+			Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG);
 	}
 }

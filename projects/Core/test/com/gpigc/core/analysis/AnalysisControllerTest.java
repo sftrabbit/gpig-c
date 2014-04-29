@@ -25,7 +25,7 @@ public class AnalysisControllerTest {
 	public void before() throws ReflectiveOperationException {
 		systems = new ArrayList<>();
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
-		sensors.add(new ClientSensor("TestSensor", new HashMap<SensorParameter, Object>()));
+		sensors.add(new ClientSensor("TestSensor", new HashMap<SensorParameter, String>()));
 		systems.add(new ClientSystem("Test", sensors, new ArrayList<String>()));
 	}
 

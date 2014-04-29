@@ -42,7 +42,7 @@
            android:background="#ffffff"
            android:orientation="vertical" >
 
-           <SeekBar
+           <uk.co.gpigc.androidapp.BarWrapper
                android:id="@+id/oilSeek"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -76,15 +76,15 @@
            android:background="#ffffff"
            android:orientation="vertical" >
 
-           <SeekBar
+           <uk.co.gpigc.androidapp.BarWrapper
                android:id="@+id/revsSeek"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_marginLeft="10dp"
                android:layout_marginRight="10dp"
                android:layout_marginTop="5dp"
-               android:max="9000"
-               android:progress="3000" />
+               android:max="10000"
+               android:progress="4000" />
 
            <TextView
                android:id="@+id/revsTextView"
@@ -110,14 +110,15 @@
            android:background="#ffffff"
            android:orientation="vertical" >
 
-           <SeekBar
+           <uk.co.gpigc.androidapp.BarWrapper
                android:id="@+id/engineTempSeek"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_marginLeft="10dp"
                android:layout_marginRight="10dp"
                android:layout_marginTop="5dp"
-               android:max="150" />
+               android:max="150"
+               android:progress="70" />
 
            <TextView
                android:id="@+id/engineTextView"

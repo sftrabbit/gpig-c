@@ -32,9 +32,9 @@ public class MeanEngineTest {
 		registeredSystems = new ArrayList<>();
 
 		//Test Sensor
-		Map<SensorParameter, Object> params = new HashMap<>();
-		params.put(SensorParameter.LOWER_BOUND, new Long(1));
-		params.put(SensorParameter.UPPER_BOUND, new Long(10));
+		Map<SensorParameter, String> params = new HashMap<>();
+		params.put(SensorParameter.LOWER_BOUND, "1");
+		params.put(SensorParameter.UPPER_BOUND, "10");
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor("Sens1", params));
 
@@ -56,7 +56,7 @@ public class MeanEngineTest {
 
 	@Test
 	public void testAnalyseEventLower() {
-		registeredSystems.get(0).getSensors().get(0).getParameters().put(SensorParameter.LOWER_BOUND, new Long(5));
+		registeredSystems.get(0).getSensors().get(0).getParameters().put(SensorParameter.LOWER_BOUND, "5");
 		//Mean should be 4;
 		DataEvent event = meanEngine.analyse(registeredSystems.get(0));
 		assertNotNull(event);
@@ -65,7 +65,7 @@ public class MeanEngineTest {
 
 	@Test
 	public void testAnalyseEventUpper()  {
-		registeredSystems.get(0).getSensors().get(0).getParameters().put(SensorParameter.UPPER_BOUND, new Long(3));
+		registeredSystems.get(0).getSensors().get(0).getParameters().put(SensorParameter.UPPER_BOUND, "3");
 		//Mean is 4
 		DataEvent event = meanEngine.analyse(registeredSystems.get(0));
 		assertNotNull(event);

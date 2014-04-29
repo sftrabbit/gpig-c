@@ -85,7 +85,7 @@ public class ConfigParser {
 	}
 
 	protected ClientSensor parseSensor(JsonParser jParser) throws IOException {
-		Map<SensorParameter,Object> sensorParams = new HashMap<SensorParameter,Object>();
+		Map<SensorParameter,String> sensorParams = new HashMap<SensorParameter,String>();
 		String sensorID = null;
 
 		while(jParser.nextToken() != JsonToken.END_OBJECT){

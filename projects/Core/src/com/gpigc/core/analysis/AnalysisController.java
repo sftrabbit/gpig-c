@@ -42,14 +42,12 @@ public class AnalysisController {
 	 * @throws FailedToReadFromDatastoreException 
 	 */
 	public void systemUpdate(String systemID){
-		System.out.println("System Update: " + systemID);
 		for (AnalysisEngine engine : analysisEngines) {
 			if (engine.getRegisteredSystem(systemID) != null) {
-				System.out.println("Engine Registered: " + engine.getClass().getName());
 				DataEvent event = engine.analyse(engine.getRegisteredSystem(systemID));
 				if(event != null && notificationGenerator != null){
 					notificationGenerator.generate(event);
-					System.out.println("Notification triggered: " +engine.getClass().getName());
+					System.out.println("Notification triggered: " +engine.getClass().getSimpleName());
 				}
 			}
 		}
@@ -87,12 +85,10 @@ public class AnalysisController {
 	}
 
 	private List<ClientSystem> getRegisteredSystems(String simpleName, List<ClientSystem> allSystems) {
-		System.out.println("Comparing: " + simpleName);
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
 		for(ClientSystem system : allSystems){
 			if(system.getRegisteredEngineNames().contains(simpleName)){
 				registeredSystems.add(system);
-				System.out.println("Adding Engine: " + simpleName  + "  For System: "+ system.getID());
 			}
 		}
 		return registeredSystems;

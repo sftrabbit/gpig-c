@@ -26,7 +26,6 @@ public class Core {
 		SystemDataGateway datastore = getDatastore(APPENGINE_SERVLET_URI);
 
 		List<ClientSystem> systemsToMonitor = getSystems();
-		System.out.println(systemsToMonitor);
 		if(datastore != null){
 			NotificationGenerator notificationGenerator = new NotificationGenerator(systemsToMonitor);
 			//Create the other engines

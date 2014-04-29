@@ -30,7 +30,7 @@ public class EarthquakeAnalysisEngineTest {
 		
 		sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor(EarthquakeAnalysisEngine.EARTHQUAKE_SENSOR_ID,
-				new HashMap<SensorParameter,Object>()));
+				new HashMap<SensorParameter,String>()));
 
 	}
 

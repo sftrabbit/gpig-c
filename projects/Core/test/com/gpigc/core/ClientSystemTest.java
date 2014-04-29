@@ -24,9 +24,9 @@ public class ClientSystemTest {
 		sensors = new ArrayList<ClientSensor>();
 		
 		//Test Sensor
-		Map<SensorParameter, Object> params = new HashMap<>();
-		params.put(SensorParameter.LOWER_BOUND, new Integer(10));
-		params.put(SensorParameter.UPPER_BOUND, new Integer(70));
+		Map<SensorParameter, String> params = new HashMap<>();
+		params.put(SensorParameter.LOWER_BOUND, "10");
+		params.put(SensorParameter.UPPER_BOUND, "70");
 		sensors.add(new ClientSensor("TestSensor", params));
 		
 		system = new ClientSystem(systemID,sensors, new ArrayList<String>());

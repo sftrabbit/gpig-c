@@ -45,7 +45,6 @@ public class TwitterNotificationEngine extends NotificationEngine {
 					event.getData().get("Message")
 					);
 			if(event.getData().containsKey("Long")&& event.getData().containsKey("Lat")){
-				System.out.println("Setting Location");
 				statusUpdate.setLocation(
 						new GeoLocation(Double.parseDouble(event.getData().get("Lat")),
 								Double.parseDouble(event.getData().get("Long"))));

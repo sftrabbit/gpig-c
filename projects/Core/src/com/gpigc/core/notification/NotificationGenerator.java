@@ -78,7 +78,6 @@ public class NotificationGenerator {
 		for(ClientSystem system : allSystems){
 			if(system.getRegisteredEngineNames().contains(name)){
 				registeredSystems.add(system);
-				System.out.println("Adding Engine: " + name  + "  For System: "+ system.getID());
 			}
 		}
 		return registeredSystems;

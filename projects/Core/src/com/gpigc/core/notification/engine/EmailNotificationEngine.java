@@ -40,7 +40,7 @@ public class EmailNotificationEngine extends NotificationEngine {
 				email.addTo(recepient);
 				email.send();
 				setRecentlySent();
-				System.out.println("Email Sent");
+				System.out.println("Email Sent With Message: " + message);
 				return true;
 			} catch (EmailException e) {
 				e.printStackTrace();
