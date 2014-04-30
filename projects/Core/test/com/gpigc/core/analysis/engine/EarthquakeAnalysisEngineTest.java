@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,9 +29,11 @@ public class EarthquakeAnalysisEngineTest {
 		//Set up dummy system
 		registeredSystems = new ArrayList<>();
 		
+		Map<SensorParameter,String> data = new HashMap<>();
+		data.put(SensorParameter.LOWER_BOUND, "1.0");
 		sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor(EarthquakeAnalysisEngine.EARTHQUAKE_SENSOR_ID,
-				new HashMap<SensorParameter,String>()));
+				data));
 
 	}
 
