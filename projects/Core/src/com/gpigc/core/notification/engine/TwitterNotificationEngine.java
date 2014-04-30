@@ -52,6 +52,7 @@ public class TwitterNotificationEngine extends NotificationEngine {
 			try {
 				twitter.updateStatus(statusUpdate);
 				setRecentlySent();
+				System.out.println("Twitter Status Updated");
 				return true;
 			} catch (TwitterException e) {
 				System.out.println("Could Not Update Status");

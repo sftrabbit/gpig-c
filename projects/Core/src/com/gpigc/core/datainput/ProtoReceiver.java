@@ -35,8 +35,8 @@ public class ProtoReceiver extends Thread {
 				new ProtoMultiReceiver(sock.accept(), queue).start();
             }
         } catch (IOException e) {
-            System.err.println("Could not start ProtoReceiver");
-            System.exit(-1);
+            System.err.println("ProtoReceiver stopped");
+            return;
         }
 	}
 	

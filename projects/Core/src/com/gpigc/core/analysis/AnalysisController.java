@@ -25,41 +25,50 @@ public class AnalysisController {
 	private SystemDataGateway datastore;
 	private NotificationGenerator notificationGenerator;
 
-
 	public AnalysisController(SystemDataGateway datastore,
-			NotificationGenerator notificationGenerator, List<ClientSystem> systems) throws ReflectiveOperationException{
+			NotificationGenerator notificationGenerator,
+			List<ClientSystem> systems) throws ReflectiveOperationException {
 		this.datastore = datastore;
 		this.notificationGenerator = notificationGenerator;
-		analysisEngines = instantiateEngines(systems);	
-		if(analysisEngines == null)
-			throw new ReflectiveOperationException("Analysis Engines could not be loaded");
+		analysisEngines = instantiateEngines(systems);
+		if (analysisEngines == null)
+			throw new ReflectiveOperationException(
+					"Analysis Engines could not be loaded");
 	}
 
 	/**
 	 * Performs analysis on a given system
+	 * 
 	 * @param systemId
 	 *            The ID of the system to perform analysis upon
-	 * @throws FailedToReadFromDatastoreException 
+	 * @throws FailedToReadFromDatastoreException
 	 */
-	public void systemUpdate(String systemID){
+	public void systemUpdate(String systemID) {
 		for (AnalysisEngine engine : analysisEngines) {
 			if (engine.getRegisteredSystem(systemID) != null) {
-				DataEvent event = engine.analyse(engine.getRegisteredSystem(systemID));
-				if(event != null && notificationGenerator != null){
+				DataEvent event = engine.analyse(engine
+						.getRegisteredSystem(systemID));
+				if (event != null && notificationGenerator != null) {
+					System.out.println("Notification triggered by: "
+							+ engine.getClass().getSimpleName()
+							+ " for System " + systemID);
 					notificationGenerator.generate(event);
-					System.out.println("Notification triggered: " +engine.getClass().getSimpleName());
 				}
 			}
 		}
 	}
 
 	/**
-	 * Class load Analysis engines and register all system with them - for prototype only
+	 * Class load Analysis engines and register all system with them - for
+	 * prototype only
+	 * 
 	 * @param systemIDs
 	 * @return engines
 	 */
-	private List<AnalysisEngine> instantiateEngines(List<ClientSystem> allSystems)  {
-		File folder = new File(System.getProperty("user.dir") + "/src/com/gpigc/core/analysis/engine");
+	private List<AnalysisEngine> instantiateEngines(
+			List<ClientSystem> allSystems) {
+		File folder = new File(System.getProperty("user.dir")
+				+ "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
 		List<AnalysisEngine> engines = new ArrayList<>();
 		try {
@@ -67,9 +76,8 @@ public class AnalysisController {
 				String name = listOfFiles[i].getName().substring(0,
 						listOfFiles[i].getName().lastIndexOf('.'));
 				Constructor<?> constructor = Class.forName(
-						"com.gpigc.core.analysis.engine."
-								+ name)
-										.getConstructor(List.class, SystemDataGateway.class);
+						"com.gpigc.core.analysis.engine." + name)
+						.getConstructor(List.class, SystemDataGateway.class);
 				AnalysisEngine engine;
 				engine = (AnalysisEngine) constructor.newInstance(
 						getRegisteredSystems(name, allSystems), datastore);
@@ -77,17 +85,19 @@ public class AnalysisController {
 			}
 			return engines;
 		} catch (InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException |
-				NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException
+				| ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	private List<ClientSystem> getRegisteredSystems(String simpleName, List<ClientSystem> allSystems) {
+	private List<ClientSystem> getRegisteredSystems(String simpleName,
+			List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
-		for(ClientSystem system : allSystems){
-			if(system.getRegisteredEngineNames().contains(simpleName)){
+		for (ClientSystem system : allSystems) {
+			if (system.getRegisteredEngineNames().contains(simpleName)) {
 				registeredSystems.add(system);
 			}
 		}

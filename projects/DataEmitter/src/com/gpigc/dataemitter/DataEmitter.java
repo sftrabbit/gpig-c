@@ -14,7 +14,7 @@ import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.AppNotRunningExc
 
 public class DataEmitter implements Runnable {
 	// _StubEmitter_ is replaced by the appropriate Emitter by the build system
-	private static final Emitter emitter = new EarthEmitter();
+	private static final Emitter emitter = new DummyEarthEmitter();
 
 	public static void main(String[] args) throws InterruptedException,
 			ExecutionException, TimeoutException {
