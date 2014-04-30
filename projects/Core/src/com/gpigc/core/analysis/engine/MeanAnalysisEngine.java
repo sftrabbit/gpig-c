@@ -25,7 +25,7 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 		boolean event = false;
 		// Set up the data
 		Map<String, String> data = new HashMap<>();
-		data.put("Subject", "MeanEngine Notification");
+		data.put("Subject", this.name+ " Notification");
 		data.put("Recepient", "gpigc.alerts@gmail.com");
 		data.put("Message", "");
 
@@ -41,13 +41,13 @@ public class MeanAnalysisEngine extends AnalysisEngine {
 		return null;
 	}
 
-	private boolean checkSensor(ClientSensor sensor, Map<String, String> data,
+	protected boolean checkSensor(ClientSensor sensor, Map<String, String> data,
 			String systemID) {
 		// Do we have the correct parameters
 		if (hasCorrectKeys(sensor)) {
-			long upperBound = Long.parseLong(sensor.getParameters().get(
+			double upperBound = Double.parseDouble(sensor.getParameters().get(
 					SensorParameter.UPPER_BOUND));
-			long lowerBound = Long.parseLong(sensor.getParameters().get(
+			double lowerBound = Double.parseDouble(sensor.getParameters().get(
 					SensorParameter.LOWER_BOUND));
 			int numRecords = Integer.parseInt(sensor.getParameters().get(
 					SensorParameter.NUM_RECORDS));
