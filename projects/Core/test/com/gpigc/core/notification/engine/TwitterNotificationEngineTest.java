@@ -11,10 +11,10 @@ import org.junit.Test;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
 
 public class TwitterNotificationEngineTest {
-
 
 	private ArrayList<ClientSystem> testSystems;
 	private TwitterNotificationEngine engine;
@@ -22,8 +22,9 @@ public class TwitterNotificationEngineTest {
 	@Before
 	public void before() {
 		testSystems = new ArrayList<>();
-		testSystems.add(new ClientSystem("Test", new ArrayList<ClientSensor>(), new ArrayList<String>()));
-		engine = new TwitterNotificationEngine(testSystems,5000);
+		testSystems.add(new ClientSystem("Test", new ArrayList<ClientSensor>(),
+				new ArrayList<String>(), new HashMap<Parameter, String>()));
+		engine = new TwitterNotificationEngine(testSystems, 5000);
 	}
 
 	/**
@@ -31,11 +32,11 @@ public class TwitterNotificationEngineTest {
 	 */
 	@Test
 	public void testSendAndRepeat() {
-		Map<String,String> testData = new HashMap<>();
-		testData.put("Message","Test Message: " + System.currentTimeMillis());
+		Map<String, String> testData = new HashMap<>();
+		testData.put("Message", "Test Message: " + System.currentTimeMillis());
 		DataEvent testEvent = new DataEvent(testData, testSystems.get(0));
 		assertTrue(engine.send(testEvent));
-		assertFalse(engine.send(testEvent)); //cooldown
+		assertFalse(engine.send(testEvent)); // cooldown
 	}
 
 }

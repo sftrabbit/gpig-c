@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
-import com.gpigc.core.SensorParameter;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
@@ -46,11 +46,11 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 		// Do we have the correct parameters
 		if (hasCorrectKeys(sensor)) {
 			double upperBound = Double.parseDouble(sensor.getParameters().get(
-					SensorParameter.UPPER_BOUND));
+					Parameter.UPPER_BOUND));
 			double lowerBound = Double.parseDouble(sensor.getParameters().get(
-					SensorParameter.LOWER_BOUND));
+					Parameter.LOWER_BOUND));
 			int numRecords = Integer.parseInt(sensor.getParameters().get(
-					SensorParameter.NUM_RECORDS));
+					Parameter.NUM_RECORDS));
 			try {
 				long mean = getMean(getSensorReadings(systemID, sensor.getID(),
 						numRecords));
@@ -81,11 +81,11 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 	}
 
 	private boolean hasCorrectKeys(ClientSensor sensor) {
-		if (sensor.getParameters().containsKey(SensorParameter.LOWER_BOUND)
+		if (sensor.getParameters().containsKey(Parameter.LOWER_BOUND)
 				&& sensor.getParameters().containsKey(
-						SensorParameter.UPPER_BOUND)
+						Parameter.UPPER_BOUND)
 				&& sensor.getParameters().containsKey(
-						SensorParameter.NUM_RECORDS))
+						Parameter.NUM_RECORDS))
 			return true;
 
 		return false;

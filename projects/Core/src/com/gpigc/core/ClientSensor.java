@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class ClientSensor {
 
-	private final Map<SensorParameter,String> parameters;
+	private final Map<Parameter,String> parameters;
 	private final String id;
 	
-	public ClientSensor(String id, Map<SensorParameter, String>parameters){
+	public ClientSensor(String id, Map<Parameter, String>parameters){
 		this.id = id;
 		this.parameters = parameters;
 	}
@@ -16,7 +16,7 @@ public class ClientSensor {
 		return id;
 	}
 
-	public Map<SensorParameter,String> getParameters() {
+	public Map<Parameter,String> getParameters() {
 		return parameters;
 	}
 }

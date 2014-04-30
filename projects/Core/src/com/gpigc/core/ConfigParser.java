@@ -50,6 +50,7 @@ public class ConfigParser {
 						String systemID = null;
 						List<ClientSensor> sensors = new ArrayList<>();
 						List<String> registeredEngines = new ArrayList<>();
+						Map<Parameter, String> params = new HashMap<>();
 						while (jParser.nextToken() != JsonToken.END_OBJECT) {
 							String key = jParser.getCurrentName();
 							if (SYSTEM_ID_KEY.equals(key)) {
@@ -68,8 +69,17 @@ public class ConfigParser {
 									}
 								}
 							}
+							if (PARAMS_KEY.equals(key)) {
+								while(jParser.nextToken() != JsonToken.END_OBJECT){
+									String paramkey = jParser.getCurrentName();
+									if(Parameter.isValid(paramkey)){
+										jParser.nextToken();
+										params.put(Parameter.valueOf(paramkey), jParser.getText());
+									}
+								}
+							}
 						}
-						systems.add(new ClientSystem(systemID, sensors, registeredEngines));
+						systems.add(new ClientSystem(systemID, sensors, registeredEngines, params));
 					}
 
 				}
@@ -85,7 +95,7 @@ public class ConfigParser {
 	}
 
 	protected ClientSensor parseSensor(JsonParser jParser) throws IOException {
-		Map<SensorParameter,String> sensorParams = new HashMap<SensorParameter,String>();
+		Map<Parameter,String> sensorParams = new HashMap<Parameter,String>();
 		String sensorID = null;
 
 		while(jParser.nextToken() != JsonToken.END_OBJECT){
@@ -97,9 +107,9 @@ public class ConfigParser {
 			if (PARAMS_KEY.equals(key)) {
 				while(jParser.nextToken() != JsonToken.END_OBJECT){
 					String paramkey = jParser.getCurrentName();
-					if(SensorParameter.isValid(paramkey)){
+					if(Parameter.isValid(paramkey)){
 						jParser.nextToken();
-						sensorParams.put(SensorParameter.valueOf(paramkey), jParser.getText());
+						sensorParams.put(Parameter.valueOf(paramkey), jParser.getText());
 					}
 				}
 			}

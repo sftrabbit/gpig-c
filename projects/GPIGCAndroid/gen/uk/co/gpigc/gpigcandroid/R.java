@@ -41,10 +41,17 @@ public final class R {
         public static final int purple_button=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f090010;
+        public static final int action_settings=0x7f090019;
+        public static final int batterySeek=0x7f090013;
+        public static final int batteryTextView=0x7f090018;
+        public static final int bluetooth=0x7f090015;
         public static final int container=0x7f090000;
+        public static final int contentLayout=0x7f090010;
+        public static final int desiredSeek=0x7f090012;
+        public static final int desiredTextView=0x7f090011;
         public static final int engineTempSeek=0x7f09000e;
         public static final int engineTextView=0x7f09000f;
+        public static final int gps=0x7f090017;
         public static final int linearLayout1=0x7f090008;
         public static final int linearLayout2=0x7f09000b;
         public static final int oilSeek=0x7f090009;
@@ -57,11 +64,16 @@ public final class R {
         public static final int system2=0x7f090003;
         public static final int system3=0x7f090004;
         public static final int textView1=0x7f090005;
+        public static final int threeG=0x7f090016;
         public static final int titleView=0x7f090001;
+        public static final int wifi=0x7f090014;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_system1=0x7f030001;
+        public static final int activity_system2=0x7f030002;
+        public static final int activity_test=0x7f030003;
+        public static final int fragment_test=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -70,6 +82,7 @@ public final class R {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
         public static final int hello_world=0x7f060001;
+        public static final int title_activity_test=0x7f060003;
     }
     public static final class style {
         /** 

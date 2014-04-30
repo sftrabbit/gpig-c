@@ -3,11 +3,14 @@
  */
 package com.gpigc.core.analysis.engine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
@@ -25,8 +28,6 @@ import expr.Variable;
  */
 public class ExpressionAnalysisEngine extends AnalysisEngine {
 
-	private static final int NUM_TO_GET = 1;
-
 	/**
 	 * The variables of the expression
 	 */
@@ -37,17 +38,12 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 	 */
 	private Parser parser;
 
-	/**
-	 * Whether to generate a notification on analysis
-	 */
-	private boolean notify;
-
-
 	public ExpressionAnalysisEngine(List<ClientSystem> registeredSystems,
 			SystemDataGateway datastore) {
 		super(registeredSystems, datastore);
+		parser = new Parser();
+		variables = new HashMap<String, Variable>();
 	}
-
 
 	/* (non-Javadoc)
 	 * @see com.gpigc.core.analysis.AnalysisEngine#analyse()
@@ -55,41 +51,59 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 
-		//		if(system.getParameters().containsKey("Expression")){
-		//			String exprStr = system.getParameters().get("Expression");
-		//
-		//		Map<String, String> dataToSave = new HashMap<>();
-		//		try {
-		//			List<SensorState> sensorStates = getSensorStates(ONE_VALUE_PER_SENSOR);
-		//			if (error) {
-		//				throw new FailedToReadFromDatastoreException(
-		//						"Couldn't load sensor states from DB during analysis");
-		//			}
-		//			variables = new HashMap<>(associatedSystems.size());
-		//			for (String systemID : associatedSystems) {
-		//				// TODO Have a way of getting all sensors associated with a system
-		//				for (String sensorID : getSensorsForSystem(systemID)) {
-		//					Variable sensorIdVar = Variable.make(sensorID);
-		//					parser.allow(sensorIdVar);
-		//					variables.put(systemID, sensorIdVar);
-		//				}
-		//			}
-		//			System.out.println("Variables = " + variables);
-		//			for (SensorState sensorState : sensorStates) {
-		//				System.out.println("Variable for ID " + 
-		//						sensorState.getSensorID() + " = " + 
-		//						variables.get(sensorState.getSensorID()));
-		//				variables.get(sensorState.getSensorID())
-		//					.setValue(Double.parseDouble(sensorState.getValue()));
-		//			}
-		//			double value = parser.parseString(exprStr).value();
-		//			dataToSave.put(getEngineName() + " value", ""+value);
-		//		} catch (FailedToReadFromDatastoreException | SyntaxException e) {
-		//			dataToSave.put(ERROR, getEngineName() + " in error: " + 
-		//					e.getClass().getCanonicalName() + ", " + 
-		//					e.getMessage());
-		//		}
-		//		return new Result(dataToSave, notify);
+		if(system.getParameters().containsKey(Parameter.EXPRESSION)){
+			String exprStr = system.getParameters().get(Parameter.EXPRESSION);
+
+			try {
+				//Get Data
+				List<SensorState> values = getSensorData(system);
+				for(SensorState sensorState: values){
+					Variable var = Variable.make(sensorState.getSensorID());
+					var.setValue(Double.parseDouble(sensorState.getValue()));
+					parser.allow(var);
+					variables.put(sensorState.getSensorID(), var);	
+				}
+				double value = parser.parseString(exprStr).value();
+				System.out.println("Expression Evaluated to: " + value);
+				return generateEvent(system,exprStr, value);
+
+			} catch (SyntaxException e) {
+				System.out.println("Could not parse string, ignoring data");
+				e.printStackTrace();
+			}catch (FailedToReadFromDatastoreException e1) {
+				System.out.println("Could not read data from datastore");
+				e1.printStackTrace();
+			}
+		}else{
+			System.out.println("System does not have an expression parameter");
+		}
+
 		return null;
+	}
+
+
+	private DataEvent generateEvent(ClientSystem system, String exprStr, double value) {
+		Map<String,String> data = new HashMap<>();
+		data.put("Message", "Expression analysis of system " 
+				+ system.getID() + " showed abnormal system behaviour: " + exprStr);
+		data.put("Subject", this.name+ " Notification");
+		data.put("Recepient", "gpigc.alerts@gmail.com");
+		data.put("Value",value+"");
+		return new DataEvent(data, system);
+	}
+
+
+	private List<SensorState> getSensorData(ClientSystem system) throws FailedToReadFromDatastoreException {
+		List<SensorState> values = new ArrayList<>();
+		for(ClientSensor sensor: system.getSensors()){
+			SensorState state = getSensorReadings(system.getID(), sensor.getID(), 1).get(0);
+			if(state!=null){
+				values.add(state);
+			}else{
+				System.out.println("Sensor Value: " + sensor.getID() +" Missing: Can not analyse");
+				return null;
+			}
+		}
+		return values;
 	}
 }

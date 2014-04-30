@@ -1,17 +1,21 @@
 package com.gpigc.core;
 
 import java.util.List;
+import java.util.Map;
 
 public class ClientSystem {
 
 	private final String id;
 	private final List<ClientSensor> sensors;
 	private final List<String> registeredEngineNames;
-	
-	public ClientSystem(String systemID, List<ClientSensor> sensors, List<String> registeredEngineNames){
+	private final Map<Parameter,String> parameters;
+
+	public ClientSystem(String systemID, List<ClientSensor> sensors, 
+			List<String> registeredEngineNames, Map<Parameter,String> parameters){
 		this.id = systemID;
 		this.sensors = sensors;
 		this.registeredEngineNames = registeredEngineNames;
+		this.parameters = parameters;
 	}
 
 	@Override
@@ -52,6 +56,10 @@ public class ClientSystem {
 
 	public List<String> getRegisteredEngineNames() {
 		return registeredEngineNames;
+	}
+
+	public Map<Parameter,String> getParameters() {
+		return parameters;
 	}
 
 }

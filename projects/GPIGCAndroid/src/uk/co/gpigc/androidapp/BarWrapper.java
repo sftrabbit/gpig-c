@@ -6,8 +6,8 @@ import android.widget.SeekBar;
 
 public class BarWrapper extends SeekBar {
 
-	private int lower;
-	private int higher;
+	private int lower = Integer.MIN_VALUE;
+	private int higher = Integer.MAX_VALUE;
 
 	public BarWrapper(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);

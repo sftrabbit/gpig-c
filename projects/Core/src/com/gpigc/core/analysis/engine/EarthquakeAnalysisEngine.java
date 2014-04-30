@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.gpigc.core.ClientSystem;
-import com.gpigc.core.SensorParameter;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
@@ -38,10 +38,10 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 				//If we have a bound
 				if (system.getSensorWithID(EARTHQUAKE_SENSOR_ID)
 						.getParameters()
-						.containsKey(SensorParameter.LOWER_BOUND)) {
+						.containsKey(Parameter.LOWER_BOUND)) {
 					double lowerBound = Double.parseDouble(system
 							.getSensorWithID(EARTHQUAKE_SENSOR_ID)
-							.getParameters().get(SensorParameter.LOWER_BOUND));
+							.getParameters().get(Parameter.LOWER_BOUND));
 					
 					if (magnitude >= lowerBound) {
 						Map<String, String> data = new HashMap<>();

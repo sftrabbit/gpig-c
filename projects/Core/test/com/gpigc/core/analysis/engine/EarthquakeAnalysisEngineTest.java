@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
-import com.gpigc.core.SensorParameter;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
@@ -29,8 +29,8 @@ public class EarthquakeAnalysisEngineTest {
 		//Set up dummy system
 		registeredSystems = new ArrayList<>();
 		
-		Map<SensorParameter,String> data = new HashMap<>();
-		data.put(SensorParameter.LOWER_BOUND, "1.0");
+		Map<Parameter,String> data = new HashMap<>();
+		data.put(Parameter.LOWER_BOUND, "1.0");
 		sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor(EarthquakeAnalysisEngine.EARTHQUAKE_SENSOR_ID,
 				data));
@@ -66,7 +66,7 @@ public class EarthquakeAnalysisEngineTest {
 		ArrayList<String> registeredEngines = new ArrayList<>();
 		registeredEngines.add(earthEngine.name);
 		registeredSystems.add(new ClientSystem("TestEarthSystem", 
-				sensors, registeredEngines));
+				sensors, registeredEngines, new HashMap<Parameter,String>()));
 	}
 	
 }

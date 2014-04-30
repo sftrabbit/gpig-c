@@ -10,15 +10,15 @@ import org.junit.Test;
 
 public class ClientSensorTest {
 
-	private Map<SensorParameter, String> testParameters;
+	private Map<Parameter, String> testParameters;
 	private ClientSensor testSensor;
 	
 
 	@Before
 	public void before() {
-		testParameters = new HashMap<SensorParameter,String>();
-		testParameters.put(SensorParameter.LOWER_BOUND, "10");
-		testParameters.put(SensorParameter.UPPER_BOUND, "100");
+		testParameters = new HashMap<Parameter,String>();
+		testParameters.put(Parameter.LOWER_BOUND, "10");
+		testParameters.put(Parameter.UPPER_BOUND, "100");
 		testSensor = new ClientSensor("TestID", testParameters);
 	}
 	
