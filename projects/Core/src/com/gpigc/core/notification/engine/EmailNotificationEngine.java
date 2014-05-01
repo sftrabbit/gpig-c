@@ -7,6 +7,7 @@ import org.apache.commons.mail.*;
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
+import com.gpigc.core.view.StandardMessageGenerator;
 
 /**
  * Email notification engine providing a way of sending an email to the specified recipient
@@ -40,7 +41,7 @@ public class EmailNotificationEngine extends NotificationEngine {
 				email.addTo(recepient);
 				email.send();
 				setRecentlySent();
-				System.out.println("Email Sent With Message: " + message);
+				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
 				return true;
 			} catch (EmailException e) {
 				e.printStackTrace();

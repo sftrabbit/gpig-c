@@ -16,8 +16,6 @@ import javax.mail.Store;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
@@ -28,12 +26,10 @@ import com.gpigc.core.notification.engine.EmailNotificationEngine;
 
 public class EmailNotificationTest {
 
-	@Mock
 	private NotificationEngine emailNotification;
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
 		emailNotification = new EmailNotificationEngine(
 				new ArrayList<ClientSystem>(), 5000);
 	}

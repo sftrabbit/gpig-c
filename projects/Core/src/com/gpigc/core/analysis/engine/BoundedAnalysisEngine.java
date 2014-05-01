@@ -9,6 +9,7 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
+import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
@@ -69,13 +70,11 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 					return true;
 				}
 			} catch (FailedToReadFromDatastoreException e) {
-				System.out
-						.println("Could not read data, will try on next update.");
+				StandardMessageGenerator.couldNotReadData();
 				e.printStackTrace();
 			}
 		} else {
-			System.out
-					.println("System Passed in does not have the correct parameters. Not Analysing");
+			StandardMessageGenerator.wrongParams(name,systemID);
 		}
 		return false;
 	}

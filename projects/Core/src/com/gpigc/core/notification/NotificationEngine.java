@@ -20,10 +20,13 @@ public abstract class NotificationEngine {
 
 	private final List<ClientSystem> registeredSystems;
 
+	public final String name;
+
 
 	public NotificationEngine(List<ClientSystem>registeredSystems, final int COOLDOWN){
 		this.registeredSystems = registeredSystems;
 		this.COOLDOWN_SECS =COOLDOWN;
+		this.name = this.getClass().getSimpleName();
 	}
 	/**
 	 * @return Whether a notification has been sent by the engine within the last cooldown period

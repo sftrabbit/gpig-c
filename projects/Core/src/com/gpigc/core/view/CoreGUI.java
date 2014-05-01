@@ -18,22 +18,31 @@ import java.awt.Font;
 import java.awt.Color;
 
 import javax.swing.border.LineBorder;
+import javax.swing.text.DefaultCaret;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class CoreGUI extends JFrame {
 
 	private final JPanel contentPane;
 	private final JButton btnStart;
 	private final JTextArea consoleArea;
+	private final JLabel configPath;
+	private String configFilePath = "config/RegisteredSystems.config";
+	private final JButton btnSelectConfigFile;
 
 	/**
 	 * Launch the application.
@@ -92,7 +101,10 @@ public class CoreGUI extends JFrame {
 		lblCoreSystemGui.setHorizontalAlignment(SwingConstants.CENTER);
 
 		consoleArea = new JTextArea();
-
+		
+		DefaultCaret caret = (DefaultCaret)consoleArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
 		JScrollPane panel_2 = new JScrollPane(getConsoleArea());
 		panel_2.setViewportBorder(new LineBorder(new Color(255, 255, 255), 6,
 				true));
@@ -108,61 +120,66 @@ public class CoreGUI extends JFrame {
 		getBtnStart().setIcon(null);
 
 		getBtnStart().setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		
+		btnSelectConfigFile = new JButton("Select Config File");
+		btnSelectConfigFile.setBackground(new Color(84, 36, 55));
+		btnSelectConfigFile.setForeground(Color.WHITE);
+		
+		configPath = new JLabel(configFilePath);
+		configPath.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		getBtnSelectConfigFile().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			    JFileChooser fileChooser = new JFileChooser();
+			    int retval = fileChooser.showOpenDialog(CoreGUI.this);
+	            if (retval == JFileChooser.APPROVE_OPTION) {
+	                File file = fileChooser.getSelectedFile();
+	                //... Update user interface.
+	                configPath.setText(file.getAbsolutePath());
+	                configFilePath = file.getAbsolutePath();
+	            }
+			}
+		});
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.LEADING)
-												.addComponent(
-														verticalStrut,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGap(154)
-																.addComponent(
-																		getBtnStart(),
-																		GroupLayout.PREFERRED_SIZE,
-																		407,
-																		GroupLayout.PREFERRED_SIZE))
-												.addGroup(
-														gl_panel.createSequentialGroup()
-																.addGap(14)
-																.addGroup(
-																		gl_panel.createParallelGroup(
-																				Alignment.LEADING)
-																				.addComponent(
-																						panel_2,
-																						GroupLayout.DEFAULT_SIZE,
-																						670,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						panel_1,
-																						GroupLayout.DEFAULT_SIZE,
-																						670,
-																						Short.MAX_VALUE))))
-								.addContainerGap(16, GroupLayout.PREFERRED_SIZE)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addComponent(verticalStrut,
-								GroupLayout.PREFERRED_SIZE, 0,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(25)
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(33)
-						.addComponent(getBtnStart(),
-								GroupLayout.PREFERRED_SIZE, 39,
-								GroupLayout.PREFERRED_SIZE)
-						.addGap(51)
-						.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 172,
-								Short.MAX_VALUE).addContainerGap()));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(293, Short.MAX_VALUE)
+					.addComponent(getBtnSelectConfigFile())
+					.addGap(265))
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(verticalStrut, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addGap(154)
+							.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 407, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+							.addGap(14)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(configPath, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+								.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+								.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE))))
+					.addContainerGap(16, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(verticalStrut, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
+					.addGap(25)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(33)
+					.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+					.addComponent(configPath, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(getBtnSelectConfigFile())
+					.addGap(12)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(
 				Alignment.LEADING).addGroup(
@@ -204,5 +221,17 @@ public class CoreGUI extends JFrame {
 
 	public JTextArea getConsoleArea() {
 		return consoleArea;
+	}
+
+	public String getConfigFilePath() {
+		return configFilePath;
+	}
+
+	public void setConfigFilePath(String configFilePath) {
+		this.configFilePath = configFilePath;
+	}
+
+	public JButton getBtnSelectConfigFile() {
+		return btnSelectConfigFile;
 	}
 }

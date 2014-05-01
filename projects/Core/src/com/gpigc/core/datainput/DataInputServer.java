@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.gpigc.core.analysis.AnalysisController;
+import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
@@ -66,11 +67,12 @@ public class DataInputServer extends Thread {
 				try {
 					database.write(systemStates);
 					for (String systemId : systemIds) {
+						StandardMessageGenerator.dataRecievedFrom(systemId);
 						analysisController.systemUpdate(systemId);
 					}
 				} catch (FailedToWriteToDatastoreException e) {
-					System.out.println("Failed to write to database. Discarding data.");
-					System.out.println(e);
+					StandardMessageGenerator.failedToWrite();
+					e.printStackTrace();
 				}
 			}
 
@@ -82,7 +84,7 @@ public class DataInputServer extends Thread {
 		try {
 			pr.close();
 		} catch (IOException e) {
-			System.out.println("An Error Occured Closing the ProtoReciever");
+			StandardMessageGenerator.errorClosingProto();
 		}
 
 	}

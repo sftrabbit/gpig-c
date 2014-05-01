@@ -9,6 +9,7 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
+import com.gpigc.core.view.StandardMessageGenerator;
 
 public class PhoneAppNotificationEngine extends NotificationEngine {
 	
@@ -48,14 +49,14 @@ public class PhoneAppNotificationEngine extends NotificationEngine {
 				out.writeObject(event.getData());
 				out.flush();
 				s.close();
-				System.out.println("Phone App Notification Sent");
+				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
 				return true;
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
 			}
 		}else{
-			System.out.println("Phone IP address not specified, cannot send notification");
+			StandardMessageGenerator.phoneIPNotSpecified();
 			return false;
 		}
 	}

@@ -13,6 +13,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.gpigc.core.view.StandardMessageGenerator;
 
 public class ConfigParser {
 
@@ -53,9 +54,9 @@ public class ConfigParser {
 						Map<Parameter, String> params = new HashMap<>();
 						while (jParser.nextToken() != JsonToken.END_OBJECT) {
 							String key = jParser.getCurrentName();
-							if (SYSTEM_ID_KEY.equals(key)) {
+							if (SYSTEM_ID_KEY.equals(key) && jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
 								systemID = jParser.getText();
-								System.out.println("Registering System: "+ systemID);
+								StandardMessageGenerator.registeredSystem(systemID);
 							}
 							if (SENSORS_KEY.equals(key)) {
 								while (jParser.nextToken() != JsonToken.END_ARRAY) {
@@ -88,7 +89,7 @@ public class ConfigParser {
 
 			return systems;
 		} catch ( IOException e) {
-			System.out.println("Could not read config file, no systems registered. Check the JSON");
+			StandardMessageGenerator.couldNotReadConfig();
 			e.printStackTrace();
 			return null;
 		}

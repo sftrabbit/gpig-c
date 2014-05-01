@@ -15,11 +15,11 @@ import com.gpigc.core.analysis.AnalysisController;
 import com.gpigc.core.datainput.DataInputServer;
 import com.gpigc.core.notification.NotificationGenerator;
 import com.gpigc.core.view.CoreGUI;
+import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.core.view.TextAreaStream;
 
 public class Core {
 	public final static String APPENGINE_SERVLET_URI = "http://gpigc-webapp.appspot.com/gpigc-webapp";
-	private static final String CONFIG_FILE_PATH = "config/RegisteredSystems.config";
 
 	/* Use this one if other instance is kaput */
 	// public final static String APPENGINE_SERVLET_URI =
@@ -27,59 +27,61 @@ public class Core {
 
 	public static boolean running = false;
 
+	private static CoreGUI view;
+
 	public static void main(String args[]) throws ReflectiveOperationException,
 			IOException {
-
-		SystemDataGateway datastore = getDatastore(APPENGINE_SERVLET_URI);
-
-		List<ClientSystem> systemsToMonitor = getSystems();
-		if (datastore != null) {
-			NotificationGenerator notificationGenerator;
-			notificationGenerator = new NotificationGenerator(systemsToMonitor);
-			// Create the other engines
-			AnalysisController analysisController = new AnalysisController(
-					datastore, notificationGenerator, systemsToMonitor);
-			final CoreGUI view = new CoreGUI();
-			setUpGui(view, analysisController, datastore);
-			view.setVisible(true);
-		} else {
-			// Abort
-			System.exit(0);
-		}
+		view = new CoreGUI();
+		setUpGui(view);
+		view.setVisible(true);
 	}
 
-	private static void setUpGui(final CoreGUI view,
-			AnalysisController analysisController, SystemDataGateway datastore) {
-		//Redirect SysOut
+	private static void setUpGui(final CoreGUI view) {
+		// Redirect SysOut
 		TextAreaStream textOut = new TextAreaStream(view.getConsoleArea());
 		PrintStream outStream = new PrintStream(textOut, true);
 		System.setOut(outStream);
-		//Set Up The Action Listener
-		view.getBtnStart().addActionListener(
-				new StartButtonListener(view, analysisController, datastore));
-	}
 
+		// Set Up The Action Listener
+		view.getBtnStart().addActionListener(new StartButtonListener(view));
+	}
 	
 	private static List<ClientSystem> getSystems() throws IOException {
 		ConfigParser parser = new ConfigParser();
-		return parser.parse(new File(CONFIG_FILE_PATH));
+		return parser.parse(new File(view.getConfigFilePath()));
 	}
-	
-	/**
-	 * Get a GWT datastore;
-	 * @param servletUri
-	 * @return
-	 */
+
 	private static SystemDataGateway getDatastore(String servletUri) {
 		try {
 			return new GWTSystemDataGateway(new URI(servletUri));
 		} catch (URISyntaxException e) {
-			System.err.println("Could not initialise datastore: "
-					+ e.getMessage());
+			System.err.println("Could not initialise datastore: " + e.getMessage());
 			return null;
 		}
 	}
 
+	private static DataInputServer setUpControllers() throws IOException,
+			ReflectiveOperationException {
+
+		SystemDataGateway datastore = getDatastore(APPENGINE_SERVLET_URI);
+		List<ClientSystem> systemsToMonitor = getSystems();
+
+		if (datastore != null) {
+			NotificationGenerator notificationGenerator = new NotificationGenerator(
+					systemsToMonitor);
+			// Create the other engines
+			AnalysisController analysisController = new AnalysisController(
+					datastore, notificationGenerator, systemsToMonitor);
+
+			return new DataInputServer(analysisController, datastore);
+		} else {
+			StandardMessageGenerator.failedToSetup();
+		}
+		return null;
+	}
+
+	
+	
 	
 	/**
 	 * This is a pain
@@ -88,30 +90,31 @@ public class Core {
 
 		private DataInputServer dis;
 		private CoreGUI view;
-		private AnalysisController analysisController;
-		private SystemDataGateway datastore;
 
-		public StartButtonListener(CoreGUI view,
-				AnalysisController analysisController,
-				SystemDataGateway datastore) {
+		public StartButtonListener(CoreGUI view) {
 			this.view = view;
-			this.analysisController = analysisController;
-			this.datastore = datastore;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!running) {
-				dis = new DataInputServer(analysisController, datastore);
-				dis.start();
-				view.getBtnStart().setText("Stop");
-				System.out.println("System Running");
+				try {
+					dis = setUpControllers();
+					dis.start();
+					view.getBtnStart().setText("Stop");
+					view.getBtnSelectConfigFile().setEnabled(false);
+					StandardMessageGenerator.coreRunning();
+				} catch (IOException | ReflectiveOperationException e1) {
+					StandardMessageGenerator.failedToSetup();
+					e1.printStackTrace();
+				}
 				running = true;
 			} else {
 				dis.stopserver();
 				view.getBtnStart().setText("Start");
-				System.out.println("System Stopped");
+				StandardMessageGenerator.coreStopped();
 				running = false;
+				view.getBtnSelectConfigFile().setEnabled(true);
 			}
 		}
 

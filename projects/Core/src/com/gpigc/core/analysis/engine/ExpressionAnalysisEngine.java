@@ -13,6 +13,7 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
+import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
@@ -64,18 +65,17 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 					variables.put(sensorState.getSensorID(), var);	
 				}
 				double value = parser.parseString(exprStr).value();
-				System.out.println("Expression Evaluated to: " + value);
 				return generateEvent(system,exprStr, value);
 
 			} catch (SyntaxException e) {
-				System.out.println("Could not parse string, ignoring data");
+				StandardMessageGenerator.couldNotParse(exprStr);
 				e.printStackTrace();
 			}catch (FailedToReadFromDatastoreException e1) {
-				System.out.println("Could not read data from datastore");
+				StandardMessageGenerator.couldNotReadData();
 				e1.printStackTrace();
 			}
 		}else{
-			System.out.println("System does not have an expression parameter");
+			StandardMessageGenerator.wrongParams(system.getID(), name);
 		}
 
 		return null;
@@ -100,7 +100,7 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 			if(state!=null){
 				values.add(state);
 			}else{
-				System.out.println("Sensor Value: " + sensor.getID() +" Missing: Can not analyse");
+				StandardMessageGenerator.sensorValueMissing(system.getID(),sensor.getID());
 				return null;
 			}
 		}

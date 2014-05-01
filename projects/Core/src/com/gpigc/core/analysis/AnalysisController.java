@@ -11,6 +11,7 @@ import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationGenerator;
+import com.gpigc.core.view.StandardMessageGenerator;
 
 /**
  * Interacts with the core application, performing analysis on the data
@@ -49,9 +50,7 @@ public class AnalysisController {
 				DataEvent event = engine.analyse(engine
 						.getRegisteredSystem(systemID));
 				if (event != null && notificationGenerator != null) {
-					System.out.println("Notification triggered by: "
-							+ engine.getClass().getSimpleName()
-							+ " for System " + systemID);
+					StandardMessageGenerator.eventGenerated(engine.name, systemID);
 					notificationGenerator.generate(event);
 				}
 			}

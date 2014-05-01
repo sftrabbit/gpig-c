@@ -12,6 +12,7 @@ import twitter4j.auth.AccessToken;
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
+import com.gpigc.core.view.StandardMessageGenerator;
 
 public class TwitterNotificationEngine extends NotificationEngine {
 
@@ -52,10 +53,10 @@ public class TwitterNotificationEngine extends NotificationEngine {
 			try {
 				twitter.updateStatus(statusUpdate);
 				setRecentlySent();
-				System.out.println("Twitter Status Updated");
+				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
 				return true;
 			} catch (TwitterException e) {
-				System.out.println("Could Not Update Status");
+				StandardMessageGenerator.couldNotUpdateStatus();
 				e.printStackTrace();
 			}
 		}
