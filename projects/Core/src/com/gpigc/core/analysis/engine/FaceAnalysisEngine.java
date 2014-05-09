@@ -21,6 +21,8 @@ import com.gpigc.dataabstractionlayer.client.SensorState;
 /**
  * Analyses the faces seen in an image detected by a sensor
  * 
+ * Requires OpenCV
+ * 
  * @author GPIG-C
  */
 public class FaceAnalysisEngine extends AnalysisEngine {
@@ -38,7 +40,11 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 
-		if(system.getParameters().containsKey(Parameter.FACES)){
+		if(system.getParameters().containsKey(Parameter.FACES) &&
+				system.getParameters().containsKey(Parameter.FACE_SIMILARITY_THRESHOLD)){
+			double threshold = Double.parseDouble(
+					system.getParameters()
+					.get(Parameter.FACE_SIMILARITY_THRESHOLD));
 //			Mat exampleFaces;
 //			if (systemExampleFacesCache.keySet().contains(system)) {
 //				exampleFaces = systemExampleFacesCache.get(system);
@@ -53,12 +59,11 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				values = getSensorData(system);
 				for(SensorState sensorState: values){
 					// TODO Actually test to see if face seen is allowed
-					boolean isValid = true;
-					if (isValid) {
-						return generateSuccessEvent(system);
-					} else {
+					//if (isAuthorisedFace(testFace, exampleFaces, threshold)) {
+					//	return generateSuccessEvent(system);
+					//} else {
 						return generateFailureEvent(system);
-					}
+					//}
 				}
 			} catch (FailedToReadFromDatastoreException e) {
 				e.printStackTrace();
@@ -72,6 +77,11 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 
 //	private Mat parseFaces(String base64) {
 //		TODO Parse example faces matrix from base64
+//	}
+	
+//	private boolean isAuthorisedFace(Mat testFace, Mat exampleFaces, boolean threshold) {
+//		// TODO Check to see if close enough to an allowable example face using 
+//		//Chi-Squared Imgproc.compareHist()
 //	}
 	
 	private DataEvent generateSuccessEvent(ClientSystem system) {
