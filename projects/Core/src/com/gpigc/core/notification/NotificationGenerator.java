@@ -7,10 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import com.gpigc.core.event.Event;
+
+import com.gpigc.core.ClientSystem;
+import com.gpigc.core.event.DataEvent;
 
 /**
  * Generates and sends notifications from event objects
@@ -19,26 +20,15 @@ import com.gpigc.core.event.Event;
  */
 public class NotificationGenerator {
 
-	private List<NotificationEngine> engines;
+	private final List<NotificationEngine> notificationEngines;
 
-	/**
-	 * Initialises the notification generator
-	 * 
-	 * @throws MalformedURLException
-	 * @throws ClassNotFoundException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 */
-	public NotificationGenerator() throws MalformedURLException,
-			ClassNotFoundException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException {
-		engines = new ArrayList<NotificationEngine>();
-		instantiateEngines();
+
+	public NotificationGenerator( List<ClientSystem> systems)
+			throws ReflectiveOperationException {
+		notificationEngines = instantiateEngines(systems);
+		if(getNotificationEngines() == null){
+			throw new ReflectiveOperationException("Notification Engines could not be loaded");
+		}
 	}
 
 	/**
@@ -47,61 +37,57 @@ public class NotificationGenerator {
 	 * @param event
 	 *            The event object containing information about the result
 	 */
-	public void generate(Event event) {
-		String systemId = event.getSystemId();
-		for (NotificationEngine engine : engines) {
-			List<String> associatedSystems = engine.getAssociatedSystems();
-			if (associatedSystems.contains(systemId)
-					&& !engine.getRecentlySent()) {
-				try {
-					BufferedReader br = new BufferedReader(new FileReader("email.txt"));
-					String recipient = br.readLine();
-				
-					String subject = "Notification: CPU usage too high!";
-					String message = "CPU usage of system " + systemId
-							+ " has exceeded threshold! Value: "
-							+ event.getResult().getDataToSave().get("Mean");
-					engine.send(recipient, subject, message);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	public void generate(DataEvent event) {
+		for (NotificationEngine engine : getNotificationEngines()) {
+			List<ClientSystem> associatedSystems = engine.getAssociatedSystems();
+			if (associatedSystems.contains(event.getSystem())) {
+				engine.send(event);
 			}
 		}
 	}
 
-	public void setEngines(List<NotificationEngine> engines) {
-		this.engines = engines;
-	}
-
-	/**
-	 * Performs class loading of notification engines allowing for runtime
-	 * additions
-	 * 
-	 * @throws MalformedURLException
-	 * @throws ClassNotFoundException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 */
-	private void instantiateEngines() throws MalformedURLException,
-			ClassNotFoundException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException {
+	private List<NotificationEngine> instantiateEngines(List<ClientSystem> systems)
+	{
 		File folder = new File(System.getProperty("user.dir")
 				+ "/src/com/gpigc/core/notification/engine");
 		File[] listOfFiles = folder.listFiles();
+
+		List<NotificationEngine> engines = new ArrayList<>();
+
 		for (int i = 0; i < listOfFiles.length; i++) {
+			try {
+				String name = listOfFiles[i].getName().substring(0,
+						listOfFiles[i].getName().lastIndexOf('.'));
 			Constructor<?> constructor = Class.forName(
-					"com.gpigc.core.notification.engine."
-							+ listOfFiles[i].getName().substring(0,
-									listOfFiles[i].getName().lastIndexOf('.')))
-					.getConstructor();
+						"com.gpigc.core.notification.engine."
+								+ name)
+										.getConstructor(List.class, int.class);
+			
 			NotificationEngine engine = (NotificationEngine) constructor
-					.newInstance();
+					.newInstance(getRegisteredSystems(name, systems), 30); //XXX Could have this as a param
 			engines.add(engine);
+			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException 
+					| InstantiationException | IllegalAccessException | 
+					IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
+		return engines;
+	}
+	
+	
+	private List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
+		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
+		for(ClientSystem system : allSystems){
+			if(system.getRegisteredEngineNames().contains(name)){
+				registeredSystems.add(system);
+			}
+		}
+		return registeredSystems;
+	}
+
+	public List<NotificationEngine> getNotificationEngines() {
+		return notificationEngines;
 	}
 }

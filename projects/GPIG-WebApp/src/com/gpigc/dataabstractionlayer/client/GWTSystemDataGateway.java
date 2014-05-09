@@ -115,7 +115,6 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 			response = client.execute(get);
 			String responseBody = EntityUtils.toString(response.getEntity(),
 					"UTF-8");
-			System.out.println("Response Body: " + responseBody);
 			return QueryResult.parseJSON(responseBody);
 		} catch (ParseException | IOException e) {
 			throw new FailedToReadFromDatastoreException(e.getMessage());
@@ -132,11 +131,9 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	@Override
 	public void write(EmitterSystemState data)
 			throws FailedToWriteToDatastoreException {
-		try {
-			writeJSON(data.toJSON());
-		} catch (IOException e) {
-			throw new FailedToWriteToDatastoreException(e.getMessage());
-		}
+		List<EmitterSystemState> dataArray = new ArrayList<EmitterSystemState>();
+		dataArray.add(data);
+		write(dataArray);
 	}
 
 	/*

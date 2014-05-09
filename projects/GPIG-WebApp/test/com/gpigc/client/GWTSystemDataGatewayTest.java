@@ -30,7 +30,7 @@ public class GWTSystemDataGatewayTest {
 								ParseException, 
 								IOException, FailedToWriteToDatastoreException {
 		GWTSystemDataGateway gateway = new GWTSystemDataGateway(
-				new URI("http://gpigc-webapp.appspot.com/gpigc-webapp"));
+				new URI("http://gpigc-beta.appspot.com/gpigc-webapp"));
 		Map<String,String> payload = new HashMap<String,String>();
 		payload.put("Test1", "Blue");
 		payload.put("Test2", "Red");

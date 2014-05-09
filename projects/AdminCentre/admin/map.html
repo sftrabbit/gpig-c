@@ -154,7 +154,7 @@
 		    eqCircle = new google.maps.Circle(earthquake);
 		    google.maps.event.addListener(eqCircle, 'click', (function(eqCircle, ts) {
 		        return function() {
-		            infoWindow.setContent("Magnitude: "+magnitude+"<br>"+latitude+", "+longitude);
+		            infoWindow.setContent("Magnitude: "+magnitude+"<br>"+latitude+", "+longitude+"<br>"+new Date(ts).toUTCString());
 		            infoWindow.setPosition(eqCircle.getCenter());
 		            infoWindow.open(map);
 		        }

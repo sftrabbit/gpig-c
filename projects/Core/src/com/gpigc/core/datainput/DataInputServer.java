@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.gpigc.core.analysis.AnalysisController;
+import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
@@ -20,6 +21,8 @@ public class DataInputServer extends Thread {
 	protected boolean running = true;
 	protected AnalysisController analysisController;
 	protected SystemDataGateway database;
+	private ProtoReceiver pr;
+	private ConcurrentLinkedQueue<Protos.SystemData> queue;
 
 	public DataInputServer(AnalysisController analysisController,
 			SystemDataGateway database) {
@@ -31,9 +34,8 @@ public class DataInputServer extends Thread {
 		running = false;
 	}
 
+	@Override
 	public void run() {
-		ProtoReceiver pr;
-
 		try {
 			pr = new ProtoReceiver();
 		} catch (IOException e1) {
@@ -41,8 +43,8 @@ public class DataInputServer extends Thread {
 		}
 
 		pr.start();
-		ConcurrentLinkedQueue<Protos.SystemData> queue = pr.getQueue();
-
+		queue = pr.getQueue();
+		
 		while (running) {
 			Protos.SystemData data = null;
 
@@ -57,20 +59,20 @@ public class DataInputServer extends Thread {
 
 				systemStates.add(new EmitterSystemState(data.getSystemId(),
 						new Date(data.getTimestamp()), datamap));
-				
+
 				systemIds.add(data.getSystemId());
 			}
 
 			if (!systemStates.isEmpty()) {
 				try {
 					database.write(systemStates);
-					
 					for (String systemId : systemIds) {
+						StandardMessageGenerator.dataRecievedFrom(systemId);
 						analysisController.systemUpdate(systemId);
 					}
 				} catch (FailedToWriteToDatastoreException e) {
-					System.out.println("Failed to write to database. Discarding data.");
-					System.out.println(e);
+					StandardMessageGenerator.failedToWrite();
+					e.printStackTrace();
 				}
 			}
 
@@ -79,11 +81,12 @@ public class DataInputServer extends Thread {
 			} catch (InterruptedException e) {
 			}
 		}
-
 		try {
 			pr.close();
 		} catch (IOException e) {
+			StandardMessageGenerator.errorClosingProto();
 		}
+
 	}
 
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="purple">#73324C</color>
+    <color name="pink">#C02942</color>
+    <color name="orange">#D95B43</color>
+    <color name="yellow">#ECD078</color>
+    <color name="teal">#53777A</color>
+    
+    <color name="light_purple">#73515E</color>
+    <color name="light_pink">#C07380</color>
+    <color name="light_orange">#DA9183</color>
+    <color name="light_yellow">#EEDDA7</color>
+    <color name="light_teal">#7B979A</color>
+    
+</resources>
