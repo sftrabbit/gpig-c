@@ -20,6 +20,15 @@
         android:paddingRight="20dp"
         android:paddingTop="35dp" >
 
+        <TextView
+            android:id="@+id/textViewMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="It&apos;s a burglar!"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
         <FrameLayout
             android:id="@+id/frameLayoutLiveView"
             android:layout_width="wrap_content"
@@ -31,15 +40,6 @@
             android:layout_centerHorizontal="false" >
 
         </FrameLayout>
-
-        <TextView
-            android:id="@+id/textViewMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="It&apos;s a burglar!"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </RelativeLayout>
 
