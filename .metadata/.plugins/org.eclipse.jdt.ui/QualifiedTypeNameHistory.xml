@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.apache.http.client.HttpClient"/>
-<fullyQualifiedTypeName name="org.apache.http.impl.client.HttpClientBuilder"/>
-<fullyQualifiedTypeName name="com.gpigc.core.storage.GWTSystemDataGateway"/>
-<fullyQualifiedTypeName name="com.gpigc.core.analysis.engine.MockDB"/>
-<fullyQualifiedTypeName name="com.gpigc.core.storage.SystemDataGateway"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
-</qualifiedTypeNameHistroy>
