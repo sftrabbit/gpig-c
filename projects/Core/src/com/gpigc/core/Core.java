@@ -8,7 +8,7 @@ import java.util.Map;
 import com.gpigc.core.analysis.AnalysisController;
 import com.gpigc.core.datainput.DataInputServer;
 import com.gpigc.core.event.DataEvent;
-import com.gpigc.core.notification.NotificationGenerator;
+import com.gpigc.core.notification.NotificationController;
 import com.gpigc.core.storage.StorageController;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
@@ -19,14 +19,14 @@ public class Core {
 	private final DataInputServer dataInputServer;
 	private final StorageController datastoreController;
 	private final AnalysisController analysisController;
-	private final NotificationGenerator notificationGenerator;
+	private final NotificationController notificationGenerator;
 	private List<ClientSystem> systemsToMonitor;
 
 	public Core(String configFilePath) throws IOException, ReflectiveOperationException{
 		systemsToMonitor = getSystems(configFilePath);
 		datastoreController = new StorageController(systemsToMonitor);
 		analysisController =  new AnalysisController(systemsToMonitor,this);
-		notificationGenerator = new NotificationGenerator(systemsToMonitor);
+		notificationGenerator = new NotificationController(systemsToMonitor);
 		dataInputServer = new DataInputServer(this);
 	}
 
@@ -63,7 +63,7 @@ public class Core {
 	}
 
 
-	public NotificationGenerator getNotificationGenerator() {
+	public NotificationController getNotificationGenerator() {
 		return notificationGenerator;
 	}
 

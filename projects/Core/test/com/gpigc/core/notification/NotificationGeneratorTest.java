@@ -28,7 +28,7 @@ public class NotificationGeneratorTest {
 
 	@Test //No exception
 	public void testMakeEngines() throws ReflectiveOperationException {
-		NotificationGenerator generator = new NotificationGenerator(systems);
+		NotificationController generator = new NotificationController(systems);
 		assertNotNull(generator.getNotificationEngines());
 		assertTrue(generator.getNotificationEngines().size() != 0);
 	}
