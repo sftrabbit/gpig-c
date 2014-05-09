@@ -26,7 +26,8 @@ public class System3Activity extends Activity implements CvCameraViewListener2 {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_system_face);
-		mFrameLayoutCamera = (FrameLayout) findViewById(R.id.frameLayoutLiveView);
+		mFrameLayoutCamera = (FrameLayout) 
+				findViewById(R.id.frameLayoutLiveView);
 		cameraView = new JavaCameraView(
 				getApplicationContext(), REAR_FACING_CAMERA);
 		cameraView.setCvCameraViewListener(this);
@@ -65,7 +66,8 @@ public class System3Activity extends Activity implements CvCameraViewListener2 {
 
 	@Override
 	public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-		// TODO Handle frames from camera on a different thread
+		// TODO Handle frames from camera
+		// TODO Return image to display (i.e. we can add overlays etc)
 		return null;
 	}
 }
