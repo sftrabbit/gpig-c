@@ -58,3 +58,70 @@
 .notification-low-priority{
     color: #36b0c9;
 }
+
+#systems-list
+{
+    float: right;
+}
+
+#systems-list .dropdown-menu
+{
+    float: right;
+    right: 0;
+    left: auto;
+}
+
+.param-item-deleted
+{
+    display: none;
+}
+
+.sensor-params input[type=text]
+{
+    display: inline-block;
+    width: calc(50% - 4px - 19px);
+    margin-right: 4px;
+}
+
+.param-delete
+{
+    width: 38px;
+}
+
+.new-param
+{
+    display: block;
+    margin: -10px -15px;
+    padding: 10px 15px;
+    text-align: left;
+}
+
+.new-param,
+.new-param:hover
+{
+    text-decoration: none;
+}
+
+.new-param:before
+{
+    content: '\002B';
+    display: inline-block;
+    margin: 0 6px 0 2px;
+}
+
+.new-param:hover span
+{
+    text-decoration: underline;
+}
+
+.buttons-group
+{
+    width: 99.5%;
+    text-align: center;
+}
+
+.buttons-group .btn
+{
+    min-width: 15%;
+    margin: 0 2px;
+}
