@@ -1,9 +1,8 @@
-package com.gpigc.core.storage;
+package com.gpigc.core.storage.engine;
 
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -12,9 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.ParseException;
+import org.junit.Before;
 import org.junit.Test;
 
-import com.gpigc.core.storage.GWTSystemDataGateway;
+import com.gpigc.core.ClientSensor;
+import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Parameter;
+import com.gpigc.core.storage.SystemDataGateway;
+import com.gpigc.core.storage.engine.GWTSystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
@@ -23,14 +27,25 @@ import com.gpigc.dataabstractionlayer.client.QueryResult;
 public class GWTSystemDataGatewayTest {
 	
 	private static final String testSystemID = "TestSystemID";
+	private List<ClientSystem> systems;
+	
+	
+	@Before
+	public void setUp(){
+		systems = new ArrayList<>();
+		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
+		sensors.add(new ClientSensor("TestSensor",
+				new HashMap<Parameter, String>()));
+		systems.add(new ClientSystem(testSystemID, sensors, new ArrayList<String>(),"",
+				new HashMap<Parameter, String>()));
+	}
 	
 	@Test
 	public void testReadAndWrite() throws FailedToReadFromDatastoreException, 
 								URISyntaxException, 
 								ParseException, 
 								IOException, FailedToWriteToDatastoreException {
-		GWTSystemDataGateway gateway = new GWTSystemDataGateway(
-				new URI("http://gpigc-beta.appspot.com/gpigc-webapp"));
+		SystemDataGateway gateway = new GWTSystemDataGateway(systems);
 		Map<String,String> payload = new HashMap<String,String>();
 		payload.put("Test1", "Blue");
 		payload.put("Test2", "Red");
@@ -61,8 +76,7 @@ public class GWTSystemDataGatewayTest {
 			payload.put("Test3", "Green");
 			states.add(new EmitterSystemState(testSystemID+i, new Date(6),payload));
 		}
-		GWTSystemDataGateway gateway = new GWTSystemDataGateway(
-				new URI("http://gpigc-webapp.appspot.com/gpigc-webapp"));
+		GWTSystemDataGateway gateway = new GWTSystemDataGateway(systems);
 		System.out.println("JSON Array = " + gateway.createJSONArray(states));
 	}
 }

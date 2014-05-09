@@ -2,48 +2,41 @@ package com.gpigc.core.analysis;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
-import com.gpigc.core.Parameter;
+import com.gpigc.core.Core;
 import com.gpigc.core.analysis.AnalysisController;
-import com.gpigc.core.analysis.engine.MockDB;
 
 public class AnalysisControllerTest {
 
-	private List<ClientSystem> systems;
+	private Set<String> systemIDs;
 
 	@Before
 	public void before() throws ReflectiveOperationException {
-		systems = new ArrayList<>();
-		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
-		sensors.add(new ClientSensor("TestSensor",
-				new HashMap<Parameter, String>()));
-		systems.add(new ClientSystem("Test", sensors, new ArrayList<String>(),
-				new HashMap<Parameter, String>()));
+		systemIDs = new HashSet<>();
+		systemIDs.add("Test");
 	}
 
 	@Test
-	public void testMakeEngines() throws ReflectiveOperationException {
+	public void testMakeEngines() throws ReflectiveOperationException, IOException {
 		AnalysisController analysisController = new AnalysisController(
-				new MockDB("1"), null, systems); // no exception should be
-													// thrown
+				new ArrayList<ClientSystem>(), new Core("config/RegisteredSystems.config")); // no exception thrown
 		assertNotNull(analysisController.getAnalysisEngines());
 		assertTrue(analysisController.getAnalysisEngines().size() != 0);
 	}
 
 	@Test
-	public void testSystemUpdate() throws ReflectiveOperationException {
+	public void testSystemUpdate() throws ReflectiveOperationException, IOException {
 		AnalysisController analysisController = new AnalysisController(
-				new MockDB("1"), null, systems); // no exception should be
-													// thrown
-		analysisController.systemUpdate("Test");
+				new ArrayList<ClientSystem>(), new Core("config/RegisteredSystems.config")); // no exception thrown
+		analysisController.analyse(systemIDs);
 	}
 
 }

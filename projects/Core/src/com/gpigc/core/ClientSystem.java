@@ -9,12 +9,14 @@ public class ClientSystem {
 	private final List<ClientSensor> sensors;
 	private final List<String> registeredEngineNames;
 	private final Map<Parameter,String> parameters;
+	private final String systemDataGatewayName;
 
 	public ClientSystem(String systemID, List<ClientSensor> sensors, 
-			List<String> registeredEngineNames, Map<Parameter,String> parameters){
+			List<String> registeredEngineNames, String systemDataGatewayName, Map<Parameter,String> parameters){
 		this.id = systemID;
 		this.sensors = sensors;
 		this.registeredEngineNames = registeredEngineNames;
+		this.systemDataGatewayName = systemDataGatewayName;
 		this.parameters = parameters;
 	}
 
@@ -60,6 +62,10 @@ public class ClientSystem {
 
 	public Map<Parameter,String> getParameters() {
 		return parameters;
+	}
+
+	public String getSystemDataGatewayName() {
+		return systemDataGatewayName;
 	}
 
 }

@@ -35,6 +35,7 @@ import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+@SuppressWarnings("serial")
 public class CoreGUI extends JFrame {
 
 	private final JPanel contentPane;

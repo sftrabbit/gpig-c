@@ -6,19 +6,18 @@ import java.util.Map;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Core;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
-import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 
 public class BoundedAnalysisEngine extends AnalysisEngine {
 
-	public BoundedAnalysisEngine(List<ClientSystem> registeredSystems,
-			SystemDataGateway datastore) {
-		super(registeredSystems, datastore);
+	public BoundedAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
+		super(registeredSystems,core);
 	}
 
 	@Override
@@ -32,7 +31,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 
 		// Check the sensors
 		for (ClientSensor sensor : system.getSensors()) {
-			boolean sensorDone = checkSensor(sensor, data, system.getID());
+			boolean sensorDone = checkSensor(sensor, data, system);
 			if (sensorDone)
 				event = sensorDone;
 		}
@@ -43,7 +42,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 	}
 
 	protected boolean checkSensor(ClientSensor sensor, Map<String, String> data,
-			String systemID) {
+			ClientSystem system) {
 		// Do we have the correct parameters
 		if (hasCorrectKeys(sensor)) {
 			double upperBound = Double.parseDouble(sensor.getParameters().get(
@@ -53,7 +52,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 			int numRecords = Integer.parseInt(sensor.getParameters().get(
 					Parameter.NUM_RECORDS));
 			try {
-				long mean = getMean(getSensorReadings(systemID, sensor.getID(),
+				long mean = getMean(getSensorReadings(system, sensor.getID(),
 						numRecords));
 				if (mean > upperBound) {
 					data.put("Message", data.get("Message")
@@ -74,7 +73,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 				e.printStackTrace();
 			}
 		} else {
-			StandardMessageGenerator.wrongParams(name,systemID);
+			StandardMessageGenerator.wrongParams(name,system.getID());
 		}
 		return false;
 	}

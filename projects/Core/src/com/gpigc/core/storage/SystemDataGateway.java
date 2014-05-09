@@ -6,17 +6,23 @@ package com.gpigc.core.storage;
 import java.util.Date;
 import java.util.List;
 
+import com.gpigc.core.ClientSystem;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 
-/**
- * The interface to any datastore
- * 
- * @author GPIGC
- */
-public interface SystemDataGateway {
+public abstract class SystemDataGateway {
+	
+	
+	
+	private final List<ClientSystem> registeredSystems;
+	public final String name;
+
+	public SystemDataGateway(List<ClientSystem> registeredSystems){
+		this.registeredSystems = registeredSystems;
+		this.name = this.getClass().getSimpleName();
+	}
 	
 	/**
 	 * @param systemID A systemID
@@ -26,7 +32,7 @@ public interface SystemDataGateway {
 	 * systemID
 	 * @throws FailedToReadFromDatastoreException
 	 */
-	public QueryResult readMostRecent(String systemID,String sensorID, int numRecords) 
+	public abstract QueryResult readMostRecent(String systemID,String sensorID, int numRecords) 
 			throws FailedToReadFromDatastoreException;
 	
 	/**
@@ -37,7 +43,7 @@ public interface SystemDataGateway {
 	 * @return All records for a given systemID within the given time period
 	 * @throws FailedToReadFromDatastoreException
 	 */
-	public QueryResult readBetween(String systemID, String sensorID, Date start, Date end) 
+	public abstract QueryResult readBetween(String systemID, String sensorID, Date start, Date end) 
 			throws FailedToReadFromDatastoreException;
 	
 	/**
@@ -46,7 +52,7 @@ public interface SystemDataGateway {
 	 * @param data The data to be written
 	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
 	 */
-	public void write(EmitterSystemState data) throws FailedToWriteToDatastoreException;
+	public abstract void write(EmitterSystemState data) throws FailedToWriteToDatastoreException;
 
 	/**
 	 * Writes a batch of data to the datastore
@@ -54,5 +60,13 @@ public interface SystemDataGateway {
 	 * @param data The data to be written
 	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
 	 */
-	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException;
+	public abstract void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException;
+
+	/**
+	 * Returns a list of systems which are registered to this datastore
+	 * @return systems
+	 */
+	public List<ClientSystem> getAssociatedSystems() {
+		return registeredSystems;
+	}
 }

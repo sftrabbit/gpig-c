@@ -55,8 +55,8 @@ public class StandardMessageGenerator {
 
 	}
 
-	public static void failedToWrite() {
-		print("Failed to Write to Database. Discarding data.");
+	public static void failedToWrite(String name, String id) {
+		print("Failed to Write to Datastore: " + name + ". Discarding Data From System: " + id);
 	}
 
 	public static void errorClosingProto() {
@@ -72,8 +72,8 @@ public class StandardMessageGenerator {
 		print("Could Not Update Status");		
 	}
 	
-	public static void dataRecievedFrom(String systemID) {
-		print("Data Recieved From System: " + systemID);		
+	public static void dataRecieved() {
+		print("New Data Recieved");		
 	}
 
 	public static void couldNotReadConfig() {
@@ -88,5 +88,9 @@ public class StandardMessageGenerator {
 
 	public static void failedToStart() {
 		print("Failed to Start Data Input Server");
+	}
+
+	public static void couldNotReadSystemInConfig() {
+		print("Could not read system from config file, skipping");		
 	}
 }

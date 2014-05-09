@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.gpigc.core.storage;
+package com.gpigc.core.storage.engine;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -25,6 +25,8 @@ import org.apache.http.util.EntityUtils;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.gpigc.core.ClientSystem;
+import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
@@ -39,7 +41,9 @@ import static com.gpigc.dataabstractionlayer.server.DatabaseField.*;
  * 
  * @author GPIGC
  */
-public class GWTSystemDataGateway implements SystemDataGateway {
+public class GWTSystemDataGateway extends SystemDataGateway {
+	
+	public final static String APPENGINE_SERVLET_URI = "http://gpigc-webapp.appspot.com/gpigc-webapp";
 
 	/**
 	 * The location of the servlet that handles the database
@@ -50,8 +54,14 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 * @param dbServletUri
 	 *            The location of the servlet that handles the database
 	 */
-	public GWTSystemDataGateway(URI dbServletUri) {
-		this.dbServletUri = dbServletUri;
+	public GWTSystemDataGateway(List<ClientSystem> systems) {
+		super(systems);
+		try {
+			this.dbServletUri = new URI(APPENGINE_SERVLET_URI);
+		} catch (URISyntaxException e) {
+			System.err.println("Could not initialise datastore: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	/*
@@ -131,8 +141,7 @@ public class GWTSystemDataGateway implements SystemDataGateway {
 	 * )
 	 */
 	@Override
-	public void write(EmitterSystemState data)
-			throws FailedToWriteToDatastoreException {
+	public void write(EmitterSystemState data) throws FailedToWriteToDatastoreException {
 		List<EmitterSystemState> dataArray = new ArrayList<EmitterSystemState>();
 		dataArray.add(data);
 		write(dataArray);

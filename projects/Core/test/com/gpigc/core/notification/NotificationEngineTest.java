@@ -23,7 +23,7 @@ public class NotificationEngineTest {
 
 		testSystems = new ArrayList<ClientSystem>();
 		testSystems.add(new ClientSystem("TestSystem",
-				new ArrayList<ClientSensor>(), new ArrayList<String>(),
+				new ArrayList<ClientSensor>(), new ArrayList<String>(),"",
 				new HashMap<Parameter, String>()));
 
 		engine = new NotificationEngine(testSystems, 3) {

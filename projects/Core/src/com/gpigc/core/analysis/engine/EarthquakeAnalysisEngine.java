@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Core;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
-import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
@@ -19,9 +19,8 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 	private final int NUM_RECORDS = 1;
 	public final static String EARTHQUAKE_SENSOR_ID = "EQ";
 
-	public EarthquakeAnalysisEngine(List<ClientSystem> registeredSystems,
-			SystemDataGateway datastore) {
-		super(registeredSystems, datastore);
+	public EarthquakeAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
+		super(registeredSystems,core);
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 		if (system.hasSensorWithID(EARTHQUAKE_SENSOR_ID)) {
 			try {
 				//Get the Data
-				SensorState sensorState = getSensorReadings(system.getID(),
+				SensorState sensorState = getSensorReadings(system,
 						EARTHQUAKE_SENSOR_ID, NUM_RECORDS).get(0);
 
 				//Get The magnitude
