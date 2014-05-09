@@ -11,10 +11,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.gpigc.core.analysis.AnalysisController;
+import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
-import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.proto.Protos;
 
 public class DataInputServer extends Thread {

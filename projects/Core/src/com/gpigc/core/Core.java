@@ -9,11 +9,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.gpigc.dataabstractionlayer.client.GWTSystemDataGateway;
-import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.core.analysis.AnalysisController;
 import com.gpigc.core.datainput.DataInputServer;
 import com.gpigc.core.notification.NotificationGenerator;
+import com.gpigc.core.storage.GWTSystemDataGateway;
+import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.core.view.CoreGUI;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.core.view.TextAreaStream;

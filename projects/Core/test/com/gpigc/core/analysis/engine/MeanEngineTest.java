@@ -17,8 +17,8 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.engine.BoundedAnalysisEngine;
 import com.gpigc.core.event.DataEvent;
+import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.SensorState;
-import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 public class MeanEngineTest {
 

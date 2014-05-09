@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 import com.gpigc.dataabstractionlayer.client.SensorState;
-import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 public class MockDB implements SystemDataGateway {
 

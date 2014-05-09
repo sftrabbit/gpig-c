@@ -2,7 +2,6 @@ package com.gpigc.core.analysis;
 
 import static org.junit.Assert.*;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,21 +14,21 @@ import org.junit.Test;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
-import com.gpigc.core.Core;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
+import com.gpigc.core.analysis.engine.MockDB;
 import com.gpigc.core.event.DataEvent;
+import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
-import com.gpigc.dataabstractionlayer.client.GWTSystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 
 public class AnalysisEngineTest {
 
 	private AnalysisEngine analysisEngine;
 	private List<ClientSystem> registeredSystems;
-	private GWTSystemDataGateway datastore;
+	private SystemDataGateway datastore;
 
 	@Before
 	public void before() throws URISyntaxException {
@@ -46,9 +45,7 @@ public class AnalysisEngineTest {
 		registeredSystems.add(new ClientSystem("TestSystem", sensors,
 				new ArrayList<String>(), new HashMap<Parameter, String>()));
 
-		// Init datastore and dummy engine
-		datastore = new GWTSystemDataGateway(
-				new URI(Core.APPENGINE_SERVLET_URI));
+		datastore = new MockDB("10");
 		analysisEngine = new AnalysisEngine(registeredSystems, datastore) {
 			@Override
 			public DataEvent analyse(ClientSystem system) {

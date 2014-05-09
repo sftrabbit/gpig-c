@@ -15,7 +15,7 @@ import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
-import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
+import com.gpigc.core.storage.SystemDataGateway;
 
 public class EarthquakeAnalysisEngineTest {
 
