@@ -10,16 +10,16 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 
 /**
- * Generates and sends notifications from event objects
+ * Handles all of the notification engines
  * 
  * @author GPIGC
  */
-public class NotificationGenerator {
+public class NotificationController {
 
 	private final List<NotificationEngine> notificationEngines;
 
 
-	public NotificationGenerator( List<ClientSystem> systems)
+	public NotificationController( List<ClientSystem> systems)
 			throws ReflectiveOperationException {
 		notificationEngines = instantiateEngines(systems);
 		if(getNotificationEngines() == null){
