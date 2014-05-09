@@ -70,7 +70,6 @@ public class DataInputServer extends Thread {
 		} catch (IOException e) {
 			StandardMessageGenerator.errorClosingProto();
 		}
-
 	}
 
 }
