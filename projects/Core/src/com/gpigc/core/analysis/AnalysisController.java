@@ -5,12 +5,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
-import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Core;
 import com.gpigc.core.event.DataEvent;
-import com.gpigc.core.notification.NotificationGenerator;
 import com.gpigc.core.view.StandardMessageGenerator;
 
 /**
@@ -22,36 +21,27 @@ import com.gpigc.core.view.StandardMessageGenerator;
 public class AnalysisController {
 
 	private final List<AnalysisEngine> analysisEngines;
+	private final Core core;
 
-	private SystemDataGateway datastore;
-	private NotificationGenerator notificationGenerator;
-
-	public AnalysisController(SystemDataGateway datastore,
-			NotificationGenerator notificationGenerator,
-			List<ClientSystem> systems) throws ReflectiveOperationException {
-		this.datastore = datastore;
-		this.notificationGenerator = notificationGenerator;
+	public AnalysisController(List<ClientSystem> systems, Core core) throws ReflectiveOperationException {
+		this.core = core;
 		analysisEngines = instantiateEngines(systems);
 		if (analysisEngines == null)
 			throw new ReflectiveOperationException(
 					"Analysis Engines could not be loaded");
 	}
 
-	/**
-	 * Performs analysis on a given system
-	 * 
-	 * @param systemId
-	 *            The ID of the system to perform analysis upon
-	 * @throws FailedToReadFromDatastoreException
-	 */
-	public void systemUpdate(String systemID) {
-		for (AnalysisEngine engine : analysisEngines) {
-			if (engine.getRegisteredSystem(systemID) != null) {
-				DataEvent event = engine.analyse(engine
-						.getRegisteredSystem(systemID));
-				if (event != null && notificationGenerator != null) {
-					StandardMessageGenerator.eventGenerated(engine.name, systemID);
-					notificationGenerator.generate(event);
+
+	public void analyse(Set<String> systemIDs) {
+		for(String currentSystemID: systemIDs){
+			for (AnalysisEngine engine : analysisEngines) {
+				//If this engine is registered to this system
+				if (engine.getRegisteredSystem(currentSystemID) != null) {
+					DataEvent event = engine.analyse(engine.getRegisteredSystem(currentSystemID));
+					if (event != null) {
+						core.generateNotification(event);
+						StandardMessageGenerator.eventGenerated(engine.name, currentSystemID);
+					}
 				}
 			}
 		}
@@ -76,10 +66,10 @@ public class AnalysisController {
 						listOfFiles[i].getName().lastIndexOf('.'));
 				Constructor<?> constructor = Class.forName(
 						"com.gpigc.core.analysis.engine." + name)
-						.getConstructor(List.class, SystemDataGateway.class);
+						.getConstructor(List.class,Core.class);
 				AnalysisEngine engine;
 				engine = (AnalysisEngine) constructor.newInstance(
-						getRegisteredSystems(name, allSystems), datastore);
+						getRegisteredSystems(name, allSystems),core);
 				engines.add(engine);
 			}
 			return engines;
@@ -106,4 +96,5 @@ public class AnalysisController {
 	public List<AnalysisEngine> getAnalysisEngines() {
 		return analysisEngines;
 	}
+
 }

@@ -30,3 +30,6 @@ AdminCentre/.idea/
 AdminCentre/modern-business/modern-business.iml
 AdminCentre/modern-business/nbproject/private/
 AdminCentre/web/web.iml
+
+.metadata
+gen

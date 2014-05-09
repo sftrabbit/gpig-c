@@ -10,13 +10,13 @@ import java.util.Map;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Core;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
-import com.gpigc.dataabstractionlayer.client.SystemDataGateway;
 
 import expr.Parser;
 import expr.SyntaxException;
@@ -39,9 +39,8 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 	 */
 	private Parser parser;
 
-	public ExpressionAnalysisEngine(List<ClientSystem> registeredSystems,
-			SystemDataGateway datastore) {
-		super(registeredSystems, datastore);
+	public ExpressionAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
+		super(registeredSystems,core);
 		parser = new Parser();
 		variables = new HashMap<String, Variable>();
 	}
@@ -96,7 +95,7 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 	private List<SensorState> getSensorData(ClientSystem system) throws FailedToReadFromDatastoreException {
 		List<SensorState> values = new ArrayList<>();
 		for(ClientSensor sensor: system.getSensors()){
-			SensorState state = getSensorReadings(system.getID(), sensor.getID(), 1).get(0);
+			SensorState state = getSensorReadings(system, sensor.getID(), 1).get(0);
 			if(state!=null){
 				values.add(state);
 			}else{

@@ -24,6 +24,8 @@ public class ConfigParser {
 	private final String SENSOR_ID_KEY = "SensorID";
 	private final String PARAMS_KEY = "Params";
 	private final String ENGINES_KEY = "Engines";
+	private final String SYSTEM_GATEWAY_KEY = "DatastoreGateway";
+
 
 
 	public ArrayList<ClientSystem> parse(File configFile) throws IOException {
@@ -48,15 +50,17 @@ public class ConfigParser {
 					// move next to get its value
 					jParser.nextToken();
 					while (jParser.nextToken() != JsonToken.END_ARRAY) {
+
 						String systemID = null;
+						String systemDataGatewayName = null;
 						List<ClientSensor> sensors = new ArrayList<>();
 						List<String> registeredEngines = new ArrayList<>();
 						Map<Parameter, String> params = new HashMap<>();
+
 						while (jParser.nextToken() != JsonToken.END_OBJECT) {
 							String key = jParser.getCurrentName();
 							if (SYSTEM_ID_KEY.equals(key) && jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
 								systemID = jParser.getText();
-								StandardMessageGenerator.registeredSystem(systemID);
 							}
 							if (SENSORS_KEY.equals(key)) {
 								while (jParser.nextToken() != JsonToken.END_ARRAY) {
@@ -70,6 +74,9 @@ public class ConfigParser {
 									}
 								}
 							}
+							if (SYSTEM_GATEWAY_KEY.equals(key) && jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
+								systemDataGatewayName = jParser.getText();
+							}
 							if (PARAMS_KEY.equals(key)) {
 								while(jParser.nextToken() != JsonToken.END_OBJECT){
 									String paramkey = jParser.getCurrentName();
@@ -80,7 +87,12 @@ public class ConfigParser {
 								}
 							}
 						}
-						systems.add(new ClientSystem(systemID, sensors, registeredEngines, params));
+						if(systemID!=null && systemDataGatewayName!= null){
+							systems.add(new ClientSystem(systemID, sensors, registeredEngines, systemDataGatewayName, params));
+							StandardMessageGenerator.registeredSystem(systemID);
+						}else{
+							StandardMessageGenerator.couldNotReadSystemInConfig();
+						}
 					}
 
 				}
