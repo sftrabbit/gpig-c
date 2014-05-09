@@ -8,7 +8,7 @@
     tools:ignore="MergeRootFrame" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -26,7 +26,7 @@
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
        android:layout_above="@+id/pushButton"
-       android:layout_below="@+id/textView1"
+       android:layout_below="@+id/textViewTitle"
        android:layout_centerHorizontal="true"
        android:background="@drawable/orange_rounded_background"
        android:orientation="vertical"
