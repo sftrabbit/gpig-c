@@ -21,7 +21,7 @@ public class CoreShell extends Shell {
 	private static final String CURRENT_CONFIG_FILE = "Current Config File: ";
 	private final Text consoleTextView;
 	private final ToolItem startButton;
-	private String configFilePath;
+	private String configFilePath = "none chosen";
 	private final Label currentConfigFile;
 	private final ToolItem configButton;
 
@@ -88,10 +88,11 @@ public class CoreShell extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(CoreShell.this, SWT.OPEN);
 				   dialog.setFilterExtensions(new String [] {"*.config"});
-				   configFilePath = dialog.open();
-				   currentConfigFile.setText(CURRENT_CONFIG_FILE + configFilePath);
-				   currentConfigFile.pack();
-				   if(configFilePath != null){
+				   String newPath = dialog.open();
+				   if(newPath != null){
+					   configFilePath = newPath;
+					   currentConfigFile.setText(CURRENT_CONFIG_FILE + configFilePath);
+					   currentConfigFile.pack();
 					   startButton.setEnabled(true);
 				   }else{
 					   startButton.setEnabled(false);
