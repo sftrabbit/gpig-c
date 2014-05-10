@@ -3,7 +3,7 @@ $("#tab-menu li a").click(function() {
         $("#tab-menu li").removeClass("active");
         $(this).closest("li").addClass("active");
         $(".tab-content").hide();
-        $("#content-" + $(this).data("tab")).fadeIn("medium");
+        $("#content-" + $(this).data("tab")).fadeIn(500);
     }
     return false;
 });

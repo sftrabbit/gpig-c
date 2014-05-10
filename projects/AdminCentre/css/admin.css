@@ -64,6 +64,11 @@
     float: right;
 }
 
+#systems-list > span
+{
+    font-size: 28px;
+}
+
 #systems-list .dropdown-menu
 {
     float: right;
