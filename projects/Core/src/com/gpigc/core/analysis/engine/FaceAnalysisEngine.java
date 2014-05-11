@@ -42,19 +42,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 
-		if(system.getParameters().containsKey(Parameter.FACES) &&
+		if(system.getParameters().containsKey(Parameter.EXAMPLE_FACES) &&
 				system.getParameters().containsKey(Parameter.FACE_SIMILARITY_THRESHOLD)){
 			double threshold = Double.parseDouble(
 					system.getParameters()
 					.get(Parameter.FACE_SIMILARITY_THRESHOLD));
-			Mat exampleFaces;
-			if (systemExampleFacesCache.keySet().contains(system)) {
-				exampleFaces = systemExampleFacesCache.get(system);
-			} else {
-				String base64faceData = system.getParameters().get(Parameter.FACES);
-				exampleFaces = parseFaces(base64faceData);
-			}
-			
+			Mat exampleFaces = getExampleFaces(system);
 			// Get data from sensor
 			List<SensorState> values;
 			try {
@@ -75,6 +68,22 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			StandardMessageGenerator.wrongParams(system.getID(), name);
 		}
 		return null;
+	}
+
+	/**
+	 * @return The example faces for the given system, using the cache where 
+	 * possible
+	 */
+	private Mat getExampleFaces(ClientSystem system) {
+		Mat exampleFaces;
+		if (systemExampleFacesCache.keySet().contains(system)) {
+			exampleFaces = systemExampleFacesCache.get(system);
+		} else {
+			String base64faceData = system.getParameters().get(
+					Parameter.EXAMPLE_FACES);
+			exampleFaces = parseFaces(base64faceData);
+		}
+		return exampleFaces;
 	}
 
 	private Mat parseFaces(String base64) {
