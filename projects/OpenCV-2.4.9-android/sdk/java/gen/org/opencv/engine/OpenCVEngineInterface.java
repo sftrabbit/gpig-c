@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /Users/Tom/Documents/GPIG/Git/gpig-c/projects/OpenCV-2.4.9-android/sdk/java/src/org/opencv/engine/OpenCVEngineInterface.aidl
+ * Original file: /home/sftrabbit/Work/University/2013/GPIG/repo/projects/OpenCV-2.4.9-android/sdk/java/src/org/opencv/engine/OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /**

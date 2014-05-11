@@ -48,7 +48,9 @@ public class MainActivity extends Activity {
 		system3Button.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				//TODO
+				 Intent intent = new Intent(MainActivity.this, System3Activity.class);
+				    intent.putExtra(DataPusher.CORE_IP_KEY, coreIP);
+				 startActivity(intent);
 			}
 		});
 	}

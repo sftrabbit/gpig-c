@@ -19,27 +19,26 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="35dp" >
-
-        <TextView
-            android:id="@+id/textViewMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="It&apos;s a burglar!"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
         
         <FrameLayout
             android:id="@+id/frameLayoutLiveView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/textViewMessage"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="false" >
 
         </FrameLayout>
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Save Data"
+            android:onClick="saveData" />
 
     </RelativeLayout>
 

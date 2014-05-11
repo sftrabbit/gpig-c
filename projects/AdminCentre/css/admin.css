@@ -59,9 +59,21 @@
     color: #36b0c9;
 }
 
+#tab-menu .fa
+{
+    margin-right: 3px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
 #systems-list
 {
     float: right;
+}
+
+#systems-list > span
+{
+    font-size: 25px;
 }
 
 #systems-list .dropdown-menu
@@ -124,4 +136,27 @@
 {
     min-width: 15%;
     margin: 0 2px;
+}
+
+#data-store select
+{
+    width: calc(100% - 10px - 100px);
+    margin-right: 10px;
+}
+
+#data-store button
+{
+    width: 100px;
+}
+
+.btn-primary
+{
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.5s;
+}
+
+.btn-success,
+.btn-warning
+{
+    transition-duration: 0s;
 }

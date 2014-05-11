@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="lib/httpcore-4.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/httpclient-4.3.3.jar"/>
 	<classpathentry kind="lib" path="lib/opencv-249.jar"/>
+	<classpathentry kind="lib" path="lib/swt_osx_64.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
