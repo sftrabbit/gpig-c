@@ -138,6 +138,17 @@
     margin: 0 2px;
 }
 
+#data-store select
+{
+    width: calc(100% - 10px - 100px);
+    margin-right: 10px;
+}
+
+#data-store button
+{
+    width: 100px;
+}
+
 .btn
 {
     transition-property: background-color, border-color, color;

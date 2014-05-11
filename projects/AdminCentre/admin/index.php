@@ -85,6 +85,7 @@ foreach ($systems as $system) {
     ?>
     <ul class="nav nav-tabs nav-justified" id="tab-menu">
         <li class="active"><a href="#" data-tab="sensors"><i class="fa fa-tasks"></i> Sensors</a></li>
+        <li><a href="#" data-tab="data"><i class="fa fa-hdd-o"></i> Data store</a></li>
         <li><a href="#" data-tab="engines"><i class="fa fa-cogs"></i> Engines</a></li>
         <li><a href="#" data-tab="reports" id="tab-menu-reports"><i class="fa fa-bar-chart-o"></i> Reporting</a></li>
     </ul>
@@ -123,6 +124,22 @@ foreach ($systems as $system) {
         }
     }
     ?>
+    </div>
+    <div id="content-data" class="tab-content" style="display:none;">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form id="data-store" class="form-inline">
+                    <select id="data-store-name" class="form-control">
+                    <?php
+                    $availableDatastores = array("GWTSystemDataGateway");
+                    foreach ($availableDatastores as $store) {
+                        echo "<option value=\"$store\"".($store == $currentSystem["DatastoreGateway"] ? "selected=\"selected\"" : "").">$store</option>";
+                    }
+                    ?>
+                    </select><button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
     </div>
     <div id="content-engines" class="tab-content" style="display:none;">
         <br>
