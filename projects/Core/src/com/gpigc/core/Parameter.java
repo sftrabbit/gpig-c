@@ -7,7 +7,7 @@ public enum Parameter {
 	NUM_RECORDS, 
 	EXPRESSION, 
 	PHONE_IP, 
-	FACES, 
+	EXAMPLE_FACES, 
 	FACE_SIMILARITY_THRESHOLD;
 
 	public static boolean isValid(String name) {
