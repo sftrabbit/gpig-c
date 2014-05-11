@@ -3,7 +3,7 @@ $("#tab-menu li a").click(function() {
         $("#tab-menu li").removeClass("active");
         $(this).closest("li").addClass("active");
         $(".tab-content").hide();
-        $("#content-" + $(this).data("tab")).fadeIn("medium");
+        $("#content-" + $(this).data("tab")).fadeIn(500);
     }
     return false;
 });
@@ -69,6 +69,26 @@ $(".sensor-params").on("reset", function() {
     $(".param-item-deleted", this).removeClass("param-item-deleted").addClass("param-item");
 });
 
+$("#data-store").submit(function() {
+    var $this = $(this);
+    $("select, button", $this).prop("disabled", true).blur();
+    $(".btn-primary", $this).html('<i class="fa fa-refresh fa-spin"></i> Saving').blur();
+    var data = {"store": $("#data-store-name option:selected").val()};
+    $.post("ajax-datastore.php?system=" + $("#systems-list .dropdown-toggle").text().trim(), data, function success(data, textStatus, jqXHR) {
+        var button = $(".btn-primary", $this);
+        button.html('<i class="fa fa-check"></i> Saved').addClass("btn-success");
+        setTimeout(function() { button.html("Save").removeClass("btn-success"); }, 1500);
+    }).fail(function() {
+        alert("Error: permission denied - could not write to the config file.");
+        var button = $(".btn-primary", $this);
+        button.html('<i class="fa fa-exclamation-triangle"></i> Error').addClass("btn-warning");
+        setTimeout(function() { button.html("Save").removeClass("btn-warning"); }, 1500);
+    }).always(function() {
+        $("select, button", $this).prop("disabled", false);
+    });
+    return false;
+});
+
 $(window).bind("unload", function() {
-    $("input, button").prop("disabled", false);
+    $("input, button, select").prop("disabled", false);
 });
