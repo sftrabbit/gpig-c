@@ -29,7 +29,7 @@ import org.opencv.core.Mat;
  */
 public class FaceAnalysisEngine extends AnalysisEngine {
 
-	Map<ClientSystem, Mat> systemExampleFacesCache;
+	private Map<ClientSystem, Mat> systemExampleFacesCache;
 
 	public FaceAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
 		super(registeredSystems, core);
