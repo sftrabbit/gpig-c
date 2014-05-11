@@ -4,6 +4,7 @@ $("#tab-menu li a").click(function() {
         $(this).closest("li").addClass("active");
         $(".tab-content").hide();
         $("#content-" + $(this).data("tab")).fadeIn(500);
+        $(this).blur();
     }
     return false;
 });
@@ -89,6 +90,18 @@ $("#data-store").submit(function() {
     return false;
 });
 
+$(".toggle-switch").bootstrapSwitch({
+    size: "normal",
+    onSwitchChange: function(event, state) {
+        var data = {"engines": $("#engines input[type=checkbox]:checked").map(function() { return $(this).val(); }).get()};
+        $.post("ajax-engines.php?system=" + $("#systems-list .dropdown-toggle").text().trim(), data).fail(function() {
+            alert("Error: permission denied - could not write to the config file.");
+            $("#engines")[0].reset();
+        });
+    }
+});
+
 $(window).bind("unload", function() {
     $("input, button, select").prop("disabled", false);
+    $("#engines")[0].reset();
 });
