@@ -51,7 +51,7 @@ public class ClientSystemTest {
 	public void testEqualsFail() {
 		ClientSystem equalSystem = new ClientSystem(systemID + "2", sensors,
 				new ArrayList<String>(),"", new HashMap<Parameter,String>());
-		assertNotEquals(system, equalSystem);
+		assertNotSame(system, equalSystem);
 	}
 
 	@Test
