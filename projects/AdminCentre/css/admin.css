@@ -149,6 +149,22 @@
     width: 100px;
 }
 
+#content-engines .list-group
+{
+    margin-bottom: 0;
+}
+
+#content-engines .list-group-item
+{
+    overflow: auto;
+    line-height: 30px;
+}
+
+.bootstrap-switch
+{
+    float: right;
+}
+
 .btn-primary
 {
     transition-property: background-color, border-color, color;

@@ -12,6 +12,21 @@ foreach ($systems as $system) {
         $otherSystems[] = $system["SystemID"];
     }
 }
+
+$availableDatastores = array(
+    "GWTSystemDataGateway"
+);
+$availableAnalysis = array(
+    "BoundedAnalysisEngine",
+    "EarthquakeAnalysisEngine",
+    "ExpressionAnalysisEngine",
+    "FaceAnalysisEngine"
+);
+$availableNotification = array(
+    "EmailNotificationEngine",
+    "PhoneAppNotificationEngine",
+    "TwitterNotificationEngine"
+);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +44,7 @@ foreach ($systems as $system) {
     <link href="../css/admin.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/custom-gpig.css" rel="stylesheet">
+    <link href="../css/bootstrap-switch.css" rel="stylesheet">
 
     <!-- JavaScript -->
     <script src="../js/jquery-1.10.2.js"></script>
@@ -131,7 +147,6 @@ foreach ($systems as $system) {
                 <form id="data-store" class="form-inline">
                     <select id="data-store-name" class="form-control">
                     <?php
-                    $availableDatastores = array("GWTSystemDataGateway");
                     foreach ($availableDatastores as $store) {
                         echo "<option value=\"$store\"".($store == $currentSystem["DatastoreGateway"] ? "selected=\"selected\"" : "").">$store</option>";
                     }
@@ -142,18 +157,46 @@ foreach ($systems as $system) {
         </div>
     </div>
     <div id="content-engines" class="tab-content" style="display:none;">
-        <br>
-        <ul class="list-group">
-        <?php
-        if (empty($currentSystem["Engines"])) {
-            echo "<li class=\"list-group-item\">No engines configured</li>";
-        } else {
-            foreach ($currentSystem["Engines"] as $engine) {
-                echo "<li class=\"list-group-item\">$engine</li>";
-            }
-        }
-        ?>
-        </ul>
+        <form id="engines">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Analysis engines</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                    <?php
+                    foreach ($availableAnalysis as $engine) {
+                    ?>
+                        <li class="list-group-item">
+                            <?php echo $engine; ?>
+                            <input type="checkbox" class="toggle-switch" name="engines[]" value="<?php echo $engine; ?>"<?php echo in_array($engine, $currentSystem["Engines"]) ? " checked=\"checked\"" : ""; ?>>
+                        </li>
+                    <?php
+                    }
+                    ?>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Notification engines</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                    <?php
+                    foreach ($availableNotification as $engine) {
+                    ?>
+                        <li class="list-group-item">
+                            <?php echo $engine; ?>
+                            <input type="checkbox" class="toggle-switch" name="engines[]" value="<?php echo $engine; ?>"<?php echo in_array($engine, $currentSystem["Engines"]) ? " checked=\"checked\"" : ""; ?>>
+                        </li>
+                    <?php
+                    }
+                    ?>
+                    </ul>
+                </div>
+            </div>
+        </form>
     </div>
     <div id="content-reports" class="tab-content" style="display:none;">
         <?php
@@ -422,6 +465,7 @@ foreach ($systems as $system) {
 <script src="../js/bootstrap.js"></script>
 <script src="../js/modern-business.js"></script>
 <script src="js/admin-navbar.js"></script>
+<script src="js/bootstrap-switch.js"></script>
 <script src="js/index.js"></script>
 </body>
 </html>
