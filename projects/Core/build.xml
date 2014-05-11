@@ -1,8 +1,9 @@
 
 <project name="GPIG-C Core" basedir="." default="rebuild-run">
 
-	<!--<condition property="lib.platform.dir" value="win"> <os family="windows" 
-		/> </condition> -->
+	<condition property="lib.platform.name" value="win">
+		<os family="windows" />
+	</condition>
 
 	<condition property="lib.platform.name" value="osx">
 		<os family="mac" />
@@ -20,8 +21,10 @@
 	<condition property="lib.platform.arch" value="64" else="32">
 		<contains string="${os.arch}" substring="64" />
 	</condition>
-
-	<echo>${os.arch}</echo>
+	
+	<condition property="jvmarg" value="-XstartOnFirstThread" else="">
+	    <equals arg1="${lib.platform.name}" arg2="osx" />
+	</condition>
 
 	<fail message="Only OSX and Linux supported atm" unless="lib.platform.name" />
 
@@ -62,7 +65,7 @@
 
 	<target name="run" depends="jar">
 		<java fork="true" classname="${main-class}">
-		    <jvmarg value="-XstartOnFirstThread"/>
+			<jvmarg value="${jvmarg}" />
 			<sysproperty key="java.library.path"
 				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
 			<classpath>
