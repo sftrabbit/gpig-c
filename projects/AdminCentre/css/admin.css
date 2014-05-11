@@ -137,3 +137,15 @@
     min-width: 15%;
     margin: 0 2px;
 }
+
+.btn
+{
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.5s;
+}
+
+.btn-success,
+.btn-warning
+{
+    transition-duration: 0s;
+}
