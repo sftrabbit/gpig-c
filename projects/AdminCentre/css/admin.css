@@ -149,7 +149,7 @@
     width: 100px;
 }
 
-.btn
+.btn-primary
 {
     transition-property: background-color, border-color, color;
     transition-duration: 0.5s;
