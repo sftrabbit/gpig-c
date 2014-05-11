@@ -59,6 +59,13 @@
     color: #36b0c9;
 }
 
+#tab-menu .fa
+{
+    margin-right: 3px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
 #systems-list
 {
     float: right;
@@ -66,7 +73,7 @@
 
 #systems-list > span
 {
-    font-size: 28px;
+    font-size: 25px;
 }
 
 #systems-list .dropdown-menu

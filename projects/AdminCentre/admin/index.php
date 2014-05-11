@@ -62,7 +62,7 @@ foreach ($systems as $system) {
             <h1>
                 Administration Center
                 <div id="systems-list">
-                    <span>System</span> 
+                    <span>System: </span> 
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
                             <?php echo $currentSystem["SystemID"]; ?> <span class="caret"></span>
@@ -84,9 +84,9 @@ foreach ($systems as $system) {
     if (!isset($currentSystem["unknown"])) {
     ?>
     <ul class="nav nav-tabs nav-justified" id="tab-menu">
-        <li class="active"><a href="#" data-tab="sensors">Sensors</a></li>
-        <li><a href="#" data-tab="engines">Engines</a></li>
-        <li><a href="#" data-tab="reports" id="tab-menu-reports">Reporting</a></li>
+        <li class="active"><a href="#" data-tab="sensors"><i class="fa fa-tasks"></i> Sensors</a></li>
+        <li><a href="#" data-tab="engines"><i class="fa fa-cogs"></i> Engines</a></li>
+        <li><a href="#" data-tab="reports" id="tab-menu-reports"><i class="fa fa-bar-chart-o"></i> Reporting</a></li>
     </ul>
     <div id="content-sensors" class="tab-content">
     <?php
