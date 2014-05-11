@@ -1,30 +1,28 @@
 
 <project name="GPIG-C Core" basedir="." default="rebuild-run">
-	
-	<!--<condition property="lib.platform.dir" value="win">
-		<os family="windows" />
-	</condition>-->
-	
+
+	<!--<condition property="lib.platform.dir" value="win"> <os family="windows" 
+		/> </condition> -->
+
 	<condition property="lib.platform.name" value="osx">
 		<os family="mac" />
 	</condition>
 
 	<condition property="lib.platform.name" value="linux">
-	    <and>
-		    <not><isset property="lib.platform.dir" /></not>
+		<and>
+			<not>
+				<isset property="lib.platform.dir" />
+			</not>
 			<os family="unix" />
 		</and>
 	</condition>
-	
-	<condition property="lib.platform.arch" value="32" else="64">
-	    <or>
-			<contains string="${os.arch}" substring="32" />
-			<contains string="${os.arch}" substring="86" />
-		</or>
+
+	<condition property="lib.platform.arch" value="64" else="32">
+		<contains string="${os.arch}" substring="64" />
 	</condition>
-	
-	<echo>${lib.platform.arch}</echo>
-	
+
+	<echo>${os.arch}</echo>
+
 	<fail message="Only OSX and Linux supported atm" unless="lib.platform.name" />
 
 	<property name="src.dir" value="src" />
@@ -32,7 +30,8 @@
 	<property name="lib.dir" value="lib" />
 	<path id="classpath">
 		<fileset dir="${lib.dir}" includes="*.jar" />
-		<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" includes="*.jar" />
+		<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
+			includes="*.jar" />
 	</path>
 
 	<property name="build.dir" value="bin" />
@@ -63,7 +62,9 @@
 
 	<target name="run" depends="jar">
 		<java fork="true" classname="${main-class}">
-			<sysproperty key="java.library.path" path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
+		    <jvmarg value="-XstartOnFirstThread"/>
+			<sysproperty key="java.library.path"
+				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
 			<classpath>
 				<path refid="classpath" />
 				<path location="${jar.dir}/Core.jar" />
