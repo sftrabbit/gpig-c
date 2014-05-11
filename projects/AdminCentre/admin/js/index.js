@@ -4,6 +4,7 @@ $("#tab-menu li a").click(function() {
         $(this).closest("li").addClass("active");
         $(".tab-content").hide();
         $("#content-" + $(this).data("tab")).fadeIn(500);
+        $(this).blur();
     }
     return false;
 });
