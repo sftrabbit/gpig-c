@@ -22,9 +22,11 @@
 		<contains string="${os.arch}" substring="64" />
 	</condition>
 	
-	<condition property="jvmarg" value="-XstartOnFirstThread" else="">
+	<condition property="jvmarg">
 	    <equals arg1="${lib.platform.name}" arg2="osx" />
 	</condition>
+	
+	<echo>${jvmarg}</echo>
 
 	<fail message="Only OSX and Linux supported atm" unless="lib.platform.name" />
 
@@ -63,9 +65,20 @@
 		</jar>
 	</target>
 
-	<target name="run" depends="jar">
+	<target name="runarg" depends="jar" if="jvmarg">
 		<java fork="true" classname="${main-class}">
-			<jvmarg value="${jvmarg}" />
+			<jvmarg value="-XstartOnFirstThread" />
+			<sysproperty key="java.library.path"
+				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
+			<classpath>
+				<path refid="classpath" />
+				<path location="${jar.dir}/Core.jar" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="run" depends="jar" unless="jvmarg">
+		<java fork="true" classname="${main-class}">
 			<sysproperty key="java.library.path"
 				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
 			<classpath>
@@ -77,6 +90,6 @@
 
 	<target name="rebuild" depends="clean,jar" />
 
-	<target name="rebuild-run" depends="clean,run" />
+	<target name="rebuild-run" depends="clean,runarg,run" />
 
 </project>
