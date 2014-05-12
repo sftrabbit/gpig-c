@@ -25,13 +25,13 @@
 		<contains string="${os.arch}" substring="64" />
 	</condition>
 
-	<!-- OSX requires a special arg to be passed ot the JVM -->
+	<!-- OSX requires a special arg to be passed to the JVM -->
 	
 	<condition property="jvmarg">
 		<equals arg1="${lib.platform.name}" arg2="osx" />
 	</condition>
 	
-	<fail message="Only OSX and Linux supported atm" unless="lib.platform.name" />
+	<fail message="Only OSX 64-bit, Linux 64-bit, and Windows 32- or 64-bit supported atm" unless="lib.platform.name" />
 	
 	<!-- Various directories -->
 

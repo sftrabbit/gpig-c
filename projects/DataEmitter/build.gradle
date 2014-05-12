@@ -3,7 +3,7 @@ apply plugin: 'java'
 buildDir = "../../build"
 libsDirName = "bin"
 
-def emitters = ['EarthEmitter', 'TestAppEmitter']
+def emitters = ['EarthEmitter', 'TestAppEmitter', 'HTTPResponseTimeEmitter']
 
 sourceSets {
 	main {
