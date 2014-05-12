@@ -24,10 +24,11 @@ public class EmitterShell extends Shell {
 	private static final String ICON_PATH = "/images/nosql.png";
 	private static final String STOP_BUTTON_PATH = "/images/control_stop_blue.png";
 	private static final String PLAY_BUTTON_PATH = "/images/control_play_blue.png";
-	private static final String TEST_APP_1_PATH = "emitterJars/testApp1.jar";
-	private static final String TEST_APP_2_PATH = "emitterJars/testApp2.jar";
-	private static final String EARTH_APP_PATH = "emitterJars/earthEmitter.jar";
-	private static final String SERVER_APP_PATH = "emitterJars/serverMonitor.jar";
+	
+	private static final String TEST_APP_1_PATH = "../TestApp1Emitter/bin/TestApp1Emitter.jar";
+	private static final String TEST_APP_2_PATH = "../TestApp2Emitter/bin/TestApp2Emitter.jar";
+	private static final String EARTH_APP_PATH = "../EarthEmitter/bin/EarthEmitter.jar";
+	private static final String SERVER_APP_PATH = "../ServerEmitter/bin/ServerEmitter.jar";
 
 	private Button serverButton;
 	private Button earthButton;
