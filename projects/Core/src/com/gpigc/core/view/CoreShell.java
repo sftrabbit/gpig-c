@@ -55,7 +55,6 @@ public class CoreShell extends Shell {
 	 */
 	public CoreShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		InputStream iconInputStream = getClass().getResourceAsStream("/images/nosql.png");
 		Image icon = new Image(display,iconInputStream);
 		this.setImage(icon);
@@ -105,7 +104,7 @@ public class CoreShell extends Shell {
 		configButton.setText("Change Config File");		
 
 		new Label(this, SWT.NONE);
-		Group grpGpigcHumsCore = new Group(this, SWT.BORDER);
+		Group grpGpigcHumsCore = new Group(this, SWT.NONE);
 		grpGpigcHumsCore.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		grpGpigcHumsCore.setText("GPIG-C: HUMS Core Application");
 		grpGpigcHumsCore.setLayout(new FillLayout(SWT.HORIZONTAL));
