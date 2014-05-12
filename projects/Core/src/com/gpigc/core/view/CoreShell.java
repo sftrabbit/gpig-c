@@ -1,5 +1,7 @@
 package com.gpigc.core.view;
 
+import java.io.InputStream;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
@@ -54,7 +56,8 @@ public class CoreShell extends Shell {
 	public CoreShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
-		Image icon = new Image(display,"images/nosql.png");
+		InputStream iconInputStream = getClass().getResourceAsStream("/images/nosql.png");
+		Image icon = new Image(display,iconInputStream);
 		this.setImage(icon);
 		GridLayout gridLayout = new GridLayout(1, true);
 		gridLayout.marginRight = 5;
@@ -142,12 +145,14 @@ public class CoreShell extends Shell {
 
 	protected void runButton() {
 		startButton.setText("Run ");
-		startButton.setImage(new Image(getDisplay(),"images/control_play_blue.png"));		
+		InputStream imageInputStream = getClass().getResourceAsStream("/images/control_play_blue.png");
+		startButton.setImage(new Image(getDisplay(),imageInputStream));		
 	}
 
 	protected void stopButton() {
 		startButton.setText("Stop");
-		startButton.setImage(new Image(getDisplay(),"images/control_stop_blue.png"));		
+		InputStream imageInputStream = getClass().getResourceAsStream("/images/control_stop_blue.png");
+		startButton.setImage(new Image(getDisplay(),imageInputStream));
 	}
 
 	/**

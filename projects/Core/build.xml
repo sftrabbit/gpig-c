@@ -1,6 +1,7 @@
-
 <project name="GPIG-C Core" basedir="." default="rebuild-run">
 
+    <!--  Determine platform directory name -->
+    
 	<condition property="lib.platform.name" value="win">
 		<os family="windows" />
 	</condition>
@@ -17,35 +18,49 @@
 			<os family="unix" />
 		</and>
 	</condition>
+	
+	<!--  Determine bitness of architecture -->
 
 	<condition property="lib.platform.arch" value="64" else="32">
 		<contains string="${os.arch}" substring="64" />
 	</condition>
+
+	<!-- OSX requires a special arg to be passed ot the JVM -->
 	
 	<condition property="jvmarg">
-	    <equals arg1="${lib.platform.name}" arg2="osx" />
+		<equals arg1="${lib.platform.name}" arg2="osx" />
 	</condition>
 	
-	<echo>${jvmarg}</echo>
-
 	<fail message="Only OSX and Linux supported atm" unless="lib.platform.name" />
+	
+	<!-- Various directories -->
 
 	<property name="src.dir" value="src" />
 
 	<property name="lib.dir" value="lib" />
+
+	<property name="build.dir" value="bin" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	
+	<!--  Manifest properties -->
+
+	<property name="main-class" value="com.gpigc.core.Main" />
+	
 	<path id="classpath">
 		<fileset dir="${lib.dir}" includes="*.jar" />
 		<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
 			includes="*.jar" />
 	</path>
+	
+	<!-- Initialise One-Jar -->
 
-	<property name="build.dir" value="bin" />
-	<property name="classes.dir" value="${build.dir}/classes" />
-	<property name="jar.dir" value="${build.dir}/jar" />
-
-	<property name="main-class" value="com.gpigc.core.Main" />
+	<property name="one-jar.dist.dir" value="../../tools/one-jar" />
+	<import file="${one-jar.dist.dir}/one-jar-ant-task.xml" />
 
 
+	<!-- TARGETS -->
+	
 	<target name="clean">
 		<delete dir="${build.dir}" />
 	</target>
@@ -58,33 +73,41 @@
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${jar.dir}" />
-		<jar destfile="${jar.dir}/Core.jar" basedir="${classes.dir}">
+		<one-jar destfile="${jar.dir}/Core.jar">
 			<manifest>
-				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="One-Jar-Main-Class" value="${main-class}" />
+				<attribute name="One-Jar-Show-Expand" value="true" />
 			</manifest>
-		</jar>
+			<main>
+				<fileset dir="${classes.dir}" />
+			</main>
+			<lib>
+				<fileset dir="${lib.dir}" includes="*.jar" />
+				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
+					includes="*.jar" />
+			</lib>
+			<binlib>
+				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
+					includes="*.so" />
+			</binlib>
+			<fileset dir="." includes="images/*.png" />
+		</one-jar>
 	</target>
 
 	<target name="runarg" depends="jar" if="jvmarg">
-		<java fork="true" classname="${main-class}">
+	    <!-- This executes on OSX -->
+		<java fork="true">
 			<jvmarg value="-XstartOnFirstThread" />
 			<sysproperty key="java.library.path"
 				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
-			<classpath>
-				<path refid="classpath" />
-				<path location="${jar.dir}/Core.jar" />
-			</classpath>
 		</java>
 	</target>
 
 	<target name="run" depends="jar" unless="jvmarg">
-		<java fork="true" classname="${main-class}">
+	    <!-- This executes on anything but OSX -->
+		<java fork="true" jar="${jar.dir}/Core.jar">
 			<sysproperty key="java.library.path"
 				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
-			<classpath>
-				<path refid="classpath" />
-				<path location="${jar.dir}/Core.jar" />
-			</classpath>
 		</java>
 	</target>
 
