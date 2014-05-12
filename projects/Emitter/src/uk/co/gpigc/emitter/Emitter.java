@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import com.gpigc.proto.Protos.SystemData;
 
@@ -17,15 +19,22 @@ public class Emitter {
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final EmitterCallable emitterCallable = new EmitterCallable();
 	private final List<DataCollector> collectors = new ArrayList<DataCollector>();
+	private Future<Void> emitterResult;
 	
 	public void start() {
 		if (!emitterCallable.isRunning()) {
-			executor.submit(emitterCallable);
+			emitterResult = executor.submit(emitterCallable);
 		}
 	}
 	
 	public void stop() throws IOException {
 		emitterCallable.stop();
+	}
+	
+	public void waitFor() throws InterruptedException, ExecutionException {
+		if (emitterCallable.isRunning()) {
+			emitterResult.get();
+		}
 	}
 	
 	public void registerDataCollector(DataCollector collector) {
