@@ -32,9 +32,7 @@ public class Emitter {
 	}
 	
 	public void waitFor() throws InterruptedException, ExecutionException {
-		if (emitterCallable.isRunning()) {
-			emitterResult.get();
-		}
+		emitterResult.get();
 	}
 	
 	public void registerDataCollector(DataCollector collector) {
