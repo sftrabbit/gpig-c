@@ -1,10 +1,15 @@
 $("#tab-menu li a").click(function() {
+    $(this).blur();
     if (!$(this).closest("li").hasClass("active")) {
         $("#tab-menu li").removeClass("active");
         $(this).closest("li").addClass("active");
         $(".tab-content").hide();
         $("#content-" + $(this).data("tab")).fadeIn(500);
-        $(this).blur();
+        if ($(this).data("tab") == "reports") {
+            $("body").trigger("reports-show");
+        } else {
+            $("body").trigger("reports-hide");
+        }
     }
     return false;
 });
