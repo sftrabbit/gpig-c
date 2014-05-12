@@ -13,13 +13,24 @@ import com.gpigc.proto.Protos.SystemData;
 
 public class Emitter {
 	private final int COLLECTION_INTERVAL = 1000;
-	protected static String CORE_HOST = "localhost";
-	protected static int CORE_PORT = 8000;
+	protected static String DEFAULT_CORE_HOST = "localhost";
+	protected static int DEFAULT_CORE_PORT = 8000;
 	
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final EmitterCallable emitterCallable = new EmitterCallable();
 	private final List<DataCollector> collectors = new ArrayList<DataCollector>();
 	private Future<Void> emitterResult;
+	private String host;
+	private int port;
+	
+	public Emitter() {
+		this(DEFAULT_CORE_HOST, DEFAULT_CORE_PORT);
+	}
+	
+	public Emitter(String host, int port) {
+		this.host = host;
+		this.port = port;
+	}
 	
 	public void start() {
 		if (!emitterCallable.isRunning()) {
@@ -45,7 +56,7 @@ public class Emitter {
 
 		@Override
 		public Void call() throws Exception {
-			sender = new DataSender(CORE_HOST, CORE_PORT);
+			sender = new DataSender(host, port);
 			
 			running = true;
 			
