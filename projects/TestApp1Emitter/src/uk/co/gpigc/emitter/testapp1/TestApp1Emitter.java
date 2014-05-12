@@ -9,7 +9,7 @@ import uk.co.gpigc.emitter.testapp1.JavaVirtualMachineMonitor.MonitorJvmExceptio
 import uk.co.gpigc.emitter.testapp1.ProcessMonitor.ProcessMonitorException;
 
 public class TestApp1Emitter {
-	private static final int COLLECTION_INTERVAL = 60000;
+	private static final int COLLECTION_INTERVAL = 1000;
 	private static final Emitter emitter = new Emitter(COLLECTION_INTERVAL);
 
 	public static void main(String[] args) throws MonitorJvmException, ProcessMonitorException, InterruptedException {
