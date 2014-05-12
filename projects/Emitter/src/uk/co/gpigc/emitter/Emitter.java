@@ -12,9 +12,9 @@ import java.util.concurrent.Future;
 import com.gpigc.proto.Protos.SystemData;
 
 public class Emitter {
-	private final int COLLECTION_INTERVAL = 1000;
-	protected static String DEFAULT_CORE_HOST = "localhost";
-	protected static int DEFAULT_CORE_PORT = 8000;
+	public static String DEFAULT_CORE_HOST = "localhost";
+	public static int DEFAULT_CORE_PORT = 8000;
+	public static int DEFAULT_COLLECTION_INTERVAL = 1000;
 	
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final EmitterCallable emitterCallable = new EmitterCallable();
@@ -22,14 +22,24 @@ public class Emitter {
 	private Future<Void> emitterResult;
 	private String host;
 	private int port;
+	private int collectionInterval;
 	
 	public Emitter() {
-		this(DEFAULT_CORE_HOST, DEFAULT_CORE_PORT);
+		this(DEFAULT_CORE_HOST, DEFAULT_CORE_PORT, DEFAULT_COLLECTION_INTERVAL);
+	}
+	
+	public Emitter(int collectionInterval) {
+		this(DEFAULT_CORE_HOST, DEFAULT_CORE_PORT, collectionInterval);
 	}
 	
 	public Emitter(String host, int port) {
+		this(host, port, DEFAULT_COLLECTION_INTERVAL);
+	}
+	
+	public Emitter(String host, int port, int collectionInterval) {
 		this.host = host;
 		this.port = port;
+		this.collectionInterval = collectionInterval;
 	}
 	
 	public void start() {
@@ -71,7 +81,7 @@ public class Emitter {
 					}
 				}
 				
-				Thread.sleep(COLLECTION_INTERVAL);
+				Thread.sleep(collectionInterval);
 			}
 			
 			return null;
