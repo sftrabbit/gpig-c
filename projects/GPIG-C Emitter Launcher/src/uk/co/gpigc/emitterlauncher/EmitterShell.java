@@ -1,5 +1,6 @@
 package uk.co.gpigc.emitterlauncher;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,9 +21,9 @@ import org.eclipse.swt.layout.GridData;
 
 public class EmitterShell extends Shell {
 
-	private static final String ICON_PATH = "/uk/co/gpigc/emitterlauncher/images/nosql.png";
-	private static final String STOP_BUTTON_PATH = "/uk/co/gpigc/emitterlauncher/images/control_stop_blue.png";
-	private static final String PLAY_BUTTON_PATH = "/uk/co/gpigc/emitterlauncher/images/control_play_blue.png";
+	private static final String ICON_PATH = "/images/nosql.png";
+	private static final String STOP_BUTTON_PATH = "/images/control_stop_blue.png";
+	private static final String PLAY_BUTTON_PATH = "/images/control_play_blue.png";
 	private static final String TEST_APP_1_PATH = "emitterJars/testApp1.jar";
 	private static final String TEST_APP_2_PATH = "emitterJars/testApp2.jar";
 	private static final String EARTH_APP_PATH = "emitterJars/earthEmitter.jar";
@@ -58,18 +59,19 @@ public class EmitterShell extends Shell {
 
 	public EmitterShell(Display display) {
 		super(display);
-		graphicsSetup();
+		graphicsSetup(display);
 		shellSetup(display);
 		Group groupComp = groupSetup();
 		compositeSetup(groupComp);
 	}
 
-	private void graphicsSetup() {
-		playIcon = SWTResourceManager.getImage(EmitterShell.class,
-				PLAY_BUTTON_PATH);
-		stopIcon = SWTResourceManager.getImage(EmitterShell.class,
-				STOP_BUTTON_PATH);
-		shellIcon = SWTResourceManager.getImage(EmitterShell.class, ICON_PATH);
+	private void graphicsSetup(Display display) {
+		InputStream playIconInputStream = getClass().getResourceAsStream(PLAY_BUTTON_PATH);
+		playIcon = new Image(display, playIconInputStream);
+		InputStream stopIconInputStream = getClass().getResourceAsStream(STOP_BUTTON_PATH);
+		stopIcon = new Image(display, stopIconInputStream);
+		InputStream shellIconInputStream = getClass().getResourceAsStream(ICON_PATH);
+		shellIcon = new Image(display, shellIconInputStream);
 	}
 
 	private void compositeSetup(Group groupComp) {
