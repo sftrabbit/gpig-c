@@ -6,6 +6,6 @@ import com.gpigc.proto.Protos.SystemData;
 
 public interface DataCollector {
 	
-	public List<SystemData> collect();
+	public List<SystemData> collect() throws Exception;
 
 }
