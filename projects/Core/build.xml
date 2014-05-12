@@ -96,7 +96,7 @@
 
 	<target name="runarg" depends="jar" if="jvmarg">
 	    <!-- This executes on OSX -->
-		<java fork="true">
+		<java fork="true" jar="${jar.dir}/Core.jar">
 			<jvmarg value="-XstartOnFirstThread" />
 			<sysproperty key="java.library.path"
 				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
