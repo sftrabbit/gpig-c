@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 OPENCV_INSTALL_MODULES:=on
-include ../OpenCV-2.4.9-android/sdk/native/jni/OpenCV.mk
+include ../../tools/opencv-android/sdk/native/jni/OpenCV.mk
 
 LOCAL_MODULE := faces
 LOCAL_LDLIBS += -llog -ldl
