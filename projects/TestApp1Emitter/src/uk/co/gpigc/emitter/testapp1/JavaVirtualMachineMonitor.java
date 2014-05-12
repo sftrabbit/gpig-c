@@ -1,4 +1,4 @@
-package com.gpigc.dataemitter.monitors;
+package uk.co.gpigc.emitter.testapp1;
 
 import java.io.File;
 import java.io.IOException;

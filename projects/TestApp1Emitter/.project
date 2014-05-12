@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>GPIG-C Data Emitter</name>
+	<name>GPIG-C Test App 1 Emitter</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,10 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<variableList>
-		<variable>
-			<name>gradle</name>
-			<value>file:/usr/Gradle/gradle-1.11/bin</value>
-		</variable>
-	</variableList>
 </projectDescription>

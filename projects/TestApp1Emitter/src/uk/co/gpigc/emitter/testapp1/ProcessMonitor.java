@@ -1,4 +1,4 @@
-package com.gpigc.dataemitter.monitors;
+package uk.co.gpigc.emitter.testapp1;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -6,8 +6,6 @@ import java.util.TimerTask;
 import org.hyperic.sigar.ProcCpu;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-
-import com.gpigc.dataemitter.monitors.JavaVirtualMachineMonitor.MonitorJvmException;
 
 /**
  * Monitors a process's resource usage, such as CPU load and heap memory usage.
@@ -85,7 +83,7 @@ public class ProcessMonitor {
 	/**
 	 * Thrown if unable to retrieve information about a process.
 	 */
-	public static class ProcessMonitorException extends MonitorJvmException {
+	public static class ProcessMonitorException extends Exception {
 		private static final long serialVersionUID = 1L;
 
 		public ProcessMonitorException() {

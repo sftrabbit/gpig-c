@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GPIG-C Emitter"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GPIG-C Proto"/>
 	<classpathentry kind="lib" path="lib/json-simple.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GPIG-C Proto"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
