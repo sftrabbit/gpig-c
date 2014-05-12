@@ -37,6 +37,7 @@ Projects
 - Storage:
   - **GPIG-WebApp** - A web application for Google App Engine that provides write
     and read access to a database for storing data from the monitored application.
-- *Proto* - Compiles Protocol Buffers message specifications into a Java
-  library so that it can be used to communicate between the data emitters and
-  the Core.
+- Utility:
+  - **Proto** - Compiles Protocol Buffers message specifications into a Java
+    library so that it can be used to communicate between the data emitters and
+    the Core.
