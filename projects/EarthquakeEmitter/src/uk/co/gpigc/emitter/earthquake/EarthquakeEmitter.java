@@ -7,7 +7,8 @@ import java.util.concurrent.ExecutionException;
 import uk.co.gpigc.emitter.Emitter;
 
 public class EarthquakeEmitter {
-	private final static Emitter emitter = new Emitter();
+	private static final int COLLECTION_INTERVAL = 60000;
+	private static final Emitter emitter = new Emitter(COLLECTION_INTERVAL);
 
 	public static void main(String[] args) throws MalformedURLException {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());

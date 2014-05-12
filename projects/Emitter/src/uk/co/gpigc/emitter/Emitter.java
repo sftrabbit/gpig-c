@@ -12,9 +12,9 @@ import java.util.concurrent.Future;
 import com.gpigc.proto.Protos.SystemData;
 
 public class Emitter {
-	public static String DEFAULT_CORE_HOST = "localhost";
-	public static int DEFAULT_CORE_PORT = 8000;
-	public static int DEFAULT_COLLECTION_INTERVAL = 1000;
+	public static final String DEFAULT_CORE_HOST = "localhost";
+	public static final int DEFAULT_CORE_PORT = 8000;
+	public static final int DEFAULT_COLLECTION_INTERVAL = 1000;
 	
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final EmitterCallable emitterCallable = new EmitterCallable();
