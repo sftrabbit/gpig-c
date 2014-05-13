@@ -45,10 +45,20 @@ public class TestApp2Collector implements DataCollector {
 				.setKey("Mem")
 				.setValue(String.valueOf(processMonitor.getMemUsage()))
 				.build();
+		SystemData.Datum procState = SystemData.Datum.newBuilder()
+				.setKey("State")
+				.setValue(String.valueOf(processMonitor.getProcState()))
+				.build();
+		SystemData.Datum procWD = SystemData.Datum.newBuilder()
+				.setKey("WorkingDir")
+				.setValue(String.valueOf(processMonitor.getProcWorkDir()()))
+				.build();
 		SystemData data = SystemData.newBuilder().setSystemId("testapp2")
 				.setTimestamp(new Date().getTime())
 					.addDatum(cpuDatum)
 					.addDatum(memoryDatum)
+					.addDatum(procState)
+					.addDatum(procWD)
 				.build();
 		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
 		dataList.add(data);
