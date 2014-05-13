@@ -8,7 +8,5 @@ LOCAL_MODULE := faces
 LOCAL_LDLIBS += -llog -ldl
 LOCAL_SRC_FILES := faces.cpp
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
-
-$(info $(LOCAL_LDLIBS))
  
 include $(BUILD_SHARED_LIBRARY)

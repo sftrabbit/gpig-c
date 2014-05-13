@@ -130,7 +130,7 @@ static cv::Mat spatial_histogram(cv::Mat src, int numPatterns,
 
 
 extern "C" {
-JNIEXPORT void JNICALL Java_uk_co_gpigc_androidapp_System3Activity_computeFaceData(
+JNIEXPORT void JNICALL Java_uk_co_gpigc_androidapp_FaceSystemActivity_computeFaceData(
 		JNIEnv * jniEnv, jclass jniClass, jobjectArray jniImage, jint jniWidth,
 		jint jniHeight, jlong outputMatAddress) {
 	int numPixels = jniEnv->GetArrayLength(jniImage);

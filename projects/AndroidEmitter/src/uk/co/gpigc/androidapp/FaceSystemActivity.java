@@ -5,9 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
+
+import uk.co.gpigc.androidapp.comms.DataPusher;
 import uk.co.gpigc.gpigcandroid.R;
 import android.app.Activity;
 import android.hardware.Camera;
@@ -23,6 +28,9 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 	SurfaceHolder.Callback {
 
 	private static int REAR_FACING_CAMERA = 0;
+	
+	private static final String SYSTEM_ID = "FaceSystem";
+	private static final String FACE_ID = "Face";
 
 	private FrameLayout cameraContainer;
 	private SurfaceView previewSurface;
@@ -97,16 +105,17 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 
 	@Override
 	public void onPreviewFrame(byte[] data, Camera camera) {
+		
+		Camera.Size previewSize = camera.getParameters().getPreviewSize();
+		byte[][] rgbImage = NV21toRGB(data, previewSize.width,
+				previewSize.height);
+
+		Mat faceData = new Mat();
+		computeFaceData(rgbImage, previewSize.width, previewSize.height,
+				faceData.getNativeObjAddr());
+		
 		if (save) {
 			save = false;
-
-			Camera.Size previewSize = camera.getParameters().getPreviewSize();
-			byte[][] rgbImage = NV21toRGB(data, previewSize.width,
-					previewSize.height);
-
-			Mat faceData = new Mat();
-			computeFaceData(rgbImage, previewSize.width, previewSize.height,
-					faceData.getNativeObjAddr());
 
 			Log.d("Foo", this.getApplicationContext().getFilesDir().toString());
 			File file = new File(this.getApplicationContext().getFilesDir(),
@@ -117,7 +126,8 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 				for (int i = 0; i < faceData.size().width; i++) {
 					float[] faceDataValue = new float[1];
 					faceData.get(0, i, faceDataValue);
-					System.out.println("Face data element "+i+" of "+faceData.size().width+": "+faceDataValue[0]);
+					System.out.println("Face data element "+i+" of "+
+							faceData.size().width+": "+faceDataValue[0]);
 					fileStream.print(faceDataValue[0]);
 					if (i != faceData.size().width - 1) {
 						fileStream.print(",");
@@ -131,7 +141,31 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 
 			saveButton.setText("Save Data");
 			saveButton.setEnabled(true);
+		} else {
+			transmitFaceData(faceData);
 		}
+	}
+
+	private void transmitFaceData(Mat faceData) {
+		// TODO Switch to base64 encoding if we want to waste less space
+		StringBuilder bld = new StringBuilder('\"');
+		for (int i = 0; i < faceData.size().width; i++) {
+			float[] faceDataValue = new float[1];
+			faceData.get(0, i, faceDataValue);
+			bld.append(faceDataValue[0]);
+			if (i != faceData.size().width - 1) {
+				bld.append(',');
+			}
+		}
+		bld.append('\"');
+		String encodedFaceData = bld.toString();
+		Map<String, String> data = new HashMap<String, String>();
+		data.put(FACE_ID, encodedFaceData);
+		DataPusher pusher = new DataPusher(getApplicationContext(),
+				SYSTEM_ID, 
+				data, 
+				getIntent().getStringExtra(DataPusher.CORE_IP_KEY));
+		pusher.execute();
 	}
 
 	private static native void computeFaceData(byte[][] image, int width,
