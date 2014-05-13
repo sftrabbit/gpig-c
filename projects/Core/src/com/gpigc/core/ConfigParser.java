@@ -102,8 +102,8 @@ public class ConfigParser {
 			return systems;
 		} catch ( IOException e) {
 			StandardMessageGenerator.couldNotReadConfig();
-			e.printStackTrace();
-			return null;
+			StandardMessageGenerator.printException(e);
+			return new ArrayList<ClientSystem>();
 		}
 	}
 

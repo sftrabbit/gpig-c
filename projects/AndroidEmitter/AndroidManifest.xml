@@ -34,17 +34,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="uk.co.gpigc.androidapp.System1Activity"
+            android:name="uk.co.gpigc.androidapp.CarSystemActivity"
             android:label="Car System"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="uk.co.gpigc.androidapp.System2Activity"
+            android:name="uk.co.gpigc.androidapp.PhoneSystemActivity"
             android:label="Phone System"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="uk.co.gpigc.androidapp.System3Activity"
+            android:name="uk.co.gpigc.androidapp.FaceSystemActivity"
             android:label="Face System"
             android:screenOrientation="portrait" >
         </activity>

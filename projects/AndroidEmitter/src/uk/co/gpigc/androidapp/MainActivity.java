@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 		system1Button.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-			    Intent intent = new Intent(MainActivity.this, System1Activity.class);
+			    Intent intent = new Intent(MainActivity.this, CarSystemActivity.class);
 			    intent.putExtra(DataPusher.CORE_IP_KEY, coreIP);
 			    startActivity(intent);
 			}
@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 		system2Button.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				 Intent intent = new Intent(MainActivity.this, System2Activity.class);
+				 Intent intent = new Intent(MainActivity.this, PhoneSystemActivity.class);
 				    intent.putExtra(DataPusher.CORE_IP_KEY, coreIP);
 				 startActivity(intent);
 			}
@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 		system3Button.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				 Intent intent = new Intent(MainActivity.this, System3Activity.class);
+				 Intent intent = new Intent(MainActivity.this, FaceSystemActivity.class);
 				    intent.putExtra(DataPusher.CORE_IP_KEY, coreIP);
 				 startActivity(intent);
 			}
