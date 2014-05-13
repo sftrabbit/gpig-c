@@ -17,8 +17,6 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 
-import uk.co.gpigc.androidapp.faces.Face;
-import uk.co.gpigc.androidapp.faces.FaceDetector;
 import uk.co.gpigc.gpigcandroid.R;
 import android.app.Activity;
 import android.content.Context;
@@ -33,14 +31,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-public class System3Activity extends Activity implements Camera.PreviewCallback, SurfaceHolder.Callback {
+public class System3Activity extends Activity implements Camera.PreviewCallback,
+	SurfaceHolder.Callback {
 
 	private static int REAR_FACING_CAMERA = 0;
 
 	private FrameLayout cameraContainer;
 	private SurfaceView previewSurface;
 	private Camera camera;
-	private FaceDetector faceDetector = new FaceDetector();
 	private Button saveButton;
 	private boolean save;
 	
