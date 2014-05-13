@@ -16,7 +16,6 @@ public class OpenJarThread extends Thread {
 			System.out.println("First Test App is running from: "+ jarPath);
 			proc.waitFor();
 			stopRunning();
-			System.out.println("First Test App Stopped");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -25,6 +24,7 @@ public class OpenJarThread extends Thread {
 	public void stopRunning(){
 		if(proc != null)
 			proc.destroy();
+		System.out.println("First Test App Stopped");
 	}
 
 }
