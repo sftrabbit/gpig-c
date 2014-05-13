@@ -165,6 +165,7 @@ public class JavaVirtualMachineMonitor {
 	private static VirtualMachineDescriptor getVirtualMachineDescriptor(
 			String appName) throws AppNotRunningException {
 		for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
+			System.out.println(descriptor.displayName());
 			if (descriptor.displayName().endsWith(appName)) {
 				return descriptor;
 			}
