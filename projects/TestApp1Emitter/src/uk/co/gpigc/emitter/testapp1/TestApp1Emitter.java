@@ -1,7 +1,6 @@
 package uk.co.gpigc.emitter.testapp1;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.concurrent.ExecutionException;
 
 import uk.co.gpigc.emitter.Emitter;
@@ -15,9 +14,9 @@ public class TestApp1Emitter {
 	public static void main(String[] args) throws MonitorJvmException, ProcessMonitorException, InterruptedException {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 		
+		OpenJarThread bThread = new OpenJarThread("../jar/b.jar");
 		emitter.registerDataCollector(new TestApp1Collector());
 		emitter.start();
-		
 		System.out.println("Emitter started");
 		
 		try {
@@ -27,8 +26,8 @@ public class TestApp1Emitter {
 		} catch (ExecutionException e) {
 			System.err.println("The emitter threw an exception: " + e.getCause().getMessage());
 		}
-		
 		System.out.println("Emitter stopped");
+		bThread.stopRunning();
 	}
 	
 	private static class ShutdownHook extends Thread {
