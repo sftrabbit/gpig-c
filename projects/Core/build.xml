@@ -74,6 +74,8 @@
 		<one-jar destfile="${jar.dir}/Core.jar">
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${main-class}" />
+				<attribute name="One-Jar-Expand" value="engine" />
+				<attribute name="One-Jar-Expand-Dir" value="." />
 				<attribute name="One-Jar-Show-Expand" value="true" />
 			</manifest>
 			<main>
@@ -94,14 +96,6 @@
 			<fileset dir="." includes="images/*.png" />
 		</one-jar>
 	</target>
-	
-	<!-- Packing up engine .class files
-	<unzip src="main.jar" dest="./analysis_engines">
-  		<patternset>
-    		<include name="com/gpigc/core/analysis/engine/*Engine.class" />
-  		</patternset>
-	</unzip>
-	-->
 
 	<target name="runarg" depends="jar" if="jvmarg">
 	    <!-- This executes on OSX -->
