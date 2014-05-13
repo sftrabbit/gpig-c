@@ -27,6 +27,7 @@ import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Text;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 import com.gpigc.dataabstractionlayer.client.SensorState;
@@ -64,15 +65,15 @@ public class AppEngineServlet extends HttpServlet {
 
 		DatastoreService datastoreService = DatastoreServiceFactory
 				.getDatastoreService();
-		
+
 		List<Entity> allEntities = new ArrayList<>();
-		
+
 		for (EmitterSystemState state : systemState) {
 
 			Date dataBaseTimestamp = new Date();
 			resp.getWriter().println(
 					state.getSystemID() + "    " + state.getTimeStamp()
-							+ "       " + state.getSensorReadings());
+					+ "       " + state.getSensorReadings());
 			List<Entity> stateEntities = createEntities(state,
 					dataBaseTimestamp);
 			allEntities.addAll(stateEntities);
@@ -157,6 +158,14 @@ public class AppEngineServlet extends HttpServlet {
 				resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
 				return;
 			}
+			for(Entity entity : results){
+				if(entity.hasProperty(VALUE.getKey())){
+					if (entity.getProperty(VALUE.getKey()) instanceof Text){
+						Text value = (Text)entity.getProperty(VALUE.getKey());
+						entity.setProperty(VALUE.getKey(), value);
+					}
+				}
+			}
 			writeResponse(systemID, resp, results, req.getParameter("callback"));
 			resp.setStatus(HttpServletResponse.SC_OK);
 		} else {
@@ -177,11 +186,11 @@ public class AppEngineServlet extends HttpServlet {
 		ArrayList<SensorState> sensorData = new ArrayList<>();
 		for (Entity result : results) {
 			String sensorID = result.getKey().getParent().getName();
-			sensorData.add(new SensorState(sensorID, new Date(Long
-					.parseLong(result.getProperty(CREATION_TIMESTAMP.getKey())
-							.toString())), new Date(Long.parseLong(result
-					.getProperty(DB_TIMESTAMP.getKey()).toString())), result
-					.getProperty(VALUE.getKey()).toString()));
+			String value = ((Text)result.getProperty(VALUE.getKey())).getValue();
+			Date creation = new Date(Long.parseLong(result.getProperty(CREATION_TIMESTAMP.getKey()).toString()));
+			Date dataDate = new Date(Long.parseLong(result.getProperty(DB_TIMESTAMP.getKey()).toString()));
+			SensorState state = new SensorState(sensorID,creation, dataDate, value);
+			sensorData.add(state);
 		}
 		QueryResult queryResult = new QueryResult(systemID, sensorData);
 		resp.getWriter().println(queryResult.toJSON());
@@ -217,14 +226,14 @@ public class AppEngineServlet extends HttpServlet {
 		String sensorID = req.getParameter(SENSOR_ID.getKey());
 		if (sensorID == null) { //Querying the Whole System.
 			return new Query(ENTITY.getKey(), systemIDKey)
-					.addSort(CREATION_TIMESTAMP.getKey(),
-							Query.SortDirection.DESCENDING);
+			.addSort(CREATION_TIMESTAMP.getKey(),
+					Query.SortDirection.DESCENDING);
 		} else { //Querying a Sensor
 			Key sensorKey = KeyFactory.createKey(systemIDKey,
 					SENSOR_ID.getKey(), sensorID);
 			return new Query(ENTITY.getKey(), sensorKey)
-					.addSort(CREATION_TIMESTAMP.getKey(),
-							Query.SortDirection.DESCENDING);
+			.addSort(CREATION_TIMESTAMP.getKey(),
+					Query.SortDirection.DESCENDING);
 		}
 	}
 

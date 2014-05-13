@@ -96,7 +96,7 @@ public class QueryResult {
 			throws JsonParseException, IOException {
 		return parseJSON(new StringReader(string)); 
 	}
-	
+
 	/**
 	 * @param reader A source to read the JSON string from
 	 * @return The QueryObject represented by the JSON given by the reader
@@ -105,10 +105,10 @@ public class QueryResult {
 	 */
 	public static QueryResult parseJSON(Reader reader) 
 			throws JsonParseException, IOException {
-		
+
 		String systemID = null;
 		List<SensorState> entities = new ArrayList<>();;
-		
+
 		JsonFactory f = new JsonFactory();
 		JsonParser parser = f.createParser(reader);
 		parser.nextToken(); // Returns a start of object token
@@ -131,7 +131,7 @@ public class QueryResult {
 		parser.close();
 		return new QueryResult(systemID, entities);
 	}
-	
+
 	/**
 	 * Reads the next record into the records list
 	 * 

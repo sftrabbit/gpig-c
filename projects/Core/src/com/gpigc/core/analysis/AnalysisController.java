@@ -59,10 +59,15 @@ public class AnalysisController {
 	 */
 	private List<AnalysisEngine> instantiateEngines(
 			List<ClientSystem> allSystems) {
-		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/analysis/engine");
+		File folder = new File(Core.ENGINES_FOLDER_PATH);
 		File[] listOfFiles = folder.listFiles();
 		List<AnalysisEngine> engines = new ArrayList<>();
+		
+		if (listOfFiles == null) {
+			StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), "analysis");
+			return engines;
+		}
+		
 		try {
 			for (int i = 0; i < listOfFiles.length; i++) {
 				String name = listOfFiles[i].getName().substring(0,
@@ -81,7 +86,9 @@ public class AnalysisController {
 				| NoSuchMethodException | SecurityException
 				| ClassNotFoundException e) {
 			e.printStackTrace();
-			return null;
+			System.out.println("Issue when loading a AnalysisController: "+
+					e.getMessage());
+			return engines;
 		}
 	}
 

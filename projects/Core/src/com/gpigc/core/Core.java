@@ -1,6 +1,7 @@
 package com.gpigc.core;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
 public class Core {
 
+	public static final String ENGINES_FOLDER_PATH ="./engines";
 	private final DataInputServer dataInputServer;
 	private final StorageController datastoreController;
 	private final AnalysisController analysisController;
@@ -30,10 +32,20 @@ public class Core {
 		notificationGenerator = new NotificationController(systemsToMonitor);
 		dataInputServer = new DataInputServer(this);
 
-		FileMonitor monitor = FileMonitor.getInstance();
-		ConfigFileChangeListener listener = new ConfigFileChangeListener();
-		monitor.addFileChangeListener(listener, currentConfigFilePath, 1000);
+		monitorFiles();
 	}
+
+
+	private void monitorFiles() throws FileNotFoundException {
+		FileMonitor configMonitor = FileMonitor.getInstance();
+		ConfigFileChangeListener configListener = new ConfigFileChangeListener();
+		configMonitor.addFileChangeListener(configListener, currentConfigFilePath, 1000);	
+
+		FileMonitor enginesMonitor = FileMonitor.getInstance();
+		ConfigFileChangeListener engineListener = new ConfigFileChangeListener();
+		enginesMonitor.addFileChangeListener(engineListener,ENGINES_FOLDER_PATH, 1000);	
+	}
+
 
 
 	public void refreshSystems() throws IOException, ReflectiveOperationException {
@@ -43,18 +55,18 @@ public class Core {
 		analysisController.refreshSystems(systemsToMonitor);
 		notificationGenerator.refreshSystems(systemsToMonitor);
 	}
-	
+
 	public void updateDatastore(Map<String, List<EmitterSystemState>> systemStates) {
 		getDatastoreController().push(systemStates);
 		StandardMessageGenerator.dataRecieved(systemStates.keySet());
 		getAnalysisController().analyse(systemStates.keySet());
 	}
-	
+
 	public void generateNotification(DataEvent event) {
 		getNotificationGenerator().generate(event);
 	}
 
-	
+
 	private List<ClientSystem> getSystems(String path) throws IOException {
 		ConfigParser parser = new ConfigParser();
 		return parser.parse(new File(path));

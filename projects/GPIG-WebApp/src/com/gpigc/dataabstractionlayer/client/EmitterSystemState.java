@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.google.appengine.api.datastore.Text;
 
 import static com.gpigc.dataabstractionlayer.client.DataJSONAttribute.*;
 
@@ -27,7 +28,7 @@ public class EmitterSystemState {
 
 	private final String systemID;
 	private final Date timestamp;
-	private final Map<String, String> sensorReadings;
+	private final Map<String, Text> sensorReadings;
 
 	/**
 	 * @param systemID  The system this data is about
@@ -36,7 +37,7 @@ public class EmitterSystemState {
 	 * more sensors at the given time
 	 */
 	public EmitterSystemState(String systemID, Date timestamp,
-			Map<String, String> payload) {
+			Map<String, Text> payload) {
 		if (systemID == null)
 			throw new NullPointerException("System ID is null");
 		if (timestamp == null)
@@ -66,7 +67,7 @@ public class EmitterSystemState {
 	/**
 	 * @return The value read by each sensor
 	 */
-	public Map<String, String> getSensorReadings() {
+	public Map<String, Text> getSensorReadings() {
 		return sensorReadings;
 	}
 
@@ -98,7 +99,7 @@ public class EmitterSystemState {
 			throws JsonParseException, IOException {
 		String systemID = null;
 		Date timeStamp = null;
-		Map<String, String> payload = new HashMap<>();
+		Map<String, Text> payload = new HashMap<>();
 		while (parser.getCurrentToken() != JsonToken.END_OBJECT) { // should be start object or previous value
 			parser.nextToken(); // Get key
 			String jsonKey = parser.getText();
@@ -134,9 +135,9 @@ public class EmitterSystemState {
 	 * @throws IOException
 	 */
 	private static void parseSensor(JsonParser parser,
-			Map<String, String> payload) throws JsonParseException,IOException {
+			Map<String, Text> payload) throws JsonParseException,IOException {
 		String sensorID = null;
-		String sensorValue = null;
+		Text sensorValue = null;
 		while (parser.nextToken() != JsonToken.END_OBJECT) {
 			String jsonKey = parser.getText();
 			String jsonValue = parser.nextTextValue();
@@ -149,7 +150,7 @@ public class EmitterSystemState {
 			if (jsonKey.equals(JSON_VALUE.getKey())) {
 				if (sensorValue != null) // Shouldn't have already seen a sensor value
 					throw new IllegalArgumentException("Duplicate "+ JSON_VALUE);
-				sensorValue = jsonValue;
+				sensorValue =  new Text(jsonValue);
 				continue;
 			}
 			throw new IllegalArgumentException(
@@ -177,7 +178,7 @@ public class EmitterSystemState {
 		gen.writeNumber(this.timestamp.getTime());
 		gen.writeArrayFieldStart(JSON_PAYLOAD.getKey());
 		for (String key : this.sensorReadings.keySet()) {
-			String value = sensorReadings.get(key);
+			String value = sensorReadings.get(key).getValue();
 			gen.writeStartObject();
 			gen.writeStringField(JSON_SENSOR_ID.getKey(), key);
 			gen.writeStringField(JSON_VALUE.getKey(), value);

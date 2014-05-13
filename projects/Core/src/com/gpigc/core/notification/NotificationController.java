@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Core;
 import com.gpigc.core.event.DataEvent;
+import com.gpigc.core.view.StandardMessageGenerator;
 
 /**
  * Handles all of the notification engines
@@ -47,11 +49,14 @@ public class NotificationController {
 
 	private List<NotificationEngine> instantiateEngines(List<ClientSystem> systems)
 	{
-		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/notification/engine");
+		File folder = new File(Core.ENGINES_FOLDER_PATH);
 		File[] listOfFiles = folder.listFiles();
-
 		List<NotificationEngine> engines = new ArrayList<>();
+		
+		if (listOfFiles == null) {
+			StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), "notification");
+			return engines;
+		}
 
 		for (int i = 0; i < listOfFiles.length; i++) {
 			try {
@@ -69,7 +74,9 @@ public class NotificationController {
 					| InstantiationException | IllegalAccessException | 
 					IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
-				return null;
+				System.out.println("Issue when loading a "
+						+ "NotificationController: "+e.getMessage());
+				return engines;
 			}
 		}
 		return engines;

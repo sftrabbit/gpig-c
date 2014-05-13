@@ -18,6 +18,8 @@
 	<classpathentry kind="lib" path="lib/httpclient-4.3.3.jar"/>
 	<classpathentry kind="lib" path="lib/osx-64/opencv-249.jar"/>
 	<classpathentry kind="lib" path="lib/osx-64/swt_osx_64.jar"/>
+	<classpathentry kind="lib" path="lib/proto.jar"/>
+	<classpathentry kind="lib" path="lib/protobuf.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GPIG-C Proto"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.9.jar"/>
 	<classpathentry kind="output" path="bin"/>

@@ -15,7 +15,6 @@ import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 
-
 public class StorageController {
 
 	private List<SystemDataGateway> datastores;
@@ -57,12 +56,15 @@ public class StorageController {
 
 
 	private List<SystemDataGateway> instantiateDatastores(List<ClientSystem> systems){
-		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/storage/engine");
+		File folder = new File(Core.ENGINES_FOLDER_PATH); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
 		File[] listOfFiles = folder.listFiles();
-
 		List<SystemDataGateway> engines = new ArrayList<>();
-
+		
+		if (listOfFiles == null) {
+			StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), "storage");
+			return engines;
+		}
+		
 		for (int i = 0; i < listOfFiles.length; i++) {
 			try {
 				String name = listOfFiles[i].getName().substring(0,
@@ -70,7 +72,6 @@ public class StorageController {
 				Constructor<?> constructor = Class.forName(
 						"com.gpigc.core.storage.engine." + name)
 						.getConstructor(List.class);
-
 				SystemDataGateway engine = (SystemDataGateway) constructor
 						.newInstance(getRegisteredSystems(name, systems));
 				engines.add(engine);
@@ -78,7 +79,9 @@ public class StorageController {
 					| InstantiationException | IllegalAccessException | 
 					IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
-				return null;
+				System.out.println("Issue when loading a StorageController: "+
+						e.getMessage());
+				return engines;
 			}
 		}
 		return engines;
