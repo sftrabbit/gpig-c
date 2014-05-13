@@ -1,5 +1,8 @@
 package com.gpigc.core.view;
 
+import java.util.Arrays;
+import java.util.Set;
+
 public class StandardMessageGenerator {
 
 	public static void registeredSystem(String systemID) {
@@ -72,8 +75,8 @@ public class StandardMessageGenerator {
 		print("Could Not Update Status");		
 	}
 	
-	public static void dataRecieved() {
-		print("New Data Recieved");		
+	public static void dataRecieved(Set<String> systems) {
+		print("New Data Recieved from: " + Arrays.deepToString(systems.toArray()));		
 	}
 
 	public static void couldNotReadConfig() {
