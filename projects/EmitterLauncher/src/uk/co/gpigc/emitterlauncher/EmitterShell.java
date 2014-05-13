@@ -55,7 +55,6 @@ public class EmitterShell extends Shell {
 	private StyledText textApp1;
 	private TabItem console3Tab;
 	private StyledText textApp3;
-	private StyledText styledText;
 	private TabItem console4Tab;
 	private StyledText textApp4;
 
