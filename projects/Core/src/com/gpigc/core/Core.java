@@ -30,9 +30,14 @@ public class Core {
 		notificationGenerator = new NotificationController(systemsToMonitor);
 		dataInputServer = new DataInputServer(this);
 
+		monitorFiles();
+	}
+
+
+	private void monitorFiles() {
 		FileMonitor monitor = FileMonitor.getInstance();
 		ConfigFileChangeListener listener = new ConfigFileChangeListener();
-		monitor.addFileChangeListener(listener, currentConfigFilePath, 1000);
+		monitor.addFileChangeListener(listener, currentConfigFilePath, 1000);		
 	}
 
 
