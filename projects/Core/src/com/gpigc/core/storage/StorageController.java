@@ -18,15 +18,17 @@ import com.gpigc.dataabstractionlayer.client.QueryResult;
 
 public class StorageController {
 
-	private final List<SystemDataGateway> datastores;
+	private List<SystemDataGateway> datastores;
 
 
-	public StorageController( List<ClientSystem> systems)
-			throws ReflectiveOperationException {
+	public StorageController( List<ClientSystem> systems) throws ReflectiveOperationException {
+		refreshSystems(systems);
+	}
+
+	public void refreshSystems(List<ClientSystem> systems) throws ReflectiveOperationException {
 		datastores = instantiateDatastores(systems);
-		if(getDatastores() == null){
+		if (datastores == null)
 			throw new ReflectiveOperationException("Datastores could not be loaded");
-		}
 	}
 
 	public void push(Map<String, List<EmitterSystemState>> systemStates) {

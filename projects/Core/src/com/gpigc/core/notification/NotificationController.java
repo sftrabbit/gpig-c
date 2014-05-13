@@ -16,15 +16,18 @@ import com.gpigc.core.event.DataEvent;
  */
 public class NotificationController {
 
-	private final List<NotificationEngine> notificationEngines;
+	private List<NotificationEngine> notificationEngines;
 
 
-	public NotificationController( List<ClientSystem> systems)
-			throws ReflectiveOperationException {
+	public NotificationController( List<ClientSystem> systems) throws ReflectiveOperationException {
+		refreshSystems(systems);
+	}
+
+
+	public void refreshSystems(List<ClientSystem> systems) throws ReflectiveOperationException {
 		notificationEngines = instantiateEngines(systems);
-		if(getNotificationEngines() == null){
+		if (notificationEngines == null)
 			throw new ReflectiveOperationException("Notification Engines could not be loaded");
-		}
 	}
 
 	/**
