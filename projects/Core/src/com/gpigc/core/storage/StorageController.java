@@ -57,30 +57,40 @@ public class StorageController {
 
 
 	private List<SystemDataGateway> instantiateDatastores(List<ClientSystem> systems){
+		System.err.println(1);
 		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/storage/engine");
+				+ "/src/com/gpigc/core/storage/engine"); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
+		System.err.println(2);
 		File[] listOfFiles = folder.listFiles();
-
+		System.err.println(3);
 		List<SystemDataGateway> engines = new ArrayList<>();
-
+		System.err.println(4);
+		System.err.println("List of files: "+listOfFiles);
+		System.err.println("Folder: "+folder.getAbsolutePath());
 		for (int i = 0; i < listOfFiles.length; i++) {
+			System.err.println(5);
 			try {
 				String name = listOfFiles[i].getName().substring(0,
 						listOfFiles[i].getName().lastIndexOf('.'));
+				System.err.println(6);
 				Constructor<?> constructor = Class.forName(
 						"com.gpigc.core.storage.engine." + name)
 						.getConstructor(List.class);
-
+				System.err.println(7);
 				SystemDataGateway engine = (SystemDataGateway) constructor
 						.newInstance(getRegisteredSystems(name, systems));
+				System.err.println(8);
 				engines.add(engine);
+				System.err.println(9);
 			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException 
 					| InstantiationException | IllegalAccessException | 
 					IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
+				System.err.println(10);
 				return null;
 			}
 		}
+		System.err.println(11);
 		return engines;
 	}
 
