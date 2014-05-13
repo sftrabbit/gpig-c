@@ -103,7 +103,7 @@ public class ConfigParser {
 		} catch ( IOException e) {
 			StandardMessageGenerator.couldNotReadConfig();
 			e.printStackTrace();
-			return null;
+			return new ArrayList<ClientSystem>();
 		}
 	}
 
