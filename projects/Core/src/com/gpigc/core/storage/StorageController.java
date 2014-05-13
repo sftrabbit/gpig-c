@@ -1,6 +1,7 @@
 package com.gpigc.core.storage;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -8,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.gpigc.core.ClientSystem;
-import com.gpigc.core.Core;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
-
 
 public class StorageController {
 
@@ -67,6 +66,13 @@ public class StorageController {
 		System.err.println(4);
 		System.err.println("List of files: "+listOfFiles);
 		System.err.println("Folder: "+folder.getAbsolutePath());
+		
+		if (listOfFiles == null) {
+			System.err.println("Folder "+folder+" does not exist, so no "
+					+ "datastores could be loaded.");
+			return engines;
+		}
+		
 		for (int i = 0; i < listOfFiles.length; i++) {
 			System.err.println(5);
 			try {
