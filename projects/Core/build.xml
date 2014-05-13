@@ -93,6 +93,14 @@
 			<fileset dir="." includes="images/*.png" />
 		</one-jar>
 	</target>
+	
+	<!-- Packing up engine .class files
+	<unzip src="main.jar" dest="./analysis_engines">
+  		<patternset>
+    		<include name="com/gpigc/core/analysis/engine/*Engine.class" />
+  		</patternset>
+	</unzip>
+	-->
 
 	<target name="runarg" depends="jar" if="jvmarg">
 	    <!-- This executes on OSX -->

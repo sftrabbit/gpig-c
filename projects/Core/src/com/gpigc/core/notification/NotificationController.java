@@ -47,7 +47,7 @@ public class NotificationController {
 
 	private List<NotificationEngine> instantiateEngines(List<ClientSystem> systems)
 	{
-		File folder = new File("./notification_engines");
+		File folder = new File("./engines/notification_engines");
 		File[] listOfFiles = folder.listFiles();
 		List<NotificationEngine> engines = new ArrayList<>();
 		

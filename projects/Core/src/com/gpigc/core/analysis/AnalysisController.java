@@ -59,17 +59,9 @@ public class AnalysisController {
 	 */
 	private List<AnalysisEngine> instantiateEngines(
 			List<ClientSystem> allSystems) {
-		File folder = new File("./analysis_engines");
+		File folder = new File("./engines/analysis_engines");
 		File[] listOfFiles = folder.listFiles();
 		List<AnalysisEngine> engines = new ArrayList<>();
-		
-		if (listOfFiles == null) {
-			System.out.println("Folder "+folder.getAbsolutePath()+" does not "
-					+ "exist, so no analysis engines could be loaded.");
-			System.err.println("Folder "+folder.getAbsolutePath()+" does not "
-					+ "exist, so no analysis engines could be loaded.");
-			return engines;
-		}
 		
 		try {
 			for (int i = 0; i < listOfFiles.length; i++) {

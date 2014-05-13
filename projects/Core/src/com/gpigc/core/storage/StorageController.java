@@ -55,7 +55,7 @@ public class StorageController {
 
 
 	private List<SystemDataGateway> instantiateDatastores(List<ClientSystem> systems){
-		File folder = new File("./storage_engines"); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
+		File folder = new File("./engines/storage_engines"); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
 		File[] listOfFiles = folder.listFiles();
 		List<SystemDataGateway> engines = new ArrayList<>();
 		
