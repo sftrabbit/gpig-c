@@ -59,10 +59,14 @@ public class AnalysisController {
 	 */
 	private List<AnalysisEngine> instantiateEngines(
 			List<ClientSystem> allSystems) {
-		File folder = new File("./engines/analysis_engines");
+		File folder = new File(Core.ENGINES_FOLDER_PATH);
 		File[] listOfFiles = folder.listFiles();
 		List<AnalysisEngine> engines = new ArrayList<>();
 		
+		if (listOfFiles == null) {
+			StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), "analysis");
+			return engines;
+		}
 		try {
 			for (int i = 0; i < listOfFiles.length; i++) {
 				String name = listOfFiles[i].getName().substring(0,
