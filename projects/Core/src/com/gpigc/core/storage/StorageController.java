@@ -1,7 +1,6 @@
 package com.gpigc.core.storage;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -57,8 +56,7 @@ public class StorageController {
 
 	private List<SystemDataGateway> instantiateDatastores(List<ClientSystem> systems){
 		System.err.println(1);
-		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/storage/engine"); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
+		File folder = new File("./storage_engines"); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
 		System.err.println(2);
 		File[] listOfFiles = folder.listFiles();
 		System.err.println(3);
@@ -68,10 +66,10 @@ public class StorageController {
 		System.err.println("Folder: "+folder.getAbsolutePath());
 		
 		if (listOfFiles == null) {
-			System.out.println("Folder "+folder+" does not exist, so no "
-					+ "datastores could be loaded.");
-			System.err.println("Folder "+folder+" does not exist, so no "
-					+ "datastores could be loaded.");
+			System.out.println("Folder "+folder.getAbsolutePath()+" does not "
+					+ "exist, so no datastores could be loaded.");
+			System.err.println("Folder "+folder.getAbsolutePath()+" does not "
+					+ "exist, so no datastores could be loaded.");
 			return engines;
 		}
 		

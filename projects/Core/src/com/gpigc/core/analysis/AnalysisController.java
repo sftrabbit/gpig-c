@@ -59,16 +59,15 @@ public class AnalysisController {
 	 */
 	private List<AnalysisEngine> instantiateEngines(
 			List<ClientSystem> allSystems) {
-		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/analysis/engine");
+		File folder = new File("./analysis_engines");
 		File[] listOfFiles = folder.listFiles();
 		List<AnalysisEngine> engines = new ArrayList<>();
 		
 		if (listOfFiles == null) {
-			System.out.println("Folder "+folder+" does not exist, so no "
-					+ "analysis engines could be loaded.");
-			System.err.println("Folder "+folder+" does not exist, so no "
-					+ "analysis engines could be loaded.");
+			System.out.println("Folder "+folder.getAbsolutePath()+" does not "
+					+ "exist, so no analysis engines could be loaded.");
+			System.err.println("Folder "+folder.getAbsolutePath()+" does not "
+					+ "exist, so no analysis engines could be loaded.");
 			return engines;
 		}
 		

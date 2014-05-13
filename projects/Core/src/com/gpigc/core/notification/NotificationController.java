@@ -47,16 +47,15 @@ public class NotificationController {
 
 	private List<NotificationEngine> instantiateEngines(List<ClientSystem> systems)
 	{
-		File folder = new File(System.getProperty("user.dir")
-				+ "/src/com/gpigc/core/notification/engine");
+		File folder = new File("./notification_engines");
 		File[] listOfFiles = folder.listFiles();
 		List<NotificationEngine> engines = new ArrayList<>();
 		
 		if (listOfFiles == null) {
-			System.out.println("Folder "+folder+" does not exist, so no "
-					+ "notification engines could be loaded.");
-			System.err.println("Folder "+folder+" does not exist, so no "
-					+ "notification engines could be loaded.");
+			System.out.println("Folder "+folder.getAbsolutePath()+" does not "
+					+ "exist, so no notification engines could be loaded.");
+			System.err.println("Folder "+folder.getAbsolutePath()+" does not "
+					+ "exist, so no notification engines could be loaded.");
 			return engines;
 		}
 
