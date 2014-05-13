@@ -1,6 +1,7 @@
 package com.gpigc.core;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
 public class Core {
 
+	public static final String ENGINES_FOLDER_PATH ="./engines";
+;
 	private final DataInputServer dataInputServer;
 	private final StorageController datastoreController;
 	private final AnalysisController analysisController;
@@ -34,7 +37,7 @@ public class Core {
 	}
 
 
-	private void monitorFiles() {
+	private void monitorFiles() throws FileNotFoundException {
 		FileMonitor monitor = FileMonitor.getInstance();
 		ConfigFileChangeListener listener = new ConfigFileChangeListener();
 		monitor.addFileChangeListener(listener, currentConfigFilePath, 1000);		

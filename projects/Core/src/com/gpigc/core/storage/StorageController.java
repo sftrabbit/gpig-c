@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Core;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
@@ -55,15 +56,12 @@ public class StorageController {
 
 
 	private List<SystemDataGateway> instantiateDatastores(List<ClientSystem> systems){
-		File folder = new File("./storage_engines"); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
+		File folder = new File(Core.ENGINES_FOLDER_PATH); // TODO Not portable when jar is built. Need engines to be packages up and expanded by one-jar?
 		File[] listOfFiles = folder.listFiles();
 		List<SystemDataGateway> engines = new ArrayList<>();
 		
 		if (listOfFiles == null) {
-			System.out.println("Folder "+folder.getAbsolutePath()+" does not "
-					+ "exist, so no datastores could be loaded.");
-			System.err.println("Folder "+folder.getAbsolutePath()+" does not "
-					+ "exist, so no datastores could be loaded.");
+			StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), "storage");
 			return engines;
 		}
 		
