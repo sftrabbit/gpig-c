@@ -38,7 +38,7 @@
 	<property name="src.dir" value="src" />
 
 	<property name="lib.dir" value="lib" />
-
+	<property name="testapp.dir" value="testapp" />
 	<property name="build.dir" value="bin" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/jar" />
@@ -74,6 +74,7 @@
 		<one-jar destfile="${jar.dir}/TestApp1Emitter.jar">
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${main-class}" />
+				<attribute name="One-Jar-Expand" value="${testapp.dir}/b.jar" />
 			</manifest>
 			<main>
 				<fileset dir="${classes.dir}" />
@@ -83,10 +84,9 @@
 				<fileset dir="${lib.dir}" includes="*.so" />
 			</lib>
 			<fileset dir="." includes="*.properties" />
+			<fileset dir="." includes="${testapp.dir}/b.jar" />
 		</one-jar>
 	</target>
-	
-	<echo>${lib.dir}</echo>
 
 	<target name="run" depends="jar">
 	    <!-- This executes on anything but OSX -->

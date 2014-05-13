@@ -25,7 +25,7 @@ public class AnalysisControllerTest {
 	}
 
 	@Test
-	public void testMakeEngines() throws ReflectiveOperationException, IOException {
+	public void testMakeEngines() throws ReflectiveOperationException, IOException, InterruptedException {
 		AnalysisController analysisController = new AnalysisController(
 				new ArrayList<ClientSystem>(), new Core("config/RegisteredSystems.config")); // no exception thrown
 		assertNotNull(analysisController.getAnalysisEngines());
@@ -33,7 +33,7 @@ public class AnalysisControllerTest {
 	}
 
 	@Test
-	public void testSystemUpdate() throws ReflectiveOperationException, IOException {
+	public void testSystemUpdate() throws ReflectiveOperationException, IOException, InterruptedException {
 		AnalysisController analysisController = new AnalysisController(
 				new ArrayList<ClientSystem>(), new Core("config/RegisteredSystems.config")); // no exception thrown
 		analysisController.analyse(systemIDs);
