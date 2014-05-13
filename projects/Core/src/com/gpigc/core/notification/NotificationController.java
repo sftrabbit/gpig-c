@@ -50,8 +50,15 @@ public class NotificationController {
 		File folder = new File(System.getProperty("user.dir")
 				+ "/src/com/gpigc/core/notification/engine");
 		File[] listOfFiles = folder.listFiles();
-
 		List<NotificationEngine> engines = new ArrayList<>();
+		
+		if (listOfFiles == null) {
+			System.out.println("Folder "+folder+" does not exist, so no "
+					+ "notification engines could be loaded.");
+			System.err.println("Folder "+folder+" does not exist, so no "
+					+ "notification engines could be loaded.");
+			return engines;
+		}
 
 		for (int i = 0; i < listOfFiles.length; i++) {
 			try {
