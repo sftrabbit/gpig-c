@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.ProcCpu;
+import org.hyperic.sigar.ProcMem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
@@ -18,6 +19,7 @@ public class ProcessMonitor {
 	private final Sigar sigar;
 	private final long processId;
 	private ProcCpu previousCpuInfo;
+	private ProcMem previousMemInfo;
 	private double cpuLoad;
 
 	/**
@@ -35,6 +37,7 @@ public class ProcessMonitor {
 
 		try {
 			previousCpuInfo = sigar.getProcCpu(processId);
+			previousMemInfo = sigar.getProcMem(processId);
 		} catch (SigarException e) {
 			throw new ProcessMonitorException(
 					"Unable to retrieve process information", e);
@@ -55,14 +58,10 @@ public class ProcessMonitor {
 	/**
 	 * Gets the memory usage of the process
 	 * @return Memory usage of the process
+	 * @throws ProcessMonitorException 
 	 */
 	public long getMemUsage() {
-		try {
-			Mem currentMemInfo = sigar.getMem();
-			return currentMemInfo.getActualUsed();
-		} catch (SigarException ex) {
-			throw new RuntimeException(ex);
-		}
+		return previousMemInfo.getSize();
 	}
 
 	/**
