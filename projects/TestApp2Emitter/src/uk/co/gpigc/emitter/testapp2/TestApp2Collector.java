@@ -51,7 +51,7 @@ public class TestApp2Collector implements DataCollector {
 				.build();
 		SystemData.Datum procWD = SystemData.Datum.newBuilder()
 				.setKey("WorkingDir")
-				.setValue(String.valueOf(processMonitor.getProcWorkDir()()))
+				.setValue(String.valueOf(processMonitor.getProcWorkDir()))
 				.build();
 		SystemData data = SystemData.newBuilder().setSystemId("testapp2")
 				.setTimestamp(new Date().getTime())
