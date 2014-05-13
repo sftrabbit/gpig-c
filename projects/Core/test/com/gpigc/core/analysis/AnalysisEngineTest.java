@@ -25,7 +25,7 @@ public class AnalysisEngineTest {
 	private List<ClientSystem> registeredSystems;
 
 	@Before
-	public void before() throws URISyntaxException, IOException, ReflectiveOperationException {
+	public void before() throws URISyntaxException, IOException, ReflectiveOperationException, InterruptedException {
 		// Set up dummy system
 		registeredSystems = new ArrayList<>();
 
