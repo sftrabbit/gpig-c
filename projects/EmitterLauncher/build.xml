@@ -76,6 +76,8 @@
 		<one-jar destfile="${jar.dir}/EmitterLauncher.jar">
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${main-class}" />
+				<attribute name="One-Jar-Expand" value="emitterJars" />
+				<attribute name="One-Jar-Expand-Dir" value="." />
 				<attribute name="One-Jar-Show-Expand" value="true" />
 			</manifest>
 			<main>
@@ -91,6 +93,7 @@
 					includes="*.so" />
 			</binlib>
 			<fileset dir="." includes="images/*.png" />
+			<fileset dir="." includes="emitterJars/*.jar" />
 		</one-jar>
 	</target>
 

@@ -1,8 +1,5 @@
 package uk.co.gpigc.emitterlauncher;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.Scanner;
 
 import org.eclipse.swt.custom.StyledText;
