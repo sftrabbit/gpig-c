@@ -35,3 +35,5 @@ AdminCentre/web/web.iml
 
 .metadata
 gen
+
+projects/GPIG-WebApp/test-classes/com/gpigc/blank.properties
