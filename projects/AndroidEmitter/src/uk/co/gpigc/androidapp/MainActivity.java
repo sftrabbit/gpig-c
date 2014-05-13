@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		coreIP = getPreferences(MODE_PRIVATE).getString("CORE_IP", coreIP);
 		system1Button = (Button) findViewById(R.id.system1);
 		system2Button = (Button) findViewById(R.id.system2);
 		system3Button = (Button) findViewById(R.id.system3);	
@@ -91,6 +91,7 @@ public class MainActivity extends Activity {
 		public void onClick(DialogInterface dialog, int whichButton) {
 		  String value = input.getText().toString();
 		  coreIP = value;
+		  getPreferences(MODE_PRIVATE).edit().putString("CORE_IP", value).commit();
 		  }
 		});
 
