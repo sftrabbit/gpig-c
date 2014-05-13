@@ -75,7 +75,9 @@ public class NotificationController {
 					| InstantiationException | IllegalAccessException | 
 					IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
-				return null;
+				System.out.println("Issue when loading a "
+						+ "NotificationController: "+e.getMessage());
+				return engines;
 			}
 		}
 		return engines;

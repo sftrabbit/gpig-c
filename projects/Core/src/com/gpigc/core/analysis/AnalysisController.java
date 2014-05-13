@@ -89,7 +89,9 @@ public class AnalysisController {
 				| NoSuchMethodException | SecurityException
 				| ClassNotFoundException e) {
 			e.printStackTrace();
-			return null;
+			System.out.println("Issue when loading a AnalysisController: "+
+					e.getMessage());
+			return engines;
 		}
 	}
 
