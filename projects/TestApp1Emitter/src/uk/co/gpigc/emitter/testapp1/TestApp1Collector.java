@@ -12,7 +12,7 @@ import uk.co.gpigc.emitter.testapp1.JavaVirtualMachineMonitor.ServerFetchExcepti
 import uk.co.gpigc.emitter.testapp1.ProcessMonitor.ProcessMonitorException;
 
 public class TestApp1Collector implements DataCollector {
-	private static final String TEST_APP_NAME = "b.jar";
+	public static final String TEST_APP_NAME = "b.jar";
 	private static final int DELAY_BEFORE_MONITOR = 4500;
 	
 	private JavaVirtualMachineMonitor jvmMonitor;
@@ -22,7 +22,6 @@ public class TestApp1Collector implements DataCollector {
 		jvmMonitor = new JavaVirtualMachineMonitor(
 				TEST_APP_NAME);
 		long pid = jvmMonitor.getProcessId();
-
 		processMonitor = new ProcessMonitor(pid);
 		Thread.sleep(DELAY_BEFORE_MONITOR);
 	}
@@ -42,6 +41,7 @@ public class TestApp1Collector implements DataCollector {
 				.addDatum(memoryDatum).build();
 		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
 		dataList.add(data);
+		System.out.println("Writing Data");
 		return dataList;
 	}
 

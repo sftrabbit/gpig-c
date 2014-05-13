@@ -46,7 +46,7 @@ public class Core {
 	
 	public void updateDatastore(Map<String, List<EmitterSystemState>> systemStates) {
 		getDatastoreController().push(systemStates);
-		StandardMessageGenerator.dataRecieved();
+		StandardMessageGenerator.dataRecieved(systemStates.keySet());
 		getAnalysisController().analyse(systemStates.keySet());
 	}
 	
