@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class System2Activity extends Activity {
+public class PhoneSystemActivity extends Activity {
 
 	private static final String OFF = "off";
 	private static final String SYSTEM_ID = "PhoneSystem";
@@ -81,7 +81,7 @@ public class System2Activity extends Activity {
 				DataPusher pusher = new DataPusher(getApplicationContext(),
 						SYSTEM_ID, data,getIntent().getStringExtra(DataPusher.CORE_IP_KEY));
 				pusher.execute();
-				new DataReciever(System2Activity.this).execute();
+				new DataReciever(PhoneSystemActivity.this).execute();
 			}
 		});
 

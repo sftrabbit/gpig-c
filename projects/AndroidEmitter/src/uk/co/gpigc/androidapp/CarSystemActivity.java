@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class System1Activity extends Activity {
+public class CarSystemActivity extends Activity {
 
 	private static final String OIL_SENSOR_TEXT = "Oil Pressure: ";
 	private static final String REVS_SENSOR_TEXT = "Revs: ";

@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 
-import uk.co.gpigc.androidapp.System2Activity;
+import uk.co.gpigc.androidapp.PhoneSystemActivity;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,9 +17,9 @@ public class DataReciever extends AsyncTask<Void,Void,Void> {
 
 	protected static int CORE_PORT = 8001;
 	private Map<String, String> recievedData;
-	private System2Activity activity;
+	private PhoneSystemActivity activity;
 
-	public DataReciever(System2Activity activity){
+	public DataReciever(PhoneSystemActivity activity){
 		this.activity = activity;
 	}
 
