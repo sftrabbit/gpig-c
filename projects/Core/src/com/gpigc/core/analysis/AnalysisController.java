@@ -20,17 +20,20 @@ import com.gpigc.core.view.StandardMessageGenerator;
  */
 public class AnalysisController {
 
-	private final List<AnalysisEngine> analysisEngines;
+	private List<AnalysisEngine> analysisEngines;
 	private final Core core;
 
 	public AnalysisController(List<ClientSystem> systems, Core core) throws ReflectiveOperationException {
 		this.core = core;
-		analysisEngines = instantiateEngines(systems);
-		if (analysisEngines == null)
-			throw new ReflectiveOperationException(
-					"Analysis Engines could not be loaded");
+		refreshSystems(systems);
 	}
 
+
+	public void refreshSystems(List<ClientSystem> systems) throws ReflectiveOperationException {
+		analysisEngines = instantiateEngines(systems);
+		if (analysisEngines == null)
+			throw new ReflectiveOperationException("Analysis Engines could not be loaded");
+	}
 
 	public void analyse(Set<String> systemIDs) {
 		for(String currentSystemID: systemIDs){

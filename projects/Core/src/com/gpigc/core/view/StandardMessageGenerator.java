@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Set;
 
 public class StandardMessageGenerator {
+	
+	public static void printException(Exception e) {
+		print(e.getMessage());
+	}
 
 	public static void registeredSystem(String systemID) {
 		print("Registered System: " + systemID);

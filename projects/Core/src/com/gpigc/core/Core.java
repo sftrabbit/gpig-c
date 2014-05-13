@@ -13,7 +13,6 @@ import com.gpigc.core.storage.StorageController;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
-
 public class Core {
 
 	private final DataInputServer dataInputServer;
@@ -21,17 +20,31 @@ public class Core {
 	private final AnalysisController analysisController;
 	private final NotificationController notificationGenerator;
 	private List<ClientSystem> systemsToMonitor;
+	private String currentConfigFilePath;
 
-	public Core(String configFilePath) throws IOException, ReflectiveOperationException{
-		systemsToMonitor = getSystems(configFilePath);
+	public Core(String configFilePath) throws IOException, ReflectiveOperationException, InterruptedException {
+		currentConfigFilePath = configFilePath;
+		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController = new StorageController(systemsToMonitor);
-		analysisController =  new AnalysisController(systemsToMonitor,this);
+		analysisController =  new AnalysisController(systemsToMonitor, this);
 		notificationGenerator = new NotificationController(systemsToMonitor);
 		dataInputServer = new DataInputServer(this);
+
+		FileMonitor monitor = FileMonitor.getInstance();
+		ConfigFileChangeListener listener = new ConfigFileChangeListener();
+		monitor.addFileChangeListener(listener, currentConfigFilePath, 1000);
 	}
 
+
+	public void refreshSystems() throws IOException, ReflectiveOperationException {
+		System.out.println("Re-registering systems...");
+		systemsToMonitor = getSystems(currentConfigFilePath);
+		datastoreController.refreshSystems(systemsToMonitor);
+		analysisController.refreshSystems(systemsToMonitor);
+		notificationGenerator.refreshSystems(systemsToMonitor);
+	}
 	
-	public void updateDatastore(Map<String, List<EmitterSystemState>> systemStates){
+	public void updateDatastore(Map<String, List<EmitterSystemState>> systemStates) {
 		getDatastoreController().push(systemStates);
 		StandardMessageGenerator.dataRecieved(systemStates.keySet());
 		getAnalysisController().analyse(systemStates.keySet());
@@ -75,5 +88,18 @@ public class Core {
 
 	public void setSystemsToMonitor(List<ClientSystem> systemsToMonitor) {
 		this.systemsToMonitor = systemsToMonitor;
+	}
+
+
+	private class ConfigFileChangeListener implements FileChangeListener {
+		public void fileChanged(File file) {
+			System.out.println("Config file modified");
+			try {
+				refreshSystems();
+			} catch (IOException | ReflectiveOperationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

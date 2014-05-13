@@ -5,8 +5,13 @@ import java.util.TimerTask;
 
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.ProcCpu;
+import org.hyperic.sigar.ProcExe;
+import org.hyperic.sigar.ProcStat;
+import org.hyperic.sigar.ProcState;
+import org.hyperic.sigar.ProcMem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+import org.hyperic.sigar.Swap;
 
 /**
  * Monitors a process's resource usage, such as CPU load and heap memory usage.
@@ -18,6 +23,7 @@ public class ProcessMonitor {
 	private final Sigar sigar;
 	private final long processId;
 	private ProcCpu previousCpuInfo;
+	private ProcMem previousMemInfo;
 	private double cpuLoad;
 
 	/**
@@ -35,6 +41,7 @@ public class ProcessMonitor {
 
 		try {
 			previousCpuInfo = sigar.getProcCpu(processId);
+			previousMemInfo = sigar.getProcMem(processId);
 		} catch (SigarException e) {
 			throw new ProcessMonitorException(
 					"Unable to retrieve process information", e);
@@ -55,12 +62,34 @@ public class ProcessMonitor {
 	/**
 	 * Gets the memory usage of the process
 	 * @return Memory usage of the process
+	 * @throws ProcessMonitorException 
 	 */
 	public long getMemUsage() {
+		return previousMemInfo.getSize();
+	}
+	
+	/**
+	 * Get the swap usage of the process
+	 * @return Swap usage of the process
+	 */
+	public String getProcState() {
 		try {
-			Mem currentMemInfo = sigar.getMem();
-			return currentMemInfo.getActualUsed();
-		} catch (SigarException ex) {
+			ProcState currentProcState = sigar.getProcState(this.processId);
+			return currentProcState.getName();
+		} catch(SigarException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+	
+	/**
+	 * Get the working directory of the process
+	 * @return Working directory of the process
+	 */
+	public String getProcWorkDir() {
+		try {
+			ProcExe currentExeState = sigar.getProcExe(this.processId);
+			return currentExeState.getCwd();
+		} catch(SigarException ex) {
 			throw new RuntimeException(ex);
 		}
 	}
