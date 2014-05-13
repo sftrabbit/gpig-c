@@ -88,7 +88,7 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 		data.put("Message", "Expression analysis of system " 
 				+ system.getID() + " showed abnormal system behaviour: " + exprStr);
 		data.put("Subject", this.name+ " Notification");
-		data.put("Recepient", "gpigc.alerts@gmail.com");
+		data.put("Recipient", "gpigc.alerts@gmail.com");
 		data.put("Value",value+"");
 		return new DataEvent(data, system);
 	}

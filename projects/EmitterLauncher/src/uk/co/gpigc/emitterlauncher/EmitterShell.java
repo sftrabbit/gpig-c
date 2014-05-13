@@ -28,16 +28,16 @@ public class EmitterShell extends Shell {
 	private static final String PLAY_BUTTON_PATH = "/images/control_play_blue.png";
 
 	//private static final String TEST_APP_1_PATH = "../TestApp1Emitter/bin/TestApp1Emitter.jar";
-	private static final String TEST_APP_1_PATH = "../../emitterJars/TestApp1Emitter.jar";
+	private static final String TEST_APP_1_PATH = "emitterJars/TestApp1Emitter.jar";
 
 	//private static final String TEST_APP_2_PATH = "../TestApp2Emitter/bin/TestApp2Emitter.jar";
-	private static final String TEST_APP_2_PATH = "../../emitterJars/TestApp2Emitter.jar";
+	private static final String TEST_APP_2_PATH = "emitterJars/TestApp2Emitter.jar";
 
 	//private static final String EARTH_APP_PATH = "../EarthEmitter/bin/EarthEmitter.jar";
-	private static final String EARTH_APP_PATH = "../../emitterJars/EarthMonitor.jar";
+	private static final String EARTH_APP_PATH = "emitterJars/EarthMonitor.jar";
 
 	//private static final String SERVER_APP_PATH = "../ServerEmitter/bin/ServerEmitter.jar";
-	private static final String SERVER_APP_PATH = "../../emitterJars/ServerEmitter.jar";
+	private static final String SERVER_APP_PATH = "emitterJars/ServerEmitter.jar";
 
 
 	private Button serverButton;
@@ -146,6 +146,8 @@ public class EmitterShell extends Shell {
 		testApp1Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				//String appPath = getClass().getResource(TEST_APP_1_PATH).toExternalForm();
+				//System.out.println("This is Rosy's appPath: " + appPath);
 				buttonSelect(TEST_APP_1_PATH, testApp1Button,textApp1);
 			}
 		});

@@ -165,7 +165,7 @@ public class JavaVirtualMachineMonitor {
 	private static VirtualMachineDescriptor getVirtualMachineDescriptor(
 			String appName) throws AppNotRunningException {
 		for (VirtualMachineDescriptor descriptor : VirtualMachine.list()) {
-			System.out.println(descriptor.displayName());
+			System.out.println("Descriptor: " + descriptor.displayName());
 			if (descriptor.displayName().endsWith(appName)) {
 				return descriptor;
 			}
@@ -358,7 +358,7 @@ public class JavaVirtualMachineMonitor {
 	}
 
 	/**
-	 * Thrown if unable to retrieve an object from the JMX agent server.
+	 * Thrown if unable to retrieve an obj ect from the JMX agent server.
 	 */
 	public static class ServerFetchException extends MonitorJvmException {
 		private static final long serialVersionUID = 1L;

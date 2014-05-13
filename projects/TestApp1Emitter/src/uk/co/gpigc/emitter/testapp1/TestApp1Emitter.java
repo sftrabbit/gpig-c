@@ -13,14 +13,10 @@ public class TestApp1Emitter {
 
 	public static void main(String[] args) throws MonitorJvmException, ProcessMonitorException, InterruptedException {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
-		
-<<<<<<< HEAD
+
 		System.setProperty("java.library.path", "lib");
 		
 		OpenJarThread bThread = new OpenJarThread("testapp/" + TestApp1Collector.TEST_APP_NAME);
-=======
-		OpenJarThread bThread = new OpenJarThread("../../../../../" + TestApp1Collector.TEST_APP_NAME);
->>>>>>> ca6944f644cd83d0ecffb6290eaab9baac2b6240
 		bThread.start();
 		emitter.registerDataCollector(new TestApp1Collector());
 		emitter.start();

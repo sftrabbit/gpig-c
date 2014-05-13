@@ -27,7 +27,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 		// Set up the data
 		Map<String, String> data = new HashMap<>();
 		data.put("Subject", this.name+ " Notification");
-		data.put("Recepient", "gpigc.alerts@gmail.com");
+		data.put("Recipient", "gpigc.alerts@gmail.com");
 		data.put("Message", "");
 
 		// Check the sensors
