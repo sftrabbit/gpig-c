@@ -14,11 +14,11 @@ public class TestApp1Emitter {
 	public static void main(String[] args) throws MonitorJvmException, ProcessMonitorException, InterruptedException {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 		
-		OpenJarThread bThread = new OpenJarThread("../jar/b.jar");
+		OpenJarThread bThread = new OpenJarThread("jar/b.jar");
+		bThread.start();
 		emitter.registerDataCollector(new TestApp1Collector());
 		emitter.start();
 		System.out.println("Emitter started");
-		
 		try {
 			emitter.waitFor();
 		} catch (InterruptedException e) {
