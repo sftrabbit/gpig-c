@@ -68,6 +68,8 @@ public class StorageController {
 		System.err.println("Folder: "+folder.getAbsolutePath());
 		
 		if (listOfFiles == null) {
+			System.out.println("Folder "+folder+" does not exist, so no "
+					+ "datastores could be loaded.");
 			System.err.println("Folder "+folder+" does not exist, so no "
 					+ "datastores could be loaded.");
 			return engines;
