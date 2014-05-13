@@ -5,8 +5,12 @@ import java.util.TimerTask;
 
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.ProcCpu;
+import org.hyperic.sigar.ProcExe;
+import org.hyperic.sigar.ProcStat;
+import org.hyperic.sigar.ProcState;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+import org.hyperic.sigar.Swap;
 
 /**
  * Monitors a process's resource usage, such as CPU load and heap memory usage.
@@ -61,6 +65,32 @@ public class ProcessMonitor {
 			Mem currentMemInfo = sigar.getMem();
 			return currentMemInfo.getActualUsed();
 		} catch (SigarException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+	
+	/**
+	 * Get the swap usage of the process
+	 * @return Swap usage of the process
+	 */
+	public String getProcState() {
+		try {
+			ProcState currentProcState = sigar.getProcState(this.processId);
+			return currentProcState.getName();
+		} catch(SigarException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+	
+	/**
+	 * Get the working directory of the process
+	 * @return Working directory of the process
+	 */
+	public String getProcWorkDir() {
+		try {
+			ProcExe currentExeState = sigar.getProcExe(this.processId);
+			return currentExeState.getCwd();
+		} catch(SigarException ex) {
 			throw new RuntimeException(ex);
 		}
 	}
