@@ -63,6 +63,15 @@ public class AnalysisController {
 				+ "/src/com/gpigc/core/analysis/engine");
 		File[] listOfFiles = folder.listFiles();
 		List<AnalysisEngine> engines = new ArrayList<>();
+		
+		if (listOfFiles == null) {
+			System.out.println("Folder "+folder+" does not exist, so no "
+					+ "analysis engines could be loaded.");
+			System.err.println("Folder "+folder+" does not exist, so no "
+					+ "analysis engines could be loaded.");
+			return engines;
+		}
+		
 		try {
 			for (int i = 0; i < listOfFiles.length; i++) {
 				String name = listOfFiles[i].getName().substring(0,
