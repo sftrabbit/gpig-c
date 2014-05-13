@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.google.appengine.api.datastore.Text;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
 /**
@@ -31,11 +32,11 @@ public class SystemDataTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		Map<String, String> payload = new HashMap<String, String>();
-		payload.put("Engine Temp", "100");
-		payload.put("RPM", "1512");
-		payload.put("Speed", "30");
-		payload.put("Awesomness", "MAXIMUM");
+		Map<String,Text> payload = new HashMap<String, Text>();
+		payload.put("Engine Temp", new Text("100"));
+		payload.put("RPM",  new Text("1512"));
+		payload.put("Speed",  new Text("30"));
+		payload.put("Awesomness",  new Text("MAXIMUM"));
 		testData = new EmitterSystemState(
 				"TestSystemID", 
 				new Date(), 
@@ -60,7 +61,7 @@ public class SystemDataTest {
 	public void testJSON() throws JsonParseException, IOException, ParseException {
 		String systemID = testData.getSystemID();
 		Date timestamp = testData.getTimeStamp();
-		Map<String, String> payload = testData.getSensorReadings();
+		Map<String, Text> payload = testData.getSensorReadings();
 		EmitterSystemState parsedData = EmitterSystemState.parseJSON(
 				new StringReader(testData.toJSON()));
 		assertEquals(systemID, parsedData.getSystemID());
