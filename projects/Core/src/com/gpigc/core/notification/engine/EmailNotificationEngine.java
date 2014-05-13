@@ -33,12 +33,12 @@ public class EmailNotificationEngine extends NotificationEngine {
 			email.setSSLOnConnect(true);
 			try {
 				email.setFrom("gpigc.alerts@gmail.com");
-				String recepient = event.getData().get("Recepient");
+				String recipient = event.getData().get("Recipient");
 				String subject = event.getData().get("Subject");
 				String message = event.getData().get("Message");
 				email.setSubject(subject);
 				email.setMsg(message);
-				email.addTo(recepient);
+				email.addTo(recipient);
 				email.send();
 				setRecentlySent();
 				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());

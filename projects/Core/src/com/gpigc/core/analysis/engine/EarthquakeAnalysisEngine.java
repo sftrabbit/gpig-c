@@ -53,7 +53,7 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 												.getCreationTimestamp()));
 						
 						data.put("Subject", this.name+ " Notification");
-						data.put("Recepient", "gpigc.alerts@gmail.com");
+						data.put("Recipient", "gpigc.alerts@gmail.com");
 						data.put("Long", sensorState.getValue().split(",")[2]);
 						data.put("Lat", sensorState.getValue().split(",")[1]);
 				
