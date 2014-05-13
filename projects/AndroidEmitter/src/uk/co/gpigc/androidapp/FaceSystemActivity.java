@@ -147,6 +147,7 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 	}
 
 	private void transmitFaceData(Mat faceData) {
+		// TODO Switch to base64 encoding if we want to waste less space
 		StringBuilder bld = new StringBuilder('\"');
 		for (int i = 0; i < faceData.size().width; i++) {
 			float[] faceDataValue = new float[1];
