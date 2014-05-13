@@ -23,21 +23,21 @@ import org.eclipse.swt.custom.StyledText;
 
 public class EmitterShell extends Shell {
 
-	private static final String ICON_PATH = "/images/nosql.png";
-	private static final String STOP_BUTTON_PATH = "/images/control_stop_blue.png";
-	private static final String PLAY_BUTTON_PATH = "/images/control_play_blue.png";
+	private static final String ICON_PATH = "res/images/nosql.png";
+	private static final String STOP_BUTTON_PATH = "res/images/control_stop_blue.png";
+	private static final String PLAY_BUTTON_PATH = "res/images/control_play_blue.png";
 
 	//private static final String TEST_APP_1_PATH = "../TestApp1Emitter/bin/TestApp1Emitter.jar";
-	private static final String TEST_APP_1_PATH = "emitterJars/TestApp1Emitter.jar";
+	private static final String TEST_APP_1_PATH = "res/TestApp1Emitter.jar";
 
 	//private static final String TEST_APP_2_PATH = "../TestApp2Emitter/bin/TestApp2Emitter.jar";
-	private static final String TEST_APP_2_PATH = "emitterJars/TestApp2Emitter.jar";
+	private static final String TEST_APP_2_PATH = "res/TestApp2Emitter.jar";
 
 	//private static final String EARTH_APP_PATH = "../EarthEmitter/bin/EarthEmitter.jar";
-	private static final String EARTH_APP_PATH = "emitterJars/EarthMonitor.jar";
+	private static final String EARTH_APP_PATH = "res/EarthMonitor.jar";
 
 	//private static final String SERVER_APP_PATH = "../ServerEmitter/bin/ServerEmitter.jar";
-	private static final String SERVER_APP_PATH = "emitterJars/ServerEmitter.jar";
+	private static final String SERVER_APP_PATH = "res/ServerEmitter.jar";
 
 
 	private Button serverButton;
@@ -120,12 +120,9 @@ public class EmitterShell extends Shell {
 	}
 
 	private void graphicsSetup(Display display) {
-		InputStream playIconInputStream = getClass().getResourceAsStream(PLAY_BUTTON_PATH);
-		playIcon = new Image(display, playIconInputStream);
-		InputStream stopIconInputStream = getClass().getResourceAsStream(STOP_BUTTON_PATH);
-		stopIcon = new Image(display, stopIconInputStream);
-		InputStream shellIconInputStream = getClass().getResourceAsStream(ICON_PATH);
-		shellIcon = new Image(display, shellIconInputStream);
+		playIcon = new Image(display, PLAY_BUTTON_PATH);
+		stopIcon = new Image(display, STOP_BUTTON_PATH);
+		shellIcon = new Image(display, ICON_PATH);
 	}
 
 	private void compositeSetup(Group groupComp) {
