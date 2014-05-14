@@ -96,7 +96,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		return exampleFaces;
 	}
 
-	private List<Mat> parseFaces(String facesMatrixStr) {
+	/**
+	 * public static for testing
+	 * @param facesMatrixStr String encoding the example faces
+	 * @return The faces as matrices
+	 */
+	public static List<Mat> parseFaces(String facesMatrixStr) {
 		String[] faceStrings = facesMatrixStr.split("\n");
 		List<Mat> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
@@ -105,7 +110,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		return faces;
 	}
 	
-	private Mat parseFace(String faceMatrixStr) {
+	/**
+	 * public static for testing
+	 * @param faceMatrixStr String encoding a face
+	 * @return The face as a matrix
+	 */
+	public static Mat parseFace(String faceMatrixStr) {
 		// Parse face matrix
 		String[] elements = faceMatrixStr.split(",");
 		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32SC1);
@@ -115,7 +125,15 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		return faceMatrix;
 	}
 	
-	private boolean isAuthorisedFace(Mat testFace, List<Mat> exampleFaces, 
+	/**
+	 * public static for testing
+	 * @param testFace The face that we wish to test the authorisation of
+	 * @param exampleFaces The example allowable faces
+	 * @param threshold How similar the testFace must be to one of the 
+	 * exampleFaces
+	 * @return Whether the testFace is authorised
+	 */
+	public static boolean isAuthorisedFace(Mat testFace, List<Mat> exampleFaces, 
 			double threshold) {
 		/* Check to see if close enough to an allowable example face using 
 		 * Chi-Squared method
