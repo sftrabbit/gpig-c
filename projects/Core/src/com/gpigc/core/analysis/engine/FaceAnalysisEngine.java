@@ -64,6 +64,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				values = getSensorData(system);
 				for(SensorState sensorState: values){
 					String faceMatrixString = sensorState.getValue();
+					System.err.println("Face matrix string: " + faceMatrixString);
 					Mat faceMatrix = parseFace(faceMatrixString);
 					System.err.println("Parsed face: " + faceMatrix.dump());
 					// Actually test to see if face seen is allowed
@@ -130,7 +131,10 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		String[] elements = faceMatrixStr.split(",");
 		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32SC1);
 		for (int i = 0; i < elements.length; i++) {
-			faceMatrix.put(0, i, new double[]{Double.parseDouble(elements[i])});
+			double elementValue = Double.parseDouble(elements[i]);
+			System.err.println("Parsing element \""+elements[i]+"\" as "+
+					elementValue);
+			faceMatrix.put(0, i, elementValue); // TODO Setting this value doesn't seem to work as I expect
 		}
 		return faceMatrix;
 	}
