@@ -33,6 +33,14 @@ import org.opencv.imgproc.Imgproc;
 public class FaceAnalysisEngine extends AnalysisEngine {
 
 	private Map<ClientSystem, List<Mat>> systemExampleFacesCache;
+	
+	static{
+		try {
+			System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+		} catch (UnsatisfiedLinkError e) {
+			System.err.println("Failed to load OpenCV natives");
+		}
+	}
 
 	public FaceAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
 		super(registeredSystems, core);
@@ -55,8 +63,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				values = getSensorData(system);
 				for(SensorState sensorState: values){
 					String faceMatrixString = sensorState.getValue();
+					//System.err.println("Face matrix string: " + faceMatrixString);
 					Mat faceMatrix = parseFace(faceMatrixString);
-					System.err.println("Parsed face: " + faceMatrix.dump());
+					//System.err.println("Parsed face: " + faceMatrix.dump());
 					// Actually test to see if face seen is allowed
 					if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
 						return generateSuccessEvent(system);
@@ -90,6 +99,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		} else {
 			String faceData = system.getParameters().get(
 					Parameter.EXAMPLE_FACES);
+			//System.err.println("Example faces loaded: " + faceData);
 			exampleFaces = parseFaces(faceData);
 			systemExampleFacesCache.put(system, exampleFaces);
 		}
@@ -118,9 +128,10 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	public static Mat parseFace(String faceMatrixStr) {
 		// Parse face matrix
 		String[] elements = faceMatrixStr.split(",");
-		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32SC1);
+		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32FC1);
 		for (int i = 0; i < elements.length; i++) {
-			faceMatrix.put(0, i, new double[]{Double.parseDouble(elements[i])});
+			double elementValue = Double.parseDouble(elements[i]);
+			faceMatrix.put(0, i, elementValue);
 		}
 		return faceMatrix;
 	}

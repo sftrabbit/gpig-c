@@ -99,6 +99,10 @@
 			<binlib>
 				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
 					includes="*.so" />
+				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
+					includes="*.dylib" />
+				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
+					includes="*.dll" />
 			</binlib>
 			<fileset dir="." includes="images/*.png" />
   			<!-- Include the folder structure in the jar so that is may be unpacked at runtime -->

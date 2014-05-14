@@ -32,7 +32,7 @@ public abstract class Controller {
 
 	protected final List<? extends Object> instantiateEngines(
 			List<ClientSystem> allSystems, Class<?>... constructorParams) {
-		System.out.println(" No attempting to load the " + engineType + " engines");
+		System.out.println(" Now attempting to load the " + engineType + " engines");
 		List<Object> engines = new ArrayList<>();
 		String parentDir ="com/gpigc/core/"+ engineType + "/engine/";
 		File folder = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType + "/" + parentDir);
