@@ -165,7 +165,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				+ system.getID() + " detected an authorised person and is "
 				+ "allowing them access.");
 		data.put(Parameter.SUBJECT, this.name+ " Notification");
-		data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
+		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
 		return new DataEvent(data, system);
 	}
 
@@ -175,7 +175,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				+ system.getID() + " detected an unauthorised person and is "
 				+ "denying them access.");
 		data.put(Parameter.SUBJECT, this.name+ " Notification");
-		data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
+		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
 		return new DataEvent(data, system);
 	}
 
