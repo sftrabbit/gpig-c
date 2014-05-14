@@ -27,9 +27,9 @@ public class Core {
 	public Core(String configFilePath) throws IOException, ReflectiveOperationException, InterruptedException {
 		currentConfigFilePath = configFilePath;
 		systemsToMonitor = getSystems(currentConfigFilePath);
-		datastoreController = new StorageController(systemsToMonitor);
+		datastoreController = new StorageController(systemsToMonitor,this);
 		analysisController =  new AnalysisController(systemsToMonitor, this);
-		notificationGenerator = new NotificationController(systemsToMonitor);
+		notificationGenerator = new NotificationController(systemsToMonitor,this);
 		dataInputServer = new DataInputServer(this);
 
 		monitorFiles();

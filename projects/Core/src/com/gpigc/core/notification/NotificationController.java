@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Controller;
 import com.gpigc.core.Core;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.view.StandardMessageGenerator;
@@ -16,20 +17,19 @@ import com.gpigc.core.view.StandardMessageGenerator;
  * 
  * @author GPIGC
  */
-public class NotificationController {
+public class NotificationController extends Controller{
 
 	private List<NotificationEngine> notificationEngines;
 
 
-	public NotificationController( List<ClientSystem> systems) throws ReflectiveOperationException {
+	public NotificationController( List<ClientSystem> systems, Core core){
+		super(ControllerType.notification, core);
 		refreshSystems(systems);
 	}
 
 
-	public void refreshSystems(List<ClientSystem> systems) throws ReflectiveOperationException {
-		notificationEngines = instantiateEngines(systems);
-		if (notificationEngines == null)
-			throw new ReflectiveOperationException("Notification Engines could not be loaded");
+	public void refreshSystems(List<ClientSystem> systems){
+		notificationEngines = (List<NotificationEngine>) instantiateEngines(systems);
 	}
 
 	/**
@@ -46,44 +46,8 @@ public class NotificationController {
 			}
 		}
 	}
-
-	private List<NotificationEngine> instantiateEngines(List<ClientSystem> systems)
-	{
-		File folder = new File(Core.ENGINES_FOLDER_PATH);
-		File[] listOfFiles = folder.listFiles();
-		List<NotificationEngine> engines = new ArrayList<>();
-		
-		if (listOfFiles == null) {
-			StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), "notification");
-			return engines;
-		}
-
-		for (int i = 0; i < listOfFiles.length; i++) {
-			try {
-				String name = listOfFiles[i].getName().substring(0,
-						listOfFiles[i].getName().lastIndexOf('.'));
-			Constructor<?> constructor = Class.forName(
-						"com.gpigc.core.notification.engine."
-								+ name)
-										.getConstructor(List.class, int.class);
-			
-			NotificationEngine engine = (NotificationEngine) constructor
-					.newInstance(getRegisteredSystems(name, systems), 30); //XXX Could have this as a param
-			engines.add(engine);
-			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException 
-					| InstantiationException | IllegalAccessException | 
-					IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
-				System.out.println("Issue when loading a "
-						+ "NotificationController: "+e.getMessage());
-				return engines;
-			}
-		}
-		return engines;
-	}
 	
-	
-	private List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
+	protected List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
 		for(ClientSystem system : allSystems){
 			if(system.getRegisteredEngineNames().contains(name)){
