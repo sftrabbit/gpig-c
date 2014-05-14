@@ -13,7 +13,7 @@ import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 
-public class StorageController extends Controller{
+public class StorageController extends Controller {
 
 	private List<SystemDataGateway> datastores;
 
