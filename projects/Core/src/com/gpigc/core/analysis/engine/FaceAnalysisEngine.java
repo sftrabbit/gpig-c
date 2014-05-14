@@ -64,9 +64,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				values = getSensorData(system);
 				for(SensorState sensorState: values){
 					String faceMatrixString = sensorState.getValue();
-					System.err.println("Face matrix string: " + faceMatrixString);
+					//System.err.println("Face matrix string: " + faceMatrixString);
 					Mat faceMatrix = parseFace(faceMatrixString);
-					System.err.println("Parsed face: " + faceMatrix.dump());
+					//System.err.println("Parsed face: " + faceMatrix.dump());
 					// Actually test to see if face seen is allowed
 					if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
 						return generateSuccessEvent(system);
@@ -100,7 +100,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		} else {
 			String faceData = system.getParameters().get(
 					Parameter.EXAMPLE_FACES);
-			System.err.println("Example faces loaded: " + faceData);
+			//System.err.println("Example faces loaded: " + faceData);
 			exampleFaces = parseFaces(faceData);
 			systemExampleFacesCache.put(system, exampleFaces);
 		}
@@ -132,9 +132,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_64FC1);
 		for (int i = 0; i < elements.length; i++) {
 			double elementValue = Double.parseDouble(elements[i]);
-			System.err.println("Parsing element \""+elements[i]+"\" as "+
-					elementValue);
-			faceMatrix.put(0, i, elementValue); // TODO Setting this value doesn't seem to work as I expect
+			faceMatrix.put(0, i, elementValue);
 		}
 		return faceMatrix;
 	}
