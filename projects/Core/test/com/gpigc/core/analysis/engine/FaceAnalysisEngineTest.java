@@ -41,8 +41,29 @@ public class FaceAnalysisEngineTest {
 	}
 
 	@Test
-	public void testIsAuthorisedFace() {
-		fail("Not yet implemented");
+	public void testIsAuthorisedFaceAccept() {
+		// TODO Set some reasonable test values
+		Mat testFace = null;
+		List<Mat> exampleFaces = null;
+		double threshold = 0.0;
+		boolean isAuthorised = FaceAnalysisEngine.isAuthorisedFace(
+				testFace, 
+				exampleFaces, 
+				threshold);
+		assertTrue("Face should have been authorised, but it was not", isAuthorised);
+	}
+	
+	@Test
+	public void testIsAuthorisedFaceDecline() {
+		// TODO Set some reasonable test values
+		Mat testFace = null;
+		List<Mat> exampleFaces = null;
+		double threshold = 0.0;
+		boolean isAuthorised = FaceAnalysisEngine.isAuthorisedFace(
+				testFace, 
+				exampleFaces, 
+				threshold);
+		assertFalse("Face should not have been authorised, but it was", isAuthorised);
 	}
 
 }
