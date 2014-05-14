@@ -25,7 +25,8 @@ $availableAnalysis = array(
 $availableNotification = array(
     "EmailNotificationEngine",
     "PhoneAppNotificationEngine",
-    "TwitterNotificationEngine"
+    "TwitterNotificationEngine",
+    "SMSNotificationEngine"
 );
 ?>
 <!DOCTYPE html>
