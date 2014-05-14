@@ -83,6 +83,7 @@ public class ConfigParser {
 									if(Parameter.isValid(paramkey)){
 										jParser.nextToken();
 										params.put(Parameter.valueOf(paramkey), jParser.getText());
+										System.out.println("Valid Param: " + paramkey);
 									}
 								}
 							}

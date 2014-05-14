@@ -44,18 +44,18 @@ public class EarthquakeAnalysisEngine extends AnalysisEngine {
 							.getParameters().get(Parameter.LOWER_BOUND));
 					
 					if (magnitude >= lowerBound) {
-						Map<String, String> data = new HashMap<>();
+						Map<Parameter, String> data = new HashMap<>();
 						//Write the message
-						data.put("Message","Earthquake measuring "
+						data.put(Parameter.MESSAGE,"Earthquake measuring "
 										+ magnitude + " was detected by system: "
 										+ system.getID() + ". Time: "
 										+ new SimpleDateFormat("HH:mm:ss").format(sensorState
 												.getCreationTimestamp()));
 						
-						data.put("Subject", this.name+ " Notification");
-						data.put("Recipient", "gpigc.alerts@gmail.com");
-						data.put("Long", sensorState.getValue().split(",")[2]);
-						data.put("Lat", sensorState.getValue().split(",")[1]);
+						data.put(Parameter.SUBJECT, this.name+ " Notification");
+						data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
+						data.put(Parameter.LONG, sensorState.getValue().split(",")[2]);
+						data.put(Parameter.LAT, sensorState.getValue().split(",")[1]);
 				
 						return new DataEvent(data, system);
 					}

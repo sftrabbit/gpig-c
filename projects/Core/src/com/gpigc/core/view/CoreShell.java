@@ -35,8 +35,8 @@ public class CoreShell extends Shell {
 		try {
 			Display display = Display.getDefault();
 			CoreShell shell = new CoreShell(display);
-			shell.setSize(700,400);
-			shell.setMinimumSize(400, 400);
+			shell.setSize(800,650);
+			shell.setMinimumSize(400, 500);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -58,6 +58,7 @@ public class CoreShell extends Shell {
 		InputStream iconInputStream = getClass().getResourceAsStream("/images/nosql.png");
 		Image icon = new Image(display,iconInputStream);
 		this.setImage(icon);
+		this.setText("GPIG-C: HUMS");
 		GridLayout gridLayout = new GridLayout(1, true);
 		gridLayout.marginRight = 5;
 		gridLayout.marginLeft = 5;

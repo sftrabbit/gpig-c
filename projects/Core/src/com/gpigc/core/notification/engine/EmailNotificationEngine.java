@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.mail.*;
 
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
 import com.gpigc.core.view.StandardMessageGenerator;
@@ -33,9 +34,9 @@ public class EmailNotificationEngine extends NotificationEngine {
 			email.setSSLOnConnect(true);
 			try {
 				email.setFrom("gpigc.alerts@gmail.com");
-				String recipient = event.getData().get("Recipient");
-				String subject = event.getData().get("Subject");
-				String message = event.getData().get("Message");
+				String recipient = event.getData().get(Parameter.RECIPIENT);
+				String subject = event.getData().get(Parameter.SUBJECT);
+				String message = event.getData().get(Parameter.MESSAGE);
 				email.setSubject(subject);
 				email.setMsg(message);
 				email.addTo(recipient);

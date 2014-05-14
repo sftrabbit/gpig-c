@@ -84,12 +84,12 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 
 
 	private DataEvent generateEvent(ClientSystem system, String exprStr, double value) {
-		Map<String,String> data = new HashMap<>();
-		data.put("Message", "Expression analysis of system " 
+		Map<Parameter,String> data = new HashMap<>();
+		data.put(Parameter.MESSAGE, "Expression analysis of system " 
 				+ system.getID() + " showed abnormal system behaviour: " + exprStr);
-		data.put("Subject", this.name+ " Notification");
-		data.put("Recipient", "gpigc.alerts@gmail.com");
-		data.put("Value",value+"");
+		data.put(Parameter.SUBJECT, this.name+ " Notification");
+		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
+		data.put(Parameter.VALUE,value+"");
 		return new DataEvent(data, system);
 	}
 

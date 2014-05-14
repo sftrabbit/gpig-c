@@ -10,6 +10,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
 import com.gpigc.core.view.StandardMessageGenerator;
@@ -45,10 +46,10 @@ public class TwitterNotificationEngine extends NotificationEngine {
 			StatusUpdate statusUpdate = new StatusUpdate(
 					event.getData().get("Message")
 					);
-			if(event.getData().containsKey("Long")&& event.getData().containsKey("Lat")){
+			if(event.getData().containsKey(Parameter.LONG)&& event.getData().containsKey(Parameter.LAT)){
 				statusUpdate.setLocation(
-						new GeoLocation(Double.parseDouble(event.getData().get("Lat")),
-								Double.parseDouble(event.getData().get("Long"))));
+						new GeoLocation(Double.parseDouble(event.getData().get(Parameter.LAT)),
+								Double.parseDouble(event.getData().get(Parameter.LONG))));
 			}
 			try {
 				twitter.updateStatus(statusUpdate);

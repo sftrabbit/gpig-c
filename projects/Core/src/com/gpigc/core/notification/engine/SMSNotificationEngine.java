@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.codec.binary.Base64;
 
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
 import com.gpigc.core.view.StandardMessageGenerator;
@@ -35,41 +36,41 @@ public class SMSNotificationEngine extends NotificationEngine {
 	public boolean send(DataEvent event) {
 		if(!getRecentlySent()){
 			try {
-				String recipient = event.getData().get("Recipient");
-				String subject = event.getData().get("Subject");
-				String message = event.getData().get("Message");
-	
-				if (recipient.substring(0, 1).equals("0")) recipient = recipient.substring(1);
+				String recipient = event.getData().get(Parameter.RECIPIENT);
+				String subject = event.getData().get(Parameter.SUBJECT);
+				String message = event.getData().get(Parameter.MESSAGE);
+
+				if (recipient.substring(0, 1).equals("0")) 
+					recipient = recipient.substring(1);
 				int size = recipient.length();
-			    for (int i = 0; i < size; i++) {
-			        if (!Character.isDigit(recipient.charAt(i))) {
-			            return false;
-			        }
-			    }
-	
-			    String body = subject + ": " + message;
-			    //if (body.length() > 160) body = body.substring(0, 160); // trim entire message to a single text message
+				for (int i = 0; i < size; i++) {
+					if (!Character.isDigit(recipient.charAt(i))) {
+						return false;
+					}
+				}
+
+				String body = subject + ": " + message;
+				//if (body.length() > 160) body = body.substring(0, 160); // trim entire message to a single text message
 
 				URL url = new URL("https://api.twilio.com/2010-04-01/Accounts/AC848eaa752727344e60afdbe24b96cb49/Messages.json");
-				
-			    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setDoOutput(true);
-			    conn.setDoInput(true);
-			    conn.setRequestMethod("POST");
-	
-			    String userpass = "AC848eaa752727344e60afdbe24b96cb49" + ":" + "c4bf474d1d3dc6b582dd81dfa8086a1f";
-			    String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
-			    conn.setRequestProperty("Authorization", basicAuth);
-	
-			    String urlParameters = "From=%2B441743562709&To=%2B44" + recipient + "&Body=" + URLEncoder.encode(body, "UTF-8");
+				conn.setDoInput(true);
+				conn.setRequestMethod("POST");
+
+				String userpass = "AC848eaa752727344e60afdbe24b96cb49" + ":" + "c4bf474d1d3dc6b582dd81dfa8086a1f";
+				String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
+				conn.setRequestProperty("Authorization", basicAuth);
+
+				String urlParameters = "From=%2B441743562709&To=%2B44" + recipient + "&Body=" + URLEncoder.encode(body, "UTF-8");
 				DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 				wr.writeBytes(urlParameters);
 				wr.flush();
 				wr.close();
-	
+
 				setRecentlySent();
 				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
-
 				/*
 				System.out.println("Response Code : " + conn.getResponseCode());
 				InputStream stream;
@@ -86,7 +87,7 @@ public class SMSNotificationEngine extends NotificationEngine {
 				}
 				in.close();		 
 				System.out.println(response.toString());
-				*/
+				 */
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

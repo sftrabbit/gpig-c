@@ -25,10 +25,10 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 
 		boolean event = false;
 		// Set up the data
-		Map<String, String> data = new HashMap<>();
-		data.put("Subject", this.name+ " Notification");
-		data.put("Recipient", "gpigc.alerts@gmail.com");
-		data.put("Message", "");
+		Map<Parameter, String> data = new HashMap<>();
+		data.put(Parameter.SUBJECT, this.name+ " Notification");
+		data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
+		data.put(Parameter.MESSAGE, "");
 
 		// Check the sensors
 		for (ClientSensor sensor : system.getSensors()) {
@@ -43,7 +43,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 		return null;
 	}
 
-	protected boolean checkSensor(ClientSensor sensor, Map<String, String> data,
+	protected boolean checkSensor(ClientSensor sensor, Map<Parameter, String> data,
 			ClientSystem system) {
 		// Do we have the correct parameters
 		if (hasCorrectKeys(sensor)) {
@@ -57,14 +57,14 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 				double mean = getMean(getSensorReadings(system, sensor.getID(),
 						numRecords));
 				if (mean > upperBound) {
-					data.put("Message", data.get("Message")
+					data.put(Parameter.MESSAGE, data.get("Message")
 							+ "Sensor with ID: " + sensor.getID()
 							+ " has exceeded its upper limit. "
 							+ "\nMean value was: " + mean + "\n\n");
 					return true;
 				}
 				if (mean < lowerBound) {
-					data.put("Message", data.get("Message")
+					data.put(Parameter.MESSAGE, data.get("Message")
 							+ "Sensor with ID: " + sensor.getID()
 							+ " has fallen below its lower limit. "
 							+ "\nMean value was: " + mean + "\n\n");

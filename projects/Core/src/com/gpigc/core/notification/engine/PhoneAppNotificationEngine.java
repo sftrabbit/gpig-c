@@ -15,10 +15,6 @@ public class PhoneAppNotificationEngine extends NotificationEngine {
 	
 	private static final String OFF = "off";
 	private static final String ON = "on";
-	private static final String GPS = "GPS";
-	private static final String BLUE = "BLUE";
-	private static final String THREE = "THREE";
-	private static final String WIFI = "WIFI";
 	
 	public static final int PORT = 8001;
 
@@ -34,15 +30,15 @@ public class PhoneAppNotificationEngine extends NotificationEngine {
 			String phoneIP = event.getSystem().getParameters().get(Parameter.PHONE_IP);
 			try {
 				if(Double.parseDouble(event.getData().get("Value")) ==1){
-					event.getData().put(WIFI,ON);
-					event.getData().put(THREE,OFF);
-					event.getData().put(BLUE,OFF);
-					event.getData().put(GPS,OFF);
+					event.getData().put(Parameter.WIFI,ON);
+					event.getData().put(Parameter.THREE,OFF);
+					event.getData().put(Parameter.BLUE,OFF);
+					event.getData().put(Parameter.GPS,OFF);
 				}else{
-					event.getData().put(WIFI,ON);
-					event.getData().put(THREE,ON);
-					event.getData().put(BLUE,ON);
-					event.getData().put(GPS,ON);
+					event.getData().put(Parameter.WIFI,ON);
+					event.getData().put(Parameter.THREE,ON);
+					event.getData().put(Parameter.BLUE,ON);
+					event.getData().put(Parameter.GPS,ON);
 				}
 				Socket s = new Socket(phoneIP, PORT);
 				ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());

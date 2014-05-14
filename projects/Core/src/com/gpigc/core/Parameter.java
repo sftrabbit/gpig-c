@@ -8,7 +8,12 @@ public enum Parameter {
 	EXPRESSION, 
 	PHONE_IP, 
 	EXAMPLE_FACES, 
-	FACE_SIMILARITY_THRESHOLD;
+	FACE_SIMILARITY_THRESHOLD, 
+	RECIPIENT, 
+	SUBJECT, 
+	MESSAGE, 
+	LONG, 
+	LAT, VALUE, WIFI, THREE, BLUE, GPS;
 
 	public static boolean isValid(String name) {
 		for(Parameter param: Parameter.values()){

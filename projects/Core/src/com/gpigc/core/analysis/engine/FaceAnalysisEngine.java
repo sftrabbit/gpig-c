@@ -149,22 +149,22 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	}
 	
 	private DataEvent generateSuccessEvent(ClientSystem system) {
-		Map<String,String> data = new HashMap<>();
-		data.put("Message", "Face recognitition in system " 
+		Map<Parameter,String> data = new HashMap<>();
+		data.put(Parameter.MESSAGE, "Face recognitition in system " 
 				+ system.getID() + " detected an authorised person and is "
 				+ "allowing them access.");
-		data.put("Subject", this.name+ " Notification");
-		data.put("Recipient", "gpigc.alerts@gmail.com");
+		data.put(Parameter.SUBJECT, this.name+ " Notification");
+		data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
 		return new DataEvent(data, system);
 	}
 
 	private DataEvent generateFailureEvent(ClientSystem system) {
-		Map<String,String> data = new HashMap<>();
-		data.put("Message", "Face recognitition in system " 
+		Map<Parameter,String> data = new HashMap<>();
+		data.put(Parameter.MESSAGE, "Face recognitition in system " 
 				+ system.getID() + " detected an unauthorised person and is "
 				+ "denying them access.");
-		data.put("Subject", this.name+ " Notification");
-		data.put("Recipient", "gpigc.alerts@gmail.com");
+		data.put(Parameter.SUBJECT, this.name+ " Notification");
+		data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
 		return new DataEvent(data, system);
 	}
 

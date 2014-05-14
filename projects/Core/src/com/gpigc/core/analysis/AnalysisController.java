@@ -37,8 +37,8 @@ public class AnalysisController extends Controller{
 				if (engine.getRegisteredSystem(currentSystemID) != null) {
 					DataEvent event = engine.analyse(engine.getRegisteredSystem(currentSystemID));
 					if (event != null) {
-						core.generateNotification(event);
 						StandardMessageGenerator.eventGenerated(engine.name, currentSystemID);
+						core.generateNotification(event);
 					}
 				}
 			}
