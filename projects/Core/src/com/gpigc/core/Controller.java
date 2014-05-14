@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.gpigc.core.analysis.AnalysisEngine;
@@ -34,7 +32,7 @@ public abstract class Controller {
 
 	protected final List<? extends Object> instantiateEngines(
 			List<ClientSystem> allSystems, Class<?>... constructorParams) {
-		System.out.println("Loading: " + engineType + " engines ---------");
+		System.out.println(" No attempting to load the " + engineType + " engines");
 		List<Object> engines = new ArrayList<>();
 		String parentDir ="com/gpigc/core/"+ engineType + "/engine/";
 		File folder = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType + "/" + parentDir);
