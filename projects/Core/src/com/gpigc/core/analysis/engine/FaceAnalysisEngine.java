@@ -18,7 +18,9 @@ import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.SensorState;
 
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 
 /**
  * Analyses the faces seen in an image detected by a sensor
@@ -29,11 +31,11 @@ import org.opencv.core.Mat;
  */
 public class FaceAnalysisEngine extends AnalysisEngine {
 
-	private Map<ClientSystem, Mat> systemExampleFacesCache;
+	private Map<ClientSystem, List<Mat>> systemExampleFacesCache;
 
 	public FaceAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
 		super(registeredSystems, core);
-		systemExampleFacesCache = new HashMap<ClientSystem, Mat>();
+		systemExampleFacesCache = new HashMap<ClientSystem, List<Mat>>();
 	}
 
 	/* (non-Javadoc)
@@ -47,12 +49,14 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			double threshold = Double.parseDouble(
 					system.getParameters()
 					.get(Parameter.FACE_SIMILARITY_THRESHOLD));
-			Mat exampleFaces = getExampleFaces(system);
+			List<Mat> exampleFaces = getExampleFaces(system);
 			// Get data from sensor
 			List<SensorState> values;
 			try {
 				values = getSensorData(system);
 				for(SensorState sensorState: values){
+					String faceMatrixString = sensorState.getValue();
+					Mat faceMatrix = parseFace(faceMatrixString);
 					// TODO Actually test to see if face seen is allowed
 					//if (isAuthorisedFace(testFace, exampleFaces, threshold)) {
 					//	return generateSuccessEvent(system);
@@ -74,21 +78,35 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @return The example faces for the given system, using the cache where 
 	 * possible
 	 */
-	private Mat getExampleFaces(ClientSystem system) {
-		Mat exampleFaces;
+	private List<Mat> getExampleFaces(ClientSystem system) {
+		List<Mat> exampleFaces;
 		if (systemExampleFacesCache.keySet().contains(system)) {
 			exampleFaces = systemExampleFacesCache.get(system);
 		} else {
-			String base64faceData = system.getParameters().get(
-					Parameter.EXAMPLE_FACES);
-			exampleFaces = parseFaces(base64faceData);
+			String faceData = system.getParameters().get(
+Parameter.EXAMPLE_FACES);
+			exampleFaces = parseFaces(faceData);
 		}
 		return exampleFaces;
 	}
 
-	private Mat parseFaces(String base64) {
-		// TODO Parse example faces matrix from base64
-		return null;
+	private List<Mat> parseFaces(String facesMatrixStr) {
+		String[] faceStrings = facesMatrixStr.split("\n");
+		List<Mat> faces = new ArrayList<>(faceStrings.length);
+		for (String faceStr : faceStrings) {
+			faces.add(parseFace(faceStr));
+		}
+		return faces;
+	}
+	
+	private Mat parseFace(String faceMatrixStr) {
+		// Parse face matrix
+		String[] elements = faceMatrixStr.split(",");
+		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32SC1);
+		for (int i = 0; i < elements.length; i++) {
+			faceMatrix.put(0, i, new double[]{Double.parseDouble(elements[i])});
+		}
+		return faceMatrix;
 	}
 	
 	private boolean isAuthorisedFace(Mat testFace, Mat exampleFaces, boolean threshold) {
