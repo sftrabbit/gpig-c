@@ -91,6 +91,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			String faceData = system.getParameters().get(
 					Parameter.EXAMPLE_FACES);
 			exampleFaces = parseFaces(faceData);
+			systemExampleFacesCache.put(system, exampleFaces);
 		}
 		return exampleFaces;
 	}
