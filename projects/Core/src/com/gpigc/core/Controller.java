@@ -1,6 +1,7 @@
 package com.gpigc.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -36,7 +37,8 @@ public abstract class Controller {
 		File folder = new File(Core.ENGINES_FOLDER_PATH + "/");
 		URL url;
 		try {
-			url = folder.toURI().toURL();       	
+			url = folder.getCanonicalFile().toURI().toURL();  
+			System.out.println(url.toString());
 			URL[] urls = new URL[]{url};
 			ClassLoader cl = new URLClassLoader(urls);
 			File[] listOfFiles = folder.listFiles();
@@ -73,6 +75,9 @@ public abstract class Controller {
 			e1.printStackTrace();
 			System.out.println("URL was malformed in core: "+
 					e1.getMessage());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}  
 		return engines;
 	}
