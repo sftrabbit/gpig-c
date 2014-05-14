@@ -52,7 +52,7 @@ public class GWTSystemDataGatewayTest {
 		payload.put("Test2", "Red");
 		payload.put("Test3", "Green");
 		gateway.write(new EmitterSystemState(testSystemID, new Date(6),payload));
-		QueryResult result = gateway.readMostRecent(testSystemID,null, 3);
+		QueryResult result = gateway.readMostRecent(testSystemID, null, 3);
 		assertEquals(testSystemID, result.getSystemID());
 		Map<String,String> readPayload = new HashMap<String,String>();
 		readPayload.put(
