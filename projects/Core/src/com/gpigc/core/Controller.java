@@ -40,7 +40,7 @@ public abstract class Controller {
 			url = folder.getCanonicalFile().toURI().toURL();  
 			System.out.println(url.toString());
 			URL[] urls = new URL[]{url};
-			ClassLoader cl = new URLClassLoader(urls);
+			ClassLoader cl = URLClassLoader.newInstance(urls);
 			File[] listOfFiles = folder.listFiles();
 			if (listOfFiles == null) {
 				StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), engineType.toString());
@@ -54,10 +54,10 @@ public abstract class Controller {
 					try{
 						String engineBinaryName = GPIGC_CORE_PACKAGE +"."+ engineType + ".engine."+ name;
 						System.out.println("Trying to load : " + engineBinaryName);
-					Class<?> engineClass = cl.loadClass(engineBinaryName);
-					Constructor<?> constructor = engineClass.getConstructor(constructorParams);
-					engines.add(makeEngine(allSystems,constructor,name));
-					System.out.println("Loaded Engine: "+ name);
+						Class<?> engineClass = cl.loadClass(engineBinaryName);
+						Constructor<?> constructor = engineClass.getConstructor(constructorParams);
+						engines.add(makeEngine(allSystems,constructor,name));
+						System.out.println("Loaded Engine: "+ name);
 					}catch (ClassNotFoundException error){
 						System.out.println("Class: "+ name + " is not an " + engineType + " engine");
 						error.printStackTrace();
