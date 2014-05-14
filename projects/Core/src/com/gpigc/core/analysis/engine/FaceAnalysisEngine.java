@@ -33,6 +33,8 @@ import org.opencv.imgproc.Imgproc;
 public class FaceAnalysisEngine extends AnalysisEngine {
 
 	private Map<ClientSystem, List<Mat>> systemExampleFacesCache;
+	
+	static{System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);}
 
 	public FaceAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
 		super(registeredSystems, core);
@@ -90,6 +92,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		} else {
 			String faceData = system.getParameters().get(
 					Parameter.EXAMPLE_FACES);
+			System.err.println("Example faces loaded: " + faceData);
 			exampleFaces = parseFaces(faceData);
 			systemExampleFacesCache.put(system, exampleFaces);
 		}
