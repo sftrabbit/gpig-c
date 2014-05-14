@@ -17,6 +17,7 @@ import com.gpigc.core.view.StandardMessageGenerator;
 public abstract class Controller {
 
 	private static final String GPIGC_CORE_PACKAGE = "com.gpigc.core";
+
 	private final ControllerType engineType;
 	protected final Core core;
 
@@ -32,10 +33,10 @@ public abstract class Controller {
 	protected final List<? extends Object> instantiateEngines(
 			List<ClientSystem> allSystems, Class<?>... constructorParams) {
 		List<Object> engines = new ArrayList<>();
-		File folder = new File(Core.ENGINES_FOLDER_PATH + File.separator+engineType + File.separator);
-
-		try{
-			URL url = folder.toURI().toURL();         
+		File folder = new File(Core.ENGINES_FOLDER_PATH + "/");
+		URL url;
+		try {
+			url = folder.toURI().toURL();       	
 			URL[] urls = new URL[]{url};
 			ClassLoader cl = new URLClassLoader(urls);
 			File[] listOfFiles = folder.listFiles();
@@ -45,20 +46,34 @@ public abstract class Controller {
 			}
 
 			for (int i = 0; i < listOfFiles.length; i++) {
-				String name = listOfFiles[i].getName().substring(0,
-						listOfFiles[i].getName().lastIndexOf('.'));
-				Class<?> engineClass = cl.loadClass(GPIGC_CORE_PACKAGE +"."+ engineType + ".engine."+ name);
-				Constructor<?> constructor = engineClass.getConstructor(constructorParams);
-				engines.add(makeEngine(allSystems,constructor,name));
+				try{
+					String name = listOfFiles[i].getName().substring(0,
+							listOfFiles[i].getName().lastIndexOf('.'));
+					try{
+						String engineBinaryName = GPIGC_CORE_PACKAGE +"."+ engineType + ".engine."+ name;
+						System.out.println("Trying to load : " + engineBinaryName);
+					Class<?> engineClass = cl.loadClass(engineBinaryName);
+					Constructor<?> constructor = engineClass.getConstructor(constructorParams);
+					engines.add(makeEngine(allSystems,constructor,name));
+					System.out.println("Loaded Engine: "+ name);
+					}catch (ClassNotFoundException error){
+						System.out.println("Class: "+ name + " is not an " + engineType + " engine");
+						error.printStackTrace();
+					}
+				} catch (InstantiationException | 
+						NoSuchMethodException | SecurityException |
+						IllegalAccessException | IllegalArgumentException |
+						InvocationTargetException e) {
+					e.printStackTrace();
+					System.out.println("Issue when loading a AnalysisController: "+
+							e.getMessage());
+				}
 			}
-		} catch (InstantiationException | ClassNotFoundException | 
-				NoSuchMethodException | SecurityException | MalformedURLException | 
-				IllegalAccessException | IllegalArgumentException |
-				InvocationTargetException e) {
-			e.printStackTrace();
-			System.out.println("Issue when loading a AnalysisController: "+
-					e.getMessage());
-		}
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+			System.out.println("URL was malformed in core: "+
+					e1.getMessage());
+		}  
 		return engines;
 	}
 
@@ -83,7 +98,7 @@ public abstract class Controller {
 		throw new RuntimeException("Engine Type now handled");
 	}	
 
-	
+
 	public abstract void refreshSystems(List<ClientSystem> systems);
 
 	protected abstract List<ClientSystem> getRegisteredSystems(String name,
