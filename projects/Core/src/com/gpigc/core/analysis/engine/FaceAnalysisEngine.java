@@ -129,7 +129,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	public static Mat parseFace(String faceMatrixStr) {
 		// Parse face matrix
 		String[] elements = faceMatrixStr.split(",");
-		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32SC1);
+		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_64FC1);
 		for (int i = 0; i < elements.length; i++) {
 			double elementValue = Double.parseDouble(elements[i]);
 			System.err.println("Parsing element \""+elements[i]+"\" as "+
