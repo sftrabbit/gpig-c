@@ -21,6 +21,7 @@ import com.gpigc.dataabstractionlayer.client.SensorState;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 
 /**
  * Analyses the faces seen in an image detected by a sensor
@@ -43,9 +44,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 */
 	@Override
 	public DataEvent analyse(ClientSystem system) {
-
-		if(system.getParameters().containsKey(Parameter.EXAMPLE_FACES) &&
-				system.getParameters().containsKey(Parameter.FACE_SIMILARITY_THRESHOLD)){
+		if(areParametersSet(system)){
 			double threshold = Double.parseDouble(
 					system.getParameters()
 					.get(Parameter.FACE_SIMILARITY_THRESHOLD));
@@ -58,12 +57,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 					String faceMatrixString = sensorState.getValue();
 					Mat faceMatrix = parseFace(faceMatrixString);
 					System.err.println("Parsed face: " + faceMatrix.dump());
-					// TODO Actually test to see if face seen is allowed
-					//if (isAuthorisedFace(testFace, exampleFaces, threshold)) {
-					//	return generateSuccessEvent(system);
-					//} else {
+					// Actually test to see if face seen is allowed
+					if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
+						return generateSuccessEvent(system);
+					} else {
 						return generateFailureEvent(system);
-					//}
+					}
 				}
 			} catch (FailedToReadFromDatastoreException e) {
 				e.printStackTrace();
@@ -72,7 +71,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		}else{
 			StandardMessageGenerator.wrongParams(system.getID(), name);
 		}
-		return null;
+		return null; // No event
+	}
+
+	private boolean areParametersSet(ClientSystem system) {
+		return system.getParameters().containsKey(Parameter.EXAMPLE_FACES) &&
+		system.getParameters().containsKey(Parameter.FACE_SIMILARITY_THRESHOLD);
 	}
 
 	/**
@@ -85,7 +89,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			exampleFaces = systemExampleFacesCache.get(system);
 		} else {
 			String faceData = system.getParameters().get(
-Parameter.EXAMPLE_FACES);
+					Parameter.EXAMPLE_FACES);
 			exampleFaces = parseFaces(faceData);
 		}
 		return exampleFaces;
@@ -110,9 +114,18 @@ Parameter.EXAMPLE_FACES);
 		return faceMatrix;
 	}
 	
-	private boolean isAuthorisedFace(Mat testFace, Mat exampleFaces, boolean threshold) {
-		// TODO Check to see if close enough to an allowable example face using 
-		//Chi-Squared Imgproc.compareHist()
+	private boolean isAuthorisedFace(Mat testFace, List<Mat> exampleFaces, 
+			double threshold) {
+		/* Check to see if close enough to an allowable example face using 
+		 * Chi-Squared method
+		 */
+		for (Mat example : exampleFaces) {
+			double faceSimilarity = Imgproc.compareHist(
+					testFace, example, Imgproc.CV_COMP_CHISQR);
+			if (faceSimilarity < threshold) {
+				return true;
+			}
+		}
 		return false;
 	}
 	

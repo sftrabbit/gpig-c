@@ -1,6 +1,5 @@
 package com.gpigc.core.analysis;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.gpigc.core.ClientSystem;
@@ -26,6 +25,9 @@ public abstract class AnalysisEngine {
 		return associatedSystems;
 	}
 
+	/**
+	 * @return The event detected, or null if no event has been detected
+	 */
 	public abstract DataEvent analyse(ClientSystem system);
 
 	public List<SensorState> getSensorReadings(ClientSystem system, String sensorID, int numberToGet) throws FailedToReadFromDatastoreException {
