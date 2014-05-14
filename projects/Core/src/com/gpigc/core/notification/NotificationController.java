@@ -1,8 +1,5 @@
 package com.gpigc.core.notification;
 
-import java.io.File;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +7,6 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Controller;
 import com.gpigc.core.Core;
 import com.gpigc.core.event.DataEvent;
-import com.gpigc.core.view.StandardMessageGenerator;
 
 /**
  * Handles all of the notification engines

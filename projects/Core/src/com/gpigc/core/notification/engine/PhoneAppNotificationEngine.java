@@ -3,7 +3,9 @@ package com.gpigc.core.notification.engine;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
@@ -28,21 +30,22 @@ public class PhoneAppNotificationEngine extends NotificationEngine {
 	public boolean send(DataEvent event) {
 		if(event.getSystem().getParameters().containsKey(Parameter.PHONE_IP)){
 			String phoneIP = event.getSystem().getParameters().get(Parameter.PHONE_IP);
+			Map<String,String> phoneData = new HashMap<>();
 			try {
-				if(Double.parseDouble(event.getData().get("Value")) ==1){
-					event.getData().put(Parameter.WIFI,ON);
-					event.getData().put(Parameter.THREE,OFF);
-					event.getData().put(Parameter.BLUE,OFF);
-					event.getData().put(Parameter.GPS,OFF);
+				if(Double.parseDouble(event.getData().get(Parameter.VALUE)) ==1){
+					phoneData.put(Parameter.WIFI.toString(),ON);
+					phoneData.put(Parameter.THREE.toString(),OFF);
+					phoneData.put(Parameter.BLUE.toString(),OFF);
+					phoneData.put(Parameter.GPS.toString(),OFF);
 				}else{
-					event.getData().put(Parameter.WIFI,ON);
-					event.getData().put(Parameter.THREE,ON);
-					event.getData().put(Parameter.BLUE,ON);
-					event.getData().put(Parameter.GPS,ON);
+					phoneData.put(Parameter.WIFI.toString(),ON);
+					phoneData.put(Parameter.THREE.toString(),ON);
+					phoneData.put(Parameter.BLUE.toString(),ON);
+					phoneData.put(Parameter.GPS.toString(),ON);
 				}
 				Socket s = new Socket(phoneIP, PORT);
 				ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
-				out.writeObject(event.getData());
+				out.writeObject(phoneData);
 				out.flush();
 				s.close();
 				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());

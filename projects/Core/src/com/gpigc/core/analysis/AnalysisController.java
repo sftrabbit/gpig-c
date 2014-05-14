@@ -31,10 +31,12 @@ public class AnalysisController extends Controller{
 	}
 
 	public void analyse(Set<String> systemIDs) {
+		System.out.println("Beginning Analysis");
 		for(String currentSystemID: systemIDs){
 			for (AnalysisEngine engine : analysisEngines) {
 				//If this engine is registered to this system
 				if (engine.getRegisteredSystem(currentSystemID) != null) {
+					System.out.println("Checking For Event");
 					DataEvent event = engine.analyse(engine.getRegisteredSystem(currentSystemID));
 					if (event != null) {
 						StandardMessageGenerator.eventGenerated(engine.name, currentSystemID);

@@ -57,14 +57,14 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 				double mean = getMean(getSensorReadings(system, sensor.getID(),
 						numRecords));
 				if (mean > upperBound) {
-					data.put(Parameter.MESSAGE, data.get("Message")
+					data.put(Parameter.MESSAGE, data.get(Parameter.MESSAGE)
 							+ "Sensor with ID: " + sensor.getID()
 							+ " has exceeded its upper limit. "
 							+ "\nMean value was: " + mean + "\n\n");
 					return true;
 				}
 				if (mean < lowerBound) {
-					data.put(Parameter.MESSAGE, data.get("Message")
+					data.put(Parameter.MESSAGE, data.get(Parameter.MESSAGE)
 							+ "Sensor with ID: " + sensor.getID()
 							+ " has fallen below its lower limit. "
 							+ "\nMean value was: " + mean + "\n\n");
