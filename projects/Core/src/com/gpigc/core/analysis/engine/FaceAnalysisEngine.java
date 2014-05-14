@@ -3,6 +3,7 @@
  */
 package com.gpigc.core.analysis.engine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,13 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 
 	private Map<ClientSystem, List<Mat>> systemExampleFacesCache;
 	
-	static{System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);}
+	static{
+		try {
+			System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+		} catch (UnsatisfiedLinkError e) {
+			System.err.println("Failed to load OpenCV natives");
+		}
+	}
 
 	public FaceAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
 		super(registeredSystems, core);
