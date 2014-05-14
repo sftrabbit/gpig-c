@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.google.appengine.api.datastore.Text;
 import com.google.gwt.dev.util.collect.HashMap;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
@@ -17,8 +18,8 @@ public class EmitterSystemStateTest {
 
 	@Test
 	public void testParseJSON() throws IOException, ParseException {
-		Map<String, String> payload = new HashMap<>();
-		payload.put("PayloadKey", "PayloadValue");
+		Map<String, Text> payload = new HashMap<>();
+		payload.put("PayloadKey", new Text("PayloadValue"));
 		EmitterSystemState state = new EmitterSystemState(
 				"ID", 
 				new Date(100), 

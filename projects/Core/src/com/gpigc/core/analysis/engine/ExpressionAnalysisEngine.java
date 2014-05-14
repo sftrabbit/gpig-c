@@ -58,10 +58,12 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 				//Get Data
 				List<SensorState> values = getSensorData(system);
 				for(SensorState sensorState: values){
-					Variable var = Variable.make(sensorState.getSensorID());
-					var.setValue(Double.parseDouble(sensorState.getValue()));
-					parser.allow(var);
-					variables.put(sensorState.getSensorID(), var);	
+					if(exprStr.contains(sensorState.getSensorID())) {
+						Variable var = Variable.make(sensorState.getSensorID());
+						var.setValue(Double.parseDouble(sensorState.getValue()));
+						parser.allow(var);
+						variables.put(sensorState.getSensorID(), var);
+					}
 				}
 				double value = parser.parseString(exprStr).value();
 				return generateEvent(system,exprStr, value);
@@ -86,7 +88,7 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 		data.put("Message", "Expression analysis of system " 
 				+ system.getID() + " showed abnormal system behaviour: " + exprStr);
 		data.put("Subject", this.name+ " Notification");
-		data.put("Recepient", "gpigc.alerts@gmail.com");
+		data.put("Recipient", "gpigc.alerts@gmail.com");
 		data.put("Value",value+"");
 		return new DataEvent(data, system);
 	}

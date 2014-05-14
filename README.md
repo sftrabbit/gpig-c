@@ -21,14 +21,23 @@ Auxiliary directories:
 Projects
 --------
 
-- **Admin Centre** - A web interface for administering a GPIG-C system.
 - **Core** - The core GPIG-C system, responsible for receiving data, storing
   and analysing it, and sending out notifications.
-- **Data Emitter** - Contains wrappers for various applications that need to be
-  monitored. It extracts data from the applications and emits it to the GPIG-C
-  system.
-- **GPIG-WebApp** - A web application for Google App Engine that provides write
-  and read access to a database for storing data from the monitored application.
-- **Proto** - Compiles Protocol Buffers message specifications into a Java
-  library so that it can be used to communicate between the Data Emitter and
-  the Core.
+- **Emitter** - A library that provides common functionality for the following
+  emitters:
+  - **Test App 1 Emitter** - Emits CPU and memory data about the first
+    Thales test application.
+  - **Earthquake Emitter** - Emits data about earthquakes gathered from USGS
+    Earthquake Hazards Program.
+  - **Response Time Emitter** - Emits HTTP response time data.
+  - **Android Emitter** - An Android application that contains various emitters.
+- User-facing components:
+  - **Emitter Launcher** - Provide a GUI for launching the desktop emitters.
+  - **Admin Centre** - A web interface for administrating a GPIG-C system.
+- Storage:
+  - **GPIG-WebApp** - A web application for Google App Engine that provides write
+    and read access to a database for storing data from the monitored application.
+- Utility:
+  - **Proto** - Compiles Protocol Buffers message specifications into a Java
+    library so that it can be used to communicate between the data emitters and
+    the Core.

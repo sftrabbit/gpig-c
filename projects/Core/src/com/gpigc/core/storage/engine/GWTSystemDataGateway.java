@@ -43,7 +43,7 @@ import static com.gpigc.dataabstractionlayer.server.DatabaseField.*;
  */
 public class GWTSystemDataGateway extends SystemDataGateway {
 	
-	public final static String APPENGINE_SERVLET_URI = "http://gpigc-webapp.appspot.com/gpigc-webapp";
+	public final static String APPENGINE_SERVLET_URI = "http://gpigc-beta.appspot.com/gpigc-webapp";
 
 	/**
 	 * The location of the servlet that handles the database
@@ -70,6 +70,7 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 	 * @see com.gpig.client.SystemDataGateway#readMostRecent(java.lang.String,
 	 * int)
 	 */
+	
 	@Override
 	public QueryResult readMostRecent(String systemID, String sensorID, int numRecords)
 			throws FailedToReadFromDatastoreException {

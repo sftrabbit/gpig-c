@@ -22,18 +22,20 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 
 	@Override
 	public DataEvent analyse(ClientSystem system) {
+
 		boolean event = false;
 		// Set up the data
 		Map<String, String> data = new HashMap<>();
 		data.put("Subject", this.name+ " Notification");
-		data.put("Recepient", "gpigc.alerts@gmail.com");
+		data.put("Recipient", "gpigc.alerts@gmail.com");
 		data.put("Message", "");
 
 		// Check the sensors
 		for (ClientSensor sensor : system.getSensors()) {
-			boolean sensorDone = checkSensor(sensor, data, system);
-			if (sensorDone)
-				event = sensorDone;
+			boolean sensorResult = checkSensor(sensor, data, system);
+
+			if (sensorResult)
+				event = sensorResult;
 		}
 		if (event)
 			return new DataEvent(data, system);
@@ -52,7 +54,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 			int numRecords = Integer.parseInt(sensor.getParameters().get(
 					Parameter.NUM_RECORDS));
 			try {
-				long mean = getMean(getSensorReadings(system, sensor.getID(),
+				double mean = getMean(getSensorReadings(system, sensor.getID(),
 						numRecords));
 				if (mean > upperBound) {
 					data.put("Message", data.get("Message")
@@ -82,20 +84,20 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 		if (sensor.getParameters().containsKey(Parameter.LOWER_BOUND)
 				&& sensor.getParameters().containsKey(
 						Parameter.UPPER_BOUND)
-				&& sensor.getParameters().containsKey(
-						Parameter.NUM_RECORDS))
+						&& sensor.getParameters().containsKey(
+								Parameter.NUM_RECORDS))
 			return true;
 
 		return false;
 	}
 
-	protected static long getMean(List<SensorState> sensorData) {
+	protected static double getMean(List<SensorState> sensorData) {
 		if (sensorData.size() == 0)
 			throw new IllegalArgumentException("Size cannot be 0");
 
 		long sum = 0;
 		for (int i = 0; i < sensorData.size(); i++) {
-			sum += Long.parseLong(sensorData.get(i).getValue());
+			sum += Double.parseDouble(sensorData.get(i).getValue());
 		}
 		return sum / sensorData.size();
 	}

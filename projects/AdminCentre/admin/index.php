@@ -41,10 +41,10 @@ $availableNotification = array(
 
     <!-- Add custom CSS here -->
     <link href="../css/modern-business.css" rel="stylesheet">
-    <link href="../css/admin.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
     <link href="../css/custom-gpig.css" rel="stylesheet">
-    <link href="../css/bootstrap-switch.css" rel="stylesheet">
+    <link href="css/bootstrap-switch.css" rel="stylesheet">
 
     <!-- JavaScript -->
     <script src="../js/jquery-1.10.2.js"></script>
@@ -209,117 +209,24 @@ $availableNotification = array(
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Memory Graph</h3>
+                            <script type="text/javascript">
+                                var ENDPOINT = "http://gpigc-webapp.appspot.com/gpigc-webapp";
+                                var REFRESH_SECONDS = 10;
+                                var MAX_POINTS = 50;
+                                var RECORD_TYPE = "<?php echo $currentSystem["Sensors"][1]["SensorID"]; ?>";
+                                var SYSTEM_ID = "<?php echo $currentSystem["SystemID"]; ?>";
+                                var FREQUENCY = 10; // 1 to 59
+                                var ROUND_SCALE = 1000;
+                                var STEPS_SCALE = 20;
+                            </script>
+                            <script src="js/Chart.js"></script>
+                            <script src="js/report-graph.js"></script>
                         </div>
                         <div class="panel-body">
                             <canvas id="graph"></canvas>
                         </div>
                     </div>
                 </div>
-                <script src="js/Chart.js"></script>
-                <script>
-                    $(function(){
-
-                        // Configuration
-                        var ENDPOINT = "http://gpigc-webapp.appspot.com/gpigc-webapp";
-                        var REFRESH_SECONDS = 10;
-                        var MAX_POINTS = 50;
-                        var RECORD_TYPE = "<?php echo $currentSystem["Sensors"][1]["SensorID"]; ?>";
-                        var SYSTEM_ID = "<?php echo $currentSystem["SystemID"]; ?>";
-                        var FREQUENCY = 10; // 1 to 59
-                        var ROUND_SCALE = 1000;
-                        var STEPS_SCALE = 20;
-
-                        var resized = false;
-                        $("#tab-menu-reports").click(function() {
-                            if (!resized) {
-                                setTimeout(function() {
-                                    // Initialise
-                                    var relative = $("#graph").parent();
-                                    $("#graph").attr("width", relative.width()).attr("height", relative.width() * 0.6);
-                                    chart = new Chart($("#graph").get(0).getContext("2d"));
-                                    $.ajax({
-                                        url: ENDPOINT+"?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+(MAX_POINTS*FREQUENCY)+"&callback=?",
-                                        dataType: "jsonp",
-                                        success: function(graphData) {
-                                            addItems(graphData.Records);
-                                            chart.Line(data, options);
-                                            options.animation = false;
-                                        }
-                                    });
-                                    setInterval(refreshChart, REFRESH_SECONDS * 1000);
-                                    // End initialisation
-                                }, 600);
-                                resized = true;
-                            }
-                        });
-
-                        var chart;
-                        var options = {
-                            scaleOverride: true,
-                            scaleSteps: STEPS_SCALE
-                        }
-                        var data = {
-                            labels : [],
-                            datasets : [
-                                {
-                                    fillColor : "rgba(93,31,173,0.5)",
-                                    strokeColor : "rgba(93,31,173,1)",
-                                    pointColor : "rgba(93,31,173,1)",
-                                    pointStrokeColor : "#fff",
-                                    data : []
-                                }
-                            ]
-                        };
-
-                        function refreshChart() {
-                            if ($("#content-reports").is(":visible")) {
-                                $.ajax({
-                                    url: ENDPOINT+"?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+(REFRESH_SECONDS*FREQUENCY)+"&callback=?",
-                                    dataType: "jsonp",
-                                    success: function(graphData) {
-                                        addItems(graphData.Records);
-                                        chart.Line(data, options);
-                                    }
-                                });
-                            }
-                        }
-
-                        function parseDate(input) {
-                            var date = new Date(input);
-                            return ("0" + date.getUTCDate()).slice(-2) + "/" + ("0" + (date.getUTCMonth() + 1)).slice(-2) + "/" + date.getUTCFullYear() + " " + ("0" + date.getUTCHours()).slice(-2) + ":" + ("0" + date.getUTCMinutes()).slice(-2) + ":" + ("0" + date.getUTCSeconds()).slice(-2);
-                        }
-
-                        function addItems(items) {
-                            var min = Number.MAX_VALUE;
-                            var max = Number.MIN_VALUE;
-                            var changed = false;
-                            items.reverse();
-                            $.each(items, function(key, item) {
-                                if (item.SensorID == RECORD_TYPE && (data.labels.indexOf(parseDate(item.CreationTimestamp)) == -1)) {
-                                    if (!(new Date(item.CreationTimestamp).getUTCSeconds() % FREQUENCY)) {
-                                        if (data.labels.length >= MAX_POINTS) {
-                                            data.labels.shift();
-                                            data.datasets[0].data.shift();
-                                        }
-                                        var value = parseFloat(item.Value)
-                                        var thisMin = Math.floor(value / ROUND_SCALE) * ROUND_SCALE;
-                                        var thisMax = Math.ceil(value / ROUND_SCALE) * ROUND_SCALE;
-                                        if (thisMin < min) min = thisMin;
-                                        if (thisMax > max) max = thisMax;
-                                        data.labels.push(parseDate(item.CreationTimestamp));
-                                        data.datasets[0].data.push(value);
-                                        changed = true;
-                                    }
-                                }
-                            });
-                            if (changed) {
-                                var stepWidth = Math.round(((max - min) / (STEPS_SCALE - 2)) / ROUND_SCALE) * ROUND_SCALE;
-                                options.scaleStepWidth = stepWidth;
-                                options.scaleStartValue = min - stepWidth;
-                            }
-                        }
-                    });
-                </script>
             <?php
             } elseif ($currentSystem["Reporting"] == "Map") {
             ?>
@@ -330,115 +237,18 @@ $availableNotification = array(
                         </div>
                         <div class="panel-body">
                             <div id="map"></div>
+                            <script type="text/javascript">
+                                var ENDPOINT = "http://gpigc-webapp.appspot.com/gpigc-webapp";
+                                var REFRESH_SECONDS = 120;
+                                var MAX_POINTS = 50;
+                                var RECORD_TYPE = "<?php echo $currentSystem["Sensors"][0]["SensorID"]; ?>";
+                                var SYSTEM_ID = "<?php echo $currentSystem["SystemID"]; ?>";
+                            </script>
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jQgEtsdQmRQtyOXp6VDwoDla2rN4FbE&sensor=false"></script>
+                            <script src="js/report-map.js"></script>
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jQgEtsdQmRQtyOXp6VDwoDla2rN4FbE&sensor=false"></script>
-                <script type="text/javascript">
-                    // Configuration
-                    var ENDPOINT = "http://gpigc-webapp.appspot.com/gpigc-webapp";
-                    var REFRESH_SECONDS = 120;
-                    var MAX_POINTS = 50;
-                    var RECORD_TYPE = "<?php echo $currentSystem["Sensors"][0]["SensorID"]; ?>";
-                    var SYSTEM_ID = "<?php echo $currentSystem["SystemID"]; ?>";
-
-                    var resized = false;
-                    $("#tab-menu-reports").click(function() {
-                        if (!resized) {
-                            setTimeout(initialize, 600);
-                            resized = true;
-                        }
-                    });
-
-                    function initialize() {
-                        var relative = $("#map").parent();
-                        $("#map").css({"width": relative.width() * 0.9, "height": relative.width() * 0.5, "margin": "0 auto"});
-
-                        var mapOptions = {
-                            center: new google.maps.LatLng(20, 0),
-                            mapTypeId: google.maps.MapTypeId.ROADMAP,
-                            zoom: 2,
-                            panControl: false,
-                            zoomControl: true,
-                            mapTypeControl: true,
-                            scaleControl: false,
-                            streetViewControl: false,
-                            overviewMapControl: false,
-                            zoomControlOptions: {
-                                style: google.maps.ZoomControlStyle.LARGE,
-                                position: google.maps.ControlPosition.RIGHT_BOTTOM
-                            },
-                            styles: [
-                                        {stylers:[
-                                                {visibility:"off"}
-                                                ]},
-                                        {featureType:"water", stylers:[
-                                                                    {visibility:"on"},
-                                                                    {color:"#d4d4d4"}
-                                                                    ]},
-                                        {featureType:"landscape", stylers:[
-                                                                        {visibility:"on"},
-                                                                        {color:"#e5e3df"}
-                                                                        ]}
-                                    ]
-                        };
-                        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                        var eqData = {};
-                        var eqCircle;
-                        var infoWindow = new google.maps.InfoWindow();
-
-                        function addMapData(mapData) {
-                            mapData.Records.reverse();
-                            $.each(mapData.Records, function(key, item) {
-                                if (item.SensorID == RECORD_TYPE && !(item.CreationTimestamp in eqData)) {
-                                    if (eqData.length >= MAX_POINTS) {
-                                        eqData.shift();
-                                    }
-                                    var bits = item.Value.split(",");
-                                    addMapPoint(item.CreationTimestamp, bits[0], bits[1], bits[2]);
-                                }
-                            });
-                        }
-
-                        function addMapPoint(ts, magnitude, latitude, longitude) {
-                            eqData[ts] = {"magnitude": parseFloat(magnitude), "location": new google.maps.LatLng(latitude, longitude)};
-                            var earthquake = {
-                                strokeColor: '#FF0000',
-                                strokeOpacity: 0.7,
-                                strokeWeight: 1,
-                                fillColor: '#FF0000',
-                                fillOpacity: 0.3,
-                                map: map,
-                                clickable: true,
-                                center: eqData[ts].location,
-                                radius: eqData[ts].magnitude * 100000,
-                                infoWindowIndex: ts
-                            };
-                            eqCircle = new google.maps.Circle(earthquake);
-                            google.maps.event.addListener(eqCircle, 'click', (function(eqCircle, ts) {
-                                return function() {
-                                    infoWindow.setContent("Magnitude: "+magnitude+"<br>"+latitude+", "+longitude+"<br>"+new Date(ts).toUTCString());
-                                    infoWindow.setPosition(eqCircle.getCenter());
-                                    infoWindow.open(map);
-                                }
-                              })(eqCircle, ts));
-                        }
-
-                        function refreshMap() {
-                            if ($("#content-reports").is(":visible")) {
-                                $.ajax({
-                                    url: ENDPOINT+"?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+MAX_POINTS+"&callback=?",
-                                    dataType: "jsonp",
-                                    success: addMapData
-                                });
-                            }
-                        }
-                        refreshMap();
-                        setInterval(refreshMap, REFRESH_SECONDS * 1000);
-
-                    }
-                    //google.maps.event.addDomListener(window, 'load', initialize);
-                </script>
             <?php
             }
         }

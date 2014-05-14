@@ -26,11 +26,4 @@ public class NotificationGeneratorTest {
 				new HashMap<Parameter, String>()));
 	}
 
-	@Test //No exception
-	public void testMakeEngines() throws ReflectiveOperationException {
-		NotificationController generator = new NotificationController(systems);
-		assertNotNull(generator.getNotificationEngines());
-		assertTrue(generator.getNotificationEngines().size() != 0);
-	}
-
 }

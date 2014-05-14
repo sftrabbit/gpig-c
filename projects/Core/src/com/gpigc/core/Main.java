@@ -78,7 +78,7 @@ public class Main {
 					core.getDataInputServer().start();
 					shell.getConfigButton().setEnabled(false);
 					StandardMessageGenerator.coreRunning();
-				} catch (IOException | ReflectiveOperationException e1) {
+				} catch (IOException | ReflectiveOperationException | InterruptedException e1) {
 					StandardMessageGenerator.failedToSetup();
 					e1.printStackTrace();
 				}
