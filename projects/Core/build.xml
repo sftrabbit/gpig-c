@@ -102,9 +102,9 @@
 			</binlib>
 			<fileset dir="." includes="images/*.png" />
   			<!-- Include the folder structure in the jar so that is may be unpacked at runtime -->
-			<fileset dir="${classes.dir}/engine/notification/" includes="com/gpigc/core/notification/engine/*.class"/>
-			<fileset dir="${classes.dir}/engine/storage/" includes="com/gpigc/core/storage/engine/*.class"/>
-			<fileset dir="${classes.dir}/engine/analysis/" includes="com/gpigc/core/analysis/engine/*.class"/>
+			<fileset dir="${classes.dir}" includes="engine/notification/com/gpigc/core/notification/engine/*.class"/>
+			<fileset dir="${classes.dir}" includes="engine/storage/com/gpigc/core/storage/engine/*.class"/>
+			<fileset dir="${classes.dir}" includes="engine/analysis/com/gpigc/core/analysis/engine/*.class"/>
 		</one-jar>
 	</target>
 
