@@ -36,8 +36,7 @@ public class EmitterSystemState {
 	 * @param payload The state of this system, i.e. the values of 0 or
 	 * more sensors at the given time
 	 */
-	public EmitterSystemState(String systemID, Date timestamp,
-			Map<String, Text> payload) {
+	public EmitterSystemState(String systemID, Date timestamp, Map<String, String> payload) {
 		if (systemID == null)
 			throw new NullPointerException("System ID is null");
 		if (timestamp == null)

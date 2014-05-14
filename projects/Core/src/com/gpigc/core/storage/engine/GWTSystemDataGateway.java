@@ -198,5 +198,4 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 					"Failed to Write to DB, Response was "
 							+ response.getStatusLine().getStatusCode());
 	}
-
 }

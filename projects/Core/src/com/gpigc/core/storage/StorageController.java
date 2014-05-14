@@ -13,7 +13,7 @@ import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 
-public class StorageController extends Controller{
+public class StorageController extends Controller {
 
 	private List<SystemDataGateway> datastores;
 
@@ -23,6 +23,7 @@ public class StorageController extends Controller{
 		refreshSystems(systems);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void refreshSystems(List<ClientSystem> systems){
 		datastores = (List<SystemDataGateway>)instantiateEngines(systems);
 	}

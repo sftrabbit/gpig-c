@@ -3,6 +3,7 @@
  */
 package com.gpigc.core.storage;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +14,6 @@ import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 
 public abstract class SystemDataGateway {
-	
-	
 	
 	private final List<ClientSystem> registeredSystems;
 	public final String name;
@@ -31,6 +30,7 @@ public abstract class SystemDataGateway {
 	 * @return The numRecords most recent records associated with the given
 	 * systemID
 	 * @throws FailedToReadFromDatastoreException
+	 * @throws SQLException 
 	 */
 	public abstract QueryResult readMostRecent(String systemID,String sensorID, int numRecords) 
 			throws FailedToReadFromDatastoreException;
@@ -42,6 +42,7 @@ public abstract class SystemDataGateway {
 	 * @param end The latest point in the time period
 	 * @return All records for a given systemID within the given time period
 	 * @throws FailedToReadFromDatastoreException
+	 * @throws SQLException 
 	 */
 	public abstract QueryResult readBetween(String systemID, String sensorID, Date start, Date end) 
 			throws FailedToReadFromDatastoreException;
@@ -51,6 +52,7 @@ public abstract class SystemDataGateway {
 	 * 
 	 * @param data The data to be written
 	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
+	 * @throws SQLException When we couldn't write
 	 */
 	public abstract void write(EmitterSystemState data) throws FailedToWriteToDatastoreException;
 
@@ -59,6 +61,7 @@ public abstract class SystemDataGateway {
 	 * 
 	 * @param data The data to be written
 	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
+	 * @throws SQLException When we fail to write to the datastore
 	 */
 	public abstract void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException;
 
