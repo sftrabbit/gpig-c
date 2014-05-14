@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public class GWTSystemDataGatewayTest {
 	public void testReadAndWrite() throws FailedToReadFromDatastoreException, 
 								URISyntaxException, 
 								ParseException, 
-								IOException, FailedToWriteToDatastoreException {
+								IOException, FailedToWriteToDatastoreException, SQLException {
 		SystemDataGateway gateway = new GWTSystemDataGateway(systems);
 		Map<String,String> payload = new HashMap<String,String>();
 		payload.put("Test1", "Blue");
