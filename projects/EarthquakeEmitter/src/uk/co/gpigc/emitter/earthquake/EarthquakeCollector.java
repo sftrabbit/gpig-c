@@ -40,7 +40,7 @@ public class EarthquakeCollector implements DataCollector {
 						.setKey("EQ")
 						.setValue(earthquake.toCsv())
 						.build();
-				SystemData data = SystemData.newBuilder().setSystemId("2")
+				SystemData data = SystemData.newBuilder().setSystemId("EarthquakeMonitor")
 						.setTimestamp(earthquake.getTime())
 						.addDatum(earthquakeDatum)
 						.build();

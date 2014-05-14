@@ -27,7 +27,7 @@ public class AnalysisController extends Controller{
 
 
 	public void refreshSystems(List<ClientSystem> systems) {
-		analysisEngines = (List<AnalysisEngine>) instantiateEngines(systems);
+		analysisEngines = (List<AnalysisEngine>) instantiateEngines(systems,List.class,Core.class);
 	}
 
 	public void analyse(Set<String> systemIDs) {

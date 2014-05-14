@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Controller;
-import com.gpigc.core.Controller.ControllerType;
 import com.gpigc.core.Core;
 import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
@@ -24,8 +23,9 @@ public class StorageController extends Controller {
 		refreshSystems(systems);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void refreshSystems(List<ClientSystem> systems){
-		datastores = (List<SystemDataGateway>)instantiateEngines(systems);
+		datastores = (List<SystemDataGateway>)instantiateEngines(systems, List.class);
 	}
 
 	public void push(Map<String, List<EmitterSystemState>> systemStates) {
