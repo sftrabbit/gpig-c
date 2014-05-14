@@ -57,6 +57,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				for(SensorState sensorState: values){
 					String faceMatrixString = sensorState.getValue();
 					Mat faceMatrix = parseFace(faceMatrixString);
+					System.err.println("Parsed face: " + faceMatrix.dump());
 					// TODO Actually test to see if face seen is allowed
 					//if (isAuthorisedFace(testFace, exampleFaces, threshold)) {
 					//	return generateSuccessEvent(system);
