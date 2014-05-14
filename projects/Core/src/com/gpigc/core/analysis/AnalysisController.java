@@ -45,6 +45,7 @@ public class AnalysisController extends Controller{
 		}
 	}
 
+
 	protected List<ClientSystem> getRegisteredSystems(String simpleName,
 			List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();

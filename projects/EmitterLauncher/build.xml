@@ -36,12 +36,16 @@
 	<!-- Various directories -->
 
 	<property name="src.dir" value="src" />
-
 	<property name="lib.dir" value="lib" />
-
 	<property name="build.dir" value="bin" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="res.dir" value="res" />
+	<property name="tools.dir" value="../../tools" />
+	
+	<!--  Various filenames -->
+	
+	<property name="jar.name" value="EmitterLauncher.jar" />
 	
 	<!--  Manifest properties -->
 
@@ -73,12 +77,11 @@
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${jar.dir}" />
-		<one-jar destfile="${jar.dir}/EmitterLauncher.jar">
+		<one-jar destfile="${jar.dir}/${jar.name}">
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${main-class}" />
-				<attribute name="One-Jar-Expand" value="emitterJars" />
+				<attribute name="One-Jar-Expand" value="${res.dir}" />
 				<attribute name="One-Jar-Expand-Dir" value="." />
-				<attribute name="One-Jar-Show-Expand" value="true" />
 			</manifest>
 			<main>
 				<fileset dir="${classes.dir}" />
@@ -88,29 +91,20 @@
 				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
 					includes="*.jar" />
 			</lib>
-			<binlib>
-				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
-					includes="*.so" />
-			</binlib>
-			<fileset dir="." includes="images/*.png" />
-			<fileset dir="." includes="emitterJars/*.jar" />
+			<fileset dir="." includes="${res.dir}/**" />
 		</one-jar>
 	</target>
 
 	<target name="runarg" depends="jar" if="jvmarg">
 	    <!-- This executes on OSX -->
-		<java fork="true" jar="${jar.dir}/EmitterLauncher.jar">
+		<java fork="true" jar="${jar.dir}/${jar.name}">
 			<jvmarg value="-XstartOnFirstThread" />
-			<sysproperty key="java.library.path"
-				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
 		</java>
 	</target>
 
 	<target name="run" depends="jar" unless="jvmarg">
 	    <!-- This executes on anything but OSX -->
-		<java fork="true" jar="${jar.dir}/EmitterLauncher.jar">
-			<sysproperty key="java.library.path"
-				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
+		<java fork="true" jar="${jar.dir}/${jar.name}">
 		</java>
 	</target>
 

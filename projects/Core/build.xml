@@ -36,9 +36,7 @@
 	<!-- Various directories -->
 
 	<property name="src.dir" value="src" />
-
 	<property name="lib.dir" value="lib" />
-
 	<property name="build.dir" value="bin" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/jar" />
@@ -76,6 +74,8 @@
 		<one-jar destfile="${jar.dir}/Core.jar">
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${main-class}" />
+				<attribute name="One-Jar-Expand" value="engine" />
+				<attribute name="One-Jar-Expand-Dir" value="." />
 				<attribute name="One-Jar-Show-Expand" value="true" />
 			</manifest>
 			<main>
@@ -90,6 +90,11 @@
 				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
 					includes="*.so" />
 			</binlib>
+			<!-- Move the engines to the ./engine folder outside the jar so that
+			the user can dynamically add to or modify the default engines -->
+			<fileset dir="${classes.dir}/com/gpigc/core/notification" includes="engine/*.class"/>
+			<fileset dir="${classes.dir}/com/gpigc/core/storage" includes="engine/*.class"/>
+			<fileset dir="${classes.dir}/com/gpigc/core/analysis" includes="engine/*.class"/>
 			<fileset dir="." includes="images/*.png" />
 		</one-jar>
 	</target>
