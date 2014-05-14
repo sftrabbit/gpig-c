@@ -38,7 +38,7 @@ public class TrafficCollector implements DataCollector {
 	
 	public TrafficCollector() throws MalformedURLException {
 		url = new URL("http://hatrafficinfo.dft.gov.uk/feeds/datex/England/UnplannedEvent/content.xml");
-		lastEventTime = new Date().getTime() - 12000000;
+		lastEventTime = new Date().getTime();
 	}
 
 	@Override
