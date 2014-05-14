@@ -1,6 +1,5 @@
 package com.gpigc.core.analysis;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.gpigc.core.ClientSystem;

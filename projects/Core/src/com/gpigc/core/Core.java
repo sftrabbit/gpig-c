@@ -31,7 +31,6 @@ public class Core {
 		analysisController =  new AnalysisController(systemsToMonitor, this);
 		notificationGenerator = new NotificationController(systemsToMonitor,this);
 		dataInputServer = new DataInputServer(this);
-
 		monitorFiles();
 	}
 

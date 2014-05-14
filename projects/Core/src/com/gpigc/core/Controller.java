@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.gpigc.core.analysis.AnalysisEngine;
@@ -33,52 +34,37 @@ public abstract class Controller {
 
 	protected final List<? extends Object> instantiateEngines(
 			List<ClientSystem> allSystems, Class<?>... constructorParams) {
+		System.out.println("Loading: " + engineType + " engines ---------");
 		List<Object> engines = new ArrayList<>();
-		File folder = new File(Core.ENGINES_FOLDER_PATH + "/");
-		URL url;
+		String parentDir ="com/gpigc/core/"+ engineType + "/engine/";
+		File folder = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType + "/" + parentDir);
+		if (folder.listFiles() == null) {
+			StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), engineType.toString());
+			return engines;
+		}
 		try {
-			url = folder.getCanonicalFile().toURI().toURL();  
-			System.out.println(url.toString());
+			URL url = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType).getCanonicalFile().toURI().toURL();  
 			URL[] urls = new URL[]{url};
-			ClassLoader cl = URLClassLoader.newInstance(urls);
-			File[] listOfFiles = folder.listFiles();
-			if (listOfFiles == null) {
-				StandardMessageGenerator.failedToFindEngines(folder.getAbsolutePath(), engineType.toString());
-				return engines;
-			}
-
-			for (int i = 0; i < listOfFiles.length; i++) {
-				try{
-					String name = listOfFiles[i].getName().substring(0,
-							listOfFiles[i].getName().lastIndexOf('.'));
-					try{
-						String engineBinaryName = GPIGC_CORE_PACKAGE +"."+ engineType + ".engine."+ name;
-						System.out.println("Trying to load : " + engineBinaryName);
-						Class<?> engineClass = cl.loadClass(engineBinaryName);
+			ClassLoader cl = URLClassLoader.newInstance(urls, this.getClass().getClassLoader());
+			for(File engineFile : folder.listFiles()){
+				if(engineFile.getName().endsWith(".class")){   //if it is a class file
+					String className = engineFile.getName().substring(0, engineFile.getName().length()-6);
+					String engineBinaryName = GPIGC_CORE_PACKAGE +"."+ engineType + ".engine."+ className;
+					Class<?> engineClass = cl.loadClass(engineBinaryName);	
+					try {
 						Constructor<?> constructor = engineClass.getConstructor(constructorParams);
-						engines.add(makeEngine(allSystems,constructor,name));
-						System.out.println("Loaded Engine: "+ name);
-					}catch (ClassNotFoundException error){
-						System.out.println("Class: "+ name + " is not an " + engineType + " engine");
-						error.printStackTrace();
+						engines.add(makeEngine(allSystems,constructor,className));
+						System.out.println(" Loaded "+engineType + " engine: " + className);
+					} catch (Exception e) {
+						System.out.println(" Could not load "+engineType + " engine: " + className);
+						e.printStackTrace();
 					}
-				} catch (InstantiationException | 
-						NoSuchMethodException | SecurityException |
-						IllegalAccessException | IllegalArgumentException |
-						InvocationTargetException e) {
-					e.printStackTrace();
-					System.out.println("Issue when loading a AnalysisController: "+
-							e.getMessage());
 				}
 			}
-		} catch (MalformedURLException e1) {
+		} catch (ClassNotFoundException | IOException e1) {
 			e1.printStackTrace();
-			System.out.println("URL was malformed in core: "+
-					e1.getMessage());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}  
+			System.out.println(e1.getMessage());
+		}
 		return engines;
 	}
 
