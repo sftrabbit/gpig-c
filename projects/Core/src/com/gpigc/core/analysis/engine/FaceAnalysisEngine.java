@@ -32,6 +32,9 @@ import org.opencv.imgproc.Imgproc;
  */
 public class FaceAnalysisEngine extends AnalysisEngine {
 
+	/* Caches the example faces associated with each system to avoid frequently 
+	 * re-parsing them
+	 */
 	private Map<ClientSystem, List<Mat>> systemExampleFacesCache;
 
 	static {
@@ -89,6 +92,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		return null; // No event
 	}
 
+	/**
+	 * @return Whether the parameters this engine needs are set
+	 */
 	private boolean areParametersSet(ClientSystem system) {
 		return system.getParameters().containsKey(Parameter.EXAMPLE_FACES)
 				&& system.getParameters().containsKey(
