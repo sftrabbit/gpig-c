@@ -2,6 +2,7 @@ package com.gpigc.core.analysis.engine;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.junit.Test;
@@ -12,7 +13,7 @@ import com.gpigc.core.analysis.engine.FaceAnalysisEngine;
 public class FaceAnalysisEngineTest {
 
 	@Test
-	public void testParseFace() {
+	public void testParseFace() throws ParseException {
 		double a = 0d;
 		double b = 0.8672d;
 		double c = 0.2d;
@@ -23,7 +24,7 @@ public class FaceAnalysisEngineTest {
 	}
 
 	@Test
-	public void testParseFaces() {
+	public void testParseFaces() throws ParseException {
 		double a = 0d;
 		double b = 0.8672d;
 		double c = 0.2d;

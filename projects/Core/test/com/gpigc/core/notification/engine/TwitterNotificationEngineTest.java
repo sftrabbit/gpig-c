@@ -32,8 +32,8 @@ public class TwitterNotificationEngineTest {
 	 */
 	@Test
 	public void testSendAndRepeat() {
-		Map<String, String> testData = new HashMap<>();
-		testData.put("Message", "Test Message: " + System.currentTimeMillis());
+		Map<Parameter, String> testData = new HashMap<>();
+		testData.put(Parameter.MESSAGE, "Test Message: " + System.currentTimeMillis());
 		DataEvent testEvent = new DataEvent(testData, testSystems.get(0));
 		assertTrue(engine.send(testEvent));
 		assertFalse(engine.send(testEvent)); // cooldown
