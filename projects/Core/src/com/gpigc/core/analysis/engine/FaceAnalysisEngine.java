@@ -166,6 +166,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 */
 	public static boolean isAuthorisedFace(Mat testFace,
 			List<Mat> exampleFaces, double threshold) {
+		System.err.println("Checking face authorisation at "+threshold+
+				" threshold");
 		/*
 		 * Check to see if close enough to an allowable example face using
 		 * Chi-Squared method
@@ -173,6 +175,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		for (Mat example : exampleFaces) {
 			double faceSimilarity = Imgproc.compareHist(testFace, example,
 					Imgproc.CV_COMP_CHISQR);
+			System.err.println("Comparing face to example face. Chi square "
+					+ "difference = "+faceSimilarity);
 			if (faceSimilarity < threshold) {
 				return true;
 			}
