@@ -1,6 +1,5 @@
 package uk.co.gpigc.emitterlauncher;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -23,7 +21,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.custom.StyledText;
 
 public class EmitterShell extends Shell {
 
@@ -80,6 +77,11 @@ public class EmitterShell extends Shell {
 
 	public EmitterShell(Display display) {
 		super(display);
+		this.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event event) {
+				System.exit(0);
+			}
+		});
 		graphicsSetup(display);
 		shellSetup(display);
 		Group groupComp = groupSetup();
@@ -116,7 +118,7 @@ public class EmitterShell extends Shell {
 		console3Tab.setControl(textApp3);
 		textApp3.addListener(SWT.Modify, new CaretListener(textApp3));
 
-		
+
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
 		console4Tab.setText("ResponseConsole");
 
@@ -285,18 +287,18 @@ public class EmitterShell extends Shell {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-	
-	
+
+
 	private class CaretListener implements Listener{
 		private Text widg;
 
 		public CaretListener(Text widg){
 			this.widg = widg;
 		}
-		
-	    public void handleEvent(Event e){
-	        widg.setTopIndex(widg.getLineCount() - 1);
-	    }
+
+		public void handleEvent(Event e){
+			widg.setTopIndex(widg.getLineCount() - 1);
+		}
 	}
 
 }

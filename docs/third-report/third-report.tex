@@ -259,7 +259,7 @@ Usability & Low & Usability was not deemed of great importance to the system, as
 }{The ranked quality attributes, associated with the HUMS}{tab:qualities}
 
 %-------------------------------------------------------------%
-%----------------------SCENARIOS------------------------%
+%----------------------SCENARIOS---------------------%
 %-------------------------------------------------------------%
 \section{Quality Attribute Scenarios}
 \label{sec:scenarios}
@@ -310,7 +310,7 @@ Having identified the quality attributes which are important to creating a succe
 \end{scenario}
 
 %-------------------------------------------------------------%
-%--------------------------RISKS----------------------------%
+%--------------------------RISKS--------------------------%
 %-------------------------------------------------------------%
 \section{Project Risks}
 \label{sec:risks}
@@ -410,21 +410,43 @@ Having determined the tactics implacable to the HUMS, which are likely to produc
 
 \subsection{System Views \hl{Joe and Andy}} 
 \label{sec:views}
-
 %-------------------------------------------------------------%
-%----------------------DEVELOPMENT --------------------%
+%-------------TECHNICAL PROGRESS-------------%
 %-------------------------------------------------------------%
-%   Notes: 									 %
-%  		- Reference risks constantly, lots and lots	 %
-%		- Reference requirements and scenarios 	 %
+%   Notes: 					         	 %
+%  	- Reference risks constantly, lots and lots	 %
+%	- Reference requirements and scenarios 	 %
 %-------------------------------------------------------------%
-\section{Development \hl{All}}
-\label{sec:development}
-vhvh
+\section{Technical Progress}
+\label{sec:techprog}
 
 \subsection{Sense}
 \label{sec:sense}
-vhvhv
+
+\subsubsection{Test Apps}
+
+\subsubsection{Earthquakes}
+
+\subsubsection{Traffic}
+
+\subsubsection{Android App}
+To explore the possibilities surrounding monitoring remote systems, an Android app was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
+
+\subsection{Smartphone Monitoring}
+
+\subsection{Simulated Car Monitoring}
+
+\subsection{Face Recognition for Security}
+The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
+
+The face recognition process is two fold: An image is captured and it's dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
+
+The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
+
+When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided the sensor if it's distance from any of the example faces provided by the configuration file is less than some threshold, also given by the configuration file.
+
+% TODO This method is robust to lighting and pose \cite{ahonen2006face}
+
 
 \subsection{Store}
 \label{sec:store}

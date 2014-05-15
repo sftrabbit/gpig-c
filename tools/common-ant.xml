@@ -1,0 +1,138 @@
+<project name="common-ant" basedir=".">
+
+	<!--  Determine platform directory name -->
+    
+	<condition property="platform.name" value="win">
+		<os family="windows" />
+	</condition>
+
+	<condition property="platform.name" value="osx">
+		<os family="mac" />
+	</condition>
+
+	<condition property="platform.name" value="linux">
+		<and>
+			<not>
+				<isset property="platform.name" />
+			</not>
+			<os family="unix" />
+		</and>
+	</condition>
+
+	<condition property="platform.arch" value="64" else="32">
+		<contains string="${os.arch}" substring="64" />
+	</condition>
+
+	<property name="platform.dir" value="${platform.name}-${platform.arch}" />
+
+	<!-- OSX requires a special arg to be passed to the JVM -->
+	
+	<condition property="pass-swt-arg">
+		<and>
+			<equals arg1="${platform.name}" arg2="osx" />
+			<contains string="${project.common.libs}" substring="swt" />
+		</and>
+	</condition>
+	
+	<fail message="Only OSX 64-bit, Linux 64-bit, and Windows 32- or 64-bit supported atm" unless="platform.name" />
+	
+	<!-- Various directories -->
+
+	<property name="bin.dir" value="bin" />
+	<property name="lib.dir" value="lib" />
+	<property name="binlib.dir" value="binlib" />
+	<property name="bin.lib.dir" value="${bin.dir}/lib" />
+	<property name="bin.binlib.dir" value="${bin.dir}/binlib" />
+	<property name="bin.classes.dir" value="${bin.dir}/classes" />
+	<property name="bin.jar.dir" value="${bin.dir}/jar" />
+	<property name="src.dir" value="src" />
+	<property name="res.dir" value="res" />
+
+	<property name="gpigc.dir" value="../.." />
+	<property name="gpigc.tools.dir" value="${gpigc.dir}/tools" />
+	<property name="gpigc.lib.dir" value="${gpigc.dir}/lib" />
+	<property name="gpigc.binlib.dir" value="${gpigc.dir}/binlib" />
+
+	<property name="relative.gpigc.dir" value=".." />
+	<property name="relative.gpigc.tools.dir" value="${relative.gpigc.dir}/tools" />
+	<property name="relative.gpigc.lib.dir" value="${relative.gpigc.dir}/lib" />
+	<property name="relative.gpigc.binlib.dir" value="${relative.gpigc.dir}/binlib" />
+	
+	<!--  Determine project and output jar name -->
+	
+	<basename property="project.dir.name" file="${basedir}" />
+	<property name="jar.name" value="${project.dir.name}.jar" />
+	
+	<!-- Initialise One-Jar -->
+
+	<property name="one-jar.dist.dir" value="${gpigc.tools.dir}/one-jar" />
+	<property name="relative.one-jar.dist.dir" value="${relative.gpigc.tools.dir}/one-jar" />
+	<import file="${relative.one-jar.dist.dir}/one-jar-ant-task.xml" />
+
+	<!-- TARGETS -->
+	
+	<target name="clean">
+		<delete dir="${bin.dir}" />
+	</target>
+
+	<target name="collect-libs">
+		<mkdir dir="${bin.lib.dir}" />
+		<mkdir dir="${bin.binlib.dir}" />
+		<copy todir="${bin.lib.dir}">
+			<fileset dir="${gpigc.lib.dir}" includes="${project.common.libs}" />
+			<fileset dir="${lib.dir}" includes="*" erroronmissingdir="false" />
+		</copy>
+		<copy todir="${bin.binlib.dir}">
+			<fileset dir="${gpigc.binlib.dir}" includes="${project.common.binlibs}" />
+			<fileset dir="${binlib.dir}" includes="*" erroronmissingdir="false" />
+		</copy>
+	</target>
+
+	<target name="set-classpath" depends="collect-libs">
+		<path id="classpath">
+			<fileset dir="${bin.lib.dir}" includes="*.jar" />
+		</path>
+	</target>
+
+	<target name="compile" depends="set-classpath">
+		<mkdir dir="${bin.classes.dir}" />
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${bin.classes.dir}"
+			classpathref="classpath" />
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${bin.jar.dir}" />
+		<one-jar destfile="${bin.jar.dir}/${jar.name}">
+			<manifest>
+				<attribute name="One-Jar-Main-Class" value="${project.main-class}" />
+				<attribute name="One-Jar-Expand" value="${res.dir},${binlib.dir}" />
+				<attribute name="One-Jar-Expand-Dir" value="." />
+			</manifest>
+			<main>
+				<fileset dir="${bin.classes.dir}" />
+			</main>
+			<lib>
+				<fileset dir="${bin.lib.dir}" includes="*" />
+			</lib>
+			<binlib>
+				<fileset dir="${bin.binlib.dir}" includes="*" />
+			</binlib>
+			<fileset dir="." includes="*.properties" />
+			<fileset dir="." includes="${res.dir}/**" />
+		</one-jar>
+	</target>
+
+	<target name="runarg" depends="jar" if="pass-swt-arg">
+		<java fork="true" jar="${bin.jar.dir}/${jar.name}">
+			<jvmarg value="-XstartOnFirstThread" />
+		</java>
+	</target>
+
+	<target name="run" depends="jar" unless="pass-swt-arg">
+		<java fork="true" jar="${bin.jar.dir}/${jar.name}" />
+	</target>
+
+	<target name="rebuild" depends="clean,jar" />
+
+	<target name="rebuild-run" depends="clean,run,runarg" />
+</project>
