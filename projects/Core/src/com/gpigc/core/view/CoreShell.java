@@ -36,8 +36,6 @@ public class CoreShell extends Shell {
 		try {
 			Display display = Display.getDefault();
 			CoreShell shell = new CoreShell(display);
-			shell.setSize(800, 650);
-			shell.setMinimumSize(400, 500);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -57,6 +55,8 @@ public class CoreShell extends Shell {
 	 */
 	public CoreShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
+		setSize(750, 450);
+		setMinimumSize(550, 500);
 		InputStream iconInputStream = getClass().getResourceAsStream(
 				"/images/nosql.png");
 		Image icon = new Image(display, iconInputStream);
