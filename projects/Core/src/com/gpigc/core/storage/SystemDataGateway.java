@@ -3,7 +3,10 @@
  */
 package com.gpigc.core.storage;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,64 +15,101 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
+import com.gpigc.dataabstractionlayer.client.SensorState;
 
 public abstract class SystemDataGateway {
-	
+
 	private final List<ClientSystem> registeredSystems;
 	public final String name;
 
-	public SystemDataGateway(List<ClientSystem> registeredSystems){
+	public SystemDataGateway(List<ClientSystem> registeredSystems) {
 		this.registeredSystems = registeredSystems;
 		this.name = this.getClass().getSimpleName();
 	}
-	
+
 	/**
-	 * @param systemID A systemID
-	 * @param sensorID The ID of the sensor you wish to read, if null all sensors will be returned
-	 * @param numRecords The maximum number of records to return
+	 * @param systemID
+	 *            A systemID
+	 * @param sensorID
+	 *            The ID of the sensor you wish to read, if null all sensors
+	 *            will be returned
+	 * @param numRecords
+	 *            The maximum number of records to return
 	 * @return The numRecords most recent records associated with the given
-	 * systemID
+	 *         systemID
 	 * @throws FailedToReadFromDatastoreException
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
-	public abstract QueryResult readMostRecent(String systemID,String sensorID, int numRecords) 
+	public abstract QueryResult readMostRecent(String systemID,
+			String sensorID, int numRecords)
 			throws FailedToReadFromDatastoreException;
-	
+
 	/**
-	 * @param systemID A systemID
-	 * @param sensorID The ID of the sensor you wish to read, if null all sensors will be returned
-	 * @param start The earliest point in the time period
-	 * @param end The latest point in the time period
+	 * @param systemID
+	 *            A systemID
+	 * @param sensorID
+	 *            The ID of the sensor you wish to read, if null all sensors
+	 *            will be returned
+	 * @param start
+	 *            The earliest point in the time period
+	 * @param end
+	 *            The latest point in the time period
 	 * @return All records for a given systemID within the given time period
 	 * @throws FailedToReadFromDatastoreException
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
-	public abstract QueryResult readBetween(String systemID, String sensorID, Date start, Date end) 
-			throws FailedToReadFromDatastoreException;
-	
+	public abstract QueryResult readBetween(String systemID, String sensorID,
+			Date start, Date end) throws FailedToReadFromDatastoreException;
+
 	/**
 	 * Writes the given data to the datastore
 	 * 
-	 * @param data The data to be written
-	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
-	 * @throws SQLException When we couldn't write
+	 * @param data
+	 *            The data to be written
+	 * @throws FailedToWriteToDatastoreException
+	 *             When we couldn't write to the
+	 * @throws SQLException
+	 *             When we couldn't write
 	 */
-	public abstract void write(EmitterSystemState data) throws FailedToWriteToDatastoreException;
+	public abstract void write(EmitterSystemState data)
+			throws FailedToWriteToDatastoreException;
 
 	/**
 	 * Writes a batch of data to the datastore
 	 * 
-	 * @param data The data to be written
-	 * @throws FailedToWriteToDatastoreException When we couldn't write to the
-	 * @throws SQLException When we fail to write to the datastore
+	 * @param data
+	 *            The data to be written
+	 * @throws FailedToWriteToDatastoreException
+	 *             When we couldn't write to the
+	 * @throws SQLException
+	 *             When we fail to write to the datastore
 	 */
-	public abstract void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException;
+	public abstract void write(List<EmitterSystemState> data)
+			throws FailedToWriteToDatastoreException;
 
 	/**
 	 * Returns a list of systems which are registered to this datastore
+	 * 
 	 * @return systems
 	 */
 	public List<ClientSystem> getAssociatedSystems() {
 		return registeredSystems;
+	}
+
+	protected Timestamp toSQLTimestamp(Date utilDate) {
+		return new Timestamp(utilDate.getTime());
+	}
+
+	protected QueryResult constructResult(String systemID, ResultSet resultSet)
+			throws SQLException {
+		List<SensorState> sensorStates = new ArrayList<SensorState>();
+		SensorState sensorState;
+		while (resultSet.next()) {
+			sensorState = new SensorState(resultSet.getString("SENSOR_ID"),
+					new Date(), resultSet.getTimestamp("DATABASE_TIMESTAMP"),
+					resultSet.getString("VALUE"));
+			sensorStates.add(sensorState);
+		}
+		return new QueryResult(systemID, sensorStates);
 	}
 }

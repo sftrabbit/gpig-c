@@ -1,6 +1,7 @@
 package com.gpigc.core.storage.engine;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -21,23 +22,22 @@ import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 
-public class HerokuSystemDataGatewayTest {
-
+public class H2SystemDataGatewayTest {
 	private static final String testSystemID = "TestSystemID";
 	private static final int ONE_RECORD = 1;
 	private List<ClientSystem> systems;
-	private HerokuSystemDataGateway gateway;
+	private H2SystemDataGateway gateway;
 
 	@Before
 	public void setUp() throws ClassNotFoundException, URISyntaxException,
-			SQLException {
+			SQLException, FailedToWriteToDatastoreException {
 		systems = new ArrayList<>();
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
 		sensors.add(new ClientSensor("TestSensor",
 				new HashMap<Parameter, String>()));
 		systems.add(new ClientSystem(testSystemID, sensors,
 				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
-		gateway = new HerokuSystemDataGateway(systems);
+		gateway = new H2SystemDataGateway(systems);
 		gateway.initialiseTables();
 	}
 
@@ -90,8 +90,8 @@ public class HerokuSystemDataGatewayTest {
 		payload.put("Test2", "Green");
 		emmitterSystemStates.add(new EmitterSystemState(testSystemID, new Date(
 				0), payload));
-		emmitterSystemStates.add(new EmitterSystemState(testSystemID,
-				new Date(), payload));
+		emmitterSystemStates.add(new EmitterSystemState(testSystemID, new Date(
+				40000), payload));
 		gateway.write(emmitterSystemStates);
 		QueryResult result = gateway.readMostRecent(testSystemID, "Test1", 5);
 		assertEquals(2, result.getRecords().size());

@@ -8,7 +8,8 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.event.DataEvent;
 
 /**
- * Provides the basic functionality and abstract methods that all notification engines require
+ * Provides the basic functionality and abstract methods that all notification
+ * engines require
  * 
  * @author GPIGC
  */
@@ -22,22 +23,24 @@ public abstract class NotificationEngine {
 
 	public final String name;
 
-
-	public NotificationEngine(List<ClientSystem>registeredSystems, final int COOLDOWN){
+	public NotificationEngine(List<ClientSystem> registeredSystems,
+			final int COOLDOWN) {
 		this.registeredSystems = registeredSystems;
-		this.COOLDOWN_SECS =COOLDOWN;
+		this.COOLDOWN_SECS = COOLDOWN;
 		this.name = this.getClass().getSimpleName();
 	}
+
 	/**
-	 * @return Whether a notification has been sent by the engine within the last cooldown period
+	 * @return Whether a notification has been sent by the engine within the
+	 *         last cooldown period
 	 */
 	public boolean getRecentlySent() {
 		return recentlySent;
 	}
 
 	/**
-	 * Sets a notification as being sent by the engine and initiates a cooldown period where no
-	 * further notifications can be sent
+	 * Sets a notification as being sent by the engine and initiates a cooldown
+	 * period where no further notifications can be sent
 	 */
 	protected void setRecentlySent() {
 		recentlySent = true;
@@ -48,7 +51,7 @@ public abstract class NotificationEngine {
 			public void run() {
 				recentlySent = false;
 			}
-			
+
 		}, COOLDOWN_SECS * 1000);
 	}
 

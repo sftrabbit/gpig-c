@@ -1,4 +1,5 @@
 package com.gpigc.core.analysis.engine;
+
 ///**
 // * 
 // */
@@ -76,4 +77,4 @@ package com.gpigc.core.analysis.engine;
 ////		Mockito.when(database.readMostRecent(SYSTEM, 1))
 ////		.thenReturn(new QueryResult(SYSTEM, states));
 ////	}
-//}
+// }

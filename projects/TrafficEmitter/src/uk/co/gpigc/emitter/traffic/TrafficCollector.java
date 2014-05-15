@@ -45,8 +45,13 @@ public class TrafficCollector implements DataCollector {
 	public List<SystemData> collect() {
 		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
 		
+		//Dummy 
+		//List<TrafficEvent> trafficEvents = new ArrayList<>();
+		//trafficEvents.add(new TrafficEvent(new Date().getTime(), "Car", "Test", -118.7, 56.7));
+		
 		List<TrafficEvent> trafficEvents = this.getNewEvents();
 		if (trafficEvents.size() > 0) {
+			System.out.println("New Incident");
 			for (TrafficEvent trafficEvent : trafficEvents) {
 				SystemData.Datum trafficDatum = SystemData.Datum.newBuilder()
 						.setKey("Incident")

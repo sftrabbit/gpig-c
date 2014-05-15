@@ -8,11 +8,12 @@ public class ClientSystem {
 	private final String id;
 	private final List<ClientSensor> sensors;
 	private final List<String> registeredEngineNames;
-	private final Map<Parameter,String> parameters;
+	private final Map<Parameter, String> parameters;
 	private final String systemDataGatewayName;
 
-	public ClientSystem(String systemID, List<ClientSensor> sensors, 
-			List<String> registeredEngineNames, String systemDataGatewayName, Map<Parameter,String> parameters){
+	public ClientSystem(String systemID, List<ClientSensor> sensors,
+			List<String> registeredEngineNames, String systemDataGatewayName,
+			Map<Parameter, String> parameters) {
 		this.id = systemID;
 		this.sensors = sensors;
 		this.registeredEngineNames = registeredEngineNames;
@@ -22,11 +23,11 @@ public class ClientSystem {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(super.equals(obj))
+		if (super.equals(obj))
 			return true;
-		
-		if(obj instanceof ClientSystem){
-			if(id.equals(((ClientSystem)obj).id))
+
+		if (obj instanceof ClientSystem) {
+			if (id.equals(((ClientSystem) obj).id))
 				return true;
 		}
 		return false;
@@ -41,16 +42,16 @@ public class ClientSystem {
 	}
 
 	public boolean hasSensorWithID(String id) {
-		for(ClientSensor sensor: sensors){
-			if(sensor.getID().equals(id))
+		for (ClientSensor sensor : sensors) {
+			if (sensor.getID().equals(id))
 				return true;
 		}
 		return false;
 	}
-	
+
 	public ClientSensor getSensorWithID(String id) {
-		for(ClientSensor sensor: sensors){
-			if(sensor.getID().equals(id))
+		for (ClientSensor sensor : sensors) {
+			if (sensor.getID().equals(id))
 				return sensor;
 		}
 		return null;
@@ -60,7 +61,7 @@ public class ClientSystem {
 		return registeredEngineNames;
 	}
 
-	public Map<Parameter,String> getParameters() {
+	public Map<Parameter, String> getParameters() {
 		return parameters;
 	}
 

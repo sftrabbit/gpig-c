@@ -70,11 +70,21 @@
 	</target>
 
 	<target name="jar" depends="compile">
+	    <!-- Make the folder structure we want onejar to unpack -->
+		<copy todir="${classes.dir}/engine/notification/com/gpigc/core/notification/engine">
+   			<fileset dir="${classes.dir}/com/gpigc/core/notification/engine" includes="*.class"/>
+ 		</copy>
+ 		<copy todir="${classes.dir}/engine/storage/com/gpigc/core/storage/engine">
+   			<fileset dir="${classes.dir}/com/gpigc/core/storage/engine" includes="*.class"/>
+ 		</copy>
+ 		<copy todir="${classes.dir}/engine/analysis/com/gpigc/core/analysis/engine">
+   			<fileset dir="${classes.dir}/com/gpigc/core/analysis/engine" includes="*.class"/>
+ 		</copy>
 		<mkdir dir="${jar.dir}" />
 		<one-jar destfile="${jar.dir}/Core.jar">
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${main-class}" />
-				<attribute name="One-Jar-Expand" value="engine" />
+				<attribute name="One-Jar-Expand" value="engine/notification/com/gpigc/core/notification/engine/,engine/storage/com/gpigc/core/storage/engine,engine/analysis/com/gpigc/core/analysis/engine" />
 				<attribute name="One-Jar-Expand-Dir" value="." />
 				<attribute name="One-Jar-Show-Expand" value="true" />
 			</manifest>
@@ -89,13 +99,16 @@
 			<binlib>
 				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
 					includes="*.so" />
+				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
+					includes="*.dylib" />
+				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
+					includes="*.dll" />
 			</binlib>
-			<!-- Move the engines to the ./engine folder outside the jar so that
-			the user can dynamically add to or modify the default engines -->
-			<fileset dir="${classes.dir}/com/gpigc/core/notification" includes="engine/*.class"/>
-			<fileset dir="${classes.dir}/com/gpigc/core/storage" includes="engine/*.class"/>
-			<fileset dir="${classes.dir}/com/gpigc/core/analysis" includes="engine/*.class"/>
 			<fileset dir="." includes="images/*.png" />
+  			<!-- Include the folder structure in the jar so that is may be unpacked at runtime -->
+			<fileset dir="${classes.dir}" includes="engine/notification/com/gpigc/core/notification/engine/*.class"/>
+			<fileset dir="${classes.dir}" includes="engine/storage/com/gpigc/core/storage/engine/*.class"/>
+			<fileset dir="${classes.dir}" includes="engine/analysis/com/gpigc/core/analysis/engine/*.class"/>
 		</one-jar>
 	</target>
 

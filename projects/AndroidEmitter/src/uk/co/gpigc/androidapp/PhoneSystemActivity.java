@@ -4,12 +4,12 @@ package uk.co.gpigc.androidapp;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import uk.co.gpigc.androidapp.comms.DataPusher;
 import uk.co.gpigc.androidapp.comms.DataReciever;
 import uk.co.gpigc.gpigcandroid.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -79,7 +79,7 @@ public class PhoneSystemActivity extends Activity {
 				data.put(BATTERY_ID, batterySeek.getProgress() + "");
 				data.put(DESIRED_ID, desiredSeek.getProgress() + "");
 				DataPusher pusher = new DataPusher(getApplicationContext(),
-						SYSTEM_ID, data,getIntent().getStringExtra(DataPusher.CORE_IP_KEY));
+						SYSTEM_ID, data,getIntent().getStringExtra(DataPusher.CORE_IP_KEY), false);
 				pusher.execute();
 				new DataReciever(PhoneSystemActivity.this).execute();
 			}
@@ -88,6 +88,7 @@ public class PhoneSystemActivity extends Activity {
 	}
 
 	public void update(Map<String, String> recievedData) {
+		Log.d("GPIG", recievedData.toString());
 		if(recievedData.get(WIFI_ID).equalsIgnoreCase(OFF)){
 			wifiCheckBox.setChecked(false);
 			currentWifiValue = 0;

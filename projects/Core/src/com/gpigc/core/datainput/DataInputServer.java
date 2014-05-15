@@ -41,7 +41,7 @@ public class DataInputServer extends Thread {
 		while (running) {
 			Protos.SystemData data = null;
 
-			Map<String, List<EmitterSystemState>> systemStates = new HashMap<String,List<EmitterSystemState>>();
+			Map<String, List<EmitterSystemState>> systemStates = new HashMap<String, List<EmitterSystemState>>();
 
 			while ((data = queue.poll()) != null) {
 				Map<String, String> datamap = new HashMap<String, String>();
@@ -49,11 +49,13 @@ public class DataInputServer extends Thread {
 					datamap.put(datum.getKey(), datum.getValue());
 				}
 
-				if(!systemStates.containsKey(data.getSystemId()))
-					systemStates.put(data.getSystemId(),new ArrayList<EmitterSystemState>());
+				if (!systemStates.containsKey(data.getSystemId()))
+					systemStates.put(data.getSystemId(),
+							new ArrayList<EmitterSystemState>());
 
-				systemStates.get(data.getSystemId()).add(new EmitterSystemState(data.getSystemId(),
-						new Date(data.getTimestamp()), datamap));
+				systemStates.get(data.getSystemId()).add(
+						new EmitterSystemState(data.getSystemId(), new Date(
+								data.getTimestamp()), datamap));
 
 			}
 

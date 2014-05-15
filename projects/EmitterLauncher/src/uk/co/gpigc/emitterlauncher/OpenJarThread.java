@@ -1,5 +1,8 @@
 package uk.co.gpigc.emitterlauncher;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 import org.eclipse.swt.custom.StyledText;
@@ -23,7 +26,7 @@ public class OpenJarThread extends Thread {
 	public void run() {
 		try {
 			proc = Runtime.getRuntime().exec("java -jar "+jarPath);
-			redirectOutput();
+			redirectOutput(proc);
 			proc.waitFor();
 			stopRunning();
 			Display.getDefault().asyncExec(new Runnable() {
@@ -41,17 +44,27 @@ public class OpenJarThread extends Thread {
 	}
 
 
-	private void redirectOutput() {
-		final Scanner s = new Scanner(proc.getInputStream());
-		Display.getDefault().asyncExec(new Runnable() {
+	private void redirectOutput(final Process proc) {
+		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				if(s.hasNextLine()){
-					console.append(s.nextLine());
-					console.append("\n");
+				final Scanner s = new Scanner(proc.getInputStream());
+				while(s.hasNextLine()){
+					writeLine(s.nextLine());
 				}
 			}
+		}).start();
+	}
+
+	protected void writeLine(final String nextLine) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+					console.append(nextLine);
+					console.append("\n");
+			}
+
 		});
 	}
 
