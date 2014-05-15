@@ -64,13 +64,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			try {
 				exampleFaces = getExampleFaces(system);
 			} catch (ParseException e) {
-				System.out.println("System \""+system.getID()+"\" does not have "
-						+ "exactly one sensor or the sensor is invalid because it "
-						+ "is not providing face data.");
-				System.err.println("System \""+system.getID()+"\" does not have "
-						+ "exactly one sensor or the sensor is invalid because it "
-						+ "is not providing face data: "+system.getParameters().get(
-								Parameter.EXAMPLE_FACES));
+				System.out.println("Failed to parse example faces. "
+						+ "Error at character "+e.getErrorOffset()+". "
+						+ "Check your .config file.");
 				return null;
 			}
 			// Get data from sensor
@@ -88,10 +84,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			values = getSensorData(system);
 			for (SensorState sensorState : values) {
 				String faceMatrixString = sensorState.getValue();
-				// System.err.println("Face matrix string: " +
-				// faceMatrixString);
 				Mat faceMatrix = parseFace(faceMatrixString);
-				// System.err.println("Parsed face: " + faceMatrix.dump());
 				// Actually test to see if face seen is allowed
 				if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
 					System.out.println("Authorised face detected");
@@ -106,7 +99,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			StandardMessageGenerator.couldNotReadData();
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.out.println("Failed to parse example faces. Error at "
+			System.out.println("Failed to parse face detected by sensor. Error at "
 					+ "character "+e.getErrorOffset());
 		}
 		return null;
@@ -133,7 +126,6 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		} else {
 			String faceData = system.getParameters().get(
 					Parameter.EXAMPLE_FACES);
-			// System.err.println("Example faces loaded: " + faceData);
 			exampleFaces = parseFaces(faceData);
 			systemExampleFacesCache.put(system, exampleFaces);
 		}
