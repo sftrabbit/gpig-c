@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import uk.co.gpigc.emitter.Emitter;
 
 public class ResponseTimeEmitter {
-	private static final int COLLECTION_INTERVAL = 3600000;
+	private static final int COLLECTION_INTERVAL = 120000;
 	private static final Emitter emitter = new Emitter(COLLECTION_INTERVAL);
 
 	public static void main(String[] args) {
@@ -15,17 +15,17 @@ public class ResponseTimeEmitter {
 		emitter.registerDataCollector(new ResponseTimeCollector());
 		emitter.start();
 		
-		System.out.println("Emitter started");
+		System.out.println("Response Emitter started");
 		
 		try {
 			emitter.waitFor();
 		} catch (InterruptedException e) {
-			System.err.println("Emitter was interrupted.");
+			System.err.println("Response Emitter was interrupted.");
 		} catch (ExecutionException e) {
-			System.err.println("The emitter threw an exception: " + e.getCause().getMessage());
+			System.err.println("The Response Emitter threw an exception: " + e.getCause().getMessage());
 		}
 		
-		System.out.println("Emitter stopped");
+		System.out.println("Response Emitter stopped");
 	}
 	
 	private static class ShutdownHook extends Thread {
@@ -34,7 +34,7 @@ public class ResponseTimeEmitter {
 			try {
 				emitter.stop();
 			} catch (IOException e) {
-				System.err.println("Could not stop emitter successfully.");
+				System.err.println("Could not stop Response Emitter successfully.");
 			}
 		}
 	}
