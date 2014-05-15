@@ -17,7 +17,7 @@ import com.gpigc.dataabstractionlayer.client.SensorState;
 public class BoundedAnalysisEngine extends AnalysisEngine {
 
 	public BoundedAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
-		super(registeredSystems,core);
+		super(registeredSystems, core);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 		boolean event = false;
 		// Set up the data
 		Map<Parameter, String> data = new HashMap<>();
-		data.put(Parameter.SUBJECT, this.name+ " Notification");
+		data.put(Parameter.SUBJECT, this.name + " Notification");
 		data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
 		data.put(Parameter.MESSAGE, "");
 
@@ -43,8 +43,8 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 		return null;
 	}
 
-	protected boolean checkSensor(ClientSensor sensor, Map<Parameter, String> data,
-			ClientSystem system) {
+	protected boolean checkSensor(ClientSensor sensor,
+			Map<Parameter, String> data, ClientSystem system) {
 		// Do we have the correct parameters
 		if (hasCorrectKeys(sensor)) {
 			double upperBound = Double.parseDouble(sensor.getParameters().get(
@@ -75,17 +75,15 @@ public class BoundedAnalysisEngine extends AnalysisEngine {
 				e.printStackTrace();
 			}
 		} else {
-			StandardMessageGenerator.wrongParams(name,system.getID());
+			StandardMessageGenerator.wrongParams(name, system.getID());
 		}
 		return false;
 	}
 
 	private boolean hasCorrectKeys(ClientSensor sensor) {
 		if (sensor.getParameters().containsKey(Parameter.LOWER_BOUND)
-				&& sensor.getParameters().containsKey(
-						Parameter.UPPER_BOUND)
-						&& sensor.getParameters().containsKey(
-								Parameter.NUM_RECORDS))
+				&& sensor.getParameters().containsKey(Parameter.UPPER_BOUND)
+				&& sensor.getParameters().containsKey(Parameter.NUM_RECORDS))
 			return true;
 
 		return false;

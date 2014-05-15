@@ -23,7 +23,7 @@ public class TwitterNotificationEngineTest {
 	public void before() {
 		testSystems = new ArrayList<>();
 		testSystems.add(new ClientSystem("Test", new ArrayList<ClientSensor>(),
-				new ArrayList<String>(),"", new HashMap<Parameter, String>()));
+				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
 		engine = new TwitterNotificationEngine(testSystems, 5000);
 	}
 

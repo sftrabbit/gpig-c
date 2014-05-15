@@ -16,7 +16,7 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
 public class Core {
 
-	public static final String ENGINES_FOLDER_PATH ="./engine";
+	public static final String ENGINES_FOLDER_PATH = "./engine";
 	private final DataInputServer dataInputServer;
 	private final StorageController datastoreController;
 	private final AnalysisController analysisController;
@@ -24,30 +24,32 @@ public class Core {
 	private List<ClientSystem> systemsToMonitor;
 	private String currentConfigFilePath;
 
-	public Core(String configFilePath) throws IOException, ReflectiveOperationException, InterruptedException {
+	public Core(String configFilePath) throws IOException,
+			ReflectiveOperationException, InterruptedException {
 		currentConfigFilePath = configFilePath;
 		systemsToMonitor = getSystems(currentConfigFilePath);
-		datastoreController = new StorageController(systemsToMonitor,this);
-		analysisController =  new AnalysisController(systemsToMonitor, this);
-		notificationGenerator = new NotificationController(systemsToMonitor,this);
+		datastoreController = new StorageController(systemsToMonitor, this);
+		analysisController = new AnalysisController(systemsToMonitor, this);
+		notificationGenerator = new NotificationController(systemsToMonitor,
+				this);
 		dataInputServer = new DataInputServer(this);
 		monitorFiles();
 	}
 
-
 	private void monitorFiles() throws FileNotFoundException {
 		FileMonitor configMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener configListener = new ConfigFileChangeListener();
-		configMonitor.addFileChangeListener(configListener, currentConfigFilePath, 1000);	
+		configMonitor.addFileChangeListener(configListener,
+				currentConfigFilePath, 1000);
 
 		FileMonitor enginesMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener engineListener = new ConfigFileChangeListener();
-		enginesMonitor.addFileChangeListener(engineListener,ENGINES_FOLDER_PATH, 1000);	
+		enginesMonitor.addFileChangeListener(engineListener,
+				ENGINES_FOLDER_PATH, 1000);
 	}
 
-
-
-	public void refreshSystems() throws IOException, ReflectiveOperationException {
+	public void refreshSystems() throws IOException,
+			ReflectiveOperationException {
 		System.out.println("Re-registering systems...");
 		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController.refreshSystems(systemsToMonitor);
@@ -55,7 +57,8 @@ public class Core {
 		notificationGenerator.refreshSystems(systemsToMonitor);
 	}
 
-	public void updateDatastore(Map<String, List<EmitterSystemState>> systemStates) {
+	public void updateDatastore(
+			Map<String, List<EmitterSystemState>> systemStates) {
 		getDatastoreController().push(systemStates);
 		StandardMessageGenerator.dataRecieved(systemStates.keySet());
 		getAnalysisController().analyse(systemStates.keySet());
@@ -65,42 +68,34 @@ public class Core {
 		getNotificationGenerator().generate(event);
 	}
 
-
 	private List<ClientSystem> getSystems(String path) throws IOException {
 		ConfigParser parser = new ConfigParser();
 		return parser.parse(new File(path));
 	}
 
-
 	public DataInputServer getDataInputServer() {
 		return dataInputServer;
 	}
-
 
 	public StorageController getDatastoreController() {
 		return datastoreController;
 	}
 
-
 	public AnalysisController getAnalysisController() {
 		return analysisController;
 	}
-
 
 	public NotificationController getNotificationGenerator() {
 		return notificationGenerator;
 	}
 
-
 	public List<ClientSystem> getSystemsToMonitor() {
 		return systemsToMonitor;
 	}
 
-
 	public void setSystemsToMonitor(List<ClientSystem> systemsToMonitor) {
 		this.systemsToMonitor = systemsToMonitor;
 	}
-
 
 	private class ConfigFileChangeListener implements FileChangeListener {
 		public void fileChanged(File file) {

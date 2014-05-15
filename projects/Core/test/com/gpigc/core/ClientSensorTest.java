@@ -12,16 +12,15 @@ public class ClientSensorTest {
 
 	private Map<Parameter, String> testParameters;
 	private ClientSensor testSensor;
-	
 
 	@Before
 	public void before() {
-		testParameters = new HashMap<Parameter,String>();
+		testParameters = new HashMap<Parameter, String>();
 		testParameters.put(Parameter.LOWER_BOUND, "10");
 		testParameters.put(Parameter.UPPER_BOUND, "100");
 		testSensor = new ClientSensor("TestID", testParameters);
 	}
-	
+
 	@Test
 	public void testGetID() {
 		assertEquals("TestID", testSensor.getID());

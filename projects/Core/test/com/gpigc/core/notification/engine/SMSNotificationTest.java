@@ -48,7 +48,7 @@ public class SMSNotificationTest {
 		data.put("Subject", "Test subject");
 		data.put("Recipient", "07number");
 		DataEvent event = new DataEvent(data, new ClientSystem("TestSystem",
-				new ArrayList<ClientSensor>(), new ArrayList<String>(),"",
+				new ArrayList<ClientSensor>(), new ArrayList<String>(), "",
 				new HashMap<Parameter, String>()));
 		return smsNotification.send(event);
 	}

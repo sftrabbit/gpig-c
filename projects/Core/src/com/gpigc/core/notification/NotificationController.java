@@ -13,19 +13,18 @@ import com.gpigc.core.event.DataEvent;
  * 
  * @author GPIGC
  */
-public class NotificationController extends Controller{
+public class NotificationController extends Controller {
 
 	private List<NotificationEngine> notificationEngines;
 
-
-	public NotificationController( List<ClientSystem> systems, Core core){
+	public NotificationController(List<ClientSystem> systems, Core core) {
 		super(ControllerType.notification, core);
 		refreshSystems(systems);
 	}
 
-
-	public void refreshSystems(List<ClientSystem> systems){
-		notificationEngines = (List<NotificationEngine>) instantiateEngines(systems, List.class, Integer.TYPE);
+	public void refreshSystems(List<ClientSystem> systems) {
+		notificationEngines = (List<NotificationEngine>) instantiateEngines(
+				systems, List.class, Integer.TYPE);
 	}
 
 	/**
@@ -36,17 +35,19 @@ public class NotificationController extends Controller{
 	 */
 	public void generate(DataEvent event) {
 		for (NotificationEngine engine : getNotificationEngines()) {
-			List<ClientSystem> associatedSystems = engine.getAssociatedSystems();
+			List<ClientSystem> associatedSystems = engine
+					.getAssociatedSystems();
 			if (associatedSystems.contains(event.getSystem())) {
 				engine.send(event);
 			}
 		}
 	}
-	
-	protected List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
+
+	protected List<ClientSystem> getRegisteredSystems(String name,
+			List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
-		for(ClientSystem system : allSystems){
-			if(system.getRegisteredEngineNames().contains(name)){
+		for (ClientSystem system : allSystems) {
+			if (system.getRegisteredEngineNames().contains(name)) {
 				registeredSystems.add(system);
 			}
 		}

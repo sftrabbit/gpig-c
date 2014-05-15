@@ -33,8 +33,8 @@ import org.opencv.imgproc.Imgproc;
 public class FaceAnalysisEngine extends AnalysisEngine {
 
 	private Map<ClientSystem, List<Mat>> systemExampleFacesCache;
-	
-	static{
+
+	static {
 		try {
 			System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
 		} catch (UnsatisfiedLinkError e) {
@@ -47,25 +47,29 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		systemExampleFacesCache = new HashMap<ClientSystem, List<Mat>>();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gpigc.core.analysis.AnalysisEngine#analyse(com.gpigc.core.ClientSystem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gpigc.core.analysis.AnalysisEngine#analyse(com.gpigc.core.ClientSystem
+	 * )
 	 */
 	@Override
 	public DataEvent analyse(ClientSystem system) {
-		if(areParametersSet(system)){
-			double threshold = Double.parseDouble(
-					system.getParameters()
-					.get(Parameter.FACE_SIMILARITY_THRESHOLD));
+		if (areParametersSet(system)) {
+			double threshold = Double.parseDouble(system.getParameters().get(
+					Parameter.FACE_SIMILARITY_THRESHOLD));
 			List<Mat> exampleFaces = getExampleFaces(system);
 			// Get data from sensor
 			List<SensorState> values;
 			try {
 				values = getSensorData(system);
-				for(SensorState sensorState: values){
+				for (SensorState sensorState : values) {
 					String faceMatrixString = sensorState.getValue();
-					//System.err.println("Face matrix string: " + faceMatrixString);
+					// System.err.println("Face matrix string: " +
+					// faceMatrixString);
 					Mat faceMatrix = parseFace(faceMatrixString);
-					//System.err.println("Parsed face: " + faceMatrix.dump());
+					// System.err.println("Parsed face: " + faceMatrix.dump());
 					// Actually test to see if face seen is allowed
 					if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
 						return generateSuccessEvent(system);
@@ -77,20 +81,21 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				e.printStackTrace();
 				StandardMessageGenerator.couldNotReadData();
 			}
-		}else{
+		} else {
 			StandardMessageGenerator.wrongParams(system.getID(), name);
 		}
 		return null; // No event
 	}
 
 	private boolean areParametersSet(ClientSystem system) {
-		return system.getParameters().containsKey(Parameter.EXAMPLE_FACES) &&
-		system.getParameters().containsKey(Parameter.FACE_SIMILARITY_THRESHOLD);
+		return system.getParameters().containsKey(Parameter.EXAMPLE_FACES)
+				&& system.getParameters().containsKey(
+						Parameter.FACE_SIMILARITY_THRESHOLD);
 	}
 
 	/**
-	 * @return The example faces for the given system, using the cache where 
-	 * possible
+	 * @return The example faces for the given system, using the cache where
+	 *         possible
 	 */
 	private List<Mat> getExampleFaces(ClientSystem system) {
 		List<Mat> exampleFaces;
@@ -99,7 +104,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		} else {
 			String faceData = system.getParameters().get(
 					Parameter.EXAMPLE_FACES);
-			//System.err.println("Example faces loaded: " + faceData);
+			// System.err.println("Example faces loaded: " + faceData);
 			exampleFaces = parseFaces(faceData);
 			systemExampleFacesCache.put(system, exampleFaces);
 		}
@@ -108,7 +113,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 
 	/**
 	 * public static for testing
-	 * @param facesMatrixStr String encoding the example faces
+	 * 
+	 * @param facesMatrixStr
+	 *            String encoding the example faces
 	 * @return The faces as matrices
 	 */
 	public static List<Mat> parseFaces(String facesMatrixStr) {
@@ -119,10 +126,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		}
 		return faces;
 	}
-	
+
 	/**
 	 * public static for testing
-	 * @param faceMatrixStr String encoding a face
+	 * 
+	 * @param faceMatrixStr
+	 *            String encoding a face
 	 * @return The face as a matrix
 	 */
 	public static Mat parseFace(String faceMatrixStr) {
@@ -135,61 +144,69 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		}
 		return faceMatrix;
 	}
-	
+
 	/**
 	 * public static for testing
-	 * @param testFace The face that we wish to test the authorisation of
-	 * @param exampleFaces The example allowable faces
-	 * @param threshold How similar the testFace must be to one of the 
-	 * exampleFaces
+	 * 
+	 * @param testFace
+	 *            The face that we wish to test the authorisation of
+	 * @param exampleFaces
+	 *            The example allowable faces
+	 * @param threshold
+	 *            How similar the testFace must be to one of the exampleFaces
 	 * @return Whether the testFace is authorised
 	 */
-	public static boolean isAuthorisedFace(Mat testFace, List<Mat> exampleFaces, 
-			double threshold) {
-		/* Check to see if close enough to an allowable example face using 
+	public static boolean isAuthorisedFace(Mat testFace,
+			List<Mat> exampleFaces, double threshold) {
+		/*
+		 * Check to see if close enough to an allowable example face using
 		 * Chi-Squared method
 		 */
 		for (Mat example : exampleFaces) {
-			double faceSimilarity = Imgproc.compareHist(
-					testFace, example, Imgproc.CV_COMP_CHISQR);
+			double faceSimilarity = Imgproc.compareHist(testFace, example,
+					Imgproc.CV_COMP_CHISQR);
 			if (faceSimilarity < threshold) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	private DataEvent generateSuccessEvent(ClientSystem system) {
-		Map<Parameter,String> data = new HashMap<>();
-		data.put(Parameter.MESSAGE, "Face recognitition in system " 
-				+ system.getID() + " detected an authorised person and is "
-				+ "allowing them access.");
-		data.put(Parameter.SUBJECT, this.name+ " Notification");
-		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
+		Map<Parameter, String> data = new HashMap<>();
+		data.put(Parameter.MESSAGE,
+				"Face recognitition in system " + system.getID()
+						+ " detected an authorised person and is "
+						+ "allowing them access.");
+		data.put(Parameter.SUBJECT, this.name + " Notification");
+		data.put(Parameter.RECIPIENT,
+				system.getParameters().get(Parameter.RECIPIENT));
 		return new DataEvent(data, system);
 	}
 
 	private DataEvent generateFailureEvent(ClientSystem system) {
-		Map<Parameter,String> data = new HashMap<>();
-		data.put(Parameter.MESSAGE, "Face recognitition in system " 
-				+ system.getID() + " detected an unauthorised person and is "
-				+ "denying them access.");
-		data.put(Parameter.SUBJECT, this.name+ " Notification");
-		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
+		Map<Parameter, String> data = new HashMap<>();
+		data.put(Parameter.MESSAGE,
+				"Face recognitition in system " + system.getID()
+						+ " detected an unauthorised person and is "
+						+ "denying them access.");
+		data.put(Parameter.SUBJECT, this.name + " Notification");
+		data.put(Parameter.RECIPIENT,
+				system.getParameters().get(Parameter.RECIPIENT));
 		return new DataEvent(data, system);
 	}
 
-	private List<SensorState> getSensorData(ClientSystem system) 
+	private List<SensorState> getSensorData(ClientSystem system)
 			throws FailedToReadFromDatastoreException {
 		List<SensorState> values = new ArrayList<>();
-		for(ClientSensor sensor: system.getSensors()){
-			SensorState state = 
-					getSensorReadings(system, sensor.getID(), 1).get(0);
-			if(state!=null){
+		for (ClientSensor sensor : system.getSensors()) {
+			SensorState state = getSensorReadings(system, sensor.getID(), 1)
+					.get(0);
+			if (state != null) {
 				values.add(state);
-			}else{
-				StandardMessageGenerator.sensorValueMissing(
-						system.getID(),sensor.getID());
+			} else {
+				StandardMessageGenerator.sensorValueMissing(system.getID(),
+						sensor.getID());
 				return null;
 			}
 		}

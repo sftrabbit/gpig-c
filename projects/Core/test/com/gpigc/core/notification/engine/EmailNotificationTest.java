@@ -48,7 +48,7 @@ public class EmailNotificationTest {
 		data.put("Subject", "Test email");
 		data.put("Recipient", "gpigc.alerts@gmail.com");
 		DataEvent event = new DataEvent(data, new ClientSystem("TestSystem",
-				new ArrayList<ClientSensor>(), new ArrayList<String>(),"",
+				new ArrayList<ClientSensor>(), new ArrayList<String>(), "",
 				new HashMap<Parameter, String>()));
 		return emailNotification.send(event);
 	}
