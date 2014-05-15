@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="protojar" name="GPIG-C Proto">
+<project name="GPIG-C Proto" default="rebuild">
+    
+	<property name="bin.dir" value="bin" />
+	<property name="bin.classes.dir" value="${bin.dir}/classes" />
+	<property name="bin.jar.dir" value="${bin.dir}/jar" />
+	<property name="lib.dir" value="lib" />
+	<property name="src.dir" value="src" />
+	<property name="res.dir" value="res" />
+	
+	<basename property="project.dir.name" file="${basedir}" />
+	<property name="jar.name" value="${project.dir.name}.jar" />
+	
+	<target name="clean">
+		<delete dir="${bin.dir}" />
+	</target>
+	
     <target name="proto">
     	<exec executable="protoc">
-    		<arg value="-I=res"/>
-    		<arg value="--java_out=src"/>
-			<arg value="res/systemdata.proto"/>
+    		<arg value="-I=${res.dir}"/>
+    		<arg value="--java_out=${src.dir}"/>
+			<arg value="${res.dir}/systemdata.proto"/>
     	</exec>
     </target>
 
-	<target name="compile-jar-classes">
-		<exec executable="mkdir">
-			<arg value="-p"/>
-			<arg value="bin/classes"/>
-		</exec>
-		<javac srcdir="src" destdir="bin/classes" classpath="./lib/protobuf.jar" includeantruntime="false"/>
+	<target name="compile" depends="proto">
+		<mkdir dir="${bin.classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${bin.classes.dir}" classpath="../../lib/protobuf.jar" includeantruntime="false"/>
 	</target>
 	
-	<target name="protojar" depends="proto,compile-jar-classes">
-    	<jar basedir="bin/classes" destfile="bin/proto.jar"/>
+	<target name="jar" depends="compile">
+		<mkdir dir="${bin.jar.dir}" />
+    	<jar basedir="${bin.classes.dir}" destfile="${bin.jar.dir}/${jar.name}"/>
 	</target>
+
+	<target name="rebuild" depends="clean,jar" />
 </project>
