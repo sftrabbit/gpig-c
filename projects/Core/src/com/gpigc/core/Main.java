@@ -16,7 +16,8 @@ public class Main {
 	public static boolean running = false;
 	private static CoreShell shell;
 
-	public static void main(String args[]) throws ReflectiveOperationException, IOException {
+	public static void main(String args[]) throws ReflectiveOperationException,
+			IOException {
 		setUpGui();
 	}
 
@@ -37,7 +38,8 @@ public class Main {
 
 						@Override
 						public void run() {
-							shell.getConsoleTextView().append(Character.toString((char) b));
+							shell.getConsoleTextView().append(
+									Character.toString((char) b));
 						}
 					});
 				}
@@ -45,7 +47,8 @@ public class Main {
 			System.setOut(new PrintStream(out));
 
 			// Set Up The Action Listener
-			shell.getStartButton().addSelectionListener(new StartButtonListener(shell));
+			shell.getStartButton().addSelectionListener(
+					new StartButtonListener(shell));
 
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {
@@ -76,7 +79,8 @@ public class Main {
 					core.getDataInputServer().start();
 					shell.getConfigButton().setEnabled(false);
 					StandardMessageGenerator.coreRunning();
-				} catch (IOException | ReflectiveOperationException | InterruptedException e1) {
+				} catch (IOException | ReflectiveOperationException
+						| InterruptedException e1) {
 					StandardMessageGenerator.failedToSetup();
 					e1.printStackTrace();
 				}

@@ -57,7 +57,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 		if (areParametersSet(system)) {
-			double threshold = Double.parseDouble(system.getParameters().get(Parameter.FACE_SIMILARITY_THRESHOLD));
+			double threshold = Double.parseDouble(system.getParameters().get(
+					Parameter.FACE_SIMILARITY_THRESHOLD));
 			List<Mat> exampleFaces = getExampleFaces(system);
 			// Get data from sensor
 			List<SensorState> values;
@@ -87,7 +88,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	}
 
 	private boolean areParametersSet(ClientSystem system) {
-		return system.getParameters().containsKey(Parameter.EXAMPLE_FACES) && system.getParameters().containsKey(Parameter.FACE_SIMILARITY_THRESHOLD);
+		return system.getParameters().containsKey(Parameter.EXAMPLE_FACES)
+				&& system.getParameters().containsKey(
+						Parameter.FACE_SIMILARITY_THRESHOLD);
 	}
 
 	/**
@@ -99,7 +102,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		if (systemExampleFacesCache.keySet().contains(system)) {
 			exampleFaces = systemExampleFacesCache.get(system);
 		} else {
-			String faceData = system.getParameters().get(Parameter.EXAMPLE_FACES);
+			String faceData = system.getParameters().get(
+					Parameter.EXAMPLE_FACES);
 			// System.err.println("Example faces loaded: " + faceData);
 			exampleFaces = parseFaces(faceData);
 			systemExampleFacesCache.put(system, exampleFaces);
@@ -152,13 +156,15 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 *            How similar the testFace must be to one of the exampleFaces
 	 * @return Whether the testFace is authorised
 	 */
-	public static boolean isAuthorisedFace(Mat testFace, List<Mat> exampleFaces, double threshold) {
+	public static boolean isAuthorisedFace(Mat testFace,
+			List<Mat> exampleFaces, double threshold) {
 		/*
 		 * Check to see if close enough to an allowable example face using
 		 * Chi-Squared method
 		 */
 		for (Mat example : exampleFaces) {
-			double faceSimilarity = Imgproc.compareHist(testFace, example, Imgproc.CV_COMP_CHISQR);
+			double faceSimilarity = Imgproc.compareHist(testFace, example,
+					Imgproc.CV_COMP_CHISQR);
 			if (faceSimilarity < threshold) {
 				return true;
 			}
@@ -168,28 +174,39 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 
 	private DataEvent generateSuccessEvent(ClientSystem system) {
 		Map<Parameter, String> data = new HashMap<>();
-		data.put(Parameter.MESSAGE, "Face recognitition in system " + system.getID() + " detected an authorised person and is " + "allowing them access.");
+		data.put(Parameter.MESSAGE,
+				"Face recognitition in system " + system.getID()
+						+ " detected an authorised person and is "
+						+ "allowing them access.");
 		data.put(Parameter.SUBJECT, this.name + " Notification");
-		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
+		data.put(Parameter.RECIPIENT,
+				system.getParameters().get(Parameter.RECIPIENT));
 		return new DataEvent(data, system);
 	}
 
 	private DataEvent generateFailureEvent(ClientSystem system) {
 		Map<Parameter, String> data = new HashMap<>();
-		data.put(Parameter.MESSAGE, "Face recognitition in system " + system.getID() + " detected an unauthorised person and is " + "denying them access.");
+		data.put(Parameter.MESSAGE,
+				"Face recognitition in system " + system.getID()
+						+ " detected an unauthorised person and is "
+						+ "denying them access.");
 		data.put(Parameter.SUBJECT, this.name + " Notification");
-		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
+		data.put(Parameter.RECIPIENT,
+				system.getParameters().get(Parameter.RECIPIENT));
 		return new DataEvent(data, system);
 	}
 
-	private List<SensorState> getSensorData(ClientSystem system) throws FailedToReadFromDatastoreException {
+	private List<SensorState> getSensorData(ClientSystem system)
+			throws FailedToReadFromDatastoreException {
 		List<SensorState> values = new ArrayList<>();
 		for (ClientSensor sensor : system.getSensors()) {
-			SensorState state = getSensorReadings(system, sensor.getID(), 1).get(0);
+			SensorState state = getSensorReadings(system, sensor.getID(), 1)
+					.get(0);
 			if (state != null) {
 				values.add(state);
 			} else {
-				StandardMessageGenerator.sensorValueMissing(system.getID(), sensor.getID());
+				StandardMessageGenerator.sensorValueMissing(system.getID(),
+						sensor.getID());
 				return null;
 			}
 		}

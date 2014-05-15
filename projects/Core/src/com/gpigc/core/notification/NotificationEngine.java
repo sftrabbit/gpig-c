@@ -23,7 +23,8 @@ public abstract class NotificationEngine {
 
 	public final String name;
 
-	public NotificationEngine(List<ClientSystem> registeredSystems, final int COOLDOWN) {
+	public NotificationEngine(List<ClientSystem> registeredSystems,
+			final int COOLDOWN) {
 		this.registeredSystems = registeredSystems;
 		this.COOLDOWN_SECS = COOLDOWN;
 		this.name = this.getClass().getSimpleName();

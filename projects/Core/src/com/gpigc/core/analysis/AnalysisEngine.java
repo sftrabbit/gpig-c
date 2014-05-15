@@ -29,8 +29,11 @@ public abstract class AnalysisEngine {
 	 */
 	public abstract DataEvent analyse(ClientSystem system);
 
-	public List<SensorState> getSensorReadings(ClientSystem system, String sensorID, int numberToGet) throws FailedToReadFromDatastoreException {
-		return core.getDatastoreController().readMostRecent(system, sensorID, numberToGet).getRecords();
+	public List<SensorState> getSensorReadings(ClientSystem system,
+			String sensorID, int numberToGet)
+			throws FailedToReadFromDatastoreException {
+		return core.getDatastoreController()
+				.readMostRecent(system, sensorID, numberToGet).getRecords();
 	}
 
 	public ClientSystem getRegisteredSystem(String systemID) {

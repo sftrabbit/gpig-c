@@ -50,9 +50,12 @@ public class DataInputServer extends Thread {
 				}
 
 				if (!systemStates.containsKey(data.getSystemId()))
-					systemStates.put(data.getSystemId(), new ArrayList<EmitterSystemState>());
+					systemStates.put(data.getSystemId(),
+							new ArrayList<EmitterSystemState>());
 
-				systemStates.get(data.getSystemId()).add(new EmitterSystemState(data.getSystemId(), new Date(data.getTimestamp()), datamap));
+				systemStates.get(data.getSystemId()).add(
+						new EmitterSystemState(data.getSystemId(), new Date(
+								data.getTimestamp()), datamap));
 
 			}
 

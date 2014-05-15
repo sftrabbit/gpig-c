@@ -20,14 +20,16 @@ public class PhoneAppNotificationEngine extends NotificationEngine {
 
 	public static final int PORT = 8001;
 
-	public PhoneAppNotificationEngine(List<ClientSystem> registeredSystems, int COOLDOWN) {
+	public PhoneAppNotificationEngine(List<ClientSystem> registeredSystems,
+			int COOLDOWN) {
 		super(registeredSystems, COOLDOWN);
 	}
 
 	@Override
 	public boolean send(DataEvent event) {
 		if (event.getSystem().getParameters().containsKey(Parameter.PHONE_IP)) {
-			String phoneIP = event.getSystem().getParameters().get(Parameter.PHONE_IP);
+			String phoneIP = event.getSystem().getParameters()
+					.get(Parameter.PHONE_IP);
 			Map<String, String> phoneData = new HashMap<>();
 			try {
 				if (Double.parseDouble(event.getData().get(Parameter.VALUE)) == 1) {
@@ -42,11 +44,13 @@ public class PhoneAppNotificationEngine extends NotificationEngine {
 					phoneData.put(Parameter.GPS.toString(), ON);
 				}
 				Socket s = new Socket(phoneIP, PORT);
-				ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+				ObjectOutputStream out = new ObjectOutputStream(
+						s.getOutputStream());
 				out.writeObject(phoneData);
 				out.flush();
 				s.close();
-				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
+				StandardMessageGenerator.notificationGenerated(name, event
+						.getSystem().getID());
 				return true;
 			} catch (IOException e) {
 				e.printStackTrace();

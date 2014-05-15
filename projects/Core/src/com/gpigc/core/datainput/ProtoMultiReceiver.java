@@ -10,7 +10,8 @@ public class ProtoMultiReceiver extends Thread {
 	private Socket sock;
 	private ConcurrentLinkedQueue<SystemData> queue;
 
-	public ProtoMultiReceiver(Socket sock, ConcurrentLinkedQueue<SystemData> queue) {
+	public ProtoMultiReceiver(Socket sock,
+			ConcurrentLinkedQueue<SystemData> queue) {
 		super("ProtoMultiReceiver");
 		this.sock = sock;
 		this.queue = queue;
@@ -19,7 +20,8 @@ public class ProtoMultiReceiver extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				SystemData data = SystemData.parseDelimitedFrom(sock.getInputStream());
+				SystemData data = SystemData.parseDelimitedFrom(sock
+						.getInputStream());
 				if (data == null)
 					break;
 				queue.add(data);

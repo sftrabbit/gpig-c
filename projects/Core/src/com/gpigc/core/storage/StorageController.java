@@ -24,7 +24,8 @@ public class StorageController extends Controller {
 
 	@SuppressWarnings("unchecked")
 	public void refreshSystems(List<ClientSystem> systems) {
-		datastores = (List<SystemDataGateway>) instantiateEngines(systems, List.class);
+		datastores = (List<SystemDataGateway>) instantiateEngines(systems,
+				List.class);
 	}
 
 	public void push(Map<String, List<EmitterSystemState>> systemStates) {
@@ -34,7 +35,8 @@ public class StorageController extends Controller {
 					try {
 						dataStore.write(systemStates.get(system.getID()));
 					} catch (FailedToWriteToDatastoreException e) {
-						StandardMessageGenerator.failedToWrite(dataStore.name, system.getID());
+						StandardMessageGenerator.failedToWrite(dataStore.name,
+								system.getID());
 						e.printStackTrace();
 					}
 				}
@@ -42,15 +44,18 @@ public class StorageController extends Controller {
 		}
 	}
 
-	public QueryResult readMostRecent(ClientSystem system, String sensorID, int numberToGet) throws FailedToReadFromDatastoreException {
+	public QueryResult readMostRecent(ClientSystem system, String sensorID,
+			int numberToGet) throws FailedToReadFromDatastoreException {
 		for (SystemDataGateway dataStore : getDatastores()) {
 			if (dataStore.name.equals(system.getSystemDataGatewayName()))
-				return dataStore.readMostRecent(system.getID(), sensorID, numberToGet);
+				return dataStore.readMostRecent(system.getID(), sensorID,
+						numberToGet);
 		}
 		return null;
 	}
 
-	protected List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
+	protected List<ClientSystem> getRegisteredSystems(String name,
+			List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
 		for (ClientSystem system : allSystems) {
 			if (system.getSystemDataGatewayName().equals(name))

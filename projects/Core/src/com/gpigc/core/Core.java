@@ -24,12 +24,14 @@ public class Core {
 	private List<ClientSystem> systemsToMonitor;
 	private String currentConfigFilePath;
 
-	public Core(String configFilePath) throws IOException, ReflectiveOperationException, InterruptedException {
+	public Core(String configFilePath) throws IOException,
+			ReflectiveOperationException, InterruptedException {
 		currentConfigFilePath = configFilePath;
 		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController = new StorageController(systemsToMonitor, this);
 		analysisController = new AnalysisController(systemsToMonitor, this);
-		notificationGenerator = new NotificationController(systemsToMonitor, this);
+		notificationGenerator = new NotificationController(systemsToMonitor,
+				this);
 		dataInputServer = new DataInputServer(this);
 		monitorFiles();
 	}
@@ -37,14 +39,17 @@ public class Core {
 	private void monitorFiles() throws FileNotFoundException {
 		FileMonitor configMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener configListener = new ConfigFileChangeListener();
-		configMonitor.addFileChangeListener(configListener, currentConfigFilePath, 1000);
+		configMonitor.addFileChangeListener(configListener,
+				currentConfigFilePath, 1000);
 
 		FileMonitor enginesMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener engineListener = new ConfigFileChangeListener();
-		enginesMonitor.addFileChangeListener(engineListener, ENGINES_FOLDER_PATH, 1000);
+		enginesMonitor.addFileChangeListener(engineListener,
+				ENGINES_FOLDER_PATH, 1000);
 	}
 
-	public void refreshSystems() throws IOException, ReflectiveOperationException {
+	public void refreshSystems() throws IOException,
+			ReflectiveOperationException {
 		System.out.println("Re-registering systems...");
 		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController.refreshSystems(systemsToMonitor);
@@ -52,7 +57,8 @@ public class Core {
 		notificationGenerator.refreshSystems(systemsToMonitor);
 	}
 
-	public void updateDatastore(Map<String, List<EmitterSystemState>> systemStates) {
+	public void updateDatastore(
+			Map<String, List<EmitterSystemState>> systemStates) {
 		getDatastoreController().push(systemStates);
 		StandardMessageGenerator.dataRecieved(systemStates.keySet());
 		getAnalysisController().analyse(systemStates.keySet());

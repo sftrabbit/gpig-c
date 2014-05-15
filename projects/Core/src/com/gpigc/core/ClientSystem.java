@@ -11,7 +11,9 @@ public class ClientSystem {
 	private final Map<Parameter, String> parameters;
 	private final String systemDataGatewayName;
 
-	public ClientSystem(String systemID, List<ClientSensor> sensors, List<String> registeredEngineNames, String systemDataGatewayName, Map<Parameter, String> parameters) {
+	public ClientSystem(String systemID, List<ClientSensor> sensors,
+			List<String> registeredEngineNames, String systemDataGatewayName,
+			Map<Parameter, String> parameters) {
 		this.id = systemID;
 		this.sensors = sensors;
 		this.registeredEngineNames = registeredEngineNames;

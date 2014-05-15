@@ -20,8 +20,10 @@ public class NotificationGeneratorTest {
 	public void before() throws ReflectiveOperationException {
 		systems = new ArrayList<>();
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
-		sensors.add(new ClientSensor("TestSensor", new HashMap<Parameter, String>()));
-		systems.add(new ClientSystem("Test", sensors, new ArrayList<String>(), "", new HashMap<Parameter, String>()));
+		sensors.add(new ClientSensor("TestSensor",
+				new HashMap<Parameter, String>()));
+		systems.add(new ClientSystem("Test", sensors, new ArrayList<String>(),
+				"", new HashMap<Parameter, String>()));
 	}
 
 }

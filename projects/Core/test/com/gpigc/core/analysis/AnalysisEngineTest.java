@@ -25,7 +25,8 @@ public class AnalysisEngineTest {
 	private List<ClientSystem> registeredSystems;
 
 	@Before
-	public void before() throws URISyntaxException, IOException, ReflectiveOperationException, InterruptedException {
+	public void before() throws URISyntaxException, IOException,
+			ReflectiveOperationException, InterruptedException {
 		// Set up dummy system
 		registeredSystems = new ArrayList<>();
 
@@ -36,9 +37,11 @@ public class AnalysisEngineTest {
 		ArrayList<ClientSensor> sensors = new ArrayList<>();
 		sensors.add(new ClientSensor("TestSensor", params));
 
-		registeredSystems.add(new ClientSystem("TestSystem", sensors, new ArrayList<String>(), "", new HashMap<Parameter, String>()));
+		registeredSystems.add(new ClientSystem("TestSystem", sensors,
+				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
 
-		analysisEngine = new AnalysisEngine(registeredSystems, new Core("config/RegisteredSystems.config")) {
+		analysisEngine = new AnalysisEngine(registeredSystems, new Core(
+				"config/RegisteredSystems.config")) {
 			@Override
 			public DataEvent analyse(ClientSystem system) {
 				return null;
@@ -49,12 +52,14 @@ public class AnalysisEngineTest {
 	@Test
 	public void testCorrectFields() {
 		assertTrue(analysisEngine.getAssociatedSystems().size() == 1);
-		assertEquals(registeredSystems.get(0), analysisEngine.getAssociatedSystems().get(0));
+		assertEquals(registeredSystems.get(0), analysisEngine
+				.getAssociatedSystems().get(0));
 	}
 
 	@Test
 	public void testRegisteredSystems() {
-		assertNotNull(analysisEngine.getRegisteredSystem(registeredSystems.get(0).getID()));
+		assertNotNull(analysisEngine.getRegisteredSystem(registeredSystems.get(
+				0).getID()));
 		assertNull(analysisEngine.getRegisteredSystem(""));
 	}
 

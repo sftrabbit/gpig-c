@@ -26,7 +26,8 @@ public class AnalysisController extends Controller {
 	}
 
 	public void refreshSystems(List<ClientSystem> systems) {
-		analysisEngines = (List<AnalysisEngine>) instantiateEngines(systems, List.class, Core.class);
+		analysisEngines = (List<AnalysisEngine>) instantiateEngines(systems,
+				List.class, Core.class);
 	}
 
 	public void analyse(Set<String> systemIDs) {
@@ -36,9 +37,11 @@ public class AnalysisController extends Controller {
 				// If this engine is registered to this system
 				if (engine.getRegisteredSystem(currentSystemID) != null) {
 					System.out.println("Checking For Event");
-					DataEvent event = engine.analyse(engine.getRegisteredSystem(currentSystemID));
+					DataEvent event = engine.analyse(engine
+							.getRegisteredSystem(currentSystemID));
 					if (event != null) {
-						StandardMessageGenerator.eventGenerated(engine.name, currentSystemID);
+						StandardMessageGenerator.eventGenerated(engine.name,
+								currentSystemID);
 						core.generateNotification(event);
 					}
 				}
@@ -46,7 +49,8 @@ public class AnalysisController extends Controller {
 		}
 	}
 
-	protected List<ClientSystem> getRegisteredSystems(String simpleName, List<ClientSystem> allSystems) {
+	protected List<ClientSystem> getRegisteredSystems(String simpleName,
+			List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
 		for (ClientSystem system : allSystems) {
 			if (system.getRegisteredEngineNames().contains(simpleName)) {

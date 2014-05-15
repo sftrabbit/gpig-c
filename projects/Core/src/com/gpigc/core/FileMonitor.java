@@ -59,7 +59,8 @@ public class FileMonitor {
 	 * @param period
 	 *            polling period in milliseconds.
 	 */
-	public void addFileChangeListener(FileChangeListener listener, String fileName, long period) throws FileNotFoundException {
+	public void addFileChangeListener(FileChangeListener listener,
+			String fileName, long period) throws FileNotFoundException {
 		addFileChangeListener(listener, new File(fileName), period);
 	}
 
@@ -73,7 +74,8 @@ public class FileMonitor {
 	 * @param period
 	 *            polling period in milliseconds.
 	 */
-	public void addFileChangeListener(FileChangeListener listener, File file, long period) throws FileNotFoundException {
+	public void addFileChangeListener(FileChangeListener listener, File file,
+			long period) throws FileNotFoundException {
 		removeFileChangeListener(listener, file);
 		FileMonitorTask task = new FileMonitorTask(listener, file);
 		timerEntries.put(file.toString() + listener.hashCode(), task);
@@ -86,7 +88,8 @@ public class FileMonitor {
 	 * @param listener
 	 *            the listener to be removed.
 	 */
-	public void removeFileChangeListener(FileChangeListener listener, String fileName) {
+	public void removeFileChangeListener(FileChangeListener listener,
+			String fileName) {
 		removeFileChangeListener(listener, new File(fileName));
 	}
 
@@ -97,7 +100,8 @@ public class FileMonitor {
 	 *            the listener to be removed.
 	 */
 	public void removeFileChangeListener(FileChangeListener listener, File file) {
-		FileMonitorTask task = timerEntries.remove(file.toString() + listener.hashCode());
+		FileMonitorTask task = timerEntries.remove(file.toString()
+				+ listener.hashCode());
 		if (task != null) {
 			task.cancel();
 		}
@@ -125,12 +129,14 @@ public class FileMonitor {
 
 		long lastModified;
 
-		public FileMonitorTask(FileChangeListener listener, File file) throws FileNotFoundException {
+		public FileMonitorTask(FileChangeListener listener, File file)
+				throws FileNotFoundException {
 			this.listener = listener;
 			this.lastModified = 0;
 			monitoredFile = file;
 			if (!monitoredFile.exists()) { // but is it on CLASSPATH?
-				URL fileURL = listener.getClass().getClassLoader().getResource(file.toString());
+				URL fileURL = listener.getClass().getClassLoader()
+						.getResource(file.toString());
 				if (fileURL != null) {
 					monitoredFile = new File(fileURL.getFile());
 				} else {

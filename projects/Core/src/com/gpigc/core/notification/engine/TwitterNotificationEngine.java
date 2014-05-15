@@ -22,7 +22,8 @@ public class TwitterNotificationEngine extends NotificationEngine {
 	private static final String ACCESS_TOKEN = "2466857444-bCriobHyeBix9Bmln3kE2I1xrnqaKJ0S387w2R2";
 	private static final String ACCESS_SECRET = "PLjTn3y9vzxDgd90Pq2l5hdcrlsDFtq6eYoaG9EDSqyyr";
 
-	public TwitterNotificationEngine(List<ClientSystem> registeredSystems, final int COOL_DOWN_SECS) {
+	public TwitterNotificationEngine(List<ClientSystem> registeredSystems,
+			final int COOL_DOWN_SECS) {
 		super(registeredSystems, COOL_DOWN_SECS);
 	}
 
@@ -35,17 +36,25 @@ public class TwitterNotificationEngine extends NotificationEngine {
 			twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
 
 			// setup OAuth Access Token
-			twitter.setOAuthAccessToken(new AccessToken(ACCESS_TOKEN, ACCESS_SECRET));
+			twitter.setOAuthAccessToken(new AccessToken(ACCESS_TOKEN,
+					ACCESS_SECRET));
 
 			// Instantiate and initialize a new twitter status update
-			StatusUpdate statusUpdate = new StatusUpdate(event.getData().get("Message"));
-			if (event.getData().containsKey(Parameter.LONG) && event.getData().containsKey(Parameter.LAT)) {
-				statusUpdate.setLocation(new GeoLocation(Double.parseDouble(event.getData().get(Parameter.LAT)), Double.parseDouble(event.getData().get(Parameter.LONG))));
+			StatusUpdate statusUpdate = new StatusUpdate(event.getData().get(
+					"Message"));
+			if (event.getData().containsKey(Parameter.LONG)
+					&& event.getData().containsKey(Parameter.LAT)) {
+				statusUpdate
+						.setLocation(new GeoLocation(Double.parseDouble(event
+								.getData().get(Parameter.LAT)), Double
+								.parseDouble(event.getData()
+										.get(Parameter.LONG))));
 			}
 			try {
 				twitter.updateStatus(statusUpdate);
 				setRecentlySent();
-				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
+				StandardMessageGenerator.notificationGenerated(name, event
+						.getSystem().getID());
 				return true;
 			} catch (TwitterException e) {
 				StandardMessageGenerator.couldNotUpdateStatus();

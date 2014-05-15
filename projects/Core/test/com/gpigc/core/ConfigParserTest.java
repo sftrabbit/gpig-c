@@ -10,9 +10,12 @@ import org.junit.Test;
 
 public class ConfigParserTest {
 
-	private static final String testValidJSON = "{\"Systems\": [" + "{\"SystemID\": \"2\"," + "\"Sensors\": [ " + " {\"SensorID\": \"EQ\", " + "\"Params\": {"
-			+ "  \"LOWER_BOUND\": \"10\", " + " \"UPPER_BOUND\": \"80\"  " + " }}]," + " \"Engines\": [ " + " \"EarthquakeAnalysisEngine\", " + " \"TwitterNotificationEngine\" "
-			+ "] }]}";
+	private static final String testValidJSON = "{\"Systems\": ["
+			+ "{\"SystemID\": \"2\"," + "\"Sensors\": [ "
+			+ " {\"SensorID\": \"EQ\", " + "\"Params\": {"
+			+ "  \"LOWER_BOUND\": \"10\", " + " \"UPPER_BOUND\": \"80\"  "
+			+ " }}]," + " \"Engines\": [ " + " \"EarthquakeAnalysisEngine\", "
+			+ " \"TwitterNotificationEngine\" " + "] }]}";
 	private ConfigParser configParser;
 
 	@Test
@@ -25,7 +28,8 @@ public class ConfigParserTest {
 	@Test
 	public void testParseFile() throws IOException {
 		configParser = new ConfigParser();
-		ArrayList<ClientSystem> systems = configParser.parse(new File("config/Test.config"));
+		ArrayList<ClientSystem> systems = configParser.parse(new File(
+				"config/Test.config"));
 		checkCorrect(systems);
 	}
 
@@ -36,8 +40,10 @@ public class ConfigParserTest {
 		assertNotNull(systems.get(0).getSensors());
 		assertNotNull(systems.get(0).getSensors().get(0));
 		assertNotNull(systems.get(0).getSensors().get(0).getParameters());
-		assertEquals("80", systems.get(0).getSensors().get(0).getParameters().get(Parameter.UPPER_BOUND));
-		assertEquals("10", systems.get(0).getSensors().get(0).getParameters().get(Parameter.LOWER_BOUND));
+		assertEquals("80", systems.get(0).getSensors().get(0).getParameters()
+				.get(Parameter.UPPER_BOUND));
+		assertEquals("10", systems.get(0).getSensors().get(0).getParameters()
+				.get(Parameter.LOWER_BOUND));
 		assertNotNull(systems.get(0).getRegisteredEngineNames());
 	}
 

@@ -39,7 +39,8 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 	 */
 	private Parser parser;
 
-	public ExpressionAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
+	public ExpressionAnalysisEngine(List<ClientSystem> registeredSystems,
+			Core core) {
 		super(registeredSystems, core);
 		parser = new Parser();
 		variables = new HashMap<String, Variable>();
@@ -84,23 +85,30 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 		return null;
 	}
 
-	private DataEvent generateEvent(ClientSystem system, String exprStr, double value) {
+	private DataEvent generateEvent(ClientSystem system, String exprStr,
+			double value) {
 		Map<Parameter, String> data = new HashMap<>();
-		data.put(Parameter.MESSAGE, "Expression analysis of system " + system.getID() + " showed abnormal system behaviour: " + exprStr);
+		data.put(Parameter.MESSAGE,
+				"Expression analysis of system " + system.getID()
+						+ " showed abnormal system behaviour: " + exprStr);
 		data.put(Parameter.SUBJECT, this.name + " Notification");
-		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
+		data.put(Parameter.RECIPIENT,
+				system.getParameters().get(Parameter.RECIPIENT));
 		data.put(Parameter.VALUE, value + "");
 		return new DataEvent(data, system);
 	}
 
-	private List<SensorState> getSensorData(ClientSystem system) throws FailedToReadFromDatastoreException {
+	private List<SensorState> getSensorData(ClientSystem system)
+			throws FailedToReadFromDatastoreException {
 		List<SensorState> values = new ArrayList<>();
 		for (ClientSensor sensor : system.getSensors()) {
-			SensorState state = getSensorReadings(system, sensor.getID(), 1).get(0);
+			SensorState state = getSensorReadings(system, sensor.getID(), 1)
+					.get(0);
 			if (state != null) {
 				values.add(state);
 			} else {
-				StandardMessageGenerator.sensorValueMissing(system.getID(), sensor.getID());
+				StandardMessageGenerator.sensorValueMissing(system.getID(),
+						sensor.getID());
 				return null;
 			}
 		}

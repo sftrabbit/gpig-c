@@ -18,7 +18,8 @@ import com.gpigc.core.view.StandardMessageGenerator;
  */
 public class EmailNotificationEngine extends NotificationEngine {
 
-	public EmailNotificationEngine(List<ClientSystem> registeredSystems, final int COOL_DOWN_SECS) {
+	public EmailNotificationEngine(List<ClientSystem> registeredSystems,
+			final int COOL_DOWN_SECS) {
 		super(registeredSystems, COOL_DOWN_SECS);
 	}
 
@@ -34,7 +35,8 @@ public class EmailNotificationEngine extends NotificationEngine {
 			SimpleEmail email = new SimpleEmail();
 			email.setHostName("smtp.gmail.com");
 			email.setSmtpPort(465);
-			email.setAuthenticator(new DefaultAuthenticator("gpigc.alerts@gmail.com", "59QEF-wKsaZUw^d"));
+			email.setAuthenticator(new DefaultAuthenticator(
+					"gpigc.alerts@gmail.com", "59QEF-wKsaZUw^d"));
 			email.setSSLOnConnect(true);
 			try {
 				email.setFrom("gpigc.alerts@gmail.com");
@@ -46,7 +48,8 @@ public class EmailNotificationEngine extends NotificationEngine {
 				email.addTo(recipient);
 				email.send();
 				setRecentlySent();
-				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
+				StandardMessageGenerator.notificationGenerated(name, event
+						.getSystem().getID());
 				return true;
 			} catch (EmailException e) {
 				e.printStackTrace();

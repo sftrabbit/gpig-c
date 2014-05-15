@@ -23,7 +23,8 @@ public class SWTLoader {
 			return "win";
 		} else if (osNameProperty.contains("mac")) {
 			return "osx";
-		} else if (osNameProperty.contains("linux") || osNameProperty.contains("nix")) {
+		} else if (osNameProperty.contains("linux")
+				|| osNameProperty.contains("nix")) {
 			return "linux";
 		} else {
 			throw new RuntimeException("Unknown OS name: " + osNameProperty);
@@ -43,9 +44,11 @@ public class SWTLoader {
 	public static void addJarToClasspath(File jarFile) {
 		try {
 			URL url = jarFile.toURI().toURL();
-			URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+			URLClassLoader urlClassLoader = (URLClassLoader) ClassLoader
+					.getSystemClassLoader();
 			Class<?> urlClass = URLClassLoader.class;
-			Method method = urlClass.getDeclaredMethod("addURL", new Class<?>[] { URL.class });
+			Method method = urlClass.getDeclaredMethod("addURL",
+					new Class<?>[] { URL.class });
 			method.setAccessible(true);
 			method.invoke(urlClassLoader, new Object[] { url });
 		} catch (Throwable t) {

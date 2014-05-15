@@ -55,7 +55,8 @@ public class ConfigParser {
 
 						while (jParser.nextToken() != JsonToken.END_OBJECT) {
 							String key = jParser.getCurrentName();
-							if (SYSTEM_ID_KEY.equals(key) && jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
+							if (SYSTEM_ID_KEY.equals(key)
+									&& jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
 								systemID = jParser.getText();
 							}
 							if (SENSORS_KEY.equals(key)) {
@@ -66,11 +67,13 @@ public class ConfigParser {
 							if (ENGINES_KEY.equals(key)) {
 								while (jParser.nextToken() != JsonToken.END_ARRAY) {
 									if (jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
-										registeredEngines.add(jParser.getText());
+										registeredEngines
+												.add(jParser.getText());
 									}
 								}
 							}
-							if (SYSTEM_GATEWAY_KEY.equals(key) && jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
+							if (SYSTEM_GATEWAY_KEY.equals(key)
+									&& jParser.getCurrentToken() == JsonToken.VALUE_STRING) {
 								systemDataGatewayName = jParser.getText();
 							}
 							if (PARAMS_KEY.equals(key)) {
@@ -78,17 +81,22 @@ public class ConfigParser {
 									String paramkey = jParser.getCurrentName();
 									if (Parameter.isValid(paramkey)) {
 										jParser.nextToken();
-										params.put(Parameter.valueOf(paramkey), jParser.getText());
-										System.out.println("Valid Param: " + paramkey);
+										params.put(Parameter.valueOf(paramkey),
+												jParser.getText());
+										System.out.println("Valid Param: "
+												+ paramkey);
 									}
 								}
 							}
 						}
 						if (systemID != null && systemDataGatewayName != null) {
-							systems.add(new ClientSystem(systemID, sensors, registeredEngines, systemDataGatewayName, params));
+							systems.add(new ClientSystem(systemID, sensors,
+									registeredEngines, systemDataGatewayName,
+									params));
 							StandardMessageGenerator.registeredSystem(systemID);
 						} else {
-							StandardMessageGenerator.couldNotReadSystemInConfig();
+							StandardMessageGenerator
+									.couldNotReadSystemInConfig();
 						}
 					}
 
@@ -119,7 +127,8 @@ public class ConfigParser {
 					String paramkey = jParser.getCurrentName();
 					if (Parameter.isValid(paramkey)) {
 						jParser.nextToken();
-						sensorParams.put(Parameter.valueOf(paramkey), jParser.getText());
+						sensorParams.put(Parameter.valueOf(paramkey),
+								jParser.getText());
 					}
 				}
 			}

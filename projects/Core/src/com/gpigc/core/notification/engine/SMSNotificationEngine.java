@@ -23,7 +23,8 @@ import com.gpigc.core.view.StandardMessageGenerator;
  */
 public class SMSNotificationEngine extends NotificationEngine {
 
-	public SMSNotificationEngine(List<ClientSystem> registeredSystems, final int COOL_DOWN_SECS) {
+	public SMSNotificationEngine(List<ClientSystem> registeredSystems,
+			final int COOL_DOWN_SECS) {
 		super(registeredSystems, COOL_DOWN_SECS);
 	}
 
@@ -54,25 +55,33 @@ public class SMSNotificationEngine extends NotificationEngine {
 				// if (body.length() > 160) body = body.substring(0, 160); //
 				// trim entire message to a single text message
 
-				URL url = new URL("https://api.twilio.com/2010-04-01/Accounts/AC848eaa752727344e60afdbe24b96cb49/Messages.json");
+				URL url = new URL(
+						"https://api.twilio.com/2010-04-01/Accounts/AC848eaa752727344e60afdbe24b96cb49/Messages.json");
 
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				HttpURLConnection conn = (HttpURLConnection) url
+						.openConnection();
 				conn.setDoOutput(true);
 				conn.setDoInput(true);
 				conn.setRequestMethod("POST");
 
-				String userpass = "AC848eaa752727344e60afdbe24b96cb49" + ":" + "c4bf474d1d3dc6b582dd81dfa8086a1f";
-				String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
+				String userpass = "AC848eaa752727344e60afdbe24b96cb49" + ":"
+						+ "c4bf474d1d3dc6b582dd81dfa8086a1f";
+				String basicAuth = "Basic "
+						+ new String(new Base64().encode(userpass.getBytes()));
 				conn.setRequestProperty("Authorization", basicAuth);
 
-				String urlParameters = "From=%2B441743562709&To=%2B44" + recipient + "&Body=" + URLEncoder.encode(body, "UTF-8");
-				DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+				String urlParameters = "From=%2B441743562709&To=%2B44"
+						+ recipient + "&Body="
+						+ URLEncoder.encode(body, "UTF-8");
+				DataOutputStream wr = new DataOutputStream(
+						conn.getOutputStream());
 				wr.writeBytes(urlParameters);
 				wr.flush();
 				wr.close();
 
 				setRecentlySent();
-				StandardMessageGenerator.notificationGenerated(name, event.getSystem().getID());
+				StandardMessageGenerator.notificationGenerated(name, event
+						.getSystem().getID());
 				/*
 				 * System.out.println("Response Code : " +
 				 * conn.getResponseCode()); InputStream stream; if

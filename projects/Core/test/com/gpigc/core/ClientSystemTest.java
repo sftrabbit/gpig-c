@@ -29,7 +29,8 @@ public class ClientSystemTest {
 		params.put(Parameter.UPPER_BOUND, "70");
 		sensors.add(new ClientSensor("TestSensor", params));
 
-		system = new ClientSystem(systemID, sensors, new ArrayList<String>(), "", new HashMap<Parameter, String>());
+		system = new ClientSystem(systemID, sensors, new ArrayList<String>(),
+				"", new HashMap<Parameter, String>());
 	}
 
 	@Test
@@ -41,13 +42,15 @@ public class ClientSystemTest {
 
 	@Test
 	public void testEqualsPass() {
-		ClientSystem equalSystem = new ClientSystem(systemID, sensors, new ArrayList<String>(), "", new HashMap<Parameter, String>());
+		ClientSystem equalSystem = new ClientSystem(systemID, sensors,
+				new ArrayList<String>(), "", new HashMap<Parameter, String>());
 		assertEquals(system, equalSystem);
 	}
 
 	@Test
 	public void testEqualsFail() {
-		ClientSystem equalSystem = new ClientSystem(systemID + "2", sensors, new ArrayList<String>(), "", new HashMap<Parameter, String>());
+		ClientSystem equalSystem = new ClientSystem(systemID + "2", sensors,
+				new ArrayList<String>(), "", new HashMap<Parameter, String>());
 		assertNotSame(system, equalSystem);
 	}
 

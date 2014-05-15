@@ -29,34 +29,46 @@ public class H2SystemDataGatewayTest {
 	private H2SystemDataGateway gateway;
 
 	@Before
-	public void setUp() throws ClassNotFoundException, URISyntaxException, SQLException, FailedToWriteToDatastoreException {
+	public void setUp() throws ClassNotFoundException, URISyntaxException,
+			SQLException, FailedToWriteToDatastoreException {
 		systems = new ArrayList<>();
 		ArrayList<ClientSensor> sensors = new ArrayList<ClientSensor>();
-		sensors.add(new ClientSensor("TestSensor", new HashMap<Parameter, String>()));
-		systems.add(new ClientSystem(testSystemID, sensors, new ArrayList<String>(), "", new HashMap<Parameter, String>()));
+		sensors.add(new ClientSensor("TestSensor",
+				new HashMap<Parameter, String>()));
+		systems.add(new ClientSystem(testSystemID, sensors,
+				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
 		gateway = new H2SystemDataGateway(systems);
 		gateway.initialiseTables();
 	}
 
 	@Test
-	public void testReadBetween() throws ClassNotFoundException, URISyntaxException, SQLException, FailedToWriteToDatastoreException, FailedToReadFromDatastoreException {
+	public void testReadBetween() throws ClassNotFoundException,
+			URISyntaxException, SQLException,
+			FailedToWriteToDatastoreException,
+			FailedToReadFromDatastoreException {
 		Map<String, String> payloadOne = new HashMap<String, String>();
 		payloadOne.put("Test1", "Red");
 
 		Map<String, String> payloadTwo = new HashMap<String, String>();
 		payloadTwo.put("Test1", "Blue");
 
-		gateway.write(new EmitterSystemState(testSystemID, new Date(), payloadTwo));
-		gateway.write(new EmitterSystemState(testSystemID, new Date(0xFFFFF), payloadOne));
-		gateway.write(new EmitterSystemState(testSystemID, new Date(0xFFFFFFFF), payloadTwo));
-		QueryResult result = gateway.readBetween(testSystemID, "Test1", new Date(0xFFFF), new Date(0xFFFFFF));
+		gateway.write(new EmitterSystemState(testSystemID, new Date(),
+				payloadTwo));
+		gateway.write(new EmitterSystemState(testSystemID, new Date(0xFFFFF),
+				payloadOne));
+		gateway.write(new EmitterSystemState(testSystemID,
+				new Date(0xFFFFFFFF), payloadTwo));
+		QueryResult result = gateway.readBetween(testSystemID, "Test1",
+				new Date(0xFFFF), new Date(0xFFFFFF));
 		assertEquals(1, result.getRecords().size());
 		assertTrue("Red".equals(result.getRecords().get(0).getValue()));
 		assertTrue("Test1".equals(result.getRecords().get(0).getSensorID()));
 	}
 
 	@Test
-	public void testWriteAndRead() throws URISyntaxException, SQLException, ClassNotFoundException, FailedToWriteToDatastoreException, FailedToReadFromDatastoreException {
+	public void testWriteAndRead() throws URISyntaxException, SQLException,
+			ClassNotFoundException, FailedToWriteToDatastoreException,
+			FailedToReadFromDatastoreException {
 		Map<String, String> payload = new HashMap<String, String>();
 		payload.put("Test1", "Blue");
 		payload.put("Test2", "Red");
@@ -70,13 +82,16 @@ public class H2SystemDataGatewayTest {
 	}
 
 	@Test
-	public void testBulkWrite() throws FailedToWriteToDatastoreException, SQLException, FailedToReadFromDatastoreException {
+	public void testBulkWrite() throws FailedToWriteToDatastoreException,
+			SQLException, FailedToReadFromDatastoreException {
 		List<EmitterSystemState> emmitterSystemStates = new ArrayList<EmitterSystemState>();
 		Map<String, String> payload = new HashMap<String, String>();
 		payload.put("Test1", "Blue");
 		payload.put("Test2", "Green");
-		emmitterSystemStates.add(new EmitterSystemState(testSystemID, new Date(0), payload));
-		emmitterSystemStates.add(new EmitterSystemState(testSystemID, new Date(40000), payload));
+		emmitterSystemStates.add(new EmitterSystemState(testSystemID, new Date(
+				0), payload));
+		emmitterSystemStates.add(new EmitterSystemState(testSystemID, new Date(
+				40000), payload));
 		gateway.write(emmitterSystemStates);
 		QueryResult result = gateway.readMostRecent(testSystemID, "Test1", 5);
 		assertEquals(2, result.getRecords().size());

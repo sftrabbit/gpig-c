@@ -30,7 +30,8 @@ public class FaceAnalysisEngineTest {
 		double d = 0.7d;
 		double e = 0.672d;
 		double f = 0.001d;
-		List<Mat> faces = FaceAnalysisEngine.parseFaces(a + "," + b + "," + c + "\n" + d + "," + e + "," + f);
+		List<Mat> faces = FaceAnalysisEngine.parseFaces(a + "," + b + "," + c
+				+ "\n" + d + "," + e + "," + f);
 		assertEquals(a, faces.get(0).get(0, 0)[0], 0.000005d);
 		assertEquals(b, faces.get(0).get(0, 1)[0], 0.000005d);
 		assertEquals(c, faces.get(0).get(0, 2)[0], 0.000005d);
@@ -45,8 +46,10 @@ public class FaceAnalysisEngineTest {
 		Mat testFace = null;
 		List<Mat> exampleFaces = null;
 		double threshold = 0.0;
-		boolean isAuthorised = FaceAnalysisEngine.isAuthorisedFace(testFace, exampleFaces, threshold);
-		assertTrue("Face should have been authorised, but it was not", isAuthorised);
+		boolean isAuthorised = FaceAnalysisEngine.isAuthorisedFace(testFace,
+				exampleFaces, threshold);
+		assertTrue("Face should have been authorised, but it was not",
+				isAuthorised);
 	}
 
 	@Test
@@ -55,8 +58,10 @@ public class FaceAnalysisEngineTest {
 		Mat testFace = null;
 		List<Mat> exampleFaces = null;
 		double threshold = 0.0;
-		boolean isAuthorised = FaceAnalysisEngine.isAuthorisedFace(testFace, exampleFaces, threshold);
-		assertFalse("Face should not have been authorised, but it was", isAuthorised);
+		boolean isAuthorised = FaceAnalysisEngine.isAuthorisedFace(testFace,
+				exampleFaces, threshold);
+		assertFalse("Face should not have been authorised, but it was",
+				isAuthorised);
 	}
 
 }

@@ -40,7 +40,9 @@ public abstract class SystemDataGateway {
 	 * @throws FailedToReadFromDatastoreException
 	 * @throws SQLException
 	 */
-	public abstract QueryResult readMostRecent(String systemID, String sensorID, int numRecords) throws FailedToReadFromDatastoreException;
+	public abstract QueryResult readMostRecent(String systemID,
+			String sensorID, int numRecords)
+			throws FailedToReadFromDatastoreException;
 
 	/**
 	 * @param systemID
@@ -56,7 +58,8 @@ public abstract class SystemDataGateway {
 	 * @throws FailedToReadFromDatastoreException
 	 * @throws SQLException
 	 */
-	public abstract QueryResult readBetween(String systemID, String sensorID, Date start, Date end) throws FailedToReadFromDatastoreException;
+	public abstract QueryResult readBetween(String systemID, String sensorID,
+			Date start, Date end) throws FailedToReadFromDatastoreException;
 
 	/**
 	 * Writes the given data to the datastore
@@ -68,7 +71,8 @@ public abstract class SystemDataGateway {
 	 * @throws SQLException
 	 *             When we couldn't write
 	 */
-	public abstract void write(EmitterSystemState data) throws FailedToWriteToDatastoreException;
+	public abstract void write(EmitterSystemState data)
+			throws FailedToWriteToDatastoreException;
 
 	/**
 	 * Writes a batch of data to the datastore
@@ -80,7 +84,8 @@ public abstract class SystemDataGateway {
 	 * @throws SQLException
 	 *             When we fail to write to the datastore
 	 */
-	public abstract void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException;
+	public abstract void write(List<EmitterSystemState> data)
+			throws FailedToWriteToDatastoreException;
 
 	/**
 	 * Returns a list of systems which are registered to this datastore
@@ -90,16 +95,19 @@ public abstract class SystemDataGateway {
 	public List<ClientSystem> getAssociatedSystems() {
 		return registeredSystems;
 	}
-	
+
 	protected Timestamp toSQLTimestamp(Date utilDate) {
 		return new Timestamp(utilDate.getTime());
 	}
-	
-	protected QueryResult constructResult(String systemID, ResultSet resultSet) throws SQLException {
+
+	protected QueryResult constructResult(String systemID, ResultSet resultSet)
+			throws SQLException {
 		List<SensorState> sensorStates = new ArrayList<SensorState>();
 		SensorState sensorState;
 		while (resultSet.next()) {
-			sensorState = new SensorState(resultSet.getString("SENSOR_ID"), new Date(), resultSet.getTimestamp("DATABASE_TIMESTAMP"), resultSet.getString("VALUE"));
+			sensorState = new SensorState(resultSet.getString("SENSOR_ID"),
+					new Date(), resultSet.getTimestamp("DATABASE_TIMESTAMP"),
+					resultSet.getString("VALUE"));
 			sensorStates.add(sensorState);
 		}
 		return new QueryResult(systemID, sensorStates);

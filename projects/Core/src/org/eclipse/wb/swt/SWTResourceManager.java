@@ -189,7 +189,8 @@ public class SWTResourceManager {
 	 *         missing image.
 	 */
 	private static Image getMissingImage() {
-		Image image = new Image(Display.getCurrent(), MISSING_IMAGE_SIZE, MISSING_IMAGE_SIZE);
+		Image image = new Image(Display.getCurrent(), MISSING_IMAGE_SIZE,
+				MISSING_IMAGE_SIZE);
 		//
 		GC gc = new GC(image);
 		gc.setBackground(getColor(SWT.COLOR_RED));
@@ -255,7 +256,8 @@ public class SWTResourceManager {
 	 *            the corner to place decorator image
 	 * @return the resulting decorated {@link Image}
 	 */
-	public static Image decorateImage(final Image baseImage, final Image decorator, final int corner) {
+	public static Image decorateImage(final Image baseImage,
+			final Image decorator, final int corner) {
 		if (corner <= 0 || corner >= LAST_CORNER_KEY) {
 			throw new IllegalArgumentException("Wrong decorate corner");
 		}
@@ -286,7 +288,8 @@ public class SWTResourceManager {
 			} else if (corner == BOTTOM_LEFT) {
 				gc.drawImage(decorator, 0, bib.height - dib.height);
 			} else if (corner == BOTTOM_RIGHT) {
-				gc.drawImage(decorator, bib.width - dib.width, bib.height - dib.height);
+				gc.drawImage(decorator, bib.width - dib.width, bib.height
+						- dib.height);
 			}
 			gc.dispose();
 			//
@@ -310,7 +313,8 @@ public class SWTResourceManager {
 		for (int i = 0; i < m_decoratedImageMap.length; i++) {
 			Map<Image, Map<Image, Image>> cornerDecoratedImageMap = m_decoratedImageMap[i];
 			if (cornerDecoratedImageMap != null) {
-				for (Map<Image, Image> decoratedMap : cornerDecoratedImageMap.values()) {
+				for (Map<Image, Image> decoratedMap : cornerDecoratedImageMap
+						.values()) {
 					for (Image image : decoratedMap.values()) {
 						image.dispose();
 					}
@@ -367,25 +371,32 @@ public class SWTResourceManager {
 	 * @return {@link Font} The font matching the name, height, style, strikeout
 	 *         and underline
 	 */
-	public static Font getFont(String name, int size, int style, boolean strikeout, boolean underline) {
-		String fontName = name + '|' + size + '|' + style + '|' + strikeout + '|' + underline;
+	public static Font getFont(String name, int size, int style,
+			boolean strikeout, boolean underline) {
+		String fontName = name + '|' + size + '|' + style + '|' + strikeout
+				+ '|' + underline;
 		Font font = m_fontMap.get(fontName);
 		if (font == null) {
 			FontData fontData = new FontData(name, size, style);
 			if (strikeout || underline) {
 				try {
-					Class<?> logFontClass = Class.forName("org.eclipse.swt.internal.win32.LOGFONT"); //$NON-NLS-1$
-					Object logFont = FontData.class.getField("data").get(fontData); //$NON-NLS-1$
+					Class<?> logFontClass = Class
+							.forName("org.eclipse.swt.internal.win32.LOGFONT"); //$NON-NLS-1$
+					Object logFont = FontData.class
+							.getField("data").get(fontData); //$NON-NLS-1$
 					if (logFont != null && logFontClass != null) {
 						if (strikeout) {
-							logFontClass.getField("lfStrikeOut").set(logFont, Byte.valueOf((byte) 1)); //$NON-NLS-1$
+							logFontClass
+									.getField("lfStrikeOut").set(logFont, Byte.valueOf((byte) 1)); //$NON-NLS-1$
 						}
 						if (underline) {
-							logFontClass.getField("lfUnderline").set(logFont, Byte.valueOf((byte) 1)); //$NON-NLS-1$
+							logFontClass
+									.getField("lfUnderline").set(logFont, Byte.valueOf((byte) 1)); //$NON-NLS-1$
 						}
 					}
 				} catch (Throwable e) {
-					System.err.println("Unable to set underline or strikeout" + " (probably on a non-Windows platform). " + e); //$NON-NLS-1$ //$NON-NLS-2$
+					System.err
+							.println("Unable to set underline or strikeout" + " (probably on a non-Windows platform). " + e); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 			font = new Font(Display.getCurrent(), fontData);
@@ -406,7 +417,8 @@ public class SWTResourceManager {
 		if (font == null) {
 			FontData fontDatas[] = baseFont.getFontData();
 			FontData data = fontDatas[0];
-			font = new Font(Display.getCurrent(), data.getName(), data.getHeight(), SWT.BOLD);
+			font = new Font(Display.getCurrent(), data.getName(),
+					data.getHeight(), SWT.BOLD);
 			m_fontToBoldFontMap.put(baseFont, font);
 		}
 		return font;

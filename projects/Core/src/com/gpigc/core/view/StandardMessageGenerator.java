@@ -21,8 +21,10 @@ public class StandardMessageGenerator {
 		print("Core Stopped");
 	}
 
-	public static void enableToSendNotification(String engineName, String systemID) {
-		print("Enable to Send Notification From the " + engineName + " for System " + systemID);
+	public static void enableToSendNotification(String engineName,
+			String systemID) {
+		print("Enable to Send Notification From the " + engineName
+				+ " for System " + systemID);
 	}
 
 	public static void eventGenerated(String engineName, String systemID) {
@@ -42,7 +44,8 @@ public class StandardMessageGenerator {
 	}
 
 	public static void wrongParams(String systemID, String name) {
-		print("System " + systemID + " Does Not Have The Correct Parameters." + name + " Not Analysing.");
+		print("System " + systemID + " Does Not Have The Correct Parameters."
+				+ name + " Not Analysing.");
 	}
 
 	public static void couldNotParse(String exprStr) {
@@ -50,12 +53,14 @@ public class StandardMessageGenerator {
 	}
 
 	public static void sensorValueMissing(String systemID, String sensorID) {
-		print("Sensor Value: " + sensorID + " Missing For System " + systemID + ": Can Not Analyse.");
+		print("Sensor Value: " + sensorID + " Missing For System " + systemID
+				+ ": Can Not Analyse.");
 
 	}
 
 	public static void failedToWrite(String name, String id) {
-		print("Failed to Write to Datastore: " + name + ". Discarding Data From System: " + id);
+		print("Failed to Write to Datastore: " + name
+				+ ". Discarding Data From System: " + id);
 	}
 
 	public static void errorClosingProto() {
@@ -72,7 +77,8 @@ public class StandardMessageGenerator {
 	}
 
 	public static void dataRecieved(Set<String> systems) {
-		print("New Data Recieved from: " + Arrays.deepToString(systems.toArray()));
+		print("New Data Recieved from: "
+				+ Arrays.deepToString(systems.toArray()));
 	}
 
 	public static void couldNotReadConfig() {
@@ -93,6 +99,7 @@ public class StandardMessageGenerator {
 	}
 
 	public static void failedToFindEngines(String absolutePath, String type) {
-		print("Folder " + absolutePath + " does not " + "exist, so no " + type + " engines could be loaded.");
+		print("Folder " + absolutePath + " does not " + "exist, so no " + type
+				+ " engines could be loaded.");
 	}
 }
