@@ -57,6 +57,11 @@ public class CoreShell extends Shell {
 	 */
 	public CoreShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
+		this.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event event) {
+				System.exit(0);
+			}
+		});
 		setSize(750, 450);
 		setMinimumSize(550, 500);
 		InputStream iconInputStream = getClass().getResourceAsStream(
@@ -125,11 +130,11 @@ public class CoreShell extends Shell {
 		Label lblNewLabel = new Label(grpGpigcHumsCore, SWT.WRAP);
 		lblNewLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblNewLabel
-				.setText("\n  Welcome to our HUMS Core. "
-						+ "\n  Select the .config file you wish to use and then hit run. "
-						+ "\n  Press stop when finished."
-						+ "\n  Any messages will be displayed in the console below."
-						+ "\n ");
+		.setText("\n  Welcome to our HUMS Core. "
+				+ "\n  Select the .config file you wish to use and then hit run. "
+				+ "\n  Press stop when finished."
+				+ "\n  Any messages will be displayed in the console below."
+				+ "\n ");
 
 		currentConfigFile = new Label(this, SWT.NONE);
 		currentConfigFile.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER,
@@ -147,9 +152,9 @@ public class CoreShell extends Shell {
 		getConsoleTextView().setLayoutData(consoleData);
 		getConsoleTextView().setEditable(false);
 		consoleTextView.addListener(SWT.Modify, new Listener(){
-		    public void handleEvent(Event e){
-		        consoleTextView.setTopIndex(consoleTextView.getLineCount() - 1);
-		    }
+			public void handleEvent(Event e){
+				consoleTextView.setTopIndex(consoleTextView.getLineCount() - 1);
+			}
 		});
 		new Label(this, SWT.NONE);
 

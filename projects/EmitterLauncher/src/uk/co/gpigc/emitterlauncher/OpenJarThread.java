@@ -1,11 +1,7 @@
 package uk.co.gpigc.emitterlauncher;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.Scanner;
 
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
@@ -34,7 +30,9 @@ public class OpenJarThread extends Thread {
 
 				@Override
 				public void run() {
-					button.setSelection(false);
+					if (!button.isDisposed()) {
+						button.setSelection(false);
+					}
 					EmitterShell.changeIcon(button);
 				}
 			});

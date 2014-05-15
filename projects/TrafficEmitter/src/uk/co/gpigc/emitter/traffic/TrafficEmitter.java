@@ -22,8 +22,10 @@ public class TrafficEmitter {
 			emitter.waitFor();
 		} catch (InterruptedException e) {
 			System.err.println("Traffic Emitter was interrupted.");
+			e.printStackTrace();
 		} catch (ExecutionException e) {
 			System.err.println("The Traffic Emitter threw an exception: " + e.getCause().getMessage());
+			e.printStackTrace();
 		}
 		
 		System.out.println("Traffic Emitter stopped");

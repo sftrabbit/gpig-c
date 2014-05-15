@@ -38,8 +38,10 @@ public class Main {
 
 						@Override
 						public void run() {
-							shell.getConsoleTextView().append(
+							if (!shell.getConsoleTextView().isDisposed()) {
+								shell.getConsoleTextView().append(
 									Character.toString((char) b));
+							}
 						}
 					});
 				}
