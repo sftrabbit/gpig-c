@@ -30,20 +30,17 @@ public class AnalysisController extends Controller {
 				List.class, Core.class);
 	}
 
-	public void analyse(Set<String> systemIDs) {
+	public void analyse(String systemID) {
 		System.out.println("Beginning Analysis");
-		for (String currentSystemID : systemIDs) {
-			for (AnalysisEngine engine : analysisEngines) {
-				// If this engine is registered to this system
-				if (engine.getRegisteredSystem(currentSystemID) != null) {
-					System.out.println("Checking For Event");
-					DataEvent event = engine.analyse(engine
-							.getRegisteredSystem(currentSystemID));
-					if (event != null) {
-						StandardMessageGenerator.eventGenerated(engine.name,
-								currentSystemID);
-						core.generateNotification(event);
-					}
+		for (AnalysisEngine engine : analysisEngines) {
+			// If this engine is registered to this system
+			if (engine.getRegisteredSystem(systemID) != null) {
+				DataEvent event = engine.analyse(engine
+						.getRegisteredSystem(systemID));
+				if (event != null) {
+					StandardMessageGenerator.eventGenerated(engine.name,
+							systemID);
+					core.generateNotification(event);
 				}
 			}
 		}

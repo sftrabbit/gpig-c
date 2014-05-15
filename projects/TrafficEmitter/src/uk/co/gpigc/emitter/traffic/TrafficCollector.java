@@ -35,20 +35,16 @@ public class TrafficCollector implements DataCollector {
 			Thread.sleep(60000);
 		}
 	}
-	
+
 	public TrafficCollector() throws MalformedURLException {
 		url = new URL("http://hatrafficinfo.dft.gov.uk/feeds/datex/England/UnplannedEvent/content.xml");
-		lastEventTime = new Date().getTime();
+		lastEventTime = new Date().getTime()-1000000;
 	}
 
 	@Override
 	public List<SystemData> collect() {
 		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
-		
-		//Dummy 
-		//List<TrafficEvent> trafficEvents = new ArrayList<>();
-		//trafficEvents.add(new TrafficEvent(new Date().getTime(), "Car", "Test", -118.7, 56.7));
-		
+
 		List<TrafficEvent> trafficEvents = this.getNewEvents();
 		if (trafficEvents.size() > 0) {
 			System.out.println("New Incident");
@@ -64,7 +60,7 @@ public class TrafficCollector implements DataCollector {
 				dataList.add(data);
 			}
 		}
-		
+
 		return dataList;
 	}
 
@@ -81,34 +77,37 @@ public class TrafficCollector implements DataCollector {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = builder.parse(url.openStream());
 
-	        NodeList situationRecords = doc.getElementsByTagName("situationRecord");
+			NodeList situationRecords = doc.getElementsByTagName("situationRecord");
 
 			long maxTime = 0;
 
-	        for (int i = 0; i < situationRecords.getLength(); i++) {
-	        	Element item = (Element) situationRecords.item(i);
+			for (int i = 0; i < situationRecords.getLength(); i++) {
 
-	        	String type = item.getAttribute("xsi:type");
+				Element item = (Element) situationRecords.item(i);
 
-	        	DateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-	        	Date dt = dtFormat.parse(getNodeValue(item, "situationRecordCreationTime").replaceAll("\\+0([0-9]){1}\\:00", "+0$100"));
-	        	long time = dt.getTime();
+				String type = item.getAttribute("xsi:type");
+
+				DateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+				Date dt = dtFormat.parse(getNodeValue(item, "situationRecordCreationTime").replaceAll("\\+0([0-9]){1}\\:00", "+0$100"));
+				long time = dt.getTime();
 				if (time > maxTime) {
 					maxTime = time;
 				}
+				if(item.getElementsByTagName("framedPoint").item(0) != null){
+					Element location = (Element) item.getElementsByTagName("framedPoint").item(0);
 
-	        	Element location = (Element) item.getElementsByTagName("framedPoint").item(0);
-	        	Element coords = (Element) location.getElementsByTagName("pointCoordinates").item(0);
-	        	double latitude = Double.parseDouble(getNodeValue(coords, "latitude"));
-	        	double longitude = Double.parseDouble(getNodeValue(coords, "longitude"));
-	        	String description = getNodeValue(location, "value");
+					Element coords = (Element) location.getElementsByTagName("pointCoordinates").item(0);
+					double latitude = Double.parseDouble(getNodeValue(coords, "latitude"));
+					double longitude = Double.parseDouble(getNodeValue(coords, "longitude"));
+					String description = getNodeValue(location, "value");
 
-				if (time > lastEventTime) {
-					TrafficEvent trafficEvent = new TrafficEvent(time, type, description, latitude, longitude);
-					events.add(trafficEvent);
-					System.out.println(time);
+					if (time > lastEventTime) {
+						System.out.println("New Incident");
+						TrafficEvent trafficEvent = new TrafficEvent(time, type, description, latitude, longitude);
+						events.add(trafficEvent);
+					}
 				}
-	        }
+			}
 
 			lastEventTime = maxTime;
 
