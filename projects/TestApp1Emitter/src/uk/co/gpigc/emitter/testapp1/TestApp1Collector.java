@@ -28,11 +28,9 @@ public class TestApp1Collector implements DataCollector {
 
 	@Override
 	public List<SystemData> collect() throws ServerFetchException {
-		double cpuLoad = processMonitor.getCpuLoad();
-		System.out.println(cpuLoad);
 		SystemData.Datum cpuDatum = SystemData.Datum.newBuilder()
 				.setKey("CPU")
-				.setValue(String.valueOf(cpuLoad))
+				.setValue(String.valueOf(processMonitor.getCpuLoad()))
 				.build();
 		SystemData.Datum memoryDatum = SystemData.Datum.newBuilder()
 				.setKey("Mem")

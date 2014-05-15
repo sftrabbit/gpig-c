@@ -106,7 +106,6 @@
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${project.main-class}" />
 				<attribute name="One-Jar-Expand" value="${res.dir},${binlib.dir}" />
-				<attribute name="One-Jar-Expand-Dir" value="." />
 			</manifest>
 			<main>
 				<fileset dir="${bin.classes.dir}" />
