@@ -62,7 +62,7 @@ public class CarSystemActivity extends Activity {
 				data.put(REVS_SENSOR_ID, revsSeek.getProgress() + "");
 				data.put(ENGINE_SENSOR_ID, tempSeek.getProgress() + "");
 				DataPusher pusher = new DataPusher(getApplicationContext(),
-						SYSTEM_ID, data, getIntent().getStringExtra(DataPusher.CORE_IP_KEY));
+						SYSTEM_ID, data, getIntent().getStringExtra(DataPusher.CORE_IP_KEY), false);
 				pusher.execute();
 			}
 		});

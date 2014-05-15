@@ -79,7 +79,7 @@ public class PhoneSystemActivity extends Activity {
 				data.put(BATTERY_ID, batterySeek.getProgress() + "");
 				data.put(DESIRED_ID, desiredSeek.getProgress() + "");
 				DataPusher pusher = new DataPusher(getApplicationContext(),
-						SYSTEM_ID, data,getIntent().getStringExtra(DataPusher.CORE_IP_KEY));
+						SYSTEM_ID, data,getIntent().getStringExtra(DataPusher.CORE_IP_KEY), false);
 				pusher.execute();
 				new DataReciever(PhoneSystemActivity.this).execute();
 			}
