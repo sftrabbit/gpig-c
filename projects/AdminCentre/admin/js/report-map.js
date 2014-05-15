@@ -60,6 +60,22 @@ if (RECORD_TYPE == "Incident") {
             {color: "#e5e3df"}
         ]}
     );
+    // Show and style place names
+    mapOptions.styles.push(
+        {featureType: "administrative", stylers: [
+            {visibility: "on"}
+        ]}
+    );
+    mapOptions.styles.push(
+        {featureType: "administrative", elementType: "labels.text.fill", stylers: [
+            {color: "#543366"}
+        ]}
+    );
+    mapOptions.styles.push(
+        {featureType: "administrative", elementType: "labels.text.stroke", stylers: [
+            {color: "#e5e3df"}
+        ]}
+    );
 }
 var map;
 var mapData = {};
