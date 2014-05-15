@@ -1,7 +1,10 @@
 package com.gpigc.core.notification.engine;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -83,18 +86,18 @@ public class SMSNotificationEngine extends NotificationEngine {
 				setRecentlySent();
 				StandardMessageGenerator.notificationGenerated(name, event
 						.getSystem().getID());
-				/*
-				 * System.out.println("Response Code : " +
-				 * conn.getResponseCode()); InputStream stream; if
-				 * (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				 * stream = conn.getInputStream(); } else { stream =
-				 * conn.getErrorStream(); } BufferedReader in = new
-				 * BufferedReader(new InputStreamReader(stream)); String
-				 * inputLine; StringBuffer response = new StringBuffer(); while
-				 * ((inputLine = in.readLine()) != null) {
-				 * response.append(inputLine); } in.close();
-				 * System.out.println(response.toString());
-				 */
+
+				System.out.println("SMS Send Response Code : " +
+						conn.getResponseCode()); InputStream stream; if
+						(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+							stream = conn.getInputStream(); } else { stream =
+									conn.getErrorStream(); } BufferedReader in = new
+									BufferedReader(new InputStreamReader(stream)); String
+									inputLine; StringBuffer response = new StringBuffer(); while
+										((inputLine = in.readLine()) != null) {
+										response.append(inputLine); } in.close();
+										System.out.println(response.toString());
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -4,7 +4,9 @@ import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.graphics.Image;
@@ -144,6 +146,11 @@ public class CoreShell extends Shell {
 		consoleData.verticalAlignment = SWT.FILL;
 		getConsoleTextView().setLayoutData(consoleData);
 		getConsoleTextView().setEditable(false);
+		consoleTextView.addListener(SWT.Modify, new Listener(){
+		    public void handleEvent(Event e){
+		        consoleTextView.setTopIndex(consoleTextView.getLineCount() - 1);
+		    }
+		});
 		new Label(this, SWT.NONE);
 
 		createContents();
