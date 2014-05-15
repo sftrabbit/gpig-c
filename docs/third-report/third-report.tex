@@ -113,7 +113,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 \section{Glossary}
 \label{sec:glossary}
 
-\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
+\begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
 	\vspace{0.15cm}
@@ -450,7 +450,23 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 
 \subsection{Store}
 \label{sec:store}
-vhvhv
+
+\hl{Need to turn this into actual text worth reading...}
+
+To improve the tailorability of the system allowing for its use across many domains support for multiple datasources was offered. 
+
+Connection pooling was used for all datasources. The process of opening, maintaining and deleting connections is resource intensive and is a performance bottleneck. A connection pool offers far more performant interaction with a datasource by providing a cache of reusable database connections. The HikariCP Java library was used to simplify the implementation of database connection pools. 
+
+H2 is a Java library that implements a simple, self-contained, serverless, transactional SQL database. H2 can be run in embedded or server mode and with a small footprint of $1.5$MB it is optimised for operation in a resource constrained environment.
+
+Postgres instance running on Heroku was useful for.... clients who didn't want to have to manage the DB, more performance than google app engine, lots of other fascinating things
+
+Google app engine was good for....
+
+Security has been consider, traffic between the core and the datastores was encrypted, needed to authenticate to read/write
+
+Configurable (i.e. "tailorability") changing a single config file allowed for a switch of datasource, as mentioned auto recognition of change in config file section ????
+
 
 \subsection{Analyse}
 \label{sec:analyse}
