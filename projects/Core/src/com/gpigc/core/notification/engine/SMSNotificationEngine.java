@@ -52,6 +52,7 @@ public class SMSNotificationEngine extends NotificationEngine {
 				}
 
 				String body = subject + ": " + message;
+
 				// if (body.length() > 160) body = body.substring(0, 160); //
 				// trim entire message to a single text message
 
