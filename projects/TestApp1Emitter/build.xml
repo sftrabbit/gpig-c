@@ -1,11 +1,11 @@
 <project name="GPIG-C Test App 1 Emitter" basedir="." default="rebuild-run">
-    <!-- The main class -->
+	<!-- The main class -->
 	<property name="project.main-class" value="uk.co.gpigc.emitter.testapp1.TestApp1Emitter" />
 	
-    <!-- The other GPIG-C projects that should be built and used as libraries (by directory name) -->
+	<!-- The other GPIG-C projects that should be built and used as libraries (by directory name) -->
 	<property name="project.dependencies" value="Emitter,Proto" />
 	
-    <!-- Libraries from GPIGC-ROOT/lib that are required -->
+	<!-- Libraries from GPIGC-ROOT/lib that are required -->
 	<property name="project.common.libs" value="protobuf.jar,tools.jar,sigar.jar" />
 	
 	<!-- Libraries from GPIGC-ROOT/binlib that are required. -->
