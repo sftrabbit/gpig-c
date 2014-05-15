@@ -72,8 +72,10 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 					// System.err.println("Parsed face: " + faceMatrix.dump());
 					// Actually test to see if face seen is allowed
 					if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
+						System.out.println("Authorised face detected");
 						return generateSuccessEvent(system);
 					} else {
+						System.out.println("No authorised face detected");
 						return generateFailureEvent(system);
 					}
 				}
