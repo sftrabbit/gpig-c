@@ -48,12 +48,14 @@ public class Emitter {
 		}
 	}
 	
-	public void stop() throws IOException {
+	public void stop() throws IOException, InterruptedException, ExecutionException {
 		emitterCallable.stop();
+		this.waitFor();
 	}
 	
 	public void waitFor() throws InterruptedException, ExecutionException {
 		emitterResult.get();
+		executor.shutdown();
 	}
 	
 	public void registerDataCollector(DataCollector collector) {
@@ -66,29 +68,35 @@ public class Emitter {
 
 		@Override
 		public Void call() throws Exception {
-			sender = new DataSender(host, port);
-			
-			running = true;
-			
-			while (running) {
-				for (DataCollector collector : collectors) {
-					List<SystemData> dataList = collector.collect();
-
-					if (dataList != null) {
-						for (SystemData data : dataList) {
-							sender.send(data);
+			try {
+				sender = new DataSender(host, port);
+				
+				running = true;
+				
+				while (running) {
+					for (DataCollector collector : collectors) {
+						List<SystemData> dataList = collector.collect();
+	
+						if (dataList != null) {
+							for (SystemData data : dataList) {
+								sender.send(data);
+							}
 						}
 					}
+					
+					Thread.sleep(collectionInterval);
 				}
-				
-				Thread.sleep(collectionInterval);
+			} catch (Exception exception) {
+				stop();
 			}
 			
 			return null;
 		}
 		
 		public void stop() throws IOException {
-			sender.close();
+			if (sender != null) {
+				sender.close();
+			}
 			running = false;
 		}
 		

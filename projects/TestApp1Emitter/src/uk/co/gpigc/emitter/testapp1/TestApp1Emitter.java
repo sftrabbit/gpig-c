@@ -37,7 +37,7 @@ public class TestApp1Emitter {
 		public void run() {
 			try {
 				emitter.stop();
-			} catch (IOException e) {
+			} catch (IOException | InterruptedException | ExecutionException e) {
 				System.err.println("Could not stop emitter successfully.");
 			}
 		}
