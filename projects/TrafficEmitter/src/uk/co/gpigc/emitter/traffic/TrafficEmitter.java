@@ -16,17 +16,17 @@ public class TrafficEmitter {
 		emitter.registerDataCollector(new TrafficCollector());
 		emitter.start();
 		
-		System.out.println("Emitter started");
+		System.out.println("Traffic Emitter started");
 		
 		try {
 			emitter.waitFor();
 		} catch (InterruptedException e) {
-			System.err.println("Emitter was interrupted.");
+			System.err.println("Traffic Emitter was interrupted.");
 		} catch (ExecutionException e) {
-			System.err.println("The emitter threw an exception: " + e.getCause().getMessage());
+			System.err.println("The Traffic Emitter threw an exception: " + e.getCause().getMessage());
 		}
 		
-		System.out.println("Emitter stopped");
+		System.out.println("Traffic Emitter stopped");
 	}
 	
 	private static class ShutdownHook extends Thread {
@@ -35,7 +35,7 @@ public class TrafficEmitter {
 			try {
 				emitter.stop();
 			} catch (IOException e) {
-				System.err.println("Could not stop emitter successfully.");
+				System.err.println("Could not stop the Traffic Emitter successfully.");
 			}
 		}
 	}
