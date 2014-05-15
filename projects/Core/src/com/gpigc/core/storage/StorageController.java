@@ -28,12 +28,12 @@ public class StorageController extends Controller {
 				List.class);
 	}
 
-	public void push(Map<String, List<EmitterSystemState>> systemStates) {
+	public void push(EmitterSystemState state) {
 		for (SystemDataGateway dataStore : getDatastores()) {
 			for (ClientSystem system : dataStore.getAssociatedSystems()) {
-				if (systemStates.containsKey(system.getID())) {
+				if (state.getSystemID().equals(system.getID())) {
 					try {
-						dataStore.write(systemStates.get(system.getID()));
+						dataStore.write(state);
 					} catch (FailedToWriteToDatastoreException e) {
 						StandardMessageGenerator.failedToWrite(dataStore.name,
 								system.getID());

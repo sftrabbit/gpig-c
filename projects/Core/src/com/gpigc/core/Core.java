@@ -25,7 +25,7 @@ public class Core {
 	private String currentConfigFilePath;
 
 	public Core(String configFilePath) throws IOException,
-			ReflectiveOperationException, InterruptedException {
+	ReflectiveOperationException, InterruptedException {
 		currentConfigFilePath = configFilePath;
 		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController = new StorageController(systemsToMonitor, this);
@@ -49,7 +49,7 @@ public class Core {
 	}
 
 	public void refreshSystems() throws IOException,
-			ReflectiveOperationException {
+	ReflectiveOperationException {
 		System.out.println("Re-registering systems...");
 		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController.refreshSystems(systemsToMonitor);
@@ -57,11 +57,12 @@ public class Core {
 		notificationGenerator.refreshSystems(systemsToMonitor);
 	}
 
-	public void updateDatastore(
-			Map<String, List<EmitterSystemState>> systemStates) {
-		getDatastoreController().push(systemStates);
-		StandardMessageGenerator.dataRecieved(systemStates.keySet());
-		getAnalysisController().analyse(systemStates.keySet());
+	public void updateDatastore(List<EmitterSystemState> systemStates) {
+		StandardMessageGenerator.dataRecieved();
+		for(EmitterSystemState state: systemStates){
+			getDatastoreController().push(state);
+			getAnalysisController().analyse(state.getSystemID());
+		}
 	}
 
 	public void generateNotification(DataEvent event) {
