@@ -20,13 +20,15 @@ public class DataPusher extends AsyncTask<Void, Void, Boolean> {
 	private final Map<String, String> data;
 	private final Context context;
 	private String coreIPAddress;
+	private boolean silent;
 
 	public DataPusher(Context context, String systemID,
-			Map<String, String> data, String coreIPAddress) {
+			Map<String, String> data, String coreIPAddress, boolean silent) {
 		this.context = context;
 		this.systemID = systemID;
 		this.data = data;
 		this.coreIPAddress = coreIPAddress;
+		this.silent = silent;
 	}
 
 	@Override
@@ -51,10 +53,11 @@ public class DataPusher extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	protected void onPostExecute(Boolean done) {
-		if (done)
-			Toast.makeText(context, "Pushed", Toast.LENGTH_LONG).show();
-		else
-			Toast.makeText(context, "An Error Occurred, Check Core IP", Toast.LENGTH_LONG)
+		if (!silent && done) {
+			Toast.makeText(context, "Sent data", Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(context, "An error occurred. Check Core IP?", Toast.LENGTH_SHORT)
 					.show();
+		}
 	}
 }
