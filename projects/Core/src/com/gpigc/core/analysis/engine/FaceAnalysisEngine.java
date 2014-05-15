@@ -3,6 +3,7 @@
  */
 package com.gpigc.core.analysis.engine;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,59 +38,78 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 */
 	private Map<ClientSystem, List<Mat>> systemExampleFacesCache;
 
-	static {
-		try {
-			System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-		} catch (UnsatisfiedLinkError e) {
-			System.err.println("Failed to load OpenCV natives");
-		}
-	}
+	static { loadNativeLibs(); }
 
 	public FaceAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
 		super(registeredSystems, core);
 		systemExampleFacesCache = new HashMap<ClientSystem, List<Mat>>();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.gpigc.core.analysis.AnalysisEngine#analyse(com.gpigc.core.ClientSystem
-	 * )
-	 */
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 		if (areParametersSet(system)) {
-			double threshold = Double.parseDouble(system.getParameters().get(
-					Parameter.FACE_SIMILARITY_THRESHOLD));
-			List<Mat> exampleFaces = getExampleFaces(system);
-			// Get data from sensor
-			List<SensorState> values;
+			double threshold;
 			try {
-				values = getSensorData(system);
-				for (SensorState sensorState : values) {
-					String faceMatrixString = sensorState.getValue();
-					// System.err.println("Face matrix string: " +
-					// faceMatrixString);
-					Mat faceMatrix = parseFace(faceMatrixString);
-					// System.err.println("Parsed face: " + faceMatrix.dump());
-					// Actually test to see if face seen is allowed
-					if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
-						System.out.println("Authorised face detected");
-						return generateSuccessEvent(system);
-					} else {
-						System.out.println("No authorised face detected");
-						return generateFailureEvent(system);
-					}
-				}
-			} catch (FailedToReadFromDatastoreException e) {
-				e.printStackTrace();
-				StandardMessageGenerator.couldNotReadData();
+				threshold = Double.parseDouble(system.getParameters().get(
+						Parameter.FACE_SIMILARITY_THRESHOLD));
+			} catch (NumberFormatException e) {
+				System.out.println("System \""+system.getID()+"\" does not have "
+						+ "a valid threshold");
+				System.err.println("System \""+system.getID()+"\" does not have "
+						+ "a valid threshold: "+system.getParameters().get(
+						Parameter.FACE_SIMILARITY_THRESHOLD));
+				return null;
 			}
+			List<Mat> exampleFaces;
+			try {
+				exampleFaces = getExampleFaces(system);
+			} catch (ParseException e) {
+				System.out.println("System \""+system.getID()+"\" does not have "
+						+ "exactly one sensor or the sensor is invalid because it "
+						+ "is not providing face data.");
+				System.err.println("System \""+system.getID()+"\" does not have "
+						+ "exactly one sensor or the sensor is invalid because it "
+						+ "is not providing face data: "+system.getParameters().get(
+								Parameter.EXAMPLE_FACES));
+				return null;
+			}
+			// Get data from sensor
+			generateAppropriateEvent(system, threshold, exampleFaces);
 		} else {
 			StandardMessageGenerator.wrongParams(system.getID(), name);
 		}
 		return null; // No event
+	}
+
+	private DataEvent generateAppropriateEvent(ClientSystem system,
+			double threshold, List<Mat> exampleFaces) {
+		List<SensorState> values;
+		try {
+			values = getSensorData(system);
+			for (SensorState sensorState : values) {
+				String faceMatrixString = sensorState.getValue();
+				// System.err.println("Face matrix string: " +
+				// faceMatrixString);
+				Mat faceMatrix = parseFace(faceMatrixString);
+				// System.err.println("Parsed face: " + faceMatrix.dump());
+				// Actually test to see if face seen is allowed
+				if (isAuthorisedFace(faceMatrix, exampleFaces, threshold)) {
+					System.out.println("Authorised face detected");
+					return generateSuccessEvent(system);
+				} else {
+					System.out.println("No authorised face detected");
+					return generateFailureEvent(system);
+				}
+			}
+		} catch (FailedToReadFromDatastoreException e) {
+			e.printStackTrace();
+			StandardMessageGenerator.couldNotReadData();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("Failed to parse example faces. Error at "
+					+ "character "+e.getErrorOffset());
+		}
+		return null;
 	}
 
 	/**
@@ -104,8 +124,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	/**
 	 * @return The example faces for the given system, using the cache where
 	 *         possible
+	 * @throws ParseException 
 	 */
-	private List<Mat> getExampleFaces(ClientSystem system) {
+	private List<Mat> getExampleFaces(ClientSystem system) throws ParseException {
 		List<Mat> exampleFaces;
 		if (systemExampleFacesCache.keySet().contains(system)) {
 			exampleFaces = systemExampleFacesCache.get(system);
@@ -125,8 +146,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @param facesMatrixStr
 	 *            String encoding the example faces
 	 * @return The faces as matrices
+	 * @throws ParseException 
 	 */
-	public static List<Mat> parseFaces(String facesMatrixStr) {
+	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
 		String[] faceStrings = facesMatrixStr.split("\n");
 		List<Mat> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
@@ -141,14 +163,23 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @param faceMatrixStr
 	 *            String encoding a face
 	 * @return The face as a matrix
+	 * @throws ParseException 
 	 */
-	public static Mat parseFace(String faceMatrixStr) {
+	public static Mat parseFace(String faceMatrixStr) throws ParseException {
+		String SPLIT_ON = ",";
 		// Parse face matrix
-		String[] elements = faceMatrixStr.split(",");
+		String[] elements = faceMatrixStr.split(SPLIT_ON);
+		int offset = 0;
 		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32FC1);
 		for (int i = 0; i < elements.length; i++) {
-			double elementValue = Double.parseDouble(elements[i]);
+			double elementValue;
+			try {
+				elementValue = Double.parseDouble(elements[i]);
+			} catch (NumberFormatException e) {
+				throw new ParseException(faceMatrixStr, offset);
+			}
 			faceMatrix.put(0, i, elementValue);
+			offset += elements[i].length()+SPLIT_ON.length();
 		}
 		return faceMatrix;
 	}
@@ -166,7 +197,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 */
 	public static boolean isAuthorisedFace(Mat testFace,
 			List<Mat> exampleFaces, double threshold) {
-		System.err.println("Checking face authorisation at "+threshold+
+		System.err.println("Checking face authorisation at the "+threshold+
 				" threshold");
 		/*
 		 * Check to see if close enough to an allowable example face using
@@ -188,8 +219,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		Map<Parameter, String> data = new HashMap<>();
 		data.put(Parameter.MESSAGE,
 				"Face recognitition in system " + system.getID()
-						+ " detected an authorised person and is "
-						+ "allowing them access.");
+				+ " detected an authorised person and is "
+				+ "allowing them access.");
 		data.put(Parameter.SUBJECT, this.name + " Notification");
 		data.put(Parameter.RECIPIENT,
 				system.getParameters().get(Parameter.RECIPIENT));
@@ -200,8 +231,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		Map<Parameter, String> data = new HashMap<>();
 		data.put(Parameter.MESSAGE,
 				"Face recognitition in system " + system.getID()
-						+ " detected an unauthorised person and is "
-						+ "denying them access.");
+				+ " detected an unauthorised person and is "
+				+ "denying them access.");
 		data.put(Parameter.SUBJECT, this.name + " Notification");
 		data.put(Parameter.RECIPIENT,
 				system.getParameters().get(Parameter.RECIPIENT));
@@ -223,6 +254,14 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			}
 		}
 		return values;
+	}
+	
+	private static void loadNativeLibs() {
+		try {
+			System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+		} catch (UnsatisfiedLinkError e) {
+			System.err.println("Failed to load OpenCV natives");
+		}
 	}
 
 }
