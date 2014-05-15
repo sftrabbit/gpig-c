@@ -23,7 +23,7 @@ public class TwitterNotificationEngineTest {
 	public void before() {
 		testSystems = new ArrayList<>();
 		testSystems.add(new ClientSystem("Test", new ArrayList<ClientSensor>(),
-				new ArrayList<String>(),"", new HashMap<Parameter, String>()));
+				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
 		engine = new TwitterNotificationEngine(testSystems, 5000);
 	}
 
@@ -32,8 +32,8 @@ public class TwitterNotificationEngineTest {
 	 */
 	@Test
 	public void testSendAndRepeat() {
-		Map<String, String> testData = new HashMap<>();
-		testData.put("Message", "Test Message: " + System.currentTimeMillis());
+		Map<Parameter, String> testData = new HashMap<>();
+		testData.put(Parameter.MESSAGE, "Test Message: " + System.currentTimeMillis());
 		DataEvent testEvent = new DataEvent(testData, testSystems.get(0));
 		assertTrue(engine.send(testEvent));
 		assertFalse(engine.send(testEvent)); // cooldown

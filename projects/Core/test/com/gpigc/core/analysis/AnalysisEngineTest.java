@@ -25,7 +25,8 @@ public class AnalysisEngineTest {
 	private List<ClientSystem> registeredSystems;
 
 	@Before
-	public void before() throws URISyntaxException, IOException, ReflectiveOperationException, InterruptedException {
+	public void before() throws URISyntaxException, IOException,
+			ReflectiveOperationException, InterruptedException {
 		// Set up dummy system
 		registeredSystems = new ArrayList<>();
 
@@ -39,7 +40,8 @@ public class AnalysisEngineTest {
 		registeredSystems.add(new ClientSystem("TestSystem", sensors,
 				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
 
-		analysisEngine = new AnalysisEngine(registeredSystems, new Core("config/RegisteredSystems.config")) {
+		analysisEngine = new AnalysisEngine(registeredSystems, new Core(
+				"config/RegisteredSystems.config")) {
 			@Override
 			public DataEvent analyse(ClientSystem system) {
 				return null;

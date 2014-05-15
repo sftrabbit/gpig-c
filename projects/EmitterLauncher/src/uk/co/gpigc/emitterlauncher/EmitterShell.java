@@ -5,8 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -27,17 +31,11 @@ public class EmitterShell extends Shell {
 	private static final String STOP_BUTTON_PATH = "res/images/control_stop_blue.png";
 	private static final String PLAY_BUTTON_PATH = "res/images/control_play_blue.png";
 
-	//private static final String TEST_APP_1_PATH = "../TestApp1Emitter/bin/TestApp1Emitter.jar";
 	private static final String TEST_APP_1_PATH = "res/TestApp1Emitter.jar";
-
-	//private static final String TEST_APP_2_PATH = "../TestApp2Emitter/bin/TestApp2Emitter.jar";
 	private static final String TEST_APP_2_PATH = "res/TestApp2Emitter.jar";
-
-	//private static final String EARTH_APP_PATH = "../EarthEmitter/bin/EarthEmitter.jar";
 	private static final String EARTH_APP_PATH = "res/EarthMonitor.jar";
-
-	//private static final String SERVER_APP_PATH = "../ServerEmitter/bin/ServerEmitter.jar";
-	private static final String SERVER_APP_PATH = "res/ServerEmitter.jar";
+	private static final String SERVER_APP_PATH = "res/ServerMonitor.jar";
+	protected static final String TRAFFIC_APP_PATH = "res/TrafficMonitor.jar";
 
 
 	private Button serverButton;
@@ -51,12 +49,15 @@ public class EmitterShell extends Shell {
 	private TabFolder tabFolder;
 	private TabItem console1Tab;
 	private TabItem console2Tab;
-	private StyledText textApp2;
-	private StyledText textApp1;
+	private Text textApp2;
+	private Text textApp1;
 	private TabItem console3Tab;
-	private StyledText textApp3;
+	private Text textApp3;
 	private TabItem console4Tab;
-	private StyledText textApp4;
+	private Text textApp4;
+	private TabItem console5Tab;
+	private Text textApp5;
+	private Button trafficButton;
 
 	/**
 	 * Launch the application.
@@ -91,32 +92,48 @@ public class EmitterShell extends Shell {
 		tabFolder.setLayoutData(data);
 
 		console1Tab = new TabItem(tabFolder, SWT.NONE);
-		console1Tab.setText("Console 1 ");
+		console1Tab.setText("App 1 Console ");
 
-		textApp1 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp1 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp1.setEditable(false);
 		console1Tab.setControl(textApp1);
+		textApp1.addListener(SWT.Modify, new CaretListener(textApp1));
 
 		console2Tab = new TabItem(tabFolder, SWT.NONE);
-		console2Tab.setText("Console 2");
+		console2Tab.setText("App 2 Console");
 
-		textApp2 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp2 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp2.setEditable(false);
 		console2Tab.setControl(textApp2);
-		
+		textApp2.addListener(SWT.Modify, new CaretListener(textApp2));
+
+
 		console3Tab = new TabItem(tabFolder, 0);
-		console3Tab.setText("Console 3");
-		
-		textApp3 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		console3Tab.setText("Earth Console");
+
+		textApp3 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp3.setEditable(false);
 		console3Tab.setControl(textApp3);
+		textApp3.addListener(SWT.Modify, new CaretListener(textApp3));
+
 		
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
-		console4Tab.setText("Console 4");
-		
-		textApp4 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		console4Tab.setText("ResponseConsole");
+
+		textApp4 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp4.setEditable(false);
 		console4Tab.setControl(textApp4);
+		textApp4.addListener(SWT.Modify, new CaretListener(textApp4));
+
+
+		console5Tab = new TabItem(tabFolder, SWT.NONE);
+		console5Tab.setText("TrafficConsole");
+
+		textApp5 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp5.setEditable(false);
+		console5Tab.setControl(textApp5);
+		textApp5.addListener(SWT.Modify, new CaretListener(textApp5));
+
 	}
 
 	private void graphicsSetup(Display display) {
@@ -143,8 +160,6 @@ public class EmitterShell extends Shell {
 		testApp1Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				//String appPath = getClass().getResource(TEST_APP_1_PATH).toExternalForm();
-				//System.out.println("This is Rosy's appPath: " + appPath);
 				buttonSelect(TEST_APP_1_PATH, testApp1Button,textApp1);
 			}
 		});
@@ -190,12 +205,26 @@ public class EmitterShell extends Shell {
 				buttonSelect(SERVER_APP_PATH, serverButton, textApp4);
 			}
 		});
+
+		trafficButton = new Button(composite, SWT.TOGGLE);
+		GridData trafficData = new GridData(SWT.LEFT, SWT.CENTER, true, true, 2, 1);
+		trafficData.horizontalAlignment = SWT.FILL;
+		trafficData.verticalAlignment = SWT.FILL;
+		trafficButton.setLayoutData(trafficData);
+		trafficButton.setImage(playIcon);
+		trafficButton.setText("5) Traffic Monitor");
+		trafficButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				buttonSelect(TRAFFIC_APP_PATH, trafficButton, textApp5);
+			}
+		});
 	}
 
-	protected void buttonSelect(final String jarPath, Button button, StyledText console) {
+	protected void buttonSelect(final String jarPath, Button button, Text text) {
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
-			threadMap.put(jarPath, new OpenJarThread(jarPath, button,console));
+			threadMap.put(jarPath, new OpenJarThread(jarPath, button,text));
 			threadMap.get(jarPath).start();
 		} else {
 			button.setImage(playIcon);
@@ -247,7 +276,7 @@ public class EmitterShell extends Shell {
 
 	private void shellSetup(Display display) {
 		setImage(shellIcon);
-		setSize(400, 300);
+		setSize(692, 504);
 		setMinimumSize(400, 200);
 		setText("GPIG-C: Launcher");
 	}
@@ -255,6 +284,19 @@ public class EmitterShell extends Shell {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+	
+	
+	private class CaretListener implements Listener{
+		private Text widg;
+
+		public CaretListener(Text widg){
+			this.widg = widg;
+		}
+		
+	    public void handleEvent(Event e){
+	        widg.setTopIndex(widg.getLineCount() - 1);
+	    }
 	}
 
 }

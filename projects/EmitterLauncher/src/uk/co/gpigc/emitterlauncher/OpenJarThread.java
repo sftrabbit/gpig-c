@@ -1,29 +1,33 @@
 package uk.co.gpigc.emitterlauncher;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
 
 public class OpenJarThread extends Thread {
 
 	private Process proc;
 	private String jarPath;
 	private Button button;
-	private StyledText console;
+	private Text console;
 
-	public OpenJarThread(String jarPath, Button button, StyledText console) {
+	public OpenJarThread(String jarPath, Button button, Text text) {
 		this.jarPath = jarPath;
 		this.button = button;
-		this.console = console;
+		this.console = text;
 	}
 
 	@Override
 	public void run() {
 		try {
 			proc = Runtime.getRuntime().exec("java -jar "+jarPath);
-			redirectOutput();
+			redirectOutput(proc);
 			proc.waitFor();
 			stopRunning();
 			Display.getDefault().asyncExec(new Runnable() {
@@ -41,17 +45,27 @@ public class OpenJarThread extends Thread {
 	}
 
 
-	private void redirectOutput() {
-		final Scanner s = new Scanner(proc.getInputStream());
-		Display.getDefault().asyncExec(new Runnable() {
+	private void redirectOutput(final Process proc) {
+		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				if(s.hasNextLine()){
-					console.append(s.nextLine());
-					console.append("\n");
+				final Scanner s = new Scanner(proc.getInputStream());
+				while(s.hasNextLine()){
+					writeLine(s.nextLine());
 				}
 			}
+		}).start();
+	}
+
+	protected void writeLine(final String nextLine) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+					console.append(nextLine);
+					console.append("\n");
+			}
+
 		});
 	}
 

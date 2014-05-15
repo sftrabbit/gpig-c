@@ -163,7 +163,8 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 		DataPusher pusher = new DataPusher(getApplicationContext(),
 				SYSTEM_ID, 
 				data, 
-				getIntent().getStringExtra(DataPusher.CORE_IP_KEY));
+				getIntent().getStringExtra(DataPusher.CORE_IP_KEY),
+				false);
 		pusher.execute();
 	}
 

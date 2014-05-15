@@ -16,7 +16,7 @@ import com.gpigc.core.event.DataEvent;
 
 public class DataEventTest {
 
-	private Map<String, String> testData;
+	private Map<Parameter, String> testData;
 	private ClientSystem testSystem;
 
 	@Before
@@ -24,8 +24,8 @@ public class DataEventTest {
 		testSystem = new ClientSystem("TestSystem",
 				new ArrayList<ClientSensor>(), new ArrayList<String>(), "",
 				new HashMap<Parameter, String>());
-		testData = new HashMap<String, String>();
-		testData.put("Test", "Value");
+		testData = new HashMap<Parameter, String>();
+		testData.put(Parameter.MESSAGE, "Value");
 	}
 
 	@Test

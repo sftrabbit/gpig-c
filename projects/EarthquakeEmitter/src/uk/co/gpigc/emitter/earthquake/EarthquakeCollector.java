@@ -36,11 +36,12 @@ public class EarthquakeCollector implements DataCollector {
 		List<Earthquake> earthquakes = this.getNewEarthquakes();
 		if (earthquakes.size() > 0) {
 			for (Earthquake earthquake : earthquakes) {
+				System.out.println("New Earthquake");
 				SystemData.Datum earthquakeDatum = SystemData.Datum.newBuilder()
 						.setKey("EQ")
 						.setValue(earthquake.toCsv())
 						.build();
-				SystemData data = SystemData.newBuilder().setSystemId("2")
+				SystemData data = SystemData.newBuilder().setSystemId("EarthquakeMonitor")
 						.setTimestamp(earthquake.getTime())
 						.addDatum(earthquakeDatum)
 						.build();
@@ -106,7 +107,6 @@ public class EarthquakeCollector implements DataCollector {
 					Earthquake earthquake = new Earthquake(time, mag, latitude,
 							longitude);
 					earthquakes.add(earthquake);
-					System.out.println(time);
 				}
 			}
 			lastEarthquakeTime = maxTime;

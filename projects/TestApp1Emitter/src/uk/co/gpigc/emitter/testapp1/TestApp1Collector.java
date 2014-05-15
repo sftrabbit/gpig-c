@@ -38,7 +38,7 @@ public class TestApp1Collector implements DataCollector {
 				.setKey("Mem")
 				.setValue(String.valueOf(jvmMonitor.getUsedMemory()))
 				.build();
-		SystemData data = SystemData.newBuilder().setSystemId("1")
+		SystemData data = SystemData.newBuilder().setSystemId("TestAppOneMonitor")
 				.setTimestamp(new Date().getTime()).addDatum(cpuDatum)
 				.addDatum(memoryDatum).build();
 		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
