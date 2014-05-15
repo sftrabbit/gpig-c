@@ -13,17 +13,18 @@ import java.util.List;
 import java.util.Map;
 
 import com.gpigc.core.ClientSystem;
-import com.gpigc.core.storage.ConnectionPool;
 import com.gpigc.core.storage.SystemDataGateway;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
 import com.gpigc.dataabstractionlayer.client.SensorState;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class HerokuSystemDataGateway extends SystemDataGateway {
 
-	private ConnectionPool connectionPool;
+	private HikariDataSource connectionPool;
 
 	private String writerEmitterSystemState = "INSERT INTO EMITTER_SYSTEM_STATE (SYSTEM_ID, TIMESTAMP) values(?, ?)";
 	private String writeSensorReading 		= "INSERT INTO SENSOR_READINGS(emitter_system, sensor_id, value, database_timestamp) values(?, ?, ?, ?)";
@@ -36,19 +37,20 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 	}
 
 	private void setupConnectionPool() {
-		connectionPool = new ConnectionPool.Builder()
-											.maximumPoolSize(10)
-											.minimumPoolSize(2)
-											.dataSourceClassName("org.postgresql.ds.PGSimpleDataSource")
-											.connectionTimeOut(10000)
-											.portNumber(5432)
-											.serverName("ec2-54-83-33-14.compute-1.amazonaws.com")
-											.user("ndfwppvphsxqga")
-											.password("S0VUQ7F5bMDDgYWIqdCx0k0Rfk")
-											.databaseName("d2quf14o1p42pp")
-											.ssl(true)
-											.sslFactory("org.postgresql.ssl.NonValidatingFactory")
-											.build();
+		HikariConfig config = new HikariConfig();
+		config.setMaximumPoolSize(10);
+		config.setMinimumIdle(2);
+		config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
+		config.setConnectionTimeout(10000);
+		config.addDataSourceProperty("portNumber", 5432);
+		config.addDataSourceProperty("serverName", "ec2-54-83-33-14.compute-1.amazonaws.com");
+		config.addDataSourceProperty("user", "ndfwppvphsxqga");
+		config.addDataSourceProperty("password", "S0VUQ7F5bMDDgYWIqdCx0k0Rfk");
+		config.addDataSourceProperty("databaseName", "d2quf14o1p42pp");
+		config.addDataSourceProperty("ssl", "true");
+		config.addDataSourceProperty("sslfactory", "org.postgresql.ssl.NonValidatingFactory");
+
+		connectionPool = new HikariDataSource(config);
 	}
 
 	public QueryResult readMostRecent(String systemID, String sensorID, int numRecords) throws FailedToReadFromDatastoreException {
