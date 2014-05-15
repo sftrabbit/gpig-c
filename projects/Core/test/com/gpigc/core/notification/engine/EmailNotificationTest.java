@@ -43,10 +43,10 @@ public class EmailNotificationTest {
 	}
 
 	private boolean sendAnEmail() {
-		Map<String, String> data = new HashMap<String, String>();
-		data.put("Message", "Test message");
-		data.put("Subject", "Test email");
-		data.put("Recipient", "gpigc.alerts@gmail.com");
+		Map<Parameter, String> data = new HashMap<Parameter, String>();
+		data.put(Parameter.MESSAGE, "Test message");
+		data.put(Parameter.SUBJECT, "Test email");
+		data.put(Parameter.RECIPIENT, "gpigc.alerts@gmail.com");
 		DataEvent event = new DataEvent(data, new ClientSystem("TestSystem",
 				new ArrayList<ClientSensor>(), new ArrayList<String>(), "",
 				new HashMap<Parameter, String>()));

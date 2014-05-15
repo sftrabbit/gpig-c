@@ -14,7 +14,9 @@ foreach ($systems as $system) {
 }
 
 $availableDatastores = array(
-    "GWTSystemDataGateway"
+    "GWTSystemDataGateway",
+    "HerokuSystemDataGateway",
+    "H2SystemDataGateway"
 );
 $availableAnalysis = array(
     "BoundedAnalysisEngine",
@@ -211,7 +213,7 @@ $availableNotification = array(
                         <div class="panel-heading">
                             <h3 class="panel-title">Memory Graph</h3>
                             <script type="text/javascript">
-                                var ENDPOINT = "http://gpigc-webapp.appspot.com/gpigc-webapp";
+                                var ENDPOINT = "http://gpigc-beta.appspot.com/gpigc-webapp";
                                 var REFRESH_SECONDS = 10;
                                 var MAX_POINTS = 50;
                                 var RECORD_TYPE = "<?php echo $currentSystem["Sensors"][1]["SensorID"]; ?>";
@@ -239,7 +241,7 @@ $availableNotification = array(
                         <div class="panel-body">
                             <div id="map"></div>
                             <script type="text/javascript">
-                                var ENDPOINT = "http://gpigc-webapp.appspot.com/gpigc-webapp";
+                                var ENDPOINT = "http://gpigc-beta.appspot.com/gpigc-webapp";
                                 var REFRESH_SECONDS = 120;
                                 var MAX_POINTS = 50;
                                 var RECORD_TYPE = "<?php echo $currentSystem["Sensors"][0]["SensorID"]; ?>";
