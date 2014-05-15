@@ -27,26 +27,23 @@ public class TrafficAnalysisEngine extends AnalysisEngine {
 	public DataEvent analyse(ClientSystem system) {
 		if (system.hasSensorWithID(TRAFFIC_SENSOR_ID)
 				&& system.getParameters().containsKey(Parameter.RECIPIENT)) {
-			System.out.println("Analysing for event");
 			Map<Parameter, String> data = new HashMap<>();
 			// Get the Data
 			try {
 				SensorState sensorState = getSensorReadings(system,
 						TRAFFIC_SENSOR_ID, NUM_RECORDS).get(0);
 
+				String message = sensorState.getValue().split(",")[0];
 				data.put(Parameter.RECIPIENT,
 						system.getParameters().get(Parameter.RECIPIENT));
 				data.put(Parameter.SUBJECT, "GPIG-C: Traffic Monitor");
-				data.put(Parameter.MESSAGE, "An Accident Has Occured: \n"
-						+ sensorState.getValue());
-
+				data.put(Parameter.MESSAGE, message);
 				return new DataEvent(data, system);
 			} catch (FailedToReadFromDatastoreException e) {
 				e.printStackTrace();
 				StandardMessageGenerator.couldNotReadData();
 			}
 		}
-		System.out.println("No event generated");
 		return null;
 	}
 

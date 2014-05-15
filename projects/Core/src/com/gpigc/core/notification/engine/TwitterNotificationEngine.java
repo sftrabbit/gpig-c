@@ -41,7 +41,7 @@ public class TwitterNotificationEngine extends NotificationEngine {
 
 			// Instantiate and initialize a new twitter status update
 			StatusUpdate statusUpdate = new StatusUpdate(event.getData().get(
-					"Message"));
+					Parameter.MESSAGE));
 			if (event.getData().containsKey(Parameter.LONG)
 					&& event.getData().containsKey(Parameter.LAT)) {
 				statusUpdate
