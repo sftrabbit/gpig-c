@@ -88,35 +88,35 @@ public class EmitterShell extends Shell {
 		tabFolder.setLayoutData(data);
 
 		console1Tab = new TabItem(tabFolder, SWT.NONE);
-		console1Tab.setText("Console 1 ");
+		console1Tab.setText("App 1 Console ");
 
 		textApp1 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp1.setEditable(false);
 		console1Tab.setControl(textApp1);
 
 		console2Tab = new TabItem(tabFolder, SWT.NONE);
-		console2Tab.setText("Console 2");
+		console2Tab.setText("App 2 Console");
 
 		textApp2 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp2.setEditable(false);
 		console2Tab.setControl(textApp2);
 
 		console3Tab = new TabItem(tabFolder, 0);
-		console3Tab.setText("Console 3");
+		console3Tab.setText("Earth Console");
 
 		textApp3 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp3.setEditable(false);
 		console3Tab.setControl(textApp3);
 
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
-		console4Tab.setText("Console 4");
+		console4Tab.setText("ResponseConsole");
 
 		textApp4 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp4.setEditable(false);
 		console4Tab.setControl(textApp4);
 
 		console5Tab = new TabItem(tabFolder, SWT.NONE);
-		console5Tab.setText("Console 5");
+		console5Tab.setText("TrafficConsole");
 
 		textApp5 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp5.setEditable(false);
@@ -263,7 +263,7 @@ public class EmitterShell extends Shell {
 
 	private void shellSetup(Display display) {
 		setImage(shellIcon);
-		setSize(692, 411);
+		setSize(692, 504);
 		setMinimumSize(400, 200);
 		setText("GPIG-C: Launcher");
 	}
