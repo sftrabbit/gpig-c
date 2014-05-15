@@ -17,21 +17,20 @@ public class StorageController extends Controller {
 
 	private List<SystemDataGateway> datastores;
 
-
-	public StorageController( List<ClientSystem> systems, Core core) {
-		super(ControllerType.storage,core);
+	public StorageController(List<ClientSystem> systems, Core core) {
+		super(ControllerType.storage, core);
 		refreshSystems(systems);
 	}
 
 	@SuppressWarnings("unchecked")
-	public void refreshSystems(List<ClientSystem> systems){
-		datastores = (List<SystemDataGateway>)instantiateEngines(systems, List.class);
+	public void refreshSystems(List<ClientSystem> systems) {
+		datastores = (List<SystemDataGateway>) instantiateEngines(systems, List.class);
 	}
 
 	public void push(Map<String, List<EmitterSystemState>> systemStates) {
 		for (SystemDataGateway dataStore : getDatastores()) {
-			for(ClientSystem system: dataStore.getAssociatedSystems()){
-				if(systemStates.containsKey(system.getID())){
+			for (ClientSystem system : dataStore.getAssociatedSystems()) {
+				if (systemStates.containsKey(system.getID())) {
 					try {
 						dataStore.write(systemStates.get(system.getID()));
 					} catch (FailedToWriteToDatastoreException e) {
@@ -43,10 +42,9 @@ public class StorageController extends Controller {
 		}
 	}
 
-	public QueryResult readMostRecent(ClientSystem system, String sensorID,
-			int numberToGet) throws FailedToReadFromDatastoreException {
+	public QueryResult readMostRecent(ClientSystem system, String sensorID, int numberToGet) throws FailedToReadFromDatastoreException {
 		for (SystemDataGateway dataStore : getDatastores()) {
-			if(dataStore.name.equals(system.getSystemDataGatewayName()))
+			if (dataStore.name.equals(system.getSystemDataGatewayName()))
 				return dataStore.readMostRecent(system.getID(), sensorID, numberToGet);
 		}
 		return null;
@@ -54,8 +52,8 @@ public class StorageController extends Controller {
 
 	protected List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
-		for(ClientSystem system : allSystems){
-			if(system.getSystemDataGatewayName().equals(name))
+		for (ClientSystem system : allSystems) {
+			if (system.getSystemDataGatewayName().equals(name))
 				registeredSystems.add(system);
 		}
 		return registeredSystems;
@@ -64,6 +62,5 @@ public class StorageController extends Controller {
 	public List<SystemDataGateway> getDatastores() {
 		return datastores;
 	}
-
 
 }

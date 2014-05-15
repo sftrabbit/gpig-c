@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +15,6 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
-import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -26,10 +23,10 @@ public class H2SystemDataGateway extends SystemDataGateway {
 	private HikariDataSource connectionPool;
 
 	private String writerEmitterSystemState = "INSERT INTO EMITTER_SYSTEM_STATE (SYSTEM_ID, TIMESTAMP) values(?, ?)";
-	private String writeSensorReading 		= "INSERT INTO SENSOR_READINGS(emitter_system, sensor_id, value, database_timestamp) values(?, ?, ?, ?)";
-	private String readMostRecentStatement 	= "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND sensor_id = ? ORDER BY database_timestamp desc LIMIT ?;";
-	private String readBetween 				= "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND timestamp >= ? AND timestamp <= ? AND sensor_id = ?;";
-	
+	private String writeSensorReading = "INSERT INTO SENSOR_READINGS(emitter_system, sensor_id, value, database_timestamp) values(?, ?, ?, ?)";
+	private String readMostRecentStatement = "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND sensor_id = ? ORDER BY database_timestamp desc LIMIT ?;";
+	private String readBetween = "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND timestamp >= ? AND timestamp <= ? AND sensor_id = ?;";
+
 	public H2SystemDataGateway(List<ClientSystem> registeredSystems) {
 		super(registeredSystems);
 		setupConnectionPool();
@@ -59,25 +56,30 @@ public class H2SystemDataGateway extends SystemDataGateway {
 			statement.execute("DROP TABLE IF EXISTS SENSOR_READINGS CASCADE");
 			statement.execute("DROP TABLE IF EXISTS EMITTER_SYSTEM_STATE CASCADE");
 			statement.execute("CREATE TABLE EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK identity PRIMARY KEY, SYSTEM_ID varchar(255), TIMESTAMP timestamp);");
-			statement.execute("CREATE TABLE SENSOR_READINGS (EMITTER_SYSTEM bigint references EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK), SENSOR_ID varchar(255), VALUE varchar(255), CREATION_TIMESTAMP timestamp, DATABASE_TIMESTAMP timestamp);");
+			statement
+					.execute("CREATE TABLE SENSOR_READINGS (EMITTER_SYSTEM bigint references EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK), SENSOR_ID varchar(255), VALUE varchar(255), CREATION_TIMESTAMP timestamp, DATABASE_TIMESTAMP timestamp);");
 			statement.execute("CREATE INDEX emitter_system_idx ON EMITTER_SYSTEM_STATE(EMITTER_SYSTEM_PK, timestamp);");
 			statement.execute("CREATE INDEX sensor_reading_idx ON SENSOR_READINGS(EMITTER_SYSTEM);");
 		} catch (SQLException e) {
 			throw new FailedToWriteToDatastoreException(e.toString());
 		} finally {
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToWriteToDatastoreException(e.toString());	
+				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (statement != null) {statement.close();}
+				if (statement != null) {
+					statement.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToWriteToDatastoreException(e.toString());	
+				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 		}
 	}
-	
+
 	public QueryResult readMostRecent(String systemID, String sensorID, int numRecords) throws FailedToReadFromDatastoreException {
 		Connection connection = null;
 		PreparedStatement readMostRecent = null;
@@ -98,21 +100,27 @@ public class H2SystemDataGateway extends SystemDataGateway {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (readMostRecent != null) {readMostRecent.close();}
+				if (readMostRecent != null) {
+					readMostRecent.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToReadFromDatastoreException(e.toString());	
+				throw new FailedToReadFromDatastoreException(e.toString());
 			}
 		}
 		return result;
@@ -138,21 +146,27 @@ public class H2SystemDataGateway extends SystemDataGateway {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (readBetweenQuery != null) {readBetweenQuery.close();}
+				if (readBetweenQuery != null) {
+					readBetweenQuery.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToReadFromDatastoreException(e.toString());	
+				throw new FailedToReadFromDatastoreException(e.toString());
 			}
 		}
 		return result;
@@ -191,24 +205,32 @@ public class H2SystemDataGateway extends SystemDataGateway {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (emitterInsert != null) {emitterInsert.close();}
+				if (emitterInsert != null) {
+					emitterInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (sensorReadingsInsert != null) {sensorReadingsInsert.close();}
+				if (sensorReadingsInsert != null) {
+					sensorReadingsInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToWriteToDatastoreException(e.toString());	
+				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 		}
 	}
@@ -229,11 +251,11 @@ public class H2SystemDataGateway extends SystemDataGateway {
 				emitterInsert.execute();
 				emitterInsert.clearParameters();
 				resultSet = emitterInsert.getGeneratedKeys();
-				
+
 				while (resultSet.next()) {
 					primaryKey = resultSet.getInt(1);
 				}
-				
+
 				for (Map.Entry<String, String> sensorReading : systemState.getSensorReadings().entrySet()) {
 					sensorReadingsInsert.setLong(1, primaryKey);
 					sensorReadingsInsert.setString(2, sensorReading.getKey());
@@ -241,46 +263,40 @@ public class H2SystemDataGateway extends SystemDataGateway {
 					sensorReadingsInsert.setTimestamp(4, toSQLTimestamp(new Date()));
 					sensorReadingsInsert.execute();
 					sensorReadingsInsert.clearParameters();
-				}		
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("Failed to write data to H2 datastore");
 			e.printStackTrace();
 		} finally {
 			try {
-				if (emitterInsert != null) {emitterInsert.close();}
+				if (emitterInsert != null) {
+					emitterInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (sensorReadingsInsert != null) {sensorReadingsInsert.close();}
+				if (sensorReadingsInsert != null) {
+					sensorReadingsInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToWriteToDatastoreException(e.toString());	
+				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 		}
-	}	
-
-	private QueryResult constructResult(String systemID, ResultSet resultSet) throws SQLException {
-		List<SensorState> sensorStates = new ArrayList<SensorState>();
-		SensorState sensorState;
-		while (resultSet.next()) {
-			sensorState = new SensorState(resultSet.getString("SENSOR_ID"), new Date(), resultSet.getTimestamp("DATABASE_TIMESTAMP"), resultSet.getString("VALUE"));
-			sensorStates.add(sensorState);
-		}
-		return new QueryResult(systemID, sensorStates);
-	}
-
-	private Timestamp toSQLTimestamp(Date utilDate) {
-		return new Timestamp(utilDate.getTime());
 	}
 }

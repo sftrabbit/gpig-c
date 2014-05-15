@@ -16,25 +16,24 @@ import com.gpigc.core.view.StandardMessageGenerator;
  * 
  * @author GPIGC
  */
-public class AnalysisController extends Controller{
+public class AnalysisController extends Controller {
 
 	private List<AnalysisEngine> analysisEngines;
 
-	public AnalysisController(List<ClientSystem> systems, Core core){
-		super(ControllerType.analysis,core);
+	public AnalysisController(List<ClientSystem> systems, Core core) {
+		super(ControllerType.analysis, core);
 		refreshSystems(systems);
 	}
 
-
 	public void refreshSystems(List<ClientSystem> systems) {
-		analysisEngines = (List<AnalysisEngine>) instantiateEngines(systems,List.class,Core.class);
+		analysisEngines = (List<AnalysisEngine>) instantiateEngines(systems, List.class, Core.class);
 	}
 
 	public void analyse(Set<String> systemIDs) {
 		System.out.println("Beginning Analysis");
-		for(String currentSystemID: systemIDs){
+		for (String currentSystemID : systemIDs) {
 			for (AnalysisEngine engine : analysisEngines) {
-				//If this engine is registered to this system
+				// If this engine is registered to this system
 				if (engine.getRegisteredSystem(currentSystemID) != null) {
 					System.out.println("Checking For Event");
 					DataEvent event = engine.analyse(engine.getRegisteredSystem(currentSystemID));
@@ -47,9 +46,7 @@ public class AnalysisController extends Controller{
 		}
 	}
 
-
-	protected List<ClientSystem> getRegisteredSystems(String simpleName,
-			List<ClientSystem> allSystems) {
+	protected List<ClientSystem> getRegisteredSystems(String simpleName, List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
 		for (ClientSystem system : allSystems) {
 			if (system.getRegisteredEngineNames().contains(simpleName)) {

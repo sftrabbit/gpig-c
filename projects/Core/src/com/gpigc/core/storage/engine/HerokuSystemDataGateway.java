@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +16,6 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
-import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -27,9 +24,9 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 	private HikariDataSource connectionPool;
 
 	private String writerEmitterSystemState = "INSERT INTO EMITTER_SYSTEM_STATE (SYSTEM_ID, TIMESTAMP) values(?, ?)";
-	private String writeSensorReading 		= "INSERT INTO SENSOR_READINGS(emitter_system, sensor_id, value, database_timestamp) values(?, ?, ?, ?)";
-	private String readMostRecentStatement 	= "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND sensor_id = ? ORDER BY database_timestamp desc LIMIT ?;";
-	private String readBetween 				= "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND timestamp >= ? AND timestamp <= ? AND sensor_id = ?;";
+	private String writeSensorReading = "INSERT INTO SENSOR_READINGS(emitter_system, sensor_id, value, database_timestamp) values(?, ?, ?, ?)";
+	private String readMostRecentStatement = "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND sensor_id = ? ORDER BY database_timestamp desc LIMIT ?;";
+	private String readBetween = "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND timestamp >= ? AND timestamp <= ? AND sensor_id = ?;";
 
 	public HerokuSystemDataGateway(List<ClientSystem> registeredSystems) throws URISyntaxException, SQLException, ClassNotFoundException {
 		super(registeredSystems);
@@ -73,21 +70,27 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (readMostRecent != null) {readMostRecent.close();}
+				if (readMostRecent != null) {
+					readMostRecent.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToReadFromDatastoreException(e.toString());	
+				throw new FailedToReadFromDatastoreException(e.toString());
 			}
 		}
 		return result;
@@ -113,21 +116,27 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (readBetweenQuery != null) {readBetweenQuery.close();}
+				if (readBetweenQuery != null) {
+					readBetweenQuery.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToReadFromDatastoreException(e.toString());
-				
+
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToReadFromDatastoreException(e.toString());	
+				throw new FailedToReadFromDatastoreException(e.toString());
 			}
 		}
 		return result;
@@ -166,24 +175,32 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (emitterInsert != null) {emitterInsert.close();}
+				if (emitterInsert != null) {
+					emitterInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (sensorReadingsInsert != null) {sensorReadingsInsert.close();}
+				if (sensorReadingsInsert != null) {
+					sensorReadingsInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToWriteToDatastoreException(e.toString());	
+				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 		}
 	}
@@ -225,27 +242,35 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (emitterInsert != null) {emitterInsert.close();}
+				if (emitterInsert != null) {
+					emitterInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (sensorReadingsInsert != null) {sensorReadingsInsert.close();}
+				if (sensorReadingsInsert != null) {
+					sensorReadingsInsert.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (resultSet != null) {resultSet.close();}
+				if (resultSet != null) {
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 			try {
-				if (connection != null) {connection.close();}
+				if (connection != null) {
+					connection.close();
+				}
 			} catch (SQLException e) {
-				throw new FailedToWriteToDatastoreException(e.toString());	
+				throw new FailedToWriteToDatastoreException(e.toString());
 			}
 		}
-	}	
+	}
 
 	public void initialiseTables() throws SQLException {
 		Statement statement = connectionPool.getConnection().createStatement();
@@ -254,23 +279,10 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 		statement.execute("DROP TABLE IF EXISTS SENSOR_READINGS CASCADE");
 		statement.execute("DROP TABLE IF EXISTS EMITTER_SYSTEM_STATE CASCADE");
 		statement.execute("CREATE TABLE EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK serial primary key, SYSTEM_ID varchar(255), TIMESTAMP timestamp);");
-		statement.execute("CREATE TABLE SENSOR_READINGS (EMITTER_SYSTEM serial references EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK), SENSOR_ID varchar(255), VALUE varchar(255), CREATION_TIMESTAMP timestamp, DATABASE_TIMESTAMP timestamp);");
+		statement
+				.execute("CREATE TABLE SENSOR_READINGS (EMITTER_SYSTEM serial references EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK), SENSOR_ID varchar(255), VALUE varchar(255), CREATION_TIMESTAMP timestamp, DATABASE_TIMESTAMP timestamp);");
 		statement.execute("CREATE INDEX emitter_system_idx ON EMITTER_SYSTEM_STATE(EMITTER_SYSTEM_PK, timestamp);");
 		statement.execute("CREATE INDEX sensor_reading_idx ON SENSOR_READINGS(EMITTER_SYSTEM);");
 		statement.close();
-	}
-
-	private QueryResult constructResult(String systemID, ResultSet resultSet) throws SQLException {
-		List<SensorState> sensorStates = new ArrayList<SensorState>();
-		SensorState sensorState;
-		while (resultSet.next()) {
-			sensorState = new SensorState(resultSet.getString("SENSOR_ID"), new Date(), resultSet.getTimestamp("DATABASE_TIMESTAMP"), resultSet.getString("VALUE"));
-			sensorStates.add(sensorState);
-		}
-		return new QueryResult(systemID, sensorStates);
-	}
-
-	private Timestamp toSQLTimestamp(Date utilDate) {
-		return new Timestamp(utilDate.getTime());
 	}
 }

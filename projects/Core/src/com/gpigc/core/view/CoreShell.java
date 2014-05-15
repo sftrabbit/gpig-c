@@ -29,13 +29,14 @@ public class CoreShell extends Shell {
 
 	/**
 	 * Launch the application.
+	 * 
 	 * @param args
 	 */
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
 			CoreShell shell = new CoreShell(display);
-			shell.setSize(800,650);
+			shell.setSize(800, 650);
 			shell.setMinimumSize(400, 500);
 			shell.open();
 			shell.layout();
@@ -51,12 +52,13 @@ public class CoreShell extends Shell {
 
 	/**
 	 * Create the shell.
+	 * 
 	 * @param display
 	 */
 	public CoreShell(Display display) {
 		super(display, SWT.SHELL_TRIM);
 		InputStream iconInputStream = getClass().getResourceAsStream("/images/nosql.png");
-		Image icon = new Image(display,iconInputStream);
+		Image icon = new Image(display, iconInputStream);
 		this.setImage(icon);
 		this.setText("GPIG-C: HUMS");
 		GridLayout gridLayout = new GridLayout(1, true);
@@ -68,16 +70,15 @@ public class CoreShell extends Shell {
 		ToolBar toolBar_1 = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-
 		startButton = new ToolItem(toolBar_1, SWT.CHECK);
 		startButton.setEnabled(false);
 		runButton();
 		getStartButton().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(startButton.getSelection()){
+				if (startButton.getSelection()) {
 					stopButton();
-				}else{
+				} else {
 					runButton();
 				}
 			}
@@ -90,19 +91,19 @@ public class CoreShell extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(CoreShell.this, SWT.OPEN);
-				   dialog.setFilterExtensions(new String [] {"*.config"});
-				   String newPath = dialog.open();
-				   if(newPath != null){
-					   configFilePath = newPath;
-					   currentConfigFile.setText(CURRENT_CONFIG_FILE + configFilePath);
-					   currentConfigFile.pack();
-					   startButton.setEnabled(true);
-				   }else{
-					   startButton.setEnabled(false);
-				   }
+				dialog.setFilterExtensions(new String[] { "*.config" });
+				String newPath = dialog.open();
+				if (newPath != null) {
+					configFilePath = newPath;
+					currentConfigFile.setText(CURRENT_CONFIG_FILE + configFilePath);
+					currentConfigFile.pack();
+					startButton.setEnabled(true);
+				} else {
+					startButton.setEnabled(false);
+				}
 			}
 		});
-		configButton.setText("Change Config File");		
+		configButton.setText("Change Config File");
 
 		new Label(this, SWT.NONE);
 		Group grpGpigcHumsCore = new Group(this, SWT.NONE);
@@ -116,16 +117,12 @@ public class CoreShell extends Shell {
 
 		Label lblNewLabel = new Label(grpGpigcHumsCore, SWT.WRAP);
 		lblNewLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		lblNewLabel.setText("\n  Welcome to our HUMS Core. "
-				+ "\n  Select the .config file you wish to use and then hit run. "
-				+ "\n  Press stop when finished."
-				+ "\n  Any messages will be displayed in the console below."
-				+ "\n ");
-		
+		lblNewLabel.setText("\n  Welcome to our HUMS Core. " + "\n  Select the .config file you wish to use and then hit run. " + "\n  Press stop when finished."
+				+ "\n  Any messages will be displayed in the console below." + "\n ");
+
 		currentConfigFile = new Label(this, SWT.NONE);
 		currentConfigFile.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		currentConfigFile.setText(CURRENT_CONFIG_FILE + configFilePath);
-
 
 		consoleTextView = new Text(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		consoleTextView.setForeground(SWTResourceManager.getColor(47, 79, 79));
@@ -140,19 +137,16 @@ public class CoreShell extends Shell {
 		createContents();
 	}
 
-
-
-
 	protected void runButton() {
 		startButton.setText("Run ");
 		InputStream imageInputStream = getClass().getResourceAsStream("/images/control_play_blue.png");
-		startButton.setImage(new Image(getDisplay(),imageInputStream));		
+		startButton.setImage(new Image(getDisplay(), imageInputStream));
 	}
 
 	protected void stopButton() {
 		startButton.setText("Stop");
 		InputStream imageInputStream = getClass().getResourceAsStream("/images/control_stop_blue.png");
-		startButton.setImage(new Image(getDisplay(),imageInputStream));
+		startButton.setImage(new Image(getDisplay(), imageInputStream));
 	}
 
 	/**

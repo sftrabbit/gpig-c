@@ -11,22 +11,26 @@ import com.gpigc.core.notification.NotificationEngine;
 import com.gpigc.core.view.StandardMessageGenerator;
 
 /**
- * Email notification engine providing a way of sending an email to the specified recipient
+ * Email notification engine providing a way of sending an email to the
+ * specified recipient
  * 
  * @author GPIGC
  */
 public class EmailNotificationEngine extends NotificationEngine {
 
-
 	public EmailNotificationEngine(List<ClientSystem> registeredSystems, final int COOL_DOWN_SECS) {
 		super(registeredSystems, COOL_DOWN_SECS);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gpigc.core.notification.NotificationEngine#send(java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.gpigc.core.notification.NotificationEngine#send(java.lang.String,
+	 * java.lang.String, java.lang.String)
 	 */
 	public boolean send(DataEvent event) {
-		if(!getRecentlySent()){
+		if (!getRecentlySent()) {
 			SimpleEmail email = new SimpleEmail();
 			email.setHostName("smtp.gmail.com");
 			email.setSmtpPort(465);

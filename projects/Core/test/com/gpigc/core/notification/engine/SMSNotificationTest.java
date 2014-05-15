@@ -30,8 +30,7 @@ public class SMSNotificationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		smsNotification = new SMSNotificationEngine(
-				new ArrayList<ClientSystem>(), 5000);
+		smsNotification = new SMSNotificationEngine(new ArrayList<ClientSystem>(), 5000);
 	}
 
 	@Test
@@ -47,9 +46,7 @@ public class SMSNotificationTest {
 		data.put("Message", "Test message");
 		data.put("Subject", "Test subject");
 		data.put("Recipient", "07number");
-		DataEvent event = new DataEvent(data, new ClientSystem("TestSystem",
-				new ArrayList<ClientSensor>(), new ArrayList<String>(),"",
-				new HashMap<Parameter, String>()));
+		DataEvent event = new DataEvent(data, new ClientSystem("TestSystem", new ArrayList<ClientSensor>(), new ArrayList<String>(), "", new HashMap<Parameter, String>()));
 		return smsNotification.send(event);
 	}
 

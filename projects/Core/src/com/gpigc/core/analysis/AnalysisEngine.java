@@ -10,12 +10,11 @@ import com.gpigc.dataabstractionlayer.client.SensorState;
 
 public abstract class AnalysisEngine {
 
-
 	private final List<ClientSystem> associatedSystems;
 	public final String name;
 	private final Core core;
-	
-	public AnalysisEngine(List<ClientSystem> registeredSystems, Core core){
+
+	public AnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
 		this.associatedSystems = registeredSystems;
 		this.core = core;
 		this.name = this.getClass().getSimpleName();
@@ -34,9 +33,9 @@ public abstract class AnalysisEngine {
 		return core.getDatastoreController().readMostRecent(system, sensorID, numberToGet).getRecords();
 	}
 
-	public ClientSystem getRegisteredSystem(String systemID){
-		for(ClientSystem system: getAssociatedSystems()){
-			if(system.getID().equals(systemID))
+	public ClientSystem getRegisteredSystem(String systemID) {
+		for (ClientSystem system : getAssociatedSystems()) {
+			if (system.getID().equals(systemID))
 				return system;
 		}
 		return null;

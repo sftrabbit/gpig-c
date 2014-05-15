@@ -40,25 +40,27 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 	private Parser parser;
 
 	public ExpressionAnalysisEngine(List<ClientSystem> registeredSystems, Core core) {
-		super(registeredSystems,core);
+		super(registeredSystems, core);
 		parser = new Parser();
 		variables = new HashMap<String, Variable>();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gpigc.core.analysis.AnalysisEngine#analyse()
 	 */
 	@Override
 	public DataEvent analyse(ClientSystem system) {
 
-		if(system.getParameters().containsKey(Parameter.EXPRESSION)){
+		if (system.getParameters().containsKey(Parameter.EXPRESSION)) {
 			String exprStr = system.getParameters().get(Parameter.EXPRESSION);
 
 			try {
-				//Get Data
+				// Get Data
 				List<SensorState> values = getSensorData(system);
-				for(SensorState sensorState: values){
-					if(exprStr.contains(sensorState.getSensorID())) {
+				for (SensorState sensorState : values) {
+					if (exprStr.contains(sensorState.getSensorID())) {
 						Variable var = Variable.make(sensorState.getSensorID());
 						var.setValue(Double.parseDouble(sensorState.getValue()));
 						parser.allow(var);
@@ -66,42 +68,39 @@ public class ExpressionAnalysisEngine extends AnalysisEngine {
 					}
 				}
 				double value = parser.parseString(exprStr).value();
-				return generateEvent(system,exprStr, value);
+				return generateEvent(system, exprStr, value);
 
 			} catch (SyntaxException e) {
 				StandardMessageGenerator.couldNotParse(exprStr);
 				e.printStackTrace();
-			}catch (FailedToReadFromDatastoreException e1) {
+			} catch (FailedToReadFromDatastoreException e1) {
 				StandardMessageGenerator.couldNotReadData();
 				e1.printStackTrace();
 			}
-		}else{
+		} else {
 			StandardMessageGenerator.wrongParams(system.getID(), name);
 		}
 
 		return null;
 	}
 
-
 	private DataEvent generateEvent(ClientSystem system, String exprStr, double value) {
-		Map<Parameter,String> data = new HashMap<>();
-		data.put(Parameter.MESSAGE, "Expression analysis of system " 
-				+ system.getID() + " showed abnormal system behaviour: " + exprStr);
-		data.put(Parameter.SUBJECT, this.name+ " Notification");
+		Map<Parameter, String> data = new HashMap<>();
+		data.put(Parameter.MESSAGE, "Expression analysis of system " + system.getID() + " showed abnormal system behaviour: " + exprStr);
+		data.put(Parameter.SUBJECT, this.name + " Notification");
 		data.put(Parameter.RECIPIENT, system.getParameters().get(Parameter.RECIPIENT));
-		data.put(Parameter.VALUE,value+"");
+		data.put(Parameter.VALUE, value + "");
 		return new DataEvent(data, system);
 	}
 
-
 	private List<SensorState> getSensorData(ClientSystem system) throws FailedToReadFromDatastoreException {
 		List<SensorState> values = new ArrayList<>();
-		for(ClientSensor sensor: system.getSensors()){
+		for (ClientSensor sensor : system.getSensors()) {
 			SensorState state = getSensorReadings(system, sensor.getID(), 1).get(0);
-			if(state!=null){
+			if (state != null) {
 				values.add(state);
-			}else{
-				StandardMessageGenerator.sensorValueMissing(system.getID(),sensor.getID());
+			} else {
+				StandardMessageGenerator.sensorValueMissing(system.getID(), sensor.getID());
 				return null;
 			}
 		}

@@ -16,8 +16,7 @@ public class Main {
 	public static boolean running = false;
 	private static CoreShell shell;
 
-	public static void main(String args[]) throws ReflectiveOperationException,
-	IOException {
+	public static void main(String args[]) throws ReflectiveOperationException, IOException {
 		setUpGui();
 	}
 
@@ -25,30 +24,29 @@ public class Main {
 		try {
 			Display display = Display.getDefault();
 			shell = new CoreShell(display);
-			shell.setSize(700,400);
+			shell.setSize(700, 400);
 			shell.setMinimumSize(400, 400);
 			shell.open();
 			shell.layout();
-			
+
 			// Redirect SysOut
-	    	OutputStream out = new OutputStream() {
-	    		@Override
-	    		public void write(final int b) throws IOException {
-	    			Display.getDefault().asyncExec(new Runnable() {
-	    				
-	    				@Override
-	    				public void run() {
-	    		    		   shell.getConsoleTextView().append(Character.toString((char) b));
-	    				}
-	    			});
-	    		}
-	    	};
-	    	System.setOut(new PrintStream(out));
+			OutputStream out = new OutputStream() {
+				@Override
+				public void write(final int b) throws IOException {
+					Display.getDefault().asyncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							shell.getConsoleTextView().append(Character.toString((char) b));
+						}
+					});
+				}
+			};
+			System.setOut(new PrintStream(out));
 
 			// Set Up The Action Listener
 			shell.getStartButton().addSelectionListener(new StartButtonListener(shell));
-			
-			
+
 			while (!shell.isDisposed()) {
 				if (!display.readAndDispatch()) {
 					display.sleep();
@@ -58,7 +56,7 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * This is a pain
 	 */
@@ -93,7 +91,7 @@ public class Main {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			run();			
+			run();
 		}
 
 		@Override
@@ -102,6 +100,5 @@ public class Main {
 		}
 
 	}
-
 
 }

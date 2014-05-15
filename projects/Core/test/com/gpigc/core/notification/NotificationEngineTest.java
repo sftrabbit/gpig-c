@@ -22,9 +22,7 @@ public class NotificationEngineTest {
 	public void before() {
 
 		testSystems = new ArrayList<ClientSystem>();
-		testSystems.add(new ClientSystem("TestSystem",
-				new ArrayList<ClientSensor>(), new ArrayList<String>(),"",
-				new HashMap<Parameter, String>()));
+		testSystems.add(new ClientSystem("TestSystem", new ArrayList<ClientSensor>(), new ArrayList<String>(), "", new HashMap<Parameter, String>()));
 
 		engine = new NotificationEngine(testSystems, 3) {
 			@Override

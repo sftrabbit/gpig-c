@@ -42,7 +42,7 @@ import static com.gpigc.dataabstractionlayer.server.DatabaseField.*;
  * @author GPIGC
  */
 public class GWTSystemDataGateway extends SystemDataGateway {
-	
+
 	public final static String APPENGINE_SERVLET_URI = "http://gpigc-beta.appspot.com/gpigc-webapp";
 
 	/**
@@ -70,20 +70,18 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 	 * @see com.gpig.client.SystemDataGateway#readMostRecent(java.lang.String,
 	 * int)
 	 */
-	
+
 	@Override
-	public QueryResult readMostRecent(String systemID, String sensorID, int numRecords)
-			throws FailedToReadFromDatastoreException {
+	public QueryResult readMostRecent(String systemID, String sensorID, int numRecords) throws FailedToReadFromDatastoreException {
 		try {
 			// Set up the get
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair(SYSTEM_ID.getKey(), systemID));
-			if(sensorID != null)
+			if (sensorID != null)
 				params.add(new BasicNameValuePair(SENSOR_ID.getKey(), sensorID));
 
 			params.add(new BasicNameValuePair(NUM_RECORDS.getKey(), numRecords + ""));
-			URI uri = new URI(dbServletUri + "?"
-					+ URLEncodedUtils.format(params, "utf-8"));
+			URI uri = new URI(dbServletUri + "?" + URLEncodedUtils.format(params, "utf-8"));
 			HttpGet get = new HttpGet(uri);
 			return getQueryResult(get);
 		} catch (URISyntaxException | ParseException e) {
@@ -99,19 +97,16 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 	 * .Date, java.util.Date)
 	 */
 	@Override
-	public QueryResult readBetween(String systemID, String sensorID, Date start, Date end)
-			throws FailedToReadFromDatastoreException {
+	public QueryResult readBetween(String systemID, String sensorID, Date start, Date end) throws FailedToReadFromDatastoreException {
 		try {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair(SYSTEM_ID.getKey(), systemID));
-			params.add(new BasicNameValuePair(START_TIME.getKey(), start.getTime()
-					+ ""));
+			params.add(new BasicNameValuePair(START_TIME.getKey(), start.getTime() + ""));
 			params.add(new BasicNameValuePair(END_TIME.getKey(), end.getTime() + ""));
-			if(sensorID != null)
+			if (sensorID != null)
 				params.add(new BasicNameValuePair(SENSOR_ID.getKey(), sensorID));
 
-			URI uri = new URI(dbServletUri + "?"
-					+ URLEncodedUtils.format(params, "utf-8"));
+			URI uri = new URI(dbServletUri + "?" + URLEncodedUtils.format(params, "utf-8"));
 			HttpGet get = new HttpGet(uri);
 
 			return getQueryResult(get);
@@ -120,14 +115,12 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 		}
 	}
 
-	private QueryResult getQueryResult(HttpGet get)
-			throws FailedToReadFromDatastoreException {
+	private QueryResult getQueryResult(HttpGet get) throws FailedToReadFromDatastoreException {
 		try {
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpResponse response;
 			response = client.execute(get);
-			String responseBody = EntityUtils.toString(response.getEntity(),
-					"UTF-8");
+			String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
 			return QueryResult.parseJSON(responseBody);
 		} catch (ParseException | IOException e) {
 			throw new FailedToReadFromDatastoreException(e.getMessage());
@@ -155,8 +148,7 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 	 * com.gpig.client.SystemDataGateway#write(com.gpig.client.EmitterSystemState
 	 * )
 	 */
-	public void write(List<EmitterSystemState> data)
-			throws FailedToWriteToDatastoreException {
+	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException {
 		try {
 			writeJSON(createJSONArray(data));
 		} catch (IOException e) {
@@ -165,7 +157,8 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 	}
 
 	/**
-	 * @param data A list of emitter states
+	 * @param data
+	 *            A list of emitter states
 	 * @return A JSON list of emitter states
 	 * @throws IOException
 	 */
@@ -184,8 +177,7 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 		return writer.toString();
 	}
 
-	private void writeJSON(String json)
-			throws FailedToWriteToDatastoreException, IOException {
+	private void writeJSON(String json) throws FailedToWriteToDatastoreException, IOException {
 		HttpClient client = HttpClientBuilder.create().build();
 
 		HttpPost post = new HttpPost(dbServletUri);
@@ -194,8 +186,6 @@ public class GWTSystemDataGateway extends SystemDataGateway {
 		HttpResponse response;
 		response = client.execute(post);
 		if (response.getStatusLine().getStatusCode() != 201)
-			throw new FailedToWriteToDatastoreException(
-					"Failed to Write to DB, Response was "
-							+ response.getStatusLine().getStatusCode());
+			throw new FailedToWriteToDatastoreException("Failed to Write to DB, Response was " + response.getStatusLine().getStatusCode());
 	}
 }

@@ -13,18 +13,16 @@ import com.gpigc.core.event.DataEvent;
  * 
  * @author GPIGC
  */
-public class NotificationController extends Controller{
+public class NotificationController extends Controller {
 
 	private List<NotificationEngine> notificationEngines;
 
-
-	public NotificationController( List<ClientSystem> systems, Core core){
+	public NotificationController(List<ClientSystem> systems, Core core) {
 		super(ControllerType.notification, core);
 		refreshSystems(systems);
 	}
 
-
-	public void refreshSystems(List<ClientSystem> systems){
+	public void refreshSystems(List<ClientSystem> systems) {
 		notificationEngines = (List<NotificationEngine>) instantiateEngines(systems, List.class, Integer.TYPE);
 	}
 
@@ -42,11 +40,11 @@ public class NotificationController extends Controller{
 			}
 		}
 	}
-	
+
 	protected List<ClientSystem> getRegisteredSystems(String name, List<ClientSystem> allSystems) {
 		List<ClientSystem> registeredSystems = new ArrayList<ClientSystem>();
-		for(ClientSystem system : allSystems){
-			if(system.getRegisteredEngineNames().contains(name)){
+		for (ClientSystem system : allSystems) {
+			if (system.getRegisteredEngineNames().contains(name)) {
 				registeredSystems.add(system);
 			}
 		}
