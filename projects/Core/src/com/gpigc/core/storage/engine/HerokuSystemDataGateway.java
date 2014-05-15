@@ -24,7 +24,7 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 	private HikariDataSource connectionPool;
 
 	private String writerEmitterSystemState = "INSERT INTO EMITTER_SYSTEM_STATE (SYSTEM_ID, TIMESTAMP) values(?, ?)";
-	private String writeSensorReading = "INSERT INTO SENSOR_READINGS(emitter_system, sensor_id, value, database_timestamp) values(?, ?, ?, ?)";
+	private String writeSensorReading = "INSERT INTO SENSOR_READINGS(emitter_system, sensor_id, value, database_timestamp, creation_timestamp) values(?, ?, ?, ?, ?)";
 	private String readMostRecentStatement = "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND sensor_id = ? ORDER BY database_timestamp desc LIMIT ?;";
 	private String readBetween = "SELECT * FROM EMITTER_SYSTEM_STATE RIGHT OUTER JOIN SENSOR_READINGS ON EMITTER_SYSTEM_STATE.EMITTER_SYSTEM_PK = SENSOR_READINGS.EMITTER_SYSTEM WHERE SYSTEM_ID = ? AND timestamp >= ? AND timestamp <= ? AND sensor_id = ?;";
 
@@ -180,6 +180,7 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 				sensorReadingsInsert.setString(3, sensorReading.getValue());
 				sensorReadingsInsert
 						.setTimestamp(4, toSQLTimestamp(new Date()));
+				sensorReadingsInsert.setTimestamp(5, toSQLTimestamp(data.getTimeStamp()));
 				sensorReadingsInsert.execute();
 			}
 		} catch (SQLException e) {
@@ -248,8 +249,8 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 					sensorReadingsInsert.setInt(1, resultSet.getInt(1));
 					sensorReadingsInsert.setString(2, sensorReading.getKey());
 					sensorReadingsInsert.setString(3, sensorReading.getValue());
-					sensorReadingsInsert.setTimestamp(4,
-							toSQLTimestamp(new Date()));
+					sensorReadingsInsert.setTimestamp(4, toSQLTimestamp(new Date()));
+					sensorReadingsInsert.setTimestamp(5, toSQLTimestamp(systemState.getTimeStamp()));
 					sensorReadingsInsert.addBatch();
 					sensorReadingsInsert.clearParameters();
 				}
