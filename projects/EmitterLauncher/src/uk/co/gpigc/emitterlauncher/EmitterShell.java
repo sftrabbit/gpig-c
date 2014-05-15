@@ -27,17 +27,11 @@ public class EmitterShell extends Shell {
 	private static final String STOP_BUTTON_PATH = "res/images/control_stop_blue.png";
 	private static final String PLAY_BUTTON_PATH = "res/images/control_play_blue.png";
 
-	//private static final String TEST_APP_1_PATH = "../TestApp1Emitter/bin/TestApp1Emitter.jar";
 	private static final String TEST_APP_1_PATH = "res/TestApp1Emitter.jar";
-
-	//private static final String TEST_APP_2_PATH = "../TestApp2Emitter/bin/TestApp2Emitter.jar";
 	private static final String TEST_APP_2_PATH = "res/TestApp2Emitter.jar";
-
-	//private static final String EARTH_APP_PATH = "../EarthEmitter/bin/EarthEmitter.jar";
 	private static final String EARTH_APP_PATH = "res/EarthMonitor.jar";
-
-	//private static final String SERVER_APP_PATH = "../ServerEmitter/bin/ServerEmitter.jar";
-	private static final String SERVER_APP_PATH = "res/ServerEmitter.jar";
+	private static final String SERVER_APP_PATH = "res/ServerMonitor.jar";
+	protected static final String TRAFFIC_APP_PATH = "res/TrafficMonitor.jar";
 
 
 	private Button serverButton;
@@ -57,6 +51,9 @@ public class EmitterShell extends Shell {
 	private StyledText textApp3;
 	private TabItem console4Tab;
 	private StyledText textApp4;
+	private TabItem console5Tab;
+	private StyledText textApp5;
+	private Button trafficButton;
 
 	/**
 	 * Launch the application.
@@ -103,20 +100,27 @@ public class EmitterShell extends Shell {
 		textApp2 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp2.setEditable(false);
 		console2Tab.setControl(textApp2);
-		
+
 		console3Tab = new TabItem(tabFolder, 0);
 		console3Tab.setText("Console 3");
-		
+
 		textApp3 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp3.setEditable(false);
 		console3Tab.setControl(textApp3);
-		
+
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
 		console4Tab.setText("Console 4");
-		
+
 		textApp4 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp4.setEditable(false);
 		console4Tab.setControl(textApp4);
+
+		console5Tab = new TabItem(tabFolder, SWT.NONE);
+		console5Tab.setText("Console 5");
+
+		textApp5 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp5.setEditable(false);
+		console5Tab.setControl(textApp5);
 	}
 
 	private void graphicsSetup(Display display) {
@@ -143,8 +147,6 @@ public class EmitterShell extends Shell {
 		testApp1Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				//String appPath = getClass().getResource(TEST_APP_1_PATH).toExternalForm();
-				//System.out.println("This is Rosy's appPath: " + appPath);
 				buttonSelect(TEST_APP_1_PATH, testApp1Button,textApp1);
 			}
 		});
@@ -188,6 +190,20 @@ public class EmitterShell extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				buttonSelect(SERVER_APP_PATH, serverButton, textApp4);
+			}
+		});
+
+		trafficButton = new Button(composite, SWT.TOGGLE);
+		GridData trafficData = new GridData(SWT.LEFT, SWT.CENTER, true, true, 2, 1);
+		trafficData.horizontalAlignment = SWT.FILL;
+		trafficData.verticalAlignment = SWT.FILL;
+		trafficButton.setLayoutData(trafficData);
+		trafficButton.setImage(playIcon);
+		trafficButton.setText("5) Traffic Monitor");
+		trafficButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				buttonSelect(TRAFFIC_APP_PATH, trafficButton, textApp5);
 			}
 		});
 	}
@@ -247,7 +263,7 @@ public class EmitterShell extends Shell {
 
 	private void shellSetup(Display display) {
 		setImage(shellIcon);
-		setSize(400, 300);
+		setSize(692, 411);
 		setMinimumSize(400, 200);
 		setText("GPIG-C: Launcher");
 	}
