@@ -1,0 +1,5 @@
+<project name="GPIG-C Emitter" basedir="." default="rebuild">
+	<property name="project.dependencies" value="Proto" />
+	<property name="project.common.libs" value="protobuf.jar" />
+	<import file="../../tools/common-ant.xml" />
+</project>
