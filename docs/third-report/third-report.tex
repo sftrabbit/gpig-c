@@ -113,7 +113,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 \section{Glossary}
 \label{sec:glossary}
 
-\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
+\begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
 	\vspace{0.15cm}
@@ -259,7 +259,7 @@ Usability & Low & Usability was not deemed of great importance to the system, as
 }{The ranked quality attributes, associated with the HUMS}{tab:qualities}
 
 %-------------------------------------------------------------%
-%----------------------SCENARIOS------------------------%
+%----------------------SCENARIOS---------------------%
 %-------------------------------------------------------------%
 \section{Quality Attribute Scenarios}
 \label{sec:scenarios}
@@ -310,7 +310,7 @@ Having identified the quality attributes which are important to creating a succe
 \end{scenario}
 
 %-------------------------------------------------------------%
-%--------------------------RISKS----------------------------%
+%--------------------------RISKS--------------------------%
 %-------------------------------------------------------------%
 \section{Project Risks}
 \label{sec:risks}
@@ -395,9 +395,9 @@ Below the tactics which appear most suitable for use with the HUMS are summarise
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
-	\item[Resisting Attacks] 
-	\item[Detecting Attacks] 
-	\item[Recovering From Attacks] 
+	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
+	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DOS attack. Trap files could be set that should only ever be accessed from specific addresses.
+	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots.  would allow for a  frequency would allow for the restoration of data.
 	\end{description}
 \end{description}
 
@@ -410,25 +410,55 @@ Having determined the tactics implacable to the HUMS, which are likely to produc
 
 \subsection{System Views \hl{Joe and Andy}} 
 \label{sec:views}
-
 %-------------------------------------------------------------%
-%----------------------DEVELOPMENT --------------------%
+%-------------TECHNICAL PROGRESS-------------%
 %-------------------------------------------------------------%
-%   Notes: 									 %
-%  		- Reference risks constantly, lots and lots	 %
-%		- Reference requirements and scenarios 	 %
+%   Notes: 					         	 %
+%  	- Reference risks constantly, lots and lots	 %
+%	- Reference requirements and scenarios 	 %
 %-------------------------------------------------------------%
-\section{Development \hl{All}}
-\label{sec:development}
-vhvh
+\section{Technical Progress}
+\label{sec:techprog}
 
 \subsection{Sense}
 \label{sec:sense}
-vhvhv
+
+\subsubsection{Test Apps}
+
+\subsubsection{Earthquakes}
+
+\subsubsection{Traffic}
+
+\subsubsection{Android App}
+To explore the possibilities surrounding monitoring remote systems, an Android app was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
+
+\subsection{Smartphone Monitoring}
+
+\subsection{Simulated Car Monitoring}
+
+\subsection{Face Recognition for Security}
+The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
+
+The face recognition process is two fold: An image is captured and it's dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
+
+The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
+
+When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided the sensor if it's distance from any of the example faces provided by the configuration file is less than some threshold, also given by the configuration file.
+
+% TODO This method is robust to lighting and pose \cite{ahonen2006face}
+
 
 \subsection{Store}
 \label{sec:store}
-vhvhv
+To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores were supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
+
+Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datastore to the HUMS system. Communication between a clients HUMS and the remote datastore takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
+
+For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained, serverless, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
+
+Connection pooling was used for all datastores. The process of opening, maintaining and deleting connections is resource intensive and a performance bottleneck. A connection pool provides a cache of reusable database connections, connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. 
+
+Prepared statements were used across all datastore. They are compiled once and then reused many times leading to significant gains in performance. Finally, prepared statements offer improved security with SQL injection attacks rendered useless with all user input being treated as data and thus not altering the characteristics of data queries.
 
 \subsection{Analyse}
 \label{sec:analyse}

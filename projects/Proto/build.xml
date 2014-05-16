@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="protojar" name="GPIG-C Proto">
-    <target name="proto">
+<project name="GPIG-C Proto" default="rebuild">
+	<property name="project.common.libs" value="protobuf.jar" />
+
+	<import file="../../tools/common-ant.xml" />
+	
+    <target name="prehook">
     	<exec executable="protoc">
-    		<arg value="-I=res"/>
-    		<arg value="--java_out=src"/>
-			<arg value="res/systemdata.proto"/>
+    		<arg value="-I=${res.dir}"/>
+    		<arg value="--java_out=${src.dir}"/>
+			<arg value="${res.dir}/systemdata.proto"/>
     	</exec>
     </target>
-
-	<target name="compile-jar-classes">
-		<exec executable="mkdir">
-			<arg value="-p"/>
-			<arg value="bin/classes"/>
-		</exec>
-		<javac srcdir="src" destdir="bin/classes" classpath="./lib/protobuf.jar" includeantruntime="false"/>
-	</target>
-	
-	<target name="protojar" depends="proto,compile-jar-classes">
-    	<jar basedir="bin/classes" destfile="bin/proto.jar"/>
-	</target>
 </project>

@@ -11,6 +11,8 @@ Directory structure
 Main directories:
 
 - `projects` - all subprojects have directories in here
+- `lib` - common Java libraries that are used by various projects
+- `binlib` - common native libraries that are used by various projects
 - `docs` - documentation source (including reports)
 
 Auxiliary directories:

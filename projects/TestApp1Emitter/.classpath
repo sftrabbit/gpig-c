@@ -2,9 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GPIG-C Proto"/>
-	<classpathentry kind="lib" path="lib/sigar.jar"/>
-	<classpathentry kind="lib" path="lib/tools.jar"/>
-	<classpathentry kind="lib" path="lib/emitter.jar"/>
+	<classpathentry kind="lib" path="../../lib/protobuf.jar"/>
+	<classpathentry kind="lib" path="../../lib/sigar.jar"/>
+	<classpathentry kind="lib" path="../../lib/tools.jar"/>
+	<classpathentry kind="lib" path="../../lib/Proto.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GPIG-C Emitter"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

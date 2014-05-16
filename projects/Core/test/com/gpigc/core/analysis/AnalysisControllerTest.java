@@ -4,10 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.gpigc.core.ClientSystem;
@@ -16,13 +13,7 @@ import com.gpigc.core.analysis.AnalysisController;
 
 public class AnalysisControllerTest {
 
-	private Set<String> systemIDs;
-
-	@Before
-	public void before() throws ReflectiveOperationException {
-		systemIDs = new HashSet<>();
-		systemIDs.add("Test");
-	}
+	private String systemID = "Test";
 
 	@Test
 	public void testMakeEngines() throws ReflectiveOperationException,
@@ -44,7 +35,7 @@ public class AnalysisControllerTest {
 						"config/RegisteredSystems.config")); // no
 																// exception
 																// thrown
-		analysisController.analyse(systemIDs);
+		analysisController.analyse(systemID);
 	}
 
 }

@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.gpigc.core.Core;
@@ -40,23 +42,15 @@ public class DataInputServer extends Thread {
 
 		while (running) {
 			Protos.SystemData data = null;
-
-			Map<String, List<EmitterSystemState>> systemStates = new HashMap<String, List<EmitterSystemState>>();
-
+			List<EmitterSystemState> systemStates = new ArrayList<EmitterSystemState>();
+			
 			while ((data = queue.poll()) != null) {
 				Map<String, String> datamap = new HashMap<String, String>();
 				for (Protos.SystemData.Datum datum : data.getDatumList()) {
 					datamap.put(datum.getKey(), datum.getValue());
 				}
-
-				if (!systemStates.containsKey(data.getSystemId()))
-					systemStates.put(data.getSystemId(),
-							new ArrayList<EmitterSystemState>());
-
-				systemStates.get(data.getSystemId()).add(
-						new EmitterSystemState(data.getSystemId(), new Date(
+				systemStates.add(new EmitterSystemState(data.getSystemId(), new Date(
 								data.getTimestamp()), datamap));
-
 			}
 
 			if (!systemStates.isEmpty()) {

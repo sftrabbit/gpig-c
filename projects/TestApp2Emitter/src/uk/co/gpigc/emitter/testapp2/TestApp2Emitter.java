@@ -13,6 +13,8 @@ public class TestApp2Emitter {
 	public static void main(String[] args) throws ProcessMonitorException, InterruptedException, IOException {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 		
+		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
+		
 		emitter.registerDataCollector(new TestApp2Collector());
 		emitter.start();
 		
@@ -29,12 +31,16 @@ public class TestApp2Emitter {
 		System.out.println("Emitter stopped");
 	}
 	
+	public static String getExpandedFilePath(String relativeFilePath) {
+		return System.getProperty("one-jar.expand.dir") + "/" + relativeFilePath;
+	}
+	
 	private static class ShutdownHook extends Thread {
 		@Override
 		public void run() {
 			try {
 				emitter.stop();
-			} catch (IOException e) {
+			} catch (IOException | InterruptedException | ExecutionException e) {
 				System.err.println("Could not stop emitter successfully.");
 			}
 		}

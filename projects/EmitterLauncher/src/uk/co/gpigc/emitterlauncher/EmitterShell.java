@@ -1,12 +1,14 @@
 package uk.co.gpigc.emitterlauncher;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -19,7 +21,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.custom.StyledText;
 
 public class EmitterShell extends Shell {
 
@@ -45,14 +46,14 @@ public class EmitterShell extends Shell {
 	private TabFolder tabFolder;
 	private TabItem console1Tab;
 	private TabItem console2Tab;
-	private StyledText textApp2;
-	private StyledText textApp1;
+	private Text textApp2;
+	private Text textApp1;
 	private TabItem console3Tab;
-	private StyledText textApp3;
+	private Text textApp3;
 	private TabItem console4Tab;
-	private StyledText textApp4;
+	private Text textApp4;
 	private TabItem console5Tab;
-	private StyledText textApp5;
+	private Text textApp5;
 	private Button trafficButton;
 
 	/**
@@ -76,6 +77,11 @@ public class EmitterShell extends Shell {
 
 	public EmitterShell(Display display) {
 		super(display);
+		this.addListener(SWT.Close, new Listener() {
+			public void handleEvent(Event event) {
+				System.exit(0);
+			}
+		});
 		graphicsSetup(display);
 		shellSetup(display);
 		Group groupComp = groupSetup();
@@ -90,37 +96,46 @@ public class EmitterShell extends Shell {
 		console1Tab = new TabItem(tabFolder, SWT.NONE);
 		console1Tab.setText("App 1 Console ");
 
-		textApp1 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp1 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp1.setEditable(false);
 		console1Tab.setControl(textApp1);
+		textApp1.addListener(SWT.Modify, new CaretListener(textApp1));
 
 		console2Tab = new TabItem(tabFolder, SWT.NONE);
 		console2Tab.setText("App 2 Console");
 
-		textApp2 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp2 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp2.setEditable(false);
 		console2Tab.setControl(textApp2);
+		textApp2.addListener(SWT.Modify, new CaretListener(textApp2));
+
 
 		console3Tab = new TabItem(tabFolder, 0);
 		console3Tab.setText("Earth Console");
 
-		textApp3 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp3 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp3.setEditable(false);
 		console3Tab.setControl(textApp3);
+		textApp3.addListener(SWT.Modify, new CaretListener(textApp3));
+
 
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
 		console4Tab.setText("ResponseConsole");
 
-		textApp4 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp4 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp4.setEditable(false);
 		console4Tab.setControl(textApp4);
+		textApp4.addListener(SWT.Modify, new CaretListener(textApp4));
+
 
 		console5Tab = new TabItem(tabFolder, SWT.NONE);
 		console5Tab.setText("TrafficConsole");
 
-		textApp5 = new StyledText(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp5 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp5.setEditable(false);
 		console5Tab.setControl(textApp5);
+		textApp5.addListener(SWT.Modify, new CaretListener(textApp5));
+
 	}
 
 	private void graphicsSetup(Display display) {
@@ -208,10 +223,10 @@ public class EmitterShell extends Shell {
 		});
 	}
 
-	protected void buttonSelect(final String jarPath, Button button, StyledText console) {
+	protected void buttonSelect(final String jarPath, Button button, Text text) {
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
-			threadMap.put(jarPath, new OpenJarThread(jarPath, button,console));
+			threadMap.put(jarPath, new OpenJarThread(jarPath, button,text));
 			threadMap.get(jarPath).start();
 		} else {
 			button.setImage(playIcon);
@@ -271,6 +286,19 @@ public class EmitterShell extends Shell {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+
+	private class CaretListener implements Listener{
+		private Text widg;
+
+		public CaretListener(Text widg){
+			this.widg = widg;
+		}
+
+		public void handleEvent(Event e){
+			widg.setTopIndex(widg.getLineCount() - 1);
+		}
 	}
 
 }

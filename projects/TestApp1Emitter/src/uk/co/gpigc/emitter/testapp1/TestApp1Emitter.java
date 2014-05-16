@@ -14,7 +14,9 @@ public class TestApp1Emitter {
 	public static void main(String[] args) throws MonitorJvmException, ProcessMonitorException, InterruptedException {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 		
-		OpenJarThread bThread = new OpenJarThread("res/" + TestApp1Collector.TEST_APP_NAME);
+		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
+		
+		OpenJarThread bThread = new OpenJarThread(getExpandedFilePath("res/" + TestApp1Collector.TEST_APP_NAME));
 		bThread.start();
 		emitter.registerDataCollector(new TestApp1Collector());
 		emitter.start();
@@ -30,12 +32,16 @@ public class TestApp1Emitter {
 		bThread.stopRunning();
 	}
 	
+	public static String getExpandedFilePath(String relativeFilePath) {
+		return System.getProperty("one-jar.expand.dir") + "/" + relativeFilePath;
+	}
+	
 	private static class ShutdownHook extends Thread {
 		@Override
 		public void run() {
 			try {
 				emitter.stop();
-			} catch (IOException e) {
+			} catch (IOException | InterruptedException | ExecutionException e) {
 				System.err.println("Could not stop emitter successfully.");
 			}
 		}

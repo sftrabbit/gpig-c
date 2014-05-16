@@ -9,7 +9,7 @@ set(CONTENT_FILES
 set(IMAGE_DIRS 
 	images)
 
-gpigc_add_report(second-report.tex
+gpigc_add_report(third-report.tex
                  INPUT_FILES ${INPUT_FILES}
                  CONTENT_FILES ${CONTENT_FILES}
                  IMAGE_DIRS ${IMAGE_DIRS})

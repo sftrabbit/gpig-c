@@ -1,7 +1,10 @@
 package com.gpigc.core.notification.engine;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -53,7 +56,7 @@ public class SMSNotificationEngine extends NotificationEngine {
 
 				String body = subject + ": " + message;
 
-				// if (body.length() > 160) body = body.substring(0, 160); //
+				if (body.length() > 160) body = body.substring(0, 160); //
 				// trim entire message to a single text message
 
 				URL url = new URL(
@@ -80,23 +83,13 @@ public class SMSNotificationEngine extends NotificationEngine {
 				wr.flush();
 				wr.close();
 
-				setRecentlySent();
+				//setRecentlySent(); //XXX comment this in if using cooldown
 				StandardMessageGenerator.notificationGenerated(name, event
 						.getSystem().getID());
-				/*
-				 * System.out.println("Response Code : " +
-				 * conn.getResponseCode()); InputStream stream; if
-				 * (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				 * stream = conn.getInputStream(); } else { stream =
-				 * conn.getErrorStream(); } BufferedReader in = new
-				 * BufferedReader(new InputStreamReader(stream)); String
-				 * inputLine; StringBuffer response = new StringBuffer(); while
-				 * ((inputLine = in.readLine()) != null) {
-				 * response.append(inputLine); } in.close();
-				 * System.out.println(response.toString());
-				 */
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
+				System.out.println("SMS Response: " + conn.getResponseMessage());
+				Thread.sleep(1000); //limitation of sms service
+			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
