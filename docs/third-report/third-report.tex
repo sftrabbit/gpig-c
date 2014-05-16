@@ -395,9 +395,9 @@ Below the tactics which appear most suitable for use with the HUMS are summarise
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
-	\item[Resisting Attacks] 
-	\item[Detecting Attacks] 
-	\item[Recovering From Attacks] 
+	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
+	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DOS attack. Trap files could be set that should only ever be accessed from specific addresses.
+	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots.  would allow for a  frequency would allow for the restoration of data.
 	\end{description}
 \end{description}
 
