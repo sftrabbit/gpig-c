@@ -3,7 +3,7 @@
 	<property name="project.main-class" value="uk.co.gpigc.emitter.testapp1.TestApp1Emitter" />
 	
 	<!-- The other GPIG-C projects that should be built and used as libraries (by directory name) -->
-	<property name="project.dependencies" value="Emitter,Proto" />
+	<property name="project.dependencies" value="Proto" />
 	
 	<!-- Libraries from GPIGC-ROOT/lib that are required -->
 	<property name="project.common.libs" value="protobuf.jar,tools.jar,sigar.jar" />
