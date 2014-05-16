@@ -450,7 +450,7 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 
 \subsection{Store}
 \label{sec:store}
-To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, multiple datasources were supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datasources with ease by updating their configuration file.
+To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datasources were supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datasources with ease by updating their configuration file.
 
 Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datasource to the HUMS system. Communication between a clients HUMS and the remote datasources takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
 
