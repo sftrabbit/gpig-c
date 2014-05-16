@@ -38,6 +38,8 @@ public class ProcessMonitor {
 			throw new ProcessMonitorException(
 					"Unable to retrieve process information", e);
 		}
+		
+		System.out.println("Monitoring process " + processId);
 
 		new Timer(true).schedule(new CpuLoadTask(), 0, UPDATE_INTERVAL);
 	}
