@@ -12,6 +12,8 @@ public class ResponseTimeEmitter {
 	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 		
+		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
+		
 		emitter.registerDataCollector(new ResponseTimeCollector());
 		emitter.start();
 		
@@ -28,12 +30,16 @@ public class ResponseTimeEmitter {
 		System.out.println("Response Emitter stopped");
 	}
 	
+	public static String getExpandedFilePath(String relativeFilePath) {
+		return System.getProperty("one-jar.expand.dir") + "/" + relativeFilePath;
+	}
+	
 	private static class ShutdownHook extends Thread {
 		@Override
 		public void run() {
 			try {
 				emitter.stop();
-			} catch (IOException e) {
+			} catch (IOException | InterruptedException | ExecutionException e) {
 				System.err.println("Could not stop Response Emitter successfully.");
 			}
 		}

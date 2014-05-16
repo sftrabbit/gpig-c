@@ -1,0 +1,7 @@
+<project name="GPIG-C Response Time Emitter" basedir="." default="rebuild-run">
+	<property name="project.main-class" value="uk.co.gpigc.emitter.responsetime.ResponseTimeEmitter" />
+	<property name="project.dependencies" value="Emitter,Proto" />
+	<property name="project.common.libs" value="protobuf.jar" />
+
+	<import file="../../tools/common-ant.xml" />
+</project>
