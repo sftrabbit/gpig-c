@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project>
+	<property name="ant-contrib.jar.name" value="${ant-contrib.dist.dir}/ant-contrib.jar"/>
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+		<classpath><pathelement location="${ant-contrib.jar.name}" /></classpath>
+	</taskdef>
+</project>

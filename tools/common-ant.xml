@@ -95,9 +95,13 @@
 	<property name="relative.one-jar.dist.dir" value="${relative.gpigc.tools.dir}/one-jar" />
 	<import file="${relative.one-jar.dist.dir}/one-jar-ant-task.xml" />
 
+	<property name="ant-contrib.dist.dir" value="${gpigc.tools.dir}/ant-contrib" />
+	<property name="relative.ant-contrib.dist.dir" value="${relative.gpigc.tools.dir}/ant-contrib" />
+	<import file="${relative.ant-contrib.dist.dir}/ant-contrib-ant-task.xml" />
+
 	<!-- TARGETS -->
 	
-	<target name="clean">
+	<target name="clean" description="Clean the build directory">
 		<delete dir="${bin.dir}" />
 	</target>
 	
@@ -164,9 +168,9 @@
 		<java fork="true" jar="${bin.jar.dir}/${jar.name}" />
 	</target>
 
-	<target name="run" depends="run-arg,run-noarg" unless="project.is-library" />
+	<target name="run" depends="run-arg,run-noarg" unless="project.is-library" description="Run the latest build" />
 
-	<target name="rebuild" depends="clean,jar,jar-library" />
+	<target name="rebuild" depends="clean,jar,jar-library" description="Rebuild the library/application" />
 
-	<target name="rebuild-run" depends="clean,run" unless="project.is-library" />
+	<target name="rebuild-run" depends="clean,run" unless="project.is-library" description="Rebuild the application and run it" />
 </project>
