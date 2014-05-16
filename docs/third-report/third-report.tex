@@ -389,15 +389,15 @@ Below the tactics which appear most suitable for use with the HUMS are summarise
 	\end{description}
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
-	\item[Fault Prevention] 
+	\item[Fault Prevention] Bundling related actions into transactions should stop the system entering an inconsistent  state. If a single action fails within a transactions then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engines) would allow for damage due to erroneous operation to be minimised.
 	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/Echo could also be used to ensure external components are correctly registered with the HUMS core.
-	\item[Fault Recovery] 
+	\item[Fault Recovery] Having secondary active or passive systems would allow for automatic switch over to the secondary systems when the main system failed, thus minimising interruption to clients.
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
 	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
 	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DOS attack. Trap files could be set that should only ever be accessed from specific addresses.
-	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots.  would allow for a  frequency would allow for the restoration of data.
+	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots would allow for the HUMS to roll back to an acceptable state.
 	\end{description}
 \end{description}
 
