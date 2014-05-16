@@ -389,15 +389,15 @@ Below the tactics which appear most suitable for use with the HUMS are summarise
 	\end{description}
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
-	\item[Fault Prevention] 
+	\item[Fault Prevention] Bundling related actions into transactions should stop the system entering an inconsistent  state. If a single action fails within a transactions then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engines) would allow for damage due to erroneous operation to be minimised.
 	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/Echo could also be used to ensure external components are correctly registered with the HUMS core.
-	\item[Fault Recovery] 
+	\item[Fault Recovery] Having secondary active or passive systems would allow for automatic switch over to the secondary systems when the main system failed, thus minimising interruption to clients.
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
-	\item[Resisting Attacks] 
-	\item[Detecting Attacks] 
-	\item[Recovering From Attacks] 
+	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
+	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DOS attack. Trap files could be set that should only ever be accessed from specific addresses.
+	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots would allow for the HUMS to roll back to an acceptable state.
 	\end{description}
 \end{description}
 
@@ -450,23 +450,17 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 
 \subsection{Store}
 \label{sec:store}
+To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores were supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
 
-\hl{Need to turn this into actual text worth reading...}
+\hl{Google app engine connection stuff is nonsense, uses TCP}
 
-To improve the tailorability of the system allowing for its use across many domains support for multiple datasources was offered. 
+Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datastore to the HUMS system. Communication between a clients HUMS and the remote datastore takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
 
-Connection pooling was used for all datasources. The process of opening, maintaining and deleting connections is resource intensive and is a performance bottleneck. A connection pool offers far more performant interaction with a datasource by providing a cache of reusable database connections. The HikariCP Java library was used to simplify the implementation of database connection pools. 
+For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained, serverless, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
 
-H2 is a Java library that implements a simple, self-contained, serverless, transactional SQL database. H2 can be run in embedded or server mode and with a small footprint of $1.5$MB it is optimised for operation in a resource constrained environment.
+Connection pooling was used for all datastores. The process of opening, maintaining and deleting connections is resource intensive and a performance bottleneck. A connection pool provides a cache of reusable database connections, connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. 
 
-Postgres instance running on Heroku was useful for.... clients who didn't want to have to manage the DB, more performance than google app engine, lots of other fascinating things
-
-Google app engine was good for....
-
-Security has been consider, traffic between the core and the datastores was encrypted, needed to authenticate to read/write
-
-Configurable (i.e. "tailorability") changing a single config file allowed for a switch of datasource, as mentioned auto recognition of change in config file section ????
-
+Prepared statements were used across all datastore. They are compiled once and then reused many times leading to significant gains in performance. Finally, prepared statements offer improved security with SQL injection attacks rendered useless with all user input being treated as data and thus not altering the characteristics of data queries.
 
 \subsection{Analyse}
 \label{sec:analyse}

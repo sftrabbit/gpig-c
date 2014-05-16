@@ -3,10 +3,17 @@ package com.gpigc.core;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.URL;
 
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.util.log.Logger;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 import com.gpigc.core.view.CoreShell;
 import com.gpigc.core.view.StandardMessageGenerator;
@@ -16,8 +23,8 @@ public class Main {
 	public static boolean running = false;
 	private static CoreShell shell;
 
-	public static void main(String args[]) throws ReflectiveOperationException,
-			IOException {
+	public static void main(String args[]) throws Exception {
+		setUpServer();
 		setUpGui();
 	}
 
@@ -60,6 +67,24 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void setUpServer() throws Exception {
+		org.eclipse.jetty.util.log.Log.setLog(new NullLogger()); // this seemingly does nothing, when it should do something
+
+		Server server = new Server(80);
+		HandlerList handlers = new HandlerList();
+
+		final URL warUrl = new URL(new URL("file:"), "./bin/server");
+		final String warUrlString = warUrl.toExternalForm();
+		WebAppContext webApp = new WebAppContext(warUrlString, "/");
+
+		handlers.setHandlers(new Handler[] { webApp, new DefaultHandler() });
+
+		server.setHandler(handlers);
+
+		server.start();
+		//server.join();
 	}
 
 	/**
@@ -105,6 +130,25 @@ public class Main {
 			run();
 		}
 
+	}
+
+	// NullLogger
+	static class NullLogger implements Logger {
+	    @Override public String getName() { return "no"; }
+	    @Override public void warn(String msg, Object... args) { }
+	    @Override public void warn(Throwable thrown) { }
+	    @Override public void warn(String msg, Throwable thrown) { }
+	    @Override public void info(String msg, Object... args) { }
+	    @Override public void info(Throwable thrown) { }
+	    @Override public void info(String msg, Throwable thrown) { }
+	    @Override public boolean isDebugEnabled() { return false; }
+	    @Override public void setDebugEnabled(boolean enabled) { }
+	    @Override public void debug(String msg, Object... args) { }
+	    @Override public void debug(Throwable thrown) { }
+	    @Override public void debug(String msg, Throwable thrown) { }
+	    @Override public Logger getLogger(String name) { return this; }
+	    @Override public void ignore(Throwable ignored) { }
+		@Override public void debug(String arg0, long arg1) { }
 	}
 
 }
