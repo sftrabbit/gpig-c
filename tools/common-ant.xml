@@ -1,6 +1,24 @@
 <project name="common-ant" basedir=".">
+    
+    <!-- Process project parameters -->
+    
+	<condition property="project.common.libs" value="abcdefg">
+		<not><isset property="project.common.libs"/></not>
+	</condition>
+	
+	<condition property="project.common.binlibs" value="abcdefg">
+		<not><isset property="project.common.binlibs"/></not>
+	</condition>
+	
+	<condition property="project.dependencies" value="">
+		<not><isset property="project.dependencies"/></not>
+	</condition>
+	
+	<condition property="project.is-library" value="true">
+		<not><isset property="project.main-class"/></not>
+	</condition>
 
-	<!--  Determine platform directory name -->
+	<!-- Determine platform directory name -->
     
 	<condition property="platform.name" value="win">
 		<os family="windows" />
@@ -27,10 +45,18 @@
 
 	<!-- OSX requires a special arg to be passed to the JVM -->
 	
-	<condition property="pass-swt-arg">
+	<condition property="pass-swt-arg" value="true">
 		<and>
 			<equals arg1="${platform.name}" arg2="osx" />
 			<contains string="${project.common.libs}" substring="swt" />
+			<not><isset property="project.is-library" /></not>
+		</and>
+	</condition>
+	
+	<condition property="no-pass-swt-arg" value="true">
+		<and>
+			<not><isset property="pass-swt-arg" /></not>
+			<not><isset property="project.is-library" /></not>
 		</and>
 	</condition>
 	
@@ -74,8 +100,10 @@
 	<target name="clean">
 		<delete dir="${bin.dir}" />
 	</target>
+	
+	<target name="prehook" />
 
-	<target name="collect-libs">
+	<target name="collect-libs" depends="prehook">
 		<mkdir dir="${bin.lib.dir}" />
 		<mkdir dir="${bin.binlib.dir}" />
 		<copy todir="${bin.lib.dir}">
@@ -100,7 +128,7 @@
 			classpathref="classpath" />
 	</target>
 
-	<target name="jar" depends="compile">
+	<target name="jar" depends="compile" unless="project.is-library">
 		<mkdir dir="${bin.jar.dir}" />
 		<one-jar destfile="${bin.jar.dir}/${jar.name}">
 			<manifest>
@@ -121,17 +149,24 @@
 		</one-jar>
 	</target>
 
-	<target name="runarg" depends="jar" if="pass-swt-arg">
+	<target name="jar-library" depends="compile" if="project.is-library">
+		<mkdir dir="${bin.jar.dir}" />
+    	<jar basedir="${bin.classes.dir}" destfile="${bin.jar.dir}/${jar.name}" />
+	</target>
+
+	<target name="run-arg" depends="jar,jar-library" if="pass-swt-arg">
 		<java fork="true" jar="${bin.jar.dir}/${jar.name}">
 			<jvmarg value="-XstartOnFirstThread" />
 		</java>
 	</target>
 
-	<target name="run" depends="jar" unless="pass-swt-arg">
+	<target name="run-noarg" depends="jar,jar-library" if="no-pass-swt-arg">
 		<java fork="true" jar="${bin.jar.dir}/${jar.name}" />
 	</target>
 
-	<target name="rebuild" depends="clean,jar" />
+	<target name="run" depends="run-arg,run-noarg" unless="project.is-library" />
 
-	<target name="rebuild-run" depends="clean,run,runarg" />
+	<target name="rebuild" depends="clean,jar,jar-library" />
+
+	<target name="rebuild-run" depends="clean,run" unless="project.is-library" />
 </project>
