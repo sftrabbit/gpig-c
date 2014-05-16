@@ -27,5 +27,17 @@
 	<classpathentry kind="lib" path="lib/slf4j-nop-1.7.7.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.9.jar"/>
 	<classpathentry kind="lib" path="lib/h2-1.4.178.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jetty-server-9.1.5.v20140505.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jetty-util-9.1.5.v20140505.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jetty-webapp-9.1.5.v20140505.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jetty-servlet-9.1.5.v20140505.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jsp/javax.el-3.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jsp/javax.servlet.jsp-2.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jsp/javax.servlet.jsp-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jsp/javax.servlet.jsp.jstl-1.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jsp/jetty-jsp-jdt-2.3.3.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jsp/org.eclipse.jdt.core-3.8.2.v20130121.jar"/>
+	<classpathentry kind="lib" path="lib/jetty/jsp/org.eclipse.jetty.orbit.javax.servlet.jsp.jstl-1.2.0.v201105211821.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

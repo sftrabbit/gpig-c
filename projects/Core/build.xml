@@ -47,6 +47,8 @@
 	
 	<path id="classpath">
 		<fileset dir="${lib.dir}" includes="*.jar" />
+		<fileset dir="${lib.dir}/jetty" includes="*.jar" />
+		<fileset dir="${lib.dir}/jetty/jsp" includes="*.jar" />
 		<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
 			includes="*.jar" />
 	</path>
@@ -80,6 +82,9 @@
  		<copy todir="${classes.dir}/engine/analysis/com/gpigc/core/analysis/engine">
    			<fileset dir="${classes.dir}/com/gpigc/core/analysis/engine" includes="*.class"/>
  		</copy>
+		<copy todir="${build.dir}/server">
+			<fileset dir="../AdminCentre"/>
+		</copy>
 		<mkdir dir="${jar.dir}" />
 		<one-jar destfile="${jar.dir}/Core.jar">
 			<manifest>
@@ -93,6 +98,8 @@
 			</main>
 			<lib>
 				<fileset dir="${lib.dir}" includes="*.jar" />
+				<fileset dir="${lib.dir}/jetty" includes="*.jar" />
+				<fileset dir="${lib.dir}/jetty/jsp" includes="*.jar" />
 				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
 					includes="*.jar" />
 			</lib>
@@ -116,6 +123,7 @@
 	    <!-- This executes on OSX -->
 		<java fork="true" jar="${jar.dir}/Core.jar">
 			<jvmarg value="-XstartOnFirstThread" />
+			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
 			<sysproperty key="java.library.path"
 				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
 		</java>
@@ -124,6 +132,7 @@
 	<target name="run" depends="jar" unless="jvmarg">
 	    <!-- This executes on anything but OSX -->
 		<java fork="true" jar="${jar.dir}/Core.jar">
+			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
 			<sysproperty key="java.library.path"
 				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
 		</java>
