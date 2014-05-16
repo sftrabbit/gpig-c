@@ -450,7 +450,7 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 
 \subsection{Store}
 \label{sec:store}
-To improve the tailorability of the system to a clients needs support for multiple datasources was offered. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datasources with ease by updating their configuration file.
+To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, multiple datasources were supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datasources with ease by updating their configuration file.
 
 Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datasource to the HUMS system. Communication between a clients HUMS and the remote datasources takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
 
@@ -459,7 +459,6 @@ For real-time applications that require high performance and low response times 
 Connection pooling was used for all datasources. The process of opening, maintaining and deleting connections is resource intensive and a performance bottleneck. A connection pool provides a cache of reusable database connections, connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. 
 
 Prepared statements were used across all datasources. They are compiled once and then reused many times leading to significant gains in performance. Finally, prepared statements offer improved security with SQL injection attacks rendered useless with all user input being treated as data and thus not altering the characteristics of data queries.
-
 
 \subsection{Analyse}
 \label{sec:analyse}
