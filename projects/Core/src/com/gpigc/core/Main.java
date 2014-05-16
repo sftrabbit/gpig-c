@@ -72,7 +72,7 @@ public class Main {
 	private static void setUpServer() throws Exception {
 		org.eclipse.jetty.util.log.Log.setLog(new NullLogger()); // this seemingly does nothing, when it should do something
 
-		Server server = new Server(8080);
+		Server server = new Server(65123);
 		HandlerList handlers = new HandlerList();
 
 		final URL warUrl = new URL(new URL("file:"), "./bin/server");
