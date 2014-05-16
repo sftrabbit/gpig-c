@@ -452,6 +452,8 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 \label{sec:store}
 To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores were supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
 
+\hl{Google app engine connection stuff is nonsense, uses TCP}
+
 Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datastore to the HUMS system. Communication between a clients HUMS and the remote datastore takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
 
 For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained, serverless, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
