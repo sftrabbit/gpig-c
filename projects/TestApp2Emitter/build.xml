@@ -1,0 +1,8 @@
+<project name="GPIG-C Test App 2 Emitter" basedir="." default="rebuild-run">
+	<property name="project.main-class" value="uk.co.gpigc.emitter.testapp2.TestApp2Emitter" />
+	<property name="project.dependencies" value="Emitter,Proto" />
+	<property name="project.common.libs" value="protobuf.jar,tools.jar,sigar.jar" />
+	<property name="project.common.binlibs" value="*sigar*.so" />
+
+	<import file="../../tools/common-ant.xml" />
+</project>
