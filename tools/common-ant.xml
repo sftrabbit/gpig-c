@@ -114,7 +114,7 @@
 	            <property name="dep.@{dependency}.dir" value="${gpigc.projects.dir}/@{dependency}" />
 	            <property name="dep.@{dependency}.ant" value="${dep.@{dependency}.dir}/build.xml" />
 	            <echo message="Building dependency in ${dep.@{dependency}.dir}" />
-	            <ant antfile="${dep.@{dependency}.ant}" inheritAll="false" useNativeBasedir="true" />
+	            <ant antfile="${dep.@{dependency}.ant}" target="rebuild" inheritAll="false" useNativeBasedir="true" />
 	            <echo message="Done building dependency" />
 	        </sequential>
 	    </for>
