@@ -32,6 +32,7 @@ $(".sensor-params").on("click", ".param-delete", function() { // bind this using
 $(".new-param").click(function() {
     if (!$(this).hasClass("disabled")) {
         $(this).parent("li").before('<li class="list-group-item param-item param-item-new"><input type="text" value="" class="form-control param-key"><input type="text" value="" class="form-control param-value"><a class="btn btn-danger param-delete" href="#"><i class="fa fa-trash-o"></i></a></li>');
+        $(this).closest("ul").children(".param-item-new").last().children(".param-key").focus();
     }
     return false;
 });
@@ -54,11 +55,11 @@ $(".sensor-params").submit(function() {
     $(".param-item", $this).each(function(index, element) {
         data[$(".param-key", element).val()] = $(".param-value", element).val();
     });
-    $.post("ajax-sensor-params.php?system=" + $("#systems-list .dropdown-toggle").text().trim() + "&sensor=" + $this.data("system"), data, function success(data, textStatus, jqXHR) {
+    $.post("ajax-sensor-params.jsp?system=" + $("#systems-list .dropdown-toggle").text().trim() + "&sensor=" + $this.data("system"), {"post": JSON.stringify(data)}, function success(data, textStatus, jqXHR) {
         var button = $(".buttons-group .btn-primary", $this);
         button.html('<i class="fa fa-check"></i> Saved').addClass("btn-success");
         setTimeout(function() { button.html("Save").removeClass("btn-success"); }, 1500);
-    }).fail(function() {
+    }, "json").fail(function() {
         alert("Error: permission denied - could not write to the config file.");
         var button = $(".buttons-group .btn-primary", $this);
         button.html('<i class="fa fa-exclamation-triangle"></i> Error').addClass("btn-warning");
@@ -80,11 +81,11 @@ $("#data-store").submit(function() {
     $("select, button", $this).prop("disabled", true).blur();
     $(".btn-primary", $this).html('<i class="fa fa-refresh fa-spin"></i> Saving').blur();
     var data = {"store": $("#data-store-name option:selected").val()};
-    $.post("ajax-datastore.php?system=" + $("#systems-list .dropdown-toggle").text().trim(), data, function success(data, textStatus, jqXHR) {
+    $.post("ajax-datastore.jsp?system=" + $("#systems-list .dropdown-toggle").text().trim(), {"post": JSON.stringify(data)}, function success(data, textStatus, jqXHR) {
         var button = $(".btn-primary", $this);
         button.html('<i class="fa fa-check"></i> Saved').addClass("btn-success");
         setTimeout(function() { button.html("Save").removeClass("btn-success"); }, 1500);
-    }).fail(function() {
+    }, "json").fail(function() {
         alert("Error: permission denied - could not write to the config file.");
         var button = $(".btn-primary", $this);
         button.html('<i class="fa fa-exclamation-triangle"></i> Error').addClass("btn-warning");
@@ -95,13 +96,20 @@ $("#data-store").submit(function() {
     return false;
 });
 
+var changing = false;
 $(".toggle-switch").bootstrapSwitch({
     size: "normal",
     onSwitchChange: function(event, state) {
+        changing = true;
         var data = {"engines": $("#engines input[type=checkbox]:checked").map(function() { return $(this).val(); }).get()};
-        $.post("ajax-engines.php?system=" + $("#systems-list .dropdown-toggle").text().trim(), data).fail(function() {
+        $.post("ajax-engines.jsp?system=" + $("#systems-list .dropdown-toggle").text().trim(), {"post": JSON.stringify(data)}, function success(data, textStatus, jqXHR) {
+            changing = false;
+        }, "json").fail(function() {
             alert("Error: permission denied - could not write to the config file.");
-            $("#engines")[0].reset();
+            if (!changing) {
+                $("#engines")[0].reset();
+                changing = false;
+            }
         });
     }
 });
@@ -109,4 +117,5 @@ $(".toggle-switch").bootstrapSwitch({
 $(window).bind("unload", function() {
     $("input, button, select").prop("disabled", false);
     $("#engines")[0].reset();
+    $("#data-store")[0].reset();
 });

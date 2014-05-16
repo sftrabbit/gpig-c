@@ -2,7 +2,7 @@
 
 // check for form submission - if it doesn't exist then send back to contact form
 if (!isset($_POST['save']) || $_POST['save'] != 'contact') {
-    header('Location: contact.php'); exit;
+    header('Location: contact.html'); exit;
 }
 	
 // get the posted data
@@ -29,7 +29,7 @@ elseif (empty($message))
 		
 // check if an error was found - if there was, send the user back to the form
 if (isset($error)) {
-    header('Location: contact.php?e='.urlencode($error)); exit;
+    header('Location: contact.html?e='.urlencode($error)); exit;
 }
 
 $headers = "From: $email_address\r\n"; 
