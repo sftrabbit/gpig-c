@@ -78,6 +78,7 @@
 	<property name="gpigc.tools.dir" value="${gpigc.dir}/tools" />
 	<property name="gpigc.lib.dir" value="${gpigc.dir}/lib" />
 	<property name="gpigc.binlib.dir" value="${gpigc.dir}/binlib" />
+	<property name="gpigc.projects.dir" value="${gpigc.dir}/projects" />
 
 	<property name="relative.gpigc.dir" value=".." />
 	<property name="relative.gpigc.tools.dir" value="${relative.gpigc.dir}/tools" />
@@ -106,8 +107,24 @@
 	</target>
 	
 	<target name="prehook" />
+	
+	<target name="collect-dependencies" depends="prehook">
+		<mkdir dir="${bin.lib.dir}" />
+	    <for list="${project.dependencies}" param="dependency">
+	        <sequential>
+	            <property name="dep.@{dependency}.dir" value="${gpigc.projects.dir}/@{dependency}" />
+	            <property name="dep.@{dependency}.ant" value="${dep.@{dependency}.dir}/build.xml" />
+	            <echo message="Building dependency in ${dep.@{dependency}.dir}" />
+	            <ant antfile="${dep.@{dependency}.ant}" inheritAll="false" useNativeBasedir="true" />
+	            <property name="dep.@{dependency}.jar" value="${dep.@{dependency}.dir}/${bin.jar.dir}/@{dependency}.jar" />
+	            <echo message="Copying dependency: ${dep.@{dependency}.jar}" />
+	            <copy file="${dep.@{dependency}.jar}" todir="${bin.lib.dir}" />
+	            <echo message="Done building dependency" />
+	        </sequential>
+	    </for>
+	</target>
 
-	<target name="collect-libs" depends="prehook">
+	<target name="collect-libs" depends="collect-dependencies">
 		<mkdir dir="${bin.lib.dir}" />
 		<mkdir dir="${bin.binlib.dir}" />
 		<copy todir="${bin.lib.dir}">
