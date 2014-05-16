@@ -108,18 +108,27 @@
 	
 	<target name="prehook" />
 	
-	<target name="collect-dependencies" depends="prehook">
-		<mkdir dir="${bin.lib.dir}" />
+	<target name="build-dependencies" depends="prehook" unless="nodeps">
 	    <for list="${project.dependencies}" param="dependency">
 	        <sequential>
 	            <property name="dep.@{dependency}.dir" value="${gpigc.projects.dir}/@{dependency}" />
 	            <property name="dep.@{dependency}.ant" value="${dep.@{dependency}.dir}/build.xml" />
 	            <echo message="Building dependency in ${dep.@{dependency}.dir}" />
 	            <ant antfile="${dep.@{dependency}.ant}" inheritAll="false" useNativeBasedir="true" />
+	            <echo message="Done building dependency" />
+	        </sequential>
+	    </for>
+	</target>
+	
+	<target name="collect-dependencies" depends="build-dependencies">
+		<mkdir dir="${bin.lib.dir}" />
+	    <for list="${project.dependencies}" param="dependency">
+	        <sequential>
+	            <property name="dep.@{dependency}.dir" value="${gpigc.projects.dir}/@{dependency}" />
 	            <property name="dep.@{dependency}.jar" value="${dep.@{dependency}.dir}/${bin.jar.dir}/@{dependency}.jar" />
 	            <echo message="Copying dependency: ${dep.@{dependency}.jar}" />
 	            <copy file="${dep.@{dependency}.jar}" todir="${bin.lib.dir}" />
-	            <echo message="Done building dependency" />
+	            <echo message="Done copying dependency" />
 	        </sequential>
 	    </for>
 	</target>
@@ -186,8 +195,16 @@
 	</target>
 
 	<target name="run" depends="run-arg,run-noarg" unless="project.is-library" description="Run the latest build" />
+	
+	<target name="nodeps">
+	    <property name="nodeps" value="true" />
+	</target>
 
 	<target name="rebuild" depends="clean,jar,jar-library" description="Rebuild the library/application" />
 
+	<target name="rebuild-no-deps" depends="nodeps,clean,jar,jar-library" description="Rebuild the library/application without building dependencies" />
+
 	<target name="rebuild-run" depends="clean,run" unless="project.is-library" description="Rebuild the application and run it" />
+
+	<target name="rebuild-run-no-deps" depends="nodeps,clean,run" unless="project.is-library" description="Rebuild the application and run it without building dependencies" />
 </project>

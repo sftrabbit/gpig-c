@@ -1,6 +1,6 @@
 <project name="GPIG-C Test App 1 Emitter" basedir="." default="rebuild-run">
 	<property name="project.main-class" value="uk.co.gpigc.emitter.testapp1.TestApp1Emitter" />
-	<property name="project.dependencies" value="Proto" />
+	<property name="project.dependencies" value="Emitter,Proto" />
 	<property name="project.common.libs" value="protobuf.jar,tools.jar,sigar.jar" />
 	<property name="project.common.binlibs" value="*sigar*.so" />
 
