@@ -13,7 +13,7 @@ public class OpenJarThread extends Thread {
 	public void run() {
 		try {
 			proc = Runtime.getRuntime().exec("java -jar "+jarPath);
-			System.out.println("First Test App is running from: "+ jarPath);
+			System.out.println("Running "+ jarPath);
 			proc.waitFor();
 		} catch (Exception e) {
 			e.printStackTrace();

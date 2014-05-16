@@ -12,8 +12,6 @@ public class ResponseTimeEmitter {
 	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 		
-		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
-		
 		emitter.registerDataCollector(new ResponseTimeCollector());
 		emitter.start();
 		

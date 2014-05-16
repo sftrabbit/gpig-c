@@ -8,7 +8,7 @@ import uk.co.gpigc.emitter.testapp1.JavaVirtualMachineMonitor.MonitorJvmExceptio
 import uk.co.gpigc.emitter.testapp1.ProcessMonitor.ProcessMonitorException;
 
 public class TestApp1Emitter {
-	private static final int COLLECTION_INTERVAL = 1000;
+	private static final int COLLECTION_INTERVAL = 30000;
 	private static final Emitter emitter = new Emitter(COLLECTION_INTERVAL);
 
 	public static void main(String[] args) throws MonitorJvmException, ProcessMonitorException, InterruptedException {
@@ -18,17 +18,20 @@ public class TestApp1Emitter {
 		
 		OpenJarThread bThread = new OpenJarThread(getExpandedFilePath("res/" + TestApp1Collector.TEST_APP_NAME));
 		bThread.start();
+		
 		emitter.registerDataCollector(new TestApp1Collector());
 		emitter.start();
 		System.out.println("Emitter started");
+		
 		try {
 			emitter.waitFor();
+			System.out.println("Emitter stopped");
 		} catch (InterruptedException e) {
-			System.err.println("Emitter was interrupted.");
+			System.err.println("Emitter was interrupted");
 		} catch (ExecutionException e) {
 			System.err.println("The emitter threw an exception: " + e.getCause().getMessage());
 		}
-		System.out.println("Emitter stopped");
+		
 		bThread.stopRunning();
 	}
 	
@@ -40,9 +43,10 @@ public class TestApp1Emitter {
 		@Override
 		public void run() {
 			try {
+				System.out.println("Shutting down");
 				emitter.stop();
 			} catch (IOException | InterruptedException | ExecutionException e) {
-				System.err.println("Could not stop emitter successfully.");
+				System.err.println("Could not stop emitter cleanly");
 			}
 		}
 	}
