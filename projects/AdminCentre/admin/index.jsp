@@ -96,7 +96,7 @@ List<String> availableNotification = Arrays.asList(
         <div class="col-sm-12 center-block">
             <br>
             <h1>
-                Administration Center
+                Administration Centre
                 <div id="systems-list">
                     <span>System: </span> 
                     <div class="btn-group">
