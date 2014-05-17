@@ -150,7 +150,7 @@
 		<copy todir="${bin.binlib.dir}">
 			<fileset dir="${gpigc.binlib.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${gpigc.binlib.dir}/${platform.dir}" includes="${project.common.binlibs}" />
-			<fileset dir="${binlib.dir}" includes="**" erroronmissingdir="false" />
+			<fileset dir="${binlib.dir}" includes="*" erroronmissingdir="false" />
 			<fileset dir="${binlib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
 		</copy>
 	</target>
