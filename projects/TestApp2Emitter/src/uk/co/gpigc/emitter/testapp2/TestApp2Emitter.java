@@ -3,7 +3,7 @@ package uk.co.gpigc.emitter.testapp2;
 import uk.co.gpigc.emitter.SimpleEmitter;
 
 public class TestApp2Emitter {
-	private static final int COLLECTION_INTERVAL = 30000;
+	private static final int COLLECTION_INTERVAL = 1000;
 
 	public static void main(String[] args) throws Exception {	
 		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
