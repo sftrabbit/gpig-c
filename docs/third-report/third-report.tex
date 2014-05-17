@@ -112,7 +112,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Glossary}
 \label{sec:glossary}
-
+\hl{TODO: Possibly update this}
 \begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
@@ -127,6 +127,8 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\item[Data Emitter] A Client that provides data to an Instance through the Input Interface
 	\item[Output Interface] The interfaces through which reports and notifications are dispatched
 	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
+	\item[Admin Centre] \hl{TODO}
+	\item[(HUMS) Core] \hl{TODO}
 	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis
 	\item[Notification] A message dispatched by the System when an Event is fired
@@ -403,7 +405,8 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 
 \subsection{Design Patterns}
 Having determined the tactics applicable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected which allow these tactics to be realised in the HUMS architecture.
-\hl{TODO Adam}
+
+\hl{TODO Adam, 1 or two sentences about each}
 \begin{description}
 \item[Observer] stuff
 \item[Pipes and Filters] stuff
@@ -452,7 +455,7 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \label{sec:core}
 \hl{Andy/Rosy: Config files, gui, server shiz}
 
-A lightweight Jetty server was also added to the core so that the admin centre can be served from the same system that the core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
+A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
 
 \subsection{Monitoring}
 \label{sec:monitor}
@@ -621,3 +624,4 @@ Using iotop under Ubuntu 14.04, we were able to verify that the test application
 \bibliography{report-refs}
 \bibliographystyle{IEEEtran}
 \end{document}
+}
