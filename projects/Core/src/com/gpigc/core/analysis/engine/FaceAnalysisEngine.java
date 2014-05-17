@@ -141,7 +141,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @throws ParseException 
 	 */
 	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
-		String[] faceStrings = facesMatrixStr.split("\n");
+		System.err.println("Face data: "+facesMatrixStr);
+		String[] faceStrings = facesMatrixStr.split("X");
+		System.out.println(faceStrings.length+" example faces loaded.");
 		List<Mat> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
 			faces.add(parseFace(faceStr));
@@ -189,7 +191,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 */
 	public static boolean isAuthorisedFace(Mat testFace,
 			List<Mat> exampleFaces, double threshold) {
-		System.err.println("Checking face authorisation at the "+threshold+
+		System.err.println(" >>>>> Checking face authorisation at the "+threshold+
 				" threshold");
 		/*
 		 * Check to see if close enough to an allowable example face using
@@ -198,12 +200,14 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		for (Mat example : exampleFaces) {
 			double faceSimilarity = Imgproc.compareHist(testFace, example,
 					Imgproc.CV_COMP_CHISQR);
-			System.err.println("Comparing face to example face. Chi square "
-					+ "difference = "+faceSimilarity);
 			if (faceSimilarity < threshold) {
+				System.err.println("    Face found! Difference = "+faceSimilarity);
 				return true;
+			} else {
+				System.err.println("    No face found. Difference = "+faceSimilarity);
 			}
 		}
+		System.err.println(" <<<<< No faces found");
 		return false;
 	}
 

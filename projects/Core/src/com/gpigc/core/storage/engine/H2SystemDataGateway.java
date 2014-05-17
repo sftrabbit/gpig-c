@@ -57,9 +57,9 @@ public class H2SystemDataGateway extends SystemDataGateway {
 			statement
 			.execute("DROP TABLE IF EXISTS EMITTER_SYSTEM_STATE CASCADE");
 			statement
-			.execute("CREATE TABLE EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK identity PRIMARY KEY, SYSTEM_ID varchar(255), TIMESTAMP timestamp);");
+			.execute("CREATE TABLE EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK identity PRIMARY KEY, SYSTEM_ID LONGVARCHAR, TIMESTAMP timestamp);");
 			statement
-			.execute("CREATE TABLE SENSOR_READINGS (EMITTER_SYSTEM bigint references EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK), SENSOR_ID varchar(255), VALUE varchar(255), CREATION_TIMESTAMP timestamp, DATABASE_TIMESTAMP timestamp);");
+			.execute("CREATE TABLE SENSOR_READINGS (EMITTER_SYSTEM bigint references EMITTER_SYSTEM_STATE (EMITTER_SYSTEM_PK), SENSOR_ID LONGVARCHAR, VALUE LONGVARCHAR, CREATION_TIMESTAMP timestamp, DATABASE_TIMESTAMP timestamp);");
 			statement
 			.execute("CREATE INDEX emitter_system_idx ON EMITTER_SYSTEM_STATE(EMITTER_SYSTEM_PK, timestamp);");
 			statement
@@ -215,7 +215,7 @@ public class H2SystemDataGateway extends SystemDataGateway {
 				sensorReadingsInsert.execute();
 			}
 		} catch (SQLException e) {
-			System.out.println("Failed to write data to H2 datastore");
+			System.out.println("Failed to write data to H2 datastore: "+e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {
