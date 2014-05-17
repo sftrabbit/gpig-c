@@ -157,7 +157,7 @@
 
 	<target name="set-classpath" depends="collect-libs">
 		<path id="classpath">
-			<fileset dir="${bin.lib.dir}" includes="**.jar" />
+			<fileset dir="${bin.lib.dir}" includes="**/*.jar" />
 		</path>
 	</target>
 
@@ -181,7 +181,7 @@
 				<fileset dir="${bin.lib.dir}" includes="**" />
 			</lib>
 			<binlib>
-				<fileset dir="${bin.binlib.dir}" includes="*" />
+				<fileset dir="${bin.binlib.dir}" includes="**" />
 			</binlib>
 			<fileset dir="." includes="*.properties" />
 			<fileset dir="." includes="${res.dir}/**" />
