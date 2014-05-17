@@ -38,6 +38,9 @@ SurfaceHolder.Callback {
 	private Camera camera;
 	private Button saveButton;
 	private boolean save;
+	
+	private long lastUpdate = 0;
+	private static final long WAIT_MILLIS = 5000;
 
 	static {
 		System.loadLibrary("opencv_java");
@@ -106,7 +109,11 @@ SurfaceHolder.Callback {
 
 	@Override
 	public void onPreviewFrame(byte[] data, Camera camera) {
-
+		if (System.currentTimeMillis()-lastUpdate < WAIT_MILLIS) {
+			System.out.println("Too soon - skipping analysis");
+			return;
+		}
+		System.out.println("Analysing");
 		Camera.Size previewSize = camera.getParameters().getPreviewSize();
 		byte[][] rgbImage = NV21toRGB(data, previewSize.width,
 				previewSize.height);
@@ -114,6 +121,8 @@ SurfaceHolder.Callback {
 		Mat faceData = new Mat();
 		computeFaceData(rgbImage, previewSize.width, previewSize.height,
 				faceData.getNativeObjAddr());
+		
+		System.out.println(">>> New frame <<<");
 
 		if (save) {
 			save = false;
@@ -150,10 +159,12 @@ SurfaceHolder.Callback {
 		} else {
 			transmitFaceData(faceData);
 		}
+		lastUpdate = System.currentTimeMillis();
 	}
 
 	private void transmitFaceData(Mat faceData) {
 		// TODO Switch to base64 encoding if we want to waste less space
+		System.out.println(">>>>>>>>>> TRANSMITTING <<<<<<<<<<");
 		StringBuilder bld = new StringBuilder();
 		for (int i = 0; i < faceData.size().width; i++) {
 			float[] faceDataValue = new float[1];
