@@ -17,6 +17,7 @@ import uk.co.gpigc.gpigcandroid.R;
 import android.app.Activity;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,10 +26,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 public class FaceSystemActivity extends Activity implements Camera.PreviewCallback,
-	SurfaceHolder.Callback {
+SurfaceHolder.Callback {
 
 	private static int REAR_FACING_CAMERA = 0;
-	
+
 	private static final String SYSTEM_ID = "FaceSystem";
 	private static final String FACE_ID = "Face";
 
@@ -37,7 +38,7 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 	private Camera camera;
 	private Button saveButton;
 	private boolean save;
-	
+
 	static {
 		System.loadLibrary("opencv_java");
 		System.loadLibrary("faces");
@@ -70,13 +71,13 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 	public void onResume() {
 		super.onResume();
 		Log.d("Foo", "onResume");
-		
+
 		OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, new BaseLoaderCallback(this) {});
-		
+
 		camera = Camera.open();
 		camera.setDisplayOrientation(90);
 		camera.setPreviewCallback(this);
-		
+
 		cameraContainer.addView(previewSurface);
 	}
 
@@ -105,7 +106,7 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 
 	@Override
 	public void onPreviewFrame(byte[] data, Camera camera) {
-		
+
 		Camera.Size previewSize = camera.getParameters().getPreviewSize();
 		byte[][] rgbImage = NV21toRGB(data, previewSize.width,
 				previewSize.height);
@@ -113,13 +114,17 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 		Mat faceData = new Mat();
 		computeFaceData(rgbImage, previewSize.width, previewSize.height,
 				faceData.getNativeObjAddr());
-		
+
 		if (save) {
 			save = false;
 
-			Log.d("Foo", this.getApplicationContext().getFilesDir().toString());
-			File file = new File(this.getApplicationContext().getFilesDir(),
-					"faces.csv");
+			File dir = Environment.getExternalStoragePublicDirectory(
+					Environment.DIRECTORY_DOWNLOADS);
+			if (!dir.mkdirs()) {
+				Log.e("GPIGC", "Directory not created");
+			}
+			Log.d("GPIGC", "Storage dir = "+dir);
+			File file = new File(dir,"faces.csv");
 			try {
 				PrintStream fileStream = new PrintStream(new FileOutputStream(
 						file, true));
@@ -138,7 +143,8 @@ public class FaceSystemActivity extends Activity implements Camera.PreviewCallba
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-
+			Log.d("GPIGC", ">>>>>>>>> SAVED <<<<<<<<<");
+			Log.d("GPIGC", "Storage dir = "+dir);
 			saveButton.setText("Save Data");
 			saveButton.setEnabled(true);
 		} else {
