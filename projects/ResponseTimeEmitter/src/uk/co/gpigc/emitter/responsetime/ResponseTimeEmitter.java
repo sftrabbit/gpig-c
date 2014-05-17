@@ -1,46 +1,19 @@
 package uk.co.gpigc.emitter.responsetime;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import uk.co.gpigc.emitter.Emitter;
+import uk.co.gpigc.emitter.SimpleEmitter;
 
 public class ResponseTimeEmitter {
-	private static final int COLLECTION_INTERVAL = 120000;
-	private static final Emitter emitter = new Emitter(COLLECTION_INTERVAL);
+	private static final int COLLECTION_INTERVAL = 30000;
 
-	public static void main(String[] args) {
-		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
+	public static void main(String[] args) throws Exception {	
+		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
 		
-		emitter.registerDataCollector(new ResponseTimeCollector());
+		SimpleEmitter emitter = new SimpleEmitter(ResponseTimeEmitter.class.getSimpleName(), new ResponseTimeCollector(), COLLECTION_INTERVAL);
 		emitter.start();
-		
-		System.out.println("Response Emitter started");
-		
-		try {
-			emitter.waitFor();
-		} catch (InterruptedException e) {
-			System.err.println("Response Emitter was interrupted.");
-		} catch (ExecutionException e) {
-			System.err.println("The Response Emitter threw an exception: " + e.getCause().getMessage());
-		}
-		
-		System.out.println("Response Emitter stopped");
 	}
 	
 	public static String getExpandedFilePath(String relativeFilePath) {
 		return System.getProperty("one-jar.expand.dir") + "/" + relativeFilePath;
-	}
-	
-	private static class ShutdownHook extends Thread {
-		@Override
-		public void run() {
-			try {
-				emitter.stop();
-			} catch (IOException | InterruptedException | ExecutionException e) {
-				System.err.println("Could not stop Response Emitter successfully.");
-			}
-		}
 	}
 
 }

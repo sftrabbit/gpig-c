@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 
 import com.gpigc.proto.Protos.SystemData;
 
-public class Emitter {
+public class EmitterService {
 	public static final String DEFAULT_CORE_HOST = "localhost";
 	public static final int DEFAULT_CORE_PORT = 8000;
 	public static final int DEFAULT_COLLECTION_INTERVAL = 1000;
@@ -24,19 +24,19 @@ public class Emitter {
 	private int port;
 	private int collectionInterval;
 	
-	public Emitter() {
+	public EmitterService() {
 		this(DEFAULT_CORE_HOST, DEFAULT_CORE_PORT, DEFAULT_COLLECTION_INTERVAL);
 	}
 	
-	public Emitter(int collectionInterval) {
+	public EmitterService(int collectionInterval) {
 		this(DEFAULT_CORE_HOST, DEFAULT_CORE_PORT, collectionInterval);
 	}
 	
-	public Emitter(String host, int port) {
+	public EmitterService(String host, int port) {
 		this(host, port, DEFAULT_COLLECTION_INTERVAL);
 	}
 	
-	public Emitter(String host, int port, int collectionInterval) {
+	public EmitterService(String host, int port, int collectionInterval) {
 		this.host = host;
 		this.port = port;
 		this.collectionInterval = collectionInterval;
