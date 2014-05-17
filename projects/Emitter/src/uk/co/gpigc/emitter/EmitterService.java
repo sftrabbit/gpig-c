@@ -88,6 +88,7 @@ public class EmitterService {
 				}
 			} catch (Exception exception) {
 				stop();
+				throw exception;
 			}
 			
 			return null;
