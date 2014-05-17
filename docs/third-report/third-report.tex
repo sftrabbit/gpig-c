@@ -103,7 +103,7 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
-This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the systems requirements are further refined, building on the feedback from the previous report, including a set of external dependancies. The systems architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made, this including examining the quality attributes associated with the system, and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented, using a number of system views deemed to be important. Having determined the architecture of the system the risks associated with this design, and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are discussed.
+This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the systems requirements are further refined, building on the feedback from the previous report, including a set of external dependancies. The system's architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made. This includes examining the quality attributes associated with the system and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented using a number of system views deemed to be important. Having determined the architecture of the system, the risks associated with this design and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are also discussed.
 
 The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the system. The project is then concluded, and the team reflects on their decisions throughout the project.
 
@@ -130,7 +130,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis
 	\item[Notification] A message dispatched by the System when an Event is fired
-	\item[Report] A message produced by the System by request of a User
+	\item[Report] A message produced by the System at the request of a User
 	\vspace{0.14cm}
 	\item[Sensor] A source of data to be monitored by the System
 	\item[Sensor ID] A unique identifier denoting a particular Sensor
@@ -142,7 +142,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-After feedback from the initial and interim reports, the HUMS requirements have been updated. This included modifying existing requirements and adding additional requirements and refinements. It also included removing the constraint requirement, which were deemed unnecessary by the module leader, and instead identifying the external dependancies of the system.
+After feedback from the initial and interim reports, the HUMS requirements have been updated. This included modifying existing requirements and adding additional requirements and refinements. It also included removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
@@ -189,7 +189,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 the way in which data is sensed.}{}
 \end{requirements}
 
-\subsection{Non Functional Requirements}
+\subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 \hl{write about changes -- currently they are unchanged} 
 
@@ -234,27 +234,27 @@ the way in which data is sensed.}{}
 \label{sec:qualities}
 A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders.
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
-When considering the HUMS, its requirements, and its stakeholders, table \ref{tab:qualities} ranks the qualities associated with the system, and explains why the quality was given that particular ranking. The ranking of qualities, was not done in the previous report, however,  is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Flexibility, and Interoperability.
+When considering the HUMS, its requirements and its stakeholders, table \ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Flexibility, and Interoperability.
 
 \tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
 \hline
 Quality \qquad Attribute & Rank & Reasoning \\
 \hline
-Flexibility & High &  It is important that the HUMS can be used in a range of domains, this has been strongly emphasised by the customer. 
+Flexibility & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the customer. 
 \\
-Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS
+Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
 \\
 Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
 \\
-Availability & High &  The non functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems, if it was not highly available then End Users would lose confidence in it. The HUMS must be at least as available as the average End Users system in order to monitor it properly. 
- \\
+Availability & High & The non-functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then End Users would lose confidence in it. The HUMS must be at least as available as the average End User's system in order to monitor it properly. 
+\\
 Security & High & Security is highly ranked as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify system data, and data in transit between Data Emitters and the HUMS must be protected.
 \\
-Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5ms. It must also  interface with many Data Emitters and Data Output Clients, meaning it must capable of handling a large number of events quickly. 
+Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5 ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
 \\
-Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults, and is also likely to increase its availability. 
+Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults and is also likely to increase its availability. 
 \\
-Usability & Low & Usability was not deemed of great importance to the system, as its sub qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for the web interface and admin centre, however, this is only a small part of the HUMS.
+Usability & Low & Usability was not deemed of great importance to the system as its sub qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for the web interface and admin centre, however this is only a small part of the HUMS.
 \\
 }{The ranked quality attributes, associated with the HUMS}{tab:qualities}
 
@@ -263,7 +263,7 @@ Usability & Low & Usability was not deemed of great importance to the system, as
 %-------------------------------------------------------------%
 \section{Quality Attribute Scenarios}
 \label{sec:scenarios}
-Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimulus. This helps to create goals, which the final implementation can be tested against to determine its quality, and how effective it is at achieving its non functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions, other scenarios where also considered and documented, however, could not be included in this report due to space limitations.
+Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimuli. This helps to create goals which the final implementation can be tested against to determine its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions. Other scenarios where also considered and documented, however could not be included in this report due to space limitations.
 
 \begin{scenario}{1}
 \quality{Flexibility}
@@ -279,34 +279,34 @@ Having identified the quality attributes which are important to creating a succe
 \begin{scenario}{2}
 \quality{Modifiability}
 \source{Developer}
-\stimulus{Wishes to add an additional analysis, reporting, or notification engine to the HUMS.}
+\stimulus{The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.}
 \artifact{HUMS Core}
 \environment{Runtime}
 \response{The new engine is implemented, tested and successfully added to the HUMS, without any loss in service.}
 \measure{No other system elements are affected, and the work is completed within budget.}
-\rationale{This scenario is important to both the HUMS developers and the End Users, the HUMS should allow both of these groups to add custom engines to the HUMS system, without affecting other system components.}
+\rationale{This scenario is important to both the HUMS developers and the End Users. The HUMS should allow both of these groups to add custom engines to the system without affecting other system components.}
 \end{scenario}
 
 \begin{scenario}{3}
 \quality{Security}
 \source{An unknown external Client}
-\stimulus{Attempts to access stored HUMS data or HUMS services.}
+\stimulus{The unknown external Client attempts to access stored HUMS data or HUMS services.}
 \artifact{HUMS Core}
-\environment{Normal Operation - Online}
+\environment{Normal Operation -- Online}
 \response{The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.}
 \measure{No HUMS data or services are damaged as a result of the access attempt.}
-\rationale{This scenario shows how the HUMS is expected to behave when a Client attempts access to its services, showing the importance of authenticating Clients and how to HUMS should respond to unauthorised Clients.}
+\rationale{This scenario shows how the HUMS is expected to behave when a Client attempts access to its services, showing the importance of authenticating Clients and how the HUMS should respond to unauthorised Clients.}
 \end{scenario}
 
 \begin{scenario}{4}
 \quality{Availability}
 \source{Datastore Module}
-\stimulus{The End Users registered datastore is unavailable to the HUMS instance}
-\artifact{HUMS System}
+\stimulus{The End Users registered datastore is unavailable to the HUMS instance.}
+\artifact{HUMS}
 \environment{Runtime}
 \response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
 \measure{End user defined repair time.}
-\rationale{This scenario shows how the HUMS should respond to a datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the End User. If the End Users defined datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in degraded mode.}
+\rationale{This scenario shows how the HUMS should respond to a datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the End User. If the End User's defined datastore fails the HUMS can only alert the user and attempt to reconnect -- this is a critical fault and does not allow the system to be run in a degraded mode.}
 \end{scenario}
 
 %-------------------------------------------------------------%
@@ -314,20 +314,20 @@ Having identified the quality attributes which are important to creating a succe
 %-------------------------------------------------------------%
 \section{Project Risks}
 \label{sec:risks}
-It is important to consider the risks of any software project, so that appropriate mitigation can be exercised, so that there are clear contingency plans in place to prevent problems having a large impact of the project, ensuring all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout development. 
+It is important to consider the risks of any software project so that appropriate mitigation can be exercised and there are clear contingency plans in place to prevent problems having a large impact of the project, thus ensuring all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout development. 
 
-Unlike in previous reports, risks have been separated into human risks and technological risks, this distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are shown in table \ref{tab:human_risks} and technical risks are presented in table \ref{tab:tech_risks}.
-Some risks have been modified since the previous report, others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
+Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in table \ref{tab:human_risks} and technical risks are presented in table \ref{tab:tech_risks}.
+Some risks have been modified since the previous report, while others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
 
 \tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c }
 { 	\hline
   	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
   	\hline
   
- 	R.1 & Loss of team member(s) or team member(s) underperformance & Internal/External deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
-   	R.2 & External pressures (such as other modules) limit the amount of development time & Internal/External deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
-   	R.3 & Customer does not think that the HUMS design correctly fulfils their brief & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
-	R.4 & Work is lost due to human or hardware error & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
+ 	R.1 & Loss of team member(s) or team member(s) underperformance. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
+   	R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
+   	R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
+	R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
   	\hline
 }
 {The human and business risks associated with this phase of the project}{tab:human_risks}
@@ -335,14 +335,14 @@ Some risks have been modified since the previous report, others are completely n
 
 \tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c}
 { 	\hline
-  	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
+    Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
   	\hline
   
- 	R.5 & Developed admin centre does not satisfy the outlined requirements & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre & 10 & Minor & \textbf{Low} \\
-   	R.6 & Data interception between the HUMS core and registered engines or datastore & Loss of confidence in HUMS. Lost/Corrupted Data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
-   	R.7 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability, and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
-   	R.8 & Included analysis engines computation too slow & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines & 25 & Moderate & \textbf{Low} \\	
-	R.9 & Included Notification engines too slow & Failure to meet performance targets. Loss of events, End User not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
+    R.5 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
+   	R.6 & Data interception between the HUMS core and registered engines or datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+   	R.7 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+   	R.8 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
+    R.9 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, End User not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
   	\hline
 }
 {The technical risks associated with this phase of the project}{tab:tech_risks}
@@ -351,10 +351,10 @@ Some risks have been modified since the previous report, others are completely n
 The following risk reduction techniques have been used throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to these techniques, the tactics and patterns explained later in this report are used to mitigate technical risks which affect the quality of the system.
 \begin{description}
 \item[Scrum:]
-The use of the Scrum as part of our software engineering methodology, as discussed in the initial report, helps to mitigate risks \emph{R.1-3}. The scrum allows team members to be kept up to date on what other team members are working on, and on the state of the project as a whole, making it easier for work to be reallocated across teams members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customers brief.
+The use of the scrum as part of our software engineering methodology, as discussed in the initial report, helps to mitigate risks \emph{R.1-3}. The scrum allows team members to be kept up to date on what other team members are working on, and on the state of the project as a whole, making it easier for work to be reallocated across teams members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customer's brief.
 
 \item[Version Control:]
-Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, it also prevents large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which caused a problem in the system, or caused the system to not meet stakeholder expectations.
+Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the system, or caused the system to not meet stakeholder expectations.
 
 \item[Automated Testing:] 
 Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.5-9}, helping to automatically validate system requirements. 
@@ -373,36 +373,36 @@ Having identified the key quality attributes for the system, and a set of qualit
 
 \subsection{Tactics}
 
-Below the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Flexibility tactics are not included as they are covered under modifiability and interoperability, as they are complementary. The tactics used are based on the descriptions provided by \hl{ref bass}.
+Below, the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Flexibility tactics are not included as they are covered under modifiability and interoperability, and are complementary. The tactics used are based on the descriptions provided by \hl{ref bass}.
 
 \begin{description}
 \item[Modifiability] \hfill
 	\begin{description}[noitemsep]
-	\item[Defer Binding Time] Configuration files, runtime registration, and polymorphism can be used to reduce the time taken to make changes, and to allow the End User to modify the system at runtime.
+	\item[Defer Binding Time] Configuration files, runtime registration and polymorphism can be used to reduce the time taken to make changes, and to allow the End User to modify the system at runtime.
 	\item[Localise Modifications] Steps are to be taken to maintain semantic coherence within the implementation, with the team aiming to produce loosely coupled modules with high cohesion. Modules are to be generalised where possible, allowing them to preform a larger variety of functions without code changes.
 	\item[Prevent Ripple Effect] Communication paths are to be restricted where possible, with the modules which can share data being limited. Information can also be hidden by using private functions where possible, meaning changing implementation details will not affect the public APIs used by the End User.
 	\end{description}
 \item[Interoperability] \hfill
 	\begin{description}[noitemsep]
 		\item[Locate] Services may need to be discovered at runtime.
-		\item[Managing Interfaces]  Complex interactions between the HUMS core and external engines may need to be orchestrated in order to fulfil the required functionality.
+		\item[Managing Interfaces] Complex interactions between the HUMS core and external engines may need to be orchestrated in order to fulfil the required functionality.
 	\end{description}
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
-	\item[Fault Prevention] Bundling related actions into transactions should stop the system entering an inconsistent  state. If a single action fails within a transactions then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engines) would allow for damage due to erroneous operation to be minimised.
-	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/Echo could also be used to ensure external components are correctly registered with the HUMS core.
+	\item[Fault Prevention] Bundling related actions into transactions should stop the system entering an inconsistent state. If a single action fails within a transactions then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engine) would allow for damage due to erroneous operation to be minimised.
+	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/echo could also be used to ensure external components are correctly registered with the HUMS core.
 	\item[Fault Recovery] Having secondary active or passive systems would allow for automatic switch over to the secondary systems when the main system failed, thus minimising interruption to clients.
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
 	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
-	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DOS attack. Trap files could be set that should only ever be accessed from specific addresses.
+	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DoS attack. Trap files could be set that should only ever be accessed from specific addresses.
 	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots would allow for the HUMS to roll back to an acceptable state.
 	\end{description}
 \end{description}
 
 \subsection{Design Patterns}
-Having determined the tactics implacable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected, which allow these tactics to be realised in the HUMS architecture.
+Having determined the tactics applicable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected which allow these tactics to be realised in the HUMS architecture.
 
 \begin{description}
 \item[Pattern] blah
@@ -412,14 +412,14 @@ Having determined the tactics implacable to the HUMS, which are likely to produc
 \label{sec:views}
 \includegraphics[width=\textwidth]{images/component.pdf}
 %-------------------------------------------------------------%
-%-------------TECHNICAL PROGRESS-------------%
+%-------------------DEVELOPMENT-------------------%
 %-------------------------------------------------------------%
 %   Notes: 					         	 %
 %  	- Reference risks constantly, lots and lots	 %
 %	- Reference requirements and scenarios 	 %
 %-------------------------------------------------------------%
-\section{Technical Progress}
-\label{sec:techprog}
+\section{Development}
+\label{sec:dev}
 
 \subsection{Sense}
 \label{sec:sense}
@@ -431,7 +431,10 @@ Having determined the tactics implacable to the HUMS, which are likely to produc
 \subsubsection{Traffic}
 
 \subsubsection{Android App}
-To explore the possibilities surrounding monitoring remote systems, an Android app was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
+To explore the possibilities surrounding monitoring remote systems an Android app was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM and oil temperature can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and, if appropriate, notification.
+
+\subsubsection{Website Responsiveness}
+A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, and in alerting some support staff if the system becomes unavailable. We implemented a simple response time sensor which reports to the core how long a request to a given website took to complete, with a default behaviour of sending an email notification if a request takes more than 5 seconds.
 
 \subsection{Smartphone Monitoring}
 
@@ -440,22 +443,22 @@ To explore the possibilities surrounding monitoring remote systems, an Android a
 \subsection{Face Recognition for Security}
 The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
 
-The face recognition process is two fold: An image is captured and it's dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
+The face recognition process is two fold: An image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
 
-The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
+The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
 
-When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided the sensor if it's distance from any of the example faces provided by the configuration file is less than some threshold, also given by the configuration file.
+When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided by the sensor if its distance from any of the example faces provided by the configuration file is less than some threshold, also given by the configuration file.
 
 % TODO This method is robust to lighting and pose \cite{ahonen2006face}
 
 
 \subsection{Store}
 \label{sec:store}
-To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores were supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
+To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores are supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
 
 \hl{Google app engine connection stuff is nonsense, uses TCP}
 
-Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datastore to the HUMS system. Communication between a clients HUMS and the remote datastore takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
+Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datastore to the HUMS. Communication between a clients HUMS and the remote datastore takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
 
 For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained, serverless, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
 
@@ -497,6 +500,7 @@ vhvhvh
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
 
+Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
