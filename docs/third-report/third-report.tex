@@ -442,7 +442,11 @@ Having determined the tactics implacable to the HUMS, which are likely to produc
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, and alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a s task, we implemented a response time data emitter which determines the response time of a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Android Mobile Application}
-To explore the possibilities surrounding monitoring remote systems, an Android app was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
+To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this.
+The first, as shown in Figure \hl{XXX} is a car system simulator, which allows a user to select values for a number of sensors and then push them to the core remotely. In the real system the user would not set the values or manually push them as it would all be automatic, however, for the purposes of demonstrating the functionality we choose to manually update the data.
+
+%The second system, as shown in Figure \hl{XXX} 
+%was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
 
 \subsection{Data Analysis}
 \label{sec:analysis}
