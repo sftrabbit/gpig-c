@@ -439,7 +439,7 @@ Having determined the tactics implacable to the HUMS, which are likely to produc
 \subsubsection{Earthquakes}
 \subsubsection{Traffic}
 \subsubsection{Server Response}
-A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, and in alerting some support staff if the system becomes unavailable. We implemented a simple response time sensor which reports to the core how long a request to a given website took to complete, with a default behaviour of sending an email notification if a request takes more than 5 seconds.
+A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, and alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a s task, we implemented a response time data emitter which determines the response time of a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Android Mobile Application}
 To explore the possibilities surrounding monitoring remote systems, an Android app was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
@@ -450,6 +450,7 @@ To explore the possibilities surrounding monitoring remote systems, an Android a
 \subsubsection{Generic Bounded Sensor Value Engine}
 
 \subsubsection{Generic Expression Engine}
+%%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
 
 \subsubsection{Phone Analysis Engine}
 
