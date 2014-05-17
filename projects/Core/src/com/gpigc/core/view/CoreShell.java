@@ -144,7 +144,7 @@ public class CoreShell extends Shell {
 
 		consoleTextView = new Text(this, SWT.BORDER | SWT.H_SCROLL
 				| SWT.V_SCROLL);
-		Font monospacedFont = new Font(getDisplay(), "Courier New", 10, SWT.NONE);
+		Font monospacedFont = new Font(getDisplay(), "Monospace", 10, SWT.NONE);
 		consoleTextView.setFont(monospacedFont);
 		consoleTextView.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		getConsoleTextView().setBackground(
