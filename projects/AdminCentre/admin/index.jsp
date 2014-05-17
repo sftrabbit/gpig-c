@@ -1,7 +1,19 @@
 <%@ page import="java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
 <%@ page buffer="none" %>
-<%
+<%!
 String filePath = new File("").getAbsolutePath();
+private List<String> getEngines(String engineType) {
+    List<String> engines = new ArrayList<String>();
+    File folder = new File(filePath.concat("/bin/classes/engine/" + engineType + "/com/gpigc/core/" + engineType + "/engine"));
+    for (File engineFile : folder.listFiles()) {
+        if (engineFile.getName().endsWith(".class")) {
+            engines.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
+        }
+    }
+    return engines;
+}
+%>
+<%
 FileReader configFile = new FileReader(filePath.concat("/config/RegisteredSystems.config"));
 
 JSONParser jsonParser = new JSONParser();
@@ -28,25 +40,9 @@ while (iter.hasNext()) {
     }
 }
 
-// These should be made to automatically read the classes available instead
-List<String> availableDatastores = Arrays.asList(
-    "GWTSystemDataGateway",
-    "HerokuSystemDataGateway",
-    "H2SystemDataGateway"
-);
-List<String> availableAnalysis = Arrays.asList(
-    "BoundedAnalysisEngine",
-    "EarthquakeAnalysisEngine",
-    "ExpressionAnalysisEngine",
-    "FaceAnalysisEngine",
-    "TrafficAnalysisEngine"
-);
-List<String> availableNotification = Arrays.asList(
-    "EmailNotificationEngine",
-    "PhoneAppNotificationEngine",
-    "TwitterNotificationEngine",
-    "SMSNotificationEngine"
-);
+List<String> availableDatastores = getEngines("storage");
+List<String> availableAnalysis = getEngines("analysis");
+List<String> availableNotification = getEngines("notification");
 %>
 <!DOCTYPE html>
 <html lang="en">

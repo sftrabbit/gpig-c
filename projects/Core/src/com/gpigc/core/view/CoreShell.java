@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -142,7 +143,9 @@ public class CoreShell extends Shell {
 		currentConfigFile.setText(CURRENT_CONFIG_FILE + configFilePath);
 
 		consoleTextView = new Text(this, SWT.BORDER | SWT.H_SCROLL
-				| SWT.V_SCROLL);
+				| SWT.V_SCROLL | SWT.WRAP);
+		Font monospacedFont = new Font(getDisplay(), "Courier New", 10, SWT.NONE);
+		consoleTextView.setFont(monospacedFont);
 		consoleTextView.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		getConsoleTextView().setBackground(
 				SWTResourceManager.getColor(255, 255, 255));
