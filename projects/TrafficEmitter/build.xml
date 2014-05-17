@@ -1,0 +1,7 @@
+<project name="GPIG-C Traffic Emitter" basedir="." default="rebuild-run">
+	<property name="project.main-class" value="uk.co.gpigc.emitter.traffic.TrafficEmitter" />
+	<property name="project.dependencies" value="Emitter" />
+	<property name="project.common.libs" value="Proto.jar" />
+
+	<import file="../../tools/common-ant.xml" />
+</project>
