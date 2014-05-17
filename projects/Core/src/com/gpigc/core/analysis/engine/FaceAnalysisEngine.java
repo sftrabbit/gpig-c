@@ -141,7 +141,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @throws ParseException 
 	 */
 	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
-		String[] faceStrings = facesMatrixStr.split("\n");
+		String[] faceStrings = facesMatrixStr.split("$");
 		List<Mat> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
 			faces.add(parseFace(faceStr));
