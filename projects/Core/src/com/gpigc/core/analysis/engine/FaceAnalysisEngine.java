@@ -3,6 +3,12 @@
  */
 package com.gpigc.core.analysis.engine;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,16 +126,27 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @throws ParseException 
 	 */
 	private List<Mat> getExampleFaces(ClientSystem system) throws ParseException {
-		List<Mat> exampleFaces;
+		List<Mat> exampleFaces = new ArrayList<Mat>();
 		if (systemExampleFacesCache.keySet().contains(system)) {
 			exampleFaces = systemExampleFacesCache.get(system);
 		} else {
-			String faceData = system.getParameters().get(
+			String faceDataFileName = "config/" + system.getParameters().get(
 					Parameter.EXAMPLE_FACES);
-			exampleFaces = parseFaces(faceData);
-			systemExampleFacesCache.put(system, exampleFaces);
+			try {
+				String faceData = loadFaces(faceDataFileName);
+				exampleFaces = parseFaces(faceData);
+				systemExampleFacesCache.put(system, exampleFaces);
+			} catch (IOException e) {
+				System.err.println("Failed to load face data from " + faceDataFileName);
+			}
 		}
 		return exampleFaces;
+	}
+	
+	private static String loadFaces(String faceDataFileName) throws IOException {
+		String faceData = new String(Files.readAllBytes(Paths.get(faceDataFileName)));
+		
+		return faceData;
 	}
 
 	/**
@@ -142,7 +159,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 */
 	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
 		System.err.println("Face data: "+facesMatrixStr);
-		String[] faceStrings = facesMatrixStr.split("X");
+		String[] faceStrings = facesMatrixStr.split("\n");
 		System.out.println(faceStrings.length+" example faces loaded.");
 		List<Mat> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
