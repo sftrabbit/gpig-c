@@ -140,14 +140,14 @@
 	<target name="collect-libs" depends="collect-dependencies">
 		<mkdir dir="${bin.lib.dir}" />
 		<mkdir dir="${bin.binlib.dir}" />
-		<copy todir="${bin.lib.dir}">
+		<copy todir="${bin.lib.dir}" includeEmptyDirs="false">
 			<fileset dir="${gpigc.lib.dir}" includes="${project.common.libs}" />
 			<fileset dir="${gpigc.lib.dir}/${platform.dir}" includes="${project.common.libs}" erroronmissingdir="false" />
 			<fileset dir="${lib.dir}" includes="*" erroronmissingdir="false" />
 			<fileset dir="${lib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
 			<fileset dir="${lib.dir}" includes="${project.nested-libs}" erroronmissingdir="false" />
 		</copy>
-		<copy todir="${bin.binlib.dir}">
+		<copy todir="${bin.binlib.dir}" includeEmptyDirs="false">
 			<fileset dir="${gpigc.binlib.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${gpigc.binlib.dir}/${platform.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${binlib.dir}" includes="*" erroronmissingdir="false" />
