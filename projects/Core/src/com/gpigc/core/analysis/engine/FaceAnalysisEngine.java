@@ -83,6 +83,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		try {
 			values = getSensorData(system);
 			for (SensorState sensorState : values) {
+				System.err.println("Data creation time: "+sensorState.getCreationTimestamp());
 				String faceMatrixString = sensorState.getValue();
 				Mat faceMatrix = parseFace(faceMatrixString);
 				// Actually test to see if face seen is allowed
@@ -197,16 +198,19 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		 * Check to see if close enough to an allowable example face using
 		 * Chi-Squared method
 		 */
+//		double sum = 0;
 		for (Mat example : exampleFaces) {
 			double faceSimilarity = Imgproc.compareHist(testFace, example,
 					Imgproc.CV_COMP_CHISQR);
 			if (faceSimilarity < threshold) {
-				System.err.println("    Face found! Difference = "+faceSimilarity);
+				System.err.println(" <<<<< Face found! Difference = "+faceSimilarity);
 				return true;
 			} else {
 				System.err.println("    No face found. Difference = "+faceSimilarity);
 			}
+//			sum += faceSimilarity;
 		}
+//		System.err.println("Mean face difference: "+(sum/(double)exampleFaces.size()));
 		System.err.println(" <<<<< No faces found");
 		return false;
 	}
