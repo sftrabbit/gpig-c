@@ -112,7 +112,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Glossary}
 \label{sec:glossary}
-
+\hl{TODO: Possibly update this}
 \begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
@@ -127,6 +127,8 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\item[Data Emitter] A Client that provides data to an Instance through the Input Interface
 	\item[Output Interface] The interfaces through which reports and notifications are dispatched
 	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
+	\item[Admin Centre] \hl{TODO}
+	\item[(HUMS) Core] \hl{TODO}
 	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis
 	\item[Notification] A message dispatched by the System when an Event is fired
@@ -404,13 +406,32 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \subsection{Design Patterns}
 Having determined the tactics applicable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected which allow these tactics to be realised in the HUMS architecture.
 
+\hl{TODO Adam, 1 or two sentences about each}
 \begin{description}
-\item[Pattern] blah
+\item[Observer] stuff
+\item[Pipes and Filters] stuff
+\item[Table Data Gateway] stuff
+\item[Row Data Gateway] stuff
+\item[Maybe another] stuff
 \end{description}
 
-\subsection{System Views \hl{Joe and Andy}} 
+\subsection{System Views} 
+\hl{TODO Joe/Andy/Rosy}
+
+\subsubsection{Module View}
 \label{sec:views}
+\hl{TODO Tom}
+
 \includegraphics[width=\textwidth]{images/component.pdf}
+
+\subsubsection{Component and Connector View}
+\hl{TODO Rosy}
+
+\subsubsection{Behavioural View}
+\hl{TODO Andy}
+
+\subsubsection{Deployment View}
+\hl{TODO Joe}
 %-------------------------------------------------------------%
 %-------------------DEVELOPMENT-------------------%
 %-------------------------------------------------------------%
@@ -420,51 +441,61 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 %-------------------------------------------------------------%
 \section{Development}
 \label{sec:dev}
+\hl{TODO Prehaps Intro}
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
+\hl{TODO ADAM}
 
 \subsection{Changes Since the Interim Report}
 \label{sec:changes}
+\hl{TODO All}
 
 \subsection{Core Development}
 \label{sec:core}
-\hl{Config files, gui, server shiz}
+\hl{Andy/Rosy: Config files, gui, server shiz}
 
-A lightweight Jetty server was also added to the core so that the admin centre can be served from the same system that the core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
+A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
 
 \subsection{Monitoring}
 \label{sec:monitor}
+In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An end user would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
 \subsubsection{Test Applications}
+\hl{TODO Michael/Ant}
 
-\subsubsection{Earthquakes}
-
-\subsubsection{Traffic}
+\subsubsection{Earthquakes and Traffic}
+In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents.
 
 \subsubsection{Server Responsiveness}
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Android Mobile Application}
 To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this.
+
 The first, as shown in Figure \hl{XXX} is a car system simulator, which allows a user to select values for a number of sensors and then push them to the core remotely. In the real system the user would not set the values or manually push them as it would all be automatic, however, for the purposes of demonstrating the functionality we choose to manually update the data.
 
-%The second system, as shown in Figure \hl{XXX} 
-%was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
+The second system, as shown in Figure \hl{XXX} is a phone battery monitoring system, which allows the user to define how long they would like to use their mobile device for and based on the given battery life, uses the HUMS to determine which services can stay on in order for this target to be met, the HUMS then feeds back into this system, toggling those services. This system was designed to show how our HUMS is capable of monitoring a system, and feeding information back to alter the systems behaviour.
+
+The final system performs face recognition, collecting face data using the built-in camera, forwarding that data to the core for analysis and notification, if appropriate. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms.
 
 \subsection{Data Analysis}
 \label{sec:analysis}
+\hl{TODO INTRO Joe/Andy/Rosy}
 
 \subsubsection{Generic Bounded Sensor Value Engine}
+\hl{TODO A Team -- this is the new and improved mean engine}
 
 \subsubsection{Generic Expression Engine}
+\hl{TODO Tom/Michael}
 %%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
 
 \subsubsection{Phone Analysis Engine}
+\hl{TODO Rosy}
 
 \subsubsection{Face Analysis Engine}
 
-\hl{Face Recognition for Security}
+\hl{TODO Tom/Joe Face Recognition for Security}
 % TODO Separate analysis from sensing
 The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
 
@@ -477,9 +508,13 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 % TODO This method is robust to lighting and pose \cite{ahonen2006face}
 
 \subsubsection{Other Analysis Engines}
+\hl{TODO Ant}
 
 \subsection{Data Storage}
 \label{sec:store}
+\hl{TODO INTRO: Joe||Andy||Rosy}
+
+% %This to be split across the sections below
 To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores are supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
 
 \hl{Google app engine connection stuff is nonsense, uses TCP}
@@ -493,29 +528,38 @@ Connection pooling was used for all datastores. The process of opening, maintain
 Prepared statements were used across all datastore. They are compiled once and then reused many times leading to significant gains in performance. Finally, prepared statements offer improved security with SQL injection attacks rendered useless with all user input being treated as data and thus not altering the characteristics of data queries.
 
 \subsubsection{Google App Engine Storage}
+\hl{TODO Adam/Rosy}
 
 \subsubsection{H2 Storage}
+\hl{TODO Adam}
 
 \subsubsection{Heroku Storage}
-
+\hl{TODO Adam}
 
 \subsection{Data Reporting and Event Notifying}
 \label{sec:report}
+\hl{INTRO: Rosy||Joe||Andy}
 
 \subsubsection{SMS Notifications}
 A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The email notification example engine provided is similar in functionality to that in the interim report. It can be configured to send email notifications for events to any email address, and may be useful for more detailed or more frequent notifications. % was the implementation of this changed at all since the interim report?
+The email notification example engine provided is similar in functionality to that in the interim report. It can be configured to send email notifications for events to any email address, and may be useful for more detailed or more frequent notifications. % was the implementation of this changed at all since the interim report? -- no :)
 
 \subsubsection{Twitter Notifications}
+\hl{TODO Rosy}
+
 \subsubsection{Android Application Feedback Notifications}
+\hl{TODO Rosy}
+
 \subsubsection{Map Report}
+\hl{TODO Andy}
 \subsubsection{Graph Report}
+\hl{TODO Andy}
 
 \subsection{Admin Centre}
 \label{sec:admin}
-
+\hl{TODO Andy}
 % add some screenshots!
 
 The prototype admin centre previously created has been updated and refined to provide a central locations for the User to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the admin centre can be accessed remotely from a number of different devices and not just from where the core is being run.
@@ -527,33 +571,34 @@ The updates to the admin centre have developed the previous prototype into a ful
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
 %-------------------------------------------------------------%
-\section{Prototype Implementation Evaluation \hl{All}}
+\section{Prototype Implementation Evaluation}
 \label{sec:prototype}
-
+\hl{INTRO: Rosy||Joe||Andy}
 
 \subsection{Evaluation Against Requirements, Qualities, and Scenarios}
 \label{sec:req_eval}
-
+\hl{TODO Ant}
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
-
+\hl{TODO Michael}
 
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
+\hl{TODO Michael}
 
 Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
-
+\hl{TODO Andy}
 % also mention PaaS here?
 
 
 \subsection{Evaluation of Additional Engines}
 \label{sec:additional}
-
+\hl{TODO Rosy\&Tom\&Adam}
 
 %-------------------------------------------------------------%
 %---------------------COMMUNICATION-------------------%
@@ -566,15 +611,17 @@ Using iotop under Ubuntu 14.04, we were able to verify that the test application
 %-------------------------------------------------------------%
 \section{Conclusion}
 \label{sec:conclusion}
-
+\hl{TODO All}
 
 \subsection{Summary}
 \label{sec:summary}
-
+\hl{TODO All}
 
 \subsection{Reflection}
 \label{sec:reflection}
+\hl{TODO All}
 
 \bibliography{report-refs}
 \bibliographystyle{IEEEtran}
 \end{document}
+}

@@ -157,7 +157,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @return The faces as matrices
 	 * @throws ParseException 
 	 */
-	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
+	public List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
 		System.err.println("Face data: "+facesMatrixStr);
 		String[] faceStrings = facesMatrixStr.split("\n");
 		System.out.println(faceStrings.length+" example faces loaded.");
@@ -176,7 +176,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @return The face as a matrix
 	 * @throws ParseException 
 	 */
-	public static Mat parseFace(String faceMatrixStr) throws ParseException {
+	public Mat parseFace(String faceMatrixStr) throws ParseException {
 		String SPLIT_ON = ",";
 		// Parse face matrix
 		String[] elements = faceMatrixStr.split(SPLIT_ON);
@@ -206,7 +206,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 *            How similar the testFace must be to one of the exampleFaces
 	 * @return Whether the testFace is authorised
 	 */
-	public static boolean isAuthorisedFace(Mat testFace,
+	public boolean isAuthorisedFace(Mat testFace,
 			List<Mat> exampleFaces, double threshold) {
 		System.err.println(" >>>>> Checking face authorisation at the "+threshold+
 				" threshold");
@@ -276,5 +276,28 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			System.err.println("Failed to load OpenCV natives");
 		}
 	}
+	
+	/**
+	 * Example LBP-class pairs
+	 */
+	private class FaceExample {
+		private final Mat lbp;
+		private final FaceClass faceClass;
+		
+		public FaceExample(Mat lbp, FaceClass faceClass) {
+			this.lbp = lbp;
+			this.faceClass = faceClass;
+		}
+
+		public Mat getLbp() {
+			return lbp;
+		}
+
+		public FaceClass getFaceClass() {
+			return faceClass;
+		}
+	}
+	
+	private enum FaceClass { ROSY, NOT_ROSY }
 
 }
