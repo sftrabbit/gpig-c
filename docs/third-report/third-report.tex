@@ -301,7 +301,7 @@ Having identified the quality attributes which are important to creating a succe
 \begin{scenario}{4}
 \quality{Availability}
 \source{Datastore Module}
-\stimulus{The End Users registered datastore is unavailable to the HUMS instance.}
+\stimulus{The End User's registered datastore is unavailable to the HUMS instance.}
 \artifact{HUMS}
 \environment{Runtime}
 \response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
@@ -324,10 +324,10 @@ Some risks have been modified since the previous report, while others are comple
   	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
   	\hline
   
- 	R.1 & Loss of team member(s) or team member(s) underperformance. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
-   	R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
-   	R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
-	R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
+    R.1 & Loss of team member(s) or team member(s) underperformance. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
+    R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
+    R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
+    R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
   	\hline
 }
 {The human and business risks associated with this phase of the project}{tab:human_risks}
@@ -339,9 +339,9 @@ Some risks have been modified since the previous report, while others are comple
   	\hline
   
     R.5 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
-   	R.6 & Data interception between the HUMS core and registered engines or datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
-   	R.7 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
-   	R.8 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
+    R.6 & Data interception between the HUMS core and registered engines or datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+    R.7 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+    R.8 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
     R.9 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, End User not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
   	\hline
 }
@@ -410,6 +410,7 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 
 \subsection{System Views \hl{Joe and Andy}} 
 \label{sec:views}
+\includegraphics[width=\textwidth]{images/component.pdf}
 %-------------------------------------------------------------%
 %-------------------DEVELOPMENT-------------------%
 %-------------------------------------------------------------%
@@ -420,35 +421,64 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \section{Development}
 \label{sec:dev}
 
-\subsection{Sense}
-\label{sec:sense}
+\subsection{Interim Implementation Summary}
+\label{sec:interim_summary}
 
-\subsubsection{Test Apps}
+\subsection{Changes Since the Interim Report}
+\label{sec:changes}
+
+\subsection{Core Development}
+\label{sec:core}
+\hl{Config files, gui, server shiz}
+
+A lightweight Jetty server was also added to the core so that the admin centre can be served from the same system that the core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
+
+\subsection{Monitoring}
+\label{sec:monitor}
+
+\subsubsection{Test Applications}
 
 \subsubsection{Earthquakes}
 
 \subsubsection{Traffic}
 
-\subsubsection{Android App}
-To explore the possibilities surrounding monitoring remote systems an Android app was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM and oil temperature can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and, if appropriate, notification.
+\subsubsection{Server Responsiveness}
+A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
 
-\subsection{Smartphone Monitoring}
+\subsubsection{Android Mobile Application}
+To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this.
+The first, as shown in Figure \hl{XXX} is a car system simulator, which allows a user to select values for a number of sensors and then push them to the core remotely. In the real system the user would not set the values or manually push them as it would all be automatic, however, for the purposes of demonstrating the functionality we choose to manually update the data.
 
-\subsection{Simulated Car Monitoring}
+%The second system, as shown in Figure \hl{XXX} 
+%was created which offers the capability to monitor the phone itself, offering an example of analysis with the HUMS resulting in feedback. The app also offers a simulation of a car monitoring sensor, where measurements such as RPM, oil temperature and so on, can be changed by the user, allowing the notification system to be easily demonstrated. Finally, the app collects face data using the built-in camera, forwarding it to the core for analysis and notification, if appropriate.
 
-\subsection{Face Recognition for Security}
+\subsection{Data Analysis}
+\label{sec:analysis}
+
+\subsubsection{Generic Bounded Sensor Value Engine}
+
+\subsubsection{Generic Expression Engine}
+%%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
+
+\subsubsection{Phone Analysis Engine}
+
+\subsubsection{Face Analysis Engine}
+
+\hl{Face Recognition for Security}
+% TODO Separate analysis from sensing
 The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
 
 The face recognition process is two fold: An image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
 
-The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector--the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
+The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
 
 When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided by the sensor if its distance from any of the example faces provided by the configuration file is less than some threshold, also given by the configuration file.
 
 % TODO This method is robust to lighting and pose \cite{ahonen2006face}
 
+\subsubsection{Other Analysis Engines}
 
-\subsection{Store}
+\subsection{Data Storage}
 \label{sec:store}
 To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores are supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
 
@@ -462,18 +492,37 @@ Connection pooling was used for all datastores. The process of opening, maintain
 
 Prepared statements were used across all datastore. They are compiled once and then reused many times leading to significant gains in performance. Finally, prepared statements offer improved security with SQL injection attacks rendered useless with all user input being treated as data and thus not altering the characteristics of data queries.
 
-\subsection{Analyse}
-\label{sec:analyse}
-vhvhv
+\subsubsection{Google App Engine Storage}
 
-\subsection{Report and Notify}
+\subsubsection{H2 Storage}
+
+\subsubsection{Heroku Storage}
+
+
+\subsection{Data Reporting and Event Notifying}
 \label{sec:report}
-vhvhvh
 
-\subsection{Feedback}
-\label{sec:feedback}
+\subsubsection{SMS Notifications}
+A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio, who have a large infrastructure for telecommunications and offer an easy to use API.
 
-\subsection{Technologies}
+\subsubsection{Email Notifications}
+The email notification example engine provided is similar in functionality to that in the interim report. It can be configured to send email notifications for events to any email address, and may be useful for more detailed or more frequent notifications. % was the implementation of this changed at all since the interim report?
+
+\subsubsection{Twitter Notifications}
+\subsubsection{Android Application Feedback Notifications}
+\subsubsection{Map Report}
+\subsubsection{Graph Report}
+
+\subsection{Admin Centre}
+\label{sec:admin}
+
+% add some screenshots!
+
+The prototype admin centre previously created has been updated and refined to provide a central locations for the User to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the admin centre can be accessed remotely from a number of different devices and not just from where the core is being run.
+
+The admin centre also provides the reporting facilities of the HUMS, with two example reporting engines currently created. A graph report is available and can be used with data like that from the first and second test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
+
+The updates to the admin centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
 
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
@@ -482,12 +531,9 @@ vhvhvh
 \label{sec:prototype}
 
 
-\subsection{Interim Implementation Summary}
-\label{sec:interim_summary}
+\subsection{Evaluation Against Requirements, Qualities, and Scenarios}
+\label{sec:req_eval}
 
-
-\subsection{Changes Since the Interim Report}
-\label{sec:changes}
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
@@ -498,16 +544,15 @@ vhvhvh
 
 Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 
+
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
 
-
-\subsection{Evaluation of the Earthquake Monitor}
-\label{sec:earthquake}
+% also mention PaaS here?
 
 
-\subsection{Evaluation of \hl{Some new thing}}
-\label{sec:new_thing} %%change this
+\subsection{Evaluation of Additional Engines}
+\label{sec:additional}
 
 
 %-------------------------------------------------------------%
