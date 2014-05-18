@@ -94,10 +94,10 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				// Actually test to see if face seen is allowed
 				if (getMostLikelyClass(faceMatrix, exampleFaces, threshold)
 						.equals(FaceClass.ROSY)) {
-					System.out.println("Authorised face detected");
+					System.out.println(" Authorised face detected");
 					return generateSuccessEvent(system);
 				} else {
-					System.out.println("No authorised face detected");
+					System.out.println(" No authorised face detected");
 					return generateFailureEvent(system);
 				}
 			}
@@ -106,7 +106,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			StandardMessageGenerator.couldNotReadData();
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.out.println("Failed to parse face detected by sensor. Error at "
+			System.out.println(" Failed to parse face detected by sensor. Error at "
 					+ "character "+e.getErrorOffset());
 		}
 		return null;

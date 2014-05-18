@@ -31,7 +31,7 @@ public class AnalysisController extends Controller {
 	}
 
 	public void analyse(String systemID) {
-		System.out.println("Beginning Analysis");
+		System.out.println(" Beginning Analysis");
 		for (AnalysisEngine engine : analysisEngines) {
 			// If this engine is registered to this system
 			if (engine.getRegisteredSystem(systemID) != null) {
