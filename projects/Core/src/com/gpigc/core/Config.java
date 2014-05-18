@@ -1,5 +1,6 @@
 package com.gpigc.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -9,9 +10,12 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public class Config {
+	private Path applicationDataDirectory;
+	
 	public Config(String defaultConfigDirectory) throws ConfigException {
+		applicationDataDirectory = generateApplicationDataDirectory();
+		
 		try {
-			Path applicationDataDirectory = getApplicationDataDirectory();
 			if (!Files.exists(applicationDataDirectory)) {
 				Files.createDirectory(applicationDataDirectory);
 			}
@@ -24,7 +28,15 @@ public class Config {
 		}
 	}
 	
-	private Path getApplicationDataDirectory() throws ConfigException
+	public File getConfigFile(String fileName) {
+		return applicationDataDirectory.resolve(fileName).toFile();
+	}
+	
+	private Path getApplicationDataDirectory() {
+		return applicationDataDirectory;
+	}
+	
+	private Path generateApplicationDataDirectory() throws ConfigException
 	{
 	    String os = System.getProperty("os.name").toUpperCase();
 	    
