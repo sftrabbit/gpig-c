@@ -437,17 +437,34 @@ Building on our work in the previous report we decided to present four further, 
 \subsection{Module View}
 \label{sec:views}
 \hl{TODO Tom}
+The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
 
-\begin{figure}[h]
+In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the End User (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
+
+Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
+
+Each of the protocols that must be followed by the engines, emitters and so on are given below:
+\begin{description} [noitemsep]	
+	\item[Analysis Engines] 
+	\item[Notification Engines] 
+	\item[Storage Engines] 
+	\item[Data Emitters] % connected via data inout interfaces. reads from inputs, sends to the core
+\end{description}
+% What methods have we used, what Java interfaces must we implement. All extends from abstract _ class, and offers these abstract functions. What they do and how the user would extend them. Sample implementations can be overidden too
+
+% Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
+% Quality attributes?
+
+\begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{Module diagram of the System}
+  \caption{Module diagram of the System. The blue components and their contents have all been implemented. The green components are extensions left to the End User.}
   \label{fig:modules}
 \end{figure}
 
 \subsection{Component and Connector View}
 
-In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorabilty of the system by not unnecessarily restricting the End User.
+In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the End User.
 
 The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
 
@@ -465,7 +482,7 @@ An \texttt{Event} object contains the ID of the system which caused the event, a
 
 The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or email. 
 
-\begin{figure}[h]
+\begin{figure}[tbp]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
   \caption{A component and connector diagram of the HUMS, showing the protocols used when passing data between filters}
   \label{fig:pipesAndFilter}
@@ -475,7 +492,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 A behavioural view can show the actual actions taken by the system when the data flows through the system, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the Core system and how it behaves during normal operation. Various methods and invocations are listed at the in the order that they occur, from top to bottom and left to right. The external parts of the system, such as the sources that data is gathered from and the destinations that notifications are sent to, are not shown.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{images/behaviourView.pdf}
   \caption{Sequence diagram showing the behaviour of the HUMS, using UML 2 notation}
@@ -517,7 +534,7 @@ The systems monitored by a particular HUMS instance, and how they will be monito
 The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
 A configuration file is loaded into the Core by the End User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \begin{lstlisting}[language=json,firstnumber=1]
 {
     "Systems": [
@@ -550,13 +567,13 @@ Any changes made to the configuration file whilst the HUMS is running are automa
 
 In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width = \textwidth]{images/coreGUI.png}
 \caption{A Screenshot of the Core GUI}
 \label{fig:coreGUI}
 \end{figure}
-A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}. 
+A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in Section~\ref{sec:admin}. 
 
 \subsection{Project Management}
 \hl{TODO Joe}
@@ -579,7 +596,7 @@ A common use of existing HUMS systems is in monitoring the responsiveness of web
 \subsubsection{Emitter Launcher}
 The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \cite{swt}, meaning native components can be used.
  
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics*[width=0.8\textwidth]{images/launcherGUI.png}
 \caption{A screenshot of the Emitter Launcher GUI}
@@ -596,7 +613,7 @@ The second system is a phone battery monitoring system, which allows the user to
 
 The final system performs face recognition, collecting face data using the built-in camera, forwarding that data to the HUMS for analysis and, if appropriate, notification. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms, in order to show that risk \emph{R.8} has not been realised. Section~\ref{sec:fae} describes the details of our computer vision approach.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=4.3cm]{images/phoneApp.png}
 \hspace{0.5cm}
@@ -634,7 +651,11 @@ The values of variables which represent the state of the system being monitored 
 
 Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
 
+<<<<<<< HEAD
 The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its flexibility and configurability, allowing the HUMS to be easily customised by the end user without needing any particular software engineering knowledge. % TODO Expand on this?
+=======
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the Tailorability quality attribute of the solution, allowing the HUMS to be easily customised by the End User without needing any particular software engineering knowledge. % TODO Expand on this?
+>>>>>>> 8233dcfd690d68bbd54750ecd04faee25f7e2b80
 
 % TODO The library used?
 
@@ -779,24 +800,24 @@ To consider the meeting of requirements, we lay out here the steps which we have
 }{Evaluation for Satisfaction of Function Requirements}{frevaltable}	
 
 \tableformat{| l | l | l |}{ \hline	NFR.x  & 	Description of NFR  & 	What we did \\ \hline
-	NFR.1  & 	  & 	 \\ \hline
-	NFR.2  & 	  & 	 \\ \hline
-	NFR.3  & 	  & 	 \\ \hline
-	NFR.4  & 	  & 	 \\ \hline
-	NFR.5  & 	  & 	 \\ \hline
-	NFR.6  & 	  & 	 \\ \hline
-	NFR.7  & 	  & 	 \\ \hline
-	NFR.8  & 	  & 	 \\ \hline
-	NFR.9  & 	  & 	 \\ \hline
-	NFR.10  & 	  & 	 \\ \hline
+	NFR.1  & 	  & 	The data store is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ \hline
+	NFR.2  & 	  & 	There has been a README provided. \\ \hline
+	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ \hline
+	NFR.4  & 	  & 	\hl{We didnt implement security} \\ \hline
+	NFR.5  & 	  & 	\hl{!} \\ \hline
+	NFR.6  & 	  & 	The tests for the system have been created and included at each stage of the development. \hl{write smat stuff} \\ \hline
+	NFR.7  & 	  & 	The system has not currently been performend. However, in the case of the real system, this would be performed by the customer and the customer would sign off to show the requirements were met. \\ \hline
+	NFR.8  & 	  & 	The current implementation is executing with 5 clients. With the emitter launcher we have tested it with 5 clients and the performance is correct. There have been tests with more clients and the functionality remains correct. \\ \hline
+	NFR.9  & 	  & 	The heroku instance has an uptime which satisfies this requirement. \\ \hline
+	NFR.10  & 	  & 	\hl{data backup - adam?} \\ \hline
 	NFR.11  & 	  & 	 \\ \hline
 	NFR.12  & 	  & 	 \\ \hline
-	NFR.13  & 	  & 	 \\ \hline
-	NFR.14  & 	  & 	 \\ \hline
+	NFR.13  & 	  & 	To achieve this, a key-value data store format has been used. This relaxes the need for a schema to a simple pair of key to value. \\ \hline
+	NFR.14  & 	  & 	The format for the configuration files is JSON, this is a widely-adopted nad easy to modify format for update by a human. \\ \hline
 }{Evaluation for Satisfaction of Non-Function Requirements}{nfrevaltable}	
 
 
-The quality attributes laid out in Section \ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
+The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
 
 A scenario for evaluating the modifiability is the ability to add engines for analysis, reporting or notifications. This has been achieved using extensible APIs for the analysis, reporting and notification engines. Each of the engines contains an abstract base class which can be extended to provide a new engine. For example, to implement a new analysis engine one must simply extend the AnalysisEngine class and implement the required abstract methods.
 
