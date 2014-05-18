@@ -16,7 +16,10 @@
 \usepackage[compact]{titlesec}
 \usepackage[justification=centering]{caption}
 \usepackage{subcaption}
+\usepackage{listings}
+\usepackage{xcolor}
 
+\input{listingsPreamble.tex}
 
 \definecolor{reqColor}{RGB}{80,80,120}
 
@@ -503,7 +506,6 @@ A behavioural view can show the actual actions taken by the system when the data
 
 \subsection{Core Development}
 \label{sec:core}
-\hl{Rosy: gui}
 
 The Core is the main application controlling the behaviour and functionality of the HUMS. It receives client data through Data Emitters and stores it using data storage engines, data is then passed to appropriate analysis engines, which can create \texttt{Event} objects that the Core passes on to the relevant notification engines.
 
@@ -512,8 +514,37 @@ The Core is the main application controlling the behaviour and functionality of 
 Several example engines are provided with the HUMS and are described throughout this report. These engines implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the system by creating their own engines to meet their own needs.
 
 The systems monitored by a particular HUMS instance, and how they will be monitored is defined using a \emph{JSON} configuration file.
-The format of this file is displayed in Figure~\hl{XXX}, which shows the definition of a particular system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
+The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
 A configuration file is loaded into the Core by the End User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
+
+\begin{figure}
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+    "Systems": [
+        {
+            "SystemID": "EarthquakeMonitor",
+            "Sensors": [
+                {
+                    "SensorID": "EQ",
+                    "Params": {
+                        "LOWER_BOUND": "1.0"
+                    }
+                }
+            ],
+            "Engines": [
+                "EarthquakeAnalysisEngine",
+                "TwitterNotificationEngine"
+            ],
+            "DatastoreGateway": "GWTSystemDataGateway",
+            "Reporting": "Map"
+        },
+        ... Further System/s ...
+    ]
+}
+\end{lstlisting}
+\caption{An Example of the JSON configuration files used by the HUMS}
+\label{fig:configFiles}
+\end{figure}
 
 Any changes made to the configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the End User cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
@@ -565,6 +596,10 @@ The final system performs face recognition, collecting face data using the built
 \caption{Screenshots of the Android mobile application, showing each of the three subsystems.}
 \label{fig:android}
 \end{figure}
+
+\subsubsection{Emitter Launcher}
+The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\hline{XX}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
+ 
 
 \subsection{Data Analysis}
 \label{sec:analysis}
