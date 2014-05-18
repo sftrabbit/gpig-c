@@ -98,6 +98,9 @@ public class EmitterService {
 			if (sender != null) {
 				sender.close();
 			}
+			for (DataCollector collector : collectors) {
+				collector.shutdown();
+			}
 			running = false;
 		}
 		

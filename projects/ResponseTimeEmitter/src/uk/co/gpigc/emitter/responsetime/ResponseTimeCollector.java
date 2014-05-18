@@ -14,7 +14,7 @@ import com.gpigc.proto.Protos.SystemData;
 
 import uk.co.gpigc.emitter.DataCollector;
 
-public class ResponseTimeCollector implements DataCollector {
+public class ResponseTimeCollector extends DataCollector {
 	protected URL url;
 
 	public ResponseTimeCollector() {
