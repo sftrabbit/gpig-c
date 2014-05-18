@@ -438,7 +438,7 @@ Building on our work in the previous report we decided to present four further, 
 \label{sec:views}
 \hl{TODO Tom}
 
-\begin{figure}[h]
+\begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
   \caption{Module diagram of the System}
@@ -465,7 +465,7 @@ An \texttt{Event} object contains the ID of the system which caused the event, a
 
 The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or email. 
 
-\begin{figure}[h]
+\begin{figure}[tbp]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
   \caption{A component and connector diagram of the HUMS, showing the protocols used when passing data between filters}
   \label{fig:pipesAndFilter}
@@ -475,7 +475,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 A behavioural view can show the actual actions taken by the system when the data flows through the system, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the Core system and how it behaves during normal operation. Various methods and invocations are listed at the in the order that they occur, from top to bottom and left to right. The external parts of the system, such as the sources that data is gathered from and the destinations that notifications are sent to, are not shown.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{images/behaviourView.pdf}
   \caption{Sequence diagram showing the behaviour of the HUMS, using UML 2 notation}
@@ -517,7 +517,7 @@ The systems monitored by a particular HUMS instance, and how they will be monito
 The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
 A configuration file is loaded into the Core by the End User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \begin{lstlisting}[language=json,firstnumber=1]
 {
     "Systems": [
@@ -550,7 +550,7 @@ Any changes made to the configuration file whilst the HUMS is running are automa
 
 In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \hl{ref}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width = \textwidth]{images/coreGUI.png}
 \caption{A Screenshot of the Core GUI}
@@ -579,7 +579,7 @@ A common use of existing HUMS systems is in monitoring the responsiveness of web
 \subsubsection{Emitter Launcher}
 The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
  
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics*[width=0.8\textwidth]{images/launcherGUI.png}
 \caption{A screenshot of the Emitter Launcher GUI}
@@ -596,7 +596,7 @@ The second system is a phone battery monitoring system, which allows the user to
 
 The final system performs face recognition, collecting face data using the built-in camera, forwarding that data to the HUMS for analysis and, if appropriate, notification. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms, in order to show that risk \emph{R.8} has not been realised. Section~\ref{sec:fae} describes the details of our computer vision approach.
 
-\begin{figure}[h]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=4.3cm]{images/phoneApp.png}
 \hspace{0.5cm}
