@@ -439,20 +439,17 @@ Building on our work in the previous report we decided to present four further, 
 \hl{TODO Tom}
 The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system.
 
-% Previously: no engines shown, which are implemented or not
-% Prev: No internals of data abstraction layer. No databases or clear interface.
-% Green => stuff to be added by the End User. Implements X interface, e.g. EmitterInterface
-% Within Blue => What we've implemented
-% Labelled types of the components: layers, engines, emitters
-% Patterns - System Data Gateway pattern to allow us to add new databases increasing modifiability as implementation is hidden behind the storage/analysis etc interface
-% Observer/subscriber pattern. Controllers=observers, Engines subscribe to the appropriate observers
-% Shows the boundary between what we implement and what the End User implements. We have defaults, showing what our system can do (tailorability) and leaving space for the user to add more. Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
+In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the End User (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
+
+Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
+
+% Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
 % Quality attributes?
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{Module diagram of the System}
+  \caption{Module diagram of the System. The blue components and their contents have all been implemented. The green components are extensions left to the End User.}
   \label{fig:modules}
 \end{figure}
 
