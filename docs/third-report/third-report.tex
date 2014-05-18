@@ -71,12 +71,12 @@ Walker}
 
 %%Requirements
 \newenvironment{requirements}{
-\newcommand{\requirement}[3]{\item[\fr{##1}] ##2
-							\ifx&##3&
+\newcommand{\requirement}[4]{\item[##1{##2}] ##3
+							\ifx&##4&
 							%nothing
 							\else
 								\begin{description}
-									##3
+									##4
 								\end{description}							
 							\fi
 							}
@@ -153,43 +153,43 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 \hl{write about changes -- currently they are unchanged} 
 
 \begin{requirements}
-\requirement{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
-	\requirement{1.1}{The HUMS shall provide an API for data input (the Input Interface).}{
-		\requirement{1.1.1}{The Input Interface shall require a System ID that uniquely identifies the Consumer System.}{}
-		\requirement{1.1.2}{The Input Interface shall require input data to be timestamped.}{}
-		\requirement{1.1.3}{The Input Interface shall allow Data Emitters to send Sensor IDs and their values to the HUMS, to be made available to an analysis engine.}{}
+\requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
+	\requirement{\fr}{1.1}{The HUMS shall provide an API for data input (the Input Interface).}{
+		\requirement{\fr}{1.1.1}{The Input Interface shall require a System ID that uniquely identifies the Consumer System.}{}
+		\requirement{\fr}{1.1.2}{The Input Interface shall require input data to be timestamped.}{}
+		\requirement{\fr}{1.1.3}{The Input Interface shall allow Data Emitters to send Sensor IDs and their values to the HUMS, to be made available to an analysis engine.}{}
 	}
-	\requirement{1.2}{A Data Emitter for extracting data from the given test application shall be provided.}{}
+	\requirement{\fr}{1.2}{A Data Emitter for extracting data from the given test application shall be provided.}{}
 }
-\requirement{2}{The HUMS shall allocate a timestamp to new data.}{
-	\requirement{2.1}{Data shall be timestamped before it reaches the HUMS Input Interface.}{}
-	\requirement{2.2}{Timestamps shall be stored alongside the input data.}{}
+\requirement{\fr}{2}{The HUMS shall allocate a timestamp to new data.}{
+	\requirement{\fr}{2.1}{Data shall be timestamped before it reaches the HUMS Input Interface.}{}
+	\requirement{\fr}{2.2}{Timestamps shall be stored alongside the input data.}{}
 }
-\requirement{3}{The HUMS shall store correctly structured data.}{
-	\requirement{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
+\requirement{\fr}{3}{The HUMS shall store correctly structured data.}{
+	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
 }
-\requirement{4}{The HUMS shall store End User configuration files.}{
-	\requirement{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{}
-	\requirement{4.2}{The HUMS shall allow the User to define a storage limit.}{}
-	\requirement{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
-	\requirement{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
-	\requirement{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
+\requirement{\fr}{4}{The HUMS shall store End User configuration files.}{
+	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{}
+	\requirement{\fr}{4.2}{The HUMS shall allow the User to define a storage limit.}{}
+	\requirement{\fr}{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
+	\requirement{\fr}{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
+	\requirement{\fr}{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
-\requirement{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
-\requirement{6}{The HUMS must store no more data records than the Consumer-defined storage quota.}{}
-\requirement{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
-	\requirement{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
-	\requirement{7.2}{The HUMS shall allow the User to define their own Events.}{}
-	\requirement{7.3}{The HUMS shall provide an API, allowing analysis engines to fetch stored data.}{}
-	\requirement{7.4}{Events shall be identified by analysis engines.}{}
-	\requirement{7.5}{The HUMS shall provide a simple analysis engine in the form of a rules engine.}{}
+\requirement{\fr}{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
+\requirement{\fr}{6}{The HUMS must store no more data records than the Consumer-defined storage quota.}{}
+\requirement{\fr}{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
+	\requirement{\fr}{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
+	\requirement{\fr}{7.2}{The HUMS shall allow the User to define their own Events.}{}
+	\requirement{\fr}{7.3}{The HUMS shall provide an API, allowing analysis engines to fetch stored data.}{}
+	\requirement{\fr}{7.4}{Events shall be identified by analysis engines.}{}
+	\requirement{\fr}{7.5}{The HUMS shall provide a simple analysis engine in the form of a rules engine.}{}
 }
-\requirement{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type will be sent during a User-specified cool down period.}{
-	\requirement{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
+\requirement{\fr}{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type will be sent during a User-specified cool down period.}{
+	\requirement{\fr}{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
 }
-\requirement{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
-\requirement{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
-\requirement{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
+\requirement{\fr}{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
+\requirement{\fr}{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
+\requirement{\fr}{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
 the way in which data is sensed.}{}
 \end{requirements}
 
@@ -198,25 +198,25 @@ the way in which data is sensed.}{}
 \hl{write about changes -- currently they are unchanged} 
 
 \begin{requirements}
-\requirement{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
-\requirement{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
-\requirement{3}{The HUMS must be accessible to End Users regardless of their geographic location.}{}
-\requirement{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
-\requirement{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
-\requirement{6}{The HUMS shall be tested to ensure all requirements are met before deployment.}{
-	\requirement{6.1}{The HUMS shall be tested using unit testing.}{}
-	\requirement{6.2}{The HUMS shall be tested using integration testing.}{}
-	\requirement{6.3}{The HUMS shall be tested using system testing.}{}
-	\requirement{6.4}{The HUMS shall be tested using inspection.}{}
-	\requirement{6.5}{The HUMS shall be tested using acceptance testing.}{}
+\requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
+\requirement{\nfr}{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
+\requirement{\nfr}{3}{The HUMS must be accessible to End Users regardless of their geographic location.}{}
+\requirement{\nfr}{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
+\requirement{\nfr}{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
+\requirement{\nfr}{6}{The HUMS shall be tested to ensure all requirements are met before deployment.}{
+	\requirement{\nfr}{6.1}{The HUMS shall be tested using unit testing.}{}
+	\requirement{\nfr}{6.2}{The HUMS shall be tested using integration testing.}{}
+	\requirement{\nfr}{6.3}{The HUMS shall be tested using system testing.}{}
+	\requirement{\nfr}{6.4}{The HUMS shall be tested using inspection.}{}
+	\requirement{\nfr}{6.5}{The HUMS shall be tested using acceptance testing.}{}
 }
-\requirement{7}{The Customer will complete acceptance testing before the System is deployed.}{}
-\requirement{8}{The System must be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
-\requirement{9}{The System must be available for no less than 99.9\% of each month.}{}
-\requirement{10}{Data must be backed up within 24 hours of having been made available to the System.}{}
-\requirement{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
-\requirement{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
-\requirement{13}{The System shall support storing data without requiring specific schemata.}{}
+\requirement{\nfr}{7}{The Customer will complete acceptance testing before the System is deployed.}{}
+\requirement{\nfr}{8}{The System must be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
+\requirement{\nfr}{9}{The System must be available for no less than 99.9\% of each month.}{}
+\requirement{\nfr}{10}{Data must be backed up within 24 hours of having been made available to the System.}{}
+\requirement{\nfr}{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
+\requirement{\nfr}{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
+\requirement{\nfr}{13}{The System shall support storing data without requiring specific schemata.}{}
 \end{requirements}
 
 \subsection{External Dependencies}
