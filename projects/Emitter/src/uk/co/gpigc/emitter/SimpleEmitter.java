@@ -23,26 +23,27 @@ public class SimpleEmitter {
 		
 		emitter.registerDataCollector(collector);
 		emitter.start();
-		System.out.println(name + " started");
+		System.out.println("-- " + name + " started --");
 		
 		try {
 			emitter.waitFor();
-			System.out.println(name + " stopped");
 		} catch (InterruptedException e) {
-			System.err.println(name + " was interrupted");
+			System.out.println("Error: " + name + " was interrupted");
 		} catch (ExecutionException e) {
-			System.err.println("The emitter threw an exception: " + e.getCause().getMessage());
+			System.out.println("Error: " + e.getCause().getMessage());
 		}
+		
+		System.out.println("-- " + name + " stopped --");
 	}
 	
 	private class ShutdownHook extends Thread {
 		@Override
 		public void run() {
 			try {
-				System.out.println("Shutting down " + name);
+				System.out.println(name + " shutting down");
 				emitter.stop();
 			} catch (IOException | InterruptedException | ExecutionException e) {
-				System.err.println("Could not stop " + name + " cleanly");
+				System.out.println("Error: Could not stop " + name + " cleanly");
 			}
 		}
 	}
