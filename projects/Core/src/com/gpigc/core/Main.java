@@ -15,6 +15,7 @@ import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import com.gpigc.core.Config.ConfigException;
 import com.gpigc.core.view.CoreShell;
 import com.gpigc.core.view.StandardMessageGenerator;
 
@@ -47,7 +48,7 @@ public class Main {
 						public void run() {
 							if (!shell.getConsoleTextView().isDisposed()) {
 								shell.getConsoleTextView().append(
-									Character.toString((char) b));
+										Character.toString((char) b));
 							}
 						}
 					});
@@ -73,7 +74,8 @@ public class Main {
 		Server server = new Server(65123);
 		HandlerList handlers = new HandlerList();
 
-		final URL warUrl = new File(FileUtils.getExpandedFilePath("res/server")).getCanonicalFile().toURI().toURL();
+		final URL warUrl = new File(FileUtils.getExpandedFilePath("res/server"))
+				.getCanonicalFile().toURI().toURL();
 		final String warUrlString = warUrl.toExternalForm();
 		WebAppContext webApp = new WebAppContext(warUrlString, "/");
 
@@ -82,7 +84,7 @@ public class Main {
 		server.setHandler(handlers);
 
 		server.start();
-		//server.join();
+		// server.join();
 	}
 
 	/**
@@ -99,18 +101,23 @@ public class Main {
 
 		public void run() {
 			if (!running) {
+
 				try {
-					System.setProperty("gpigc.configfile", shell.getConfigFilePath());
-					core = new Core(shell.getConfigFilePath());
+					String tempConfig = FileUtils
+							.getExpandedFilePath("res/config");
+					Config config = new Config(tempConfig);
+					System.setProperty("gpigc.configfile",
+							shell.getConfigFilePath());
+					core = new Core(shell.getConfigFilePath(), config);
 					core.getDataInputServer().start();
 					shell.getConfigButton().setEnabled(false);
 					StandardMessageGenerator.coreRunning();
+					running = true;
 				} catch (IOException | ReflectiveOperationException
-						| InterruptedException e1) {
+						| InterruptedException | ConfigException e1) {
 					StandardMessageGenerator.failedToSetup();
 					e1.printStackTrace();
 				}
-				running = true;
 			} else {
 				core.getDataInputServer().stopserver();
 				shell.getConfigButton().setEnabled(true);

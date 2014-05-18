@@ -19,10 +19,12 @@ public class Core {
 	private final NotificationController notificationGenerator;
 	private List<ClientSystem> systemsToMonitor;
 	private String currentConfigFilePath;
+	private Config config;
 
-	public Core(String configFilePath) throws IOException,
+	public Core(String configFilePath, Config config) throws IOException,
 	ReflectiveOperationException, InterruptedException {
 		currentConfigFilePath = configFilePath;
+		this.config = config;
 		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController = new StorageController(systemsToMonitor, this);
 		analysisController = new AnalysisController(systemsToMonitor, this);
@@ -66,6 +68,7 @@ public class Core {
 	}
 
 	private List<ClientSystem> getSystems(String path) throws IOException {
+		StandardMessageGenerator.loadingConfigurationFile();
 		ConfigParser parser = new ConfigParser();
 		return parser.parse(new File(path));
 	}
@@ -92,6 +95,10 @@ public class Core {
 
 	public void setSystemsToMonitor(List<ClientSystem> systemsToMonitor) {
 		this.systemsToMonitor = systemsToMonitor;
+	}
+	
+	public Config getConfig() {
+		return config;
 	}
 
 	private class ConfigFileChangeListener implements FileChangeListener {
