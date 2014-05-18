@@ -155,7 +155,7 @@
 			<fileset dir="${binlib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
 		</copy>
 		<copy todir="${bin.res.dir}" includeEmptyDirs="false">
-			<fileset dir="${res.dir}" includes="**" />
+			<fileset dir="${res.dir}" includes="**" erroronmissingdir="false" />
 		</copy>
 	</target>
 
