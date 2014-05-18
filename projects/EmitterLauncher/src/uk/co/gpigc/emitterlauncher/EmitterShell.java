@@ -1,5 +1,6 @@
 package uk.co.gpigc.emitterlauncher;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
@@ -93,6 +95,10 @@ public class EmitterShell extends Shell {
 		shellSetup(display);
 		Group groupComp = groupSetup();
 		compositeSetup(groupComp);
+		
+		File monospacedFontFile = new File(FileUtils.getExpandedFilePath("res/LucidaTypewriterRegular.ttf"));
+		getDisplay().loadFont(monospacedFontFile.toString());
+		Font monospacedFont = new Font(getDisplay(), "Lucida Sans Typewriter", 10, SWT.NONE);
 
 		tabFolder = new TabFolder(this, SWT.NONE);
 		GridData data = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
@@ -104,6 +110,7 @@ public class EmitterShell extends Shell {
 		console1Tab.setText("Test App 1");
 
 		textApp1 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp1.setFont(monospacedFont);
 		textApp1.setEditable(false);
 		console1Tab.setControl(textApp1);
 		textApp1.addListener(SWT.Modify, new CaretListener(textApp1));
@@ -112,6 +119,7 @@ public class EmitterShell extends Shell {
 		console2Tab.setText("Test App 2");
 
 		textApp2 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp2.setFont(monospacedFont);
 		textApp2.setEditable(false);
 		console2Tab.setControl(textApp2);
 		textApp2.addListener(SWT.Modify, new CaretListener(textApp2));
@@ -121,6 +129,7 @@ public class EmitterShell extends Shell {
 		console3Tab.setText("Earthquake");
 
 		textApp3 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp3.setFont(monospacedFont);
 		textApp3.setEditable(false);
 		console3Tab.setControl(textApp3);
 		textApp3.addListener(SWT.Modify, new CaretListener(textApp3));
@@ -130,6 +139,7 @@ public class EmitterShell extends Shell {
 		console4Tab.setText("Response Time");
 
 		textApp4 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp4.setFont(monospacedFont);
 		textApp4.setEditable(false);
 		console4Tab.setControl(textApp4);
 		textApp4.addListener(SWT.Modify, new CaretListener(textApp4));
@@ -139,6 +149,7 @@ public class EmitterShell extends Shell {
 		console5Tab.setText("Traffic");
 
 		textApp5 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp5.setFont(monospacedFont);
 		textApp5.setEditable(false);
 		console5Tab.setControl(textApp5);
 		textApp5.addListener(SWT.Modify, new CaretListener(textApp5));
@@ -233,13 +244,13 @@ public class EmitterShell extends Shell {
 	protected void buttonSelect(final String jarPath, Button button, Text text) {
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
-			text.append(">> Starting " + jarPath + "\n");
+			text.append(" >> Starting " + jarPath + "\n");
 			threadMap.put(jarPath, new OpenJarThread(jarPath, button,text));
 			threadMap.get(jarPath).start();
 		} else {
 			button.setImage(playIcon);
 			if (threadMap.containsKey(jarPath)) {
-				text.append(">> Stopping " + jarPath + "\n");
+				text.append(" >> Stopping " + jarPath + "\n");
 				threadMap.get(jarPath).stopRunning();
 				threadMap.remove(jarPath);
 			}
