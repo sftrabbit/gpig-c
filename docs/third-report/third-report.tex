@@ -763,6 +763,8 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 % QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
 
 
+To consider the meeting of requirements, we lay out here the steps which we have taken in order to validate the meeting of the requirements.
+
 \tableformat{| l | l | l |}{ \hline	FR.x  & 	Description of FR  & 	What we did \\ \hline
 	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
 	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\ \hline
