@@ -1,5 +1,6 @@
 package com.gpigc.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -75,7 +76,7 @@ public class Main {
 		Server server = new Server(65123);
 		HandlerList handlers = new HandlerList();
 
-		final URL warUrl = new URL(new URL("file:"), FileUtils.getExpandedFilePath("res/server"));
+		final URL warUrl = new File(FileUtils.getExpandedFilePath("res/server")).toURI().toURL();
 		final String warUrlString = warUrl.toExternalForm();
 		WebAppContext webApp = new WebAppContext(warUrlString, "/");
 

@@ -1,6 +1,6 @@
 <%@ page import="java.io.File,java.io.FileReader,java.io.FileWriter,java.util.Iterator,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject,org.json.simple.JSONValue" %>
 <%
-String filePath = new File("").getAbsolutePath().concat("/config/RegisteredSystems.config");
+String filePath = new File("").getAbsolutePath().concat("/res/config/RegisteredSystems.config");
 FileReader configFile = new FileReader(filePath);
 
 JSONParser jsonParser = new JSONParser();
