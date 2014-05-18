@@ -27,6 +27,7 @@ public class TestApp2Collector implements DataCollector {
 			p.waitFor();
 			BufferedReader bri = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			long pid = Long.parseLong(bri.readLine());
+			System.out.println(pid);
 		
 			processMonitor = new ProcessMonitor(pid);
 			Thread.sleep(DELAY_BEFORE_MONITOR);

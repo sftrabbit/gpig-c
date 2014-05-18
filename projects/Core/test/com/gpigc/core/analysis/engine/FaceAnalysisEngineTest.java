@@ -10,7 +10,6 @@ import org.opencv.core.Mat;
 
 import com.gpigc.core.analysis.engine.FaceAnalysisEngine;
 import com.gpigc.core.analysis.engine.FaceAnalysisEngine.FaceClass;
-import com.gpigc.core.analysis.engine.FaceAnalysisEngine.FaceExample;
 
 public class FaceAnalysisEngineTest {
 

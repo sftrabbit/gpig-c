@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-
 import com.gpigc.core.analysis.AnalysisController;
 import com.gpigc.core.datainput.DataInputServer;
 import com.gpigc.core.event.DataEvent;
@@ -48,7 +46,7 @@ public class Core {
 
 	public void refreshSystems() throws IOException,
 	ReflectiveOperationException {
-		System.out.println("Re-registering systems...");
+		System.out.println(" Re-registering systems...");
 		systemsToMonitor = getSystems(currentConfigFilePath);
 		datastoreController.refreshSystems(systemsToMonitor);
 		analysisController.refreshSystems(systemsToMonitor);
@@ -98,7 +96,7 @@ public class Core {
 
 	private class ConfigFileChangeListener implements FileChangeListener {
 		public void fileChanged(File file) {
-			System.out.println("Config file modified");
+			System.out.println(" Config file modified");
 			try {
 				refreshSystems();
 			} catch (IOException | ReflectiveOperationException e) {

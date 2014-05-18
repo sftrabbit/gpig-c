@@ -5,15 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
-import javax.mail.Address;
-import javax.mail.Flags;
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Store;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +13,6 @@ import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.event.DataEvent;
 import com.gpigc.core.notification.NotificationEngine;
-import com.gpigc.core.notification.engine.EmailNotificationEngine;
 
 public class SMSNotificationTest {
 

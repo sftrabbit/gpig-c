@@ -1,8 +1,5 @@
 package com.gpigc.core.view;
 
-import java.util.Arrays;
-import java.util.Set;
-
 public class StandardMessageGenerator {
 
 	public static void printException(Exception e) {
@@ -36,7 +33,7 @@ public class StandardMessageGenerator {
 	}
 
 	private static void print(String text) {
-		System.out.println(text);
+		System.out.println(' '+text);
 	}
 
 	public static void couldNotReadData() {
@@ -82,7 +79,6 @@ public class StandardMessageGenerator {
 
 	public static void couldNotReadConfig() {
 		print("Could Not Read Config File, No Systems Registered. Check the JSON");
-
 	}
 
 	public static void failedToSetup() {
