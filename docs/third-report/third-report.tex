@@ -467,11 +467,7 @@ A lightweight Jetty server was also added to the core so that the Admin Centre c
 In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An end user would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
 \subsubsection{Test Applications} \label{subsec:tapp}
-\hl{TODO Michael/Ant}
-
-Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. 
-
-For this we created a process monitoring engine which is capable of tracking information from a process. The finished process, for a given process, tracks metrics such as: CPU usage, memory usage, state of the process, number of threads, processor that the process is executing on and working directory of the process.
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. For this we created a process monitoring engine which is capable of tracking information from a process.
 
 The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
 
@@ -633,7 +629,7 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
 
-We decided to monitor the memory and CPU usage of the test application, and our initial implementation simply queried the operating system for these values, using the Sigar library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
+We decided to monitor the memory and CPU usage of the test application, and our initial implementation simply queried the operating system for these values, using the SIGAR library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
 
 By using these cross-platform and established libraries, our monitor can be generalised to more than just the test application. This is illustrated by how easily we were able to reuse it as the basis of the second test application.
 
