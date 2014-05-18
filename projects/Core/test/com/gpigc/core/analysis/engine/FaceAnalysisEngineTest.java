@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.opencv.core.Mat;
 
 import com.gpigc.core.analysis.engine.FaceAnalysisEngine;
+import com.gpigc.core.analysis.engine.FaceAnalysisEngine.FaceClass;
+import com.gpigc.core.analysis.engine.FaceAnalysisEngine.FaceExample;
 
 public class FaceAnalysisEngineTest {
 
@@ -24,45 +26,27 @@ public class FaceAnalysisEngineTest {
 	}
 
 	@Test
-	public void testParseFaces() throws ParseException {
-		double a = 0d;
-		double b = 0.8672d;
-		double c = 0.2d;
-		double d = 0.7d;
-		double e = 0.672d;
-		double f = 0.001d;
-		List<Mat> faces = FaceAnalysisEngine.parseExampleFaces(a + "," + b + "," + c
-				+ "\n" + d + "," + e + "," + f);
-		assertEquals(a, faces.get(0).get(0, 0)[0], 0.000005d);
-		assertEquals(b, faces.get(0).get(0, 1)[0], 0.000005d);
-		assertEquals(c, faces.get(0).get(0, 2)[0], 0.000005d);
-		assertEquals(d, faces.get(1).get(0, 0)[0], 0.000005d);
-		assertEquals(e, faces.get(1).get(0, 1)[0], 0.000005d);
-		assertEquals(f, faces.get(1).get(0, 2)[0], 0.000005d);
-	}
-
-	@Test
 	public void testIsAuthorisedFaceAccept() {
 		// TODO Set some reasonable test values
 		Mat testFace = null;
-		List<Mat> exampleFaces = null;
+		List<FaceAnalysisEngine.FaceExample> exampleFaces = null;
 		double threshold = 0.0;
-		boolean isAuthorised = FaceAnalysisEngine.getMostLikelyClass(testFace,
+		FaceAnalysisEngine.FaceClass faceClass = FaceAnalysisEngine.getMostLikelyClass(testFace,
 				exampleFaces, threshold);
 		assertTrue("Face should have been authorised, but it was not",
-				isAuthorised);
+				faceClass == FaceClass.ROSY);
 	}
 
 	@Test
 	public void testIsAuthorisedFaceDecline() {
 		// TODO Set some reasonable test values
 		Mat testFace = null;
-		List<Mat> exampleFaces = null;
+		List<FaceAnalysisEngine.FaceExample> exampleFaces = null;
 		double threshold = 0.0;
-		boolean isAuthorised = FaceAnalysisEngine.getMostLikelyClass(testFace,
+		FaceAnalysisEngine.FaceClass faceClass = FaceAnalysisEngine.getMostLikelyClass(testFace,
 				exampleFaces, threshold);
 		assertFalse("Face should not have been authorised, but it was",
-				isAuthorised);
+				faceClass != FaceClass.ROSY);
 	}
 
 }
