@@ -6,7 +6,7 @@ private List<String> getEngines(String engineType) {
     List<String> engines = new ArrayList<String>();
     File folder = new File(filePath.concat("/bin/classes/engine/" + engineType + "/com/gpigc/core/" + engineType + "/engine"));
     for (File engineFile : folder.listFiles()) {
-        if (engineFile.getName().endsWith(".class")) {
+        if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
             engines.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
         }
     }
