@@ -251,13 +251,13 @@ the way in which data is sensed.}{}
 \label{sec:qualities}
 A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders.
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
-When considering the HUMS, its requirements and its stakeholders, Table~\ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Flexibility, and Interoperability.
+When considering the HUMS, its requirements and its stakeholders, Table~\ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
 
 \tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
 \hline
 Quality \qquad Attribute & Rank & Reasoning \\
 \hline
-Flexibility & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the customer. 
+Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the customer. 
 \\
 Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
 \\
@@ -283,7 +283,7 @@ Usability & Low & Usability was not deemed of great importance to the system as 
 Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimuli. This helps to create goals which the final implementation can be tested against to determine its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions. Other scenarios where also considered and documented, however could not be included in this report due to space limitations.
 
 \begin{scenario}{1}
-\quality{Flexibility}
+\quality{Configurability}
 \source{The Customer}
 \stimulus{The Customer wishes to reconfigure the system to monitor mechanical systems.}
 \artifact{HUMS Core}
@@ -358,7 +358,7 @@ Some risks have been modified since the previous report, while others are comple
   
     R.6 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
     R.7 & Data interception between the HUMS core and registered engines or datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
-    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
     R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
     R.10 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, End User not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
   	\hline
@@ -391,7 +391,7 @@ Having identified the key quality attributes for the system, and a set of qualit
 
 \subsection{Tactics}
 
-Below, the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Flexibility tactics are not included as they are covered under modifiability and interoperability, and are complementary. The tactics used are based on the descriptions provided by Software Architecture in Practice\cite{Bass98}.
+Below, the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Configurability tactics are not included as they are covered under modifiability and interoperability, and are complementary. The tactics used are based on the descriptions provided by Software Architecture in Practice\cite{Bass98}.
 
 \begin{description}
 \item[Modifiability] \hfill
@@ -445,7 +445,7 @@ Design patterns were used in order to increase the modifiability of our system, 
 
 Each of the protocols that must be followed by the engines, emitters and so on are given below:
 \begin{description} [noitemsep]	
-	\item[Analysis Engines] 
+	\item[Analysis Engines] All analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a description of a system (including its unique ID, settings and a handle to its stored sensor values) as a parameter, and returns a description of the event generated as a result of the analysis (which may be \texttt{null}). This allows analysis engines free reign as to how they define events in the context of a system with sensor values that are updated over time, giving fully dynamic configurability, that is, it is configurability at both runtime and compile time.
 	\item[Notification Engines] 
 	\item[Storage Engines] 
 	\item[Data Emitters] % connected via data inout interfaces. reads from inputs, sends to the core
@@ -526,7 +526,7 @@ A behavioural view can show the actual actions taken by the system when the data
 
 The Core is the main application controlling the behaviour and functionality of the HUMS. It receives client data through Data Emitters and stores it using data storage engines, data is then passed to appropriate analysis engines, which can create \texttt{Event} objects that the Core passes on to the relevant notification engines.
 
-\texttt{Controller} objects are used to dynamically load and manage the three different engine types. The use of dynamic class loading increases the flexibility or modifiability of the system, by allowing the new engines to be added both at runtime and compile time. In addition, the Core automatically detects when new files are added to the folder they are loaded from, and refreshes the system. This means that from the End Users perspective, they merely have to place their class into the correct folder, increasing the usability of the HUMS. 
+\texttt{Controller} objects are used to dynamically load and manage the three different engine types. The use of dynamic class loading increases the configurability or modifiability of the system, by allowing the new engines to be added both at runtime and compile time. In addition, the Core automatically detects when new files are added to the folder they are loaded from, and refreshes the system. This means that from the End Users perspective, they merely have to place their class into the correct folder, increasing the usability of the HUMS. 
 
 Several example engines are provided with the HUMS and are described throughout this report. These engines implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the system by creating their own engines to meet their own needs.
 
@@ -632,7 +632,7 @@ The final system performs face recognition, collecting face data using the built
 
 The previous mean analysis engine has been rewritten to form a generic bounded sensor value engine. This engine performs analysis on each sensor in the system being analysed to determine if the mean average of the values is outside of specified bounds. It then produces a single event detailing any violations across all the sensors, which generates a single notification for the system being analysed rather than a flood of them.
 
-The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds flexibility on a per sensor level.
+The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds configurability on a per sensor level.
 
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
 
@@ -719,7 +719,7 @@ The email notification example engine provided is similar in functionality to th
 The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the User through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information.
 
 \subsubsection{Graph Report}
-Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its flexibility of use. The graph reports generated can also automatically update to show live data.
+Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its configurability of use. The graph reports generated can also automatically update to show live data.
 
 \subsection{Admin Centre}
 \label{sec:admin}
@@ -770,7 +770,7 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 \label{sec:req_eval}
 \hl{TODO Ant}
 % -- Qual attibrs
-% High flexibility
+% High configurability
 % High modifiability
 % High Interop
 % High Avail
@@ -821,7 +821,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 }{Evaluation for Satisfaction of Non-Function Requirements}{nfrevaltable}	
 
 
-The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
+The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high configurability was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
 
 A scenario for evaluating the modifiability is the ability to add engines for analysis, reporting or notifications. This has been achieved using extensible APIs for the analysis, reporting and notification engines. Each of the engines contains an abstract base class which can be extended to provide a new engine. For example, to implement a new analysis engine one must simply extend the AnalysisEngine class and implement the required abstract methods.
 
@@ -858,7 +858,7 @@ We decided to monitor the process memory usage, CPU usage, state (idle, running,
 
 We maintained communication with the Customer throughout the phase of this report, with emails exchanged every few weeks. The first feedback received from the Customer was the feedback to the previous Interim Report. This was in the form of written feedback and a face-to-face meeting with the Customer, with the main points raised for improvement surrounding the risks and the quality attribute scenarios. This feedback was taken on board and incorporated into this report, with risks more thoroughly considered throughout the process and with the scenarios explicitly defined.
 
-During email communication with the Customer, we attempted to resolve an issue they had with accessing the web sources that were produced as part of the Interim Report. Once this was done we briefly discussed the ideas behind the configurable engines architecture and it was agreed that it was a good strategy. We then asked about different qualities expected of the system, particularly flexibility and its related qualities. The Customer replied highlighting configurability as a key quality and this helped to influence some of our development to ensure that this was well met.
+During email communication with the Customer, we attempted to resolve an issue they had with accessing the web sources that were produced as part of the Interim Report. Once this was done we briefly discussed the ideas behind the configurable engines architecture and it was agreed that it was a good strategy. We then asked about different qualities expected of the system, particularly configurability and its related qualities. The Customer replied highlighting configurability as a key quality and this helped to influence some of our development to ensure that this was well met.
 
 Further information about how development was progressing and the proposals for future work was exchanged to keep the Customer up-to-date and ensure that it was on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at compile time and run time.
 
