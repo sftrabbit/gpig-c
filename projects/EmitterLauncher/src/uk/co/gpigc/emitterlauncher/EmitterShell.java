@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -115,6 +116,7 @@ public class EmitterShell extends Shell {
 		textApp1.setFont(monospacedFont);
 		textApp1.setEditable(false);
 		textApp1.setForeground(SWTResourceManager.getColor(47, 79, 79));
+		textApp1.setBackground(SWTResourceManager.getColor(255,255,255));
 		console1Tab.setControl(textApp1);
 		textApp1.addListener(SWT.Modify, new CaretListener(textApp1));
 
@@ -127,6 +129,7 @@ public class EmitterShell extends Shell {
 		textApp2.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console2Tab.setControl(textApp2);
 		textApp2.addListener(SWT.Modify, new CaretListener(textApp2));
+		textApp2.setBackground(SWTResourceManager.getColor(255,255,255));
 
 
 		console3Tab = new TabItem(tabFolder, 0);
@@ -138,6 +141,7 @@ public class EmitterShell extends Shell {
 		textApp3.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console3Tab.setControl(textApp3);
 		textApp3.addListener(SWT.Modify, new CaretListener(textApp3));
+		textApp3.setBackground(SWTResourceManager.getColor(255,255,255));
 
 
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
@@ -149,6 +153,7 @@ public class EmitterShell extends Shell {
 		textApp4.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console4Tab.setControl(textApp4);
 		textApp4.addListener(SWT.Modify, new CaretListener(textApp4));
+		textApp4.setBackground(SWTResourceManager.getColor(255,255,255));
 
 
 		console5Tab = new TabItem(tabFolder, SWT.NONE);
@@ -160,6 +165,7 @@ public class EmitterShell extends Shell {
 		textApp5.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console5Tab.setControl(textApp5);
 		textApp5.addListener(SWT.Modify, new CaretListener(textApp5));
+		textApp5.setBackground(SWTResourceManager.getColor(255,255,255));
 
 		clearButton = new Button(this, SWT.PUSH);
 		clearButton.setText("Clear Console");
