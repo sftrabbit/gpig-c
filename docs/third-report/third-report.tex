@@ -443,9 +443,9 @@ In the previous report, many of the details in the module view were omitted. In 
 
 Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
 
-Each of the protocols that must be followed by the engines, emitters and so on are given below:
+The components of the End User facing API, made up of generic engines and emitters, is described below:
 \begin{description} [noitemsep]	
-	\item[Analysis Engines] All analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a description of a system (including its unique ID, settings and a handle to its stored sensor values) as a parameter, and returns a description of the event generated as a result of the analysis (which may be \texttt{null}). This allows analysis engines free reign as to how they define events in the context of a system with sensor values that are updated over time, giving fully dynamic configurability, that is, it is configurability at both runtime and compile time.
+	\item[Analysis Engines] All analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a description of a system (including its unique ID, settings and a handle to its stored sensor values) as a parameter, and returns a description of the event generated as a result of the analysis (which may be \texttt{null}). This allows analysis engines free reign as to how they define events in the context of a system with sensor values that are updated over time, giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
 	\item[Notification Engines] 
 	\item[Storage Engines] 
 	\item[Data Emitters] % connected via data inout interfaces. reads from inputs, sends to the core
