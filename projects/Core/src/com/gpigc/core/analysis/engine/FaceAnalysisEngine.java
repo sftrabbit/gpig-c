@@ -177,7 +177,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		// Parse face matrix
 		String[] elements = faceStr.split(ELEMENT_SEP);
 		int offset = 0;
-		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32FC1);
+		Mat faceMatrix = new Mat(new Size(elements.length-1, 1), CvType.CV_32FC1);
 		for (int i = 1; i < elements.length; i++) {
 			double elementValue;
 			try {
@@ -247,6 +247,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		System.err.println("Assuming class "+bestExampleClass);
 		double minDifference = threshold;
 		for (FaceExample example : exampleFaces) {
+			System.err.println("Example matrix dims = "+
+					example.getLbp().width()+"x"+
+					example.getLbp().height());
+			System.err.println("Test matrix dims = "+
+					testFace.width()+"x"+
+					testFace.height());
 			double faceDifference = Imgproc.compareHist(
 					testFace, 
 					example.getLbp(),
