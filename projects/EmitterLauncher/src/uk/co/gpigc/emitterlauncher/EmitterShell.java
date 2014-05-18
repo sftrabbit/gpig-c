@@ -233,11 +233,13 @@ public class EmitterShell extends Shell {
 	protected void buttonSelect(final String jarPath, Button button, Text text) {
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
+			text.append(">> Starting " + jarPath + "\n");
 			threadMap.put(jarPath, new OpenJarThread(jarPath, button,text));
 			threadMap.get(jarPath).start();
 		} else {
 			button.setImage(playIcon);
 			if (threadMap.containsKey(jarPath)) {
+				text.append(">> Stopping " + jarPath + "\n");
 				threadMap.get(jarPath).stopRunning();
 				threadMap.remove(jarPath);
 			}
