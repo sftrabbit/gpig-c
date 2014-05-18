@@ -437,11 +437,20 @@ Building on our work in the previous report we decided to present four further, 
 \subsection{Module View}
 \label{sec:views}
 \hl{TODO Tom}
-The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system.
+The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
 
 In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the End User (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
 
 Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
+
+Each of the protocols that must be followed by the engines, emitters and so on are given below:
+\begin{description} [noitemsep]	
+	\item[Analysis Engines] 
+	\item[Notification Engines] 
+	\item[Storage Engines] 
+	\item[Data Emitters] % connected via data inout interfaces. reads from inputs, sends to the core
+\end{description}
+% What methods have we used, what Java interfaces must we implement. All extends from abstract _ class, and offers these abstract functions. What they do and how the user would extend them. Sample implementations can be overidden too
 
 % Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
 % Quality attributes?
