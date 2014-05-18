@@ -113,7 +113,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Glossary}
 \label{sec:glossary}
-\hl{TODO: Possibly update this}
+\hl{TODO: Possibly update this - add something about data stores too?}
 \begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
@@ -458,9 +458,17 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 
 \subsection{Core Development}
 \label{sec:core}
-\hl{Andy/Rosy: Config files, gui, server shiz}
+\hl{Rosy: gui}
 
-A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
+The Core is the main application that controls the behaviour and functionality of the HUMS. It receives the input data from the Data Emitters and stores it using the data storage engines, then passes it on for appropriate analysis using the analysis engines, which in turn may create notifications that the Core passes on to the relevant notification engines. The different engines are all interchangeable and dynamic class loading is used to flexibly discover which engines exists and should be used by the HUMS.
+
+Several example engines are provided with the HUMS and are described throughout this report. The engines implement the standard interfaces which have been created for the main different types of engines: storage, analysis and notification. The Customer and Consumer can easily extend and customise the system by creating their own engines to meet their own needs.
+
+An instance of a HUMS can be defined using a configuration file. This specifies the parameters of the instance such as System IDs and the Senors involved, along with options for each sensor, for analysis, and for notification. The engines and data store to use are also specified. A configuration file is loaded into the Core by the User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
+
+Any changes made to the configuration file being used by an instance of the HUMS are automatically detected by the Core and the configuration is reloaded to take immediate effect. This saves extra work for the User who may forget to reload the file, or not realise that this needs to be done or how to do it.
+
+A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section\ref{sec:admin}.
 
 \subsection{Monitoring}
 \label{sec:monitor}
