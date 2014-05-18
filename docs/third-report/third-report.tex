@@ -437,6 +437,17 @@ Building on our work in the previous report we decided to present four further, 
 \subsection{Module View}
 \label{sec:views}
 \hl{TODO Tom}
+The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system.
+
+% Previously: no engines shown, which are implemented or not
+% Prev: No internals of data abstraction layer. No databases or clear interface.
+% Green => stuff to be added by the End User. Implements X interface, e.g. EmitterInterface
+% Within Blue => What we've implemented
+% Labelled types of the components: layers, engines, emitters
+% Patterns - System Data Gateway pattern to allow us to add new databases increasing modifiability as implementation is hidden behind the storage/analysis etc interface
+% Observer/subscriber pattern. Controllers=observers, Engines subscribe to the appropriate observers
+% Shows the boundary between what we implement and what the End User implements. We have defaults, showing what our system can do (tailorability) and leaving space for the user to add more. Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
+% Quality attributes?
 
 \begin{figure}[tbp]
   \centering
@@ -447,7 +458,7 @@ Building on our work in the previous report we decided to present four further, 
 
 \subsection{Component and Connector View}
 
-In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorabilty of the system by not unnecessarily restricting the End User.
+In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the End User.
 
 The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
 
@@ -556,7 +567,7 @@ In addition to the above, we created an optional GUI for our HUMS Core which mak
 \caption{A Screenshot of the Core GUI}
 \label{fig:coreGUI}
 \end{figure}
-A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}. 
+A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in Section~\ref{sec:admin}. 
 
 \subsection{Project Management}
 \hl{TODO Joe}
@@ -634,7 +645,7 @@ The values of variables which represent the state of the system being monitored 
 
 Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
 
-The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the Tailorability quality attribute of the solution, allowing the HUMS to be easily customised by the end user without needing any particular software engineering knowledge. % TODO Expand on this?
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the Tailorability quality attribute of the solution, allowing the HUMS to be easily customised by the End User without needing any particular software engineering knowledge. % TODO Expand on this?
 
 % TODO The library used?
 
@@ -804,7 +815,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 }{Evaluation for Satisfaction of Non-Function Requirements}{nfrevaltable}	
 
 
-The quality attributes laid out in Section \ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
+The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
 
 A scenario for evaluating the modifiability is the ability to add engines for analysis, reporting or notifications. This has been achieved using extensible APIs for the analysis, reporting and notification engines. Each of the engines contains an abstract base class which can be extended to provide a new engine. For example, to implement a new analysis engine one must simply extend the AnalysisEngine class and implement the required abstract methods.
 
