@@ -565,7 +565,7 @@ A configuration file is loaded into the Core by the End User before it is run. C
 
 Any changes made to the configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the End User cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
-In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \hl{ref}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
+In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
 \begin{figure}[tbp]
 \centering
@@ -594,7 +594,7 @@ In order to ensure our HUMS is capable of receiving, analysing, and reporting da
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Emitter Launcher}
-The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
+The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \cite{swt}, meaning native components can be used.
  
 \begin{figure}[tbp]
 \centering
@@ -626,7 +626,7 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Data Analysis}
 \label{sec:analysis}
-\hl{TODO INTRO Joe/Andy/Rosy}
+In this section we describe how our HUMS implementation currently analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the End User to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
 
 \subsubsection{Generic Bounded Sensor Value Engine}
 
@@ -651,7 +651,11 @@ The values of variables which represent the state of the system being monitored 
 
 Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
 
+<<<<<<< HEAD
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its flexibility and configurability, allowing the HUMS to be easily customised by the end user without needing any particular software engineering knowledge. % TODO Expand on this?
+=======
 The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the Tailorability quality attribute of the solution, allowing the HUMS to be easily customised by the End User without needing any particular software engineering knowledge. % TODO Expand on this?
+>>>>>>> 8233dcfd690d68bbd54750ecd04faee25f7e2b80
 
 % TODO The library used?
 
@@ -671,33 +675,25 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 % TODO This method is robust to lighting and pose \cite{ahonen2006face} (due to use of local thresholds)
 
 \subsubsection{Other Analysis Engines}
-The traffic analysis engine, simple creates an event when a reading is generated. The earthquake engine checks if the magnitude of the earthquake is above a certain value, so larger earthquakes generate events. For other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods.
+The \texttt{TrafficAnalysisEngine}, creates an event when a reading is generated, the analysis performed in this case is simply parsing the data about the earthquake and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification \texttt{Event} only if the magnitude above a specified value, so larger earthquakes generate events. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class in incredibly versatile  Other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the \texttt{AnalysisEngine} abstract class, and implementing the required methods.
 
 \subsection{Data Storage}
 \label{sec:store}
-\hl{TODO INTRO: Joe||Andy||Rosy}
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the End User to conform to a particular data schema or datastore, in fact, the datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
 
-% %This to be split across the sections below
-To improve the tailorability of the system and address risks \emph{R.6} and \emph{R.7}, three different datastores are supported. Two remote data sources, Google app engine and a Postgres instance hosted on Heroku or a local H2 instance. Clients can change between datastores with ease by updating their configuration file.
-
-\hl{Google app engine connection stuff is nonsense, uses TCP}
-
-Both Google App Engine and Heroku are Platform as a Service solutions, they both provide a remote datastore to the HUMS. Communication between a clients HUMS and the remote datastore takes place over HTTP. Both Heroku and App Engine provide a guaranteed uptime of $99.99\%$, as such the reliability and speed of the connection to the remote datastore will be largely influenced by a clients internet connection.
-
-For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained, serverless, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
-
-Connection pooling was used for all datastores. The process of opening, maintaining and deleting connections is resource intensive and a performance bottleneck. A connection pool provides a cache of reusable database connections, connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. 
-
-Prepared statements were used across all datastore. They are compiled once and then reused many times leading to significant gains in performance. Finally, prepared statements offer improved security with SQL injection attacks rendered useless with all user input being treated as data and thus not altering the characteristics of data queries.
+Prepared statements were used where possible in our datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
 
 \subsubsection{Google App Engine Storage}
-\hl{TODO Adam/Rosy}
+\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
+
+\subsubsection{PostgreSQL Storage}
+\emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. 
+To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
+
+\hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
 
 \subsubsection{H2 Storage}
-\hl{TODO Adam}
-
-\subsubsection{Heroku Storage}
-\hl{TODO Adam}
+For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained and server-less, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsection{Data Reporting and Event Notifying}
 \label{sec:report}
