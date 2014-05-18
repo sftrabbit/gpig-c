@@ -90,7 +90,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-Word count:  \input{wc} (\textit{using TeXCount})
+Word count: % \input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -342,6 +342,7 @@ Some risks have been modified since the previous report, while others are comple
     R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
     R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
     R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
+    R.5 & The End User fails to update the configuration files of the HUMS  & Users find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential End Users to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
   	\hline
 }
 {The human and business risks associated with this phase of the project}{tab:human_risks}
@@ -352,11 +353,11 @@ Some risks have been modified since the previous report, while others are comple
     Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
   	\hline
   
-    R.5 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
-    R.6 & Data interception between the HUMS core and registered engines or datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
-    R.7 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
-    R.8 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
-    R.9 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, End User not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
+    R.6 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
+    R.7 & Data interception between the HUMS core and registered engines or datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and flexibility requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+    R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
+    R.10 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, End User not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
   	\hline
 }
 {The technical risks associated with this phase of the project}{tab:tech_risks}
@@ -387,7 +388,7 @@ Having identified the key quality attributes for the system, and a set of qualit
 
 \subsection{Tactics}
 
-Below, the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Flexibility tactics are not included as they are covered under modifiability and interoperability, and are complementary. The tactics used are based on the descriptions provided by \hl{ref bass}.
+Below, the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Flexibility tactics are not included as they are covered under modifiability and interoperability, and are complementary. The tactics used are based on the descriptions provided by Software Architecture in Practice\cite{Bass98}.
 
 \begin{description}
 \item[Modifiability] \hfill
@@ -443,15 +444,15 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 
 \subsection{Component and Connector View}
 
-In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorabilty of the system by not unnecessarily restricting the end user.
+In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorabilty of the system by not unnecessarily restricting the End User.
 
 The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
 
 The \texttt{:Emit Data} filter transforms the client data into serialisable data which can be sent using protocol buffers to the \texttt{:Read Data} filter. Using \emph{Protocol Buffers}, allows for data to be sent locally or over a network, with or without encryption. 
-The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the end users defined datastore. 
+The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the End Users defined datastore. 
 
-The \texttt{:Store Data} filter inserts the data into the end users defined datastore.
-The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the end user, being limited only by what their defined datastores support.
+The \texttt{:Store Data} filter inserts the data into the End Users defined datastore.
+The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the End User, being limited only by what their defined datastores support.
 The \texttt{:Create Report} filter transforms data from the datastore into a \texttt{Data Report}, for example, a graph or PDF.
 
 When sending data between the \texttt{:Store Data} and \texttt{:Analyse Data} filters, \texttt{SensorState} objects are passed, each of which hold the ID of a particular sensor, the timestamp of when it was created and stored, and its value at the time of creation. 
@@ -504,22 +505,34 @@ A behavioural view can show the actual actions taken by the system when the data
 \label{sec:core}
 \hl{Rosy: gui}
 
-The Core is the main application that controls the behaviour and functionality of the HUMS. It receives the input data from the Data Emitters and stores it using the data storage engines, then passes it on for appropriate analysis using the analysis engines, which in turn may create notifications that the Core passes on to the relevant notification engines. The different engines are all interchangeable and dynamic class loading is used to flexibly discover which engines exists and should be used by the HUMS.
+The Core is the main application controlling the behaviour and functionality of the HUMS. It receives client data through Data Emitters and stores it using data storage engines, data is then passed to appropriate analysis engines, which can create \texttt{Event} objects that the Core passes on to the relevant notification engines.
 
-Several example engines are provided with the HUMS and are described throughout this report. The engines implement the standard interfaces which have been created for the main different types of engines: storage, analysis and notification. The Customer and Consumer can easily extend and customise the system by creating their own engines to meet their own needs.
+\texttt{Controller} objects are used to dynamically load and manage the three different engine types. The use of dynamic class loading increases the flexibility or modifiability of the system, by allowing the new engines to be added both at runtime and compile time. In addition, the Core automatically detects when new files are added to the folder they are loaded from, and refreshes the system. This means that from the End Users perspective, they merely have to place their class into the correct folder, increasing the usability of the HUMS. 
 
-An instance of a HUMS can be defined using a configuration file. This specifies the parameters of the instance such as System IDs and the Senors involved, along with options for each sensor, for analysis, and for notification. The engines and data store to use are also specified. A configuration file is loaded into the Core by the User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
+Several example engines are provided with the HUMS and are described throughout this report. These engines implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the system by creating their own engines to meet their own needs.
 
-Any changes made to the configuration file being used by an instance of the HUMS are automatically detected by the Core and the configuration is reloaded to take immediate effect. This saves extra work for the User who may forget to reload the file, or not realise that this needs to be done or how to do it.
+The systems monitored by a particular HUMS instance, and how they will be monitored is defined using a \emph{JSON} configuration file.
+The format of this file is displayed in Figure~\hl{XXX}, which shows the definition of a particular system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
+A configuration file is loaded into the Core by the End User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
-A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}.
+Any changes made to the configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the End User cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
+
+In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \hl{ref}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
+
+\begin{figure}
+\centering
+\includegraphics[width = \textwidth]{images/coreGUI.png}
+\caption{A Screenshot of the Core GUI}
+\label{fig:coreGUI}
+\end{figure}
+A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}. 
 
 \subsection{Project Management}
 \hl{TODO Joe}
 
 \subsection{Monitoring}
 \label{sec:monitor}
-In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An end user would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
+In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An End User would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
 \subsubsection{Test Applications} \label{subsec:tapp}
 Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. For this we created a process monitoring engine which is capable of tracking information from a process.
@@ -558,7 +571,13 @@ The final system performs face recognition, collecting face data using the built
 \hl{TODO INTRO Joe/Andy/Rosy}
 
 \subsubsection{Generic Bounded Sensor Value Engine}
-\hl{TODO A Team -- this is the new and improved mean engine}
+
+The previous mean analysis engine has been rewritten to form a generic bounded sensor value engine. This engine performs analysis on each sensor in the system being analysed to determine if the mean average of the values is outside of specified bounds. It then produces a single event detailing any violations across all the sensors, which generates a single notification for the system being analysed rather than a flood of them.
+
+The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds flexibility on a per sensor level.
+
+The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
+
 
 \subsubsection{Generic Expression Engine}
 \hl{TODO Tom}
