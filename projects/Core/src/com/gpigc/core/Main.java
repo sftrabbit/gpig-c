@@ -24,6 +24,9 @@ public class Main {
 	private static CoreShell shell;
 
 	public static void main(String args[]) throws Exception {
+		String tempConfig = FileUtils.getExpandedFilePath("res/config");
+		Config config = new Config(tempConfig);
+		
 		setUpServer();
 		setUpGui();
 	}
