@@ -43,7 +43,7 @@ public class ResponseTimeCollector implements DataCollector {
 
 	private long getResponseTime() {
 		System.out.println("Getting reponse time.");
-		long start = System.currentTimeMillis();
+		long duration = -1;
 
 		System.setProperty("http.agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36");
 
@@ -53,11 +53,10 @@ public class ResponseTimeCollector implements DataCollector {
 			connection.setRequestMethod("GET");
 			connection.setDoInput(true);
 
-			// Read to end of response, but discard
+			// Time how long it takes to open the response handle. As we don't care about connection set-up time (which is language/library dependent), this is a reasonable metric to use.
+                        long start = System.currentTimeMillis();
 			InputStream is = connection.getInputStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-			while ((rd.readLine()) != null) {}
-			rd.close();
+                        duration = System.currentTimeMillis() - start;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -66,9 +65,7 @@ public class ResponseTimeCollector implements DataCollector {
 			}
 		}
 
-		long stop = System.currentTimeMillis();
-
-		return stop - start;
+		return duration;
 	}
 
 }

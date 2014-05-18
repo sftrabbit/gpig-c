@@ -263,5 +263,28 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			System.err.println("Failed to load OpenCV natives");
 		}
 	}
+	
+	/**
+	 * Example LBP-class pairs
+	 */
+	private class FaceExample {
+		private final Mat lbp;
+		private final FaceClass faceClass;
+		
+		public FaceExample(Mat lbp, FaceClass faceClass) {
+			this.lbp = lbp;
+			this.faceClass = faceClass;
+		}
+
+		public Mat getLbp() {
+			return lbp;
+		}
+
+		public FaceClass getFaceClass() {
+			return faceClass;
+		}
+	}
+	
+	private enum FaceClass { ROSY, NOT_ROSY }
 
 }
