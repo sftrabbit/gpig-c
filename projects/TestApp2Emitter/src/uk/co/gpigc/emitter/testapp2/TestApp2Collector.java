@@ -11,7 +11,7 @@ import uk.co.gpigc.emitter.testapp2.ProcessMonitor.ProcessMonitorException;
 
 import com.gpigc.proto.Protos.SystemData;
 
-public class TestApp2Collector implements DataCollector {
+public class TestApp2Collector extends DataCollector {
 	private static final String PROCESS_NAME = "test2";
 	private static final int DELAY_BEFORE_MONITOR = 4500;
 	

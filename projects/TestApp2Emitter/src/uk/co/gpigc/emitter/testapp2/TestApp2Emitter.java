@@ -12,10 +12,12 @@ public class TestApp2Emitter {
 		CommandThread commandThread = new CommandThread(getExpandedFilePath(TEST_APP_PATH), true);
 		commandThread.start();
 		
-		SimpleEmitter emitter = new SimpleEmitter(TestApp2Emitter.class.getSimpleName(), new TestApp2Collector(), COLLECTION_INTERVAL);
-		emitter.start();
-		
-		commandThread.stopRunning();
+		try {
+			SimpleEmitter emitter = new SimpleEmitter(TestApp2Emitter.class.getSimpleName(), new TestApp2Collector(), COLLECTION_INTERVAL);
+			emitter.run();
+		} finally {
+			commandThread.stopRunning();
+		}
 	}
 	
 	public static String getExpandedFilePath(String relativeFilePath) {

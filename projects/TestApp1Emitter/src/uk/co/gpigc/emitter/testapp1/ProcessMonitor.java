@@ -18,6 +18,7 @@ public class ProcessMonitor {
 	private final long processId;
 	private ProcCpu previousCpuInfo;
 	private double cpuLoad;
+	private Timer cpuLoadTimer = new Timer(true);
 
 	/**
 	 * Monitor the process with the given process ID.
@@ -41,7 +42,11 @@ public class ProcessMonitor {
 		
 		System.out.println("Monitoring process " + processId);
 
-		new Timer(true).schedule(new CpuLoadTask(), 0, UPDATE_INTERVAL);
+		cpuLoadTimer.schedule(new CpuLoadTask(), 0, UPDATE_INTERVAL);
+	}
+	
+	public void stop() {
+		cpuLoadTimer.cancel();
 	}
 
 	/**

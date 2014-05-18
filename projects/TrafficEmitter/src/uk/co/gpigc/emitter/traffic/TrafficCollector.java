@@ -23,7 +23,7 @@ import com.gpigc.proto.Protos.SystemData;
 
 import uk.co.gpigc.emitter.DataCollector;
 
-public class TrafficCollector implements DataCollector {
+public class TrafficCollector extends DataCollector {
 
 	private URL url;
 	private long lastEventTime;

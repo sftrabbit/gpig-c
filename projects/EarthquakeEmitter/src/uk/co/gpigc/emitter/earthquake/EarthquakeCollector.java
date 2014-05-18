@@ -18,7 +18,7 @@ import com.gpigc.proto.Protos.SystemData;
 
 import uk.co.gpigc.emitter.DataCollector;
 
-public class EarthquakeCollector implements DataCollector {
+public class EarthquakeCollector extends DataCollector {
 
 	private URL url;
 	private long lastEarthquakeTime;

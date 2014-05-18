@@ -9,7 +9,7 @@ public class ResponseTimeEmitter {
 		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
 		
 		SimpleEmitter emitter = new SimpleEmitter(ResponseTimeEmitter.class.getSimpleName(), new ResponseTimeCollector(), COLLECTION_INTERVAL);
-		emitter.start();
+		emitter.run();
 	}
 	
 	public static String getExpandedFilePath(String relativeFilePath) {
