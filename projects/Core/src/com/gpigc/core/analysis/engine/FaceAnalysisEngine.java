@@ -57,7 +57,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				threshold = Double.parseDouble(system.getParameters().get(
 						Parameter.FACE_SIMILARITY_THRESHOLD));
 			} catch (NumberFormatException e) {
-				System.out.println("System \""+system.getID()+"\" does not have "
+				System.out.println(" System \""+system.getID()+"\" does not have "
 						+ "a valid threshold");
 				System.err.println("System \""+system.getID()+"\" does not have "
 						+ "a valid threshold: "+system.getParameters().get(
@@ -68,7 +68,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			try {
 				exampleFaces = getExampleFaces(system);
 			} catch (ParseException e) {
-				System.out.println("Failed to parse example faces. "
+				System.out.println(" Failed to parse example faces. "
 						+ "Error at character "+e.getErrorOffset()+". "
 						+ "Check your .config file.");
 				return null;
@@ -160,7 +160,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		final String LINE_SEP = "\n";
 		System.err.println("Face data: "+facesMatrixStr);
 		String[] faceStrings = facesMatrixStr.split(LINE_SEP);
-		System.out.println(faceStrings.length+" example faces loaded.");
+		System.out.println(' '+faceStrings.length+" example faces loaded.");
 		List<FaceExample> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
 			faces.add(parseFaceExample(faceStr));

@@ -33,7 +33,7 @@ public abstract class Controller {
 
 	protected final List<? extends Object> instantiateEngines(
 			List<ClientSystem> allSystems, Class<?>... constructorParams) {
-		System.out.println("Now attempting to load the " + engineType
+		System.out.println(" Now attempting to load the " + engineType
 				+ " engines");
 		List<Object> engines = new ArrayList<>();
 		String parentDir = "res/com/gpigc/core/" + engineType + "/engine/";
@@ -61,10 +61,10 @@ public abstract class Controller {
 								.getConstructor(constructorParams);
 						engines.add(makeEngine(allSystems, constructor,
 								className));
-						System.out.println("Loaded " + engineType
+						System.out.println(" Loaded " + engineType
 								+ " engine: " + className);
 					} catch (Exception e) {
-						System.out.println("Could not load " + engineType
+						System.out.println(" Could not load " + engineType
 								+ " engine: " + className);
 						e.printStackTrace();
 					}
@@ -72,7 +72,7 @@ public abstract class Controller {
 			}
 		} catch (ClassNotFoundException | IOException e1) {
 			e1.printStackTrace();
-			System.out.println(e1.getMessage());
+			System.out.println(' '+e1.getMessage());
 		}
 		return engines;
 	}

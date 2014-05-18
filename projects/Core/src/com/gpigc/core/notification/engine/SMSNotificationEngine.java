@@ -84,7 +84,7 @@ public class SMSNotificationEngine extends NotificationEngine {
 				StandardMessageGenerator.notificationGenerated(name, event
 						.getSystem().getID());
 				
-				System.out.println("SMS Response: " + conn.getResponseMessage());
+				System.out.println(" SMS Response: " + conn.getResponseMessage());
 				Thread.sleep(1000); //limitation of sms service
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();

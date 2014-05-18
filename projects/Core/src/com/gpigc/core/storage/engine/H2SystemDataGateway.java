@@ -150,7 +150,7 @@ public class H2SystemDataGateway extends SystemDataGateway {
 
 			result = constructResult(systemID, resultSet);
 		} catch (SQLException e) {
-			System.out.println("Failed to execute query:");
+			System.out.println(" Failed to execute query:");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -215,7 +215,7 @@ public class H2SystemDataGateway extends SystemDataGateway {
 				sensorReadingsInsert.execute();
 			}
 		} catch (SQLException e) {
-			System.out.println("Failed to write data to H2 datastore: "+e.getMessage());
+			System.out.println(" Failed to write data to H2 datastore: "+e.getMessage());
 			e.printStackTrace();
 		} finally {
 			try {
@@ -287,7 +287,7 @@ public class H2SystemDataGateway extends SystemDataGateway {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("Failed to write data to H2 datastore");
+			System.out.println(" Failed to write data to H2 datastore");
 			e.printStackTrace();
 		} finally {
 			try {
