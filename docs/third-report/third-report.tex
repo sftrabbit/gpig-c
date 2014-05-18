@@ -533,8 +533,7 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 % TODO This method is robust to lighting and pose \cite{ahonen2006face}
 
 \subsubsection{Other Analysis Engines}
-\hl{TODO Ant}
-The analysis system is expansible. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods. 
+The analysis system is expansible. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods. \hl{TODO Ant}
 
 \subsection{Data Storage}
 \label{sec:store}
@@ -609,7 +608,7 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
 
-We decided to monitor the memory and CPU usage of the test application, and our initial implementation simply queried the operating system for these values, using the Sigar library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
+We decided to monitor the memory and CPU usage of the test application, and our initial implementation simply queried the operating system for these values, using the SIGAR library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
 
 By using these cross-platform and established libraries, our monitor can be generalised to more than just the test application. This is illustrated by how easily we were able to reuse it as the basis of the second test application.
 
@@ -618,7 +617,7 @@ By using these cross-platform and established libraries, our monitor can be gene
 
 Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 
-We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that the result was \hl{TODO: after actually implementing that}.
+We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that the result was not relevant for the second Test Application because it did not utilise threads. Therefore, this is why we extended the monitoring to check which CPU the process was last executed on.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
