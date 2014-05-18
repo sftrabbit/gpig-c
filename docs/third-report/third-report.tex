@@ -90,7 +90,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-Word count: \input{wc} (\textit{using TeXCount})
+Word count:  \input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -113,7 +113,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Glossary}
 \label{sec:glossary}
-\hl{TODO: Possibly update this}
+\hl{TODO: Tom}
 \begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
@@ -150,7 +150,10 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
-\hl{write about changes -- currently they are unchanged} 
+
+\fr{4.1.1}, \fr{4.1.2}, and \fr{4.1.3} were added as we implemented configuration files into our prototype. We chose to use JSON as the configuration format as it is a widely-used standard.
+
+\fr{12} became apparent once we considered the reloading of configuration in \fr{4.1.3}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
@@ -169,7 +172,11 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
 }
 \requirement{\fr}{4}{The HUMS shall store End User configuration files.}{
-	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{}
+	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{
+      \requirement{\fr}{4.1.1}{The configuration file shall be human editable.}{}
+      \requirement{\fr}{4.1.2}{The Admin Centre shall provide an interface to allow authorised users to modify the configuration.}{}
+      \requirement{\fr}{4.1.3}{The HUMS shall monitor the configuration for changes and apply them.}{}
+    }
 	\requirement{\fr}{4.2}{The HUMS shall allow the User to define a storage limit.}{}
 	\requirement{\fr}{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
 	\requirement{\fr}{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
@@ -191,6 +198,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 \requirement{\fr}{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
 \requirement{\fr}{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
 the way in which data is sensed.}{}
+\requirement{\fr}{12}{The System shall load new engines which an authorised user adds during runtime.}{}
 \end{requirements}
 
 \subsection{Non-Functional Requirements}
@@ -432,14 +440,29 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \end{figure}
 
 \subsection{Component and Connector View}
-\hl{TODO Rosy}
+
 In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorabilty of the system by not unnecessarily restricting the end user.
 
-The input to the HUMS, in this view, is the sensor data from the consumer system,
+The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
+
+The \texttt{:Emit Data} filter transforms the client data into serialisable data which can be sent using protocol buffers to the \texttt{:Read Data} filter. Using \emph{Protocol Buffers}, allows for data to be sent locally or over a network, with or without encryption. 
+The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the end users defined datastore. 
+
+The \texttt{:Store Data} filter inserts the data into the end users defined datastore.
+The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the end user, being limited only by what their defined datastores support.
+The \texttt{:Create Report} filter transforms data from the datastore into a \texttt{Data Report}, for example, a graph or PDF.
+
+When sending data between the \texttt{:Store Data} and \texttt{:Analyse Data} filters, \texttt{SensorState} objects are passed, each of which hold the ID of a particular sensor, the timestamp of when it was created and stored, and its value at the time of creation. 
+
+The \texttt{:Analyse Data} filter transforms \texttt{SensorState} objects into \texttt{Event} objects, which are used by the \texttt{:Generate Notification} filter to produce notifications using the engines specified by the client.
+An \texttt{Event} object contains the ID of the system which caused the event, and a \texttt{Map} of key-value pairs containing information needed by the registered notification engines.
+
+The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or Email. 
+
 \begin{figure}
 \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
-\label{fig:pipesAndFilter}
 \caption{A Component and Connector Diagram of our HUMS, showing the protocols used when passing data between filters}
+\label{fig:pipesAndFilter}
 \end{figure}
 
 \subsection{Behavioural View}
@@ -478,7 +501,10 @@ An instance of a HUMS can be defined using a configuration file. This specifies 
 
 Any changes made to the configuration file being used by an instance of the HUMS are automatically detected by the Core and the configuration is reloaded to take immediate effect. This saves extra work for the User who may forget to reload the file, or not realise that this needs to be done or how to do it.
 
-A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section\ref{sec:admin}.
+A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}.
+
+\subsection{Project Management}
+\hl{TODO Joe}
 
 \subsection{Monitoring}
 \label{sec:monitor}
@@ -493,7 +519,7 @@ The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGA
 In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data is in a JSON format and the traffic data is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
 
 \subsubsection{Server Responsiveness}
-A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
+A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Android Mobile Application}
 \hl{TODO Finish Tom}
@@ -513,8 +539,8 @@ The final system performs face recognition, collecting face data using the built
 \includegraphics[width=4.3cm]{images/carApp.png}
 \hspace{0.5cm}
 \includegraphics[width=4.3cm]{images/faceApp.png}
-\label{fig:android}
 \caption{\hl{TODO}}
+\label{fig:android}
 \end{figure}
 
 \subsection{Data Analysis}
