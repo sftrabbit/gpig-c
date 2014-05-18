@@ -1,5 +1,6 @@
 package com.gpigc.core.view;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -153,7 +154,9 @@ public class CoreShell extends Shell {
 
 		consoleTextView = new Text(this, SWT.BORDER | SWT.H_SCROLL
 				| SWT.V_SCROLL);
-		Font monospacedFont = new Font(getDisplay(), "Monospace", 10, SWT.NONE);
+		File monospacedFontFile = new File(FileUtils.getExpandedFilePath("res/LucidaTypewriterRegular.ttf"));
+		getDisplay().loadFont(monospacedFontFile.toString());
+		Font monospacedFont = new Font(getDisplay(), "Lucida Sans Typewriter", 10, SWT.NONE);
 		consoleTextView.setFont(monospacedFont);
 		consoleTextView.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		getConsoleTextView().setBackground(
