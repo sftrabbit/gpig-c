@@ -1052,9 +1052,11 @@ FUNCTION(ADD_LATEX_TARGETS_INTERNAL)
 
   SET(make_dvi_command
     ${CMAKE_COMMAND} -E chdir ${output_dir}
+    ${latex_build_command}
     ${latex_build_command})
   SET(make_pdf_command
     ${CMAKE_COMMAND} -E chdir ${output_dir}
+    ${pdflatex_build_command}
     ${pdflatex_build_command}
     )
 
