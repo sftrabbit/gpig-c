@@ -506,8 +506,14 @@ A configuration file is loaded into the Core by the End User before it is run. C
 
 Any changes made to the configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the End User cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
-In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\hl{XXX}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core.
+In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \hl{ref}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
+\begin{figure}
+\centering
+\includegraphics[width = \textwidth]{images/coreGUI.png}
+\caption{A Screenshot of the Core GUI}
+\label{fig:coreGUI}
+\end{figure}
 A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}. 
 
 \subsection{Project Management}
