@@ -12,7 +12,7 @@ public class TestApp1Emitter {
 		bThread.start();
 		
 		SimpleEmitter emitter = new SimpleEmitter(TestApp1Emitter.class.getSimpleName(), new TestApp1Collector(), COLLECTION_INTERVAL);
-		emitter.start();
+		emitter.run();
 		
 		bThread.stopRunning();
 	}

@@ -9,7 +9,7 @@ public class TrafficEmitter {
 		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
 		
 		SimpleEmitter emitter = new SimpleEmitter(TrafficEmitter.class.getSimpleName(), new TrafficCollector(), COLLECTION_INTERVAL);
-		emitter.start();
+		emitter.run();
 	}
 	
 	public static String getExpandedFilePath(String relativeFilePath) {
