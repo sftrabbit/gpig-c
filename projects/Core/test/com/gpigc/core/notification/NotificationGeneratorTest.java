@@ -1,13 +1,9 @@
 package com.gpigc.core.notification;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.Before;
-import org.junit.Test;
-
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Parameter;
