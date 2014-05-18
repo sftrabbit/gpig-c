@@ -1,5 +1,6 @@
 package com.gpigc.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -12,7 +13,6 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import com.gpigc.core.view.CoreShell;
@@ -70,12 +70,10 @@ public class Main {
 	}
 
 	private static void setUpServer() throws Exception {
-		org.eclipse.jetty.util.log.Log.setLog(new NullLogger()); // this seemingly does nothing, when it should do something
-
 		Server server = new Server(65123);
 		HandlerList handlers = new HandlerList();
 
-		final URL warUrl = new URL(new URL("file:"), "./bin/server");
+		final URL warUrl = new File(FileUtils.getExpandedFilePath("res/server")).getCanonicalFile().toURI().toURL();
 		final String warUrlString = warUrl.toExternalForm();
 		WebAppContext webApp = new WebAppContext(warUrlString, "/");
 
@@ -130,25 +128,6 @@ public class Main {
 			run();
 		}
 
-	}
-
-	// NullLogger
-	static class NullLogger implements Logger {
-	    @Override public String getName() { return "no"; }
-	    @Override public void warn(String msg, Object... args) { }
-	    @Override public void warn(Throwable thrown) { }
-	    @Override public void warn(String msg, Throwable thrown) { }
-	    @Override public void info(String msg, Object... args) { }
-	    @Override public void info(Throwable thrown) { }
-	    @Override public void info(String msg, Throwable thrown) { }
-	    @Override public boolean isDebugEnabled() { return false; }
-	    @Override public void setDebugEnabled(boolean enabled) { }
-	    @Override public void debug(String msg, Object... args) { }
-	    @Override public void debug(Throwable thrown) { }
-	    @Override public void debug(String msg, Throwable thrown) { }
-	    @Override public Logger getLogger(String name) { return this; }
-	    @Override public void ignore(Throwable ignored) { }
-		@Override public void debug(String arg0, long arg1) { }
 	}
 
 }

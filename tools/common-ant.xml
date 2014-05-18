@@ -13,6 +13,10 @@
 	<condition property="project.dependencies" value="">
 		<not><isset property="project.dependencies"/></not>
 	</condition>
+
+	<condition property="project.nested-libs" value="abcdefg">
+		<not><isset property="project.nested-libs"/></not>
+	</condition>
 	
 	<condition property="project.is-library" value="true">
 		<not><isset property="project.main-class"/></not>
@@ -48,7 +52,6 @@
 	<condition property="pass-swt-arg" value="true">
 		<and>
 			<equals arg1="${platform.name}" arg2="osx" />
-			<contains string="${project.common.libs}" substring="swt" />
 			<not><isset property="project.is-library" /></not>
 		</and>
 	</condition>
@@ -69,6 +72,7 @@
 	<property name="binlib.dir" value="binlib" />
 	<property name="bin.lib.dir" value="${bin.dir}/lib" />
 	<property name="bin.binlib.dir" value="${bin.dir}/binlib" />
+	<property name="bin.res.dir" value="${bin.dir}/res" />
 	<property name="bin.classes.dir" value="${bin.dir}/classes" />
 	<property name="bin.jar.dir" value="${bin.dir}/jar" />
 	<property name="src.dir" value="src" />
@@ -136,20 +140,28 @@
 	<target name="collect-libs" depends="collect-dependencies">
 		<mkdir dir="${bin.lib.dir}" />
 		<mkdir dir="${bin.binlib.dir}" />
-		<copy todir="${bin.lib.dir}">
+		<mkdir dir="${bin.res.dir}" />
+		<copy todir="${bin.lib.dir}" includeEmptyDirs="false">
 			<fileset dir="${gpigc.lib.dir}" includes="${project.common.libs}" />
+			<fileset dir="${gpigc.lib.dir}/${platform.dir}" includes="${project.common.libs}" erroronmissingdir="false" />
 			<fileset dir="${lib.dir}" includes="*" erroronmissingdir="false" />
+			<fileset dir="${lib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
+			<fileset dir="${lib.dir}" includes="${project.nested-libs}" erroronmissingdir="false" />
 		</copy>
-		<copy todir="${bin.binlib.dir}">
+		<copy todir="${bin.binlib.dir}" includeEmptyDirs="false">
 			<fileset dir="${gpigc.binlib.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${gpigc.binlib.dir}/${platform.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${binlib.dir}" includes="*" erroronmissingdir="false" />
+			<fileset dir="${binlib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
+		</copy>
+		<copy todir="${bin.res.dir}" includeEmptyDirs="false">
+			<fileset dir="${res.dir}" includes="**" />
 		</copy>
 	</target>
 
 	<target name="set-classpath" depends="collect-libs">
 		<path id="classpath">
-			<fileset dir="${bin.lib.dir}" includes="*.jar" />
+			<fileset dir="${bin.lib.dir}" includes="**/*.jar" />
 		</path>
 	</target>
 
@@ -158,8 +170,10 @@
 		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${bin.classes.dir}"
 			classpathref="classpath" />
 	</target>
+	
+	<target name="prejar-hook" depends="compile" />
 
-	<target name="jar" depends="compile" unless="project.is-library">
+	<target name="jar" depends="prejar-hook" unless="project.is-library">
 		<mkdir dir="${bin.jar.dir}" />
 		<one-jar destfile="${bin.jar.dir}/${jar.name}">
 			<manifest>
@@ -170,17 +184,17 @@
 				<fileset dir="${bin.classes.dir}" />
 			</main>
 			<lib>
-				<fileset dir="${bin.lib.dir}" includes="*" />
+				<fileset dir="${bin.lib.dir}" includes="**" />
 			</lib>
 			<binlib>
-				<fileset dir="${bin.binlib.dir}" includes="*" />
+				<fileset dir="${bin.binlib.dir}" includes="**" />
 			</binlib>
 			<fileset dir="." includes="*.properties" />
-			<fileset dir="." includes="${res.dir}/**" />
+			<fileset dir="${bin.dir}" includes="${res.dir}/**" />
 		</one-jar>
 	</target>
 
-	<target name="jar-library" depends="compile" if="project.is-library">
+	<target name="jar-library" depends="prejar-hook" if="project.is-library">
 		<mkdir dir="${bin.jar.dir}" />
     	<jar basedir="${bin.classes.dir}" destfile="${bin.jar.dir}/${jar.name}" />
 	</target>
@@ -188,11 +202,14 @@
 	<target name="run-arg" depends="jar,jar-library" if="pass-swt-arg">
 		<java fork="true" jar="${bin.jar.dir}/${jar.name}">
 			<jvmarg value="-XstartOnFirstThread" />
+			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
 		</java>
 	</target>
 
 	<target name="run-noarg" depends="jar,jar-library" if="no-pass-swt-arg">
-		<java fork="true" jar="${bin.jar.dir}/${jar.name}" />
+		<java fork="true" jar="${bin.jar.dir}/${jar.name}">
+			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
+		</java>
 	</target>
 
 	<target name="run" depends="run-arg,run-noarg" unless="project.is-library" description="Run the latest build" />

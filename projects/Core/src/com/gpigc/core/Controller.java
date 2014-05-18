@@ -16,6 +16,7 @@ import com.gpigc.core.view.StandardMessageGenerator;
 
 public abstract class Controller {
 
+	public static final String ENGINES_FOLDER_PATH = "res/engine";
 	private static final String GPIGC_CORE_PACKAGE = "com.gpigc.core";
 
 	private final ControllerType engineType;
@@ -35,23 +36,21 @@ public abstract class Controller {
 		System.out.println(" Now attempting to load the " + engineType
 				+ " engines");
 		List<Object> engines = new ArrayList<>();
-		String parentDir = "com/gpigc/core/" + engineType + "/engine/";
-		File folder = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType
-				+ "/" + parentDir);
+		String parentDir = "res/com/gpigc/core/" + engineType + "/engine/";
+		File folder = new File(FileUtils.getExpandedFilePath(parentDir));
 		if (folder.listFiles() == null) {
 			StandardMessageGenerator.failedToFindEngines(
 					folder.getAbsolutePath(), engineType.toString());
 			return engines;
 		}
 		try {
-			URL url = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType)
+			URL url = new File(FileUtils.getExpandedFilePath("res/com"))
 					.getCanonicalFile().toURI().toURL();
 			URL[] urls = new URL[] { url };
 			ClassLoader cl = URLClassLoader.newInstance(urls, this.getClass()
 					.getClassLoader());
 			for (File engineFile : folder.listFiles()) {
-				if (engineFile.getName().endsWith(".class")) { // if it is a
-																// class file
+				if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
 					String className = engineFile.getName().substring(0,
 							engineFile.getName().length() - 6);
 					String engineBinaryName = GPIGC_CORE_PACKAGE + "."

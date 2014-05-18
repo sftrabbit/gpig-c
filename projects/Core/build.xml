@@ -1,145 +1,20 @@
 <project name="GPIG-C Core" basedir="." default="rebuild-run">
+	<property name="project.main-class" value="com.gpigc.core.Main" />
+	<property name="project.common.libs" value="Proto.jar,protobuf.jar" />
+	<property name="project.nested-libs" value="jetty/**" />
 
-    <!--  Determine platform directory name -->
-    
-	<condition property="lib.platform.name" value="win">
-		<os family="windows" />
-	</condition>
+	<import file="../../tools/common-ant.xml" />
 
-	<condition property="lib.platform.name" value="osx">
-		<os family="mac" />
-	</condition>
-
-	<condition property="lib.platform.name" value="linux">
-		<and>
-			<not>
-				<isset property="lib.platform.dir" />
-			</not>
-			<os family="unix" />
-		</and>
-	</condition>
-	
-	<!--  Determine bitness of architecture -->
-
-	<condition property="lib.platform.arch" value="64" else="32">
-		<contains string="${os.arch}" substring="64" />
-	</condition>
-
-	<!-- OSX requires a special arg to be passed to the JVM -->
-	
-	<condition property="jvmarg">
-		<equals arg1="${lib.platform.name}" arg2="osx" />
-	</condition>
-	
-	<fail message="Only OSX 64-bit, Linux 64-bit, and Windows 32- or 64-bit supported atm" unless="lib.platform.name" />
-	
-	<!-- Various directories -->
-
-	<property name="src.dir" value="src" />
-	<property name="lib.dir" value="lib" />
-	<property name="build.dir" value="bin" />
-	<property name="classes.dir" value="${build.dir}/classes" />
-	<property name="jar.dir" value="${build.dir}/jar" />
-	
-	<!--  Manifest properties -->
-
-	<property name="main-class" value="com.gpigc.core.Main" />
-	
-	<path id="classpath">
-		<fileset dir="${lib.dir}" includes="*.jar" />
-		<fileset dir="${lib.dir}/jetty" includes="*.jar" />
-		<fileset dir="${lib.dir}/jetty/jsp" includes="*.jar" />
-		<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
-			includes="*.jar" />
-	</path>
-	
-	<!-- Initialise One-Jar -->
-
-	<property name="one-jar.dist.dir" value="../../tools/one-jar" />
-	<import file="${one-jar.dist.dir}/one-jar-ant-task.xml" />
-
-
-	<!-- TARGETS -->
-	
-	<target name="clean">
-		<delete dir="${build.dir}" />
-	</target>
-
-	<target name="compile">
-		<mkdir dir="${classes.dir}" />
-		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"
-			classpathref="classpath" />
-	</target>
-
-	<target name="jar" depends="compile">
-	    <!-- Make the folder structure we want onejar to unpack -->
-		<copy todir="${classes.dir}/engine/notification/com/gpigc/core/notification/engine">
-   			<fileset dir="${classes.dir}/com/gpigc/core/notification/engine" includes="*.class"/>
- 		</copy>
- 		<copy todir="${classes.dir}/engine/storage/com/gpigc/core/storage/engine">
-   			<fileset dir="${classes.dir}/com/gpigc/core/storage/engine" includes="*.class"/>
- 		</copy>
- 		<copy todir="${classes.dir}/engine/analysis/com/gpigc/core/analysis/engine">
-   			<fileset dir="${classes.dir}/com/gpigc/core/analysis/engine" includes="*.class"/>
- 		</copy>
-		<copy todir="${build.dir}/server">
-			<fileset dir="../AdminCentre"/>
+	<target name="prehook">
+		<copy todir="${bin.res.dir}/server">
+			<fileset dir="${gpigc.projects.dir}/AdminCentre" includes="**" />
 		</copy>
-		<mkdir dir="${jar.dir}" />
-		<one-jar destfile="${jar.dir}/Core.jar">
-			<manifest>
-				<attribute name="One-Jar-Main-Class" value="${main-class}" />
-				<attribute name="One-Jar-Expand" value="engine/notification/com/gpigc/core/notification/engine/,engine/storage/com/gpigc/core/storage/engine,engine/analysis/com/gpigc/core/analysis/engine" />
-				<attribute name="One-Jar-Expand-Dir" value="." />
-				<attribute name="One-Jar-Show-Expand" value="true" />
-			</manifest>
-			<main>
-				<fileset dir="${classes.dir}" />
-			</main>
-			<lib>
-				<fileset dir="${lib.dir}" includes="*.jar" />
-				<fileset dir="${lib.dir}/jetty" includes="*.jar" />
-				<fileset dir="${lib.dir}/jetty/jsp" includes="*.jar" />
-				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
-					includes="*.jar" />
-			</lib>
-			<binlib>
-				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
-					includes="*.so" />
-				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
-					includes="*.dylib" />
-				<fileset dir="${lib.dir}/${lib.platform.name}-${lib.platform.arch}"
-					includes="*.dll" />
-			</binlib>
-			<fileset dir="." includes="images/*.png" />
-  			<!-- Include the folder structure in the jar so that is may be unpacked at runtime -->
-			<fileset dir="${classes.dir}" includes="engine/notification/com/gpigc/core/notification/engine/*.class"/>
-			<fileset dir="${classes.dir}" includes="engine/storage/com/gpigc/core/storage/engine/*.class"/>
-			<fileset dir="${classes.dir}" includes="engine/analysis/com/gpigc/core/analysis/engine/*.class"/>
-		</one-jar>
 	</target>
-
-	<target name="runarg" depends="jar" if="jvmarg">
-	    <!-- This executes on OSX -->
-		<java fork="true" jar="${jar.dir}/Core.jar">
-			<jvmarg value="-XstartOnFirstThread" />
-			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
-			<sysproperty key="java.library.path"
-				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
-		</java>
+	
+	<target name="prejar-hook" depends="compile">
+	    <mkdir dir="${bin.res.dir}" />
+		<copy todir="${bin.res.dir}">
+   			<fileset dir="${bin.classes.dir}" includes="com/gpigc/core/*/engine/*.class"/>
+ 		</copy>
 	</target>
-
-	<target name="run" depends="jar" unless="jvmarg">
-	    <!-- This executes on anything but OSX -->
-		<java fork="true" jar="${jar.dir}/Core.jar">
-			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
-			<sysproperty key="java.library.path"
-				path="${lib.dir}/${lib.platform.name}-${lib.platform.arch}" />
-		</java>
-	</target>
-
-	<target name="rebuild" depends="clean,jar" />
-
-	<target name="rebuild-run" depends="clean,runarg,run" />
-
 </project>

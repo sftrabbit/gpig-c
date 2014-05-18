@@ -15,6 +15,7 @@
 \usepackage{ifthen}
 \usepackage[compact]{titlesec}
 \usepackage[justification=centering]{caption}
+\usepackage{subcaption}
 
 
 \definecolor{reqColor}{RGB}{80,80,120}
@@ -103,7 +104,7 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
-This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the systems requirements are further refined, building on the feedback from the previous report, including a set of external dependancies. The system's architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made. This includes examining the quality attributes associated with the system and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented using a number of system views deemed to be important. Having determined the architecture of the system, the risks associated with this design and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are also discussed.
+This report details the design and development of a HUMS, concentrating on progress and changes made since the interim report. In this document the systems requirements are further refined, building on the feedback from the previous report, including a set of external dependencies. The system's architecture is then considered, in order to determine how the system will meet its requirements and what design decisions must be made. This includes examining the quality attributes associated with the system and the related scenarios, as well as tactics and patterns which can be used to achieve these qualities. The desired HUMS architecture is then presented using a number of system views deemed to be important. Having determined the architecture of the system, the risks associated with this design and the project as a whole are discussed, and the risk reduction tactics used to mitigate them are also discussed.
 
 The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the system. The project is then concluded, and the team reflects on their decisions throughout the project.
 
@@ -217,9 +218,9 @@ the way in which data is sensed.}{}
 \requirement{13}{The System shall support storing data without requiring specific schemata.}{}
 \end{requirements}
 
-\subsection{External Dependancies}
- \label{sec:external_dependancies}
-\hl{todo --- write an intro to these, 4 dependancies is probably enough}
+\subsection{External Dependencies}
+ \label{sec:external_dependencies}
+\hl{todo --- write an intro to these, 4 dependencies is probably enough}
 
  \begin{description}
  \item[\ed{1}] \hl{todo}
@@ -427,6 +428,7 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 
 \subsubsection{Component and Connector View}
 \hl{TODO Rosy}
+
 % Put in figure
 \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
 
@@ -464,11 +466,17 @@ A lightweight Jetty server was also added to the core so that the Admin Centre c
 \label{sec:monitor}
 In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An end user would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
-\subsubsection{Test Applications}
+\subsubsection{Test Applications} \label{subsec:tapp}
 \hl{TODO Michael/Ant}
 
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. 
+
+For this we created a process monitoring engine which is capable of tracking information from a process. The finished process, for a given process, tracks metrics such as: CPU usage, memory usage, state of the process, number of threads, processor that the process is executing on and working directory of the process.
+
+The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
+
 \subsubsection{Earthquakes and Traffic}
-In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents.
+In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data is in a JSON format and the traffic data is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
 
 \subsubsection{Server Responsiveness}
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
@@ -503,9 +511,10 @@ The final system performs face recognition, collecting face data using the built
 \hl{TODO A Team -- this is the new and improved mean engine}
 
 \subsubsection{Generic Expression Engine}
-\hl{TODO Tom/Michael}
+\hl{TODO Tom}
 %%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
- 
+To allow for sensors which provide a combination of numeric and string data to use the expression engine, it interprets only the data which is necessary.
+
 \subsubsection{Face Analysis Engine}
 
 \hl{TODO Tom/Joe Face Recognition for Security}
@@ -522,6 +531,7 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 
 \subsubsection{Other Analysis Engines}
 \hl{TODO Ant}
+The analysis system is expansible. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods. 
 
 \subsection{Data Storage}
 \label{sec:store}
@@ -557,7 +567,7 @@ Prepared statements were used across all datastore. They are compiled once and t
 A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The email notification example engine provided is similar in functionality to that in the interim report. It can be configured to send email notifications for events to any email address, and may be useful for more detailed or more frequent notifications. % was the implementation of this changed at all since the interim report? -- no :)
+The email notification example engine provided is similar in functionality to that in the interim report. It can be configured to send email notifications for events to any email address, and may be useful for more detailed or more frequent notifications.
 
 \subsubsection{Twitter Notifications}
 \hl{TODO Rosy}
@@ -566,20 +576,48 @@ The email notification example engine provided is similar in functionality to th
 \hl{TODO Rosy}
 
 \subsubsection{Map Report}
-\hl{TODO Andy}
+The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the User through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information.
+
 \subsubsection{Graph Report}
-\hl{TODO Andy}
+Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its flexibility of use. The graph reports generated can also automatically update to show live data.
 
 \subsection{Admin Centre}
 \label{sec:admin}
-\hl{TODO Andy}
-% add some screenshots!
 
-The prototype admin centre previously created has been updated and refined to provide a central locations for the User to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the admin centre can be accessed remotely from a number of different devices and not just from where the core is being run.
+The prototype Admin Centre previously created has been updated and refined to provide a central locations for the User to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the core is being run.
 
-The admin centre also provides the reporting facilities of the HUMS, with two example reporting engines currently created. A graph report is available and can be used with data like that from the first and second test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
+The Admin Centre also provides the reporting facilities of the HUMS, with two example reporting engines currently created. A graph report is available and can be used with data like that from the first and second test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
 
-The updates to the admin centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
+The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
+
+\begin{figure}[b!]
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_sensors}
+        \caption{Sensors}
+        \label{fig:admin-centre_sensors}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_engines}
+        \caption{Engine}
+        \label{fig:admin-centre_engines}
+    \end{subfigure}
+	\vspace{0.2cm}
+
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_data}
+        \caption{Data store}
+        \label{fig:admin-centre_data}
+    \end{subfigure}
+	~
+	\begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_report}
+        \caption{Reporting}
+        \label{fig:admin-centre_report}
+    \end{subfigure}
+    \caption{Screenshots of the Admin Centre}
+	\label{fig:admin-centre}
+\end{figure}
 
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
@@ -594,14 +632,17 @@ The updates to the admin centre have developed the previous prototype into a ful
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
-\hl{TODO Michael}
+
+We decided to monitor the memory and CPU usage of the test application, and our initial implementation simply queried the operating system for these values, using the Sigar library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
+
+By using these cross-platform and established libraries, our monitor can be generalised to more than just the test application. This is illustrated by how easily we were able to reuse it as the basis of the second test application.
 
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
-\hl{TODO Michael}
 
 Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 
+We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
