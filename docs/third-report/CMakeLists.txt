@@ -1,5 +1,6 @@
 # List all files that are included by main tex file
-set(INPUT_FILES)
+set(INPUT_FILES
+    listingsPreamble.tex)
 
 # List all files that should be word-counted
 set(CONTENT_FILES

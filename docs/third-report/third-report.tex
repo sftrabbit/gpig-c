@@ -615,7 +615,7 @@ The final system performs face recognition, collecting face data using the built
 
 The previous mean analysis engine has been rewritten to form a generic bounded sensor value engine. This engine performs analysis on each sensor in the system being analysed to determine if the mean average of the values is outside of specified bounds. It then produces a single event detailing any violations across all the sensors, which generates a single notification for the system being analysed rather than a flood of them.
 
-The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds flexibility on a per sensor level.
+The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds flexibility on a per sensor level.
 
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
 
