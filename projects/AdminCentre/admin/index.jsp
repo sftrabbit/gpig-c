@@ -13,7 +13,11 @@ private List<String> getEngines(String engineType) {
 }
 %>
 <%
-FileReader configFile = new FileReader(FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config"));
+String sysConfigFilePath = System.getProperty("gpigc.configfile");
+if (sysConfigFilePath == null) {
+    sysConfigFilePath = FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config");
+}
+FileReader configFile = new FileReader(sysConfigFilePath);
 
 JSONParser jsonParser = new JSONParser();
 JSONObject configJson = (JSONObject) jsonParser.parse(configFile);
@@ -100,10 +104,16 @@ List<String> availableNotification = getEngines("notification");
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <%
-                            for (String system: otherSystems) {
+                            if (otherSystems.isEmpty()) {
                             %>
-                                <li><a href="?system=<%= system %>"><%= system %></a></li>
+                                <li>&nbsp;No other systems</li>
                             <%
+                            } else {
+                            for (String system: otherSystems) {
+                                %>
+                                <li><a href="?system=<%= system %>"><%= system %></a></li>
+                                <%
+                                }
                             }
                             %>
                         </ul>
