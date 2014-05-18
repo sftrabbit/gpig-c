@@ -15,6 +15,7 @@
 \usepackage{ifthen}
 \usepackage[compact]{titlesec}
 \usepackage[justification=centering]{caption}
+\usepackage{subcaption}
 
 
 \definecolor{reqColor}{RGB}{80,80,120}
@@ -586,14 +587,41 @@ Similarly to the map reporting engine, the graph reporting engine has been enhan
 
 \subsection{Admin Centre}
 \label{sec:admin}
-\hl{TODO Andy}
-% add some screenshots!
 
 The prototype Admin Centre previously created has been updated and refined to provide a central locations for the User to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the core is being run.
 
 The Admin Centre also provides the reporting facilities of the HUMS, with two example reporting engines currently created. A graph report is available and can be used with data like that from the first and second test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
 
 The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
+
+\begin{figure}[b!]
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_sensors}
+        \caption{Sensors}
+        \label{fig:admin-centre_sensors}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_engines}
+        \caption{Engine}
+        \label{fig:admin-centre_engines}
+    \end{subfigure}
+	\vspace{0.2cm}
+
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_data}
+        \caption{Data store}
+        \label{fig:admin-centre_data}
+    \end{subfigure}
+	~
+	\begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_report}
+        \caption{Reporting}
+        \label{fig:admin-centre_report}
+    \end{subfigure}
+    \caption{Screenshots of the Admin Centre}
+	\label{fig:admin-centre}
+\end{figure}
 
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
