@@ -75,7 +75,7 @@ List<String> availableNotification = getEngines("notification");
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Admin Home</a>
+            <a class="navbar-brand" href="/admin/">Admin Home</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
