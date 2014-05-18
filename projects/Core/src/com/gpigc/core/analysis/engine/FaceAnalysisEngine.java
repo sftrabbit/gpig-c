@@ -140,7 +140,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @return The faces as matrices
 	 * @throws ParseException 
 	 */
-	public List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
+	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
 		System.err.println("Face data: "+facesMatrixStr);
 		String[] faceStrings = facesMatrixStr.split("X");
 		System.out.println(faceStrings.length+" example faces loaded.");
@@ -159,7 +159,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @return The face as a matrix
 	 * @throws ParseException 
 	 */
-	public Mat parseFace(String faceMatrixStr) throws ParseException {
+	public static Mat parseFace(String faceMatrixStr) throws ParseException {
 		String SPLIT_ON = ",";
 		// Parse face matrix
 		String[] elements = faceMatrixStr.split(SPLIT_ON);
@@ -189,7 +189,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 *            How similar the testFace must be to one of the exampleFaces
 	 * @return Whether the testFace is authorised
 	 */
-	public boolean isAuthorisedFace(Mat testFace,
+	public static boolean isAuthorisedFace(Mat testFace,
 			List<Mat> exampleFaces, double threshold) {
 		System.err.println(" >>>>> Checking face authorisation at the "+threshold+
 				" threshold");
