@@ -100,6 +100,7 @@ public class Main {
 		public void run() {
 			if (!running) {
 				try {
+					System.setProperty("gpigc.configfile", shell.getConfigFilePath());
 					core = new Core(shell.getConfigFilePath());
 					core.getDataInputServer().start();
 					shell.getConfigButton().setEnabled(false);
