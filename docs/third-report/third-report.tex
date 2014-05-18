@@ -15,6 +15,7 @@
 \usepackage{ifthen}
 \usepackage[compact]{titlesec}
 \usepackage[justification=centering]{caption}
+\usepackage{subcaption}
 
 
 \definecolor{reqColor}{RGB}{80,80,120}
@@ -128,7 +129,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\item[Output Interface] The interfaces through which reports and notifications are dispatched
 	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
 	\item[Admin Centre] \hl{TODO}
-	\item[(HUMS) Core] \hl{TODO}
+	\item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through the Input Interface.
 	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis
 	\item[Notification] A message dispatched by the System when an Event is fired
@@ -466,11 +467,7 @@ A lightweight Jetty server was also added to the core so that the Admin Centre c
 In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An end user would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
 \subsubsection{Test Applications} \label{subsec:tapp}
-\hl{TODO Michael/Ant}
-
-Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. 
-
-For this we created a process monitoring engine which is capable of tracking information from a process. The finished process, for a given process, tracks metrics such as: CPU usage, memory usage, state of the process, number of threads, processor that the process is executing on and working directory of the process.
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. For this we created a process monitoring engine which is capable of tracking information from a process.
 
 The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
 
@@ -489,7 +486,7 @@ The first system simulates a car monitoring system,allowing users to select valu
 
 The second system is a phone battery monitoring system, which allows the user to define how long they would like to use their mobile device for and based on the given battery life, uses the HUMS to determine which services can stay on in order for this target to be met, the HUMS then feeds back into this system, toggling those services. This system was designed to show how our HUMS is capable of monitoring a system, and feeding information back to alter the systems behaviour.
 
-The final system performs face recognition, collecting face data using the built-in camera, forwarding that data to the core for analysis and notification, if appropriate. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms.
+The final system performs face recognition, collecting face data using the built-in camera, forwarding that data to the core for analysis and notification, if appropriate. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms, in order to ensure risk \emph{R.8} is not realised.
 
 \begin{figure}[h]
 \centering
@@ -512,11 +509,7 @@ The final system performs face recognition, collecting face data using the built
 \subsubsection{Generic Expression Engine}
 \hl{TODO Tom}
 %%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
-
 To allow for sensors which provide a combination of numeric and string data to use the expression engine, it interprets only the data which is necessary.
-
-\subsubsection{Phone Analysis Engine}
-\hl{TODO Rosy}
 
 \subsubsection{Face Analysis Engine}
 
@@ -585,14 +578,41 @@ Similarly to the map reporting engine, the graph reporting engine has been enhan
 
 \subsection{Admin Centre}
 \label{sec:admin}
-\hl{TODO Andy}
-% add some screenshots!
 
 The prototype Admin Centre previously created has been updated and refined to provide a central locations for the User to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the core is being run.
 
 The Admin Centre also provides the reporting facilities of the HUMS, with two example reporting engines currently created. A graph report is available and can be used with data like that from the first and second test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
 
 The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
+
+\begin{figure}[b!]
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_sensors.png}
+        \caption{Sensors}
+        \label{fig:admin-centre_sensors}
+    \end{subfigure}
+    ~
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_engines.png}
+        \caption{Engine}
+        \label{fig:admin-centre_engines}
+    \end{subfigure}
+	\vspace{0.2cm}
+
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_data.png}
+        \caption{Data store}
+        \label{fig:admin-centre_data}
+    \end{subfigure}
+	~
+	\begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{images/admin-centre_report.png}
+        \caption{Reporting}
+        \label{fig:admin-centre_report}
+    \end{subfigure}
+    \caption{Screenshots of the Admin Centre}
+	\label{fig:admin-centre}
+\end{figure}
 
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
@@ -616,8 +636,7 @@ By using these cross-platform and established libraries, our monitor can be gene
 \label{sec:test_app2}
 
 Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
-
-We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that the result was not relevant for the second Test Application because it did not utilise threads. Therefore, this is why we extended the monitoring to check which CPU the process was last executed on.
+We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
