@@ -58,6 +58,8 @@ public class EmitterShell extends Shell {
 	private Text textApp5;
 	private Button trafficButton;
 	
+	private Button clearButton;
+	
 	private String emitterDirectory = "./emitters";
 
 	/**
@@ -153,6 +155,15 @@ public class EmitterShell extends Shell {
 		textApp5.setEditable(false);
 		console5Tab.setControl(textApp5);
 		textApp5.addListener(SWT.Modify, new CaretListener(textApp5));
+
+		clearButton = new Button(this, SWT.PUSH);
+		clearButton.setText("Clear Console");
+		clearButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				clearConsole();
+			}
+		});
 
 	}
 
@@ -262,6 +273,17 @@ public class EmitterShell extends Shell {
 			button.setImage(stopIcon);
 		} else {
 			button.setImage(playIcon);
+		}
+	}
+	
+	protected void clearConsole() {
+		int selectedTab = tabFolder.getSelectionIndex();
+		switch (selectedTab) {
+			case 0: textApp1.setText(""); break;
+			case 1: textApp2.setText(""); break;
+			case 2: textApp3.setText(""); break;
+			case 3: textApp4.setText(""); break;
+			case 4: textApp5.setText(""); break;
 		}
 	}
 
