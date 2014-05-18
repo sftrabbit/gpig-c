@@ -151,9 +151,9 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\fr{4.1.1}, \fr{4.1.2}, and \fr{4.1.3} were added as we implemented configuration files into our prototype. We chose to use JSON as the configuration format as it is a widely-used standard.
+\fr{4.1.1} and \fr{4.1.2} were added as we implemented configuration files into our prototype. We chose to use JSON as the configuration format as it is a widely-used standard.
 
-\fr{12} became apparent once we considered the reloading of configuration in \fr{4.1.3}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
+\fr{12} became apparent once we considered the reloading of configuration in \fr{4.1.2}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
@@ -173,9 +173,8 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 }
 \requirement{\fr}{4}{The HUMS shall store End User configuration files.}{
 	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{
-      \requirement{\fr}{4.1.1}{The configuration file shall be human editable.}{}
-      \requirement{\fr}{4.1.2}{The Admin Centre shall provide an interface to allow authorised users to modify the configuration.}{}
-      \requirement{\fr}{4.1.3}{The HUMS shall monitor the configuration for changes and apply them.}{}
+      \requirement{\fr}{4.1.1}{The Admin Centre shall provide an interface to allow authorised users to modify the configuration.}{}
+      \requirement{\fr}{4.1.2}{The HUMS shall monitor the configuration for changes and apply them.}{}
     }
 	\requirement{\fr}{4.2}{The HUMS shall allow the User to define a storage limit.}{}
 	\requirement{\fr}{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
@@ -203,7 +202,9 @@ the way in which data is sensed.}{}
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
-\hl{write about changes -- currently they are unchanged} 
+\hl{more changes?} 
+
+\nfr{14} was added as it is not necessarily the case that a user will want to use the Admin Centre to modify the configuration file, in which case it should be amenable to hand-editing.
 
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
@@ -225,6 +226,7 @@ the way in which data is sensed.}{}
 \requirement{\nfr}{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
 \requirement{\nfr}{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
 \requirement{\nfr}{13}{The System shall support storing data without requiring specific schemata.}{}
+\requirement{\nfr}{14}{The configuration shall be in a human-readable format.}{}
 \end{requirements}
 
 \subsection{External Dependencies}
