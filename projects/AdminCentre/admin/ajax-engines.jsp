@@ -29,7 +29,7 @@ while (iter.hasNext()) {
 }
 
 try {
-    FileWriter file = new FileWriter(filePath);
+    FileWriter file = new FileWriter(FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config"));
     file.write(configJson.toJSONString());
     file.flush();
     file.close();
