@@ -769,6 +769,8 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 % QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
 
 
+To consider the meeting of requirements, we lay out here the steps which we have taken in order to validate the meeting of the requirements.
+
 \tableformat{| l | l | l |}{ \hline	FR.x  & 	Description of FR  & 	What we did \\ \hline
 	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
 	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\ \hline
@@ -783,6 +785,23 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 	FR.11  & 	  & 	 \\ \hline
 	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
 }{Evaluation for Satisfaction of Function Requirements}{frevaltable}	
+
+\tableformat{| l | l | l |}{ \hline	NFR.x  & 	Description of NFR  & 	What we did \\ \hline
+	NFR.1  & 	  & 	 \\ \hline
+	NFR.2  & 	  & 	 \\ \hline
+	NFR.3  & 	  & 	 \\ \hline
+	NFR.4  & 	  & 	 \\ \hline
+	NFR.5  & 	  & 	 \\ \hline
+	NFR.6  & 	  & 	 \\ \hline
+	NFR.7  & 	  & 	 \\ \hline
+	NFR.8  & 	  & 	 \\ \hline
+	NFR.9  & 	  & 	 \\ \hline
+	NFR.10  & 	  & 	 \\ \hline
+	NFR.11  & 	  & 	 \\ \hline
+	NFR.12  & 	  & 	 \\ \hline
+	NFR.13  & 	  & 	 \\ \hline
+	NFR.14  & 	  & 	 \\ \hline
+}{Evaluation for Satisfaction of Non-Function Requirements}{nfrevaltable}	
 
 
 The quality attributes laid out in Section \ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
