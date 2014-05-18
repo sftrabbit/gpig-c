@@ -16,7 +16,7 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
 public class Core {
 
-	public static final String ENGINES_FOLDER_PATH = "./engine";
+	public static final String ENGINES_FOLDER_PATH = "res/engine";
 	private final DataInputServer dataInputServer;
 	private final StorageController datastoreController;
 	private final AnalysisController analysisController;

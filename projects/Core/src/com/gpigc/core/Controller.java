@@ -36,8 +36,8 @@ public abstract class Controller {
 				+ " engines");
 		List<Object> engines = new ArrayList<>();
 		String parentDir = "com/gpigc/core/" + engineType + "/engine/";
-		File folder = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType
-				+ "/" + parentDir);
+		File folder = new File(FileUtils.getExpandedFilePath(Core.ENGINES_FOLDER_PATH + "/" + engineType
+				+ "/" + parentDir));
 		if (folder.listFiles() == null) {
 			StandardMessageGenerator.failedToFindEngines(
 					folder.getAbsolutePath(), engineType.toString());

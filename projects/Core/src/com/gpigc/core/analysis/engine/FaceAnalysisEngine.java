@@ -18,6 +18,7 @@ import java.util.Map;
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Core;
+import com.gpigc.core.FileUtils;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
@@ -130,8 +131,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		if (systemExampleFacesCache.keySet().contains(system)) {
 			exampleFaces = systemExampleFacesCache.get(system);
 		} else {
-			String faceDataFileName = "config/" + system.getParameters().get(
-					Parameter.EXAMPLE_FACES);
+			String faceDataFileName = FileUtils.getExpandedFilePath("res/config/" + system.getParameters().get(
+					Parameter.EXAMPLE_FACES));
 			try {
 				String faceData = loadFaces(faceDataFileName);
 				exampleFaces = parseFaces(faceData);
