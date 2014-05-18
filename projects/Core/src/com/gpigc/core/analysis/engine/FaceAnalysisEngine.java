@@ -90,6 +90,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		try {
 			values = getSensorData(system);
 			for (SensorState sensorState : values) {
+				System.err.println("Data creation time: "+sensorState.getCreationTimestamp());
 				String faceMatrixString = sensorState.getValue();
 				Mat faceMatrix = parseFace(faceMatrixString);
 				// Actually test to see if face seen is allowed
@@ -158,7 +159,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @return The faces as matrices
 	 * @throws ParseException 
 	 */
-	public List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
+	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
 		System.err.println("Face data: "+facesMatrixStr);
 		String[] faceStrings = facesMatrixStr.split("\n");
 		System.out.println(faceStrings.length+" example faces loaded.");
@@ -177,7 +178,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @return The face as a matrix
 	 * @throws ParseException 
 	 */
-	public Mat parseFace(String faceMatrixStr) throws ParseException {
+	public static Mat parseFace(String faceMatrixStr) throws ParseException {
 		String SPLIT_ON = ",";
 		// Parse face matrix
 		String[] elements = faceMatrixStr.split(SPLIT_ON);
@@ -207,7 +208,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 *            How similar the testFace must be to one of the exampleFaces
 	 * @return Whether the testFace is authorised
 	 */
-	public boolean isAuthorisedFace(Mat testFace,
+	public static boolean isAuthorisedFace(Mat testFace,
 			List<Mat> exampleFaces, double threshold) {
 		System.err.println(" >>>>> Checking face authorisation at the "+threshold+
 				" threshold");
@@ -215,16 +216,19 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		 * Check to see if close enough to an allowable example face using
 		 * Chi-Squared method
 		 */
+//		double sum = 0;
 		for (Mat example : exampleFaces) {
 			double faceSimilarity = Imgproc.compareHist(testFace, example,
 					Imgproc.CV_COMP_CHISQR);
 			if (faceSimilarity < threshold) {
-				System.err.println("    Face found! Difference = "+faceSimilarity);
+				System.err.println(" <<<<< Face found! Difference = "+faceSimilarity);
 				return true;
 			} else {
 				System.err.println("    No face found. Difference = "+faceSimilarity);
 			}
+//			sum += faceSimilarity;
 		}
+//		System.err.println("Mean face difference: "+(sum/(double)exampleFaces.size()));
 		System.err.println(" <<<<< No faces found");
 		return false;
 	}
