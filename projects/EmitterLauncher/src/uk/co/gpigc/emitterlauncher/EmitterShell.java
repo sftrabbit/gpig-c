@@ -28,11 +28,11 @@ public class EmitterShell extends Shell {
 	private static final String STOP_BUTTON_PATH = "res/images/control_stop_blue.png";
 	private static final String PLAY_BUTTON_PATH = "res/images/control_play_blue.png";
 
-	private static final String TEST_APP_1_PATH = "res/TestApp1Emitter.jar";
-	private static final String TEST_APP_2_PATH = "res/TestApp2Emitter.jar";
-	private static final String EARTH_APP_PATH = "res/EarthMonitor.jar";
-	private static final String SERVER_APP_PATH = "res/ServerMonitor.jar";
-	protected static final String TRAFFIC_APP_PATH = "res/TrafficMonitor.jar";
+	private static final String TEST_APP_1_NAME = "TestApp1Emitter.jar";
+	private static final String TEST_APP_2_NAME = "TestApp2Emitter.jar";
+	private static final String EARTH_APP_NAME = "EarthquakeEmitter.jar";
+	private static final String SERVER_APP_NAME = "ResponseTimeEmitter.jar";
+	protected static final String TRAFFIC_APP_NAME = "TrafficEmitter.jar";
 
 
 	private Button serverButton;
@@ -55,6 +55,8 @@ public class EmitterShell extends Shell {
 	private TabItem console5Tab;
 	private Text textApp5;
 	private Button trafficButton;
+	
+	private String emitterDirectory = "./emitters";
 
 	/**
 	 * Launch the application.
@@ -62,7 +64,7 @@ public class EmitterShell extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			EmitterShell shell = new EmitterShell(display);
+			EmitterShell shell = new EmitterShell(display, args);
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -75,8 +77,13 @@ public class EmitterShell extends Shell {
 		}
 	}
 
-	public EmitterShell(Display display) {
+	public EmitterShell(Display display, String args[]) {
 		super(display);
+		
+		if (args.length >= 1) {
+			emitterDirectory = args[0];
+		}
+		
 		this.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event event) {
 				System.exit(0);
@@ -162,7 +169,7 @@ public class EmitterShell extends Shell {
 		testApp1Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				buttonSelect(TEST_APP_1_PATH, testApp1Button,textApp1);
+				buttonSelect(emitterDirectory + "/" + TEST_APP_1_NAME, testApp1Button,textApp1);
 			}
 		});
 
@@ -176,7 +183,7 @@ public class EmitterShell extends Shell {
 		testApp2Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				buttonSelect(TEST_APP_2_PATH, testApp2Button, textApp2);
+				buttonSelect(emitterDirectory + "/" + TEST_APP_2_NAME, testApp2Button, textApp2);
 			}
 		});
 
@@ -190,7 +197,7 @@ public class EmitterShell extends Shell {
 		earthButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				buttonSelect(EARTH_APP_PATH, earthButton, textApp3);
+				buttonSelect(emitterDirectory + "/" + EARTH_APP_NAME, earthButton, textApp3);
 			}
 		});
 
@@ -204,7 +211,7 @@ public class EmitterShell extends Shell {
 		serverButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				buttonSelect(SERVER_APP_PATH, serverButton, textApp4);
+				buttonSelect(emitterDirectory + "/" + SERVER_APP_NAME, serverButton, textApp4);
 			}
 		});
 
@@ -218,7 +225,7 @@ public class EmitterShell extends Shell {
 		trafficButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				buttonSelect(TRAFFIC_APP_PATH, trafficButton, textApp5);
+				buttonSelect(emitterDirectory + "/" + TRAFFIC_APP_NAME, trafficButton, textApp5);
 			}
 		});
 	}
