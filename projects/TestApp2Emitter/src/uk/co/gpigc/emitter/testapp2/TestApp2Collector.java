@@ -53,12 +53,22 @@ public class TestApp2Collector implements DataCollector {
 				.setKey("WorkingDir")
 				.setValue(String.valueOf(processMonitor.getProcWorkDir()))
 				.build();
+		SystemData.Datum threads = SystemData.Datum.newBuilder()
+				.setKey("Threads")
+				.setValue(String.valueOf(processMonitor.getNumThreads()))
+				.build();
+		SystemData.Datum processorID = SystemData.Datum.newBuilder()
+				.setKey("Processor")
+				.setValue(String.valueOf(processMonitor.getProcessorID()))
+				.build();
 		SystemData data = SystemData.newBuilder().setSystemId("testapp2")
 				.setTimestamp(new Date().getTime())
 					.addDatum(cpuDatum)
 					.addDatum(memoryDatum)
 					.addDatum(procState)
 					.addDatum(procWD)
+					.addDatum(threads)
+					.addDatum(processorID)
 				.build();
 		ArrayList<SystemData> dataList = new ArrayList<SystemData>();
 		dataList.add(data);

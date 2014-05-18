@@ -50,8 +50,7 @@ public abstract class Controller {
 			ClassLoader cl = URLClassLoader.newInstance(urls, this.getClass()
 					.getClassLoader());
 			for (File engineFile : folder.listFiles()) {
-				if (engineFile.getName().endsWith(".class")) { // if it is a
-																// class file
+				if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
 					String className = engineFile.getName().substring(0,
 							engineFile.getName().length() - 6);
 					String engineBinaryName = GPIGC_CORE_PACKAGE + "."

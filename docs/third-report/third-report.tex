@@ -468,7 +468,11 @@ In this section we describe what data our HUMS currently monitors. We created si
 \subsubsection{Test Applications} \label{subsec:tapp}
 \hl{TODO Michael/Ant}
 
-Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory.
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. 
+
+For this we created a process monitoring engine which is capable of tracking information from a process. The finished process, for a given process, tracks metrics such as: CPU usage, memory usage, state of the process, number of threads, processor that the process is executing on and working directory of the process.
+
+The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
 
 \subsubsection{Earthquakes and Traffic}
 In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data is in a JSON format and the traffic data is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
@@ -530,11 +534,7 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 
 \subsubsection{Other Analysis Engines}
 \hl{TODO Ant}
-
-\subsubsection{Process Monitor Engine}
-The process monitoring engine is capable of tracking information from a process. For a given process, it tracks metrics such as CPU usage, memory usage, state of the process, number of threads, processor that the process is executing on and working directory of the process. This engine is the one utilised for the Test Applications (Section \ref{subsec:tapp}).
-
-The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
+The analysis system is expansible. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods. 
 
 \subsection{Data Storage}
 \label{sec:store}
@@ -618,7 +618,7 @@ By using these cross-platform and established libraries, our monitor can be gene
 
 Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 
-We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that the result was \hl{TODO: after actually implementing that}.
+We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}

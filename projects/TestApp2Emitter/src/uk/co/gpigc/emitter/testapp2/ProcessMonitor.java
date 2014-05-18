@@ -93,6 +93,30 @@ public class ProcessMonitor {
 			throw new RuntimeException(ex);
 		}
 	}
+	
+	/**
+	 * Get the number of threads of the process
+	 * @return Number of current thread
+	 */
+	public long getNumThreads() {
+		try {
+			return sigar.getProcState(this.processId).getThreads();
+		} catch(SigarException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+	
+	/**
+	 * Get the last processor it ran on
+	 * @return Number of current thread
+	 */
+	public long getProcessorID() {
+		try {
+			return sigar.getProcState(this.processId).getProcessor();
+		} catch(SigarException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
 	/**
 	 * A task that computes the process's CPU load over an interval of time.
