@@ -427,6 +427,7 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 
 \subsubsection{Component and Connector View}
 \hl{TODO Rosy}
+
 % Put in figure
 \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
 
@@ -560,7 +561,7 @@ Prepared statements were used across all datastore. They are compiled once and t
 A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The email notification example engine provided is similar in functionality to that in the interim report. It can be configured to send email notifications for events to any email address, and may be useful for more detailed or more frequent notifications. % was the implementation of this changed at all since the interim report? -- no :)
+The email notification example engine provided is similar in functionality to that in the interim report. It can be configured to send email notifications for events to any email address, and may be useful for more detailed or more frequent notifications.
 
 \subsubsection{Twitter Notifications}
 \hl{TODO Rosy}
@@ -569,9 +570,10 @@ The email notification example engine provided is similar in functionality to th
 \hl{TODO Rosy}
 
 \subsubsection{Map Report}
-\hl{TODO Andy}
+The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the User through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information.
+
 \subsubsection{Graph Report}
-\hl{TODO Andy}
+Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its flexibility of use. The graph reports generated can also automatically update to show live data.
 
 \subsection{Admin Centre}
 \label{sec:admin}
