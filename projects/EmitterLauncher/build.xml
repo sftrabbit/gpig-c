@@ -68,8 +68,17 @@
 	<target name="clean">
 		<delete dir="${build.dir}" />
 	</target>
+	
+	<target name="collect-emitters">
+	    <mkdir dir="bin/emitters" />
+	    <copy file="../TestApp1Emitter/bin/jar/TestApp1Emitter.jar" todir="bin/emitters" />
+	    <copy file="../TestApp2Emitter/bin/jar/TestApp2Emitter.jar" todir="bin/emitters" />
+	    <copy file="../ResponseTimeEmitter/bin/jar/ResponseTimeEmitter.jar" todir="bin/emitters" />
+	    <copy file="../EarthquakeEmitter/bin/jar/EarthquakeEmitter.jar" todir="bin/emitters" />
+	    <copy file="../TrafficEmitter/bin/jar/TrafficEmitter.jar" todir="bin/emitters" />
+	</target>
 
-	<target name="compile">
+	<target name="compile" depends="collect-emitters">
 		<mkdir dir="${classes.dir}" />
 		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}"
 			classpathref="classpath" />
@@ -99,12 +108,14 @@
 	    <!-- This executes on OSX -->
 		<java fork="true" jar="${jar.dir}/${jar.name}">
 			<jvmarg value="-XstartOnFirstThread" />
+			<arg value="./bin/emitters" />
 		</java>
 	</target>
 
 	<target name="run" depends="jar" unless="jvmarg">
 	    <!-- This executes on anything but OSX -->
 		<java fork="true" jar="${jar.dir}/${jar.name}">
+			<arg value="./bin/emitters" />
 		</java>
 	</target>
 

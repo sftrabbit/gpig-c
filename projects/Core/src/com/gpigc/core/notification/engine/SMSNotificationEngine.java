@@ -1,10 +1,7 @@
 package com.gpigc.core.notification.engine;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -87,7 +84,7 @@ public class SMSNotificationEngine extends NotificationEngine {
 				StandardMessageGenerator.notificationGenerated(name, event
 						.getSystem().getID());
 				
-				System.out.println("SMS Response: " + conn.getResponseMessage());
+				System.out.println(" SMS Response: " + conn.getResponseMessage());
 				Thread.sleep(1000); //limitation of sms service
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();

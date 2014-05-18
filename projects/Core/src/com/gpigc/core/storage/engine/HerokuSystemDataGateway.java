@@ -119,7 +119,7 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 
 			result = constructResult(systemID, resultSet);
 		} catch (SQLException e) {
-			System.out.println("Failed to execute query:");
+			System.out.println(" Failed to execute query:");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -184,7 +184,7 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 				sensorReadingsInsert.execute();
 			}
 		} catch (SQLException e) {
-			System.out.println("Failed to write data to Heroku");
+			System.out.println(" Failed to write data to Heroku");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -257,7 +257,7 @@ public class HerokuSystemDataGateway extends SystemDataGateway {
 			}
 			sensorReadingsInsert.executeBatch();
 		} catch (SQLException e) {
-			System.out.println("Failed to write data to Heroku");
+			System.out.println(" Failed to write data to Heroku");
 			e.printStackTrace();
 		} finally {
 			try {

@@ -71,12 +71,12 @@ Walker}
 
 %%Requirements
 \newenvironment{requirements}{
-\newcommand{\requirement}[3]{\item[\fr{##1}] ##2
-							\ifx&##3&
+\newcommand{\requirement}[4]{\item[##1{##2}] ##3
+							\ifx&##4&
 							%nothing
 							\else
 								\begin{description}
-									##3
+									##4
 								\end{description}							
 							\fi
 							}
@@ -113,7 +113,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Glossary}
 \label{sec:glossary}
-\hl{TODO: Possibly update this}
+\hl{TODO: Tom}
 \begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
 	\item[The HUMS/System] The health and usage monitoring system being developed
 	\item[(HUMS) Instance] A particular deployment of the System
@@ -128,7 +128,8 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\item[Data Emitter] A Client that provides data to an Instance through the Input Interface
 	\item[Output Interface] The interfaces through which reports and notifications are dispatched
 	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
-	\item[Admin Centre] \hl{TODO}
+    \item[Data Store] The component of the System which stores data received through the Input Interface.
+	\item[Admin Centre] Web interface to configure and interact with the Core.
 	\item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through the Input Interface.
 	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis
@@ -149,47 +150,55 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
-\hl{write about changes -- currently they are unchanged} 
+
+\fr{4.1.1}, \fr{4.1.2}, and \fr{4.1.3} were added as we implemented configuration files into our prototype. We chose to use JSON as the configuration format as it is a widely-used standard.
+
+\fr{12} became apparent once we considered the reloading of configuration in \fr{4.1.3}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
-\requirement{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
-	\requirement{1.1}{The HUMS shall provide an API for data input (the Input Interface).}{
-		\requirement{1.1.1}{The Input Interface shall require a System ID that uniquely identifies the Consumer System.}{}
-		\requirement{1.1.2}{The Input Interface shall require input data to be timestamped.}{}
-		\requirement{1.1.3}{The Input Interface shall allow Data Emitters to send Sensor IDs and their values to the HUMS, to be made available to an analysis engine.}{}
+\requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
+	\requirement{\fr}{1.1}{The HUMS shall provide an API for data input (the Input Interface).}{
+		\requirement{\fr}{1.1.1}{The Input Interface shall require a System ID that uniquely identifies the Consumer System.}{}
+		\requirement{\fr}{1.1.2}{The Input Interface shall require input data to be timestamped.}{}
+		\requirement{\fr}{1.1.3}{The Input Interface shall allow Data Emitters to send Sensor IDs and their values to the HUMS, to be made available to an analysis engine.}{}
 	}
-	\requirement{1.2}{A Data Emitter for extracting data from the given test application shall be provided.}{}
+	\requirement{\fr}{1.2}{A Data Emitter for extracting data from the given test application shall be provided.}{}
 }
-\requirement{2}{The HUMS shall allocate a timestamp to new data.}{
-	\requirement{2.1}{Data shall be timestamped before it reaches the HUMS Input Interface.}{}
-	\requirement{2.2}{Timestamps shall be stored alongside the input data.}{}
+\requirement{\fr}{2}{The HUMS shall allocate a timestamp to new data.}{
+	\requirement{\fr}{2.1}{Data shall be timestamped before it reaches the HUMS Input Interface.}{}
+	\requirement{\fr}{2.2}{Timestamps shall be stored alongside the input data.}{}
 }
-\requirement{3}{The HUMS shall store correctly structured data.}{
-	\requirement{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
+\requirement{\fr}{3}{The HUMS shall store correctly structured data.}{
+	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
 }
-\requirement{4}{The HUMS shall store End User configuration files.}{
-	\requirement{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{}
-	\requirement{4.2}{The HUMS shall allow the User to define a storage limit.}{}
-	\requirement{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
-	\requirement{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
-	\requirement{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
+\requirement{\fr}{4}{The HUMS shall store End User configuration files.}{
+	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{
+      \requirement{\fr}{4.1.1}{The configuration file shall be human editable.}{}
+      \requirement{\fr}{4.1.2}{The Admin Centre shall provide an interface to allow authorised users to modify the configuration.}{}
+      \requirement{\fr}{4.1.3}{The HUMS shall monitor the configuration for changes and apply them.}{}
+    }
+	\requirement{\fr}{4.2}{The HUMS shall allow the User to define a storage limit.}{}
+	\requirement{\fr}{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
+	\requirement{\fr}{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
+	\requirement{\fr}{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
-\requirement{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
-\requirement{6}{The HUMS must store no more data records than the Consumer-defined storage quota.}{}
-\requirement{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
-	\requirement{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
-	\requirement{7.2}{The HUMS shall allow the User to define their own Events.}{}
-	\requirement{7.3}{The HUMS shall provide an API, allowing analysis engines to fetch stored data.}{}
-	\requirement{7.4}{Events shall be identified by analysis engines.}{}
-	\requirement{7.5}{The HUMS shall provide a simple analysis engine in the form of a rules engine.}{}
+\requirement{\fr}{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
+\requirement{\fr}{6}{The HUMS must store no more data records than the Consumer-defined storage quota.}{}
+\requirement{\fr}{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
+	\requirement{\fr}{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
+	\requirement{\fr}{7.2}{The HUMS shall allow the User to define their own Events.}{}
+	\requirement{\fr}{7.3}{The HUMS shall provide an API, allowing analysis engines to fetch stored data.}{}
+	\requirement{\fr}{7.4}{Events shall be identified by analysis engines.}{}
+	\requirement{\fr}{7.5}{The HUMS shall provide a simple analysis engine in the form of a rules engine.}{}
 }
-\requirement{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type will be sent during a User-specified cool down period.}{
-	\requirement{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
+\requirement{\fr}{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type will be sent during a User-specified cool down period.}{
+	\requirement{\fr}{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
 }
-\requirement{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
-\requirement{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
-\requirement{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
+\requirement{\fr}{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
+\requirement{\fr}{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
+\requirement{\fr}{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
 the way in which data is sensed.}{}
+\requirement{\fr}{12}{The System shall load new engines which an authorised user adds during runtime.}{}
 \end{requirements}
 
 \subsection{Non-Functional Requirements}
@@ -197,25 +206,25 @@ the way in which data is sensed.}{}
 \hl{write about changes -- currently they are unchanged} 
 
 \begin{requirements}
-\requirement{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
-\requirement{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
-\requirement{3}{The HUMS must be accessible to End Users regardless of their geographic location.}{}
-\requirement{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
-\requirement{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
-\requirement{6}{The HUMS shall be tested to ensure all requirements are met before deployment.}{
-	\requirement{6.1}{The HUMS shall be tested using unit testing.}{}
-	\requirement{6.2}{The HUMS shall be tested using integration testing.}{}
-	\requirement{6.3}{The HUMS shall be tested using system testing.}{}
-	\requirement{6.4}{The HUMS shall be tested using inspection.}{}
-	\requirement{6.5}{The HUMS shall be tested using acceptance testing.}{}
+\requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
+\requirement{\nfr}{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
+\requirement{\nfr}{3}{The HUMS must be accessible to End Users regardless of their geographic location.}{}
+\requirement{\nfr}{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
+\requirement{\nfr}{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
+\requirement{\nfr}{6}{The HUMS shall be tested to ensure all requirements are met before deployment.}{
+	\requirement{\nfr}{6.1}{The HUMS shall be tested using unit testing.}{}
+	\requirement{\nfr}{6.2}{The HUMS shall be tested using integration testing.}{}
+	\requirement{\nfr}{6.3}{The HUMS shall be tested using system testing.}{}
+	\requirement{\nfr}{6.4}{The HUMS shall be tested using inspection.}{}
+	\requirement{\nfr}{6.5}{The HUMS shall be tested using acceptance testing.}{}
 }
-\requirement{7}{The Customer will complete acceptance testing before the System is deployed.}{}
-\requirement{8}{The System must be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
-\requirement{9}{The System must be available for no less than 99.9\% of each month.}{}
-\requirement{10}{Data must be backed up within 24 hours of having been made available to the System.}{}
-\requirement{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
-\requirement{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
-\requirement{13}{The System shall support storing data without requiring specific schemata.}{}
+\requirement{\nfr}{7}{The Customer will complete acceptance testing before the System is deployed.}{}
+\requirement{\nfr}{8}{The System must be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
+\requirement{\nfr}{9}{The System must be available for no less than 99.9\% of each month.}{}
+\requirement{\nfr}{10}{Data must be backed up within 24 hours of having been made available to the System.}{}
+\requirement{\nfr}{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
+\requirement{\nfr}{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
+\requirement{\nfr}{13}{The System shall support storing data without requiring specific schemata.}{}
 \end{requirements}
 
 \subsection{External Dependencies}
@@ -423,8 +432,12 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \label{sec:views}
 \hl{TODO Tom}
 
-% Put in figure
-\includegraphics[width=\textwidth]{images/component.pdf}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{images/component.pdf}
+  \caption{Module diagram of the System.}
+  \label{fig:modules}
+\end{figure}
 
 \subsection{Component and Connector View}
 
@@ -478,9 +491,17 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 \subsection{Core Development}
 \label{sec:core}
-\hl{Andy/Rosy: Config files, gui, server shiz}
+\hl{Rosy: gui}
 
-A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
+The Core is the main application that controls the behaviour and functionality of the HUMS. It receives the input data from the Data Emitters and stores it using the data storage engines, then passes it on for appropriate analysis using the analysis engines, which in turn may create notifications that the Core passes on to the relevant notification engines. The different engines are all interchangeable and dynamic class loading is used to flexibly discover which engines exists and should be used by the HUMS.
+
+Several example engines are provided with the HUMS and are described throughout this report. The engines implement the standard interfaces which have been created for the main different types of engines: storage, analysis and notification. The Customer and Consumer can easily extend and customise the system by creating their own engines to meet their own needs.
+
+An instance of a HUMS can be defined using a configuration file. This specifies the parameters of the instance such as System IDs and the Senors involved, along with options for each sensor, for analysis, and for notification. The engines and data store to use are also specified. A configuration file is loaded into the Core by the User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
+
+Any changes made to the configuration file being used by an instance of the HUMS are automatically detected by the Core and the configuration is reloaded to take immediate effect. This saves extra work for the User who may forget to reload the file, or not realise that this needs to be done or how to do it.
+
+A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}.
 
 \subsection{Project Management}
 \hl{TODO Joe}
@@ -498,7 +519,7 @@ The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGA
 In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data is in a JSON format and the traffic data is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
 
 \subsubsection{Server Responsiveness}
-A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
+A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Android Mobile Application}
 \hl{TODO Finish Tom}
@@ -518,8 +539,8 @@ The final system performs face recognition, collecting face data using the built
 \includegraphics[width=4.3cm]{images/carApp.png}
 \hspace{0.5cm}
 \includegraphics[width=4.3cm]{images/faceApp.png}
-\label{fig:android}
 \caption{\hl{TODO}}
+\label{fig:android}
 \end{figure}
 
 \subsection{Data Analysis}
@@ -647,6 +668,25 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 \subsection{Evaluation Against Requirements, Qualities, and Scenarios}
 \label{sec:req_eval}
 \hl{TODO Ant}
+% -- Qual attibrs
+% High flexibility
+% High modifiability
+% High Interop
+% High Avail
+% High Security
+% Medi Performance
+% Medi Testability
+%  Low Usability
+
+% -- scenario qual atr
+% QAS1 The Customer wishes to reconfigure the system to monitor mechanical systems.
+% QAS2 The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.
+% QAS3 The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.
+% QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
+
+The quality attributes laid out in Section \hl{sec} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. 
+
+A scenario for evaluating the modifiability is the ability to add engines for analysis, reporting or notifications. This has been achieved using extensible APIs for the analysis, reporting and notification engines. Each of the engines contains an abstract base class which can be extended to provide a new engine. For example, to implement a new analysis engine one must simply extend the AnalysisEngine class and implement the required abstract methods.
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}

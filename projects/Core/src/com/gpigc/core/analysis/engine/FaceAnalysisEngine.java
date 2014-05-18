@@ -57,7 +57,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				threshold = Double.parseDouble(system.getParameters().get(
 						Parameter.FACE_SIMILARITY_THRESHOLD));
 			} catch (NumberFormatException e) {
-				System.out.println("System \""+system.getID()+"\" does not have "
+				System.out.println(" System \""+system.getID()+"\" does not have "
 						+ "a valid threshold");
 				System.err.println("System \""+system.getID()+"\" does not have "
 						+ "a valid threshold: "+system.getParameters().get(
@@ -68,9 +68,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			try {
 				exampleFaces = getExampleFaces(system);
 			} catch (ParseException e) {
-				System.out.println("Failed to parse example faces. "
+				System.out.println(" Failed to parse example faces. "
 						+ "Error at character "+e.getErrorOffset()+". "
-						+ "Check your .config file.");
+						+ "Check your example data .csv file.");
+				System.err.println("Failed to parse example faces. "
+						+ "Error at character "+e.getErrorOffset()+": "+
+						e.getMessage());
 				return null;
 			}
 			// Get data from sensor
@@ -94,10 +97,10 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				// Actually test to see if face seen is allowed
 				if (getMostLikelyClass(faceMatrix, exampleFaces, threshold)
 						.equals(FaceClass.ROSY)) {
-					System.out.println("Authorised face detected");
+					System.out.println(" Authorised face detected");
 					return generateSuccessEvent(system);
 				} else {
-					System.out.println("No authorised face detected");
+					System.out.println(" No authorised face detected");
 					return generateFailureEvent(system);
 				}
 			}
@@ -106,7 +109,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			StandardMessageGenerator.couldNotReadData();
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.out.println("Failed to parse face detected by sensor. Error at "
+			System.out.println(" Failed to parse face detected by sensor. Error at "
 					+ "character "+e.getErrorOffset());
 		}
 		return null;
@@ -141,6 +144,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			} catch (IOException e) {
 				System.err.println("Failed to load face data from " + 
 						faceDataFileName);
+				throw new ParseException("IO error: "+e.getMessage(), -1);
 			}
 		}
 		return exampleFaces;
@@ -158,9 +162,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	public List<FaceExample> parseExampleFaces(String facesMatrixStr) 
 			throws ParseException {
 		final String LINE_SEP = "\n";
-		System.err.println("Face data: "+facesMatrixStr);
 		String[] faceStrings = facesMatrixStr.split(LINE_SEP);
-		System.out.println(faceStrings.length+" example faces loaded.");
+		System.out.println(" "+faceStrings.length+" example faces loaded.");
 		List<FaceExample> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
 			faces.add(parseFaceExample(faceStr));
@@ -174,13 +177,13 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		// Parse face matrix
 		String[] elements = faceStr.split(ELEMENT_SEP);
 		int offset = 0;
-		Mat faceMatrix = new Mat(new Size(elements.length, 1), CvType.CV_32FC1);
+		Mat faceMatrix = new Mat(new Size(elements.length-1, 1), CvType.CV_32FC1);
 		for (int i = 1; i < elements.length; i++) {
 			double elementValue;
 			try {
 				elementValue = Double.parseDouble(elements[i]);
 			} catch (NumberFormatException e) {
-				throw new ParseException(faceStr, offset);
+				throw new ParseException("Failed to parse example face on double: "+elements[i], offset);
 			}
 			faceMatrix.put(0, i-1, elementValue);
 			offset += elements[i].length()+ELEMENT_SEP.length();
@@ -189,7 +192,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		try {
 			exampleClass = FaceClass.valueOf(elements[0]);
 		} catch (IllegalArgumentException | NullPointerException e) {
-			throw new ParseException(faceStr, offset);
+			throw new ParseException("Failed to parse example face on class: "+elements[0], offset);
 		}
 		return new FaceExample(faceMatrix, exampleClass);
 	}
@@ -244,6 +247,12 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		System.err.println("Assuming class "+bestExampleClass);
 		double minDifference = threshold;
 		for (FaceExample example : exampleFaces) {
+			System.err.println("Example matrix dims = "+
+					example.getLbp().width()+"x"+
+					example.getLbp().height());
+			System.err.println("Test matrix dims = "+
+					testFace.width()+"x"+
+					testFace.height());
 			double faceDifference = Imgproc.compareHist(
 					testFace, 
 					example.getLbp(),

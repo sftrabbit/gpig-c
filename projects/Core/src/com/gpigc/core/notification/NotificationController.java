@@ -22,6 +22,7 @@ public class NotificationController extends Controller {
 		refreshSystems(systems);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void refreshSystems(List<ClientSystem> systems) {
 		notificationEngines = (List<NotificationEngine>) instantiateEngines(
 				systems, List.class, Integer.TYPE);
