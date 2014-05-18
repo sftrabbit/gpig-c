@@ -6,27 +6,12 @@
     android:padding="20dp"
     tools:context="uk.co.gpigc.androidapp.MainActivity"
     tools:ignore="MergeRootFrame" >
-
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingBottom="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="Car System"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/teal"
-        android:textSize="40sp"
-        android:textStyle="bold" />
             
    <RelativeLayout
        android:id="@+id/relativeLayout1"
        android:layout_width="fill_parent"
        android:layout_height="fill_parent"
        android:layout_above="@+id/pushButton"
-       android:layout_below="@+id/textViewTitle"
        android:layout_centerHorizontal="true"
        android:background="@drawable/orange_rounded_background"
        android:orientation="vertical"

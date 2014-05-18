@@ -465,8 +465,10 @@ A lightweight Jetty server was also added to the core so that the Admin Centre c
 \label{sec:monitor}
 In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An end user would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
-\subsubsection{Test Applications}
+\subsubsection{Test Applications} \label{subsec:tapp}
 \hl{TODO Michael/Ant}
+
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory.
 
 \subsubsection{Earthquakes and Traffic}
 In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents.
@@ -504,8 +506,10 @@ The final system performs face recognition, collecting face data using the built
 \hl{TODO A Team -- this is the new and improved mean engine}
 
 \subsubsection{Generic Expression Engine}
-\hl{TODO Tom/Michael}
+\hl{TODO Tom}
 %%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
+
+To allow for sensors which provide a combination of numeric and string data to use the expression engine, it interprets only the data which is necessary.
 
 \subsubsection{Phone Analysis Engine}
 \hl{TODO Rosy}
@@ -526,6 +530,11 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 
 \subsubsection{Other Analysis Engines}
 \hl{TODO Ant}
+
+\subsubsection{Process Monitor Engine}
+The process monitoring engine is capable of tracking information from a process. For a given process, it tracks ____ such as CPU usage, memory usage, state of the process, number of threads, processor that the process is executing on and working directory of the process. This engine is the one utilised for the Test Applications (Section \ref{subsec:tapp}).
+
+The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
 
 \subsection{Data Storage}
 \label{sec:store}
