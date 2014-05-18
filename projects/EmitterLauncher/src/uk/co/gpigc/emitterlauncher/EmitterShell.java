@@ -101,7 +101,7 @@ public class EmitterShell extends Shell {
 		tabFolder.setLayoutData(data);
 
 		console1Tab = new TabItem(tabFolder, SWT.NONE);
-		console1Tab.setText("App 1 Console ");
+		console1Tab.setText("Test App 1");
 
 		textApp1 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp1.setEditable(false);
@@ -109,7 +109,7 @@ public class EmitterShell extends Shell {
 		textApp1.addListener(SWT.Modify, new CaretListener(textApp1));
 
 		console2Tab = new TabItem(tabFolder, SWT.NONE);
-		console2Tab.setText("App 2 Console");
+		console2Tab.setText("Test App 2");
 
 		textApp2 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp2.setEditable(false);
@@ -118,7 +118,7 @@ public class EmitterShell extends Shell {
 
 
 		console3Tab = new TabItem(tabFolder, 0);
-		console3Tab.setText("Earth Console");
+		console3Tab.setText("Earthquake");
 
 		textApp3 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp3.setEditable(false);
@@ -127,7 +127,7 @@ public class EmitterShell extends Shell {
 
 
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
-		console4Tab.setText("ResponseConsole");
+		console4Tab.setText("Response Time");
 
 		textApp4 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp4.setEditable(false);
@@ -136,7 +136,7 @@ public class EmitterShell extends Shell {
 
 
 		console5Tab = new TabItem(tabFolder, SWT.NONE);
-		console5Tab.setText("TrafficConsole");
+		console5Tab.setText("Traffic");
 
 		textApp5 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp5.setEditable(false);
@@ -165,7 +165,7 @@ public class EmitterShell extends Shell {
 		data1.verticalAlignment = SWT.FILL;
 		testApp1Button.setLayoutData(data1);
 		testApp1Button.setImage(playIcon);
-		testApp1Button.setText("1) First Test App");
+		testApp1Button.setText("Test App 1 Emitter");
 		testApp1Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -179,7 +179,7 @@ public class EmitterShell extends Shell {
 		data2.verticalAlignment = SWT.FILL;
 		testApp2Button.setLayoutData(data2);
 		testApp2Button.setImage(playIcon);
-		testApp2Button.setText("2) Second Test App");
+		testApp2Button.setText("Test App 2 Emitter");
 		testApp2Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -193,7 +193,7 @@ public class EmitterShell extends Shell {
 		data3.verticalAlignment = SWT.FILL;
 		earthButton.setLayoutData(data3);
 		earthButton.setImage(playIcon);
-		earthButton.setText("3) Earthquake Monitor");
+		earthButton.setText("Earthquake Emitter");
 		earthButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -207,7 +207,7 @@ public class EmitterShell extends Shell {
 		data4.verticalAlignment = SWT.FILL;
 		serverButton.setLayoutData(data4);
 		serverButton.setImage(playIcon);
-		serverButton.setText("4) Server Monitor");
+		serverButton.setText("Response Time Emitter");
 		serverButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -216,12 +216,12 @@ public class EmitterShell extends Shell {
 		});
 
 		trafficButton = new Button(composite, SWT.TOGGLE);
-		GridData trafficData = new GridData(SWT.LEFT, SWT.CENTER, true, true, 2, 1);
+		GridData trafficData = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
 		trafficData.horizontalAlignment = SWT.FILL;
 		trafficData.verticalAlignment = SWT.FILL;
 		trafficButton.setLayoutData(trafficData);
 		trafficButton.setImage(playIcon);
-		trafficButton.setText("5) Traffic Monitor");
+		trafficButton.setText("Traffic Emitter");
 		trafficButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
