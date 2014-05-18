@@ -727,6 +727,23 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 % QAS3 The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.
 % QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
 
+
+\tableformat{| l | l | l |}{ \hline	FR.x  & 	Description of FR  & 	What we did \\ \hline
+	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
+	FR.2  & 	  & 	 \\ \hline
+	FR.3  & 	  & 	 \\ \hline
+	FR.4  & 	  & 	This requirement has been satisfied by the use of configuration files, these can be loaded into the core at runtime. And can easily be changed and reloaded while the core is running. The administration center can be used to edit these configuration files even while the system is running. \\ \hline
+	FR.5  & 	  & 	The requirement for notifications on a full quota were meant for the SaaS part of our implementation. As this is a prototype and is not completed, this is not currently implementation. \hl{?} \\ \hline
+	FR.6  & 	  & 	  \hl{?} \\ \hline
+	FR.7  & 	  & 	  \hl{?} \\ \hline
+	FR.8  & 	  & 	 \\ \hline
+	FR.9  & 	  & 	For recognition of an event, the information which is received from a system ID is passed into the core and analysed. If analysis rules are matched, then a notification is generated for the event. \\ \hline
+	FR.10  & 	  & 	 \\ \hline
+	FR.11  & 	  & 	 \\ \hline
+	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
+}{Evaluation for Satisfaction of Function Requirements}{frevaltable}	
+
+
 The quality attributes laid out in Section \ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
 
 A scenario for evaluating the modifiability is the ability to add engines for analysis, reporting or notifications. This has been achieved using extensible APIs for the analysis, reporting and notification engines. Each of the engines contains an abstract base class which can be extended to provide a new engine. For example, to implement a new analysis engine one must simply extend the AnalysisEngine class and implement the required abstract methods.
