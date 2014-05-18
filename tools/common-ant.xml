@@ -13,6 +13,10 @@
 	<condition property="project.dependencies" value="">
 		<not><isset property="project.dependencies"/></not>
 	</condition>
+
+	<condition property="project.nested-libs" value="abcdefg">
+		<not><isset property="project.nested-libs"/></not>
+	</condition>
 	
 	<condition property="project.is-library" value="true">
 		<not><isset property="project.main-class"/></not>
@@ -136,20 +140,24 @@
 	<target name="collect-libs" depends="collect-dependencies">
 		<mkdir dir="${bin.lib.dir}" />
 		<mkdir dir="${bin.binlib.dir}" />
-		<copy todir="${bin.lib.dir}">
+		<copy todir="${bin.lib.dir}" includeEmptyDirs="false">
 			<fileset dir="${gpigc.lib.dir}" includes="${project.common.libs}" />
+			<fileset dir="${gpigc.lib.dir}/${platform.dir}" includes="${project.common.libs}" erroronmissingdir="false" />
 			<fileset dir="${lib.dir}" includes="*" erroronmissingdir="false" />
+			<fileset dir="${lib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
+			<fileset dir="${lib.dir}" includes="${project.nested-libs}" erroronmissingdir="false" />
 		</copy>
-		<copy todir="${bin.binlib.dir}">
+		<copy todir="${bin.binlib.dir}" includeEmptyDirs="false">
 			<fileset dir="${gpigc.binlib.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${gpigc.binlib.dir}/${platform.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${binlib.dir}" includes="*" erroronmissingdir="false" />
+			<fileset dir="${binlib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
 		</copy>
 	</target>
 
 	<target name="set-classpath" depends="collect-libs">
 		<path id="classpath">
-			<fileset dir="${bin.lib.dir}" includes="*.jar" />
+			<fileset dir="${bin.lib.dir}" includes="**/*.jar" />
 		</path>
 	</target>
 
@@ -170,10 +178,10 @@
 				<fileset dir="${bin.classes.dir}" />
 			</main>
 			<lib>
-				<fileset dir="${bin.lib.dir}" includes="*" />
+				<fileset dir="${bin.lib.dir}" includes="**" />
 			</lib>
 			<binlib>
-				<fileset dir="${bin.binlib.dir}" includes="*" />
+				<fileset dir="${bin.binlib.dir}" includes="**" />
 			</binlib>
 			<fileset dir="." includes="*.properties" />
 			<fileset dir="." includes="${res.dir}/**" />

@@ -16,6 +16,7 @@ import com.gpigc.core.view.StandardMessageGenerator;
 
 public abstract class Controller {
 
+	public static final String ENGINES_FOLDER_PATH = "res/engine";
 	private static final String GPIGC_CORE_PACKAGE = "com.gpigc.core";
 
 	private final ControllerType engineType;
@@ -36,15 +37,15 @@ public abstract class Controller {
 				+ " engines");
 		List<Object> engines = new ArrayList<>();
 		String parentDir = "com/gpigc/core/" + engineType + "/engine/";
-		File folder = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType
-				+ "/" + parentDir);
+		File folder = new File(FileUtils.getExpandedFilePath(ENGINES_FOLDER_PATH + "/" + engineType
+				+ "/" + parentDir));
 		if (folder.listFiles() == null) {
 			StandardMessageGenerator.failedToFindEngines(
 					folder.getAbsolutePath(), engineType.toString());
 			return engines;
 		}
 		try {
-			URL url = new File(Core.ENGINES_FOLDER_PATH + "/" + engineType)
+			URL url = new File(ENGINES_FOLDER_PATH + "/" + engineType)
 					.getCanonicalFile().toURI().toURL();
 			URL[] urls = new URL[] { url };
 			ClassLoader cl = URLClassLoader.newInstance(urls, this.getClass()

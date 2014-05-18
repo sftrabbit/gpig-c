@@ -15,8 +15,6 @@ import com.gpigc.core.view.StandardMessageGenerator;
 import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 
 public class Core {
-
-	public static final String ENGINES_FOLDER_PATH = "./engine";
 	private final DataInputServer dataInputServer;
 	private final StorageController datastoreController;
 	private final AnalysisController analysisController;
@@ -45,7 +43,7 @@ public class Core {
 		FileMonitor enginesMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener engineListener = new ConfigFileChangeListener();
 		enginesMonitor.addFileChangeListener(engineListener,
-				ENGINES_FOLDER_PATH, 1000);
+				Controller.ENGINES_FOLDER_PATH, 1000);
 	}
 
 	public void refreshSystems() throws IOException,

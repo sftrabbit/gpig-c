@@ -1,5 +1,8 @@
 package com.gpigc.core.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
@@ -21,6 +24,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Group;
+
+import com.gpigc.core.FileUtils;
 
 public class CoreShell extends Shell {
 	private static final String CURRENT_CONFIG_FILE = "Current Config File: ";
@@ -65,11 +70,16 @@ public class CoreShell extends Shell {
 		});
 		setSize(750, 450);
 		setMinimumSize(550, 500);
-		InputStream iconInputStream = getClass().getResourceAsStream(
-				"/images/nosql.png");
-		Image icon = new Image(display, iconInputStream);
-		this.setImage(icon);
-		this.setText("GPIG-C: HUMS");
+		String iconFileName = FileUtils
+				.getExpandedFilePath("res/images/nosql.png");
+		try {
+			InputStream iconInputStream = new FileInputStream(iconFileName);
+			Image icon = new Image(display, iconInputStream);
+			this.setImage(icon);
+			this.setText("GPIG-C: HUMS");
+		} catch (FileNotFoundException e1) {
+			System.err.println("Could not load " + iconFileName);
+		}
 		GridLayout gridLayout = new GridLayout(1, true);
 		gridLayout.marginRight = 5;
 		gridLayout.marginLeft = 5;
@@ -131,11 +141,11 @@ public class CoreShell extends Shell {
 		Label lblNewLabel = new Label(grpGpigcHumsCore, SWT.WRAP);
 		lblNewLabel.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblNewLabel
-		.setText("\n  Welcome to our HUMS Core. "
-				+ "\n  Select the .config file you wish to use and then hit run. "
-				+ "\n  Press stop when finished."
-				+ "\n  Any messages will be displayed in the console below."
-				+ "\n ");
+				.setText("\n  Welcome to our HUMS Core. "
+						+ "\n  Select the .config file you wish to use and then hit run. "
+						+ "\n  Press stop when finished."
+						+ "\n  Any messages will be displayed in the console below."
+						+ "\n ");
 
 		currentConfigFile = new Label(this, SWT.NONE);
 		currentConfigFile.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER,
@@ -144,7 +154,9 @@ public class CoreShell extends Shell {
 
 		consoleTextView = new Text(this, SWT.BORDER | SWT.H_SCROLL
 				| SWT.V_SCROLL);
-		Font monospacedFont = new Font(getDisplay(), "Monospace", 10, SWT.NONE);
+		File monospacedFontFile = new File(FileUtils.getExpandedFilePath("res/LucidaTypewriterRegular.ttf"));
+		getDisplay().loadFont(monospacedFontFile.toString());
+		Font monospacedFont = new Font(getDisplay(), "Lucida Sans Typewriter", 10, SWT.NONE);
 		consoleTextView.setFont(monospacedFont);
 		consoleTextView.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		getConsoleTextView().setBackground(
@@ -154,8 +166,8 @@ public class CoreShell extends Shell {
 		consoleData.verticalAlignment = SWT.FILL;
 		getConsoleTextView().setLayoutData(consoleData);
 		getConsoleTextView().setEditable(false);
-		consoleTextView.addListener(SWT.Modify, new Listener(){
-			public void handleEvent(Event e){
+		consoleTextView.addListener(SWT.Modify, new Listener() {
+			public void handleEvent(Event e) {
 				consoleTextView.setTopIndex(consoleTextView.getLineCount() - 1);
 			}
 		});
@@ -166,16 +178,26 @@ public class CoreShell extends Shell {
 
 	protected void runButton() {
 		startButton.setText("Run ");
-		InputStream imageInputStream = getClass().getResourceAsStream(
-				"/images/control_play_blue.png");
-		startButton.setImage(new Image(getDisplay(), imageInputStream));
+		String fileName = FileUtils
+				.getExpandedFilePath("res/images/control_play_blue.png");
+		try {
+			InputStream imageInputStream = new FileInputStream(fileName);
+			startButton.setImage(new Image(getDisplay(), imageInputStream));
+		} catch (FileNotFoundException e) {
+			System.err.println("Could not load " + fileName);
+		}
 	}
 
 	protected void stopButton() {
 		startButton.setText("Stop");
-		InputStream imageInputStream = getClass().getResourceAsStream(
-				"/images/control_stop_blue.png");
-		startButton.setImage(new Image(getDisplay(), imageInputStream));
+		String fileName = FileUtils
+				.getExpandedFilePath("res/images/control_stop_blue.png");
+		try {
+			InputStream imageInputStream = new FileInputStream(fileName);
+			startButton.setImage(new Image(getDisplay(), imageInputStream));
+		} catch (FileNotFoundException e) {
+			System.err.println("Could not load " + fileName);
+		}
 	}
 
 	/**

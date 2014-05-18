@@ -3,6 +3,12 @@
  */
 package com.gpigc.core.analysis.engine;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +18,7 @@ import java.util.Map;
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Core;
+import com.gpigc.core.FileUtils;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
@@ -83,6 +90,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		try {
 			values = getSensorData(system);
 			for (SensorState sensorState : values) {
+				System.err.println("Data creation time: "+sensorState.getCreationTimestamp());
 				String faceMatrixString = sensorState.getValue();
 				Mat faceMatrix = parseFace(faceMatrixString);
 				// Actually test to see if face seen is allowed
@@ -120,16 +128,27 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 * @throws ParseException 
 	 */
 	private List<Mat> getExampleFaces(ClientSystem system) throws ParseException {
-		List<Mat> exampleFaces;
+		List<Mat> exampleFaces = new ArrayList<Mat>();
 		if (systemExampleFacesCache.keySet().contains(system)) {
 			exampleFaces = systemExampleFacesCache.get(system);
 		} else {
-			String faceData = system.getParameters().get(
-					Parameter.EXAMPLE_FACES);
-			exampleFaces = parseFaces(faceData);
-			systemExampleFacesCache.put(system, exampleFaces);
+			String faceDataFileName = FileUtils.getExpandedFilePath("res/config/" + system.getParameters().get(
+					Parameter.EXAMPLE_FACES));
+			try {
+				String faceData = loadFaces(faceDataFileName);
+				exampleFaces = parseFaces(faceData);
+				systemExampleFacesCache.put(system, exampleFaces);
+			} catch (IOException e) {
+				System.err.println("Failed to load face data from " + faceDataFileName);
+			}
 		}
 		return exampleFaces;
+	}
+	
+	private static String loadFaces(String faceDataFileName) throws IOException {
+		String faceData = new String(Files.readAllBytes(Paths.get(faceDataFileName)));
+		
+		return faceData;
 	}
 
 	/**
@@ -142,7 +161,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	 */
 	public static List<Mat> parseFaces(String facesMatrixStr) throws ParseException {
 		System.err.println("Face data: "+facesMatrixStr);
-		String[] faceStrings = facesMatrixStr.split("X");
+		String[] faceStrings = facesMatrixStr.split("\n");
 		System.out.println(faceStrings.length+" example faces loaded.");
 		List<Mat> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
@@ -197,16 +216,19 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		 * Check to see if close enough to an allowable example face using
 		 * Chi-Squared method
 		 */
+//		double sum = 0;
 		for (Mat example : exampleFaces) {
 			double faceSimilarity = Imgproc.compareHist(testFace, example,
 					Imgproc.CV_COMP_CHISQR);
 			if (faceSimilarity < threshold) {
-				System.err.println("    Face found! Difference = "+faceSimilarity);
+				System.err.println(" <<<<< Face found! Difference = "+faceSimilarity);
 				return true;
 			} else {
 				System.err.println("    No face found. Difference = "+faceSimilarity);
 			}
+//			sum += faceSimilarity;
 		}
+//		System.err.println("Mean face difference: "+(sum/(double)exampleFaces.size()));
 		System.err.println(" <<<<< No faces found");
 		return false;
 	}

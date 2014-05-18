@@ -468,6 +468,8 @@ In this section we describe what data our HUMS currently monitors. We created si
 \subsubsection{Test Applications}
 \hl{TODO Michael/Ant}
 
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory.
+
 \subsubsection{Earthquakes and Traffic}
 In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents.
 
@@ -504,8 +506,10 @@ The final system performs face recognition, collecting face data using the built
 \hl{TODO A Team -- this is the new and improved mean engine}
 
 \subsubsection{Generic Expression Engine}
-\hl{TODO Tom/Michael}
+\hl{TODO Tom}
 %%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
+
+To allow for sensors which provide a combination of numeric and string data to use the expression engine, it interprets only the data which is necessary.
 
 \subsubsection{Phone Analysis Engine}
 \hl{TODO Rosy}
