@@ -322,7 +322,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	/**
 	 * Example LBP-class pairs
 	 */
-	private class FaceExample {
+	class FaceExample {
 		private final Mat lbp;
 		private final FaceClass faceClass;
 
@@ -340,6 +340,6 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		}
 	}
 
-	private enum FaceClass { ROSY, NOT_ROSY }
+	public enum FaceClass { ROSY, NOT_ROSY }
 
 }
