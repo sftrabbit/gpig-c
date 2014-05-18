@@ -140,8 +140,6 @@ SurfaceHolder.Callback {
 				for (int i = 0; i < faceData.size().width; i++) {
 					float[] faceDataValue = new float[1];
 					faceData.get(0, i, faceDataValue);
-					System.out.println("Face data element "+i+" of "+
-							faceData.size().width+": "+faceDataValue[0]);
 					fileStream.print(faceDataValue[0]);
 					if (i != faceData.size().width - 1) {
 						fileStream.print(",");
