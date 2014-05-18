@@ -609,7 +609,7 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Data Analysis}
 \label{sec:analysis}
-In this section we describe how our HUMS implementation currently analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the End User to add additional engines using the generic \texttt{AnalysisEngine} interface provided.
+In this section we describe how our HUMS implementation currently analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the End User to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
 
 \subsubsection{Generic Bounded Sensor Value Engine}
 
@@ -634,7 +634,7 @@ The values of variables which represent the state of the system being monitored 
 
 Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
 
-The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the Tailorability quality attribute of the solution, allowing the HUMS to be easily customised by the end user without needing any particular software engineering knowledge. % TODO Expand on this?
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its flexibility and configurability, allowing the HUMS to be easily customised by the end user without needing any particular software engineering knowledge. % TODO Expand on this?
 
 % TODO The library used?
 
@@ -654,7 +654,7 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 % TODO This method is robust to lighting and pose \cite{ahonen2006face} (due to use of local thresholds)
 
 \subsubsection{Other Analysis Engines}
-The traffic analysis engine, simple creates an event when a reading is generated. The earthquake engine checks if the magnitude of the earthquake is above a certain value, so larger earthquakes generate events. For other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods.
+The \texttt{TrafficAnalysisEngine}, creates an event when a reading is generated, the analysis performed in this case is simply parsing the data about the earthquake and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification \texttt{Event} only if the magnitude above a specified value, so larger earthquakes generate events. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class in incredibly versatile  Other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the \texttt{AnalysisEngine} abstract class, and implementing the required methods.
 
 \subsection{Data Storage}
 \label{sec:store}
