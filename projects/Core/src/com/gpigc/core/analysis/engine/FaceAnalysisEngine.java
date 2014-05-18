@@ -70,7 +70,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			} catch (ParseException e) {
 				System.out.println(" Failed to parse example faces. "
 						+ "Error at character "+e.getErrorOffset()+". "
-						+ "Check your .config file.");
+						+ "Check your example data .csv file.");
 				return null;
 			}
 			// Get data from sensor
@@ -141,6 +141,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			} catch (IOException e) {
 				System.err.println("Failed to load face data from " + 
 						faceDataFileName);
+				throw new ParseException("IO error: "+e.getMessage(), -1);
 			}
 		}
 		return exampleFaces;
@@ -179,7 +180,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 			try {
 				elementValue = Double.parseDouble(elements[i]);
 			} catch (NumberFormatException e) {
-				throw new ParseException(faceStr, offset);
+				throw new ParseException("Failed to parse example face on double: "+elements[i], offset);
 			}
 			faceMatrix.put(0, i-1, elementValue);
 			offset += elements[i].length()+ELEMENT_SEP.length();
@@ -188,7 +189,7 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		try {
 			exampleClass = FaceClass.valueOf(elements[0]);
 		} catch (IllegalArgumentException | NullPointerException e) {
-			throw new ParseException(faceStr, offset);
+			throw new ParseException("Failed to parse example face on class: "+elements[0], offset);
 		}
 		return new FaceExample(faceMatrix, exampleClass);
 	}
