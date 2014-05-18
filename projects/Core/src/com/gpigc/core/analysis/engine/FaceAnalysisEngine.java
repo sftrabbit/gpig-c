@@ -158,9 +158,8 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 	public List<FaceExample> parseExampleFaces(String facesMatrixStr) 
 			throws ParseException {
 		final String LINE_SEP = "\n";
-		System.err.println("Face data: "+facesMatrixStr);
 		String[] faceStrings = facesMatrixStr.split(LINE_SEP);
-		System.out.println(' '+faceStrings.length+" example faces loaded.");
+		System.out.println(" "+faceStrings.length+" example faces loaded.");
 		List<FaceExample> faces = new ArrayList<>(faceStrings.length);
 		for (String faceStr : faceStrings) {
 			faces.add(parseFaceExample(faceStr));
