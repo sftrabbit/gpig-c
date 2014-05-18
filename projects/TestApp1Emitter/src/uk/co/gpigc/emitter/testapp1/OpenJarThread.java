@@ -13,7 +13,7 @@ public class OpenJarThread extends Thread {
 	public void run() {
 		try {
 			proc = Runtime.getRuntime().exec("java -jar "+jarPath);
-			System.out.println("Running "+ jarPath);
+			System.out.println("Jar has started: " + jarPath);
 			proc.waitFor();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -23,7 +23,7 @@ public class OpenJarThread extends Thread {
 	public void stopRunning(){
 		if(proc != null)
 			proc.destroy();
-		System.out.println("First Test App Stopped");
+		System.out.println("Jar has stopped: " + jarPath);
 	}
 
 }

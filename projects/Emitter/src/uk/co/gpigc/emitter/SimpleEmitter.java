@@ -7,6 +7,7 @@ public class SimpleEmitter {
 	private String name;
 	private DataCollector collector;
 	private EmitterService emitter;
+	private boolean running = false;
 	
 	public SimpleEmitter(String name, DataCollector collector) {
 		this(name, collector, EmitterService.DEFAULT_COLLECTION_INTERVAL);
@@ -16,34 +17,45 @@ public class SimpleEmitter {
 		this.name = name;
 		this.collector = collector;
 		this.emitter = new EmitterService(collectionInterval);
+		
+		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
 	}
 
-	public void start() {
-		Runtime.getRuntime().addShutdownHook(new ShutdownHook());
+	public void run() {
+		running = true;
 		
 		emitter.registerDataCollector(collector);
 		emitter.start();
-		System.out.println(name + " started");
+		System.out.println("-- " + name + " started --");
 		
 		try {
 			emitter.waitFor();
-			System.out.println(name + " stopped");
 		} catch (InterruptedException e) {
-			System.err.println(name + " was interrupted");
+			System.out.println("Error: " + name + " was interrupted");
 		} catch (ExecutionException e) {
-			System.err.println("The emitter threw an exception: " + e.getCause().getMessage());
+			System.out.println("Error: " + e.getCause().getMessage());
+		}
+		
+		stop();
+	}
+	
+	private void stop() {
+		if (running) {
+			try {
+				emitter.stop();
+				System.out.println("-- " + name + " stopped --");
+			} catch (IOException e) {
+				System.out.println("Error: Could not stop " + name + " cleanly");
+			}
+			
+			running = false;
 		}
 	}
 	
 	private class ShutdownHook extends Thread {
 		@Override
 		public void run() {
-			try {
-				System.out.println("Shutting down " + name);
-				emitter.stop();
-			} catch (IOException | InterruptedException | ExecutionException e) {
-				System.err.println("Could not stop " + name + " cleanly");
-			}
+			SimpleEmitter.this.stop();
 		}
 	}
 }

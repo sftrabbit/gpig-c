@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.gpigc.proto.Protos.SystemData;
 
-public interface DataCollector {
+public abstract class DataCollector {
 	
-	public List<SystemData> collect() throws Exception;
+	public abstract List<SystemData> collect() throws Exception;
+	
+	public void shutdown() {}
 
 }

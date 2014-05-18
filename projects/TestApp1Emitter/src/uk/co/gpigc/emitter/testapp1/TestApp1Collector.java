@@ -11,7 +11,7 @@ import uk.co.gpigc.emitter.testapp1.JavaVirtualMachineMonitor.MonitorJvmExceptio
 import uk.co.gpigc.emitter.testapp1.JavaVirtualMachineMonitor.ServerFetchException;
 import uk.co.gpigc.emitter.testapp1.ProcessMonitor.ProcessMonitorException;
 
-public class TestApp1Collector implements DataCollector {
+public class TestApp1Collector extends DataCollector {
 	public static final String TEST_APP_NAME = "b.jar";
 	private static final int DELAY_BEFORE_MONITOR = 4500;
 	
@@ -43,6 +43,11 @@ public class TestApp1Collector implements DataCollector {
 		dataList.add(data);
 		System.out.println("Writing Data");
 		return dataList;
+	}
+	
+	@Override
+	public void shutdown() {
+		processMonitor.stop();
 	}
 
 }

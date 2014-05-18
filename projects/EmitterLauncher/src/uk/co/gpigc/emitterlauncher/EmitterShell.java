@@ -1,5 +1,6 @@
 package uk.co.gpigc.emitterlauncher;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
@@ -93,6 +95,10 @@ public class EmitterShell extends Shell {
 		shellSetup(display);
 		Group groupComp = groupSetup();
 		compositeSetup(groupComp);
+		
+		File monospacedFontFile = new File(FileUtils.getExpandedFilePath("res/LucidaTypewriterRegular.ttf"));
+		getDisplay().loadFont(monospacedFontFile.toString());
+		Font monospacedFont = new Font(getDisplay(), "Lucida Sans Typewriter", 10, SWT.NONE);
 
 		tabFolder = new TabFolder(this, SWT.NONE);
 		GridData data = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
@@ -101,44 +107,49 @@ public class EmitterShell extends Shell {
 		tabFolder.setLayoutData(data);
 
 		console1Tab = new TabItem(tabFolder, SWT.NONE);
-		console1Tab.setText("App 1 Console ");
+		console1Tab.setText("Test App 1");
 
 		textApp1 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp1.setFont(monospacedFont);
 		textApp1.setEditable(false);
 		console1Tab.setControl(textApp1);
 		textApp1.addListener(SWT.Modify, new CaretListener(textApp1));
 
 		console2Tab = new TabItem(tabFolder, SWT.NONE);
-		console2Tab.setText("App 2 Console");
+		console2Tab.setText("Test App 2");
 
 		textApp2 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp2.setFont(monospacedFont);
 		textApp2.setEditable(false);
 		console2Tab.setControl(textApp2);
 		textApp2.addListener(SWT.Modify, new CaretListener(textApp2));
 
 
 		console3Tab = new TabItem(tabFolder, 0);
-		console3Tab.setText("Earth Console");
+		console3Tab.setText("Earthquake");
 
 		textApp3 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp3.setFont(monospacedFont);
 		textApp3.setEditable(false);
 		console3Tab.setControl(textApp3);
 		textApp3.addListener(SWT.Modify, new CaretListener(textApp3));
 
 
 		console4Tab = new TabItem(tabFolder, SWT.NONE);
-		console4Tab.setText("ResponseConsole");
+		console4Tab.setText("Response Time");
 
 		textApp4 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp4.setFont(monospacedFont);
 		textApp4.setEditable(false);
 		console4Tab.setControl(textApp4);
 		textApp4.addListener(SWT.Modify, new CaretListener(textApp4));
 
 
 		console5Tab = new TabItem(tabFolder, SWT.NONE);
-		console5Tab.setText("TrafficConsole");
+		console5Tab.setText("Traffic");
 
 		textApp5 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		textApp5.setFont(monospacedFont);
 		textApp5.setEditable(false);
 		console5Tab.setControl(textApp5);
 		textApp5.addListener(SWT.Modify, new CaretListener(textApp5));
@@ -165,7 +176,7 @@ public class EmitterShell extends Shell {
 		data1.verticalAlignment = SWT.FILL;
 		testApp1Button.setLayoutData(data1);
 		testApp1Button.setImage(playIcon);
-		testApp1Button.setText("1) First Test App");
+		testApp1Button.setText("Test App 1 Emitter");
 		testApp1Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -179,7 +190,7 @@ public class EmitterShell extends Shell {
 		data2.verticalAlignment = SWT.FILL;
 		testApp2Button.setLayoutData(data2);
 		testApp2Button.setImage(playIcon);
-		testApp2Button.setText("2) Second Test App");
+		testApp2Button.setText("Test App 2 Emitter");
 		testApp2Button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -193,7 +204,7 @@ public class EmitterShell extends Shell {
 		data3.verticalAlignment = SWT.FILL;
 		earthButton.setLayoutData(data3);
 		earthButton.setImage(playIcon);
-		earthButton.setText("3) Earthquake Monitor");
+		earthButton.setText("Earthquake Emitter");
 		earthButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -207,7 +218,7 @@ public class EmitterShell extends Shell {
 		data4.verticalAlignment = SWT.FILL;
 		serverButton.setLayoutData(data4);
 		serverButton.setImage(playIcon);
-		serverButton.setText("4) Server Monitor");
+		serverButton.setText("Response Time Emitter");
 		serverButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -216,12 +227,12 @@ public class EmitterShell extends Shell {
 		});
 
 		trafficButton = new Button(composite, SWT.TOGGLE);
-		GridData trafficData = new GridData(SWT.LEFT, SWT.CENTER, true, true, 2, 1);
+		GridData trafficData = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
 		trafficData.horizontalAlignment = SWT.FILL;
 		trafficData.verticalAlignment = SWT.FILL;
 		trafficButton.setLayoutData(trafficData);
 		trafficButton.setImage(playIcon);
-		trafficButton.setText("5) Traffic Monitor");
+		trafficButton.setText("Traffic Emitter");
 		trafficButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -233,11 +244,13 @@ public class EmitterShell extends Shell {
 	protected void buttonSelect(final String jarPath, Button button, Text text) {
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
+			text.append(" >> Starting " + jarPath + "\n");
 			threadMap.put(jarPath, new OpenJarThread(jarPath, button,text));
 			threadMap.get(jarPath).start();
 		} else {
 			button.setImage(playIcon);
 			if (threadMap.containsKey(jarPath)) {
+				text.append(" >> Stopping " + jarPath + "\n");
 				threadMap.get(jarPath).stopRunning();
 				threadMap.remove(jarPath);
 			}
