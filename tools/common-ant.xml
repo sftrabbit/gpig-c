@@ -52,7 +52,6 @@
 	<condition property="pass-swt-arg" value="true">
 		<and>
 			<equals arg1="${platform.name}" arg2="osx" />
-			<contains string="${project.common.libs}" substring="swt" />
 			<not><isset property="project.is-library" /></not>
 		</and>
 	</condition>
