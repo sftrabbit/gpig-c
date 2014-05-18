@@ -150,7 +150,10 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
-\hl{write about changes -- currently they are unchanged} 
+
+\fr{4.1.1}, \fr{4.1.2}, and \fr{4.1.3} were added as we implemented configuration files into our prototype. We chose to use JSON as the configuration format as it is a widely-used standard.
+
+\fr{12} became apparent once we considered the reloading of configuration in \fr{4.1.3}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
@@ -169,7 +172,11 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
 }
 \requirement{\fr}{4}{The HUMS shall store End User configuration files.}{
-	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{}
+	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{
+      \requirement{\fr}{4.1.1}{The configuration file shall be human editable.}{}
+      \requirement{\fr}{4.1.2}{The Admin Centre shall provide an interface to allow authorised users to modify the configuration.}{}
+      \requirement{\fr}{4.1.3}{The HUMS shall monitor the configuration for changes and apply them.}{}
+    }
 	\requirement{\fr}{4.2}{The HUMS shall allow the User to define a storage limit.}{}
 	\requirement{\fr}{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
 	\requirement{\fr}{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
@@ -191,6 +198,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 \requirement{\fr}{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
 \requirement{\fr}{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
 the way in which data is sensed.}{}
+\requirement{\fr}{12}{The System shall load new engines which an authorised user adds during runtime.}{}
 \end{requirements}
 
 \subsection{Non-Functional Requirements}
