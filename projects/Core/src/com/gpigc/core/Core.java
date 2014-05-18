@@ -43,7 +43,7 @@ public class Core {
 		FileMonitor enginesMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener engineListener = new ConfigFileChangeListener();
 		enginesMonitor.addFileChangeListener(engineListener,
-				Controller.ENGINES_FOLDER_PATH, 1000);
+				FileUtils.getExpandedFilePath("res/com"), 1000);
 	}
 
 	public void refreshSystems() throws IOException,
