@@ -787,19 +787,19 @@ To consider the meeting of requirements, we lay out here the steps which we have
 }{Evaluation for Satisfaction of Function Requirements}{frevaltable}	
 
 \tableformat{| l | l | l |}{ \hline	NFR.x  & 	Description of NFR  & 	What we did \\ \hline
-	NFR.1  & 	  & 	 \\ \hline
-	NFR.2  & 	  & 	 \\ \hline
+	NFR.1  & 	  & 	The data store is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ \hline
+	NFR.2  & 	  & 	There has been a README provided. \\ \hline
 	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ \hline
 	NFR.4  & 	  & 	\hl{We didnt implement security} \\ \hline
 	NFR.5  & 	  & 	\hl{!} \\ \hline
-	NFR.6  & 	  & 	 \\ \hline
-	NFR.7  & 	  & 	 \\ \hline
-	NFR.8  & 	  & 	 \\ \hline
-	NFR.9  & 	  & 	The heroku instance has an uptime which can satisfy this requirement.  \\ \hline
-	NFR.10  & 	  & 	 \\ \hline
+	NFR.6  & 	  & 	The tests for the system have been created and included at each stage of the development. \hl{write smat stuff} \\ \hline
+	NFR.7  & 	  & 	The system has not currently been performend. However, in the case of the real system, this would be performed by the customer and the customer would sign off to show the requirements were met. \\ \hline
+	NFR.8  & 	  & 	The current implementation is executing with 5 clients. With the emitter launcher we have tested it with 5 clients and the performance is correct. There have been tests with more clients and the functionality remains correct. \\ \hline
+	NFR.9  & 	  & 	The heroku instance has an uptime which satisfies this requirement. \\ \hline
+	NFR.10  & 	  & 	\hl{data backup - adam?} \\ \hline
 	NFR.11  & 	  & 	 \\ \hline
 	NFR.12  & 	  & 	 \\ \hline
-	NFR.13  & 	  & 	 \\ \hline
+	NFR.13  & 	  & 	To achieve this, a key-value data store format has been used. This relaxes the need for a schema to a simple pair of key to value. \\ \hline
 	NFR.14  & 	  & 	The format for the configuration files is JSON, this is a widely-adopted nad easy to modify format for update by a human. \\ \hline
 }{Evaluation for Satisfaction of Non-Function Requirements}{nfrevaltable}	
 
