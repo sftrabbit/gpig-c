@@ -597,7 +597,10 @@ The updates to the admin centre have developed the previous prototype into a ful
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
-\hl{TODO Michael}
+
+We decided to monitor the memory and CPU usage of the test application, and our initial implementation simply queried the operating system for these values, using the Sigar library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
+
+By using these cross-platform and established libraries, our monitor can be generalised to more than just the test application. This is illustrated by how easily we were able to reuse it as the basis of the second test application.
 
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
