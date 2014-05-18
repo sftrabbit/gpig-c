@@ -2,7 +2,6 @@ package com.gpigc.core.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.gpigc.core.ClientSystem;
 import com.gpigc.core.Controller;
@@ -25,6 +24,7 @@ public class AnalysisController extends Controller {
 		refreshSystems(systems);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void refreshSystems(List<ClientSystem> systems) {
 		analysisEngines = (List<AnalysisEngine>) instantiateEngines(systems,
 				List.class, Core.class);
