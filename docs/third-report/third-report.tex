@@ -586,7 +586,7 @@ The second system is a phone battery monitoring system, which allows the user to
 
 The final system performs face recognition, collecting face data using the built-in camera, forwarding that data to the HUMS for analysis and, if appropriate, notification. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms, in order to show that risk \emph{R.8} has not been realised. Section~\ref{sec:fae} describes the details of our computer vision approach.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=4.3cm]{images/phoneApp.png}
 \hspace{0.5cm}
@@ -598,8 +598,14 @@ The final system performs face recognition, collecting face data using the built
 \end{figure}
 
 \subsubsection{Emitter Launcher}
-The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\hline{XX}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
+The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
  
+\begin{figure}[h]
+\centering
+\includegraphics*[width=0.8\textwidth]{images/launcherGUI.png}
+\caption{A screenshot of the Emitter Launcher GUI}
+\label{fig:launcherGUI}
+\end{figure}
 
 \subsection{Data Analysis}
 \label{sec:analysis}
