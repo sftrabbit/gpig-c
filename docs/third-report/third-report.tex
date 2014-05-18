@@ -475,7 +475,7 @@ For this we created a process monitoring engine which is capable of tracking inf
 The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
 
 \subsubsection{Earthquakes and Traffic}
-In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents.
+In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data is in a JSON format and the traffic data is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
 
 \subsubsection{Server Responsiveness}
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.

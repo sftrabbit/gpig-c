@@ -10,4 +10,11 @@
 			<fileset dir="${gpigc.projects.dir}/AdminCentre" includes="**" />
 		</copy>
 	</target>
+	
+	<target name="prejar-hook" depends="compile">
+	    <mkdir dir="${bin.res.dir}" />
+		<copy todir="${bin.res.dir}">
+   			<fileset dir="${bin.classes.dir}" includes="com/gpigc/core/*/engine/*.class"/>
+ 		</copy>
+	</target>
 </project>

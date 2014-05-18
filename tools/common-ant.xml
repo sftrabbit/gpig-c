@@ -171,8 +171,10 @@
 		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${bin.classes.dir}"
 			classpathref="classpath" />
 	</target>
+	
+	<target name="prejar-hook" depends="compile" />
 
-	<target name="jar" depends="compile" unless="project.is-library">
+	<target name="jar" depends="prejar-hook" unless="project.is-library">
 		<mkdir dir="${bin.jar.dir}" />
 		<one-jar destfile="${bin.jar.dir}/${jar.name}">
 			<manifest>
@@ -193,7 +195,7 @@
 		</one-jar>
 	</target>
 
-	<target name="jar-library" depends="compile" if="project.is-library">
+	<target name="jar-library" depends="prejar-hook" if="project.is-library">
 		<mkdir dir="${bin.jar.dir}" />
     	<jar basedir="${bin.classes.dir}" destfile="${bin.jar.dir}/${jar.name}" />
 	</target>
