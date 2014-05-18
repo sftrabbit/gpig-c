@@ -469,9 +469,7 @@ In this section we describe what data our HUMS currently monitors. We created si
 \subsubsection{Test Applications} \label{subsec:tapp}
 \hl{TODO Michael/Ant}
 
-Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. 
-
-For this we created a process monitoring engine which is capable of tracking information from a process. The finished process, for a given process, tracks metrics such as: CPU usage, memory usage, state of the process, number of threads, processor that the process is executing on and working directory of the process.
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, number of threads, last processor it was run on, and working directory. For this we created a process monitoring engine which is capable of tracking information from a process.
 
 The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
 
