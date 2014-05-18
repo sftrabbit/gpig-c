@@ -154,9 +154,9 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\fr{4.1.1} and \fr{4.1.2} were added as we implemented configuration files into our prototype. We chose to use JSON as the configuration format as it is a widely-used standard.
+\emph{FR.4.1.1} and \emph{FR.4.1.2} were added as we implemented configuration files into our prototype. We chose to use \emph{JSON} as the configuration format as it is a widely-used standard.
 
-\fr{12} became apparent once we considered the reloading of configuration in \fr{4.1.2}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
+\emph{FR.12} became apparent once we considered the reloading of configuration in \emph{FR.4.1.2}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
@@ -207,7 +207,7 @@ the way in which data is sensed.}{}
 \label{sec:nonfunctional_requirements}
 \hl{more changes?} 
 
-\nfr{14} was added as it is not necessarily the case that a user will want to use the Admin Centre to modify the configuration file, in which case it should be amenable to hand-editing.
+\emph{NFR.14} was added as it is not necessarily the case that an End User will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
 
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
@@ -375,7 +375,7 @@ The use of the scrum as part of our software engineering methodology, as discuss
 Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the system, or caused the system to not meet stakeholder expectations.
 
 \item[Automated Testing:] 
-Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.5-9}, helping to automatically validate system requirements. 
+Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.5-9}, helping to automatically validate system requirements. 
 Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging.
 \end{description}
 
@@ -432,13 +432,13 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \end{description}
 
 \section{System Views} 
-\hl{TODO Joe/Andy/Rosy}
+Building on our work in the previous report we decided to present four further, more detailed views of our HUMS. This time we choose to take inspiration from the SEI \cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Deployment View}.
 
 \subsection{Module View}
 \label{sec:views}
 \hl{TODO Tom}
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
   \caption{Module diagram of the System}
@@ -465,7 +465,7 @@ An \texttt{Event} object contains the ID of the system which caused the event, a
 
 The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or email. 
 
-\begin{figure}
+\begin{figure}[h]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
   \caption{A component and connector diagram of the HUMS, showing the protocols used when passing data between filters}
   \label{fig:pipesAndFilter}
@@ -475,7 +475,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 A behavioural view can show the actual actions taken by the system when the data flows through the system, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the Core system and how it behaves during normal operation. Various methods and invocations are listed at the in the order that they occur, from top to bottom and left to right. The external parts of the system, such as the sources that data is gathered from and the destinations that notifications are sent to, are not shown.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/behaviourView.pdf}
   \caption{Sequence diagram showing the behaviour of the HUMS, using UML 2 notation}
@@ -517,7 +517,7 @@ The systems monitored by a particular HUMS instance, and how they will be monito
 The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
 A configuration file is loaded into the Core by the End User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{lstlisting}[language=json,firstnumber=1]
 {
     "Systems": [
@@ -550,7 +550,7 @@ Any changes made to the configuration file whilst the HUMS is running are automa
 
 In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \hl{ref}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width = \textwidth]{images/coreGUI.png}
 \caption{A Screenshot of the Core GUI}
@@ -576,6 +576,16 @@ In order to ensure our HUMS is capable of receiving, analysing, and reporting da
 \subsubsection{Server Responsiveness}
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
 
+\subsubsection{Emitter Launcher}
+The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
+ 
+\begin{figure}[h]
+\centering
+\includegraphics*[width=0.8\textwidth]{images/launcherGUI.png}
+\caption{A screenshot of the Emitter Launcher GUI}
+\label{fig:launcherGUI}
+\end{figure}
+
 \subsubsection{Android Mobile Application}
 \hl{Tom}
 To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in Figure~\ref{fig:android}.
@@ -586,7 +596,7 @@ The second system is a phone battery monitoring system, which allows the user to
 
 The final system performs face recognition, collecting face data using the built-in camera, forwarding that data to the HUMS for analysis and, if appropriate, notification. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms, in order to show that risk \emph{R.8} has not been realised. Section~\ref{sec:fae} describes the details of our computer vision approach.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=4.3cm]{images/phoneApp.png}
 \hspace{0.5cm}
@@ -597,10 +607,6 @@ The final system performs face recognition, collecting face data using the built
 \label{fig:android}
 \end{figure}
 
-\subsubsection{Emitter Launcher}
-The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\hl{XX}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
- 
-
 \subsection{Data Analysis}
 \label{sec:analysis}
 \hl{TODO INTRO Joe/Andy/Rosy}
@@ -609,7 +615,7 @@ The demonstration purposes, and to make our prototype easier to test and use, we
 
 The previous mean analysis engine has been rewritten to form a generic bounded sensor value engine. This engine performs analysis on each sensor in the system being analysed to determine if the mean average of the values is outside of specified bounds. It then produces a single event detailing any violations across all the sensors, which generates a single notification for the system being analysed rather than a flood of them.
 
-The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds flexibility on a per sensor level.
+The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds flexibility on a per sensor level.
 
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
 
@@ -617,7 +623,7 @@ The average computed is a moving average over a certain number (depending on the
 \subsubsection{Generic Expression Engine}
 \hl{TODO Tom}
 We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential analysis processes, avoiding the need to build new analysis engine classes. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the system configuration file to define the action of the engine.
-\begin{figure}[tbp]
+\begin{figure}[htbp]
 \centering
 \verb+if(max(ENGINE_TEMP_A, ENGINE_TEMP_B) >= 120 or RPM > 5000, -1, 0)+
 \caption{A basic example of an expression that evaluates to $-1$ when a system is operating outside of its defined normal operational parameters.}
@@ -707,7 +713,7 @@ The Admin Centre also provides the reporting facilities of the HUMS, with two ex
 
 The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
 
-\begin{figure}[b!]
+\begin{figure}[h!b]
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{images/admin-centre_sensors.png}
         \caption{Sensors}
