@@ -73,6 +73,7 @@
 	<property name="binlib.dir" value="binlib" />
 	<property name="bin.lib.dir" value="${bin.dir}/lib" />
 	<property name="bin.binlib.dir" value="${bin.dir}/binlib" />
+	<property name="bin.res.dir" value="${bin.dir}/res" />
 	<property name="bin.classes.dir" value="${bin.dir}/classes" />
 	<property name="bin.jar.dir" value="${bin.dir}/jar" />
 	<property name="src.dir" value="src" />
@@ -140,6 +141,7 @@
 	<target name="collect-libs" depends="collect-dependencies">
 		<mkdir dir="${bin.lib.dir}" />
 		<mkdir dir="${bin.binlib.dir}" />
+		<mkdir dir="${bin.res.dir}" />
 		<copy todir="${bin.lib.dir}" includeEmptyDirs="false">
 			<fileset dir="${gpigc.lib.dir}" includes="${project.common.libs}" />
 			<fileset dir="${gpigc.lib.dir}/${platform.dir}" includes="${project.common.libs}" erroronmissingdir="false" />
@@ -152,6 +154,9 @@
 			<fileset dir="${gpigc.binlib.dir}/${platform.dir}" includes="${project.common.binlibs}" />
 			<fileset dir="${binlib.dir}" includes="*" erroronmissingdir="false" />
 			<fileset dir="${binlib.dir}/${platform.dir}" includes="*" erroronmissingdir="false" />
+		</copy>
+		<copy todir="${bin.res.dir}" includeEmptyDirs="false">
+			<fileset dir="${res.dir}" includes="**" />
 		</copy>
 	</target>
 
@@ -184,7 +189,7 @@
 				<fileset dir="${bin.binlib.dir}" includes="**" />
 			</binlib>
 			<fileset dir="." includes="*.properties" />
-			<fileset dir="." includes="${res.dir}/**" />
+			<fileset dir="${bin.dir}" includes="${res.dir}/**" />
 		</one-jar>
 	</target>
 
@@ -196,11 +201,14 @@
 	<target name="run-arg" depends="jar,jar-library" if="pass-swt-arg">
 		<java fork="true" jar="${bin.jar.dir}/${jar.name}">
 			<jvmarg value="-XstartOnFirstThread" />
+			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
 		</java>
 	</target>
 
 	<target name="run-noarg" depends="jar,jar-library" if="no-pass-swt-arg">
-		<java fork="true" jar="${bin.jar.dir}/${jar.name}" />
+		<java fork="true" jar="${bin.jar.dir}/${jar.name}">
+			<jvmarg value="-Dorg.apache.jasper.compiler.disablejsr199=true" />
+		</java>
 	</target>
 
 	<target name="run" depends="run-arg,run-noarg" unless="project.is-library" description="Run the latest build" />

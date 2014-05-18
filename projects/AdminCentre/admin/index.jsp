@@ -14,7 +14,7 @@ private List<String> getEngines(String engineType) {
 }
 %>
 <%
-FileReader configFile = new FileReader(filePath.concat("/config/RegisteredSystems.config"));
+FileReader configFile = new FileReader(filePath.concat("/res/config/RegisteredSystems.config"));
 
 JSONParser jsonParser = new JSONParser();
 JSONObject configJson = (JSONObject) jsonParser.parse(configFile);

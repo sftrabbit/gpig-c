@@ -4,4 +4,10 @@
 	<property name="project.nested-libs" value="jetty/**" />
 
 	<import file="../../tools/common-ant.xml" />
+
+	<target name="prehook">
+		<copy todir="${bin.res.dir}/server">
+			<fileset dir="${gpigc.projects.dir}/AdminCentre" includes="**" />
+		</copy>
+	</target>
 </project>
