@@ -608,12 +608,12 @@ The face recognition process is two fold: An image is captured and its dimension
 
 The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
 
-When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided by the sensor if its distance from any of the example faces provided by the configuration file is less than some threshold, also given by the configuration file.
+When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces provided by the configuration file is less than some threshold, also given by the configuration file, and any example unauthorised face.
 
-% TODO This method is robust to lighting and pose \cite{ahonen2006face}
+% TODO This method is robust to lighting and pose \cite{ahonen2006face} (due to use of local thresholds)
 
 \subsubsection{Other Analysis Engines}
-The analysis system is expansible. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods. \hl{TODO Ant}
+The traffic analysis engine, simple creates an event when a reading is generated. The earthquake engine checks if the magnitude of the earthquake is above a certain value, so larger earthquakes generate events. For other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods.
 
 \subsection{Data Storage}
 \label{sec:store}
@@ -726,6 +726,23 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 % QAS2 The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.
 % QAS3 The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.
 % QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
+
+
+\tableformat{| l | l | l |}{ \hline	FR.x  & 	Description of FR  & 	What we did \\ \hline
+	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
+	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\ \hline
+	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a postgres instance on heroku for the cloud solution. \\ \hline
+	FR.4  & 	  & 	This requirement has been satisfied by the use of configuration files, these can be loaded into the core at runtime. And can easily be changed and reloaded while the core is running. The administration center can be used to edit these configuration files even while the system is running. \\ \hline
+	FR.5  & 	  & 	The requirement for notifications on a full quota were meant for the SaaS part of our implementation. As this is a prototype and is not completed, this is not currently implementation. \hl{?} \\ \hline
+	FR.6  & 	  & 	  \hl{?} \\ \hline
+	FR.7  & 	  & 	  \hl{?} \\ \hline
+	FR.8  & 	  & 	 \\ \hline
+	FR.9  & 	  & 	For recognition of an event, the information which is received from a system ID is passed into the core and analysed. If analysis rules are matched, then a notification is generated for the event. \\ \hline
+	FR.10  & 	  & 	 \\ \hline
+	FR.11  & 	  & 	 \\ \hline
+	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
+}{Evaluation for Satisfaction of Function Requirements}{frevaltable}	
+
 
 The quality attributes laid out in Section \ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high flexibility was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
 
