@@ -576,6 +576,16 @@ In order to ensure our HUMS is capable of receiving, analysing, and reporting da
 \subsubsection{Server Responsiveness}
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
 
+\subsubsection{Emitter Launcher}
+The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
+ 
+\begin{figure}[h]
+\centering
+\includegraphics*[width=0.8\textwidth]{images/launcherGUI.png}
+\caption{A screenshot of the Emitter Launcher GUI}
+\label{fig:launcherGUI}
+\end{figure}
+
 \subsubsection{Android Mobile Application}
 \hl{Tom}
 To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in Figure~\ref{fig:android}.
@@ -595,16 +605,6 @@ The final system performs face recognition, collecting face data using the built
 \includegraphics[width=4.3cm]{images/faceApp.png}
 \caption{Screenshots of the Android mobile application, showing each of the three subsystems.}
 \label{fig:android}
-\end{figure}
-
-\subsubsection{Emitter Launcher}
-The demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher}, which simplifies the process of running our desktop Data Emitters by allowing the individually packaged emitters to all be run from a single application, using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, it has again been created using the \emph{Standard Widget Toolkit} \hl{ref}, meaning native components can be used.
- 
-\begin{figure}[h]
-\centering
-\includegraphics*[width=0.8\textwidth]{images/launcherGUI.png}
-\caption{A screenshot of the Emitter Launcher GUI}
-\label{fig:launcherGUI}
 \end{figure}
 
 \subsection{Data Analysis}
