@@ -248,7 +248,7 @@ the way in which data is sensed.}{}
 \label{sec:qualities}
 A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders.
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
-When considering the HUMS, its requirements and its stakeholders, table \ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Flexibility, and Interoperability.
+When considering the HUMS, its requirements and its stakeholders, Table~\ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Flexibility, and Interoperability.
 
 \tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
 \hline
@@ -268,7 +268,7 @@ Performance & Medium & The HUMS is required to receive data from Sensors, and pr
 \\
 Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults and is also likely to increase its availability. 
 \\
-Usability & Low & Usability was not deemed of great importance to the system as its sub qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for the web interface and admin centre, however this is only a small part of the HUMS.
+Usability & Low & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for the web interface and admin centre, however this is only a small part of the HUMS.
 \\
 }{The ranked quality attributes, associated with the HUMS}{tab:qualities}
 
@@ -330,7 +330,7 @@ Having identified the quality attributes which are important to creating a succe
 \label{sec:risks}
 It is important to consider the risks of any software project so that appropriate mitigation can be exercised and there are clear contingency plans in place to prevent problems having a large impact of the project, thus ensuring all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout development. 
 
-Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in table \ref{tab:human_risks} and technical risks are presented in table \ref{tab:tech_risks}.
+Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in Table~\ref{tab:human_risks} and technical risks are presented in Table~\ref{tab:tech_risks}.
 Some risks have been modified since the previous report, while others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
 
 \tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c }
@@ -383,7 +383,7 @@ Static testing is also performed using type checkers and code profilers in order
 %-------------------------------------------------------------%
 \section{Tactics and Patterns}
 \label{sec:tactics}
-Having identified the key quality attributes for the system, and a set of quality attribute scenarios, the tactics and patterns needed to ensure the desired utility of these attributes can be examined. In this section we focus on those qualities ranked highly in table \ref{tab:qualities}.
+Having identified the key quality attributes for the system, and a set of quality attribute scenarios, the tactics and patterns needed to ensure the desired utility of these attributes can be examined. In this section we focus on those qualities ranked highly in Table~\ref{tab:qualities}.
 
 \subsection{Tactics}
 
@@ -533,7 +533,8 @@ In order to ensure our HUMS is capable of receiving, analysing, and reporting da
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Android Mobile Application}
-To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in figure~\ref{fig:android}.
+\hl{Tom}
+To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in Figure~\ref{fig:android}.
 
 The first system simulates a car monitoring system, allowing users to select values for a number of sensors and then push them to the remotely-based core. In the real system, the user would not set the values or manually push them---it would all be automatic---however, we choose to manually update the data for the purposes of demonstrating the functionality.
 
@@ -561,17 +562,21 @@ The final system performs face recognition, collecting face data using the built
 
 \subsubsection{Generic Expression Engine}
 \hl{TODO Tom}
-%%with a default behaviour of sending an email notification if a request takes more than 5 seconds. ---- server app
-%To allow for sensors which provide a combination of numeric and string data to use the expression engine, it interprets only the data which is necessary.
-We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential analysis processes without the need to modify any of the analysis engines. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the system configuration file to define the action of the engine.
+We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential analysis processes, avoiding the need to build new analysis engine classes. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the system configuration file to define the action of the engine.
 \begin{figure}[tbp]
 \centering
-\verb+if(max(ENGINE_TEMP_A, ENGINE_TEMP_B) >= 120 and RPM > 5000, -1, 0)+
-\caption{A basic example of an expression that evaluates to $-1$ when a system is operating outside of some defined normal operational parameters.}
+\verb+if(max(ENGINE_TEMP_A, ENGINE_TEMP_B) >= 120 or RPM > 5000, -1, 0)+
+\caption{A basic example of an expression that evaluates to $-1$ when a system is operating outside of its defined normal operational parameters.}
 \label{fig:exprExample}
 \end{figure}
 
 The values of variables which represent the state of the system being monitored are available in the expression, and are evaluated lazily for efficiency (evaluation often entails querying the datastore to retrieve the most recent value, potentially over a network connection, which could be very inefficient when unnecessary).
+
+Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
+
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the Tailorability quality attribute of the solution, allowing the HUMS to be easily customised by the end user without needing any particular software engineering knowledge. % TODO Expand on this?
+
+% TODO The library used?
 
 \subsubsection{Face Analysis Engine}
 \label{sec:fae}
