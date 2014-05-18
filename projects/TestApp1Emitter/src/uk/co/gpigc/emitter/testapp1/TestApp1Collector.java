@@ -44,5 +44,10 @@ public class TestApp1Collector extends DataCollector {
 		System.out.println("Writing Data");
 		return dataList;
 	}
+	
+	@Override
+	public void shutdown() {
+		processMonitor.stop();
+	}
 
 }

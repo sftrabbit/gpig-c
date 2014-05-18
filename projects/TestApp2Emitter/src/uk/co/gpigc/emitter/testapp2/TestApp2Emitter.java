@@ -13,7 +13,7 @@ public class TestApp2Emitter {
 		commandThread.start();
 		
 		SimpleEmitter emitter = new SimpleEmitter(TestApp2Emitter.class.getSimpleName(), new TestApp2Collector(), COLLECTION_INTERVAL);
-		emitter.start();
+		emitter.run();
 		
 		commandThread.stopRunning();
 	}

@@ -9,7 +9,7 @@ public class EarthquakeEmitter {
 		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
 		
 		SimpleEmitter emitter = new SimpleEmitter(EarthquakeEmitter.class.getSimpleName(), new EarthquakeCollector(), COLLECTION_INTERVAL);
-		emitter.start();
+		emitter.run();
 	}
 	
 	public static String getExpandedFilePath(String relativeFilePath) {

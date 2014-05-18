@@ -48,9 +48,9 @@ public class EmitterService {
 		}
 	}
 	
-	public void stop() throws IOException, InterruptedException, ExecutionException {
+	public void stop() throws IOException {
 		emitterCallable.stop();
-		this.waitFor();
+		executor.shutdown();
 	}
 	
 	public void waitFor() throws InterruptedException, ExecutionException {
@@ -88,6 +88,7 @@ public class EmitterService {
 				}
 			} catch (Exception exception) {
 				stop();
+				
 				throw exception;
 			}
 			
@@ -97,9 +98,6 @@ public class EmitterService {
 		public void stop() throws IOException {
 			if (sender != null) {
 				sender.close();
-			}
-			for (DataCollector collector : collectors) {
-				collector.shutdown();
 			}
 			running = false;
 		}
