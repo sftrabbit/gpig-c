@@ -6,8 +6,12 @@ public class StandardMessageGenerator {
 		print(e.getMessage());
 	}
 
+	public static void loadingConfigurationFile() {
+		print("Loading configuration file:");
+	}
+
 	public static void registeredSystem(String systemID) {
-		print("Registered System: " + systemID);
+		print("  Registered system: " + systemID);
 	}
 
 	public static void coreRunning() {
@@ -78,7 +82,7 @@ public class StandardMessageGenerator {
 	}
 
 	public static void couldNotReadConfig() {
-		print("Could Not Read Config File, No Systems Registered. Check the JSON");
+		print("  Could Not Read Config File, No Systems Registered. Check the JSON");
 	}
 
 	public static void failedToSetup() {

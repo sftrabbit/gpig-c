@@ -66,6 +66,7 @@ public class Core {
 	}
 
 	private List<ClientSystem> getSystems(String path) throws IOException {
+		StandardMessageGenerator.loadingConfigurationFile();
 		ConfigParser parser = new ConfigParser();
 		return parser.parse(new File(path));
 	}
