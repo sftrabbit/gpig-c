@@ -1,10 +1,9 @@
-<%@ page import="java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
+<%@ page import="com.gpigc.core.FileUtils,java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
 <%@ page buffer="none" %>
 <%!
-String filePath = new File("").getAbsolutePath();
 private List<String> getEngines(String engineType) {
     List<String> engines = new ArrayList<String>();
-    File folder = new File(filePath.concat("/bin/classes/engine/" + engineType + "/com/gpigc/core/" + engineType + "/engine"));
+    File folder = new File(FileUtils.getExpandedFilePath("res/com/gpigc/core/" + engineType + "/engine"));
     for (File engineFile : folder.listFiles()) {
         if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
             engines.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
@@ -14,7 +13,7 @@ private List<String> getEngines(String engineType) {
 }
 %>
 <%
-FileReader configFile = new FileReader(filePath.concat("/res/config/RegisteredSystems.config"));
+FileReader configFile = new FileReader(FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config"));
 
 JSONParser jsonParser = new JSONParser();
 JSONObject configJson = (JSONObject) jsonParser.parse(configFile);

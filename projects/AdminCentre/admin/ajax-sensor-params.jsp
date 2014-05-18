@@ -1,7 +1,6 @@
-<%@ page import="java.io.File,java.io.FileReader,java.io.FileWriter,java.util.Iterator,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject,org.json.simple.JSONValue" %>
+<%@ page import="com.gpigc.core.FileUtils,java.io.File,java.io.FileReader,java.io.FileWriter,java.util.Iterator,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject,org.json.simple.JSONValue" %>
 <%
-String filePath = new File("").getAbsolutePath().concat("/res/config/RegisteredSystems.config");
-FileReader configFile = new FileReader(filePath);
+FileReader configFile = new FileReader(FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config"));
 
 JSONParser jsonParser = new JSONParser();
 JSONObject configJson = (JSONObject) jsonParser.parse(configFile);
