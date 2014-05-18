@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
@@ -34,6 +35,7 @@ public class CoreShell extends Shell {
 	private String configFilePath = "none chosen";
 	private final Label currentConfigFile;
 	private final ToolItem configButton;
+	private Button clearButton;
 
 	/**
 	 * Launch the application.
@@ -174,6 +176,15 @@ public class CoreShell extends Shell {
 		new Label(this, SWT.NONE);
 
 		createContents();
+
+		clearButton = new Button(this, SWT.PUSH);
+		clearButton.setText("Clear Console");
+		clearButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				consoleTextView.setText("");
+			}
+		});
 	}
 
 	protected void runButton() {
