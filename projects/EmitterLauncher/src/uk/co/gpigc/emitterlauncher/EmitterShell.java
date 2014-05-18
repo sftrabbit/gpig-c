@@ -58,6 +58,8 @@ public class EmitterShell extends Shell {
 	private Text textApp5;
 	private Button trafficButton;
 	
+	private Button clearButton;
+	
 	private String emitterDirectory = "./emitters";
 
 	/**
@@ -112,6 +114,7 @@ public class EmitterShell extends Shell {
 		textApp1 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp1.setFont(monospacedFont);
 		textApp1.setEditable(false);
+		textApp1.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console1Tab.setControl(textApp1);
 		textApp1.addListener(SWT.Modify, new CaretListener(textApp1));
 
@@ -121,6 +124,7 @@ public class EmitterShell extends Shell {
 		textApp2 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp2.setFont(monospacedFont);
 		textApp2.setEditable(false);
+		textApp2.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console2Tab.setControl(textApp2);
 		textApp2.addListener(SWT.Modify, new CaretListener(textApp2));
 
@@ -131,6 +135,7 @@ public class EmitterShell extends Shell {
 		textApp3 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp3.setFont(monospacedFont);
 		textApp3.setEditable(false);
+		textApp3.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console3Tab.setControl(textApp3);
 		textApp3.addListener(SWT.Modify, new CaretListener(textApp3));
 
@@ -141,6 +146,7 @@ public class EmitterShell extends Shell {
 		textApp4 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp4.setFont(monospacedFont);
 		textApp4.setEditable(false);
+		textApp4.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console4Tab.setControl(textApp4);
 		textApp4.addListener(SWT.Modify, new CaretListener(textApp4));
 
@@ -151,8 +157,18 @@ public class EmitterShell extends Shell {
 		textApp5 = new Text(tabFolder, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		textApp5.setFont(monospacedFont);
 		textApp5.setEditable(false);
+		textApp5.setForeground(SWTResourceManager.getColor(47, 79, 79));
 		console5Tab.setControl(textApp5);
 		textApp5.addListener(SWT.Modify, new CaretListener(textApp5));
+
+		clearButton = new Button(this, SWT.PUSH);
+		clearButton.setText("Clear Console");
+		clearButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				clearConsole();
+			}
+		});
 
 	}
 
@@ -262,6 +278,17 @@ public class EmitterShell extends Shell {
 			button.setImage(stopIcon);
 		} else {
 			button.setImage(playIcon);
+		}
+	}
+	
+	protected void clearConsole() {
+		int selectedTab = tabFolder.getSelectionIndex();
+		switch (selectedTab) {
+			case 0: textApp1.setText(""); break;
+			case 1: textApp2.setText(""); break;
+			case 2: textApp3.setText(""); break;
+			case 3: textApp4.setText(""); break;
+			case 4: textApp5.setText(""); break;
 		}
 	}
 

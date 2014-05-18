@@ -33,6 +33,7 @@ public class OpenJarThread extends Thread {
 					if (!button.isDisposed()) {
 						button.setSelection(false);
 					}
+					console.append(" >> Stopping " + jarPath + "\n");
 					EmitterShell.changeIcon(button);
 				}
 			});
