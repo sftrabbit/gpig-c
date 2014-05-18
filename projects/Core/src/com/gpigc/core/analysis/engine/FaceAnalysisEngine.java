@@ -71,6 +71,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 				System.out.println(" Failed to parse example faces. "
 						+ "Error at character "+e.getErrorOffset()+". "
 						+ "Check your example data .csv file.");
+				System.err.println("Failed to parse example faces. "
+						+ "Error at character "+e.getErrorOffset()+": "+
+						e.getMessage());
 				return null;
 			}
 			// Get data from sensor
