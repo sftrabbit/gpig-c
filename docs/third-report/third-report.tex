@@ -432,13 +432,13 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \end{description}
 
 \section{System Views} 
-\hl{TODO Joe/Andy/Rosy}
+Building on our work in the previous report we decided to present four further, more detailed views of our HUMS. This time we choose to take inspiration from the SEI \cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Deployment View}.
 
 \subsection{Module View}
 \label{sec:views}
 \hl{TODO Tom}
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
   \caption{Module diagram of the System}
@@ -465,7 +465,7 @@ An \texttt{Event} object contains the ID of the system which caused the event, a
 
 The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or email. 
 
-\begin{figure}
+\begin{figure}[h]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
   \caption{A component and connector diagram of the HUMS, showing the protocols used when passing data between filters}
   \label{fig:pipesAndFilter}
@@ -475,7 +475,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 A behavioural view can show the actual actions taken by the system when the data flows through the system, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the Core system and how it behaves during normal operation. Various methods and invocations are listed at the in the order that they occur, from top to bottom and left to right. The external parts of the system, such as the sources that data is gathered from and the destinations that notifications are sent to, are not shown.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/behaviourView.pdf}
   \caption{Sequence diagram showing the behaviour of the HUMS, using UML 2 notation}
@@ -517,7 +517,7 @@ The systems monitored by a particular HUMS instance, and how they will be monito
 The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
 A configuration file is loaded into the Core by the End User before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{lstlisting}[language=json,firstnumber=1]
 {
     "Systems": [
@@ -550,7 +550,7 @@ Any changes made to the configuration file whilst the HUMS is running are automa
 
 In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the End User to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the End User informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \hl{ref}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width = \textwidth]{images/coreGUI.png}
 \caption{A Screenshot of the Core GUI}
@@ -623,7 +623,7 @@ The average computed is a moving average over a certain number (depending on the
 \subsubsection{Generic Expression Engine}
 \hl{TODO Tom}
 We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential analysis processes, avoiding the need to build new analysis engine classes. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the system configuration file to define the action of the engine.
-\begin{figure}[tbp]
+\begin{figure}[htbp]
 \centering
 \verb+if(max(ENGINE_TEMP_A, ENGINE_TEMP_B) >= 120 or RPM > 5000, -1, 0)+
 \caption{A basic example of an expression that evaluates to $-1$ when a system is operating outside of its defined normal operational parameters.}
@@ -713,7 +713,7 @@ The Admin Centre also provides the reporting facilities of the HUMS, with two ex
 
 The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
 
-\begin{figure}[b!]
+\begin{figure}[h!b]
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{images/admin-centre_sensors.png}
         \caption{Sensors}
