@@ -1,7 +1,10 @@
-<%@ page import="java.io.File,java.io.FileReader,java.io.FileWriter,java.util.Iterator,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject,org.json.simple.JSONValue" %>
+<%@ page import="com.gpigc.core.FileUtils,java.io.File,java.io.FileReader,java.io.FileWriter,java.util.Iterator,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject,org.json.simple.JSONValue" %>
 <%
-String filePath = new File("").getAbsolutePath().concat("/res/config/RegisteredSystems.config");
-FileReader configFile = new FileReader(filePath);
+String sysConfigFilePath = System.getProperty("gpigc.configfile");
+if (sysConfigFilePath == null) {
+    sysConfigFilePath = FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config");
+}
+FileReader configFile = new FileReader(sysConfigFilePath);
 
 JSONParser jsonParser = new JSONParser();
 JSONObject configJson = (JSONObject) jsonParser.parse(configFile);
@@ -31,7 +34,7 @@ while (iter.hasNext()) {
 
 try {
     if (!toWrite.equals("")) {
-        FileWriter file = new FileWriter(filePath);
+        FileWriter file = new FileWriter(sysConfigFilePath);
         file.write(configJson.toJSONString());
         file.flush();
         file.close();

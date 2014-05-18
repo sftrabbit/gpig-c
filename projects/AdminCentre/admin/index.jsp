@@ -1,10 +1,9 @@
-<%@ page import="java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
+<%@ page import="com.gpigc.core.FileUtils,java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
 <%@ page buffer="none" %>
 <%!
-String filePath = new File("").getAbsolutePath();
 private List<String> getEngines(String engineType) {
     List<String> engines = new ArrayList<String>();
-    File folder = new File(filePath.concat("/bin/classes/engine/" + engineType + "/com/gpigc/core/" + engineType + "/engine"));
+    File folder = new File(FileUtils.getExpandedFilePath("res/com/gpigc/core/" + engineType + "/engine"));
     for (File engineFile : folder.listFiles()) {
         if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
             engines.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
@@ -14,7 +13,11 @@ private List<String> getEngines(String engineType) {
 }
 %>
 <%
-FileReader configFile = new FileReader(filePath.concat("/res/config/RegisteredSystems.config"));
+String sysConfigFilePath = System.getProperty("gpigc.configfile");
+if (sysConfigFilePath == null) {
+    sysConfigFilePath = FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config");
+}
+FileReader configFile = new FileReader(sysConfigFilePath);
 
 JSONParser jsonParser = new JSONParser();
 JSONObject configJson = (JSONObject) jsonParser.parse(configFile);
@@ -76,7 +79,7 @@ List<String> availableNotification = getEngines("notification");
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Admin Home</a>
+            <a class="navbar-brand" href="/admin/">Admin Home</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -101,10 +104,16 @@ List<String> availableNotification = getEngines("notification");
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <%
-                            for (String system: otherSystems) {
+                            if (otherSystems.isEmpty()) {
                             %>
-                                <li><a href="?system=<%= system %>"><%= system %></a></li>
+                                <li>&nbsp;No other systems</li>
                             <%
+                            } else {
+                            for (String system: otherSystems) {
+                                %>
+                                <li><a href="?system=<%= system %>"><%= system %></a></li>
+                                <%
+                                }
                             }
                             %>
                         </ul>
