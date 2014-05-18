@@ -478,7 +478,7 @@ An instance of a HUMS can be defined using a configuration file. This specifies 
 
 Any changes made to the configuration file being used by an instance of the HUMS are automatically detected by the Core and the configuration is reloaded to take immediate effect. This saves extra work for the User who may forget to reload the file, or not realise that this needs to be done or how to do it.
 
-A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section\ref{sec:admin}.
+A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in section~\ref{sec:admin}.
 
 \subsection{Monitoring}
 \label{sec:monitor}
@@ -493,7 +493,7 @@ The monitoring engine utilises the System Information Gatherer (SIGAR) API. SIGA
 In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data is in a JSON format and the traffic data is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
 
 \subsubsection{Server Responsiveness}
-A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website \footnote{thalesgroup.com} and sends this data to the core for analysis.
+A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
 
 \subsubsection{Android Mobile Application}
 \hl{TODO Finish Tom}
@@ -513,8 +513,8 @@ The final system performs face recognition, collecting face data using the built
 \includegraphics[width=4.3cm]{images/carApp.png}
 \hspace{0.5cm}
 \includegraphics[width=4.3cm]{images/faceApp.png}
-\label{fig:android}
 \caption{\hl{TODO}}
+\label{fig:android}
 \end{figure}
 
 \subsection{Data Analysis}
