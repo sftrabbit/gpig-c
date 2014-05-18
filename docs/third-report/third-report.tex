@@ -613,7 +613,7 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 % TODO This method is robust to lighting and pose \cite{ahonen2006face} (due to use of local thresholds)
 
 \subsubsection{Other Analysis Engines}
-The analysis system is expansible. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods. \hl{TODO Ant}
+The traffic analysis engine, simple creates an event when a reading is generated. The earthquake engine checks if the magnitude of the earthquake is above a certain value, so larger earthquakes generate events. For other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the AnalysisEngine base class, and implementing the required methods.
 
 \subsection{Data Storage}
 \label{sec:store}
@@ -730,7 +730,7 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 
 \tableformat{| l | l | l |}{ \hline	FR.x  & 	Description of FR  & 	What we did \\ \hline
 	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
-	FR.2  & 	  & 	 \\ \hline
+	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\ \hline
 	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a postgres instance on heroku for the cloud solution. \\ \hline
 	FR.4  & 	  & 	This requirement has been satisfied by the use of configuration files, these can be loaded into the core at runtime. And can easily be changed and reloaded while the core is running. The administration center can be used to edit these configuration files even while the system is running. \\ \hline
 	FR.5  & 	  & 	The requirement for notifications on a full quota were meant for the SaaS part of our implementation. As this is a prototype and is not completed, this is not currently implementation. \hl{?} \\ \hline
