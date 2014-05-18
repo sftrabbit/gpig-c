@@ -90,7 +90,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-Word count: \input{wc} (\textit{using TeXCount})
+Word count: % \input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -427,14 +427,29 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \includegraphics[width=\textwidth]{images/component.pdf}
 
 \subsection{Component and Connector View}
-\hl{TODO Rosy}
+
 In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorabilty of the system by not unnecessarily restricting the end user.
 
-The input to the HUMS, in this view, is the sensor data from the consumer system,
+The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
+
+The \texttt{:Emit Data} filter transforms the client data into serialisable data which can be sent using protocol buffers to the \texttt{:Read Data} filter. Using \emph{Protocol Buffers}, allows for data to be sent locally or over a network, with or without encryption. 
+The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the end users defined datastore. 
+
+The \texttt{:Store Data} filter inserts the data into the end users defined datastore.
+The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the end user, being limited only by what their defined datastores support.
+The \texttt{:Create Report} filter transforms data from the datastore into a \texttt{Data Report}, for example, a graph or PDF.
+
+When sending data between the \texttt{:Store Data} and \texttt{:Analyse Data} filters, \texttt{SensorState} objects are passed, each of which hold the ID of a particular sensor, the timestamp of when it was created and stored, and its value at the time of creation. 
+
+The \texttt{:Analyse Data} filter transforms \texttt{SensorState} objects into \texttt{Event} objects, which are used by the \texttt{:Generate Notification} filter to produce notifications using the engines specified by the client.
+An \texttt{Event} object contains the ID of the system which caused the event, and a \texttt{Map} of key-value pairs containing information needed by the registered notification engines.
+
+The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or Email. 
+
 \begin{figure}
 \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
-\label{fig:pipesAndFilter}
 \caption{A Component and Connector Diagram of our HUMS, showing the protocols used when passing data between filters}
+\label{fig:pipesAndFilter}
 \end{figure}
 
 \subsection{Behavioural View}
@@ -466,7 +481,6 @@ The input to the HUMS, in this view, is the sensor data from the consumer system
 \hl{Andy/Rosy: Config files, gui, server shiz}
 
 A lightweight Jetty server was also added to the core so that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process.
-
 
 \subsection{Project Management}
 \hl{TODO Joe}
