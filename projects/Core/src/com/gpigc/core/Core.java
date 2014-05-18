@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-
 import com.gpigc.core.analysis.AnalysisController;
 import com.gpigc.core.datainput.DataInputServer;
 import com.gpigc.core.event.DataEvent;

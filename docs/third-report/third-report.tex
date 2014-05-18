@@ -416,26 +416,35 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 \item[Maybe another] stuff
 \end{description}
 
-\subsection{System Views} 
+\section{System Views} 
 \hl{TODO Joe/Andy/Rosy}
 
-\subsubsection{Module View}
+\subsection{Module View}
 \label{sec:views}
 \hl{TODO Tom}
 
-% Put in figure
-\includegraphics[width=\textwidth]{images/component.pdf}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{images/component.pdf}
+  \caption{Module diagram of the System.}
+  \label{fig:modules}
+\end{figure}
 
-\subsubsection{Component and Connector View}
+\subsection{Component and Connector View}
 \hl{TODO Rosy}
+In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorabilty of the system by not unnecessarily restricting the end user.
 
-% Put in figure
+The input to the HUMS, in this view, is the sensor data from the consumer system,
+\begin{figure}
 \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
+\label{fig:pipesAndFilter}
+\caption{A Component and Connector Diagram of our HUMS, showing the protocols used when passing data between filters}
+\end{figure}
 
-\subsubsection{Behavioural View}
+\subsection{Behavioural View}
 \hl{TODO Andy}
 
-\subsubsection{Deployment View}
+\subsection{Deployment View}
 \hl{TODO Joe}
 %-------------------------------------------------------------%
 %-------------------DEVELOPMENT-------------------%
@@ -680,4 +689,4 @@ We decided to monitor the process memory usage, CPU usage, state (idle, running,
 \bibliography{report-refs}
 \bibliographystyle{IEEEtran}
 \end{document}
-}
+
