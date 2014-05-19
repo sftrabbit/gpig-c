@@ -394,9 +394,9 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \begin{description}
 \item[Modifiability] \hfill
 	\begin{description}[noitemsep]
-	\item[Defer Binding Time] Configuration files, runtime registration and polymorphism can be used to reduce the time taken to make changes, and to allow the Consumer to modify the system at runtime.
+	\item[Defer Binding Time] Configuration files, runtime registration and polymorphism will be used to reduce the time taken to make changes, and to allow the Consumer to modify the system at runtime.
 	\item[Localise Modifications] Steps are to be taken to maintain semantic coherence within the implementation, with the team aiming to produce loosely coupled modules with high cohesion. Modules are to be generalised where possible, allowing them to preform a larger variety of functions without code changes.
-	\item[Prevent Ripple Effect] Communication paths are to be restricted where possible, with the modules which can share data being limited. Information can also be hidden by using private functions where possible, meaning changing implementation details will not affect the public APIs used by the Consumer.
+	\item[Prevent Ripple Effect] Communication paths are to be restricted where possible, with the modules which can share data being limited. Information can also be hidden by using private functions, meaning changing implementation details will not affect the public APIs used by the Consumer.
 	\end{description}
 \item[Interoperability] \hfill
 	\begin{description}[noitemsep]
@@ -406,8 +406,8 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
 	\item[Fault Prevention] Bundling related actions into transactions should stop the system entering an inconsistent state. If a single action fails within a transactions then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engine) would allow for damage due to erroneous operation to be minimised.
-	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/echo could also be used to ensure external components are correctly registered with the HUMS core.
-	\item[Fault Recovery] Having secondary active or passive systems would allow for automatic switch over to the secondary systems when the main system failed, thus minimising interruption to clients.
+	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/echo could also be used to ensure external components registered with the HUMS Core are available.
+	\item[Fault Recovery] Having active or passive redundant systems would allow for automatic switch over in the event of a System failure, thus minimising interruption to Clients.
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
