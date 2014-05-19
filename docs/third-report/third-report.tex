@@ -133,31 +133,31 @@ The development of the prototype HUMS, demonstrating some of the important featu
 \section{Glossary}
 \label{sec:glossary}
 \begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
-	\item[The HUMS/System] The health and usage monitoring system being developed
+	\item[The HUMS/System] The health and usage monitoring system being developed.
 	
 	\vspace{0.15cm}
-	\item[Customer] Thales, the organisation that has commissioned the System
-	\item[Consumer] An organisation, or individual within that organisation, using the HUMS
-	\item[Client] Consumer hardware or software that interfaces with the HUMS
+	\item[Customer] Thales, the organisation that has commissioned the System.
+	\item[Consumer] An organisation, or individual within that organisation, using the HUMS.
+	\item[Client] Consumer hardware or software that interfaces with the HUMS.
 	
 	\vspace{0.15cm}
-	\item[Event] A trend in data identified by analysis
-	\item[Notification] A message dispatched by the System when an Event is fired
-	\item[Report] An artefact (consisting of HUMS data) produced by the HUMS at the request of the Consumer
+	\item[Event] A trend in data identified by analysis.
+	\item[Notification] A message dispatched by the System when an Event is fired.
+	\item[Report] An artefact (consisting of HUMS data) produced by the HUMS at the request of the Consumer.
 	
 	\vspace{0.15cm}
-	\item[Input Interface] An interface through which data is supplied to  the HUMS
-	\item[Data Emitter] Software that provides Client data to a HUMS instance through an Input Interface
-	\item[Output Interface] An  interface through which Reports and Notifications are dispatched
-	\item[Data Output Client] A Client that receives data from an Instance through an Output Interface
-    \item[Datastore] A component of the System which stores data received through an Input Interface
-    \item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through Input Interfaces
-	\item[Admin Centre] A web interface to configure and interact with the HUMS Core
+	\item[Input Interface] An interface through which data is supplied to the HUMS.
+	\item[Data Emitter] Software that provides Client data to a HUMS instance through an Input Interface.
+	\item[Output Interface] An  interface through which Reports and Notifications are dispatched.
+	\item[Data Output Client] A Client that receives data from an Instance through an Output Interface.
+    \item[Datastore] A component of the System which stores data received through an Input Interface.
+    \item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through Input Interfaces.
+	\item[Admin Centre] A web interface to configure and interact with the HUMS Core.
 
 	\vspace{0.15cm}
-	\item[Sensor] A source of data to be monitored by the System
-	\item[Sensor ID] A unique identifier denoting a particular Sensor
-	\item[System ID] A unique identifier denoting a group of Sensors
+	\item[Sensor] A source of data to be monitored by the System.
+	\item[Sensor ID] A unique identifier denoting a particular Sensor.
+	\item[System ID] A unique identifier denoting a group of Sensors.
 \end{description}
 
 %-------------------------------------------------------------%
@@ -165,14 +165,14 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-After feedback from the previous reports, the requirements of the HUMS have been updated. This includes modifying existing requirements, and adding additional requirements and refinements. It also includes removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
+Following feedback from the previous reports, the requirements of the HUMS have been updated. This includes modifying existing requirements and adding additional requirements and refinements. It also includes removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
 \emph{FR.4.1} has been modified, and refinements added, to increase the configurability of our solution by specifying exactly how configuration files will be used within our implementation. We chose to use JSON as the configuration format because it is a lightweight and widely-used standard.
 
-\emph{FR.12} became apparent after considering the reloading of configuration in \emph{FR.4.1.2}, as without the ability to dynamically load new engines, modifying registered analysis, storage, and reporting methods would require a restart of the System to take effect.
+\emph{FR.12} became apparent after considering the reloading of the configuration in \emph{FR.4.1.2}. Without the ability to dynamically load new engines, modifying registered analysis, storage and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
