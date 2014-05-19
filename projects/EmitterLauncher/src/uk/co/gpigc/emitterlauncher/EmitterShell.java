@@ -85,8 +85,14 @@ public class EmitterShell extends Shell {
 	public EmitterShell(Display display, String args[]) {
 		super(display);
 		
+		String distDirectory = EmitterShell.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		int indexOfJarName = distDirectory.indexOf("EmitterLauncher.jar");
+		distDirectory = distDirectory.substring(5, indexOfJarName);
+		
 		if (args.length >= 1) {
-			emitterDirectory = args[0];
+			emitterDirectory = distDirectory + args[0];
+		} else {
+			emitterDirectory = distDirectory + emitterDirectory;
 		}
 		
 		this.addListener(SWT.Close, new Listener() {

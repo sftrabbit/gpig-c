@@ -115,7 +115,7 @@
 	<target name="run" depends="jar" unless="jvmarg">
 	    <!-- This executes on anything but OSX -->
 		<java fork="true" jar="${jar.dir}/${jar.name}">
-			<arg value="./bin/emitters" />
+			<arg value="../../bin/emitters" />
 		</java>
 	</target>
 
