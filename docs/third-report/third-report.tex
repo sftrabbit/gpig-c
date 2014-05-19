@@ -467,7 +467,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{A \emph{Module View} of the System. Component within the \textbf{blue} areas are included with the HUMS. The \textbf{green} components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
+  \caption{A \emph{Module View} of the System. Components within the \textbf{blue} areas are included with the HUMS. The \textbf{green} components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
   \label{fig:modules}
 \end{figure}
 
@@ -529,9 +529,13 @@ When making these changes our team was structured as described in the previous r
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
-The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earthquake Hazards Program API and monitored information using JMX for the first Test Application.
+At the end of the interim phase of the report we had implemented the basic functionality of our core, with data being sent through the Input Interface and controllers managing engines. However, we did not have dynamic class loading and the Consumer was not able to add classes at runtime. The Consumer was able to create their own engines, but would be required to re-build the HUMS in order for the additions to take effect.
 
-The interim solution provided a minimal end to end solution capable of sensing the first test application, storing the test data, analysing the data and triggering reports. 
+At the interim stage of the project we had created a Data Emitter for the first test application, and an addition Data Emitter monitoring earthquakes. We had implemented a single Datastore using Google App Engine, and had created a basic analysis engine which computed the mean of the latest data for a System, and created an \texttt{Event} if that mean was outside define bounds. The parameters used for analysis and to determine system sensors were hard-coded, as the configuration file system had not yet been created. An \texttt{EmailNotificationEngine} had also been created, which sent emails to a defined address. 
+
+We had created a low fidelity  Admin Centre, which appeared as we had desired, but had no actual functionality, created in just HTML and JavaScript.
+
+Overall, our interim solution was a low fidelity end-to-end solution, but did not meet many of our requirements, and was not impressively tailorable or configurable. 
 
 \subsection{Changes Since the Interim Report}
 \label{sec:changes}
