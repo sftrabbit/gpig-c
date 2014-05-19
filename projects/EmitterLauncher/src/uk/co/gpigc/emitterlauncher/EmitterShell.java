@@ -274,7 +274,8 @@ public class EmitterShell extends Shell {
 		});
 	}
 
-	protected void buttonSelect(final String jarPath, Button button, Text text) {
+	protected void buttonSelect(String jarPath, Button button, Text text) {
+		jarPath = jarPath.substring(1,jarPath.length()).replace("%20", " ");
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
 			text.append(" >> Starting " + jarPath + "\n");
