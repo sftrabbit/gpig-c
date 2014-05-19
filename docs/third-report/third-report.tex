@@ -922,7 +922,7 @@ By using these cross-platform and established libraries, our monitor can be gene
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
 
-Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
+Using iotop~\cite{iotop} under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
 
 As this is an extension of the previous work for the first test application, this can be easily adapted as a cross-platform solution for monitoring any process running on a given system. 
