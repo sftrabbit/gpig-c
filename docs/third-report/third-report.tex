@@ -403,7 +403,7 @@ Having identified the key quality attributes for the system, and a set of qualit
 
 \subsection{Tactics}
 
-Below, the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Configurability tactics are not included as they are covered under modifiability and interoperability, and are complementary. The tactics used are based on the descriptions provided by Software Architecture in Practice\cite{Bass98}.
+Below, the tactics which appear most suitable for use with the HUMS are summarised. Each quality attribute has different tactics, which can be used to increase its utility within the HUMS. Configurability tactics are not included as they are covered under modifiability and interoperability, and are complementary. The tactics used are based on the descriptions provided by Software Architecture in Practice~\cite{Bass98}.
 
 \begin{description}
 \item[Modifiability] \hfill
@@ -857,7 +857,6 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
 \subsection{Evaluation Against Requirements, Qualities, and Scenarios}
 \label{sec:req_eval}
-\hl{TODO Ant}
 % -- Qual attibrs
 % High configurability
 % High modifiability
@@ -899,7 +898,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 	NFR.2  & 	  & 	There has been a README provided. \\ 
 	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ 
 	NFR.4  & 	  & 	We did not implement a security system in the current implementation, however for the full implementation which would be for release we had a set of requirements in place which we would enforce to provide an acceptable level of security. \\ 
-	NFR.5  & 	  & 	\hl{!} \\
+	NFR.5  & 	  & 	For the prototype system the data is being stored in a database. This does not meet this requirement, but is good enough for our prototype. For the final product that would be released, where security was needed, this storage method would have to be enhanced. An example method for achieving this is using file-system encryption. \\
 	NFR.6  & 	  & 	The tests for the system have been created and included at each stage of the development. \hl{write smat stuff} \\
 	NFR.7  & 	  & 	The system has not currently been performend. However, in the case of the real system, this would be performed by the customer and the customer would sign off to show the requirements were met. \\
 	NFR.8  & 	  & 	The current implementation is executing with 5 clients. With the emitter launcher we have tested it with 5 clients and the performance is correct. There have been tests with more clients and the functionality remains correct. \\ 
@@ -908,7 +907,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 	NFR.11  & 	  & 	 \\ 
 	NFR.12  & 	  & 	 \\ 
 	NFR.13  & 	  & 	To achieve this, a key-value data store format has been used. This relaxes the need for a schema to a simple pair of key to value. \\
-	NFR.14  & 	  & 	The format for the configuration files is JSON, this is a widely-adopted nad easy to modify format for update by a human. \\
+	NFR.14  & 	  & 	The format for the configuration files is JSON, this is a widely-adopted and easy to modify format for update by a human. \\
 }{Evaluation for Satisfaction of Non-Functional Requirements}{nfrevaltable}
 
 
