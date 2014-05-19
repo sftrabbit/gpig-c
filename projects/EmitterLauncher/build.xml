@@ -90,7 +90,6 @@
 			<manifest>
 				<attribute name="One-Jar-Main-Class" value="${main-class}" />
 				<attribute name="One-Jar-Expand" value="${res.dir}" />
-				<attribute name="One-Jar-Expand-Dir" value="." />
 			</manifest>
 			<main>
 				<fileset dir="${classes.dir}" />
@@ -115,7 +114,7 @@
 	<target name="run" depends="jar" unless="jvmarg">
 	    <!-- This executes on anything but OSX -->
 		<java fork="true" jar="${jar.dir}/${jar.name}">
-			<arg value="./bin/emitters" />
+			<arg value="../../bin/emitters" />
 		</java>
 	</target>
 

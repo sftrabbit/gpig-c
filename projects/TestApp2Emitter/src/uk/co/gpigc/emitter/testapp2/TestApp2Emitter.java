@@ -3,7 +3,7 @@ package uk.co.gpigc.emitter.testapp2;
 import uk.co.gpigc.emitter.SimpleEmitter;
 
 public class TestApp2Emitter {
-	private static final int COLLECTION_INTERVAL = 1000;
+	private static final int COLLECTION_INTERVAL = 5000;
 	private static final String TEST_APP_PATH = "res/test2";
 
 	public static void main(String[] args) throws Exception {	

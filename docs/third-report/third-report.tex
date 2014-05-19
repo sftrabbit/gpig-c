@@ -25,7 +25,7 @@
 
 %%Tables
 \newcommand{\tableformat}[4]{
-\begin{table}[t]
+\begin{table}[ht!]
 \centering
   \rowcolors{2}{gray!10} {white}
 \begin{tabular}{#1}
@@ -93,7 +93,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-Word count: \input{wc} (\textit{using TeXCount})
+%Word count: \input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -204,7 +204,6 @@ After feedback from the previous reports, the HUMS requirements have been update
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
-\hl{more changes?} 
 
 When considering the non-functional requirements,\emph{NFR.14} was added as it is not necessarily the case that an Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
 
@@ -283,13 +282,13 @@ Having identified the quality attributes which are important to creating a succe
 
 \begin{scenario}{1}
 \quality{Configurability}
-\source{The Customer}
-\stimulus{The Customer wishes to reconfigure the system to monitor mechanical systems.}
-\artifact{HUMS Core}
-\environment{Design Time}
-\response{The System is reconfigured to be comparable with mechanical systems, tested, and deployed.}
-\measure{All work is completed on time and in budget.}
-\rationale{This scenario is important to the customer, as they expect the HUMS to move across domains easily.}
+\source{The Consumer}
+\stimulus{The Consumer wishes to modify the HUMS behaviour by updating their configuration file.}
+\artifact{HUMS Core, Configuration File}
+\environment{Runtime/Compile Time}
+\response{The Consumer is able to modify their configuration file.}
+\measure{ The HUMS is not re-installed or re-compiled}
+\rationale{This scenario is important to the customer, as they expect the Consumer to be able to easily chage HUMS parameters, making them specific to their industry, for example modifying the engines thier system uses. Achieving this scenario will help our solution to move across different domains easily.}
 \end{scenario}
 
 \begin{scenario}{2}
@@ -311,13 +310,12 @@ Having identified the quality attributes which are important to creating a succe
 \environment{Normal Operation -- Online}
 \response{The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.}
 \measure{No HUMS data or services are damaged as a result of the access attempt.}
-\rationale{This scenario shows how the HUMS is expected to behave when a Client attempts access to its services, showing the importance of authenticating Clients and how the HUMS should respond to unauthorised Clients.}
+\rationale{This scenario shows how the HUMS is expected to behave when a Client attempts to access its services, showing the importance of authenticating Clients and how the HUMS should respond to unauthorised Clients.}
 \end{scenario}
 
 \begin{scenario}{4}
 \quality{Availability}
 \source{Datastore Module}
-<<<<<<< HEAD
 \stimulus{The Consumer's registered Datastore is unavailable to the HUMS instance.}
 \artifact{HUMS}
 \environment{Runtime}
@@ -424,11 +422,12 @@ Having determined the tactics applicable to the HUMS, which are likely to produc
 
 \hl{TODO Adam, 1 or two sentences about each}
 \begin{description}
-\item[Observer] stuff
-\item[Pipes and Filters] stuff
-\item[Table Data Gateway] stuff
-\item[Row Data Gateway] stuff
-\item[Maybe another] stuff
+\item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. When the subject object changes its state then all observers are informed and they can then react appropriately. We should use this for the implementation of our analysis component. An object that controls the analysis would be the subject, when the subject receives new data the dependant observers would be notified and would then perform analysis on the new data.
+\item[Pipes and Filters] A HUMS is complex and constructed from many components. The adoption of the pipes and filters pattern would allow for large processing tasks to be broken down into a sequence of smaller independent tasks. Pipes and filters works by each filter exposing a simple interface that receives messages from the incoming pipe, performs some action on the message and places it onto the outbound pipe. Pipes and filters would allow the HUMS to be tailorable by the client as alternative solutions can be composed by connecting filters to different pipes. \hl{this could probably be clearer}
+\item[Table Data Gateway] An object that abstracts over a table, with a single instance handling all data access \cite{fowler2002patterns}. Utilising table data gateway would simplify the HUMS interaction with the chosen data store. The single point of access and encapsulation of all SQL statements would reduce coupling, with the system unaffected by changes to the datastore or data access logic and therefore facilitate easier maintenance.
+\item[Row Data Gateway] Unlike table data gateway, row data gateway is an object that is a gateway to a single record in a datastore, with an instance for each record \cite{fowler2002patterns}. As with the table data gateway, the abstraction over the specific datastores implementation decreases coupling with the system system being unaffected by changes to the datastore or access logic.
+\item[Model View Controller] If clients are going to tailor the HUMS to their needs a user interface will be required. We should adopt model view controller to provide clear separation of concerns between the application data and the application view. The separation allows for components to be tested independently, code re-use and modifiability.
+\item[Any more?] \hl{Any more stuff}
 \end{description}
 
 \section{System Views} 
@@ -517,6 +516,8 @@ A behavioural view can show the actual actions taken by the system when the data
 \label{sec:interim_summary}
 \hl{TODO ADAM}
 The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earth-quake Hazards Program API and monitored information using JMX for the first Test Application.
+
+The interim solution provided a minimal end to end solution capable of sensing the first test application, storing the test data, analysing the data and triggering reports. 
 
 \subsection{Changes Since the Interim Report}
 \label{sec:changes}
