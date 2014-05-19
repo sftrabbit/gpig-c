@@ -678,34 +678,34 @@ The implementation of the \texttt{ExpressionAnalysisEngine} works towards addres
 
 \subsubsection{Face Analysis Engine}
 \label{sec:fae}
-The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
+
+The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to services. This engine shows how components of our HUMS work together to perform complex analysis, which can be tailored using the Core configuration file.
 
 The face recognition process is two fold: an image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
 
-The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns} (those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s) have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This method is robust to changes in illumination and pose~\cite{ahonen2006face}, making it a robust method for describing faces in the presence of extraneous variables. This is the data which is then transmitted to the Core for storage and analysis to determine if the face is authorised.
+The face description in the Android app is computed using the \emph{Local Binary Patterns Histogram} (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it. These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns} (those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s) have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This method is robust to changes in illumination and pose~\cite{ahonen2006face}, making it a robust method for describing faces in the presence of extraneous variables. This is the data which is then transmitted to the Core for storage and analysis to determine if the face is authorised.
 
-When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces provided by the configuration file is less than some threshold, also given by the configuration file, and any example unauthorised face.
+When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces provided by the configuration file using the \emph{Chi-Squared} distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces is less than some threshold, also given by the configuration file, and any example unauthorised face.
 
 \subsubsection{Other Analysis Engines}
-The \texttt{TrafficAnalysisEngine}, creates an event when a reading is generated, the analysis performed in this case is simply parsing the data about the earthquake and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification \texttt{Event} only if the magnitude above a specified value, so larger earthquakes generate events. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class in incredibly versatile  Other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the \texttt{AnalysisEngine} abstract class, and implementing the required methods.
-
+The \texttt{TrafficAnalysisEngine}, creates an event when a reading is received, the analysis performed in this case is simply parsing the data about the traffic incident and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification only if the magnitude above a specified value. 
+These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class is incredibly versatile.
 
 \subsection{Reporting and Notifying}
 \label{sec:reporting}
+This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create notifications through any notification engine configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different notifications that might be generated and dispatched using the HUMS, and to show the flexibility and tailorability of the system. They show how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
 
-This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create notifications using any notification engines configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different types of notification that might want to be generated and dispatched by a HUMS, and to show the flexibility and tailorability of the system. They exhibit how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
-
-For reporting, two sample reporting engines were created that can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines provide just a small idea of what is possible with our HUMS implementation, with further web based or standalone reporting engines -- or engines integrated into other applications -- able to be created to interact with the system and produce other types of reports the Consumer may require.
+For reporting, two sample engines were created which can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines show just a small selection of what is possible with our HUMS implementation, with scope for adding further web based, standalone, or integrated reporting engines to interact with the HUMS.
 
 \subsubsection{SMS Notifications}
-A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; an individual is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created than sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile devices in modern life; an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platform. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
 The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however, has been heavily refactored to comply with our new, more modular code-base.
 It can be configured to send email notifications for events to any email address, and may be useful for more detailed, less frequent notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
-The \texttt{TwitterNotificationEngine} provided allows events to be pushed to the social networking site \emph{Twitter}. We included this engine to demonstrate how our HUMS implementation can be used to interact with popular platforms to provide report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the message it receives from analysis engines and then pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
+The \texttt{TwitterNotificationEngine} provided allows events to be pushed to the social networking site \emph{Twitter}. This was included to demonstrate how our HUMS implementation can be used to interact with popular platforms to report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the output of analysis and pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
 
 \subsubsection{Android Application Feedback Notifications}
 \hl{TODO Rosy}
@@ -834,6 +834,7 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
 \subsection{Evaluation Against Requirements, Qualities, and Scenarios}
 \label{sec:req_eval}
+
 % -- Qual attibrs
 % High configurability
 % High modifiability
@@ -849,6 +850,10 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 % QAS2 The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.
 % QAS3 The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.
 % QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
+
+% Have we met requirements, why? Is our architecture just not capable of it? Or have we just not implemented because its a prototype, and here's how we'd do it....
+% Qualities: e.g. usability, let examples users recruited within the dept to try it out - informal UX testing - they asked for a clear button and monospace fonts in the console to make it easier to read, admin centre stuff? Something that was added? Turn engines on and off using a web-based client
+% Scenarios: Response and measure? What we expected and what we achieved
 
 
 To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} and \ref{nfrevaltable} the steps which we have taken in order to validate the meeting of the requirements. \emph{FR.5}, \emph{FR.6}, and \emph{FR.8} were not implemented in this prototype, and so the method of validation describes what would be done in a more complete system.
@@ -889,7 +894,7 @@ To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} 
 }{Evaluation for satisfaction of non-functional requirements.}{nfrevaltable} % TODO What should we do when this spills over a page? Just make a long table or is there something smarter?
 
 
-The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high configurability was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone Datastore to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
+The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high configurability was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system and a stand-alone Datastore to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
 
 A scenario for evaluating the modifiability is the ability to add engines for analysis, reporting or notifications. This has been achieved using extensible APIs for the analysis, reporting and notification engines. Each of the engines contains an abstract base class which can be extended to provide a new engine. For example, to implement a new analysis engine one must simply extend the AnalysisEngine class and implement the required abstract methods.
 
@@ -921,7 +926,6 @@ Ideally, only a single instance of the Core would be needed and would be able to
 
 Along with SaaS, a Platform as a Service (PaaS) deployment is also possible with our implementation. The HUMS would be provided to the Consumer so they could configure it as needed and then deploy it using servers and storage that we would provide. They would also be able to bundle in their own custom engines and any additional software to be deployed and run alongside the HUMS on our platform, which would further reduce the the complexity and cost to the Consumer of purchasing and managing their own hardware. This could not be fully explored in the report due to time and resource limitations.
 
-
 \subsection{Evaluation of Additional Engines}
 \label{sec:additional}
 
@@ -930,14 +934,6 @@ Providing support for multiple kinds of datastore within the HUMS prototype prov
 The \texttt{FaceAnalysisEngine} provided a convincing example of a complex, domain-specific analysis engine being easily built on top of the generic interface. The configuration file allowed easy description of the faces to be accepted by storing a relative path to a face description file, and the Java interface provided a simple mechanism for retrieving data from the sensors. This engine showed that even highly tailored engines comfortably fit within our plugin model of engines, giving strong evidence that our prototype is highly tailorable.
 
 % TODO Cover Availability, Security and Performance quality attributes if possible
-
-\subsection{Instructions for Running and Replicating Results}
-\label{sec:instructions}
-
-\hl{TODO probably Joe}
-
-\hl{super easy GUIs, sources online, etc}
-
 
 %-------------------------------------------------------------%
 %---------------------COMMUNICATION-------------------%
