@@ -185,9 +185,9 @@ public class EmitterShell extends Shell {
 	}
 
 	private void graphicsSetup(Display display) {
-		playIcon = new Image(display, PLAY_BUTTON_PATH);
-		stopIcon = new Image(display, STOP_BUTTON_PATH);
-		shellIcon = new Image(display, ICON_PATH);
+		playIcon = new Image(display, FileUtils.getExpandedFilePath(PLAY_BUTTON_PATH));
+		stopIcon = new Image(display, FileUtils.getExpandedFilePath(STOP_BUTTON_PATH));
+		shellIcon = new Image(display, FileUtils.getExpandedFilePath(ICON_PATH));
 	}
 
 	private void compositeSetup(Group groupComp) {
