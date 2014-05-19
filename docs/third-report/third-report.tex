@@ -872,7 +872,7 @@ Table~\ref{tab:traceability} shows the tests used to verify the that system requ
 
 To consider the meeting of requirements, we lay out here the steps which we have taken in order to validate the meeting of the requirements.
 
-\xtableformat{| l | l | X |}{ \hline	FR.x  & 	Description of FR  & 	What we did \\ \hline
+\xtableformat{| l | l | X |}{ \hline	FR.x  & 	Description of FR  & 	Validation \\ \hline
 	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
 	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\ \hline
 	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a postgres instance on heroku for the cloud solution. \\ \hline
@@ -887,7 +887,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
 }{Evaluation for Satisfaction of Functional Requirements}{frevaltable}
 
-\xtableformat{| l | l | X |}{ \hline	NFR.x  & 	Description of NFR  & 	What we did \\ \hline
+\xtableformat{| l | l | X |}{ \hline	NFR.x  & 	Description of NFR  & 	Validation \\ \hline
 	NFR.1  & 	  & 	The data store is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ \hline
 	NFR.2  & 	  & 	There has been a README provided. \\ \hline
 	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ \hline
