@@ -463,13 +463,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given system sensor, and the \texttt{readBetween()} method returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the datastore which fit the query. The methods for writing to a datastore are both named \texttt{write()}, however, one takes a single item of data and writes it to the datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
 	\item[Data Emitters] Data emitters read values from sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example emitters, such as the Earthquake Emitter and the Test App Emitters, but more may be added by the user. This method of data input allows data from different Clients to pass through the HUMS Core as if it was all the same, vastly increasing our solutions interoperability with different types of Client.
 \end{description}
-% What methods have we used, what Java interfaces must we implement. All extends from abstract _ class, and offers these abstract functions. What they do and how the user would extend them. Sample implementations can be overidden too
 
-% Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
-% Quality attributes?
- %giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
- % and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
- 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
@@ -543,7 +537,9 @@ The interim solution provided a minimal end to end solution capable of sensing t
 
 \subsection{Core Development}
 \label{sec:core}
-
+ %giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
+ % and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
+ 
 The Core is the main application controlling the behaviour and functionality of the HUMS. It receives client data through Data Emitters and stores it using data storage engines, data is then passed to appropriate analysis engines, which can create \texttt{Event} objects that the Core passes on to the relevant notification engines.
 
 \texttt{Controller} objects are used to dynamically load and manage the three different engine types. The use of dynamic class loading increases the configurability or modifiability of the system, by allowing the new engines to be added both at runtime and compile time. In addition, the Core automatically detects when new files are added to the folder they are loaded from, and refreshes the system. This means that from the Consumers perspective, they merely have to place their class into the correct folder, increasing the usability of the HUMS. 
