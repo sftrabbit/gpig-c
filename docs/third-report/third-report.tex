@@ -467,7 +467,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{A \emph{Module} diagram of the System. Component within the \textbf{blue} areas are included with the HUMS. The \textbf{green} components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
+  \caption{A \emph{Module View} of the System. Component within the \textbf{blue} areas are included with the HUMS. The \textbf{green} components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
   \label{fig:modules}
 \end{figure}
 
@@ -495,7 +495,7 @@ An \texttt{Event} object contains the ID of the system which caused the event, a
 
 The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or email. 
 
-\begin{figure}[tbp]
+\begin{figure}[ht]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
   \caption{A \emph{Component and Connector} diagram of the HUMS, showing the protocols used when passing data between filters}
   \label{fig:pipesAndFilter}
@@ -503,7 +503,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 \subsection{Behavioural View}
 
-A behavioural view can show the actual actions taken by the system when the data flows through the system, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the Core system and how it behaves during normal operation. Various methods and invocations are listed at the in the order that they occur, from top to bottom and left to right. The external parts of the system, such as the sources that data is gathered from and the destinations that notifications are sent to, are not shown.
+The \emph{Behavioural View} can show the actual actions taken by the system when the data flows through the system, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the Core system and how it behaves during normal operation. Various methods and invocations are listed at the in the order that they occur, from top to bottom and left to right. The external parts of the system, such as the sources that data is gathered from and the destinations that notifications are sent to, are not shown.
 
 \begin{figure}[tbp]
   \centering
