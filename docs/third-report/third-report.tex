@@ -642,7 +642,7 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing Datastores. To demonstrate this we created four sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or Datastore, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of Datastores. To demonstrate this we created \hl{five} sample implementations interfacing with a range of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or Datastore, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores chosen used in our implementation were chosen as they allow \emph{NFR.9--10} be achieved.
 
 Prepared statements were used where possible in our Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
 
@@ -655,7 +655,6 @@ To implement this we created a \emph{Heroku} web application, which included a \
 
 \subsubsection{H2 Storage}
 For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained and server-less, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
-
 
 \subsection{Analysing}
 \label{sec:analysis}
