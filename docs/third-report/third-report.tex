@@ -289,7 +289,7 @@ Unlike in the previous reports, risks have been separated into human risks and t
     R.9 & Computation by included analysis engines too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
     R.10 & Included notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of System failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
 }
-{The technical risks associated with this phase of the project}{tab:tech_risks}
+{The technical risks associated with this phase of the project.}{tab:tech_risks}
 
 \subsection{Risk Mitigation}
 The following risk reduction techniques have been applied throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to the techniques specified in this section, the tactics and patterns explained later in this report have also been used to mitigate technical risks which affect the quality of the system.
@@ -334,7 +334,7 @@ Testability & Medium & The TDD development approach, discussed in the initial re
 \\
 Usability & Medium & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphics and otherwise.
 \\
-}{The ranked quality attributes, associated with the HUMS}{tab:qualities}
+}{The ranked quality attributes associated with the HUMS.}{tab:qualities}
 
 
 %-------------------------------------------------------------%
@@ -398,7 +398,7 @@ Having identified the quality attributes which are important to creating a succe
 
 \section{Tactics and Patterns}
 \label{sec:tactics}
-Having identified the key quality attributes for the system and a set of quality attribute scenarios, the tactics and patterns needed to ensure the desired utility of these attributes can be examined. In this section we focus on those qualities ranked highly in Table~\ref{tab:qualities}.
+Having identified the key quality attributes for the System and a set of quality attribute scenarios, the tactics and patterns needed to ensure the desired utility of these attributes can be examined. In this section we focus on those qualities ranked highly in Table~\ref{tab:qualities}.
 
 \subsection{Tactics}
 
@@ -407,18 +407,18 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \begin{description}
 \item[Modifiability] \hfill
 	\begin{description}[noitemsep]
-	\item[Defer Binding Time] Configuration files, runtime registration and polymorphism will be used to reduce the time taken to make changes, and to allow the Consumer to modify the system at runtime.
+	\item[Defer Binding Time] Configuration files, runtime registration and polymorphism will be used to reduce the time taken to make changes, and to allow the Consumer to modify the System at runtime.
 	\item[Localise Modifications] Steps are to be taken to maintain semantic coherence within the implementation, with the team aiming to produce loosely coupled modules with high cohesion. Modules are to be generalised where possible, allowing them to preform a larger variety of functions without code changes.
 	\item[Prevent Ripple Effect] Communication paths are to be restricted where possible, with the modules which can share data being limited. Information can also be hidden by using private functions, meaning changing implementation details will not affect the public APIs used by the Consumer.
 	\end{description}
 \item[Interoperability] \hfill
 	\begin{description}[noitemsep]
 		\item[Locate] Services may need to be discovered at runtime.
-		\item[Managing Interfaces] Complex interactions between the HUMS core and external engines may need to be orchestrated in order to fulfil the required functionality.
+		\item[Managing Interfaces] Complex interactions between the HUMS Core and external engines may need to be orchestrated in order to fulfil the required functionality.
 	\end{description}
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
-	\item[Fault Prevention] Bundling related actions into transactions should stop the system entering an inconsistent state. If a single action fails within a transactions then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engine) would allow for damage due to erroneous operation to be minimised.
+	\item[Fault Prevention] Bundling related actions into transactions should stop the System entering an inconsistent state. If a single action fails within a transaction then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engine) allows for damage due to erroneous operation to be minimised.
 	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/echo could also be used to ensure external components registered with the HUMS Core are available.
 	\item[Fault Recovery] Having active or passive redundant systems would allow for automatic switch over in the event of a System failure, thus minimising interruption to Clients.
 	\end{description}
@@ -431,13 +431,13 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \end{description}
 
 \subsection{Design Patterns}
-Having determined the tactics applicable to the HUMS, which are likely to increase the utility of key system quality attributes, a number of software design patterns can be selected which realise these tactics within the HUMS architecture.
+Having determined the tactics applicable to the HUMS, which are likely to increase the utility of key system quality attributes, a number of software design patterns can be selected which realise these tactics within its architecture.
 
 \begin{description}
-\item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. Such that observers are kept in a list within the subject, and updated when the state of the subject changes. This will be used for the implementation of our analysis, storage, and notification engines, with controller objects keeping a list of engine observers. When the controller receives an update, it can inform the relevant engines through a method call.
-\item[Pipes and Filters]The adoption of the pipes and filters pattern would allow for large processing tasks to be broken down into a sequence of smaller independent filters, and the protocol of the data to be passed between those filters explicitly defined. Pipes and filters would also increase the tailorability of the HUMS, as alternative architectures can be composed by connecting filters to different pipes. 
-\item[Table Data Gateway]  Utilising table data gateway, defined by \cite{fowler2002patterns} as a single object which handles all interaction with accessing a Datastore e.g SQL statements, will reduce coupling and allow a single HUMS to interact with a number of different Datastores. It does by ensuring the core is not coupled to a particular Datastore implementation, instead each Datastore implements their own table data gateway, which can be interchanged both at runtime and compile time. The single point of access and encapsulation means that the System as a whole is unaffected by changes to the Datastore or data access logic and therefore facilitate easier maintenance.
-\item[Row Data Gateway] A Row data gateway is an object which encapsulates a single record in a Datastore~\cite{fowler2002patterns}. This could be utilised by our HUMS, as a method of ensuring data pulled from various Datastores can be used throughout the Core as if it was from a single Datastore. This will reduce the effect of impedance mismatch whilst increasing the tailorability of our solution and decreasing coupling.
+\item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. Observers are kept in a list within the subject and sent updates when the state of the subject changes. This will be used for the implementation of our analysis, storage, and notification engines, with controller objects keeping a list of engine observers. When the controller receives an update it can inform the relevant engines through a method call.
+\item[Pipes and Filters] The adoption of the pipes and filters pattern allows for large processing tasks to be broken down into sequences of smaller independent filters, and the protocol of the data passed between those filters to be explicitly defined. Pipes and filters also increase the tailorability of the HUMS, as alternative architectures can be composed by connecting filters to different pipes.
+\item[Table Data Gateway] Utilising table data gateway, defined by \cite{fowler2002patterns} as a single object which handles all interaction with accessing a Datastore (e.g. SQL statements), will reduce coupling and allow a single HUMS to interact with a number of different Datastores. It does by ensuring the Core is not coupled to a particular Datastore implementation, instead each Datastore implements their own table data gateway which can be interchanged both at runtime and compile time. The single point of access and encapsulation means that the System as a whole is unaffected by changes to the Datastore or data access logic and therefore facilitates easier maintenance.
+\item[Row Data Gateway] A row data gateway is an object which encapsulates a single record in a Datastore~\cite{fowler2002patterns}. This could be utilised by our HUMS as a method of ensuring data pulled from various Datastores can be used throughout the Core as if it was from a single Datastore. This will reduce the effect of impedance mismatch whilst increasing the tailorability of our solution and decreasing coupling.
 \end{description}
 
 \section{System Views} 
@@ -496,7 +496,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 \begin{figure}[ht]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
-  \caption{A \emph{Component and Connector} diagram of the HUMS, showing the protocols used when passing data between filters}
+  \caption{A \emph{Component and Connector} diagram of the HUMS, showing the protocols used when passing data between filters.}
   \label{fig:pipesAndFilter}
 \end{figure}
 
@@ -507,7 +507,7 @@ The \emph{Behavioural View} can show the actual actions taken by the HUMS when t
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/behaviourView.pdf}
-  \caption{Sequence diagram showing the behaviour of the HUMS, using UML 2.0 notation}
+  \caption{A sequence diagram showing the behaviour of the HUMS, using UML 2.0 notation.}
   \label{fig:sequence}
 \end{figure}
 
@@ -576,7 +576,7 @@ The Consumer systems monitored by a particular HUMS instance, and how they will 
     ]
 }
 \end{lstlisting}
-\caption{An Example of a JSON configuration file as used by the HUMS}
+\caption{An example of a JSON configuration file used by the HUMS.}
 \label{fig:configFiles}
 \end{figure}
 
@@ -590,7 +590,7 @@ In addition to the above, we created an optional GUI for our HUMS Core which mak
 \begin{figure}[ht]
 \centering
 \includegraphics[width = 0.8\textwidth]{images/coreGUI.png}
-\caption{A Screenshot of the HUMS Core GUI}
+\caption{A screenshot of the HUMS Core GUI.}
 \label{fig:coreGUI}
 \end{figure}
 A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface which now allows these files to be easily administered by both technical and non-technical users, and avoids a custom server having to be manually set up by the Consumer as the process is automated.
@@ -618,7 +618,7 @@ The demonstration purposes, and to make our prototype easier to test and use, we
 \begin{figure}[ht]
 \centering
 \includegraphics*[width=0.8\textwidth]{images/launcherGUI.png}
-\caption{A screenshot of the Emitter Launcher GUI}
+\caption{A screenshot of the Emitter Launcher GUI.}
 \label{fig:launcherGUI}
 \end{figure}
 
@@ -688,13 +688,15 @@ The implementation of the \texttt{ExpressionAnalysisEngine} works towards addres
 
 \subsubsection{Face Analysis Engine}
 \label{sec:fae}
+
 The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to services. This engine shows how components of our HUMS work together to perform complex analysis, which can be tailored using the Core configuration file.
 
 The face recognition process is two fold: An image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
 
 The face description in the Android app is computed using the \emph{Local Binary Patterns Histogram} (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it. These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This method is robust to changes in illumination and pose~\cite{ahonen2006face}, making it a robust method for describing faces in the presence of extraneous variables. This is the data which is then transmitted to the Core for storage and analysis to determine if the describe face is authorised.
 
-When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the \emph{Chi-Squared} distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces provided by the configuration file is less than some threshold, also given by the configuration file, and any example unauthorised face.
+
+When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces provided by the configuration file using the \emph{Chi-Squared} distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces is less than some threshold, also given by the configuration file, and any example unauthorised face.
 
 \subsubsection{Other Analysis Engines}
 The \texttt{TrafficAnalysisEngine}, creates an event when a reading is received, the analysis performed in this case is simply parsing the data about the traffic incident and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification only if the magnitude above a specified value. 
@@ -760,7 +762,7 @@ The updates to the Admin Centre have developed the previous prototype into a ful
         \caption{Reporting}
         \label{fig:admin-centre_report}
     \end{subfigure}
-    \caption{Screenshots of the Admin Centre}
+    \caption{Screenshots of the Admin Centre.}
 	\label{fig:admin-centre}
 \end{figure}
 
@@ -832,7 +834,7 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
     NFR.6    & N/A & Inspection & Verify existence of all test levels \\
 	NFR.14   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
 }
-{The traceability table showing the mapping from each requirement to its existing tests}{tab:traceability}
+{The traceability table showing the mapping from each requirement to its existing tests.}{tab:traceability}
 
 
 %-------------------------------------------------------------%
@@ -878,7 +880,7 @@ To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} 
 	FR.10  & 	  & 	 \\ 
 	FR.11  & 	  & 	 \\ 
 	FR.12  &This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. 	  & 	 \\ 
-}{Evaluation for Satisfaction of Functional Requirements}{frevaltable}
+}{Evaluation for satisfaction of functional requirements.}{frevaltable}
 
 \xtableformat{ p{1.3cm} X X }{
 	NFR.x  & 	Method of Validation & Result \\ \hline
@@ -896,7 +898,7 @@ To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} 
 	NFR.12  & 	  & 	 \\ 
 	NFR.13  & 	To achieve this, a key-value data store format has been used. This relaxes the need for a schema to a simple pair of key to value.  & 	 \\
 	NFR.14  & 	The format for the configuration files is JSON, this is a widely-adopted and easy to modify format for update by a human.  & 	 \\
-}{Evaluation for Satisfaction of Non-Functional Requirements}{nfrevaltable} % TODO What should we do when this spills over a page? Just make a long table or is there something smarter?
+}{Evaluation for satisfaction of non-functional requirements.}{nfrevaltable} % TODO What should we do when this spills over a page? Just make a long table or is there something smarter?
 
 
 The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high configurability was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone Datastore to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
