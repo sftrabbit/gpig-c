@@ -677,7 +677,6 @@ The number of data records to average over and the upper and lower bounds for th
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
 
 \subsubsection{Generic Expression Engine}
-\hl{TODO Tom}
 We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential analysis processes, avoiding the need to build new analysis engine classes. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the system configuration file to define the action of the engine.
 \begin{figure}[htbp]
 \centering
@@ -690,7 +689,7 @@ The values of variables which represent the state of the system being monitored 
 
 Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
 
-The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its flexibility and configurability, allowing the HUMS to be easily customised by the Consumer without needing any particular software engineering knowledge. % TODO Expand on this?
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its flexibility and configurability, allowing the HUMS to be easily customised by the Consumer without needing any knowledge outside of the analysis engine interface.
 
 % TODO The library used?
 
