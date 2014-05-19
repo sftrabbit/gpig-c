@@ -941,11 +941,12 @@ As this is an extension of the previous work for the first test application, thi
 
 \subsection{Evaluation of Additional Engines}
 \label{sec:additional}
-\hl{TODO Rosy\&Tom\&Adam}
 
-Adding multiple kinds of datastore to the HUMS prototype proved to be a relatively straightforward process. As part of our prototype, we added local, remote SQL, remote NoSQL and distributed datastores, showing our architecture yields a high level of interoperability. The fact that we can switch between these by changing a configuration file at runtime, without any code being written, shows a high level of configurability and accessibility, since consumers with even low levels of technical knowledge can implement these changes.
+Providing support for multiple kinds of datastore within the HUMS prototype proved to be a relatively straightforward process. As part of our prototype, we added local, remote SQL, remote NoSQL and distributed datastores, showing our architecture yields a high level of interoperability. The fact that we can switch between these by changing a configuration file at runtime, without any code being written, shows a high level of configurability and accessibility, since consumers with even low levels of technical knowledge can implement these changes.
  
 The \texttt{FaceAnalysisEngine} provided a convincing example of a complex, domain-specific analysis engine being easily built on top of the generic interface. The configuration file allowed easy description of the faces to be accepted by storing a relative path to a face description file, and the Java interface provided a simple mechanism for retrieving data from the sensors. This engine showed that even highly tailored engines comfortably fit within our plugin model of engines, giving strong evidence that our prototype is highly tailorable.
+
+% TODO Cover Availability, Security and Performance quality attributes if possible
 
 \subsection{Instructions for Running and Replicating Results}
 \label{sec:instructions}
