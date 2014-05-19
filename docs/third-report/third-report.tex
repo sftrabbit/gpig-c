@@ -243,6 +243,59 @@ When considering the non-functional requirements,\emph{NFR.14} was added as it i
 
 
 %-------------------------------------------------------------%
+%--------------------------RISKS--------------------------%
+%-------------------------------------------------------------%
+\section{Project Risks}
+\label{sec:risks}
+It is important to consider the risks of any software project so that appropriate mitigation can be used, and clear contingency plans can be put in place to prevent problems having a large impact. This will help to ensure all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout the project. 
+
+Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}.
+Some risks have been modified since the previous report, while others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
+
+\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c }
+{ 	\hline
+  	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
+  	\hline
+  
+    R.1 & Loss of team member(s) or team member(s) underperformance. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
+    R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
+    R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
+    R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
+    R.5 & The Consumer fails to update the configuration files of the HUMS  & Consumers find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential Consumers to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
+  	\hline
+}
+{The human and business risks associated with this phase of the project}{tab:human_risks}
+
+
+\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c}
+{ 	\hline
+    Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
+  	\hline
+  
+    R.6 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
+    R.7 & Data interception between the HUMS core and registered engines or Datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+    R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
+    R.10 & Included notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
+  	\hline
+}
+{The technical risks associated with this phase of the project}{tab:tech_risks}
+
+\subsection{Risk Mitigation}
+The following risk reduction techniques have been used throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to these techniques, the tactics and patterns explained later in this report are used to mitigate technical risks which affect the quality of the system.
+\begin{description}
+\item[Scrum:]
+The use of the scrum as part of our software engineering methodology, as discussed in the initial report, helps to mitigate risks \emph{R.1-3}. The scrum allows team members to be kept up to date on what other team members are working on, and on the state of the project as a whole, making it easier for work to be reallocated across teams members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customer's brief.
+
+\item[Version Control:]
+Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the system, or caused the system to not meet stakeholder expectations.
+
+\item[Automated Testing:] 
+Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.6-10}, helping to automatically validate system requirements. 
+Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging.
+\end{description}
+
+%-------------------------------------------------------------%
 %-----------------------QUALITIES-------------------------%
 %-------------------------------------------------------------%
 \section{Quality Attributes}
@@ -269,7 +322,7 @@ Performance & Medium & The HUMS is required to receive data from Sensors, and pr
 \\
 Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults and is also likely to increase its availability. 
 \\
-Usability & Low & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for the web interface and admin centre, however this is only a small part of the HUMS.
+Usability & Medium & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphics and otherwise.
 \\
 }{The ranked quality attributes, associated with the HUMS}{tab:qualities}
 
@@ -323,59 +376,6 @@ Having identified the quality attributes which are important to creating a succe
 \measure{End user defined repair time.}
 \rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined Datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in a degraded mode.}
 \end{scenario}
-
-%-------------------------------------------------------------%
-%--------------------------RISKS--------------------------%
-%-------------------------------------------------------------%
-\section{Project Risks}
-\label{sec:risks}
-It is important to consider the risks of any software project so that appropriate mitigation can be exercised and there are clear contingency plans in place to prevent problems having a large impact of the project, thus ensuring all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout development. 
-
-Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in Table~\ref{tab:human_risks} and technical risks are presented in Table~\ref{tab:tech_risks}.
-Some risks have been modified since the previous report, while others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
-
-\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c }
-{ 	\hline
-  	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
-  	\hline
-  
-    R.1 & Loss of team member(s) or team member(s) underperformance. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
-    R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
-    R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
-    R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
-    R.5 & The Consumer fails to update the configuration files of the HUMS  & Consumers find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential Consumers to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
-  	\hline
-}
-{The human and business risks associated with this phase of the project}{tab:human_risks}
-
-
-\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c}
-{ 	\hline
-    Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
-  	\hline
-  
-    R.6 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
-    R.7 & Data interception between the HUMS core and registered engines or Datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
-    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
-    R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
-    R.10 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
-  	\hline
-}
-{The technical risks associated with this phase of the project}{tab:tech_risks}
-
-\subsection{Risk Mitigation}
-The following risk reduction techniques have been used throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to these techniques, the tactics and patterns explained later in this report are used to mitigate technical risks which affect the quality of the system.
-\begin{description}
-\item[Scrum:]
-The use of the scrum as part of our software engineering methodology, as discussed in the initial report, helps to mitigate risks \emph{R.1-3}. The scrum allows team members to be kept up to date on what other team members are working on, and on the state of the project as a whole, making it easier for work to be reallocated across teams members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customer's brief.
-
-\item[Version Control:]
-Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the system, or caused the system to not meet stakeholder expectations.
-
-\item[Automated Testing:] 
-Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.5-9}, helping to automatically validate system requirements. 
-Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging.
-\end{description}
 
 %-------------------------------------------------------------%
 %--------------TACTICS / PATTERNS----------------------%
