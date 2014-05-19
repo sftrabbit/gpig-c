@@ -418,9 +418,8 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \end{description}
 
 \subsection{Design Patterns}
-Having determined the tactics applicable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected which allow these tactics to be realised in the HUMS architecture.
+Having determined the tactics applicable to the HUMS, which are likely to increase the utility of key system quality attributes, a number of software design patterns can be selected which realise these tactics within the HUMS architecture.
 
-\hl{TODO Adam, 1 or two sentences about each}
 \begin{description}
 \item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. When the subject object changes its state then all observers are informed and they can then react appropriately. We should use this for the implementation of our analysis component. An object that controls the analysis would be the subject, when the subject receives new data the dependant observers would be notified and would then perform analysis on the new data.
 \item[Pipes and Filters] A HUMS is complex and constructed from many components. The adoption of the pipes and filters pattern would allow for large processing tasks to be broken down into a sequence of smaller independent tasks. Pipes and filters works by each filter exposing a simple interface that receives messages from the incoming pipe, performs some action on the message and places it onto the outbound pipe. Pipes and filters would allow the HUMS to be tailorable by the client as alternative solutions can be composed by connecting filters to different pipes. \hl{this could probably be clearer}
