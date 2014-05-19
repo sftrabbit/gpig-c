@@ -12,8 +12,8 @@
 	</target>
 	
 	<target name="prejar-hook" depends="compile">
-	    <mkdir dir="${bin.res.dir}" />
-		<copy todir="${bin.res.dir}">
+	    <mkdir dir="${bin.res.dir}/config/engines" />
+		<copy todir="${bin.res.dir}/config/engines">
    			<fileset dir="${bin.classes.dir}" includes="com/gpigc/core/*/engine/*.class"/>
  		</copy>
 	</target>

@@ -3,6 +3,7 @@
  */
 package com.gpigc.core.analysis.engine;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -34,9 +35,7 @@ import org.opencv.imgproc.Imgproc;
  * @author GPIG-C
  */
 public class FaceAnalysisEngine extends AnalysisEngine {
-
-	private static final String CONFIG_PATH = "res/config/";
-
+	
 	/* Caches the example faces associated with each system to avoid frequently 
 	 * re-parsing them
 	 */
@@ -135,10 +134,9 @@ public class FaceAnalysisEngine extends AnalysisEngine {
 		if (systemExampleFacesCache.keySet().contains(system)) {
 			exampleFaces = systemExampleFacesCache.get(system);
 		} else {
-			String faceDataFileName = FileUtils.getExpandedFilePath(CONFIG_PATH 
-					+ system.getParameters().get(Parameter.EXAMPLE_FACES));
+			File faceDataFileName = this.core.getConfig().getConfigFile(system.getParameters().get(Parameter.EXAMPLE_FACES));
 			try {
-				String faceData = FileUtils.readString(faceDataFileName);
+				String faceData = FileUtils.readString(faceDataFileName.toString());
 				exampleFaces = parseExampleFaces(faceData);
 				systemExampleFacesCache.put(system, exampleFaces);
 			} catch (IOException e) {

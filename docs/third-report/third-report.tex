@@ -93,7 +93,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-Word count: \input{wc} (\textit{using TeXCount})
+Word count: % \input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -185,7 +185,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 	\requirement{\fr}{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
 \requirement{\fr}{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
-\requirement{\fr}{6}{The HUMS must store no more data records than the Consumer-defined storage quota.}{}
+\requirement{\fr}{6}{The HUMS shall store no more data records than the Consumer-defined storage quota.}{}
 \requirement{\fr}{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
 	\requirement{\fr}{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
 	\requirement{\fr}{7.2}{The HUMS shall allow the User to define their own Events.}{}
@@ -197,7 +197,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 	\requirement{\fr}{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
 }
 \requirement{\fr}{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
-\requirement{\fr}{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
+\requirement{\fr}{10}{The HUMS shall interface with Report engines, allowing them to pull Reports.}{}
 \requirement{\fr}{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
 the way in which data is sensed.}{}
 \requirement{\fr}{12}{The System shall load new engines which an authorised user adds during runtime.}{}
@@ -212,7 +212,7 @@ the way in which data is sensed.}{}
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
 \requirement{\nfr}{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
-\requirement{\nfr}{3}{The HUMS must be accessible to End Users regardless of their geographic location.}{}
+\requirement{\nfr}{3}{The HUMS shall be accessible to End Users regardless of their geographic location.}{}
 \requirement{\nfr}{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
 \requirement{\nfr}{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
 \requirement{\nfr}{6}{The HUMS shall be tested to ensure all requirements are met before deployment.}{
@@ -223,10 +223,10 @@ the way in which data is sensed.}{}
 	\requirement{\nfr}{6.5}{The HUMS shall be tested using acceptance testing.}{}
 }
 \requirement{\nfr}{7}{The Customer will complete acceptance testing before the System is deployed.}{}
-\requirement{\nfr}{8}{The System must be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
-\requirement{\nfr}{9}{The System must be available for no less than 99.9\% of each month.}{}
-\requirement{\nfr}{10}{Data must be backed up within 24 hours of having been made available to the System.}{}
-\requirement{\nfr}{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
+\requirement{\nfr}{8}{The System shall be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
+\requirement{\nfr}{9}{The System shall be available for no less than 99.9\% of each month.}{}
+\requirement{\nfr}{10}{Data shall be backed up within 24 hours of having been made available to the System.}{}
+\requirement{\nfr}{11}{Timestamps applied by the system shall be accurate to within 5 ms of UTC.}{}
 \requirement{\nfr}{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
 \requirement{\nfr}{13}{The System shall support storing data without requiring specific schemata.}{}
 \requirement{\nfr}{14}{The configuration shall be in a human-readable format.}{}
@@ -443,9 +443,9 @@ In the previous report, many of the details in the module view were omitted. In 
 
 Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
 
-Each of the protocols that must be followed by the engines, emitters and so on are given below:
+The components of the End User facing API, made up of generic engines and emitters, is described below:
 \begin{description} [noitemsep]	
-	\item[Analysis Engines] All analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a description of a system (including its unique ID, settings and a handle to its stored sensor values) as a parameter, and returns a description of the event generated as a result of the analysis (which may be \texttt{null}). This allows analysis engines free reign as to how they define events in the context of a system with sensor values that are updated over time, giving fully dynamic configurability, that is, it is configurability at both runtime and compile time.
+	\item[Analysis Engines] All analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a description of a system (including its unique ID, settings and a handle to its stored sensor values) as a parameter, and returns a description of the event generated as a result of the analysis (which may be \texttt{null}). This allows analysis engines free reign as to how they define events in the context of a system with sensor values that are updated over time, giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
 	\item[Notification Engines] 
 	\item[Storage Engines] 
 	\item[Data Emitters] % connected via data inout interfaces. reads from inputs, sends to the core
@@ -580,7 +580,7 @@ A lightweight Jetty server was also added to the Core demonstrating that the Adm
 \subsection{Project Management}
 \hl{TODO Joe}
 
-\subsection{Monitoring}
+\subsection{Sensing}
 \label{sec:monitor}
 In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An End User would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
@@ -626,7 +626,27 @@ The final system performs face recognition, collecting face data using the built
 \label{fig:android}
 \end{figure}
 
-\subsection{Data Analysis}
+
+\subsection{Storing}
+\label{sec:store}
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the End User to conform to a particular data schema or datastore, in fact, the datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
+
+Prepared statements were used where possible in our datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
+
+\subsubsection{Google App Engine Storage}
+\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
+
+\subsubsection{PostgreSQL Storage}
+\emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. 
+To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
+
+\hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
+
+\subsubsection{H2 Storage}
+For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained and server-less, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
+
+
+\subsection{Analysing}
 \label{sec:analysis}
 In this section we describe how our HUMS implementation currently analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the End User to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
 
@@ -637,7 +657,6 @@ The previous mean analysis engine has been rewritten to form a generic bounded s
 The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds configurability on a per sensor level.
 
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
-
 
 \subsubsection{Generic Expression Engine}
 \hl{TODO Tom}
@@ -675,27 +694,13 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 \subsubsection{Other Analysis Engines}
 The \texttt{TrafficAnalysisEngine}, creates an event when a reading is generated, the analysis performed in this case is simply parsing the data about the earthquake and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification \texttt{Event} only if the magnitude above a specified value, so larger earthquakes generate events. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class in incredibly versatile  Other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the \texttt{AnalysisEngine} abstract class, and implementing the required methods.
 
-\subsection{Data Storage}
-\label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the End User to conform to a particular data schema or datastore, in fact, the datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
 
-Prepared statements were used where possible in our datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
+\subsection{Reporting and Notifying}
+\label{sec:reporting}
 
-\subsubsection{Google App Engine Storage}
-\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
+This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create notifications using any notification engines configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different types of notification that might want to be generated and dispatched by a HUMS, and to show the flexibility and tailorability of the system. They exhibit how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
 
-\subsubsection{PostgreSQL Storage}
-\emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. 
-To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
-
-\hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
-
-\subsubsection{H2 Storage}
-For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained and server-less, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
-
-\subsection{Data Reporting and Event Notifying}
-\label{sec:report}
-\hl{INTRO: Rosy||Joe||Andy}
+For reporting, two sample reporting engines were created that can be used through the Admin Centre. Once requested by the User, these generate reports with live updating information from the HUMS. These engines provide just a small idea of what is possible with our HUMS implementation, with further web based or standalone reporting engines -- or engines integrated into other applications -- able to be created to interact with the system and produce other types of reports the User may require.
 
 \subsubsection{SMS Notifications}
 A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio, who have a large infrastructure for telecommunications and offer an easy to use API.
@@ -705,6 +710,7 @@ The \texttt{EmailNotificationEngine} provided has the same functionality as the 
 It can be configured to send email notifications for events to any email address, and may be useful for more detailed, less frequent notifications.
 
 \subsubsection{Twitter Notifications}
+The \texttt{TwitterNotificationEngine} provided allows events to be pushed to the social networking site \emph{Twitter}. We included this engine to demonstrate how our HUMS implementation can be used to interact with popular platforms to provide report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the message it receives from analysis engines and then pushes that tweet to the registered account.
 
 \subsubsection{Android Application Feedback Notifications}
 \hl{TODO Rosy}
@@ -752,6 +758,15 @@ The updates to the Admin Centre have developed the previous prototype into a ful
     \caption{Screenshots of the Admin Centre}
 	\label{fig:admin-centre}
 \end{figure}
+
+%-------------------------------------------------------------%
+%-----------------------TESTING-----------------------%
+%-------------------------------------------------------------%
+\section{Testing}
+\label{sec:testing}
+
+\hl{TODO!}
+
 
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
@@ -843,6 +858,12 @@ We decided to monitor the process memory usage, CPU usage, state (idle, running,
 \subsection{Evaluation of Additional Engines}
 \label{sec:additional}
 \hl{TODO Rosy\&Tom\&Adam}
+
+
+\subsection{Instructions for Running and Replicating Results}
+\label{sec:instructions}
+\hl{TODO!}
+
 
 %-------------------------------------------------------------%
 %---------------------COMMUNICATION-------------------%
