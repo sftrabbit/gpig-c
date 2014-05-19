@@ -448,8 +448,6 @@ Building on our work in the previous report we decided to present four further, 
 \label{sec:views}
 The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
 
-\hl{Tom: Who is this view aimed at?}
-
 In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the Consumer (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
 
 Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
@@ -875,10 +873,10 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
 To consider the meeting of requirements, we lay out here the steps which we have taken in order to validate the meeting of the requirements.
 
-\xtableformat{| l | l | X |}{ \hline	FR.x  & 	Description of FR  & 	Validation \\ \hline
+\xtableformat{| p{1.6cm} | p{4.4cm} | p{8.6cm} |}{ \hline	FR.x  & 	Description of FR  & 	Validation \\ \hline
 	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
 	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\ \hline
-	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a postgres instance on heroku for the cloud solution. \\ \hline
+	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a Postgres instance on Heroku for the cloud solution. \\ \hline
 	FR.4  & 	  & 	This requirement has been satisfied by the use of configuration files, these can be loaded into the core at runtime. And can easily be changed and reloaded while the core is running. The administration center can be used to edit these configuration files even while the system is running. \\ \hline
 	FR.5  & 	  & 	The requirement for notifications on a full quota were meant for the SaaS part of our implementation. As this is a prototype and is not completed, this is not currently implementation. \hl{?} \\ \hline
 	FR.6  & 	  & 	  \hl{?} \\ \hline
@@ -890,11 +888,11 @@ To consider the meeting of requirements, we lay out here the steps which we have
 	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
 }{Evaluation for Satisfaction of Functional Requirements}{frevaltable}
 
-\xtableformat{| l | l | X |}{ \hline	NFR.x  & 	Description of NFR  & 	Validation \\ \hline
+\xtableformat{| p{1.6cm} | p{4.4cm} | p{8.6cm} |}{ \hline	NFR.x  & 	Description of NFR  & 	Validation \\ \hline
 	NFR.1  & 	  & 	The data store is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ \hline
 	NFR.2  & 	  & 	There has been a README provided. \\ \hline
 	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ \hline
-	NFR.4  & 	  & 	\hl{We didnt implement security} \\ \hline
+	NFR.4  & 	  & 	We did not implement a security system in the current implementation, however for the full implementation which would be for release we had a set of requirements in place which we would enforce to provide an acceptable level of security. \\ \hline
 	NFR.5  & 	  & 	\hl{!} \\ \hline
 	NFR.6  & 	  & 	The tests for the system have been created and included at each stage of the development. \hl{write smat stuff} \\ \hline
 	NFR.7  & 	  & 	The system has not currently been performend. However, in the case of the real system, this would be performed by the customer and the customer would sign off to show the requirements were met. \\ \hline
