@@ -214,7 +214,7 @@ public class EmitterShell extends Shell {
 				buttonSelect(emitterDirectory + "/" + TEST_APP_1_NAME, testApp1Button,textApp1);
 			}
 		});
-		testApp1Button.setEnabled(!isLinux);
+		testApp1Button.setEnabled(isLinux);
 
 		testApp2Button = new Button(composite, SWT.TOGGLE);
 		GridData data2 = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
@@ -229,7 +229,7 @@ public class EmitterShell extends Shell {
 				buttonSelect(emitterDirectory + "/" + TEST_APP_2_NAME, testApp2Button, textApp2);
 			}
 		});
-		testApp2Button.setEnabled(!isLinux);
+		testApp2Button.setEnabled(isLinux);
 
 		earthButton = new Button(composite, SWT.TOGGLE);
 		GridData data3 = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
