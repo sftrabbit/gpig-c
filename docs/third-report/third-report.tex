@@ -25,7 +25,7 @@
 
 %%Tables
 \newcommand{\tableformat}[4]{
-\begin{table}[t]
+\begin{table}[ht!]
 \centering
   \rowcolors{2}{gray!10} {white}
 \begin{tabular}{#1}
@@ -204,7 +204,6 @@ After feedback from the previous reports, the HUMS requirements have been update
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
-\hl{more changes?} 
 
 When considering the non-functional requirements,\emph{NFR.14} was added as it is not necessarily the case that an Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
 
@@ -244,96 +243,13 @@ When considering the non-functional requirements,\emph{NFR.14} was added as it i
 
 
 %-------------------------------------------------------------%
-%-----------------------QUALITIES-------------------------%
-%-------------------------------------------------------------%
-\section{Quality Attributes}
-\label{sec:qualities}
-A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders.
-Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
-When considering the HUMS, its requirements and its stakeholders, Table~\ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
-
-\tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
-\hline
-Quality \qquad Attribute & Rank & Reasoning \\
-\hline
-Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the customer. 
-\\
-Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
-\\
-Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
-\\
-Availability & High & The non-functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then Consumers would lose confidence in it. The HUMS must be at least as available as the average Consumer's system in order to monitor it properly. 
-\\
-Security & High & Security is highly ranked as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify system data, and data in transit between Data Emitters and the HUMS must be protected.
-\\
-Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5 ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
-\\
-Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults and is also likely to increase its availability. 
-\\
-Usability & Low & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for the web interface and admin centre, however this is only a small part of the HUMS.
-\\
-}{The ranked quality attributes, associated with the HUMS}{tab:qualities}
-
-%-------------------------------------------------------------%
-%----------------------SCENARIOS---------------------%
-%-------------------------------------------------------------%
-\section{Quality Attribute Scenarios}
-\label{sec:scenarios}
-Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimuli. This helps to create goals which the final implementation can be tested against to determine its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions. Other scenarios where also considered and documented, however could not be included in this report due to space limitations.
-
-\begin{scenario}{1}
-\quality{Configurability}
-\source{The Customer}
-\stimulus{The Customer wishes to reconfigure the system to monitor mechanical systems.}
-\artifact{HUMS Core}
-\environment{Design Time}
-\response{The System is reconfigured to be comparable with mechanical systems, tested, and deployed.}
-\measure{All work is completed on time and in budget.}
-\rationale{This scenario is important to the customer, as they expect the HUMS to move across domains easily.}
-\end{scenario}
-
-\begin{scenario}{2}
-\quality{Modifiability}
-\source{Developer}
-\stimulus{The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.}
-\artifact{HUMS Core}
-\environment{Runtime}
-\response{The new engine is implemented, tested and successfully added to the HUMS, without any loss in service.}
-\measure{No other system elements are affected, and the work is completed within budget.}
-\rationale{This scenario is important to both the HUMS developers and the Consumers. The HUMS should allow both of these groups to add custom engines to the system without affecting other system components.}
-\end{scenario}
-
-\begin{scenario}{3}
-\quality{Security}
-\source{An unknown external Client}
-\stimulus{The unknown external Client attempts to access stored HUMS data or HUMS services.}
-\artifact{HUMS Core}
-\environment{Normal Operation -- Online}
-\response{The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.}
-\measure{No HUMS data or services are damaged as a result of the access attempt.}
-\rationale{This scenario shows how the HUMS is expected to behave when a Client attempts access to its services, showing the importance of authenticating Clients and how the HUMS should respond to unauthorised Clients.}
-\end{scenario}
-
-\begin{scenario}{4}
-\quality{Availability}
-\source{Datastore Module}
-<<<<<<< HEAD
-\stimulus{The Consumer's registered Datastore is unavailable to the HUMS instance.}
-\artifact{HUMS}
-\environment{Runtime}
-\response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
-\measure{End user defined repair time.}
-\rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined Datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in a degraded mode.}
-\end{scenario}
-
-%-------------------------------------------------------------%
 %--------------------------RISKS--------------------------%
 %-------------------------------------------------------------%
 \section{Project Risks}
 \label{sec:risks}
-It is important to consider the risks of any software project so that appropriate mitigation can be exercised and there are clear contingency plans in place to prevent problems having a large impact of the project, thus ensuring all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout development. 
+It is important to consider the risks of any software project so that appropriate mitigation can be used, and clear contingency plans can be put in place to prevent problems having a large impact. This will help to ensure all work is completed on time and to a high standard. For this phase of the project, risks have been formulated and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc. This was done to ensure that the risks were explicitly known, and mitigated, throughout the project. 
 
-Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in Table~\ref{tab:human_risks} and technical risks are presented in Table~\ref{tab:tech_risks}.
+Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}.
 Some risks have been modified since the previous report, while others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
 
 \tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c }
@@ -360,7 +276,7 @@ Some risks have been modified since the previous report, while others are comple
     R.7 & Data interception between the HUMS core and registered engines or Datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
     R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
     R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
-    R.10 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
+    R.10 & Included notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
   	\hline
 }
 {The technical risks associated with this phase of the project}{tab:tech_risks}
@@ -375,9 +291,91 @@ The use of the scrum as part of our software engineering methodology, as discuss
 Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the system, or caused the system to not meet stakeholder expectations.
 
 \item[Automated Testing:] 
-Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.5-9}, helping to automatically validate system requirements. 
+Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.6-10}, helping to automatically validate system requirements. 
 Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging.
 \end{description}
+
+%-------------------------------------------------------------%
+%-----------------------QUALITIES-------------------------%
+%-------------------------------------------------------------%
+\section{Quality Attributes}
+\label{sec:qualities}
+A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders.
+Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
+When considering the HUMS, its requirements and its stakeholders, Table~\ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
+
+\tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
+\hline
+Quality \qquad Attribute & Rank & Reasoning \\
+\hline
+Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the customer. 
+\\
+Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
+\\
+Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
+\\
+Availability & High & The non-functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then Consumers would lose confidence in it. The HUMS must be at least as available as the average Consumer's system in order to monitor it properly. 
+\\
+Security & High & Security is highly ranked as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify system data, and data in transit between Data Emitters and the HUMS must be protected.
+\\
+Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5 ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
+\\
+Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults and is also likely to increase its availability. 
+\\
+Usability & Medium & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphics and otherwise.
+\\
+}{The ranked quality attributes, associated with the HUMS}{tab:qualities}
+
+%-------------------------------------------------------------%
+%----------------------SCENARIOS---------------------%
+%-------------------------------------------------------------%
+\section{Quality Attribute Scenarios}
+\label{sec:scenarios}
+Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimuli. This helps to create goals which the final implementation can be tested against to determine its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions. Other scenarios where also considered and documented, however could not be included in this report due to space limitations.
+
+\begin{scenario}{1}
+\quality{Configurability}
+\source{The Consumer}
+\stimulus{The Consumer wishes to modify the HUMS behaviour by updating their configuration file.}
+\artifact{HUMS Core, Configuration File}
+\environment{Runtime/Compile Time}
+\response{The Consumer is able to modify their configuration file.}
+\measure{ The HUMS is not re-installed or re-compiled}
+\rationale{This scenario is important to the customer, as they expect the Consumer to be able to easily chage HUMS parameters, making them specific to their industry, for example modifying the engines thier system uses. Achieving this scenario will help our solution to move across different domains easily.}
+\end{scenario}
+
+\begin{scenario}{2}
+\quality{Modifiability}
+\source{Developer}
+\stimulus{The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.}
+\artifact{HUMS Core}
+\environment{Runtime}
+\response{The new engine is implemented, tested and successfully added to the HUMS, without any loss in service.}
+\measure{No other system elements are affected, and the work is completed within budget.}
+\rationale{This scenario is important to both the HUMS developers and the Consumers. The HUMS should allow both of these groups to add custom engines to the system without affecting other system components.}
+\end{scenario}
+
+\begin{scenario}{3}
+\quality{Security}
+\source{An unknown external Client}
+\stimulus{The unknown external Client attempts to access stored HUMS data or HUMS services.}
+\artifact{HUMS Core}
+\environment{Normal Operation -- Online}
+\response{The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.}
+\measure{No HUMS data or services are damaged as a result of the access attempt.}
+\rationale{This scenario shows how the HUMS is expected to behave when a Client attempts to access its services, showing the importance of authenticating Clients and how the HUMS should respond to unauthorised Clients.}
+\end{scenario}
+
+\begin{scenario}{4}
+\quality{Availability}
+\source{Datastore Module}
+\stimulus{The Consumer's registered Datastore is unavailable to the HUMS instance.}
+\artifact{HUMS}
+\environment{Runtime}
+\response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
+\measure{End user defined repair time.}
+\rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined Datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in a degraded mode.}
+\end{scenario}
 
 %-------------------------------------------------------------%
 %--------------TACTICS / PATTERNS----------------------%
@@ -517,6 +515,7 @@ A behavioural view can show the actual actions taken by the system when the data
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
 \hl{TODO ADAM}
+The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earth-quake Hazards Program API and monitored information using JMX for the first Test Application.
 
 The interim solution provided a minimal end to end solution capable of sensing the first test application, storing the test data, analysing the data and triggering reports. 
 
