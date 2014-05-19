@@ -25,7 +25,7 @@
 
 %%Tables
 \newcommand{\tableformat}[4]{
-\begin{table}[t]
+\begin{table}[ht!]
 \centering
   \rowcolors{2}{gray!10} {white}
 \begin{tabular}{#1}
@@ -204,7 +204,6 @@ After feedback from the previous reports, the HUMS requirements have been update
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
-\hl{more changes?} 
 
 When considering the non-functional requirements,\emph{NFR.14} was added as it is not necessarily the case that an Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
 
@@ -283,13 +282,13 @@ Having identified the quality attributes which are important to creating a succe
 
 \begin{scenario}{1}
 \quality{Configurability}
-\source{The Customer}
-\stimulus{The Customer wishes to reconfigure the system to monitor mechanical systems.}
-\artifact{HUMS Core}
-\environment{Design Time}
-\response{The System is reconfigured to be comparable with mechanical systems, tested, and deployed.}
-\measure{All work is completed on time and in budget.}
-\rationale{This scenario is important to the customer, as they expect the HUMS to move across domains easily.}
+\source{The Consumer}
+\stimulus{The Consumer wishes to modify the HUMS behaviour, to use new engines and update their configuration file.}
+\artifact{HUMS Core, Configuration File}
+\environment{Runtime/Compile Time}
+\response{The Consumer is able to add new engines and modify the configuration files.}
+\measure{ The HUMS is not re-installed or re-compiled}
+\rationale{This scenario is important to the customer, as they expect the Consumer to be able to easily add functionality specific to their industry. Achieving this scenario will help our solution to move across different domains easily.}
 \end{scenario}
 
 \begin{scenario}{2}
