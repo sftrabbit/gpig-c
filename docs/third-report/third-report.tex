@@ -69,9 +69,6 @@ Walker}
 \newcommand{\ed}[1]{\textcolor{reqColor}{\textbf{ED.#1}}}
 \newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
 \newcommand{\qas}[1]{\textcolor{reqColor}{\textbf{QAS.#1}}}
-		
-		
-
 
 %%Scenarios
 \newenvironment{scenario}[1]{
@@ -123,7 +120,7 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
-This report details the design and development of our HUMS, concentrating on progress made since the Interim Report. In this report, the system requirements are further refined, building on feedback from previous reports, adding a set of external dependencies. The HUMS architecture is then considered, in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views deemed to be the most relevant. Having determined the HUMS architecture, the associated risks of the project as a whole are considered, and risk reduction tactics are discussed.
+This report details the design and development of our HUMS, concentrating on progress made since the Interim Report. In this report the system requirements are further refined, building on feedback from previous reports and adding a set of external dependencies. The HUMS architecture is then considered in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views deemed to be the most relevant. Having determined the HUMS architecture, the associated risks of the project as a whole are considered and risk reduction tactics are discussed.
 
 The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the System. The project is then concluded, and the team reflects on their decisions throughout the project.
 
@@ -143,16 +140,16 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis
 	\item[Notification] A message dispatched by the System when an Event is fired
-	\item[Report] A message produced by the HUMS at the request of the Consumer
+	\item[Report] An artefact (consisting of HUMS data) produced by the HUMS at the request of the Consumer
 	
 	\vspace{0.15cm}
-	\item[Input Interface] The interface through which data is supplied to  the HUMS
-	\item[Data Emitter] Software that provides Client data to a HUMS instance through the Input Interface
-	\item[Output Interface] The interfaces through which reports and notifications are dispatched
-	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
-    \item[Datastore] A component of the System which stores data received through the Input Interface
-    \item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through the Input Interface.
-	\item[Admin Centre] A Web interface to configure and interact with the HUMS Core
+	\item[Input Interface] An interface through which data is supplied to  the HUMS
+	\item[Data Emitter] Software that provides Client data to a HUMS instance through an Input Interface
+	\item[Output Interface] An  interface through which Reports and Notifications are dispatched
+	\item[Data Output Client] A Client that receives data from an Instance through an Output Interface
+    \item[Datastore] A component of the System which stores data received through an Input Interface
+    \item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through Input Interfaces
+	\item[Admin Centre] A web interface to configure and interact with the HUMS Core
 
 	\vspace{0.15cm}
 	\item[Sensor] A source of data to be monitored by the System
@@ -654,9 +651,7 @@ Prepared statements were used where possible in our Datastore implementations, b
 
 \subsubsection{PostgreSQL Storage}
 \emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL Datastore. 
-To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
-
-\hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
+To implement this we created a \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
 
 \subsubsection{H2 Storage}
 For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained and server-less, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
@@ -977,7 +972,7 @@ Further information about how development was progressing and the proposals for 
 \subsection{Summary}
 \label{sec:summary}
 \hl{TODO All}
-This report has set out the details for the design and development of our HUMS progress, and in particular highlights the changes and progression from the previous report. The main addition for requirements were the set of external dependencies and the design of the system architecture.
+This report has set out the details for the design and development of our HUMS progress, and in particular highlights the changes and progression from the previous report. The main addition from the previous report were requirements, the set of external dependencies and the design of the system architecture.
 
 The prototype systems, such as the test applications like the earthquake monitor, for the HUMS system have been demonstrated and the validation for the functional and non-functional requirements, as well as the quality of the solution, have been considered.
 
