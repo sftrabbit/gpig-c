@@ -664,19 +664,16 @@ For real-time applications that require high performance and low response times 
 
 \subsection{Analysing}
 \label{sec:analysis}
-In this section we describe how our HUMS implementation currently analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the Consumer to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
+In this section we describe how our HUMS implementation can analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the Consumer to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
 
-\subsubsection{Generic Bounded Sensor Value Engine}
+\subsubsection{Bounded Sensor Value Engine}
+The previous mean analysis engine has been extended to form a generic bounded sensor value engine. This engine performs analysis per sensor of the system being analysed to determine if the rolling mean average of a number of values is outside of bounds defined in the system configuration diagram. A single event is produced detailing any violations across all sensors, generating a single notification for the system being analysed rather than an unmanageable amount.
 
-The previous mean analysis engine has been rewritten to form a generic bounded sensor value engine. This engine performs analysis on each sensor in the system being analysed to determine if the mean average of the values is outside of specified bounds. It then produces a single event detailing any violations across all the sensors, which generates a single notification for the system being analysed rather than a flood of them.
-
-The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the Consumer to tailor to their needs, and also adds configurability on a per sensor level.
-
-The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
+The engine is able to analyse any sensor that records numerical values so is reusable across different contexts and flexible for use in a variety of domains.
 
 \subsubsection{Expression Engine}
 We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential analysis processes, avoiding the need to build new analysis engine classes. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the system configuration file to define the action of the engine.
-\begin{figure}[htbp]
+\begin{figure}[ht]
 \centering
 \verb+if(max(ENGINE_TEMP_A, ENGINE_TEMP_B) >= 120 or RPM > 5000, -1, 0)+
 \caption{A basic example of an expression that evaluates to $-1$ when a system is operating outside of its defined normal operational parameters.}
