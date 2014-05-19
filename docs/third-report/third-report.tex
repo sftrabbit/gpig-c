@@ -442,32 +442,38 @@ Having determined the tactics applicable to the HUMS, which are likely to increa
 \end{description}
 
 \section{System Views} 
-Building on our work in the previous report we decided to present four further, more detailed views of our HUMS. This time we choose to take inspiration from the SEI \cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Deployment View}.
+Building on our work in the previous reports we decided to present four further, more detailed, views of our HUMS. This time we choose to take inspiration from the SEI \cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Deployment View}.
 
 \subsection{Module View}
 \label{sec:views}
-The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
+A\emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
 
-In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the Consumer (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
+This view is targeted at all System stakeholders, showing enough detail for developers to understand the structure and interactions between components, but not so much detail that non-technical stakeholders would be confused.
 
-Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
+In the previous report, many of the details in the module view were omitted. In this iteration, details of the included and customisable components, such as the engines, are included showing exactly which modules have been implemented so far, as well as their associated interfaces which would be used by the Consumer. 
 
-The components of the Consumer facing API, made up of generic engines and emitters, is described below:
+Figure~\ref{fig:modules} shows a clear separation between those modules included with the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our system is highly tailorable, with plenty scope for adding additional functionality.
+
+The design patterns described above can be seen within this view, including the table data gateway pattern which is used for abstracting away the implementation details of particular datastores, and the observer pattern implemented through the controllers and engines.
+
+The components of the Consumer facing API, made up of generic engines and emitters, are described below:
 \begin{description} [noitemsep]	
-	\item[Analysis Engines] All analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a description of a system (including its unique ID, settings and a handle to its stored sensor values) as a parameter, and returns a description of the event generated as a result of the analysis (which may be \texttt{null}). This allows analysis engines free reign as to how they define events in the context of a system with sensor values that are updated over time, giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
-	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an event, which describes a notable situation detected by an analysis engine, and notifies the relevant user by its notification method. A boolean must be returned indicating whether the notification was delivered or not. Users can implement this interface themselves or extend a default implementation, and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
-	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a datastore. There are two methods for writing and two for reading. The two for reading are \texttt{readMostRecent()}, which returns the $n$ most recent records for a given system sensor, and \texttt{readBetween()}, which returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult}, which encapsulates the values in the datastore which fit the query. The methods for writing to a datastore are both named \texttt{write()}, however one of them takes a single data point and writes it to the datastore, the other is a batch method, which often allows a list of data points to be written more efficiently in the underlying implementation.
+	\item[Analysis Engines] All Consumer analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a \texttt{ClientSystem} object, which wraps information about a particular system loaded from the configuration file, and returns an \texttt{Event} object generated as a result of the analysis (which may be \texttt{null}). This event object, holds stores the ID of the Client that generated it and key-values describing the event to be used by notification engines. This allows analysis engines free reign as to how they define events, and what information they store about events.
+	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an \texttt{Event}, the result of analysis, and notifies the relevant individual, software, or hardware, as defined. Consumers can implement this interface themselves or extend a provided implementations.
+	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given system sensor, and the \texttt{readBetween()} method returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the datastore which fit the query. The methods for writing to a datastore are both named \texttt{write()}, however, one takes a single item of data and writes it to the datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
 	\item[Data Emitters] Data emitters read values from sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example emitters, such as the Earthquake Emitter and the Test App Emitters, but more may be added by the user.
 \end{description}
 % What methods have we used, what Java interfaces must we implement. All extends from abstract _ class, and offers these abstract functions. What they do and how the user would extend them. Sample implementations can be overidden too
 
 % Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
 % Quality attributes?
-
+ %giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
+ % and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
+ 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{Module diagram of the System. The blue components and their contents have all been implemented. The green components are extensions left to the Consumer.}
+  \caption{Module diagram of the System. Component within the \textbf{blue} areas are included with the HUMS. The green components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
   \label{fig:modules}
 \end{figure}
 
