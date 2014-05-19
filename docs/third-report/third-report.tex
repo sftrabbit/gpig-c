@@ -603,7 +603,7 @@ A lightweight Jetty server was also added to the Core demonstrating that the Adm
 
 \subsection{Sensing}
 \label{sec:monitor}
-In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An Consumer would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
+In this section we describe the applications our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An Consumer would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS Core.
 
 \subsubsection{Test Applications} \label{subsec:tapp}
 Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added state, numbeer of threads, last processor it was run on, and working directory. For this we created a process monitoring engine which is capable of tracking information from a process.
