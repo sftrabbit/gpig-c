@@ -1,4 +1,4 @@
-<%@ page import="com.gpigc.core.FileUtils,java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
+<%@ page import="com.gpigc.core.Main,com.gpigc.core.Config,com.gpigc.core.FileUtils,java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
 <%@ page buffer="none" %>
 <%!
 private List<String> getEngines(String engineType) {
@@ -13,9 +13,11 @@ private List<String> getEngines(String engineType) {
 }
 %>
 <%
+Config coreConfig = new Config(Main.CONFIG_NAME);
+
 String sysConfigFilePath = System.getProperty("gpigc.configfile");
 if (sysConfigFilePath == null) {
-    sysConfigFilePath = FileUtils.getExpandedFilePath("res/config/RegisteredSystems.config");
+    sysConfigFilePath = coreConfig.getConfigFile("RegisteredSystems.config").toString();
 }
 FileReader configFile = new FileReader(sysConfigFilePath);
 
