@@ -165,14 +165,14 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-After feedback from the previous reports, the HUMS requirements have been updated. This included modifying existing requirements, and adding additional requirements and refinements. It also included removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
+After feedback from the previous reports, the requirements of the HUMS have been updated. This includes modifying existing requirements, and adding additional requirements and refinements. It also includes removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\emph{FR.4.1} has been modified, and refinements added, to increase the configurability of our solution, by specifying exactly how configuration files will be used within our implementation. We chose to use \emph{JSON} as the configuration format as it is a lightweight, widely-used, standard.
+\emph{FR.4.1} has been modified, and refinements added, to increase the configurability of our solution by specifying exactly how configuration files will be used within our implementation. We chose to use \emph{JSON} as the configuration format because it is a lightweight and widely-used standard.
 
-\emph{FR.12} became apparent after considered the reloading of configuration in \emph{FR.4.1.2}, as without the ability to dynamically load new engines modifying registered analysis, storage, and reporting methods would require a restart of the System to take effect.
+\emph{FR.12} became apparent after considering the reloading of configuration in \emph{FR.4.1.2}, as without the ability to dynamically load new engines, modifying registered analysis, storage, and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
@@ -221,7 +221,7 @@ After feedback from the previous reports, the HUMS requirements have been update
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
-When considering the non-functional requirements, \emph{NFR.14} was added as it is not necessarily the case that an Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
+When considering the non-functional requirements, \emph{NFR.14} was added as it is not necessarily the case that a Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
 
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
