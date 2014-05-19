@@ -537,16 +537,12 @@ We had created a low fidelity  Admin Centre, which appeared as we had desired, b
 
 Overall, our interim solution was a low fidelity end-to-end solution, but did not meet many of our requirements, and was not impressively tailorable or configurable. 
 
-\subsection{Changes Since the Interim Report}
-\label{sec:changes}
-\hl{TODO All}
-
 \subsection{Core Development}
 \label{sec:core}
  %giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
  % and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
  
-The Core is the main application controlling the behaviour and functionality of the HUMS. It receives client data through Data Emitters and stores it using data storage engines, data is then passed to appropriate analysis engines, which can create \texttt{Event} objects that the Core passes on to the relevant notification engines.
+The HUMS Core is the main application controlling the behaviour and functionality of the HUMS. It receives Client data through Data Emitters and stores it using data storage engines, data is then passed to appropriate analysis engines, which can create \texttt{Event} objects that the Core passes on to the relevant notification engines.
 
 \texttt{Controller} objects are used to dynamically load and manage the three different engine types. The use of dynamic class loading increases the configurability or modifiability of the system, by allowing the new engines to be added both at runtime and compile time. In addition, the Core automatically detects when new files are added to the folder they are loaded from, and refreshes the system. This means that from the Consumers perspective, they merely have to place their class into the correct folder, increasing the usability of the HUMS. 
 
