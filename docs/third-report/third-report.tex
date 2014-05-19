@@ -458,7 +458,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \end{figure}
 
 \subsection{Component and Connector View}
-
+%Pipes and filters works by each filter exposing a simple interface that receives messages from the incoming pipe, performs some action on the message and places it onto the outbound pipe. In the context of the HUMS, pipes are interfaces through which data is passed (such as the Data Input Interface), and filters are engines (such as the Generic Bounded Sensor Value Engine). Pipes and filters would allow the HUMS to be tailorable by the client as alternative solutions can be composed by connecting filters to different pipes, or by even implementing their own filters.
 In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer.
 
 The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
@@ -511,7 +511,7 @@ For the implementation we have built upon our previous prototypes, utilising Jav
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
-The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earth-quake Hazards Program API and monitored information using JMX for the first Test Application.
+The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earthquake Hazards Program API and monitored information using JMX for the first Test Application.
 
 The interim solution provided a minimal end to end solution capable of sensing the first test application, storing the test data, analysing the data and triggering reports. 
 
@@ -563,8 +563,7 @@ A configuration file is loaded into the Core by the Consumer before it is run. C
 
 Any changes made to the configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
-\hl{TODO Tom: Refactored to add config file that contains all it's parameters, which can be set and modified at runtime, separating params from the code}
-Since the last report, the HUMS has been refactored to load its parameters from a \texttt{*.config} file. The file describes the parameters for each engine, for example, the expression to be used by the \texttt{ExpressionAnalysisEngine}, as well as how data is to be routed through the HUMS, from the emitter, to storage, to analysis and then on to notification.
+Since the last report, the HUMS has been refactored to load its parameters from a \texttt{*.config} file. Such a file describes the parameters for each engine, for example, the expression to be used by the \texttt{ExpressionAnalysisEngine}, as well as how data is to be routed through the HUMS, from the emitter, to storage, to analysis and then on to notification. Many routes can exist at once, with information about different systems being handled independently or by the same process. The configuration file can be set and modified at runtime or compile time, allowing for a very high degree of configurability that is separate from the codebase.
 
 In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
@@ -628,7 +627,6 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-<<<<<<< HEAD
 This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing Datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or Datastore, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
 
 Prepared statements were used where possible in our Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
