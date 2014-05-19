@@ -467,17 +467,20 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{Module diagram of the System. Component within the \textbf{blue} areas are included with the HUMS. The  \textbf{green} components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
+  \caption{A \emph{Module} diagram of the System. Component within the \textbf{blue} areas are included with the HUMS. The \textbf{green} components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
   \label{fig:modules}
 \end{figure}
 
 \subsection{Component and Connector View}
-%Pipes and filters works by each filter exposing a simple interface that receives messages from the incoming pipe, performs some action on the message and places it onto the outbound pipe. In the context of the HUMS, pipes are interfaces through which data is passed (such as the Data Input Interface), and filters are engines (such as the Generic Bounded Sensor Value Engine). Pipes and filters would allow the HUMS to be tailorable by the client as alternative solutions can be composed by connecting filters to different pipes, or by even implementing their own filters.
-In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer.
+In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. 
+Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes.
+This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer.
+
+This view is again targeted more at technical stakeholders, allowing them to visualise the flow of data, and determine what within the system they can configure.
 
 The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
 
-The \texttt{:Emit Data} filter transforms the client data into serialisable data which can be sent using protocol buffers to the \texttt{:Read Data} filter. Using \emph{Protocol Buffers}, allows for data to be sent locally or over a network, with or without encryption. 
+The \texttt{:Emit Data} filter transforms the client data into a format which can be sent using protocol buffers to the \texttt{:Read Data} filter. The use of \emph{Protocol Buffers} allows for data to be sent locally or over a network, with or without encryption. 
 
 The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the Consumers defined Datastore. 
 
@@ -494,7 +497,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 \begin{figure}[tbp]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
-  \caption{A component and connector diagram of the HUMS, showing the protocols used when passing data between filters}
+  \caption{A \emph{Component and Connector} diagram of the HUMS, showing the protocols used when passing data between filters}
   \label{fig:pipesAndFilter}
 \end{figure}
 
