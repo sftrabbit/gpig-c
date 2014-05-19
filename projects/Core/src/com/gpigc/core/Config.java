@@ -12,8 +12,16 @@ import java.nio.file.attribute.BasicFileAttributes;
 public class Config {
 	private Path applicationDataDirectory;
 	
-	public Config(String defaultConfigDirectory) throws ConfigException {
-		applicationDataDirectory = generateApplicationDataDirectory();
+	public Config() {
+		applicationDataDirectory = null;
+	}
+	
+	public Config(String configName) throws ConfigException {
+		applicationDataDirectory = generateApplicationDataDirectory(configName);
+	}
+	
+	public Config(String configName, String defaultConfigDirectory) throws ConfigException {
+		this(configName);
 		
 		try {
 			if (!Files.exists(applicationDataDirectory)) {
@@ -29,14 +37,17 @@ public class Config {
 	}
 	
 	public File getConfigFile(String fileName) {
-		return applicationDataDirectory.resolve(fileName).toFile();
+		if (applicationDataDirectory != null) {
+			return applicationDataDirectory.resolve(fileName).toFile();
+		}
+		return null;
 	}
 	
-	private Path getApplicationDataDirectory() {
+	public Path getApplicationDataDirectory() {
 		return applicationDataDirectory;
 	}
 	
-	private Path generateApplicationDataDirectory() throws ConfigException
+	private Path generateApplicationDataDirectory(String configName) throws ConfigException
 	{
 	    String os = System.getProperty("os.name").toUpperCase();
 	    
@@ -56,7 +67,7 @@ public class Config {
 	    	throw new ConfigException("Could not determine application data directory");
 	    }
 	    
-	    applicationDataDirectory += "/.gpigc";
+	    applicationDataDirectory += "/." + configName;
 	    
 	    return Paths.get(applicationDataDirectory);
 	}
