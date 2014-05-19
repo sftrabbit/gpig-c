@@ -237,23 +237,23 @@ When considering the non-functional requirements, \emph{NFR.14} was added as it 
 	\requirement{\nfr}{6.5}{The HUMS shall be tested using acceptance testing.}{}
 }
 \requirement{\nfr}{7}{The Customer shall complete acceptance testing before the System is deployed.}{}
-\requirement{\nfr}{8}{The System shall be able to support at least 5 Clients of the Output Interface per HUMS instance.}{}
+\requirement{\nfr}{8}{The System shall be able to support at least five Clients of the Output Interface per HUMS instance.}{}
 \requirement{\nfr}{9}{The System shall be available for no less than 99.9\% of each month.}{}
 \requirement{\nfr}{10}{Data shall be backed up within 24 hours of having been made available to the System.}{}
-\requirement{\nfr}{11}{Timestamps applied by the system shall be accurate to within 5 ms of UTC.}{}
-\requirement{\nfr}{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
+\requirement{\nfr}{11}{Timestamps applied by the system shall be accurate to within 5~ms of UTC.}{}
+\requirement{\nfr}{12}{The System shall dispatch Notifications within 5~ms of an Event being triggered.}{}
 \requirement{\nfr}{13}{The System shall support storing data without requiring specific schemata.}{}
 \requirement{\nfr}{14}{The configuration file shall be in a human-readable format.}{}
 \end{requirements}
 
 \subsection{External Dependencies}
 \label{sec:external_dependencies}
-External dependencies are necessary events which must take place before the HUMS can be run successfully by consumers. The previous report did not consider the external dependencies of the consumer running the HUMS rather than the development process, so they are considered here.
+External dependencies are necessary events which must take place before the HUMS can be run successfully by Consumers. The previous report did not consider the external dependencies of the Consumer running the HUMS as well as those of the development process, so they are considered here.
 
  \begin{description}
  \item[\ed{1}] An appropriate platform must be provisioned, including supported hardware, operating system and JVM, when not running as a SaaS.
- \item[\ed{2}] The consumer must be instructed in the process of configuration of the HUMS.
- \item[\ed{3}] The initial data emitters, analysis engines, notifiers and data gateways must be selected.
+ \item[\ed{2}] The Consumer must be instructed in the process of configuration of the HUMS.
+ \item[\ed{3}] The initial Data Emitters, analysis engines, notifiers and data gateways must be selected.
  \item[\ed{4}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core, if not running on the same physical machine.
  \end{description}
 
@@ -263,50 +263,49 @@ External dependencies are necessary events which must take place before the HUMS
 %-------------------------------------------------------------%
 \section{Project Risks}
 \label{sec:risks}
-It is important to consider the risks of any software project so that appropriate mitigation strategies can be applied, and clear contingency plans can be put in place to prevent potential problems having a large impact. This will help to ensure that all work is completed on time and to a high standard. For this phase of the project, risks have been identified and mitigated before beginning development, unlike in previous phases where risks have been updated ad-hoc which otherwise potentially allows them to occur before a mitigation strategy is in place. In this iteration, many risks were explicitly known, and mitigated, before commencing the next stage of development. 
+It is important to consider the risks of any software project so that appropriate mitigation strategies can be applied, and clear contingency plans can be put in place to prevent potential problems having a large impact. This will help to ensure that all work is completed on time and to a high standard. For this phase of the project risks have been identified and mitigated before beginning development, unlike in previous phases where risks were updated ad-hoc which otherwise potentially allowed them to occur before a mitigation strategy is in place. In this iteration many risks were explicitly known, and mitigated, before commencing the next stage of development.
 
-Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks being sidelined and inadequately considered. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}.
-Some risks have been modified since the previous report, while others are completely new and specific to the revised system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured on a scale between 1$-$100.
+Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks being sidelined and inadequately considered. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}. Some risks have been modified since the previous report, while others are completely new and specific to the revised system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured on a scale between 1$-$100.
 
 \xtableformat{p{0.8cm} X X X c c c }
 { 	\hline
-  	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
+  	Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
   
-    R.1 & Loss of team member(s) or team member(s) underperformance. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
-    R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
+    R.1 & Loss of team member(s) or team member(s) underperform. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
+    R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality. Request extension. & 25 & Moderate &  \textbf{Low} \\
     R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
     R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
-    R.5 & The Consumer fails to update the configuration files of the HUMS  & Consumers find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential Consumers to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
+    R.5 & The Consumer fails to update the configuration files of the HUMS. & Consumers find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential Consumers to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
 }
-{The human and business risks associated with this phase of the project}{tab:human_risks}
+{The human and business risks associated with this phase of the project.}{tab:human_risks}
 
 
 \xtableformat{p{0.8cm} X X X c c c}
 { 	\hline
-    Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
+    Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
   
-    R.6 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
-    R.7 & Data interception between the HUMS core and registered engines or Datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
-    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
-    R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
-    R.10 & Included notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
+    R.6 & Developed Admin Centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign Admin Centre. & 10 & Minor & \textbf{Low} \\
+    R.7 & Data intercepted between the HUMS Core and registered engines or Datastore. & Loss of confidence in HUMS. Lost/corrupted data. & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+    R.8 & HUMS does not facilitate data storage using a variety of Datastores. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. & Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+    R.9 & Computation by included analysis engines too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
+    R.10 & Included notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of System failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
 }
 {The technical risks associated with this phase of the project}{tab:tech_risks}
 
 \subsection{Risk Mitigation}
-The following risk reduction techniques have been applied throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to the techniques specified in this section, the tactics and patterns explained later in this report have been used to mitigate technical risks which affect the quality of the system.
+The following risk reduction techniques have been applied throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to the techniques specified in this section, the tactics and patterns explained later in this report have also been used to mitigate technical risks which affect the quality of the system.
+
 \begin{description}
 \item[Scrum:]
-The use of the scrum as part of our software engineering methodology, as discussed in the initial report, helps to mitigate risks \emph{R.1-3}. The scrum allows team members to be kept up to date on what others are working on, and the state of the project as a whole, making it easier for work to be reallocated across teams members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customer's brief.
+The use of the scrum as part of our software engineering methodology, as discussed in the Initial Report, helps to mitigate risks \emph{R.1--3}. The scrum allows team members to be kept up to date on what others are working on, and the state of the project as a whole, making it easier for work to be reallocated across team members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customer's brief.
 
 \item[Version Control:]
-Git version control is used, allowing the entire team to simultaneously modify the project, whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the system, or caused the system to not meet stakeholder expectations.
+Git version control is used, allowing the entire team to simultaneously modify the project whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the System, or caused the System to not meet Customer expectations.
 
 \item[Automated Testing:] 
-Automated integration, unit, and regression testing is used throughout the project using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.6-10}, helping to automatically validate system requirements. 
-Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging. % TODO Code profilers don't run on static code, do they?
+Automated integration, unit and regression testing is used throughout the project, using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.6--10}, helping to automatically validate system requirements. Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging. % TODO Code profilers don't run on static code, do they?
 \end{description}
 
 %-------------------------------------------------------------%
@@ -340,22 +339,23 @@ Usability & Medium & Usability was not deemed of great importance to the system 
 \\
 }{The ranked quality attributes, associated with the HUMS}{tab:qualities}
 
+
 %-------------------------------------------------------------%
 %----------------------SCENARIOS---------------------%
 %-------------------------------------------------------------%
 \section{Quality Attribute Scenarios}
 \label{sec:scenarios}
-Having identified the quality attributes which are important to creating a successful system, a set of quality attribute scenarios can be created which show how the system should respond to certain stimuli. This helps to create goals which the final implementation can be tested against to determine its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions. Other scenarios where also considered and documented, however could not be included in this report due to space limitations.
+Having identified the quality attributes which are important to creating a successful System, a set of quality attribute scenarios can be created which show how the System should respond to certain stimuli. This helps to create goals which the final implementation can be tested against to determine its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions. Other scenarios where also considered and documented, however could not be included due to space limitations.
 
 \begin{scenario}{1}
 \quality{Configurability}
 \source{The Consumer}
 \stimulus{The Consumer wishes to modify the HUMS behaviour by updating their configuration file.}
-\artifact{HUMS Core, Configuration File}
-\environment{Runtime/Compile Time}
+\artifact{HUMS Core, configuration file}
+\environment{Runtime/compile time}
 \response{The Consumer is able to modify their configuration file.}
-\measure{ The HUMS is not re-installed or re-compiled}
-\rationale{This scenario is important to the customer, as they expect the Consumer to be able to easily chage HUMS parameters, making them specific to their industry, for example modifying the engines thier system uses. Achieving this scenario will help our solution to move across different domains easily.}
+\measure{The HUMS is not reinstalled or recompiled.}
+\rationale{This scenario is important to the Customer as they expect the Consumer to be able to easily change HUMS parameters, making it specific to their context, for example modifying the engines their System uses. Achieving this scenario will help our solution to move across different domains easily.}
 \end{scenario}
 
 \begin{scenario}{2}
@@ -365,8 +365,8 @@ Having identified the quality attributes which are important to creating a succe
 \artifact{HUMS Core}
 \environment{Runtime}
 \response{The new engine is implemented, tested and successfully added to the HUMS, without any loss in service.}
-\measure{No other system elements are affected, and the work is completed within budget.}
-\rationale{This scenario is important to both the HUMS developers and the Consumers. The HUMS should allow both of these groups to add custom engines to the system without affecting other system components.}
+\measure{No other System elements are affected, and the work is completed within their budget.}
+\rationale{This scenario is important to both the HUMS developers and the Consumers. The HUMS should allow both of these groups to add custom engines to the System without affecting other System components.}
 \end{scenario}
 
 \begin{scenario}{3}
@@ -375,21 +375,22 @@ Having identified the quality attributes which are important to creating a succe
 \stimulus{The unknown external Client attempts to access stored HUMS data or HUMS services.}
 \artifact{HUMS Core}
 \environment{Normal Operation -- Online}
-\response{The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.}
+\response{The Client is authenticated, and allowed to access System services, or is not recognised and blocked from accessing System data and services.}
 \measure{No HUMS data or services are damaged as a result of the access attempt.}
 \rationale{This scenario shows how the HUMS is expected to behave when a Client attempts to access its services, showing the importance of authenticating Clients and how the HUMS should respond to unauthorised Clients.}
 \end{scenario}
 
 \begin{scenario}{4}
 \quality{Availability}
-\source{Datastore Module}
+\source{Datastore module}
 \stimulus{The Consumer's registered Datastore is unavailable to the HUMS instance.}
 \artifact{HUMS}
 \environment{Runtime}
 \response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
 \measure{End user defined repair time.}
-\rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined Datastore fails the HUMS can only alert the user and attempt to reconnect, this is a critical fault and does not allow the system to be run in a degraded mode.}
+\rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined Datastore fails the HUMS can only alert the user and attempt to reconnect; this is a critical fault and does not allow the System to be run in a degraded mode.}
 \end{scenario}
+
 
 %-------------------------------------------------------------%
 %--------------TACTICS / PATTERNS----------------------%
@@ -397,6 +398,7 @@ Having identified the quality attributes which are important to creating a succe
 %   Notes: 									 %
 %  		- Reference risks constantly, lots and lots	 %
 %-------------------------------------------------------------%
+
 \section{Tactics and Patterns}
 \label{sec:tactics}
 Having identified the key quality attributes for the system and a set of quality attribute scenarios, the tactics and patterns needed to ensure the desired utility of these attributes can be examined. In this section we focus on those qualities ranked highly in Table~\ref{tab:qualities}.
