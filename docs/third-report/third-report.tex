@@ -666,7 +666,7 @@ For real-time applications that require high performance and low response times 
 
 \subsection{Analysing}
 \label{sec:analysis}
-In this section we describe how our HUMS implementation can analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the Consumer to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
+In this section we describe how our HUMS implementation analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the Consumer to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
 
 \subsubsection{Bounded Sensor Value Engine}
 The previous mean analysis engine has been extended to form a generic bounded sensor value engine. This engine performs analysis per sensor of the system being analysed to determine if the rolling mean average of a number of values is outside of bounds defined in the system configuration diagram. A single event is produced detailing any violations across all sensors, generating a single notification for the system being analysed rather than an unmanageable amount.
