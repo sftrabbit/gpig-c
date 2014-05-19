@@ -13,6 +13,7 @@ package com.gpigc.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
 import java.util.Timer;
@@ -135,12 +136,16 @@ public class FileMonitor {
 			this.lastModified = 0;
 			monitoredFile = file;
 			if (!monitoredFile.exists()) { // but is it on CLASSPATH?
-				URL fileURL = listener.getClass().getClassLoader()
-						.getResource(file.toString());
-				if (fileURL != null) {
-					monitoredFile = new File(fileURL.getFile());
-				} else {
-					throw new FileNotFoundException("File Not Found: " + file);
+				try {
+					URL fileURL = file.toURI().toURL();
+					if (fileURL != null) {
+						monitoredFile = new File(fileURL.getFile());
+					} else {
+						throw new FileNotFoundException("File Not Found: " + file);
+					}
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 			this.lastModified = monitoredFile.lastModified();
