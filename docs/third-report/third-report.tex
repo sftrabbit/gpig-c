@@ -449,18 +449,18 @@ A \emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes o
 
 This view is targeted at all System stakeholders, showing enough detail for developers to understand the structure and interactions between components, but not so much detail that non-technical stakeholders would be confused.
 
-In the previous report, many of the details in the module view were omitted. In this iteration, details of the included and customisable components, such as the engines, are included showing exactly which modules have been implemented so far, as well as their associated interfaces which would be used by the Consumer. 
+In the previous report many of the details in the module view were omitted. In this iteration details of the included and customisable components, such as the engines, are included showing exactly which modules have been implemented so far, as well as their associated interfaces which would be used by the Consumer. 
 
-Figure~\ref{fig:modules} shows a clear separation between those modules included with the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our system is highly tailorable, with plenty scope for adding additional functionality.
+Figure~\ref{fig:modules} shows a clear separation between those modules included with the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our System is highly tailorable, with plenty scope for adding additional functionality.
 
 The design patterns described above can be seen within this view, including the table data gateway pattern which is used for abstracting away the implementation details of particular Datastores, and the observer pattern implemented through the controllers and engines.
 
 The components of the Consumer facing API, made up of generic engines and emitters, are described below:
 \begin{description} [noitemsep]	
-	\item[Analysis Engines] All Consumer analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a \texttt{ClientSystem} object, which wraps information about a particular system loaded from the configuration file, and returns an \texttt{Event} object generated as a result of the analysis (which may be \texttt{null}). This event object, holds stores the ID of the Client that generated it and key-values describing the event to be used by notification engines. This allows analysis engines free reign as to how they define events, and what information they store about events.
-	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an \texttt{Event}, the result of analysis, and notifies the relevant individual, software, or hardware, as defined. Consumers can implement this interface themselves or extend a provided implementations.
-	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a Datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given system sensor, and the \texttt{readBetween()} method returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the Datastore which fit the query. The methods for writing to a Datastore are both named \texttt{write()}, however, one takes a single item of data and writes it to the Datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
-	\item[Data Emitters] Data emitters read values from sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example emitters, such as the Earthquake Emitter and the Test App Emitters, but more may be added by the user. This method of data input allows data from different Clients to pass through the HUMS Core as if it was all the same, vastly increasing our solutions interoperability with different types of Client.
+	\item[Analysis Engines] All Consumer analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a \texttt{ClientSystem} object, which wraps information about a particular system loaded from the configuration file and returns an \texttt{Event} object generated as a result of the analysis (which may be \texttt{null}). This Event object holds stores the ID of the Client that generated it and key-values describing the event to be used by notification engines. This allows analysis engines free reign as to how they define events, and what information they store about events.
+	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an \texttt{Event}, representing the result of analysis, and notifies the relevant individual, software or hardware, as defined. Consumers can implement this interface themselves or extend a provided implementation.
+	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a Datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given Sensor, and the \texttt{readBetween()} method returns all records for a Sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the Datastore which fit the query. The methods for writing to a Datastore are both named \texttt{write()}, however one takes a single item of data and writes it to the Datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
+	\item[Data Emitters] Data Emitters read values from Sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example emitters, such as the Earthquake Emitter and the Test App Emitters, but more may be added by the user. This method of data input allows data from different Clients to pass through the HUMS Core as if it was all the same, vastly increasing our solution's interoperability with different types of Client.
 \end{description}
 
 \begin{figure}[t]
@@ -471,28 +471,19 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \end{figure}
 
 \subsection{Component and Connector View}
-In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. 
-Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes.
-This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer.
+In order to visualise how data flows through the System, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them.
 
-This view is again targeted more at technical stakeholders, allowing them to visualise the flow of data, and determine what within the system they can configure.
+Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer. This view is again targeted more at technical stakeholders, allowing them to visualise the flow of data, and determine what within the System they can configure.
 
-The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
+The input to the HUMS, in this view, is the Sensor data from the Consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. The \texttt{:Emit Data} filter transforms the client data into a format which can be sent using \emph{Protocol Buffers} to the \texttt{:Read Data} filter. The use of \emph{Protocol Buffers} allows for data to be sent locally or over a network, with or without encryption. 
 
-The \texttt{:Emit Data} filter transforms the client data into a format which can be sent using protocol buffers to the \texttt{:Read Data} filter. The use of \emph{Protocol Buffers} allows for data to be sent locally or over a network, with or without encryption. 
+The \texttt{:Read Data} filter deserialises the client data and transforms it to a format which can be used with the Consumer's defined Datastore. The \texttt{:Store Data} filter inserts the data into the Consumers defined Datastore.
 
-The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the Consumers defined Datastore. 
+The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the Consumer, being limited only by what their defined Datastores support. The \texttt{:Create Report} filter transforms data from the Datastore into a \texttt{Data Report}, for example, a graph or PDF.
 
-The \texttt{:Store Data} filter inserts the data into the Consumers defined Datastore.
-The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the Consumer, being limited only by what their defined Datastores support.
-The \texttt{:Create Report} filter transforms data from the Datastore into a \texttt{Data Report}, for example, a graph or PDF.
+When sending data between the \texttt{:Store Data} and \texttt{:Analyse Data} filters, \texttt{SensorState} objects are passed, each of which hold the ID of a particular Sensor, the timestamp of when it was created and stored, and its value at the time of creation. The \texttt{:Analyse Data} filter transforms \texttt{SensorState} objects into \texttt{Event} objects, which are used by the \texttt{:Generate Notification} filter to produce Notifications using the engines specified by the Consumer.
 
-When sending data between the \texttt{:Store Data} and \texttt{:Analyse Data} filters, \texttt{SensorState} objects are passed, each of which hold the ID of a particular sensor, the timestamp of when it was created and stored, and its value at the time of creation. 
-
-The \texttt{:Analyse Data} filter transforms \texttt{SensorState} objects into \texttt{Event} objects, which are used by the \texttt{:Generate Notification} filter to produce notifications using the engines specified by the client.
-An \texttt{Event} object contains the ID of the system which caused the event, and a \texttt{Map} of key-value pairs containing information needed by the registered notification engines.
-
-The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a notification, for example, an SMS or email. 
+An \texttt{Event} object contains the ID of the system which caused the event, and a \texttt{Map} of key-value pairs containing information needed by the registered notification engines. The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a Notification, for example, an SMS or email. 
 
 \begin{figure}[ht]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
@@ -502,7 +493,7 @@ The \texttt{:Generate Notification} filter transforms an \texttt{Event} object i
 
 \subsection{Behavioural View}
 
-The \emph{Behavioural View} can show the actual actions taken by the HUMS when the data flows through the System, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the HUMS Core and how it behaves during normal operation. Various methods and invocations are listed in the order that they occur, from top to bottom and left to right. The external parts of the system, such as the sources that data is gathered from and the destinations that notifications are sent to, are omitted, as this view purely describes the HUMS Core.
+The \emph{Behavioural View} can show the actual actions taken by the HUMS when the data flows through the System, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the HUMS Core and how it behaves during normal operation. Various methods and invocations are listed in the order that they occur, from top to bottom and left to right. The external Clients, such as the sources that data is gathered from and the destinations that Notifications are sent to, are omitted, as this view purely describes the HUMS Core.
 
 \begin{figure}[h]
   \centering
@@ -511,9 +502,10 @@ The \emph{Behavioural View} can show the actual actions taken by the HUMS when t
   \label{fig:sequence}
 \end{figure}
 
-
 \subsection{Allocation View}
 \hl{TODO Joe}
+
+
 %-------------------------------------------------------------%
 %-------------------DEVELOPMENT-------------------%
 %-------------------------------------------------------------%
@@ -521,35 +513,35 @@ The \emph{Behavioural View} can show the actual actions taken by the HUMS when t
 %  	- Reference risks constantly, lots and lots	 %
 %	- Reference requirements and scenarios 	 %
 %-------------------------------------------------------------%
+
 \section{Development}
 \label{sec:dev}
-In this section, the implementation created in the previous report is summarised and the significant changes made since then detailed.
-When making these changes our team was structured as described in the previous report. However, we had to alter our project plan slightly to accommodate other important deadlines. Luckily, we had considered this in risk \emph{R.2} and had appropriate  contingency and mitigation strategies in place, meaning we were able to fully utilise the development time available. 
+In this section, the implementation created in the previous report is summarised and the significant changes made since then detailed. When making these changes our team was structured as described in the previous report. However, we had to alter our project plan slightly to accommodate other important deadlines. Luckily, we had considered this in risk \emph{R.2} and had appropriate contingency and mitigation strategies in place, meaning we were able to fully utilise the development time available. 
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
-At the end of the interim phase of the report we had implemented the basic functionality of our core, with data being sent through the Input Interface and controllers managing engines. However, we did not have dynamic class loading and the Consumer was not able to add classes at runtime. The Consumer was able to create their own engines, but would be required to re-build the HUMS in order for the additions to take effect.
+At the end of the Interim Report we had implemented the basic functionality of our core, with data being sent through the Input Interface and controllers managing engines. However, we did not have dynamic class loading and the Consumer was not able to add classes at runtime. The Consumer was able to create their own engines, but would be required to rebuild the HUMS in order for additions to take effect.
 
-At the interim stage of the project we had created a Data Emitter for the first test application, and an addition Data Emitter monitoring earthquakes. We had implemented a single Datastore using Google App Engine, and had created a basic analysis engine which computed the mean of the latest data for a System, and created an \texttt{Event} if that mean was outside define bounds. The parameters used for analysis and to determine system sensors were hard-coded, as the configuration file system had not yet been created. An \texttt{EmailNotificationEngine} had also been created, which sent emails to a defined address. 
+At the interim stage of the project we had created a Data Emitter for the first test application, and an addition Data Emitter monitoring earthquakes. We had implemented a single Datastore using Google App Engine, and had created a basic analysis engine which computed the mean of the latest data for a System and created an \texttt{Event} if that mean was outside define bounds. The parameters used for analysis and to determine system sensors were hard-coded, as the configuration file system had not yet been created. An \texttt{EmailNotificationEngine} had also been created, which sent emails to a defined address. 
 
 We had created a low fidelity  Admin Centre, which appeared as we had desired, but had no actual functionality, created in just HTML and JavaScript.
 
-Overall, our interim solution was a low fidelity end-to-end solution, but did not meet many of our requirements, and was not impressively tailorable or configurable. 
+Overall, our interim solution was a low fidelity end-to-end solution, but did not meet a large number of our requirements and was not impressively tailorable or configurable. 
 
 \subsection{Core Development}
 \label{sec:core}
  %giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
  % and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
  
-The HUMS Core is the main application controlling the behaviour and functionality of the HUMS. It receives Client data through Data Emitters, stores that data and then passes it to appropriate analysis engines, which can create \texttt{Event} objects for the Core to pass to relevant notification engines.
+The HUMS Core is the main application controlling the behaviour and functionality of the HUMS. It receives Client data through Data Emitters, stores that data and then passes it to appropriate analysis engines which can create \texttt{Event} objects for the Core to pass to relevant notification engines.
 
-\texttt{Controller} objects are used to dynamically load and manage the three different engine types. The addition of dynamic class loading increases the configurability or modifiability of the system, by allowing the new engines to be added both at runtime and compile time, making our HUMS fully dynamic. 
+\texttt{Controller} objects are used to dynamically load and manage the three different engine types. The addition of dynamic class loading increases the configurability and modifiability of the System by allowing the new engines to be added both at runtime and compile time, making our HUMS fully dynamic.
 
-In addition, the Core now automatically detects when new files are added to the folder they are loaded from, and refreshes the system. This means that from the Consumers perspective, they merely have to place their class into the correct folder, increasing the HUMS's usability. 
+In addition, the Core now automatically detects when new files are added to the folder they are loaded from, and refreshes the System. This means that from the Consumer's perspective they merely have to place their class into the correct folder to load it, increasing the HUMS's usability.
 
-Several example applications provided with our HUMS are described throughout this report. These implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the system by creating their own engines to meet their needs.
+Several example applications provided with our HUMS are described throughout this report. These implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the System by creating their own engines to meet their needs.
 
-The Consumer systems monitored by a particular HUMS instance, and how they will be monitored is now defined using a JSON configuration file. The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular Consumer system, with a System ID, Sensor IDs, parameters, and which engines the system uses. A system configuration file (\texttt{*.config}) is loaded into the Core by the Consumer before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
+The Consumer system monitored by a particular HUMS instance, and how they will be monitored, is now defined using a JSON configuration file. The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular Consumer system, with a System ID, Sensor IDs, parameters, and which engines the system uses. A System configuration file (\texttt{*.config}) is loaded into the Core by the Consumer before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
 \begin{figure}[tbp]
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -580,12 +572,11 @@ The Consumer systems monitored by a particular HUMS instance, and how they will 
 \label{fig:configFiles}
 \end{figure}
 
-Any changes made to the system configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
+Any changes made to the System configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
-The Core has also been re-factored to load Consumer system parameters to be used by engines from system configuration files. This includes both individual sensor parameters and system parameters meaning that, for example, analysis can be performed both per sensor and on the system as a whole, further increasing the tailorability of our solution.
-The configuration file for a particular instance of the HUMS can be set and modified at runtime or compile time as it is separate from the code-base, making it very versatile and further improving configurability. 
+The Core has also been refactored to load Consumer system parameters to be used by engines from System configuration files. This includes both individual Sensor parameters and System parameters meaning that, for example, analysis can be performed both per Sensor and on the System as a whole, further increasing the tailorability of our solution. The configuration file for a particular instance of the HUMS can be set and modified at runtime or compile time, as it is separate from the code-base, making it very versatile and further improving configurability. 
 
-In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
+In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit}~\cite{swt}. This was chosen over other UI libraries such as \emph{Swing} as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
 \begin{figure}[ht]
 \centering
@@ -711,7 +702,7 @@ For reporting, two sample reporting engines were created that can be used throug
 A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; an individual is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however, has been heavily re-factored to comply with our new, more modular code-base.
+The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however, has been heavily refactored to comply with our new, more modular code-base.
 It can be configured to send email notifications for events to any email address, and may be useful for more detailed, less frequent notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
