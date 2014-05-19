@@ -695,9 +695,6 @@ The implementation of the \texttt{ExpressionAnalysisEngine} works towards addres
 
 \subsubsection{Face Analysis Engine}
 \label{sec:fae}
-
-\hl{TODO Tom/Joe Face Recognition for Security}
-% TODO Separate analysis from sensing
 The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
 
 The face recognition process is two fold: An image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
