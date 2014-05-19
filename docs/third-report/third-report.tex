@@ -33,6 +33,7 @@
 \begin{tabular}{#1}
   \hline
   \rowcolor[gray]{0.9} #2
+  \hline
 \end{tabular}
 \caption{#3}
 \label{#4}
@@ -45,6 +46,7 @@
 \begin{tabularx}{\textwidth}{#1}
   \hline
   \rowcolor[gray]{0.9} #2
+  \hline
 \end{tabularx}
 \caption{#3}
 \label{#4}
@@ -121,7 +123,7 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
-This report details the design and development of our HUMS, concentrating on progress made since the interim report. System requirements are further refined, building on feedback from previous reports, adding a set of external dependencies. The HUMS architecture is then considered, in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views, deemed to be important. Having determined the HUMS architecture, the associated risks with the project as a whole are considered, and risk reduction tactics are discussed.
+This report details the design and development of our HUMS, concentrating on progress made since the interim report. In this report, the system requirements are further refined, building on feedback from previous reports, adding a set of external dependencies. The HUMS architecture is then considered, in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views deemed to be the most relevant. Having determined the HUMS architecture, the associated risks of the project as a whole are considered, and risk reduction tactics are discussed.
 
 The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the System. The project is then concluded, and the team reflects on their decisions throughout the project.
 
@@ -148,9 +150,9 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\item[Data Emitter] A Client that provides data to a HUMS instance through the Input Interface
 	\item[Output Interface] The interfaces through which reports and notifications are dispatched
 	\item[Data Output Client] A Client that receives data from an Instance through Output Interfaces
-    \item[Datastore] A component of the System which stores data received through the Input Interface.
+    \item[Datastore] A component of the System which stores data received through the Input Interface
     \item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through the Input Interface.
-	\item[Admin Centre] A Web interface to configure and interact with the HUMS Core.
+	\item[Admin Centre] A Web interface to configure and interact with the HUMS Core
 
 	\vspace{0.14cm}
 	\item[Sensor] A source of data to be monitored by the System
@@ -219,7 +221,7 @@ After feedback from the previous reports, the HUMS requirements have been update
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
-When considering the non-functional requirements,\emph{NFR.14} was added as it is not necessarily the case that an Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
+When considering the non-functional requirements, \emph{NFR.14} was added as it is not necessarily the case that an Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
 
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
@@ -246,7 +248,7 @@ When considering the non-functional requirements,\emph{NFR.14} was added as it i
 
 \subsection{External Dependencies}
 \label{sec:external_dependencies}
-External dependancies are necessary occurrences which must take place before the HUMS can be run successfully by consumers. The previous report did not consider the external dependancies of the consumer running the HUMS rather than the development process, so they are considered here.
+External dependencies are necessary occurrences which must take place before the HUMS can be run successfully by consumers. The previous report did not consider the external dependencies of the consumer running the HUMS rather than the development process, so they are considered here.
 
  \begin{description}
  \item[\ed{1}] An appropriate platform must be provisioned, including supported hardware, operating system and JVM, when not running as a SaaS.
@@ -276,7 +278,6 @@ Some risks have been modified since the previous report, while others are comple
     R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
     R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
     R.5 & The Consumer fails to update the configuration files of the HUMS  & Consumers find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential Consumers to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
-  	\hline
 }
 {The human and business risks associated with this phase of the project}{tab:human_risks}
 
@@ -291,7 +292,6 @@ Some risks have been modified since the previous report, while others are comple
     R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
     R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
     R.10 & Included notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
-  	\hline
 }
 {The technical risks associated with this phase of the project}{tab:tech_risks}
 
@@ -442,32 +442,38 @@ Having determined the tactics applicable to the HUMS, which are likely to increa
 \end{description}
 
 \section{System Views} 
-Building on our work in the previous report we decided to present four further, more detailed views of our HUMS. This time we choose to take inspiration from the SEI \cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Deployment View}.
+Building on our work in the previous reports we decided to present four further, more detailed, views of our HUMS. This time we choose to take inspiration from the SEI \cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Deployment View}.
 
 \subsection{Module View}
 \label{sec:views}
-The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
+A\emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
 
-In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the Consumer (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
+This view is targeted at all System stakeholders, showing enough detail for developers to understand the structure and interactions between components, but not so much detail that non-technical stakeholders would be confused.
 
-Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
+In the previous report, many of the details in the module view were omitted. In this iteration, details of the included and customisable components, such as the engines, are included showing exactly which modules have been implemented so far, as well as their associated interfaces which would be used by the Consumer. 
 
-The components of the Consumer facing API, made up of generic engines and emitters, is described below:
+Figure~\ref{fig:modules} shows a clear separation between those modules included with the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our system is highly tailorable, with plenty scope for adding additional functionality.
+
+The design patterns described above can be seen within this view, including the table data gateway pattern which is used for abstracting away the implementation details of particular datastores, and the observer pattern implemented through the controllers and engines.
+
+The components of the Consumer facing API, made up of generic engines and emitters, are described below:
 \begin{description} [noitemsep]	
-	\item[Analysis Engines] All analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a description of a system (including its unique ID, settings and a handle to its stored sensor values) as a parameter, and returns a description of the event generated as a result of the analysis (which may be \texttt{null}). This allows analysis engines free reign as to how they define events in the context of a system with sensor values that are updated over time, giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
-	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an event, which describes a notable situation detected by an analysis engine, and notifies the relevant user by its notification method. A boolean must be returned indicating whether the notification was delivered or not. Users can implement this interface themselves or extend a default implementation, and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
-	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a datastore. There are two methods for writing and two for reading. The two for reading are \texttt{readMostRecent()}, which returns the $n$ most recent records for a given system sensor, and \texttt{readBetween()}, which returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult}, which encapsulates the values in the datastore which fit the query. The methods for writing to a datastore are both named \texttt{write()}, however one of them takes a single data point and writes it to the datastore, the other is a batch method, which often allows a list of data points to be written more efficiently in the underlying implementation.
+	\item[Analysis Engines] All Consumer analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a \texttt{ClientSystem} object, which wraps information about a particular system loaded from the configuration file, and returns an \texttt{Event} object generated as a result of the analysis (which may be \texttt{null}). This event object, holds stores the ID of the Client that generated it and key-values describing the event to be used by notification engines. This allows analysis engines free reign as to how they define events, and what information they store about events.
+	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an \texttt{Event}, the result of analysis, and notifies the relevant individual, software, or hardware, as defined. Consumers can implement this interface themselves or extend a provided implementations.
+	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given system sensor, and the \texttt{readBetween()} method returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the datastore which fit the query. The methods for writing to a datastore are both named \texttt{write()}, however, one takes a single item of data and writes it to the datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
 	\item[Data Emitters] Data emitters read values from sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example emitters, such as the Earthquake Emitter and the Test App Emitters, but more may be added by the user.
 \end{description}
 % What methods have we used, what Java interfaces must we implement. All extends from abstract _ class, and offers these abstract functions. What they do and how the user would extend them. Sample implementations can be overidden too
 
 % Code interfaces: class names etc, controllers and generic interfaces. Latex description list thing. Reference code here.
 % Quality attributes?
-
-\begin{figure}[tbp]
+ %giving fully dynamic configurability, that is, it is configurable both at runtime and compile time.
+ % and then load the class file at runtime or compile time to extend or modify the default HUMS to meet their needs.
+ 
+\begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{Module diagram of the System. The blue components and their contents have all been implemented. The green components are extensions left to the Consumer.}
+  \caption{Module diagram of the System. Component within the \textbf{blue} areas are included with the HUMS. The green components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
   \label{fig:modules}
 \end{figure}
 
@@ -521,7 +527,9 @@ A behavioural view can show the actual actions taken by the system when the data
 %-------------------------------------------------------------%
 \section{Development}
 \label{sec:dev}
-For the implementation we have built upon our previous prototypes, utilising Java and building upon the foundation from the interim report. The development was split up into teams. The teams were dedicated to different parts of the core made up of sensing, analysis and storage. The team members were put into one of these teams based upon their strengths and weaknesses so that each team could perform optimally. \hl{blah blah blah, anything else here? or good enough as intro?}
+This section summaries the previous report and explains the changes made since then, describing the most important new features. 
+
+For the implementation we have extended our previous prototypes, utilising Java and building upon the foundation from the interim report. The development process was split between sub-teams. The teams were dedicated to different parts of the core, made up of sensing, analysis and storage. The team members were put into one of these teams based upon their strengths and weaknesses so that each team could perform optimally. \hl{blah blah blah, anything else here? or good enough as intro?}
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
@@ -618,7 +626,6 @@ The demonstration purposes, and to make our prototype easier to test and use, we
 \end{figure}
 
 \subsubsection{Android Mobile Application}
-\hl{Tom}
 To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in Figure~\ref{fig:android}.
 
 The first system simulates a car monitoring system, allowing users to select values for a number of sensors and then push them to the remotely-based core. In the real system, the user would not set the values or manually push them---it would all be automatic---however, we choose to manually update the data for the purposes of demonstrating the functionality.
@@ -800,7 +807,7 @@ The testing of each module is described below:
 
   \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito to provide isolated unit tests, confirming that notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, this was confirmed to be working via inspection and integration testing.
 
-  \item[Analysis Engine] For the Analysis Engine, we created a unit test to check each aspect of the engine as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependancies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
+  \item[Analysis Engine] For the Analysis Engine, we created a unit test to check each aspect of the engine as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependencies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
 
   \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a notification is generated when analysis has indicated it. The second test ensured that notifications were only sent once to avoid spamming users.	 
 
@@ -838,8 +845,6 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 	FR.12    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
     NFR.6    & N/A & Inspection & Verify existence of all test levels \\
 	NFR.14   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
-
-    \hline
 }
 {The traceability table showing the mapping from each requirement to its existing tests}{tab:traceability}
 
@@ -873,36 +878,38 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
 To consider the meeting of requirements, we lay out here the steps which we have taken in order to validate the meeting of the requirements.
 
-\xtableformat{| p{1.6cm} | p{4.4cm} | p{8.6cm} |}{ \hline	FR.x  & 	Description of FR  & 	Validation \\ \hline
-	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
-	FR.2  & 	  & 	Timestamps are held for all data, and stored in the Datastore when the information is saved. \\ \hline
-	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a Postgres instance on Heroku for the cloud solution. \\ \hline
-	FR.4  & 	  & 	This requirement has been satisfied by the use of configuration files, these can be loaded into the core at runtime. And can easily be changed and reloaded while the core is running. The administration center can be used to edit these configuration files even while the system is running. \\ \hline
-	FR.5  & 	  & 	The requirement for notifications on a full quota were meant for the SaaS part of our implementation. As this is a prototype and is not completed, this is not currently implementation. \hl{?} \\ \hline
-	FR.6  & 	  & 	  \hl{?} \\ \hline
-	FR.7  & 	  & 	  \hl{?} \\ \hline
-	FR.8  & 	  & 	 \\ \hline
-	FR.9  & 	  & 	For recognition of an event, the information which is received from a system ID is passed into the core and analysed. If analysis rules are matched, then a notification is generated for the event. \\ \hline
-	FR.10  & 	  & 	 \\ \hline
-	FR.11  & 	  & 	 \\ \hline
-	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
+\xtableformat{ p{1.6cm}  p{4.4cm}  p{8.6cm} }{ 
+	FR.x  & 	Description of FR  & 	Validation \\ \hline
+	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\
+	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\
+	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a Postgres instance on Heroku for the cloud solution. \\ 
+	FR.4  & 	  & 	This requirement has been satisfied by the use of configuration files, these can be loaded into the core at runtime. And can easily be changed and reloaded while the core is running. The administration center can be used to edit these configuration files even while the system is running. \\ 
+	FR.5  & 	  & 	The requirement for notifications on a full quota were meant for the SaaS part of our implementation. As this is a prototype and is not completed, this is not currently implementation. \hl{?} \\
+	FR.6  & 	  & 	  \hl{?} \\ 
+	FR.7  & 	  & 	  \hl{?} \\ 
+	FR.8  & 	  & 	 \\ 
+	FR.9  & 	  & 	For recognition of an event, the information which is received from a system ID is passed into the core and analysed. If analysis rules are matched, then a notification is generated for the event. \\
+	FR.10  & 	  & 	 \\ 
+	FR.11  & 	  & 	 \\ 
+	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ 
 }{Evaluation for Satisfaction of Functional Requirements}{frevaltable}
 
-\xtableformat{| p{1.6cm} | p{4.4cm} | p{8.6cm} |}{ \hline	NFR.x  & 	Description of NFR  & 	Validation \\ \hline
-	NFR.1  & 	  & 	The Datastore is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ \hline
-	NFR.2  & 	  & 	There has been a README provided. \\ \hline
-	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ \hline
-	NFR.4  & 	  & 	We did not implement a security system in the current implementation, however for the full implementation which would be for release we had a set of requirements in place which we would enforce to provide an acceptable level of security. \\ \hline
-	NFR.5  & 	  & 	\hl{!} \\ \hline
-	NFR.6  & 	  & 	The tests for the system have been created and included at each stage of the development. \hl{write smat stuff} \\ \hline
-	NFR.7  & 	  & 	The system has not currently been performend. However, in the case of the real system, this would be performed by the customer and the customer would sign off to show the requirements were met. \\ \hline
-	NFR.8  & 	  & 	The current implementation is executing with 5 clients. With the emitter launcher we have tested it with 5 clients and the performance is correct. There have been tests with more clients and the functionality remains correct. \\ \hline
-	NFR.9  & 	  & 	The heroku instance has an uptime which satisfies this requirement. \\ \hline
-	NFR.10  & 	  & 	\hl{data backup - adam?} \\ \hline
-	NFR.11  & 	  & 	 \\ \hline
-	NFR.12  & 	  & 	 \\ \hline
-	NFR.13  & 	  & 	To achieve this, a key-value data store format has been used. This relaxes the need for a schema to a simple pair of key to value. \\ \hline
-	NFR.14  & 	  & 	The format for the configuration files is JSON, this is a widely-adopted nad easy to modify format for update by a human. \\ \hline
+\xtableformat{ p{1.6cm}  p{4.4cm}  p{8.6cm} }{
+	NFR.x  & 	Description of NFR  & 	Validation \\ \hline
+	NFR.1  & 	  & 	The data store is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ 
+	NFR.2  & 	  & 	There has been a README provided. \\ 
+	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ 
+	NFR.4  & 	  & 	We did not implement a security system in the current implementation, however for the full implementation which would be for release we had a set of requirements in place which we would enforce to provide an acceptable level of security. \\ 
+	NFR.5  & 	  & 	\hl{!} \\
+	NFR.6  & 	  & 	The tests for the system have been created and included at each stage of the development. \hl{write smat stuff} \\
+	NFR.7  & 	  & 	The system has not currently been performend. However, in the case of the real system, this would be performed by the customer and the customer would sign off to show the requirements were met. \\
+	NFR.8  & 	  & 	The current implementation is executing with 5 clients. With the emitter launcher we have tested it with 5 clients and the performance is correct. There have been tests with more clients and the functionality remains correct. \\ 
+	NFR.9  & 	  & 	The heroku instance has an uptime which satisfies this requirement. \\ 
+	NFR.10  & 	  & 	\hl{data backup - adam?} \\ 
+	NFR.11  & 	  & 	 \\ 
+	NFR.12  & 	  & 	 \\ 
+	NFR.13  & 	  & 	To achieve this, a key-value data store format has been used. This relaxes the need for a schema to a simple pair of key to value. \\
+	NFR.14  & 	  & 	The format for the configuration files is JSON, this is a widely-adopted nad easy to modify format for update by a human. \\
 }{Evaluation for Satisfaction of Non-Functional Requirements}{nfrevaltable}
 
 
@@ -924,6 +931,8 @@ By using these cross-platform and established libraries, our monitor can be gene
 
 Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
+
+As this is an extension of the previous work for the first test application, this can be easily adapted as a cross-platform solution for monitoring any process running on a given system. 
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
