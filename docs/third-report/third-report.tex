@@ -149,7 +149,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-After feedback from the initial and interim reports, the HUMS requirements have been updated. This included modifying existing requirements and adding additional requirements and refinements. It also included removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
+After feedback from the previous reports, the HUMS requirements have been updated. This included modifying existing requirements, and adding additional requirements and refinements. It also included removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
@@ -172,7 +172,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 	\requirement{\fr}{2.2}{Timestamps shall be stored alongside the input data.}{}
 }
 \requirement{\fr}{3}{The HUMS shall store correctly structured data.}{
-	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their datastore technology.}{}
+	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their Datastore technology.}{}
 }
 \requirement{\fr}{4}{The HUMS shall store Consumer configuration files.}{
 	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{
@@ -317,12 +317,12 @@ Having identified the quality attributes which are important to creating a succe
 \begin{scenario}{4}
 \quality{Availability}
 \source{Datastore Module}
-\stimulus{The Consumer's registered datastore is unavailable to the HUMS instance.}
+\stimulus{The Consumer's registered Datastore is unavailable to the HUMS instance.}
 \artifact{HUMS}
 \environment{Runtime}
 \response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
 \measure{End user defined repair time.}
-\rationale{This scenario shows how the HUMS should respond to a datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined datastore fails the HUMS can only alert the user and attempt to reconnect -- this is a critical fault and does not allow the system to be run in a degraded mode.}
+\rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined Datastore fails the HUMS can only alert the user and attempt to reconnect -- this is a critical fault and does not allow the system to be run in a degraded mode.}
 \end{scenario}
 
 %-------------------------------------------------------------%
@@ -356,8 +356,8 @@ Some risks have been modified since the previous report, while others are comple
   	\hline
   
     R.6 & Developed admin centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign admin centre. & 10 & Minor & \textbf{Low} \\
-    R.7 & Data interception between the HUMS core and registered engines or datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
-    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
+    R.7 & Data interception between the HUMS core and registered engines or Datastore. & Loss of confidence in HUMS. Lost/corrupted data & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+    R.8 & HUMS does not facilitate data storage for a variety of systems. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. &  Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
     R.9 & Included analysis engines computation too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
     R.10 & Included Notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of system failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
   	\hline
@@ -412,7 +412,7 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
-	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
+	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the Datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
 	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DoS attack. Trap files could be set that should only ever be accessed from specific addresses.
 	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots would allow for the HUMS to roll back to an acceptable state.
 	\end{description}
@@ -468,11 +468,11 @@ In order to visualise how data flows through the system, from its inputs to its 
 The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
 
 The \texttt{:Emit Data} filter transforms the client data into serialisable data which can be sent using protocol buffers to the \texttt{:Read Data} filter. Using \emph{Protocol Buffers}, allows for data to be sent locally or over a network, with or without encryption. 
-The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the Consumers defined datastore. 
+The \texttt{:Read Data} filter de-serializes the client data and transforms it to a format which can be used with the Consumers defined Datastore. 
 
-The \texttt{:Store Data} filter inserts the data into the Consumers defined datastore.
-The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the Consumer, being limited only by what their defined datastores support.
-The \texttt{:Create Report} filter transforms data from the datastore into a \texttt{Data Report}, for example, a graph or PDF.
+The \texttt{:Store Data} filter inserts the data into the Consumers defined Datastore.
+The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the Consumer, being limited only by what their defined Datastores support.
+The \texttt{:Create Report} filter transforms data from the Datastore into a \texttt{Data Report}, for example, a graph or PDF.
 
 When sending data between the \texttt{:Store Data} and \texttt{:Analyse Data} filters, \texttt{SensorState} objects are passed, each of which hold the ID of a particular sensor, the timestamp of when it was created and stored, and its value at the time of creation. 
 
@@ -628,15 +628,15 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or datastore, in fact, the datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing Datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or Datastore, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
 
-Prepared statements were used where possible in our datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
+Prepared statements were used where possible in our Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
 
 \subsubsection{Google App Engine Storage}
-\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
+\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, Datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
 
 \subsubsection{PostgreSQL Storage}
-\emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. 
+\emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL Datastore. 
 To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
 
 \hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
@@ -667,7 +667,7 @@ We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which
 \label{fig:exprExample}
 \end{figure}
 
-The values of variables which represent the state of the system being monitored are available in the expression, and are evaluated lazily for efficiency (evaluation often entails querying the datastore to retrieve the most recent value, potentially over a network connection, which could be very inefficient when unnecessary).
+The values of variables which represent the state of the system being monitored are available in the expression, and are evaluated lazily for efficiency (evaluation often entails querying the Datastore to retrieve the most recent value, potentially over a network connection, which could be very inefficient when unnecessary).
 
 Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
 
