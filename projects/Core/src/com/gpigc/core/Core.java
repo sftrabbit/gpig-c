@@ -44,7 +44,7 @@ public class Core {
 		FileMonitor enginesMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener engineListener = new ConfigFileChangeListener();
 		enginesMonitor.addFileChangeListener(engineListener,
-				FileUtils.getExpandedFilePath("res/com"), 1000);
+				config.getConfigFile("engines"), 1000);
 	}
 
 	public void refreshSystems() throws IOException,

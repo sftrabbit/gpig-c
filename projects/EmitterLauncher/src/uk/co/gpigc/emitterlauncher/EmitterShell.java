@@ -85,8 +85,14 @@ public class EmitterShell extends Shell {
 	public EmitterShell(Display display, String args[]) {
 		super(display);
 		
+		String distDirectory = EmitterShell.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		int indexOfJarName = distDirectory.indexOf("EmitterLauncher.jar");
+		distDirectory = distDirectory.substring(5, indexOfJarName);
+		
 		if (args.length >= 1) {
-			emitterDirectory = args[0];
+			emitterDirectory = distDirectory + args[0];
+		} else {
+			emitterDirectory = distDirectory + emitterDirectory;
 		}
 		
 		this.addListener(SWT.Close, new Listener() {
@@ -179,9 +185,9 @@ public class EmitterShell extends Shell {
 	}
 
 	private void graphicsSetup(Display display) {
-		playIcon = new Image(display, PLAY_BUTTON_PATH);
-		stopIcon = new Image(display, STOP_BUTTON_PATH);
-		shellIcon = new Image(display, ICON_PATH);
+		playIcon = new Image(display, FileUtils.getExpandedFilePath(PLAY_BUTTON_PATH));
+		stopIcon = new Image(display, FileUtils.getExpandedFilePath(STOP_BUTTON_PATH));
+		shellIcon = new Image(display, FileUtils.getExpandedFilePath(ICON_PATH));
 	}
 
 	private void compositeSetup(Group groupComp) {
@@ -272,7 +278,6 @@ public class EmitterShell extends Shell {
 		} else {
 			button.setImage(playIcon);
 			if (threadMap.containsKey(jarPath)) {
-				text.append(" >> Stopping " + jarPath + "\n");
 				threadMap.get(jarPath).stopRunning();
 				threadMap.remove(jarPath);
 			}
