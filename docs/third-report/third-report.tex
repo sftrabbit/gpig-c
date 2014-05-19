@@ -123,7 +123,7 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
-This report details the design and development of our HUMS, concentrating on progress made since the interim report. In this report, the system requirements are further refined, building on feedback from previous reports, adding a set of external dependencies. The HUMS architecture is then considered, in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views deemed to be the most relevant. Having determined the HUMS architecture, the associated risks of the project as a whole are considered, and risk reduction tactics are discussed.
+This report details the design and development of our HUMS, concentrating on progress made since the Interim Report. In this report, the system requirements are further refined, building on feedback from previous reports, adding a set of external dependencies. The HUMS architecture is then considered, in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views deemed to be the most relevant. Having determined the HUMS architecture, the associated risks of the project as a whole are considered, and risk reduction tactics are discussed.
 
 The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the System. The project is then concluded, and the team reflects on their decisions throughout the project.
 
@@ -446,7 +446,7 @@ Building on our work in the previous reports we decided to present four further,
 
 \subsection{Module View}
 \label{sec:views}
-A\emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
+A \emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective in terms of a collection of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
 
 This view is targeted at all System stakeholders, showing enough detail for developers to understand the structure and interactions between components, but not so much detail that non-technical stakeholders would be confused.
 
@@ -467,7 +467,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{A \emph{Module View} of the System. Components within the \textbf{blue} areas are included with the HUMS. The \textbf{green} components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
+  \caption{A \emph{Module View} of the System. Components within the blue areas are included with the HUMS. The green components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
   \label{fig:modules}
 \end{figure}
 
@@ -647,7 +647,7 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing Datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or Datastore, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing Datastores. To demonstrate this we created four sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or Datastore, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
 
 Prepared statements were used where possible in our Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
 
@@ -718,7 +718,7 @@ For reporting, two sample reporting engines were created that can be used throug
 A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; an individual is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the interim report, however, has been heavily re-factored to comply with our new, more modular code-base.
+The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however, has been heavily re-factored to comply with our new, more modular code-base.
 It can be configured to send email notifications for events to any email address, and may be useful for more detailed, less frequent notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
@@ -728,10 +728,10 @@ The \texttt{TwitterNotificationEngine} provided allows events to be pushed to th
 \hl{TODO Rosy}
 
 \subsubsection{Map Report}
-The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the Consumer through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information. The map generated uses the Google Maps JavaScript API~\cite{g_maps} which is customised to fit the needs of the report.
+The map reporting engine created in the Interim Report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the Consumer through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information. The map generated uses the Google Maps JavaScript API~\cite{g_maps} which is customised to fit the needs of the report.
 
 \subsubsection{Graph Report}
-Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its configurability of use. The graph reports generated can also automatically update to show live data. This report uses the open source Chart.js JavaScript charting library~\cite{chart_js} to draw and customise the graph.
+Similarly to the map reporting engine, the graph reporting engine has been enhanced since the Interim Report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its configurability of use. The graph reports generated can also automatically update to show live data. This report uses the open source Chart.js JavaScript charting library~\cite{chart_js} to draw and customise the graph.
 
 \subsection{Admin Centre}
 \label{sec:admin}
