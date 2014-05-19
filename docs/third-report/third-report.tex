@@ -929,8 +929,14 @@ As this is an extension of the previous work for the first test application, thi
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
-\hl{TODO Andy}
-% also mention PaaS here?
+
+In the Interim Report we proposed an innovative deployment option for our HUMS as a System as a Service (SaaS) solution. This would allow multiple Consumers to use the same central HUMS, saving them from the complexity of setting up and managing the system themselves, whilst still allowing flexibility for them to configure it to their needs and interface with local Datastores and engines.
+
+This is possible due to the ability of different components to run from different location, for example a data emitter can run on a different system to the Core of the HUMS. With our HUMS implementation the SaaS solution could be achieved by running multiple Cores on the same server, with one Core for each Consumer. This is not ideal, as a new Core instance for a new Consumer would have to manually be started, but does successfully enable this type of deployment.
+
+Ideally, only a single instance of the Core would be needed and would be able to handle multiple Consumers' configurations. This is a future possibility for the system as only small parts of the Core would need to be changed and all other components, including all engines, would still work as before.
+
+Along with SaaS, a Platform as a Service (PaaS) deployment is also possible with our implementation. The HUMS would be provided to the Consumer so they could configure it as needed and then deploy it using servers and storage that we would provide. They would also be able to bundle in their own custom engines and any additional software to be deployed and run alongside the HUMS on our platform, which would further reduce the the complexity and cost to the Consumer of purchasing and managing their own hardware. This could not be fully explored in the report due to time and resource limitations.
 
 
 \subsection{Evaluation of Additional Engines}
