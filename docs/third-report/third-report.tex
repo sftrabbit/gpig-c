@@ -109,7 +109,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-%Word count: \input{wc} (\textit{using TeXCount})
+Word count: %\input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -170,7 +170,7 @@ After feedback from the previous reports, the requirements of the HUMS have been
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\emph{FR.4.1} has been modified, and refinements added, to increase the configurability of our solution by specifying exactly how configuration files will be used within our implementation. We chose to use \emph{JSON} as the configuration format because it is a lightweight and widely-used standard.
+\emph{FR.4.1} has been modified, and refinements added, to increase the configurability of our solution by specifying exactly how configuration files will be used within our implementation. We chose to use JSON as the configuration format because it is a lightweight and widely-used standard.
 
 \emph{FR.12} became apparent after considering the reloading of configuration in \emph{FR.4.1.2}, as without the ability to dynamically load new engines, modifying registered analysis, storage, and reporting methods would require a restart of the System to take effect.
 
@@ -190,7 +190,7 @@ After feedback from the previous reports, the requirements of the HUMS have been
 \requirement{\fr}{3}{The HUMS shall store correctly structured data.}{
 	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their Datastore technology.}{}
 }
-\requirement{\fr}{4}{The HUMS shall store Consumer configuration files using \emph{JSON}.}{
+\requirement{\fr}{4}{The HUMS shall store Consumer configuration files using JSON.}{
 	\requirement{\fr}{4.1}{The HUMS shall allow authorised individuals to modify configuration files.}{
       \requirement{\fr}{4.1.1}{The Admin Centre shall provide an interface to allow authorised users to modify the configuration.}{}
       \requirement{\fr}{4.1.2}{The HUMS shall monitor the configuration for changes and apply them.}{}
@@ -437,12 +437,12 @@ Having determined the tactics applicable to the HUMS, which are likely to increa
 \begin{description}
 \item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. Such that observers are kept in a list within the subject, and updated when the state of the subject changes. This will be used for the implementation of our analysis, storage, and notification engines, with controller objects keeping a list of engine observers. When the controller receives an update, it can inform the relevant engines through a method call.
 \item[Pipes and Filters]The adoption of the pipes and filters pattern would allow for large processing tasks to be broken down into a sequence of smaller independent filters, and the protocol of the data to be passed between those filters explicitly defined. Pipes and filters would also increase the tailorability of the HUMS, as alternative architectures can be composed by connecting filters to different pipes. 
-\item[Table Data Gateway]  Utilising table data gateway, defined by \cite{fowler2002patterns} as a single object which handles all interaction with accessing a datastore e.g SQL statements, will reduce coupling and allow a single HUMS to interact with a number of different datastores. It does by ensuring the core is not coupled to a particular datastore implementation, instead each datastore implements their own table data gateway, which can be interchanged both at runtime and compile time. The single point of access and encapsulation means that the System as a whole is unaffected by changes to the datastore or data access logic and therefore facilitate easier maintenance.
-\item[Row Data Gateway] A Row data gateway is an object which encapsulates a single record in a datastore\cite{fowler2002patterns}. This could be utilised by our HUMS, as a method of ensuring data pulled from various datastores can be used throughout the Core as if it was from a single datastore. This will reduce the effect of impedance mismatch whilst increasing the tailorability of our solution and decreasing coupling.
+\item[Table Data Gateway]  Utilising table data gateway, defined by \cite{fowler2002patterns} as a single object which handles all interaction with accessing a Datastore e.g SQL statements, will reduce coupling and allow a single HUMS to interact with a number of different Datastores. It does by ensuring the core is not coupled to a particular Datastore implementation, instead each Datastore implements their own table data gateway, which can be interchanged both at runtime and compile time. The single point of access and encapsulation means that the System as a whole is unaffected by changes to the Datastore or data access logic and therefore facilitate easier maintenance.
+\item[Row Data Gateway] A Row data gateway is an object which encapsulates a single record in a Datastore~\cite{fowler2002patterns}. This could be utilised by our HUMS, as a method of ensuring data pulled from various Datastores can be used throughout the Core as if it was from a single Datastore. This will reduce the effect of impedance mismatch whilst increasing the tailorability of our solution and decreasing coupling.
 \end{description}
 
 \section{System Views} 
-Building on our work in the previous reports we decided to present four further, more detailed, views of our HUMS. This time we choose to take inspiration from the SEI \cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Allocation View}.
+Building on our work in the previous reports we decided to present four further, more detailed, views of our HUMS. This time we choose to take inspiration from the SEI~\cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Allocation View}.
 
 \subsection{Module View}
 \label{sec:views}
@@ -454,13 +454,13 @@ In the previous report, many of the details in the module view were omitted. In 
 
 Figure~\ref{fig:modules} shows a clear separation between those modules included with the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our system is highly tailorable, with plenty scope for adding additional functionality.
 
-The design patterns described above can be seen within this view, including the table data gateway pattern which is used for abstracting away the implementation details of particular datastores, and the observer pattern implemented through the controllers and engines.
+The design patterns described above can be seen within this view, including the table data gateway pattern which is used for abstracting away the implementation details of particular Datastores, and the observer pattern implemented through the controllers and engines.
 
 The components of the Consumer facing API, made up of generic engines and emitters, are described below:
 \begin{description} [noitemsep]	
 	\item[Analysis Engines] All Consumer analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a \texttt{ClientSystem} object, which wraps information about a particular system loaded from the configuration file, and returns an \texttt{Event} object generated as a result of the analysis (which may be \texttt{null}). This event object, holds stores the ID of the Client that generated it and key-values describing the event to be used by notification engines. This allows analysis engines free reign as to how they define events, and what information they store about events.
 	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an \texttt{Event}, the result of analysis, and notifies the relevant individual, software, or hardware, as defined. Consumers can implement this interface themselves or extend a provided implementations.
-	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given system sensor, and the \texttt{readBetween()} method returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the datastore which fit the query. The methods for writing to a datastore are both named \texttt{write()}, however, one takes a single item of data and writes it to the datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
+	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a Datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given system sensor, and the \texttt{readBetween()} method returns all records for a system sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the Datastore which fit the query. The methods for writing to a Datastore are both named \texttt{write()}, however, one takes a single item of data and writes it to the Datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
 	\item[Data Emitters] Data emitters read values from sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example emitters, such as the Earthquake Emitter and the Test App Emitters, but more may be added by the user. This method of data input allows data from different Clients to pass through the HUMS Core as if it was all the same, vastly increasing our solutions interoperability with different types of Client.
 \end{description}
 
@@ -550,9 +550,7 @@ In addition, the Core now automatically detects when new files are added to the 
 
 Several example applications provided with our HUMS are described throughout this report. These implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the system by creating their own engines to meet their needs.
 
-The Consumer systems monitored by a particular HUMS instance, and how they will be monitored is now defined using a \emph{JSON} configuration file.
-The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular Consumer system, with a System ID, Sensor IDs, parameters, and which engines the system uses.
-A configuration file (\texttt{*.config}) is loaded into the Core by the Consumer before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
+The Consumer systems monitored by a particular HUMS instance, and how they will be monitored is now defined using a JSON configuration file. The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular Consumer system, with a System ID, Sensor IDs, parameters, and which engines the system uses. A configuration file (\texttt{*.config}) is loaded into the Core by the Consumer before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
 \begin{figure}[tbp]
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -583,7 +581,7 @@ A configuration file (\texttt{*.config}) is loaded into the Core by the Consumer
 \label{fig:configFiles}
 \end{figure}
 
-Any changes made to the \texttt{*.config} whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
+Any changes made to the \texttt{*.config} whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
 The Core has also been re-factored to load Consumer system parameters to be used by engines from \texttt{*.config} files. This includes both individual sensor parameters and system parameters meaning that, for example, analysis can be performed both per sensor and on the system as a whole, further increasing the tailorability of our solution.
 The configuration file for a particular instance of the HUMS can be set and modified at runtime or compile time as it is separate from the code-base, making it very versatile and further improving configurability. 
@@ -678,8 +676,7 @@ The number of data records to average over and the upper and lower bounds for th
 
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
 
-\subsubsection{Generic Expression Engine}
-\hl{TODO Tom}
+\subsubsection{Expression Engine}
 We devised a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential analysis processes, avoiding the need to build new analysis engine classes. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the system configuration file to define the action of the engine.
 \begin{figure}[htbp]
 \centering
@@ -692,24 +689,19 @@ The values of variables which represent the state of the system being monitored 
 
 Since the expressions that may be passed to the \texttt{ExpressionAnalysisEngine} can be arbitrarily large, a limit may be imposed on the processing time that may be taken to evaluate an expression. If that time limit is broken, the engine stops processing the expression and sends a notification to the appropriate users to warn them of the situation.
 
-The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its flexibility and configurability, allowing the HUMS to be easily customised by the Consumer without needing any particular software engineering knowledge. % TODO Expand on this?
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its flexibility and configurability, allowing the HUMS to be easily customised by the Consumer without needing any knowledge outside of the analysis engine interface.
 
 % TODO The library used?
 
 \subsubsection{Face Analysis Engine}
 \label{sec:fae}
-
-\hl{TODO Tom/Joe Face Recognition for Security}
-% TODO Separate analysis from sensing
 The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to a secure system. This module shows off the ability of sensors and analysis engines to work together to perform complex tasks, which can be tailored using the Core configuration file.
 
 The face recognition process is two fold: An image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
 
-The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This is the data which is then transmitted to the Core.
+The face description in the Android app is computed using the Local Binary Patterns Histogram (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it (although what constitutes a neighbour can be varied to control for scaling). These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns}, those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s, have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This method is robust to changes in illumination and pose~\cite{ahonen2006face}, making it a robust method for describing faces in the presence of extraneous variables. This is the data which is then transmitted to the Core for storage and analysis to determine if the describe face is authorised.
 
 When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces using the Chi-Squared distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces provided by the configuration file is less than some threshold, also given by the configuration file, and any example unauthorised face.
-
-% TODO This method is robust to lighting and pose \cite{ahonen2006face} (due to use of local thresholds)
 
 \subsubsection{Other Analysis Engines}
 The \texttt{TrafficAnalysisEngine}, creates an event when a reading is generated, the analysis performed in this case is simply parsing the data about the earthquake and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification \texttt{Event} only if the magnitude above a specified value, so larger earthquakes generate events. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class in incredibly versatile  Other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the \texttt{AnalysisEngine} abstract class, and implementing the required methods.
@@ -930,23 +922,31 @@ By using these cross-platform and established libraries, our monitor can be gene
 \subsection{Evaluation on Test Application 2}
 \label{sec:test_app2}
 
-Using iotop under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
+Using iotop~\cite{iotop} under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
 We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
 
 As this is an extension of the previous work for the first test application, this can be easily adapted as a cross-platform solution for monitoring any process running on a given system. 
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
-\hl{TODO Andy}
-% also mention PaaS here?
+
+In the Interim Report we proposed an innovative deployment option for our HUMS as a System as a Service (SaaS) solution. This would allow multiple Consumers to use the same central HUMS, saving them from the complexity of setting up and managing the system themselves, whilst still allowing flexibility for them to configure it to their needs and interface with local Datastores and engines.
+
+This is possible due to the ability of different components to run from different location, for example a data emitter can run on a different system to the Core of the HUMS. With our HUMS implementation the SaaS solution could be achieved by running multiple Cores on the same server, with one Core for each Consumer. This is not ideal, as a new Core instance for a new Consumer would have to manually be started, but does successfully enable this type of deployment.
+
+Ideally, only a single instance of the Core would be needed and would be able to handle multiple Consumers' configurations. This is a future possibility for the system as only small parts of the Core would need to be changed and all other components, including all engines, would still work as before.
+
+Along with SaaS, a Platform as a Service (PaaS) deployment is also possible with our implementation. The HUMS would be provided to the Consumer so they could configure it as needed and then deploy it using servers and storage that we would provide. They would also be able to bundle in their own custom engines and any additional software to be deployed and run alongside the HUMS on our platform, which would further reduce the the complexity and cost to the Consumer of purchasing and managing their own hardware. This could not be fully explored in the report due to time and resource limitations.
 
 
 \subsection{Evaluation of Additional Engines}
 \label{sec:additional}
-\hl{TODO Rosy\&Tom\&Adam}
 
-% EVALUATION IN TERMS OF: what they show our prototype is capable of. How easy was it etc 
-The \texttt{FaceAnalysisEngine} provided a convincing example of a complex, domain-specific analysis engine being easily built on top of the generic interface. The configuration file allowed easy description of the faces to be accepted by storing a relative path to a face description file, and the Java interface provided a simple mechanism for retrieving data from the sensors. This engine showed that even highly tailored engines comfortably fit within our plugin model of engines.
+Providing support for multiple kinds of datastore within the HUMS prototype proved to be a relatively straightforward process. As part of our prototype, we added both local and remote SQL, NoSQL and distributed Datastores, showing our architecture yields a high level of interoperability. The fact that we can switch between these by changing a configuration file at runtime, without any code being written, shows a high level of configurability and accessibility, since consumers with even low levels of technical knowledge can implement these changes.
+ 
+The \texttt{FaceAnalysisEngine} provided a convincing example of a complex, domain-specific analysis engine being easily built on top of the generic interface. The configuration file allowed easy description of the faces to be accepted by storing a relative path to a face description file, and the Java interface provided a simple mechanism for retrieving data from the sensors. This engine showed that even highly tailored engines comfortably fit within our plugin model of engines, giving strong evidence that our prototype is highly tailorable.
+
+% TODO Cover Availability, Security and Performance quality attributes if possible
 
 \subsection{Instructions for Running and Replicating Results}
 \label{sec:instructions}
