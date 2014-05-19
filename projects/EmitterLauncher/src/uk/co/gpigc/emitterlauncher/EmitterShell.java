@@ -87,7 +87,9 @@ public class EmitterShell extends Shell {
 		
 		String distDirectory = EmitterShell.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		int indexOfJarName = distDirectory.indexOf("EmitterLauncher.jar");
-		distDirectory = distDirectory.substring(5, indexOfJarName);
+		String os = System.getProperty("os.name").toUpperCase();
+		int pathStart = os.contains("WIN") ? 6 : 5;
+		distDirectory = distDirectory.substring(pathStart, indexOfJarName);
 		
 		if (args.length >= 1) {
 			emitterDirectory = distDirectory + args[0];
@@ -275,7 +277,7 @@ public class EmitterShell extends Shell {
 	}
 
 	protected void buttonSelect(String jarPath, Button button, Text text) {
-		jarPath = jarPath.substring(1,jarPath.length()).replace("%20", " ");
+		jarPath = jarPath.replace("%20", " ");
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
 			text.append(" >> Starting " + jarPath + "\n");
