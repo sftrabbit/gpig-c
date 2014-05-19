@@ -51,8 +51,6 @@ public class Config {
 	{
 	    String os = System.getProperty("os.name").toUpperCase();
 	    
-	    System.out.println(os);
-	    
 	    String applicationDataDirectory = new String();
 	    
 	    if (os.contains("WIN"))
