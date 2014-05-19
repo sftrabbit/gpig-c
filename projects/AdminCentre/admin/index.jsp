@@ -62,6 +62,7 @@ for (File engineFile : notificationFolder.listFiles()) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico">
 
     <title>Admin Centre - System: <%= currentSystem.get("SystemID") %></title>
 
