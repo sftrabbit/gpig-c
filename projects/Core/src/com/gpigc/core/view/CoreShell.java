@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Group;
 
+import com.gpigc.core.Config;
 import com.gpigc.core.FileUtils;
 
 public class CoreShell extends Shell {
@@ -36,40 +37,24 @@ public class CoreShell extends Shell {
 	private final Label currentConfigFile;
 	private final ToolItem configButton;
 	private Button clearButton;
-
-	/**
-	 * Launch the application.
-	 * 
-	 * @param args
-	 */
-	public static void main(String args[]) {
-		try {
-			Display display = Display.getDefault();
-			CoreShell shell = new CoreShell(display);
-			shell.open();
-			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private final Config config;
 
 	/**
 	 * Create the shell.
 	 * 
 	 * @param display
 	 */
-	public CoreShell(Display display) {
+	public CoreShell(Display display, Config config) {
 		super(display, SWT.SHELL_TRIM);
+		
 		this.addListener(SWT.Close, new Listener() {
 			public void handleEvent(Event event) {
 				System.exit(0);
 			}
 		});
+		
+		this.config = config;
+		
 		setSize(750, 450);
 		setMinimumSize(550, 500);
 		String iconFileName = FileUtils
@@ -114,6 +99,7 @@ public class CoreShell extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog(CoreShell.this, SWT.OPEN);
 				dialog.setFilterExtensions(new String[] { "*.config" });
+				dialog.setFilterPath(CoreShell.this.config.getApplicationDataDirectory().toString());
 				String newPath = dialog.open();
 				if (newPath != null) {
 					configFilePath = newPath;

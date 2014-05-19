@@ -14,7 +14,10 @@ import org.junit.Test;
 
 import com.gpigc.core.ClientSensor;
 import com.gpigc.core.ClientSystem;
+import com.gpigc.core.Config;
+import com.gpigc.core.Config.ConfigException;
 import com.gpigc.core.Core;
+import com.gpigc.core.Main;
 import com.gpigc.core.Parameter;
 import com.gpigc.core.analysis.AnalysisEngine;
 import com.gpigc.core.event.DataEvent;
@@ -26,7 +29,7 @@ public class AnalysisEngineTest {
 
 	@Before
 	public void before() throws URISyntaxException, IOException,
-			ReflectiveOperationException, InterruptedException {
+			ReflectiveOperationException, InterruptedException, ConfigException {
 		// Set up dummy system
 		registeredSystems = new ArrayList<>();
 
@@ -39,9 +42,11 @@ public class AnalysisEngineTest {
 
 		registeredSystems.add(new ClientSystem("TestSystem", sensors,
 				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
+		
+		Config config = new Config(Main.CONFIG_NAME);
 
 		analysisEngine = new AnalysisEngine(registeredSystems, new Core(
-				"config/RegisteredSystems.config")) {
+				"config/RegisteredSystems.config", config)) {
 			@Override
 			public DataEvent analyse(ClientSystem system) {
 				return null;

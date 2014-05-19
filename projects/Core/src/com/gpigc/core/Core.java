@@ -18,14 +18,15 @@ public class Core {
 	private final AnalysisController analysisController;
 	private final NotificationController notificationGenerator;
 	private List<ClientSystem> systemsToMonitor;
-	private String currentConfigFilePath;
+	private String systemConfigFilePath;
 	private Config config;
 
-	public Core(String configFilePath, Config config) throws IOException,
+	public Core(String systemConfigFilePath, Config config) throws IOException,
 	ReflectiveOperationException, InterruptedException {
-		currentConfigFilePath = configFilePath;
+		this.systemConfigFilePath = systemConfigFilePath;
 		this.config = config;
-		systemsToMonitor = getSystems(currentConfigFilePath);
+		
+		systemsToMonitor = getSystems(systemConfigFilePath);
 		datastoreController = new StorageController(systemsToMonitor, this);
 		analysisController = new AnalysisController(systemsToMonitor, this);
 		notificationGenerator = new NotificationController(systemsToMonitor,
@@ -38,7 +39,7 @@ public class Core {
 		FileMonitor configMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener configListener = new ConfigFileChangeListener();
 		configMonitor.addFileChangeListener(configListener,
-				currentConfigFilePath, 1000);
+				systemConfigFilePath, 1000);
 
 		FileMonitor enginesMonitor = FileMonitor.getInstance();
 		ConfigFileChangeListener engineListener = new ConfigFileChangeListener();
@@ -49,7 +50,7 @@ public class Core {
 	public void refreshSystems() throws IOException,
 	ReflectiveOperationException {
 		System.out.println(" Re-registering systems...");
-		systemsToMonitor = getSystems(currentConfigFilePath);
+		systemsToMonitor = getSystems(systemConfigFilePath);
 		datastoreController.refreshSystems(systemsToMonitor);
 		analysisController.refreshSystems(systemsToMonitor);
 		notificationGenerator.refreshSystems(systemsToMonitor);

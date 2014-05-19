@@ -21,18 +21,32 @@ import com.gpigc.core.view.StandardMessageGenerator;
 
 public class Main {
 
+	public static final String CONFIG_NAME = "gpigc";
 	public static boolean running = false;
 	private static CoreShell shell;
+	private static Config config;
 
 	public static void main(String args[]) throws Exception {
+		setUpConfig();
 		setUpServer();
 		setUpGui();
+	}
+	
+	private static void setUpConfig() {
+		try {
+			String defaultConfigDirectory = FileUtils
+				.getExpandedFilePath("res/config");
+			config = new Config(CONFIG_NAME, defaultConfigDirectory);
+		} catch(ConfigException e) {
+			System.err.println("Unable to initialise configuration directory");
+			config = new Config();
+		}
 	}
 
 	private static void setUpGui() {
 		try {
 			Display display = Display.getDefault();
-			shell = new CoreShell(display);
+			shell = new CoreShell(display, config);
 			shell.setSize(700, 400);
 			shell.setMinimumSize(400, 400);
 			shell.open();
@@ -103,18 +117,16 @@ public class Main {
 			if (!running) {
 
 				try {
-					String tempConfig = FileUtils
-							.getExpandedFilePath("res/config");
-					Config config = new Config(tempConfig);
 					System.setProperty("gpigc.configfile",
 							shell.getConfigFilePath());
+					
 					core = new Core(shell.getConfigFilePath(), config);
 					core.getDataInputServer().start();
 					shell.getConfigButton().setEnabled(false);
 					StandardMessageGenerator.coreRunning();
 					running = true;
 				} catch (IOException | ReflectiveOperationException
-						| InterruptedException | ConfigException e1) {
+						| InterruptedException e1) {
 					StandardMessageGenerator.failedToSetup();
 					e1.printStackTrace();
 				}
