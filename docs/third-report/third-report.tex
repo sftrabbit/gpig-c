@@ -93,7 +93,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-Word count: \input{wc} (\textit{using TeXCount})
+Word count: % \input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -185,7 +185,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 	\requirement{\fr}{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
 \requirement{\fr}{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
-\requirement{\fr}{6}{The HUMS must store no more data records than the Consumer-defined storage quota.}{}
+\requirement{\fr}{6}{The HUMS shall store no more data records than the Consumer-defined storage quota.}{}
 \requirement{\fr}{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
 	\requirement{\fr}{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
 	\requirement{\fr}{7.2}{The HUMS shall allow the User to define their own Events.}{}
@@ -197,7 +197,7 @@ After feedback from the initial and interim reports, the HUMS requirements have 
 	\requirement{\fr}{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
 }
 \requirement{\fr}{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
-\requirement{\fr}{10}{The HUMS must interface with Report engines, allowing them to pull Reports.}{}
+\requirement{\fr}{10}{The HUMS shall interface with Report engines, allowing them to pull Reports.}{}
 \requirement{\fr}{11}{The System shall allow for Notifications to be fed back to the Consumer System to change
 the way in which data is sensed.}{}
 \requirement{\fr}{12}{The System shall load new engines which an authorised user adds during runtime.}{}
@@ -212,7 +212,7 @@ the way in which data is sensed.}{}
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
 \requirement{\nfr}{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
-\requirement{\nfr}{3}{The HUMS must be accessible to End Users regardless of their geographic location.}{}
+\requirement{\nfr}{3}{The HUMS shall be accessible to End Users regardless of their geographic location.}{}
 \requirement{\nfr}{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
 \requirement{\nfr}{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
 \requirement{\nfr}{6}{The HUMS shall be tested to ensure all requirements are met before deployment.}{
@@ -223,10 +223,10 @@ the way in which data is sensed.}{}
 	\requirement{\nfr}{6.5}{The HUMS shall be tested using acceptance testing.}{}
 }
 \requirement{\nfr}{7}{The Customer will complete acceptance testing before the System is deployed.}{}
-\requirement{\nfr}{8}{The System must be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
-\requirement{\nfr}{9}{The System must be available for no less than 99.9\% of each month.}{}
-\requirement{\nfr}{10}{Data must be backed up within 24 hours of having been made available to the System.}{}
-\requirement{\nfr}{11}{Timestamps applied by the system must be accurate to within 5 ms of UTC.}{}
+\requirement{\nfr}{8}{The System shall be able to support at least 5 Clients of the Output Interface per HUMS Instance.}{}
+\requirement{\nfr}{9}{The System shall be available for no less than 99.9\% of each month.}{}
+\requirement{\nfr}{10}{Data shall be backed up within 24 hours of having been made available to the System.}{}
+\requirement{\nfr}{11}{Timestamps applied by the system shall be accurate to within 5 ms of UTC.}{}
 \requirement{\nfr}{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
 \requirement{\nfr}{13}{The System shall support storing data without requiring specific schemata.}{}
 \requirement{\nfr}{14}{The configuration shall be in a human-readable format.}{}
