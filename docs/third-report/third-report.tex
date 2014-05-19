@@ -589,7 +589,7 @@ Part of our task was monitoring the provided test applications, treating them as
 The monitoring engine utilises the System Information GAthereR (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about which implementation for reading that information the platform provides. The information gathered by this engine is forwarded to the core for analysis.
 
 \subsubsection{Earthquakes and Traffic}
-In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data is in a JSON format and the traffic data is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
+In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data (from the U.S. Geological Survey~\cite{us_geo}) is in a JSON format and the traffic data (from the UK Highways Agency~\cite{ha_traffic}) is in an XML format, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
 
 \subsubsection{Server Responsiveness}
 A common use of existing HUMS systems is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time data emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the core for analysis.
@@ -702,23 +702,23 @@ This section describes the reporting and notification capabilities of our HUMS. 
 For reporting, two sample reporting engines were created that can be used through the Admin Centre. Once requested by the User, these generate reports with live updating information from the HUMS. These engines provide just a small idea of what is possible with our HUMS implementation, with further web based or standalone reporting engines -- or engines integrated into other applications -- able to be created to interact with the system and produce other types of reports the User may require.
 
 \subsubsection{SMS Notifications}
-A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
 The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the interim report, however, has been heavily re-factored to comply with our new, more modular code-base.
-It can be configured to send email notifications for events to any email address, and may be useful for more detailed, less frequent notifications.
+It can be configured to send email notifications for events to any email address, and may be useful for more detailed, less frequent notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
-The \texttt{TwitterNotificationEngine} provided allows events to be pushed to the social networking site \emph{Twitter}. We included this engine to demonstrate how our HUMS implementation can be used to interact with popular platforms to provide report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the message it receives from analysis engines and then pushes that tweet to the registered account.
+The \texttt{TwitterNotificationEngine} provided allows events to be pushed to the social networking site \emph{Twitter}. We included this engine to demonstrate how our HUMS implementation can be used to interact with popular platforms to provide report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the message it receives from analysis engines and then pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
 
 \subsubsection{Android Application Feedback Notifications}
 \hl{TODO Rosy}
 
 \subsubsection{Map Report}
-The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the User through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information.
+The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the User through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information. The map generated uses the Google Maps JavaScript API~\cite{g_maps} which is customised to fit the needs of the report.
 
 \subsubsection{Graph Report}
-Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its configurability of use. The graph reports generated can also automatically update to show live data.
+Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its configurability of use. The graph reports generated can also automatically update to show live data. This report uses the open source Chart.js JavaScript charting library~\cite{chart_js} to draw and customise the graph.
 
 \subsection{Admin Centre}
 \label{sec:admin}
@@ -809,7 +809,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 	FR.10  & 	  & 	 \\ \hline
 	FR.11  & 	  & 	 \\ \hline
 	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
-}{Evaluation for Satisfaction of Function Requirements}{frevaltable}	
+}{Evaluation for Satisfaction of Functional Requirements}{frevaltable}
 
 \tableformat{| l | l | l |}{ \hline	NFR.x  & 	Description of NFR  & 	What we did \\ \hline
 	NFR.1  & 	  & 	The data store is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ \hline
@@ -826,7 +826,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 	NFR.12  & 	  & 	 \\ \hline
 	NFR.13  & 	  & 	To achieve this, a key-value data store format has been used. This relaxes the need for a schema to a simple pair of key to value. \\ \hline
 	NFR.14  & 	  & 	The format for the configuration files is JSON, this is a widely-adopted nad easy to modify format for update by a human. \\ \hline
-}{Evaluation for Satisfaction of Non-Function Requirements}{nfrevaltable}	
+}{Evaluation for Satisfaction of Non-Functional Requirements}{nfrevaltable}
 
 
 The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high configurability was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system, and a stand-alone data store to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
@@ -861,7 +861,7 @@ We decided to monitor the process memory usage, CPU usage, state (idle, running,
 
 \subsection{Instructions for Running and Replicating Results}
 \label{sec:instructions}
-\hl{TODO!}
+\hl{TODO! - super easy GUIs, sources online, etc}
 
 
 %-------------------------------------------------------------%
