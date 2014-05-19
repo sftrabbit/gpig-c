@@ -18,6 +18,8 @@
 			<os family="unix" />
 		</and>
 	</condition>
+
+	<property name="${platform.name}" value="true" />
 	
 	<fail message="Only OSX 64-bit, Linux 64-bit, and Windows 32- or 64-bit supported atm" unless="platform.name" />
 	
@@ -80,11 +82,22 @@
 				<chmod file="${dist.emitters.dir}/@{emitter}.jar" perm="ugo+x"/>
 			</sequential>
 		</for>
-		<copy file="tools/run.sh" todir="${dist.dir}" />
-		<chmod file="${dist.dir}/run.sh" perm="ugo+x"/>
-		<copy file="tools/run.bat" todir="${dist.dir}" />
+	</target>
+
+	<target name="copy-win-script" depends="copy" if="win">
+		<copy file="tools/run.bat" tofile="${dist.dir}/run.bat" />
 		<chmod file="${dist.dir}/run.bat" perm="ugo+x"/>
 	</target>
+
+	<target name="copy-linux-script" depends="copy" if="linux">
+		<copy file="tools/run-linux.sh" tofile="${dist.dir}/run.sh" />
+		<chmod file="${dist.dir}/run.sh" perm="ugo+x"/>
+	</target>
+
+	<target name="copy-osx-script" depends="copy" if="osx">
+		<copy file="tools/run-osx.sh" tofile="${dist.dir}/run.sh" />
+		<chmod file="${dist.dir}/run.sh" perm="ugo+x"/>
+	</target>
 	
-	<target name="dist" depends="copy" />
+	<target name="dist" depends="clean,copy-win-script,copy-linux-script,copy-osx-script" />
 </project>
