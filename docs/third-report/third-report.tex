@@ -394,9 +394,9 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \begin{description}
 \item[Modifiability] \hfill
 	\begin{description}[noitemsep]
-	\item[Defer Binding Time] Configuration files, runtime registration and polymorphism can be used to reduce the time taken to make changes, and to allow the Consumer to modify the system at runtime.
+	\item[Defer Binding Time] Configuration files, runtime registration and polymorphism will be used to reduce the time taken to make changes, and to allow the Consumer to modify the system at runtime.
 	\item[Localise Modifications] Steps are to be taken to maintain semantic coherence within the implementation, with the team aiming to produce loosely coupled modules with high cohesion. Modules are to be generalised where possible, allowing them to preform a larger variety of functions without code changes.
-	\item[Prevent Ripple Effect] Communication paths are to be restricted where possible, with the modules which can share data being limited. Information can also be hidden by using private functions where possible, meaning changing implementation details will not affect the public APIs used by the Consumer.
+	\item[Prevent Ripple Effect] Communication paths are to be restricted where possible, with the modules which can share data being limited. Information can also be hidden by using private functions, meaning changing implementation details will not affect the public APIs used by the Consumer.
 	\end{description}
 \item[Interoperability] \hfill
 	\begin{description}[noitemsep]
@@ -406,14 +406,14 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \item[Availability] \hfill
 	\begin{description}[noitemsep]
 	\item[Fault Prevention] Bundling related actions into transactions should stop the system entering an inconsistent state. If a single action fails within a transactions then all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engine) would allow for damage due to erroneous operation to be minimised.
-	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/echo could also be used to ensure external components are correctly registered with the HUMS core.
-	\item[Fault Recovery] Having secondary active or passive systems would allow for automatic switch over to the secondary systems when the main system failed, thus minimising interruption to clients.
+	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/echo could also be used to ensure external components registered with the HUMS Core are available.
+	\item[Fault Recovery] Having active or passive redundant systems would allow for automatic switch over in the event of a System failure, thus minimising interruption to Clients.
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
-	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the Datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Individual user access to functionality should be restricted to the bare necessities. 
-	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DoS attack. Trap files could be set that should only ever be accessed from specific addresses.
-	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots would allow for the HUMS to roll back to an acceptable state.
+	\item[Resisting Attacks] Using prepared statements would mitigate the threat of SQL injection attacks. All connections to the Datastore will require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Access to functionality should be restricted such that no individual has access to services they do not need. 
+	\item[Detecting Attacks] Trap files could be used, which should only ever be accessed from specific addresses.
+	\item[Recovering From Attacks] Redundant copies of data should be stored, as well as frequent data snapshots, allowing for the HUMS to roll back to a valid state after an attack.
 	\end{description}
 \end{description}
 
@@ -566,8 +566,7 @@ A configuration file is loaded into the Core by the Consumer before it is run. C
 
 Any changes made to the configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
-\hl{TODO Tom: Refactored to add config file that contains all it's parameters, which can be set and modified at runtime, separating params from the code}
-Since the last report, the HUMS has been refactored to load its parameters from a \texttt{*.config} file. The file describes the parameters for each engine, for example, the expression to be used by the \texttt{ExpressionAnalysisEngine}, as well as how data is to be routed through the HUMS, from the emitter, to storage, to analysis and then on to notification.
+Since the last report, the HUMS has been refactored to load its parameters from a \texttt{*.config} file. Such a file describes the parameters for each engine, for example, the expression to be used by the \texttt{ExpressionAnalysisEngine}, as well as how data is to be routed through the HUMS, from the emitter, to storage, to analysis and then on to notification. Many routes can exist at once, with information about different systems being handled independently or by the same process. The configuration file can be set and modified at runtime or compile time, allowing for a very high degree of configurability that is separate from the codebase.
 
 In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
