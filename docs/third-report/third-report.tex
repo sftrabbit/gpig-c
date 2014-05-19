@@ -580,7 +580,7 @@ A lightweight Jetty server was also added to the Core demonstrating that the Adm
 \subsection{Project Management}
 \hl{TODO Joe}
 
-\subsection{Monitoring}
+\subsection{Sensing}
 \label{sec:monitor}
 In this section we describe what data our HUMS currently monitors. We created six sample Data Emitters for this stage of the project, in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications, and APIs, as well as how it can be used with specially made applications. An End User would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS.
 
@@ -626,7 +626,27 @@ The final system performs face recognition, collecting face data using the built
 \label{fig:android}
 \end{figure}
 
-\subsection{Data Analysis}
+
+\subsection{Storing}
+\label{sec:store}
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the End User to conform to a particular data schema or datastore, in fact, the datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
+
+Prepared statements were used where possible in our datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
+
+\subsubsection{Google App Engine Storage}
+\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
+
+\subsubsection{PostgreSQL Storage}
+\emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. 
+To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
+
+\hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
+
+\subsubsection{H2 Storage}
+For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained and server-less, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
+
+
+\subsection{Analysing}
 \label{sec:analysis}
 In this section we describe how our HUMS implementation currently analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the End User to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
 
@@ -637,7 +657,6 @@ The previous mean analysis engine has been rewritten to form a generic bounded s
 The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds configurability on a per sensor level.
 
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
-
 
 \subsubsection{Generic Expression Engine}
 \hl{TODO Tom}
@@ -675,25 +694,8 @@ When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is co
 \subsubsection{Other Analysis Engines}
 The \texttt{TrafficAnalysisEngine}, creates an event when a reading is generated, the analysis performed in this case is simply parsing the data about the earthquake and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating a notification \texttt{Event} only if the magnitude above a specified value, so larger earthquakes generate events. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class in incredibly versatile  Other analysis engines, the analysis system can be easily built up. Hence, it is easy to add further analysis engines to the system. This can easily be done by extending the \texttt{AnalysisEngine} abstract class, and implementing the required methods.
 
-\subsection{Data Storage}
-\label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the End User to conform to a particular data schema or datastore, in fact, the datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
 
-Prepared statements were used where possible in our datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
-
-\subsubsection{Google App Engine Storage}
-\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
-
-\subsubsection{PostgreSQL Storage}
-\emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. 
-To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
-
-\hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
-
-\subsubsection{H2 Storage}
-For real-time applications that require high performance and low response times a local H2 instance is offered. H2 is a Java library that implements a simple, self-contained and server-less, transactional SQL database. H2 can be run in embedded or server mode, its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
-
-\subsection{Data Reporting and Event Notifying}
+\subsection{Reporting and Notifying}
 \label{sec:report}
 \hl{INTRO: Rosy||Joe||Andy}
 
