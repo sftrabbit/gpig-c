@@ -654,7 +654,7 @@ Prepared statements were used where possible in our Datastore implementations, b
 
 \subsubsection{PostgreSQL Storage}
 \emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliment. We included this storage engine in order to show how our HUMS can interact with a remote SQL Datastore. 
-To implement this we created an \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
+To implement this we created a \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
 
 \hl{For this implementation we were able to use a connection pool, which provides a cache of reusable database connections. This means that connections only need to be created once and shared between components that require data access. The HikariCP Java library was used to simplify the implementation of database connection pools. ---- REMOVE?}
 
