@@ -1,17 +1,5 @@
-<%@ page import="com.gpigc.core.Main,com.gpigc.core.Config,com.gpigc.core.FileUtils,java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
+<%@ page import="com.gpigc.core.Main,com.gpigc.core.Config,java.io.File,java.io.FileReader,java.util.ArrayList,java.util.Arrays,java.util.Iterator,java.util.List,java.util.Set,java.util.Map,java.util.Map.Entry,org.json.simple.parser.JSONParser,org.json.simple.JSONArray,org.json.simple.JSONObject" %>
 <%@ page buffer="none" %>
-<%!
-private List<String> getEngines(String engineType) {
-    List<String> engines = new ArrayList<String>();
-    File folder = new File(FileUtils.getExpandedFilePath("res/com/gpigc/core/" + engineType + "/engine"));
-    for (File engineFile : folder.listFiles()) {
-        if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
-            engines.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
-        }
-    }
-    return engines;
-}
-%>
 <%
 Config coreConfig = new Config(Main.CONFIG_NAME);
 
@@ -45,9 +33,29 @@ while (iter.hasNext()) {
     }
 }
 
-List<String> availableDatastores = getEngines("storage");
-List<String> availableAnalysis = getEngines("analysis");
-List<String> availableNotification = getEngines("notification");
+List<String> availableDatastores = new ArrayList<String>();
+File datastoresFolder = coreConfig.getConfigFile("engines/com/gpigc/core/storage/engine");
+for (File engineFile : datastoresFolder.listFiles()) {
+    if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
+        availableDatastores.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
+    }
+}
+
+List<String> availableAnalysis = new ArrayList<String>();
+File analysisFolder = coreConfig.getConfigFile("engines/com/gpigc/core/analysis/engine");
+for (File engineFile : analysisFolder.listFiles()) {
+    if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
+        availableAnalysis.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
+    }
+}
+
+List<String> availableNotification = new ArrayList<String>();
+File notificationFolder = coreConfig.getConfigFile("engines/com/gpigc/core/notification/engine");
+for (File engineFile : notificationFolder.listFiles()) {
+    if (engineFile.getName().endsWith(".class") && !engineFile.getName().contains("$")) {
+        availableNotification.add(engineFile.getName().substring(0, engineFile.getName().length() - 6));
+    }
+}
 %>
 <!DOCTYPE html>
 <html lang="en">
