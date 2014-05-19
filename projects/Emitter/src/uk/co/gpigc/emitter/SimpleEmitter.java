@@ -1,6 +1,7 @@
 package uk.co.gpigc.emitter;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.concurrent.ExecutionException;
 
 public class SimpleEmitter {
@@ -34,6 +35,9 @@ public class SimpleEmitter {
 			System.out.println("Error: " + name + " was interrupted");
 		} catch (ExecutionException e) {
 			System.out.println("Error: " + e.getCause().getMessage());
+			if (e.getCause().getClass() == ConnectException.class) {
+				System.out.println("Error: Is the Core running?");
+			}
 		}
 		
 		stop();
