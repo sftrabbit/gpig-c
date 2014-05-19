@@ -191,6 +191,9 @@ public class EmitterShell extends Shell {
 	}
 
 	private void compositeSetup(Group groupComp) {
+		String os = System.getProperty("os.name").toUpperCase();
+		boolean isLinux = os.contains("NUX");
+		
 		Composite composite = new Composite(groupComp, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		GridData buttonData = new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1);
@@ -211,6 +214,7 @@ public class EmitterShell extends Shell {
 				buttonSelect(emitterDirectory + "/" + TEST_APP_1_NAME, testApp1Button,textApp1);
 			}
 		});
+		testApp1Button.setEnabled(isLinux);
 
 		testApp2Button = new Button(composite, SWT.TOGGLE);
 		GridData data2 = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
@@ -225,6 +229,7 @@ public class EmitterShell extends Shell {
 				buttonSelect(emitterDirectory + "/" + TEST_APP_2_NAME, testApp2Button, textApp2);
 			}
 		});
+		testApp2Button.setEnabled(isLinux);
 
 		earthButton = new Button(composite, SWT.TOGGLE);
 		GridData data3 = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
@@ -269,7 +274,8 @@ public class EmitterShell extends Shell {
 		});
 	}
 
-	protected void buttonSelect(final String jarPath, Button button, Text text) {
+	protected void buttonSelect(String jarPath, Button button, Text text) {
+		jarPath = jarPath.substring(1,jarPath.length()).replace("%20", " ");
 		if (button.getSelection()) {
 			button.setImage(stopIcon);
 			text.append(" >> Starting " + jarPath + "\n");

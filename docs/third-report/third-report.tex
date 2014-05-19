@@ -514,7 +514,6 @@ A behavioural view can show the actual actions taken by the system when the data
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
-\hl{TODO ADAM}
 The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earth-quake Hazards Program API and monitored information using JMX for the first Test Application.
 
 The interim solution provided a minimal end to end solution capable of sensing the first test application, storing the test data, analysing the data and triggering reports. 
@@ -768,8 +767,72 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 %-------------------------------------------------------------%
 \section{Testing}
 \label{sec:testing}
+% this should perhaps be a subsection of the section above or the section below...
 
-\hl{TODO!}
+We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the system and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
+
+For system testing we completed manual and automated testing, such as inspection testing and deploying our system across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the customer about various functionality and features of the system, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the system, and for integration testing we ensured that the disparate components of the HUMS properly interacted and further verified communication across a network.
+
+The testing of each module is described below:
+
+\begin{description}
+
+  \item[Core Shell] The Core Shell provides an interface for the Core of the HUMS and also manages execution. This includes listening for changes to engines, thus fulfilling \emph{FR.12} and \emph{FR.4.1.2}, and managing the use of configuration files, helping to fulfil \emph{NFR.14}. Unit tests and manual inspection were used to verify proper operation.
+
+  \item[Data Emitter] The purpose of the Data Emitter is to run continuously, monitoring a system and reporting on it, thereby fulfilling \emph{FR.1.2}. We completed inspection testing to verify that data was reported, along with running the program for several hours to verify that it continued to function correctly.
+
+  \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple clients simultaneously and checking that the data from both was recorded, thus verifying \emph{FR.1.1}.
+
+  \item[Data Abstraction Layer] Given the high throughput and importance of storage to the function of the HUMS as a whole, the Data Abstraction Layer's key attributes are availability and performance. We completed an inspection test and used the \texttt{GWTSystemDataGatewayTest} class to verify \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
+
+  \item[Storage Controller] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
+
+  \item[System Data Gateway] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
+
+  \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito to provide isolated unit tests, confirming that notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, this was confirmed to be working via inspection and integration testing.
+
+  \item[Analysis Engine] For the Analysis Engine, we created a unit test to check each aspect of the engine as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependancies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
+
+  \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a notification is generated when analysis has indicated it. The second test ensured that notifications were only sent once to avoid spamming users.	 
+
+  \item[Notification Engine] The functionality of the email Notification Engine is tested using a unit test. The test uses the Notification Engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information, satisfying \emph{FR.9}.
+
+  \item[Admin Centre] One of the features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Amin Centre is web based so testing was mainly manual.
+
+  \item[Reports Engine] We tested the Reports Engine by inspection since the reports produced are quite visual and vary depending on the data used in them. This reporting ensured \emph{FR.10} was met.
+
+ \end{description}
+
+\subsubsection{Traceability Table}
+
+Table~\ref{tab:traceability} shows the tests used to verify the that system requirements are met.
+
+\tableformat{p{1.3cm} p{4.1cm} p{2cm} p{5.2cm}}
+{ 	\hline
+    Req. ID & Test Classes & Type & Details \\
+    \hline
+
+    FR.1.1   & & & \\
+    FR.1.2   & N/A & Inspection, Alpha & Verify by observing output in Admin Centre \\
+    FR.2.1   & SystemDataTest & Unit & Verify existence of timestamp \\
+    FR.2.2   & EmitterSystemStateTest & Unit & Verify existence of timestamp \\
+    FR.3   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON \\
+	FR.3.1   & & & \\
+	FR.4.1.1 & & & \\
+	FR.4.1.2 & & & \\
+	FR.7     & & & \\
+    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Inspection,\newline Unit & Check notification flag is set and queried to control notifications \\
+    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of events \\
+	FR.9     & & & \\
+	FR.10    & & & \\
+    FR.11    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
+	FR.12    & & & \\
+    NFR.6    & N/A  & Inspection & Verify existence of all test levels \\
+	NFR.14   & & & \\
+
+    \hline
+}
+{The traceability table showing the mapping from each requirement to its existing tests}{tab:traceability}
 
 
 %-------------------------------------------------------------%
@@ -866,7 +929,10 @@ We decided to monitor the process memory usage, CPU usage, state (idle, running,
 
 \subsection{Instructions for Running and Replicating Results}
 \label{sec:instructions}
-\hl{TODO! - super easy GUIs, sources online, etc}
+
+\hl{TODO probably Joe}
+
+\hl{super easy GUIs, sources online, etc}
 
 
 %-------------------------------------------------------------%
@@ -879,7 +945,7 @@ We maintained communication with the Customer throughout the phase of this repor
 
 During email communication with the Customer, we attempted to resolve an issue they had with accessing the web sources that were produced as part of the Interim Report. Once this was done we briefly discussed the ideas behind the configurable engines architecture and it was agreed that it was a good strategy. We then asked about different qualities expected of the system, particularly configurability and its related qualities. The Customer replied highlighting configurability as a key quality and this helped to influence some of our development to ensure that this was well met.
 
-Further information about how development was progressing and the proposals for future work was exchanged to keep the Customer up-to-date and ensure that it was on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at compile time and run time.
+Further information about how development was progressing and the proposals for future work was exchanged to keep the Customer up-to-date and ensure that it was on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at both compile time and run time. Discussion about data stores was also useful and revealed the possibility of additionally using a distributed database alongside the other data stores we had implemented gateways for. This feedback was taken on board and \hl{xxx data store was yyy}.
 
 
 %-------------------------------------------------------------%
