@@ -112,7 +112,7 @@ public class CoreShell extends Shell {
 				}
 			}
 		});
-		configButton.setText("Change Config File");
+		configButton.setText("Select system config file...");
 
 		new Label(this, SWT.NONE);
 		Group grpGpigcHumsCore = new Group(this, SWT.NONE);
