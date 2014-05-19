@@ -33,6 +33,7 @@
 \begin{tabular}{#1}
   \hline
   \rowcolor[gray]{0.9} #2
+  \hline
 \end{tabular}
 \caption{#3}
 \label{#4}
@@ -45,6 +46,7 @@
 \begin{tabularx}{\textwidth}{#1}
   \hline
   \rowcolor[gray]{0.9} #2
+    \hline
 \end{tabularx}
 \caption{#3}
 \label{#4}
@@ -626,7 +628,6 @@ The demonstration purposes, and to make our prototype easier to test and use, we
 \end{figure}
 
 \subsubsection{Android Mobile Application}
-\hl{Tom}
 To explore the possibilities surrounding monitoring remote systems over network communication, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in Figure~\ref{fig:android}.
 
 The first system simulates a car monitoring system, allowing users to select values for a number of sensors and then push them to the remotely-based core. In the real system, the user would not set the values or manually push them---it would all be automatic---however, we choose to manually update the data for the purposes of demonstrating the functionality.
