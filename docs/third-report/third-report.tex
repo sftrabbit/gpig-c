@@ -719,7 +719,7 @@ It can be configured to send email notifications for events to any email address
 The \texttt{TwitterNotificationEngine} provided allows events to be pushed to the social networking site \emph{Twitter}. This was included to demonstrate how our HUMS implementation can be used to interact with popular platforms to report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the output of analysis and pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
 
 \subsubsection{Android Application Feedback Notifications}
-\hl{TODO Rosy}
+The \texttt{PhoneNotificationEngine} included with our HUMS, shows how a Consumer system can use to HUMS to alter its own behaviour. It takes the result of analysis on the data collected from the Android phone system, and sends a notification across the network to the phone system, informing it of which services it must turn off in order to meet its battery life target.
 
 \subsubsection{Map Report}
 The map reporting engine created in the Interim Report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the Consumer through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information. The map generated uses the Google Maps JavaScript API~\cite{g_maps} which is customised to fit the needs of the report.
