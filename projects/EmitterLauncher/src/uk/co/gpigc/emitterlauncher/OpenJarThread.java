@@ -22,7 +22,7 @@ public class OpenJarThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			proc = Runtime.getRuntime().exec("java -jar \""+jarPath+"\"");
+			proc = Runtime.getRuntime().exec(new String[] {"java", "-jar", jarPath});
 			redirectOutput(proc);
 			proc.waitFor();
 			stopRunning();
