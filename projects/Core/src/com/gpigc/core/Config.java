@@ -51,6 +51,8 @@ public class Config {
 	{
 	    String os = System.getProperty("os.name").toUpperCase();
 	    
+	    System.out.println(os);
+	    
 	    String applicationDataDirectory = new String();
 	    
 	    if (os.contains("WIN"))
@@ -67,7 +69,11 @@ public class Config {
 	    	throw new ConfigException("Could not determine application data directory");
 	    }
 	    
-	    applicationDataDirectory += "/." + configName;
+	    if (os.contains("NUX")) {
+		    applicationDataDirectory += "/." + configName;
+	    } else {
+		    applicationDataDirectory += "/" + configName;
+	    }
 	    
 	    return Paths.get(applicationDataDirectory);
 	}
