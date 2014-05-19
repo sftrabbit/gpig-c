@@ -272,7 +272,6 @@ public class EmitterShell extends Shell {
 		} else {
 			button.setImage(playIcon);
 			if (threadMap.containsKey(jarPath)) {
-				text.append(" >> Stopping " + jarPath + "\n");
 				threadMap.get(jarPath).stopRunning();
 				threadMap.remove(jarPath);
 			}
