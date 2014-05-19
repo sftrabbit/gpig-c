@@ -588,15 +588,15 @@ Any changes made to the \texttt{*.config} whilst the HUMS is running are automat
 The Core has also been re-factored to load Consumer system parameters to be used by engines from \texttt{*.config} files. This includes both individual sensor parameters and system parameters meaning that, for example, analysis can be performed both per sensor and on the system as a whole, further increasing the tailorability of our solution.
 The configuration file for a particular instance of the HUMS can be set and modified at runtime or compile time as it is separate from the code-base, making it very versatile and further improving configurability. 
 
-In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
+In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
-\begin{figure}[tb]
+\begin{figure}[ht]
 \centering
 \includegraphics[width = \textwidth]{images/coreGUI.png}
-\caption{A Screenshot of the Core GUI}
+\caption{A Screenshot of the HUMS Core GUI}
 \label{fig:coreGUI}
 \end{figure}
-A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface created for easily administering them, and avoids any custom server having to be manually set up by the Consumer by automating the process. The functionality of the Admin Centre is described further in Section~\ref{sec:admin}. 
+A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface which now allows these files to be easily administered by both technical and non-technical users, and avoids a custom server having to be manually set up by the Consumer as the process is automated. \hl{Remove if too many words---}The added functionality of the Admin Centre is described further in Section~\ref{sec:admin} \hl{  }. 
 
 \subsection{Project Management}
 \hl{TODO Joe}
