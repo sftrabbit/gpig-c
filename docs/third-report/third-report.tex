@@ -244,13 +244,13 @@ When considering the non-functional requirements,\emph{NFR.14} was added as it i
 \end{requirements}
 
 \subsection{External Dependencies}
- \label{sec:external_dependencies}
-\hl{todo --- write an intro to these, 4 dependencies is probably enough}
+\label{sec:external_dependencies}
+External dependancies are necessary occurrences which must take place before the HUMS can be run successfully by consumers. The previous report did not consider the external dependancies of the consumer running the HUMS rather than the development process, so they are considered here.
 
  \begin{description}
- \item[\ed{1}] \hl{todo}
- \item[\ed{2}] \hl{todo}
- \item[\ed{3}] \hl{todo}
+ \item[\ed{1}] An appropriate platform must be provisioned, including supported hardware, operating system and JVM, when not running as a SaaS.
+ \item[\ed{2}] The consumer must be instructed in the process of configuration of the HUMS.
+ \item[\ed{3}] The initial data emitters, analysis engines, notifiers and data gateways must be selected.
  \item[\ed{4}] \hl{todo}
  \end{description}
 
@@ -446,6 +446,8 @@ Building on our work in the previous report we decided to present four further, 
 \subsection{Module View}
 \label{sec:views}
 The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
+
+\hl{Tom: Who is this view aimed at?}
 
 In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the Consumer (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
 
@@ -813,30 +815,30 @@ The testing of each module is described below:
 
 \subsubsection{Traceability Table}
 
-Table~\ref{tab:traceability} shows the tests used to verify the that system requirements are met.
+Table~\ref{tab:traceability} shows the tests used to verify that the system requirements were met.
 
-\tableformat{p{1.3cm} p{4.1cm} p{2cm} p{5.2cm}}
+\tableformat{p{1.4cm} p{4.7cm} p{1.8cm} p{6cm}}
 { 	\hline
     Req. ID & Test Classes & Type & Details \\
     \hline
 
-    FR.1.1   & & & \\
-    FR.1.2   & N/A & Inspection, Alpha & Verify by observing output in Admin Centre \\
+    FR.1.1   & N/A & Inspection & Use data store consoles and viewers to verify data storage \\
+    FR.1.2   & N/A & Inspection & Verify by observing output in Admin Centre \\
     FR.2.1   & SystemDataTest & Unit & Verify existence of timestamp \\
     FR.2.2   & EmitterSystemStateTest & Unit & Verify existence of timestamp \\
     FR.3   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON \\
-	FR.3.1   & & & \\
-	FR.4.1.1 & & & \\
-	FR.4.1.2 & & & \\
-	FR.7     & & & \\
-    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Inspection,\newline Unit & Check notification flag is set and queried to control notifications \\
+	FR.3.1   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & \hl{foo} \\
+	FR.4.1.1 & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
+	FR.4.1.2 & ConfigParserTest & Unit, \newline Inspection & \hl{foo} \\
+	FR.7     & AnalysisEngineTest, \newline DataEventTest & Unit & \hl{foo} \\
+    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Check notification flag is set and queried to control notifications \\
     FR.7.4   & AnalysisControllerTest & Unit & Verify generation of events \\
-	FR.9     & & & \\
-	FR.10    & & & \\
-    FR.11    & EmailNotificationTest  & Unit,\newline Inspection & Verify sending of email notification \\
-	FR.12    & & & \\
-    NFR.6    & N/A  & Inspection & Verify existence of all test levels \\
-	NFR.14   & & & \\
+	FR.8     & NotificationEngineTest & Unit & \hl{foo}\\
+    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit,\newline Inspection & Verify sending of notifications \\
+	FR.10    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
+	FR.12    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
+    NFR.6    & N/A & Inspection & Verify existence of all test levels \\
+	NFR.14   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
 
     \hline
 }
