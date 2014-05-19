@@ -432,11 +432,15 @@ Building on our work in the previous reports we decided to present four further,
 
 \subsection{Module View}
 \label{sec:views}
-The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
+A\emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
 
-In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the Consumer (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
+This view is targeted at all System stakeholders, showing enough detail for developers to understand the structure and interactions between components, but not so much detail that non-technical stakeholders would be confused.
 
-Design patterns were used in order to increase the modifiability of our system, including the system data gateway pattern for abstracting away the implementation details of particular data stores, and the observer pattern allowing controllers (observers) to push changes to the various engines (subscribers), without the need to know about their implementation details.
+In the previous report, many of the details in the module view were omitted. In this iteration, details of the included and customisable components, such as the engines, are included showing exactly which modules have been implemented so far, as well as their associated interfaces which would be used by the Consumer. 
+
+Figure~\ref{fig:modules} shows a clear separation between those modules included with the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our system is highly tailorable, with plenty scope for adding additional functionality.
+
+The design patterns described above can be seen within this view, including the table data gateway pattern which is used for abstracting away the implementation details of particular datastores, and the observer pattern implemented through the controllers and engines.
 
 The components of the Consumer facing API, made up of generic engines and emitters, is described below:
 \begin{description} [noitemsep]	
@@ -453,7 +457,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\textwidth]{images/component.pdf}
-  \caption{Module diagram of the System. The blue components and their contents have all been implemented. The green components are extensions left to the Consumer.}
+  \caption{Module diagram of the System. Component within the \textbf{blue} areas are included with the HUMS. The green components are those which can be added by the Consumer to extend the HUMS to meet their needs.}
   \label{fig:modules}
 \end{figure}
 
