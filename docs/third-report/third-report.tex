@@ -154,9 +154,9 @@ After feedback from the previous reports, the HUMS requirements have been update
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\emph{FR.4.1.1} and \emph{FR.4.1.2} were added as we implemented configuration files into our prototype. We chose to use \emph{JSON} as the configuration format as it is a widely-used standard.
+\emph{FR.4.1} has been modified, and refinements added, to increase the configurability of our solution, by specifying exactly how configuration files will be used within our implementation. We chose to use \emph{JSON} as the configuration format as it is a lightweight, widely-used, standard.
 
-\emph{FR.12} became apparent once we considered the reloading of configuration in \emph{FR.4.1.2}, as without the ability to load new engines, adding new analyses and reporting methods would require a restart of the System to take effect.
+\emph{FR.12} became apparent after considered the reloading of configuration in \emph{FR.4.1.2}, as without the ability to dynamically load new engines modifying registered analysis, storage, and reporting methods would require a restart of the System to take effect.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
@@ -174,32 +174,32 @@ After feedback from the previous reports, the HUMS requirements have been update
 \requirement{\fr}{3}{The HUMS shall store correctly structured data.}{
 	\requirement{\fr}{3.1}{The HUMS shall use a database abstraction layer, allowing the Consumer to select their Datastore technology.}{}
 }
-\requirement{\fr}{4}{The HUMS shall store Consumer configuration files.}{
-	\requirement{\fr}{4.1}{The HUMS shall allow authorised Users to modify configuration files.}{
+\requirement{\fr}{4}{The HUMS shall store Consumer configuration files using \emph{JSON}.}{
+	\requirement{\fr}{4.1}{The HUMS shall allow authorised individuals to modify configuration files.}{
       \requirement{\fr}{4.1.1}{The Admin Centre shall provide an interface to allow authorised users to modify the configuration.}{}
       \requirement{\fr}{4.1.2}{The HUMS shall monitor the configuration for changes and apply them.}{}
     }
-	\requirement{\fr}{4.2}{The HUMS shall allow the User to define a storage limit.}{}
-	\requirement{\fr}{4.3}{The HUMS shall allow the User to set an expiry time on stored data.}{}
-	\requirement{\fr}{4.4}{The HUMS shall allow the User to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
-	\requirement{\fr}{4.5}{The HUMS shall allow the User to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
+	\requirement{\fr}{4.2}{The HUMS shall allow the Consumer to define a storage limit.}{}
+	\requirement{\fr}{4.3}{The HUMS shall allow the Consumer to set an expiry time on stored data.}{}
+	\requirement{\fr}{4.4}{The HUMS shall allow the Consumer to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
+	\requirement{\fr}{4.5}{The HUMS shall allow the Consumer to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
 \requirement{\fr}{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
 \requirement{\fr}{6}{The HUMS shall store no more data records than the Consumer-defined storage quota.}{}
-\requirement{\fr}{7}{Events shall be triggered in response to data matching analysis rules specified by a User.}{
-	\requirement{\fr}{7.1}{The HUMS shall allow the User to specify which analysis rules will produce Events.}{}
-	\requirement{\fr}{7.2}{The HUMS shall allow the User to define their own Events.}{}
+\requirement{\fr}{7}{Events shall be triggered in response to data matching analysis rules specified by the Consumer.}{
+	\requirement{\fr}{7.1}{The HUMS shall allow the Consumer to specify which analysis rules will produce Events.}{}
+	\requirement{\fr}{7.2}{The HUMS shall allow the Consumer to define their own Events.}{}
 	\requirement{\fr}{7.3}{The HUMS shall provide an API, allowing analysis engines to fetch stored data.}{}
 	\requirement{\fr}{7.4}{Events shall be identified by analysis engines.}{}
 	\requirement{\fr}{7.5}{The HUMS shall provide a simple analysis engine in the form of a rules engine.}{}
 }
-\requirement{\fr}{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type will be sent during a User-specified cool down period.}{
-	\requirement{\fr}{8.1}{The HUMS shall allow the User to specify a cool down period for particular Events.}{}
+\requirement{\fr}{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type shall be sent during a Consumer-specified cool down period.}{
+	\requirement{\fr}{8.1}{The HUMS shall allow the Consumer to specify a cool down period for particular Events.}{}
 }
 \requirement{\fr}{9}{The HUMS shall identify an Event when a specified analysis rule is matched.}{}
 \requirement{\fr}{10}{The HUMS shall interface with Report engines, allowing them to pull Reports.}{}
 \requirement{\fr}{11}{The System shall allow for Notifications to be fed back to Client to change the way in which data is sensed.}{}
-\requirement{\fr}{12}{The System shall load new engines which an authorised user adds during runtime.}{}
+\requirement{\fr}{12}{The System shall load new engines added by an authorised user at both runtime and compile time.}{}
 \end{requirements}
 
 \subsection{Non-Functional Requirements}
@@ -210,7 +210,7 @@ After feedback from the previous reports, the HUMS requirements have been update
 
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
-\requirement{\nfr}{2}{Users shall be provided with documentation detailing how to use the HUMS.}{}
+\requirement{\nfr}{2}{Consumers shall be provided with documentation detailing how to use the HUMS.}{}
 \requirement{\nfr}{3}{The HUMS shall be accessible to Consumers regardless of their geographic location.}{}
 \requirement{\nfr}{4}{The HUMS shall only accept data from a Client of the Input Interface providing valid credentials.}{}
 \requirement{\nfr}{5}{The HUMS shall allow data to be stored according to the relevant industry security standards.}{}
@@ -221,14 +221,14 @@ After feedback from the previous reports, the HUMS requirements have been update
 	\requirement{\nfr}{6.4}{The HUMS shall be tested using inspection.}{}
 	\requirement{\nfr}{6.5}{The HUMS shall be tested using acceptance testing.}{}
 }
-\requirement{\nfr}{7}{The Customer will complete acceptance testing before the System is deployed.}{}
+\requirement{\nfr}{7}{The Customer shall complete acceptance testing before the System is deployed.}{}
 \requirement{\nfr}{8}{The System shall be able to support at least 5 Clients of the Output Interface per HUMS instance.}{}
 \requirement{\nfr}{9}{The System shall be available for no less than 99.9\% of each month.}{}
 \requirement{\nfr}{10}{Data shall be backed up within 24 hours of having been made available to the System.}{}
 \requirement{\nfr}{11}{Timestamps applied by the system shall be accurate to within 5 ms of UTC.}{}
 \requirement{\nfr}{12}{The System shall dispatch Notifications within 5 ms of an Event being triggered.}{}
 \requirement{\nfr}{13}{The System shall support storing data without requiring specific schemata.}{}
-\requirement{\nfr}{14}{The configuration shall be in a human-readable format.}{}
+\requirement{\nfr}{14}{The configuration file shall be in a human-readable format.}{}
 \end{requirements}
 
 \subsection{External Dependencies}
@@ -344,7 +344,7 @@ Some risks have been modified since the previous report, while others are comple
     R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality, request extension. & 25 & Moderate &  \textbf{Low} \\
     R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
     R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
-    R.5 & The Consumer fails to update the configuration files of the HUMS  & Users find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential Consumers to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
+    R.5 & The Consumer fails to update the configuration files of the HUMS  & Consumers find the system difficult to use and decide to use a different, simpler HUMS. & Survey potential Consumers to discover what they would find simplest to use and then implement such a system. & 20 & Medium & \textbf{Low} \\	
   	\hline
 }
 {The human and business risks associated with this phase of the project}{tab:human_risks}
@@ -412,7 +412,7 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
-	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the Datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Users access to functionality should be restricted to the bare necessities. 
+	\item[Resisting Attacks] The use of prepared statements would mitigate the threat of SQL injection attacks. All connections to the Datastore should require authentication and communications should be encrypted to avoid man-in-the-middle attacks. Individual user access to functionality should be restricted to the bare necessities. 
 	\item[Detecting Attacks] Detecting attacks can take many forms. A primitive ping/echo could be used with length response times indicating heavy server load and possible DoS attack. Trap files could be set that should only ever be accessed from specific addresses.
 	\item[Recovering From Attacks] Maintaining redundant copies of data or frequent data snapshots would allow for the HUMS to roll back to an acceptable state.
 	\end{description}
@@ -653,7 +653,7 @@ In this section we describe how our HUMS implementation currently analyses data.
 
 The previous mean analysis engine has been rewritten to form a generic bounded sensor value engine. This engine performs analysis on each sensor in the system being analysed to determine if the mean average of the values is outside of specified bounds. It then produces a single event detailing any violations across all the sensors, which generates a single notification for the system being analysed rather than a flood of them.
 
-The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the User to tailor to their needs, and also adds configurability on a per sensor level.
+The number of data records to average over and the upper and lower bounds for the acceptable range of the average are specified for each sensor in the configuration file. This allows these parameters to easily be changed by the Consumer to tailor to their needs, and also adds configurability on a per sensor level.
 
 The average computed is a moving average over a certain number (depending on the value specified in the configuration) of the last records in the database. The engine is able to do this across any sensor that records numerical values so is reusable across different contexts and flexible to different uses of the HUMS.
 
@@ -699,10 +699,10 @@ The \texttt{TrafficAnalysisEngine}, creates an event when a reading is generated
 
 This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create notifications using any notification engines configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different types of notification that might want to be generated and dispatched by a HUMS, and to show the flexibility and tailorability of the system. They exhibit how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
 
-For reporting, two sample reporting engines were created that can be used through the Admin Centre. Once requested by the User, these generate reports with live updating information from the HUMS. These engines provide just a small idea of what is possible with our HUMS implementation, with further web based or standalone reporting engines -- or engines integrated into other applications -- able to be created to interact with the system and produce other types of reports the User may require.
+For reporting, two sample reporting engines were created that can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines provide just a small idea of what is possible with our HUMS implementation, with further web based or standalone reporting engines -- or engines integrated into other applications -- able to be created to interact with the system and produce other types of reports the Consumer may require.
 
 \subsubsection{SMS Notifications}
-A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; a User is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created than can send SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile phones in modern life; an individual is likely to have their phone with them most of the time so can instantly be notified and informed of anything the HUMS needs to flag up, and then react appropriately. It is a quick and efficient notification method and one that works across all phone platforms. To build this engine we utilised the service offered by the communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
 The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the interim report, however, has been heavily re-factored to comply with our new, more modular code-base.
@@ -715,7 +715,7 @@ The \texttt{TwitterNotificationEngine} provided allows events to be pushed to th
 \hl{TODO Rosy}
 
 \subsubsection{Map Report}
-The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the User through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information. The map generated uses the Google Maps JavaScript API~\cite{g_maps} which is customised to fit the needs of the report.
+The map reporting engine created in the interim report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the Consumer through the Admin Centre, and can then automatically update with the latest data that is input to the HUMS to provide live information. The map generated uses the Google Maps JavaScript API~\cite{g_maps} which is customised to fit the needs of the report.
 
 \subsubsection{Graph Report}
 Similarly to the map reporting engine, the graph reporting engine has been enhanced since the interim report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its configurability of use. The graph reports generated can also automatically update to show live data. This report uses the open source Chart.js JavaScript charting library~\cite{chart_js} to draw and customise the graph.
@@ -723,11 +723,11 @@ Similarly to the map reporting engine, the graph reporting engine has been enhan
 \subsection{Admin Centre}
 \label{sec:admin}
 
-The prototype Admin Centre previously created has been updated and refined to provide a central locations for the User to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the core is being run.
+The prototype Admin Centre previously created has been updated and refined to provide a central locations for the Consumer to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the core is being run.
 
 The Admin Centre also provides the reporting facilities of the HUMS, with two example reporting engines currently created. A graph report is available and can be used with data like that from the first and second test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
 
-The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the User that they can interact with and update to have effect on the running HUMS instance.
+The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the Consumer, allowing them to interact with and update to have effect on the running HUMS instance.
 
 \begin{figure}[h!b]
     \begin{subfigure}{0.49\textwidth}
