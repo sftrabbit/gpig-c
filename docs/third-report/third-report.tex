@@ -254,7 +254,7 @@ External dependencies are necessary events which must take place before the HUMS
  \item[\ed{1}] An appropriate platform must be provisioned, including supported hardware, operating system and JVM, when not running as a SaaS.
  \item[\ed{2}] The consumer must be instructed in the process of configuration of the HUMS.
  \item[\ed{3}] The initial data emitters, analysis engines, notifiers and data gateways must be selected.
- \item[\ed{4}] \hl{todo}
+ \item[\ed{4}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core, if not running on the same physical machine.
  \end{description}
 
 
@@ -314,9 +314,9 @@ Static testing is also performed using type checkers and code profilers in order
 %-------------------------------------------------------------%
 \section{Quality Attributes}
 \label{sec:qualities}
-A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality but produce a system meeting the needs of all stakeholders in terms of other metrics.
+A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality, but produce a system meeting the quality requirements of all stakeholders.
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
-Table~\ref{tab:qualities} considers the HUMS, its requirements and its stakeholders, ranking the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however this is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
+Table~\ref{tab:qualities} considers the HUMS, its requirements and its stakeholders, ranking the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however this is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability has been identified as important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
 
 \xtableformat{p{2.4cm} p{1.2cm} X}{
 \hline
