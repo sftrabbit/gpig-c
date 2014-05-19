@@ -10,6 +10,7 @@
 \usepackage[table]{xcolor}
 \usepackage{float}
 \usepackage{longtable}
+\usepackage{tabularx}
 \usepackage{parskip}
 \usepackage{soul}
 \usepackage{ifthen}
@@ -32,6 +33,18 @@
   \hline
   \rowcolor[gray]{0.9} #2
 \end{tabular}
+\caption{#3}
+\label{#4}
+\end{table}}
+
+\newcommand{\xtableformat}[4]{
+\begin{table}[ht!]
+\centering
+  \rowcolors{2}{gray!10} {white}
+\begin{tabularx}{\textwidth}{#1}
+  \hline
+  \rowcolor[gray]{0.9} #2
+\end{tabularx}
 \caption{#3}
 \label{#4}
 \end{table}}
@@ -231,13 +244,13 @@ When considering the non-functional requirements,\emph{NFR.14} was added as it i
 \end{requirements}
 
 \subsection{External Dependencies}
- \label{sec:external_dependencies}
-\hl{todo --- write an intro to these, 4 dependencies is probably enough}
+\label{sec:external_dependencies}
+External dependancies are necessary occurrences which must take place before the HUMS can be run successfully by consumers. The previous report did not consider the external dependancies of the consumer running the HUMS rather than the development process, so they are considered here.
 
  \begin{description}
- \item[\ed{1}] \hl{todo}
- \item[\ed{2}] \hl{todo}
- \item[\ed{3}] \hl{todo}
+ \item[\ed{1}] An appropriate platform must be provisioned, including supported hardware, operating system and JVM, when not running as a SaaS.
+ \item[\ed{2}] The consumer must be instructed in the process of configuration of the HUMS.
+ \item[\ed{3}] The initial data emitters, analysis engines, notifiers and data gateways must be selected.
  \item[\ed{4}] \hl{todo}
  \end{description}
 
@@ -252,7 +265,7 @@ It is important to consider the risks of any software project so that appropriat
 Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks not being thoroughly considered throughout the project. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}.
 Some risks have been modified since the previous report, while others are completely new and specific to the new system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured between 1$-$100.
 
-\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c }
+\xtableformat{p{0.8cm} X X X c c c }
 { 	\hline
   	Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
   	\hline
@@ -267,7 +280,7 @@ Some risks have been modified since the previous report, while others are comple
 {The human and business risks associated with this phase of the project}{tab:human_risks}
 
 
-\tableformat{p{0.8cm} p{3cm} p{3cm} p{3cm} c c c}
+\xtableformat{p{0.8cm} X X X c c c}
 { 	\hline
     Risk ID & Risk Description & Impact Description & Contingency & Prob.(\%) & Impact & Score \\
   	\hline
@@ -304,7 +317,7 @@ A number of quality attributes must be considered when creating the HUMS archite
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
 When considering the HUMS, its requirements and its stakeholders, Table~\ref{tab:qualities} ranks the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability is important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
 
-\tableformat{p{2.4cm} p{1.2cm} p{11.2cm}}{
+\xtableformat{p{2.4cm} p{1.2cm} X}{
 \hline
 Quality \qquad Attribute & Rank & Reasoning \\
 \hline
@@ -418,16 +431,13 @@ Below, the tactics which appear most suitable for use with the HUMS are summaris
 \end{description}
 
 \subsection{Design Patterns}
-Having determined the tactics applicable to the HUMS, which are likely to produced the desired utility of the key system quality attributes, a number of software design patterns can be selected which allow these tactics to be realised in the HUMS architecture.
+Having determined the tactics applicable to the HUMS, which are likely to increase the utility of key system quality attributes, a number of software design patterns can be selected which realise these tactics within the HUMS architecture.
 
-\hl{TODO Adam, 1 or two sentences about each}
 \begin{description}
-\item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. When the subject object changes its state then all observers are informed and they can then react appropriately. We should use this for the implementation of our analysis component. An object that controls the analysis would be the subject, when the subject receives new data the dependant observers would be notified and would then perform analysis on the new data.
-\item[Pipes and Filters] A HUMS is complex and constructed from many components. The adoption of the pipes and filters pattern would allow for large processing tasks to be broken down into a sequence of smaller independent tasks. Pipes and filters works by each filter exposing a simple interface that receives messages from the incoming pipe, performs some action on the message and places it onto the outbound pipe. Pipes and filters would allow the HUMS to be tailorable by the client as alternative solutions can be composed by connecting filters to different pipes. \hl{this could probably be clearer}
-\item[Table Data Gateway] An object that abstracts over a table, with a single instance handling all data access \cite{fowler2002patterns}. Utilising table data gateway would simplify the HUMS interaction with the chosen data store. The single point of access and encapsulation of all SQL statements would reduce coupling, with the system unaffected by changes to the datastore or data access logic and therefore facilitate easier maintenance.
-\item[Row Data Gateway] Unlike table data gateway, row data gateway is an object that is a gateway to a single record in a datastore, with an instance for each record \cite{fowler2002patterns}. As with the table data gateway, the abstraction over the specific datastores implementation decreases coupling with the system system being unaffected by changes to the datastore or access logic.
-\item[Model View Controller] If clients are going to tailor the HUMS to their needs a user interface will be required. We should adopt model view controller to provide clear separation of concerns between the application data and the application view. The separation allows for components to be tested independently, code re-use and modifiability.
-\item[Any more?] \hl{Any more stuff}
+\item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. Such that observers are kept in a list within the subject, and updated when the state of the subject changes. This will be used for the implementation of our analysis, storage, and notification engines, with controller objects keeping a list of engine observers. When the controller receives an update, it can inform the relevant engines through a method call.
+\item[Pipes and Filters]The adoption of the pipes and filters pattern would allow for large processing tasks to be broken down into a sequence of smaller independent filters, and the protocol of the data to be passed between those filters explicitly defined. Pipes and filters would also increase the tailorability of the HUMS, as alternative architectures can be composed by connecting filters to different pipes. 
+\item[Table Data Gateway]  Utilising table data gateway, defined by \cite{fowler2002patterns} as a single object which handles all interaction with accessing a datastore e.g SQL statements, will reduce coupling and allow a single HUMS to interact with a number of different datastores. It does by ensuring the core is not coupled to a particular datastore implementation, instead each datastore implements their own table data gateway, which can be interchanged both at runtime and compile time. The single point of access and encapsulation means that the System as a whole is unaffected by changes to the datastore or data access logic and therefore facilitate easier maintenance.
+\item[Row Data Gateway] A Row data gateway is an object which encapsulates a single record in a datastore\cite{fowler2002patterns}. This could be utilised by our HUMS, as a method of ensuring data pulled from various datastores can be used throughout the Core as if it was from a single datastore. This will reduce the effect of impedance mismatch whilst increasing the tailorability of our solution and decreasing coupling.
 \end{description}
 
 \section{System Views} 
@@ -436,6 +446,8 @@ Building on our work in the previous report we decided to present four further, 
 \subsection{Module View}
 \label{sec:views}
 The Module View, as shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective, in terms of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
+
+\hl{Tom: Who is this view aimed at?}
 
 In the previous report, many of the details in the module view were omitted. In this iteration, details of the customisable components, such as the engines, data gateways and so on, are given, showing exactly what modules have been implemented so far, as well as their associated interfaces. Figure~\ref{fig:modules} shows a clear separation between those modules which have been implemented (in blue) and those which may be implemented by the Consumer (in green). The variety and extend of our existing implementations already show that our system is highly tailorable, with plenty scope for further functionality.
 
@@ -461,7 +473,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \end{figure}
 
 \subsection{Component and Connector View}
-
+%Pipes and filters works by each filter exposing a simple interface that receives messages from the incoming pipe, performs some action on the message and places it onto the outbound pipe. In the context of the HUMS, pipes are interfaces through which data is passed (such as the Data Input Interface), and filters are engines (such as the Generic Bounded Sensor Value Engine). Pipes and filters would allow the HUMS to be tailorable by the client as alternative solutions can be composed by connecting filters to different pipes, or by even implementing their own filters.
 In order to visualise how data flows through the system, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them. Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer.
 
 The input to the HUMS, in this view, is the sensor data from the consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. 
@@ -514,7 +526,7 @@ For the implementation we have built upon our previous prototypes, utilising Jav
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
-The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earth-quake Hazards Program API and monitored information using JMX for the first Test Application.
+The interim implementation was created as a prototype for further development. It consisted of the basis for the current implementation, and when finished could track earthquakes using the USGS Earthquake Hazards Program API and monitored information using JMX for the first Test Application.
 
 The interim solution provided a minimal end to end solution capable of sensing the first test application, storing the test data, analysing the data and triggering reports. 
 
@@ -566,8 +578,7 @@ A configuration file is loaded into the Core by the Consumer before it is run. C
 
 Any changes made to the configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces the Risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
-\hl{TODO Tom: Refactored to add config file that contains all it's parameters, which can be set and modified at runtime, separating params from the code}
-Since the last report, the HUMS has been refactored to load its parameters from a \texttt{*.config} file. The file describes the parameters for each engine, for example, the expression to be used by the \texttt{ExpressionAnalysisEngine}, as well as how data is to be routed through the HUMS, from the emitter, to storage, to analysis and then on to notification.
+Since the last report, the HUMS has been refactored to load its parameters from a \texttt{*.config} file. Such a file describes the parameters for each engine, for example, the expression to be used by the \texttt{ExpressionAnalysisEngine}, as well as how data is to be routed through the HUMS, from the emitter, to storage, to analysis and then on to notification. Many routes can exist at once, with information about different systems being handled independently or by the same process. The configuration file can be set and modified at runtime or compile time, allowing for a very high degree of configurability that is separate from the codebase.
 
 In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit} \cite{swt}, this was chosen over other UI libraries, such as \emph{Swing}, as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
@@ -631,7 +642,6 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-<<<<<<< HEAD
 This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of existing Datastores. To demonstrate this we created \hl{how many} sample implementations interfacing with a variety of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \hl{XXX}, and \emph{H2}. This was done to show how our system does not force the Consumer to conform to a particular data schema or Datastore, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9} be achieved.
 
 Prepared statements were used where possible in our Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
@@ -864,7 +874,7 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
 To consider the meeting of requirements, we lay out here the steps which we have taken in order to validate the meeting of the requirements.
 
-\tableformat{| l | l | l |}{ \hline	FR.x  & 	Description of FR  & 	What we did \\ \hline
+\xtableformat{| l | l | X |}{ \hline	FR.x  & 	Description of FR  & 	Validation \\ \hline
 	FR.1  & 	  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the core utilising a data emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. \\ \hline
 	FR.2  & 	  & 	Timestamps are held for all data, and stored in the data store when the information is saved. \\ \hline
 	FR.3  & 	  & 	To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a database. This is H2 for a local database, and is a postgres instance on heroku for the cloud solution. \\ \hline
@@ -879,7 +889,7 @@ To consider the meeting of requirements, we lay out here the steps which we have
 	FR.12  & 	  & 	This can be achieved by the user placing them in the correct namespace in JAVA. The system will load all the classes associated with the engines when it first loads. \\ \hline
 }{Evaluation for Satisfaction of Functional Requirements}{frevaltable}
 
-\tableformat{| l | l | l |}{ \hline	NFR.x  & 	Description of NFR  & 	What we did \\ \hline
+\xtableformat{| l | l | X |}{ \hline	NFR.x  & 	Description of NFR  & 	Validation \\ \hline
 	NFR.1  & 	  & 	The data store is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \\ \hline
 	NFR.2  & 	  & 	There has been a README provided. \\ \hline
 	NFR.3  & 	  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the emitters can be run detached from the main system, for example on an embedded system. \\ \hline
