@@ -792,9 +792,23 @@ The updates to the Admin Centre since the previous report have allowed it to dev
 	\label{fig:admin-centre}
 \end{figure}
 
-\subsection{Project Management}
+\subsection{Project Building}
 
-\hl{TODO Joe}
+The implementation consists of a number of independent software projects which must be built separately and then collated into a final distribution. A number of tools have been used to aid this build process. 
+
+Java applications are typically bundled into Java Archive (JAR) files. By default, libraries that are required by an application must be distributed together with the JAR. This is inconvenient for early distribution because many files must be distributed together. To avoid this, the One-JAR build tool \cite{foo} is used. It allows an application and its dependencies to be bundled into a single JAR file. In the future, the HUMS may be distributed through system-dependent package managers which handle dependencies automatically.
+
+Apache Ant build scripts \cite{foo} are used to build most of the projects. Much of the build process is common to all projects and so this behaviour has been extracted out into \texttt{tools/common-ant.xml}. This has the following benefits:
+
+\begin{itemize}
+\item Projects need only specify build requirements that are project-specific in their respective \texttt{build.xml} files.
+\item Projects can be built for different platforms simply by changing a property of the build script.
+\item Libraries that are common to multiple projects need not be duplicated between those projects.
+\item The build script will perform the bundling of libraries using One-JAR.
+\item The entire build process can be performed using a single command.
+\end{itemize}
+
+A global \texttt{build.xml} file is provided in the source root directory which builds all projects and combines them into a distributable for the requested platform.
 
 %-------------------------------------------------------------%
 %-----------------------TESTING-----------------------%
