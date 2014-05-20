@@ -941,17 +941,14 @@ In addition to this, we also preformed a small UX study, within the department, 
 \subsection{Evaluation on the Customers Test Applications}
 \label{sec:test_app1}
 
-We decided to monitor the memory and CPU usage of the first test application, and our initial implementation simply queried the operating system for these values, using the SIGAR library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
+We decided to monitor the memory and CPU usage of the first test application, using SIGAR to monitor CPU usage, and JMX to monitor memory as the JVM has a fixed heap sized meaning SIGAR cannot determine what is being used by the application. 
 
-By using these cross-platform and established libraries, our monitor can be generalised to more than just the test application. This is illustrated by how easily we were able to reuse it as the basis of the second test application.
+Use of the SIGAR library proved useful when attempting to monitor the second test application, as we were able to reuse much of work.
+For the second test application, we also considered monitoring IO operations and network activity. To test whether monitoring network activity would be a good use of our time we used \emph{iotop}~\cite{iotop} to examine the applications IO operations and found nothing notable. We also used Wireshark \hl{ref} to examine network activity but found none. 
 
-\subsection{Evaluation on Test Application 2}
-\label{sec:test_app2}
+With this in mind, we decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on, allowing us to reuse the SIGAR library.
 
-Using iotop~\cite{iotop} under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
-We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
-
-As this is an extension of the previous work for the first test application, this can be easily adapted as a cross-platform solution for monitoring any process running on a given system. 
+SIGAR is also capable of monitoring networking and file system metrics, however, we did not feel that this was useful information when considering the second test application.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
