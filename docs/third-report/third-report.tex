@@ -860,22 +860,22 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
     Req. ID & Test Classes & Type & Details \\
     \hline
 
-    FR.1.1   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
-    FR.1.2   & N/A & Inspection & Verify by observing output in Admin Centre \\
-    FR.2   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
-    FR.3   & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
-	FR.3.1   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
-	FR.4.1.1 & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
-	FR.4.1.2 & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
-	FR.7     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
-    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
-    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of Events \\
-	FR.8     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
-    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
-	FR.10    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
-	FR.12    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
-    NFR.6    & N/A & Inspection & Verify existence of all test levels \\
-	NFR.14   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
+    \fr{1.1}   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
+    \fr{1.2}   & N/A & Inspection & Verify by observing output in Admin Centre \\
+    \fr{2}   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
+    \fr{3}    & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
+	\fr{3.1}   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
+	\fr{4.1.1} & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
+	\fr{4.1.2} & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
+	\fr{7}     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
+    \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
+    \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of Events \\
+	\fr{8}     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
+    \fr{9}     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
+	\fr{10}    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
+	\fr{12}    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
+    \nfr{6}    & N/A & Inspection & Verify existence of all test levels \\
+	\nfr{14}   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
 }
 {The traceability table showing the mapping from each requirement to its existing tests.}{tab:traceability}
 
