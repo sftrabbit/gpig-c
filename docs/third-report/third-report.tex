@@ -298,7 +298,7 @@ Automated integration, unit, and regression testing is used throughout the proje
 %-------------------------------------------------------------%
 \section{Quality Attributes}
 \label{sec:qualities}
-Quality attributes must be considered when designing the HUMS architecture to ensure that architectural decisions not only provide the desired functionality, but also result in a system meeting the quality requirements of all stakeholders.
+Quality attributes are non-functional qualities used to measure the performance and standard of a system. They must be considered when designing the HUMS architecture to ensure that architectural decisions not only provide the desired functionality, but also result in a system meeting the quality requirements of all stakeholders.
 Defining these attributes explicitly allows tactics and design patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
 Table~\ref{tab:qualities} ranks the quality attributes associated with the system and rationalises these rankings. This was not performed in the previous report, but it is important at this phase because improving one quality attribute may result in another being reduced. Achieving the right balance is very important, and the support of lower ranked qualities may need to be sacrificed in order to support the highly ranked qualities. Tailorability has been identified as particularly important to the Customer and has been decomposed into a number of sub-qualities: Modifiability, Configurability, and Interoperability.
 
@@ -330,7 +330,7 @@ Usability & Medium & Usability was not deemed of great importance to the System 
 %-------------------------------------------------------------%
 \section{Quality Attribute Scenarios}
 \label{sec:scenarios}
-Having identified the quality attributes which are important to creating a successful System, a set of quality attribute scenarios can be created which show how the System should respond to certain stimuli. This helps to create goals which the final implementation can be tested against to determine its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they appear particularly interesting and describe how the system should behave both normally and in extreme conditions. Other scenarios where also considered and documented, however could not be included due to space limitations.
+Having identified key quality attributes, a set of quality attribute scenarios have been identified which show how the System should behave while supporting those quality attributes. This helps to create goals against which the final implementation can be tested to assess its quality and how effective it is at achieving its non-functional requirements. The selection of scenarios presented below are included as they highlight quality attributes and describe how the system should behave in both normal and extreme situations. Other scenarios were also considered and documented, but could not however be included due to space limitations.
 
 \begin{scenario}{1}
 \quality{Configurability}
@@ -340,7 +340,7 @@ Having identified the quality attributes which are important to creating a succe
 \environment{Runtime/compile time}
 \response{The Consumer is able to modify their configuration file.}
 \measure{The HUMS is not reinstalled or recompiled.}
-\rationale{This scenario is important to the Customer as they expect the Consumer to be able to easily change HUMS parameters, making it specific to their context, for example modifying the engines their System uses. Achieving this scenario will help our solution to move across different domains easily.}
+\rationale{This scenario is important to the Customer as they expect the Consumer to be able to easily modify HUMS parameters, making it applicable to their domain, for example, by modifying the engines their Systems use. Achieving this scenario will help our solution transfer between different domains easily.}
 \end{scenario}
 
 \begin{scenario}{2}
@@ -351,7 +351,7 @@ Having identified the quality attributes which are important to creating a succe
 \environment{Runtime}
 \response{The new engine is implemented, tested and successfully added to the HUMS, without any loss in service.}
 \measure{No other System elements are affected, and the work is completed within their budget.}
-\rationale{This scenario is important to both the HUMS developers and the Consumers. The HUMS should allow both of these groups to add custom engines to the System without affecting other System components.}
+\rationale{This scenario is important to both the HUMS developers and Consumers. The HUMS should allow both of these groups to add custom engines to the System without affecting other System components.}
 \end{scenario}
 
 \begin{scenario}{3}
@@ -373,7 +373,7 @@ Having identified the quality attributes which are important to creating a succe
 \environment{Runtime}
 \response{A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore.}
 \measure{End user defined repair time.}
-\rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's defined Datastore fails the HUMS can only alert the user and attempt to reconnect; this is a critical fault and does not allow the System to be run in a degraded mode.}
+\rationale{This scenario shows how the HUMS should respond to a Datastore failure, clearly drawing a line between the responsibilities of the HUMS and of the Consumer. If the Consumer's Datastore fails, the HUMS can only alert the user and attempt to reconnect; this is a critical fault and does not allow the System to be run in a degraded mode.}
 \end{scenario}
 
 
