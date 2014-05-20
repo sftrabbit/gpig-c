@@ -504,33 +504,41 @@ The \emph{Behavioural View} shows the actual actions taken by the HUMS when the 
 
 \subsection{Allocation View}
 
-\begin{figure}[ht]
+The \emph{Allocation View} shows how System components may be assigned to physical hardware. It demonstrates various configurations in which the System can operate, each of which is useful in particular situations. The HUMS is designed such that, if necessary, its components can be distributed amongst a number of devices, perhaps at different geographical locations. This is achieved by allowing each component to execute in its own environment, between which data is transferred via network protocols. The deployment diagrams in Figure~\ref{fig:deployisolated} through Figure~\ref{fig:deploydemo} represent various allocations of System components. In these figures, blue components are those deployed as a service, while green components are those deployed by the Consumer.
+
+Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:distributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configuring the HUMS.
+
+\begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{images/Isolated.png}
   \caption{\hl{Foo}}
   \label{fig:deployisolated}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{images/Distributed.png}
   \caption{\hl{Foo}}
   \label{fig:deploydistributed}
 \end{figure}
 
-\begin{figure}[ht]
+Figure~\ref{fig:deployscaled} shows how the HUMS capacity can be scaled up to support many Consumer systems. Due to the modular design of the system, various components can be allocated to multiple devices and scaled independently. Many Consumer devices may communicate with the HUMS at any time. To support an increased capacity, load balancers may be introduced to divide the load amongst a number of Cores. This architecture supports dynamic scaling, in which additional Cores are allocated when necessary. Figure~\ref{fig:deployhumsaas} shows how these architectural qualities allow the HUMS to be deployed as a service (SaaS). The SaaS allocates Cores according to Consumer demand, allowing the Consumer systems to emit data without any knowledge of how these Cores are allocated. A web interface is provided for Consumers to configure their HUMS instances.
+
+\begin{figure}[htp]
   \centering
-  \includegraphics[width=0.8\textwidth]{images/HUMSaaS.png}
+  \includegraphics[width=0.75\textwidth]{images/Scaled.png}
+  \caption{\hl{Foo}}
+  \label{fig:deployscaled}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{images/HUMSaaS.png}
   \caption{\hl{Foo}}
   \label{fig:deployhumsaas}
 \end{figure}
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.8\textwidth]{images/Scaled.png}
-  \caption{\hl{Foo}}
-  \label{fig:deployscaled}
-\end{figure}
+For the purposes of demonstration, the HUMS has been configured to support a number of Data Emitters, with various engines for each, and to store data in a variety of Datastores. Most components are deployed to a single device, while one Data Emitter is deployed to an Android smartphone and three Datastores are provided by cloud services. The complete deployment for demonstration is shown in Figure~\ref{fig:deploydemo}.
 
 \begin{figure}[ht]
   \centering
