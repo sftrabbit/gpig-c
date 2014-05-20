@@ -150,14 +150,14 @@ In Section~\ref{sec:requirements}, previously identified requirements are refine
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-Following feedback from the previous reports, the requirements of the HUMS have been updated. This includes modifying existing requirements and adding additional requirements and refinements. It also includes removing the constraint requirements, which were deemed unnecessary by the module leader, and instead identifying the external dependencies of the system.
+Based on Customer feedback from the previous reports, the requirements of the HUMS have been updated. This included refining existing requirements and adding newly identified requirements. The constraint requirements have been removed as they were deemed unnecessary by the module leader and, instead, the external dependencies of the system hvae been identified.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\emph{FR.4.1} has been modified, and refinements added, to increase the configurability of our solution by specifying exactly how configuration files will be used within our implementation. We chose to use JSON as the configuration format because it is a lightweight and widely-used standard.
+\emph{FR.4.1} has been refined by specifying exactly how configuration files will be used within our implementation to increase configurability. We chose to use JavaScript Object Notation (JSON) \cite{json} as the configuration format because it is lightweight and widely-used format supported by many languages and tools.
 
-\emph{FR.12} became apparent after considering the reloading of the configuration in \emph{FR.4.1.2}. Without the ability to dynamically load new engines, modifying registered analysis, storage and reporting methods would require a restart of the System to take effect.
+\emph{FR.12} became apparent after considering the ability to reload the configuration from \emph{FR.4.1.2}. Without the ability to dynamically load new engines, adding or removing analysis, storage and reporting engines would require a restart of the System.
 
 \begin{requirements}
 \requirement{\fr}{1}{Data Emitters shall be able to push correctly structured data to the HUMS.}{
@@ -206,7 +206,7 @@ Following feedback from the previous reports, the requirements of the HUMS have 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
-When considering the non-functional requirements, \emph{NFR.14} was added as it is not necessarily the case that a Consumer will want to use the Admin Centre to modify the configuration file, in which case it should be possible to manually amend the file.
+\emph{NFR.14} has been added as a Consumer will not necessarily want to use the Admin Centre to modify the system configuration, in which case it should be possible to manually amend the configuration file.
 
 \begin{requirements}
 \requirement{\nfr}{1}{The HUMS shall undergo hardware modifications without loss of previously stored data.}{}
@@ -233,10 +233,11 @@ When considering the non-functional requirements, \emph{NFR.14} was added as it 
 
 \subsection{External Dependencies}
 \label{sec:external_dependencies}
-External dependencies are requirements outside of the scope of control of the development project necessary for the HUMS to be run successfully. The previous report did not consider the external dependencies pertaining to the Consumer running the HUMS, as well as those of the development process, so they are considered here.
+
+External dependencies are requirements outside the scope of development that are necessary for the HUMS to be deployed successfully. The previous report did not consider external dependencies pertaining to the Consumer running the HUMS, as well as those of the development process, so they are considered here.
 
  \begin{description}
- \item[\ed{1}] The provisioned deployment platform must be running an up-to-date JVM on top of current versions of GNU/Linux, Windows or OS X.
+ \item[\ed{1}] The provisioned deployment platform must be running an up-to-date Java Virtual Machine (JVM) in a GNU/Linux, Windows or OS X environment.
  \item[\ed{2}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core where necessary.
   \item[\ed{3}] The selected remote data stores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
  \end{description}
