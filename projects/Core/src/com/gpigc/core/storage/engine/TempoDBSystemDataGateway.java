@@ -1,8 +1,8 @@
 package com.gpigc.core.storage.engine;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.http.HttpStatus;
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import com.gpigc.core.ClientSystem;
@@ -18,15 +19,16 @@ import com.gpigc.dataabstractionlayer.client.EmitterSystemState;
 import com.gpigc.dataabstractionlayer.client.FailedToReadFromDatastoreException;
 import com.gpigc.dataabstractionlayer.client.FailedToWriteToDatastoreException;
 import com.gpigc.dataabstractionlayer.client.QueryResult;
+import com.gpigc.dataabstractionlayer.client.SensorState;
 import com.tempodb.Client;
 import com.tempodb.ClientBuilder;
 import com.tempodb.Credentials;
 import com.tempodb.Cursor;
+import com.tempodb.DataPoint;
 import com.tempodb.Database;
-import com.tempodb.Filter;
-import com.tempodb.MultiDataPoint;
 import com.tempodb.Result;
 import com.tempodb.Series;
+import com.tempodb.WriteRequest;
 
 public class TempoDBSystemDataGateway extends SystemDataGateway {
 
@@ -62,39 +64,53 @@ public class TempoDBSystemDataGateway extends SystemDataGateway {
 	}
 
 	public QueryResult readBetween(String systemID, String sensorID, Date start, Date end) throws FailedToReadFromDatastoreException {
-		Interval interval = new Interval(start.getTime(), end.getTime());
-		Filter filter = new Filter();
-		filter.addKey(systemID + "." + sensorID);
+		Interval interval = new Interval(new DateTime(start), new DateTime(end));
+		String key = systemID + "." + sensorID;
+		Series series;
 		
-		Cursor<MultiDataPoint> result = client.readMultiDataPoints(filter, interval);
-		Iterator<MultiDataPoint> multiPoints = result.iterator();
-		
-		while(multiPoints.hasNext()) {
-			System.out.println("asd");
-			System.out.println(multiPoints.next().toString());
+		try {
+			series = client.getSeries(key).getValue();
+		} catch (Exception e) {
+			throw new FailedToReadFromDatastoreException(e.toString());
 		}
-		return null;
+		
+		Cursor<DataPoint> result = client.readDataPoints(series, interval);
+		Iterator<DataPoint> multiPoints = result.iterator();
+		List<SensorState> sensorStates = new ArrayList<SensorState>();
+		while(multiPoints.hasNext()) {
+			DataPoint dataPoint = multiPoints.next();
+			SensorState sensorState = new SensorState(sensorID, new Date(), dataPoint.getTimestamp().toDate(),dataPoint.getValue().toString());
+			sensorStates.add(sensorState);
+		}
+		
+		return new QueryResult(systemID, sensorStates);
 	}
 
 	public void write(EmitterSystemState data) throws FailedToWriteToDatastoreException {
 		Result<Series> result = null;
+		Set<String> tags = new HashSet<String>();
+        tags.add(data.getSystemID());
         Map<String, String> sensorReadings = data.getSensorReadings();
-		for(String sensorID : sensorReadings.keySet()) {
-			result = client.getSeries(data.getSystemID() + "." +sensorID);
+		
+        for(String sensorID : sensorReadings.keySet()) {
+        	String key = data.getSystemID() + "." + sensorID;
+			result = client.getSeries(key);
+			WriteRequest writeRequest = new WriteRequest();
+			DataPoint dataPoint = new DataPoint();
+			dataPoint.setTimestamp(new DateTime(data.getTimeStamp()));
+			dataPoint.setValue(Integer.parseInt(sensorReadings.get(sensorID)));
 			if(result.getValue() == null) {
-				Set<String> tags = new HashSet<String>();
-		        tags.add(data.getSystemID());
-		        tags.add(sensorID);
-				Map<String, String> attributes = new HashMap<String, String>();
-		        attributes.put(data.getTimeStamp().toString(), sensorReadings.get(sensorID));
-		        Series series = new Series(data.getSystemID() + "." +sensorID, data.getSystemID() + "." +sensorID, tags, attributes);
-				result = client.createSeries(series);
+				Series series = new Series(key);
+		        series.setTags(tags);
+		        series.setName(key);
+				writeRequest.add(series, dataPoint);
 			} else {
 				Series series = result.getValue();
-				series.getAttributes().put(data.getTimeStamp().toString(), sensorReadings.get(sensorID));
-				client.updateSeries(series);
+				series.setName(key);
+				writeRequest.add(series, dataPoint);
 			}
-			if(result.getCode() != HttpStatus.SC_OK) {
+			Result<Void> writeResult = client.writeDataPoints(writeRequest);
+			if(writeResult.getCode() != HttpStatus.SC_OK) {
 				throw new FailedToWriteToDatastoreException("Failed to write EmitterSystemState to TempoDB: " + result.getMessage());
 			}
         }
@@ -104,5 +120,5 @@ public class TempoDBSystemDataGateway extends SystemDataGateway {
 		for(EmitterSystemState systemState : data) {
 			write(systemState);
 		}
-	}
+	}	
 }
