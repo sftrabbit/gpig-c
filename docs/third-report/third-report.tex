@@ -107,9 +107,10 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Introduction}
 \label{sec:intro}
-This report details the design and development of our HUMS, concentrating on progress made since the Interim Report. In this report the system requirements are further refined, building on feedback from previous reports and adding a set of external dependencies. The HUMS architecture is then considered in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views deemed to be the most relevant. Having determined the HUMS architecture, the associated risks of the project as a whole are considered and risk reduction tactics are discussed.
 
-The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the System. The project is then concluded, and the team reflects on their decisions throughout the project.
+This report details the design and development of a Health and Usage Monitoring System (HUMS), focussing particularly on progress since the Interim Report. This includes the development of a prototype implementation that will be demonstrated to the Customer.
+
+In Section~\ref{sec:requirements}, previously identified requirements are refined, building on Customer feedback, and a set of external dependencies are identified. The associated risks of the project are considered and risk reduction strategies are discussed in Section~\ref{sec:risks}. The quality attributes that the System must exhibit are described in Section~\ref{sec:qualities} and scenarios that require those qualities are given in Section~\ref{sec:scenarios}. To support these quality attributes, tactics and architectural design patterns are identified in Section~\ref{sec:tactics}. In Section~\ref{sec:architecture}, the design of the HUMS architecture is presented from a variety of software engineering views. The development of the prototype HUMS, which demonstrates many important features of the System, is then described in Section~\ref{sec:dev}, followed by test results in Section~\ref{sec:testing} and an evaluation of the achieved quality and functionality of the System in Section~\ref{sec:prototype}. An overview of communication with the Customer is given in Section~\ref{sec:customer_comms}. The project is then concluded in Section~\ref{sec:conclusion}, and the team reflects on their decisions throughout the project.
 
 %-------------------------------------------------------------%
 %--------------------------GLOSSARY ---------------------%
@@ -117,7 +118,7 @@ The development of the prototype HUMS, demonstrating some of the important featu
 \section{Glossary}
 \label{sec:glossary}
 \begin{description}%[leftmargin=!,labelwidth=\widthof{\bfseries Data output clientxx},noitemsep]
-	\item[The HUMS/System] The health and usage monitoring system being developed.
+	\item[The HUMS/System] The Health and Usage Monitoring System being developed.
 	
 	\vspace{0.15cm}
 	\item[Customer] Thales, the organisation that has commissioned the System.
@@ -127,15 +128,15 @@ The development of the prototype HUMS, demonstrating some of the important featu
 	\vspace{0.15cm}
 	\item[Event] A trend in data identified by analysis.
 	\item[Notification] A message dispatched by the System when an Event is fired.
-	\item[Report] An artefact (consisting of HUMS data) produced by the HUMS at the request of the Consumer.
+	\item[Report] An artifact consisting of information produced by the HUMS at the request of the Consumer.
 	
 	\vspace{0.15cm}
 	\item[Input Interface] An interface through which data is supplied to the HUMS.
-	\item[Data Emitter] Software that provides Client data to a HUMS instance through an Input Interface.
-	\item[Output Interface] An  interface through which Reports and Notifications are dispatched.
+	\item[Data Emitter] Software that provides data to a HUMS instance through an Input Interface.
+	\item[Output Interface] An interface through which Reports and Notifications are dispatched.
 	\item[Data Output Client] A Client that receives data from an Instance through an Output Interface.
     \item[Datastore] A component of the System which stores data received through an Input Interface.
-    \item[(HUMS) Core] The component of the System which performs analysis, and which receives data from Data Emitters through Input Interfaces.
+    \item[(HUMS) Core] The component of the System which performs analysis and receives data from Data Emitters through Input Interfaces.
 	\item[Admin Centre] A web interface to configure and interact with the HUMS Core.
 
 	\vspace{0.15cm}
@@ -426,7 +427,9 @@ Having determined the tactics applicable to the HUMS, which are likely to increa
 \item[Row Data Gateway] A row data gateway is an object which encapsulates a single record in a Datastore~\cite{fowler2002patterns}. This could be utilised by our HUMS as a method of ensuring data pulled from various Datastores can be used throughout the Core as if it was from a single Datastore. This will reduce the effect of impedance mismatch whilst increasing the tailorability of our solution and decreasing coupling.
 \end{description}
 
-\section{System Views} 
+\section{Views of the System Architecture} 
+\label{sec:architecture}
+
 Building on our work in the previous reports we decided to present four further, more detailed, views of our HUMS. This time we choose to take inspiration from the SEI~\cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Allocation View}.
 
 \subsection{Module View}
@@ -868,7 +871,7 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 %-------------------------------------------------------------%
 %-----------------------PROTOTYPE-----------------------%
 %-------------------------------------------------------------%
-\section{Prototype Implementation Evaluation}
+\section{Prototype Evaluation}
 \label{sec:prototype}
 
 In this section, our prototype implementation is evaluated to assess how well it has met our specified requirements and quality attributes. This includes evaluating how it performs with the two test applications provided by the Customer, and helps to assess the overall implementation work that has been completed.
@@ -950,11 +953,11 @@ With this in mind, we decided to monitor the process memory usage, CPU usage, st
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
 
-In the Interim Report we proposed an innovative deployment option for our HUMS as a System as a Service (SaaS) solution. This would allow multiple Consumers to use the same central HUMS, saving them from the complexity of setting up and managing the system themselves, whilst still allowing flexibility for them to configure it to their needs and interface with their own Datastores and custom engines.
+In the Interim Report we proposed an innovative deployment option for our HUMS as a System as a Service (SaaS) solution, allowing multiple Consumers to use the same central HUMS. This removes the complexity of setting up and managing the System themselves, whilst being configurable through the use of custom engines and configuration files.
 
-This is possible due to the ability of different components to run from different location, for example a data emitter can run on a different system to the Core of the HUMS. With our HUMS implementation the SaaS solution could be achieved by running multiple Cores on the same server, with one Core for each Consumer. This is not ideal, as a new Core instance for a new Consumer would have to manually be started, but does successfully enable this type of deployment.
+This deployment is possible as components of our HUMS can run from different locations. With our HUMS implementation the SaaS solution can be achieved by running multiple Cores on the same server, with one Core for each Consumer. This is not ideal, as a new Core instance for a new Consumer would have to manually be started, but does successfully enable this type of deployment.
 
-Ideally, only a single instance of the Core would be needed and would be able to handle multiple Consumers' configurations. This is a future possibility for the system as only small parts of the Core would need to be changed and all other components, including all engines, would still work as before.
+Ideally, only a single instance of the Core would be needed and would be able to handle multiple Consumers' configurations. This is a future possibility for the system as only small parts of the Core would need to be modified and all other components, including engines could remain the same.
 
 \subsection{Evaluation of Additional Engines}
 \label{sec:additional}
