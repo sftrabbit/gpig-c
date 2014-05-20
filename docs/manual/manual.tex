@@ -19,6 +19,7 @@
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{hyperref}
 
 \input{listingsPreamble.tex}
 
@@ -118,11 +119,11 @@ Walker}
 %-------------------------------------------------------------%
 \section{Introduction}
 
-\hl{Briefly introduce the HUMS}
+The GPIG-C Health and Usage Monitoring System (HUMS) allows systems to be monitored by sensors, which feed information into the core of the HUMS, where it can be stored and analysed, potentially triggering notifications to users if the analysis processes determine that an event of note has occurred. Reports on the state of the system being monitored can be requested by consumers through a web-based administration centre, allowing for a simple interface to the HUMS. This manual will describe how to get a HUMS up and running so that you can start monitoring your own system.
 
 \subsection{Requirements}
 
-To utilise the HUMS, the target system must have Java 7 installed. This can be obtained for free for Windows, Linux, and OS X from www.java.com.
+To utilise the HUMS, the target system must have Java 7 installed. This can be obtained for Windows, Linux, and OS X from \url{www.java.com}.
 
 \section{The HUMS Core}
 \label{sec:launching}
@@ -146,7 +147,7 @@ To launch the core on OS X, using the terminal, navigate to the directory where 
 \subsection{Using the Core}
 \label{sec:core}
 
-\subsubsection{The interface}
+\subsubsection{The User Interface}
 
 When the Core has loaded, the GUI will appear. The functionality for the GUI is set out in Figure~\ref{fig:manualgui}.
 \begin{figure}[H]
@@ -168,12 +169,12 @@ Displays information about things in the configuration file which are being moni
 Clears the \emph{current configuration output} (4.).
 \end{enumerate}
 
-\subsubsection{Running with a given config file}
+\subsubsection{Running with a Given Configuration File}
 \label{subsec:loadconf}
 
 To load a configuration file, click the \emph{current configuration output} button (2.). This will open a dialogue to select the configuration file, navigate to the file, select it and click open. The \emph{run button} should not be clickable. Once clicked the GUI will: load the configuration file, initialise the core with the engines to be loaded and the \emph{run button} will become a \emph{stop button}.
 
-\subsubsection{Stopping and loading a different configuration}
+\subsubsection{Loading a Different Configuration at Runtime}
 
 Click the \emph{stop button}, which is located at the same position as the \emph{run button} (1.). This will halt the running of the core for the current configuration, and will revert the GUI back to the same state as when it was first launched. The steps for Section~\ref{subsubsec:loadconf} can then be repeated for a different, or updated, configuration file.
 
@@ -188,6 +189,13 @@ Click the \emph{stop button}, which is located at the same position as the \emph
   \caption{The GUI for the Demonstration of the monitoring and analysis systems for our HUMS with annotations on each element.}
   \label{fig:demogui}
 \end{figure}
+\begin{enumerate}
+\item \textbf{Application Runners} \\ For each configuration for demonstration there is a button to run it. The output for each different demonstration is shown in the \emph{output area} (3.)
+\item \textbf{Output Selection Tabs} \\ For each configuration file, there is a matching output. These tabs select which output is displayed in the\emph{output area}.
+\item \textbf{Output area} \\ Displays the currently selected configuration files output. Updates on events, such as new information being sent into the core.
+\item \textbf{Clear Console Button} \\ 
+Clears the current configuration's \emph{output area} (3.).
+\end{enumerate}
 
 \section{Troubleshooting}
 
