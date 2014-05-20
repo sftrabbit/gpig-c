@@ -238,7 +238,7 @@ External dependencies are requirements outside of the scope of control of the de
  \begin{description}
  \item[\ed{1}] The provisioned deployment platform must be running an up-to-date JVM on top of current versions of GNU/Linux, Windows or OS X.
  \item[\ed{2}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core where necessary.
-  \item[\ed{3}] The selected remote data stores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
+  \item[\ed{3}] The selected remote datastores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
  \end{description}
 % \item[\ed{3}] The HUMS and Customer test applications must be compatible, allowing the HUMS to sensor, storage, analyse and notify regarding the test applications in such a way that no data is lost. % Doesn't sound like an External Dependancy to me?
 
@@ -271,7 +271,7 @@ Unlike in the previous reports, risks have been separated into human risks and t
   	\hline
   
     R.6 & Developed Admin Centre does not satisfy the outlined requirements. & Poor user experience. Wasted time. Failure to meet requirements. & Redesign Admin Centre. & 10 & Minor & \textbf{Low} \\
-    R.7 & Data intercepted between the HUMS Core and registered engines or Datastore. & Loss of confidence in HUMS. Lost/corrupted data. & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
+    R.7 & Data intercepted between the HUMS Core and registered engines or Datastore. & Loss of confidence in HUMS. Lost or corrupted data. & Additional penetration testing to identify security flaws. Have an audit trail. & 5 & Serious &  \textbf{Low} \\
     R.8 & HUMS does not facilitate data storage using a variety of Datastores. & Failure to meet key modifiability, interoperability and configurability requirements. Low quality solution. & Test this system on a number of popular Datastore implementations and make any required alterations. & 20 & Serious & \textbf{Medium} \\
     R.9 & Computation by included analysis engines too slow. & Failure to meet performance targets. Loss of data due to backlog. & Re-engineer analysis system and reduce complexity. Possibly reduce the functionality of the engines. & 25 & Moderate & \textbf{Low} \\	
     R.10 & Included notification engines too slow. & Failure to meet performance targets. Loss of events, Consumer not informed of System failure. & Re-engineer notification system, reducing complexity. Possibly change protocols and functionality to meet performance requirements. & 20 & Moderate & \textbf{Low} \\	
@@ -315,7 +315,7 @@ Availability & High & The non-functional system requirements identified high ava
 \\
 Security & High & Security is highly ranked, as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify System data, and data in transit between Data Emitters and the HUMS must be protected.
 \\
-Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5~ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
+Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than $5$~ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
 \\
 Testability & Medium & The TDD development approach, discussed in the Initial Report and followed throughout the project, makes testability of medium importance to the System. Having a highly testability utility will help to reduce System faults and is also likely to increase its availability.
 \\
@@ -460,7 +460,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \end{figure}
 
 \subsection{Component and Connector View}
-In order to visualise how data flows through the System, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them.
+In order to visualise how data flows through the System, from its inputs to its outputs, a \emph{Pipes and Filters diagram} of the HUMS has been created. Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them.
 
 Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer. This view is again targeted more at technical stakeholders, allowing them to visualise the flow of data, and determine what within the System they can configure.
 
@@ -732,7 +732,7 @@ This section describes the reporting and notification capabilities of our HUMS. 
 For reporting, two sample engines were created which can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines show just a small selection of what is possible with our HUMS implementation, with scope for adding further web based, standalone, or integrated reporting engines to interact with the HUMS.
 
 \subsubsection{SMS Notifications}
-A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: An individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
 The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications of Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
@@ -902,7 +902,7 @@ Requirement & Verified? & Reasoning \\ \hline
 \fr{9} & Yes & Unit and inspection testing verified that all implemented Notification engines correctly send Notifications.\\
 \fr{10}& Yes & Unit testing, and the existence of our web based reporting tools, verified this requirement.\\
 \fr{11}& Yes & The phone system, created as part of the Android application, proves that our HUMS is capable of changing the behaviour of the Consumer system it is monitoring.\\
-\fr{12}& Partially & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to time constraints, meaning any user could add or remove engine files. \\
+\fr{12}& Partially & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to time constraints, meaning any user with write-access could add or remove engine files. \\
 }{Verification of functional requirements, and reasoning for those not met by the prototype.}{tab:functionalEval}
 
 
