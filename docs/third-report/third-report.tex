@@ -938,17 +938,14 @@ The quality attributes laid out in Section~\ref{sec:scenarios} have been largely
 
 In addition to this, we performed a small UX study within the department to help us ensure that our HUMS Core interface and Admin Centre were easy to use. Results of the study led us to change the font of our consoles to an easier to read monospace font, and to add a `clear console' button, allowing old information to be deleted, making updates easier to see. We also found that users wanted to be able to toggle engines on and off using the Admin Centre, rather than manually selecting which ones they would like to use. We acted upon this feedback and changed our interfaces appropriately.
 
-\subsection{Evaluation on the Customers Test Applications}
+\subsection{Evaluation on the Customer's Test Applications}
 \label{sec:test_app1}
 
-We decided to monitor the memory and CPU usage of the first test application, using SIGAR to monitor CPU usage, and JMX to monitor memory as the JVM has a fixed heap sized meaning SIGAR cannot determine what is being used by the application. 
+We decided to monitor the memory and CPU usage of the first test application, using SIGAR to monitor CPU usage and JMX to monitor memory. JMX was used as the JVM has a fixed heap sized meaning SIGAR cannot determine what is being used by the application. 
 
-Use of the SIGAR library proved useful when attempting to monitor the second test application, as we were able to reuse much of work.
-For the second test application, we also considered monitoring IO operations and network activity. To test whether monitoring network activity would be a good use of our time we used \emph{iotop}~\cite{iotop} to examine the applications IO operations and found nothing notable. We also used Wireshark \hl{ref} to examine network activity but found none. 
+Use of the SIGAR library proved useful when attempting to monitor the second test application, as we were able to reuse much of work. For this test application we also considered monitoring IO operations and network activity. To test whether monitoring these would be a good use of our time we used \emph{iotop}~\cite{iotop} to examine the application's IO operations and found nothing notable, then also used \emph{Wireshark}~\cite{wireshark} to examine network activity but found none. 
 
-With this in mind, we decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on, allowing us to reuse the SIGAR library.
-
-SIGAR is also capable of monitoring networking and file system metrics, however, we did not feel that this was useful information when considering the second test application.
+With this in mind, we decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on, allowing us to reuse the SIGAR library. SIGAR is also capable of monitoring networking and file system metrics, however, we did not feel that this was useful information when considering the second test application.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
