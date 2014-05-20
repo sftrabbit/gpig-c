@@ -264,7 +264,7 @@ It is important to consider the risks of any software project so that appropriat
 
 Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks being sidelined and inadequately considered. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}. Some risks have been modified since the previous report, while others are completely new and specific to the revised system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured on a scale between 1$-$100.
 
-\xtableformat{p{0.8cm} X X X c c c }
+\xtableformat{ p{0.8cm} X X X c c c }
 { 	\hline
   	Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
@@ -278,7 +278,7 @@ Unlike in the previous reports, risks have been separated into human risks and t
 {The human and business risks associated with this phase of the project.}{tab:human_risks}
 
 
-\xtableformat{p{0.8cm} X X X c c c}
+\xtableformat{ p{0.8cm} X X X c c c }
 { 	\hline
     Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
@@ -314,7 +314,7 @@ A number of quality attributes must be considered when creating the HUMS archite
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
 Table~\ref{tab:qualities} considers the HUMS, its requirements and its stakeholders, ranking the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however this is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability has been identified as important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
 
-\xtableformat{p{2.4cm} p{1.2cm} X}{
+\xtableformat{ p{2.4cm} p{1.2cm} X }{
 \hline
 Quality \qquad Attribute & Rank & Reasoning \\
 \hline
@@ -855,27 +855,27 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 
 \end{description}
 
-\tableformat{p{1.4cm} p{4.7cm} p{1.8cm} p{6cm}}
+\xtableformat{ p{1.8cm} p{4.7cm} p{1.9cm} X }
 { 	\hline
-    Req. ID & Test Classes & Type & Details \\
+    Requirement & Test Classes & Type & Details \\
     \hline
 
-    FR.1.1   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
-    FR.1.2   & N/A & Inspection & Verify by observing output in Admin Centre \\
-    FR.2   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
-    FR.3   & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
-	FR.3.1   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
-	FR.4.1.1 & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
-	FR.4.1.2 & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
-	FR.7     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
-    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
-    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of Events \\
-	FR.8     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
-    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
-	FR.10    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
-	FR.12    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
-    NFR.6    & N/A & Inspection & Verify existence of all test levels \\
-	NFR.14   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
+    \fr{1.1}   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
+    \fr{1.2}   & N/A & Inspection & Verify by observing output in Admin Centre \\
+    \fr{2}   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
+    \fr{3}    & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
+	\fr{3.1}   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
+	\fr{4.1.1} & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
+	\fr{4.1.2} & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
+	\fr{7}     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
+    \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
+    \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of Events \\
+	\fr{8}     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
+    \fr{9}     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
+	\fr{10}    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
+	\fr{12}    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
+    \nfr{6}    & N/A & Inspection & Verify existence of all test levels \\
+	\nfr{14}   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
 }
 {The traceability table showing the mapping from each requirement to its existing tests.}{tab:traceability}
 
@@ -898,7 +898,7 @@ In order to properly evaluate our solution, we must consider its limitations and
 
 Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in this future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
 
-\xtableformat{ p{2cm}  p{2cm} X}{ 
+\xtableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
 \fr{1} & Yes & Inspection testing showed this requirement to be satisfied\\
 \fr{2} & Yes & Unit testing showed this requirement to be satisfied\\
@@ -915,7 +915,7 @@ Requirement & Verified? & Reasoning \\ \hline
 }{Verification of functional requirements, and reasoning for those not met by the prototype.}{tab:functionalEval}
 
 
-\xtableformat{ p{2cm}  p{2cm} X}{ 
+\xtableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
 }{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
@@ -940,7 +940,7 @@ Requirement & Verified? & Reasoning \\ \hline
 To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} and \ref{nfrevaltable} the steps which we have taken in order to validate the meeting of the requirements. \emph{FR.5}, \emph{FR.6}, and \emph{FR.8} were not implemented in this prototype, and so the method of validation describes what would be done in a more complete system.
 
 % ID/Method of Validation/Result
-\xtableformat{ p{1.3cm}  X X }{ 
+\xtableformat{ p{1.3cm}  X X }{
 	FR.x  &  	Method of Verification & Result \\ \hline
 	FR.1  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the Core utilising a Data Emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. & Our validation showed that the Data Emitters passed correctly structure data to the Core. \\
 	FR.2  & The Datastore was queried manually. & It was verified that timestamps are held for all data, and stored in the Datastore when the information is saved.	\\
