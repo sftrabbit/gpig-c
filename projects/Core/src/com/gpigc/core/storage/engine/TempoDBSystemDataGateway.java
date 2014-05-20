@@ -48,61 +48,82 @@ public class TempoDBSystemDataGateway extends SystemDataGateway {
 		Database database = new Database(DATABASE_NAME);
 		Credentials credentials = new Credentials(API_PUBLIC_KEY, API_SUPER_SECRET_KEY);
 		InetSocketAddress host = new InetSocketAddress(API_URL, 443);
-		client = new ClientBuilder()
-				        .database(database)
-				        .credentials(credentials)
-				        .host(host)
-				        .scheme(HTTPS)
-				        .build();
+		client = new ClientBuilder().database(database).credentials(credentials).host(host).scheme(HTTPS).build();
 
 		client.deleteAllSeries();
+		
 	}
 
 	public QueryResult readMostRecent(String systemID, String sensorID, int numRecords) throws FailedToReadFromDatastoreException {
-		// TODO Auto-generated method stub
-		return null;
+		String key = systemID + "." + sensorID;
+		Series series;
+
+		try {
+			series = client.getSeries(key).getValue();
+		} catch (Exception e) {
+			throw new FailedToReadFromDatastoreException(e.toString());
+		}
+
+		Interval interval = new Interval(new DateTime(0), new DateTime());
+		
+		
+		Iterator<DataPoint> result = client.readDataPoints(series, interval).iterator();
+		List<SensorState> sensorStates = new ArrayList<SensorState>();
+		while(result.hasNext()) {
+			DataPoint dataPoint = result.next();
+			SensorState sensorState = new SensorState(sensorID, new Date(), dataPoint.getTimestamp().toDate(), dataPoint.getValue().toString());
+			sensorStates.add(sensorState);
+		}
+		
+		int sublistStartIndex = 0;
+		if((sensorStates.size() - numRecords) >= 0) {
+			sublistStartIndex = sensorStates.size() - numRecords;
+		}
+		
+		return new QueryResult(systemID, sensorStates.subList(sublistStartIndex, sensorStates.size()));
 	}
 
 	public QueryResult readBetween(String systemID, String sensorID, Date start, Date end) throws FailedToReadFromDatastoreException {
 		Interval interval = new Interval(new DateTime(start), new DateTime(end));
 		String key = systemID + "." + sensorID;
 		Series series;
-		
+
 		try {
 			series = client.getSeries(key).getValue();
 		} catch (Exception e) {
 			throw new FailedToReadFromDatastoreException(e.toString());
 		}
-		
+
 		Cursor<DataPoint> result = client.readDataPoints(series, interval);
 		Iterator<DataPoint> multiPoints = result.iterator();
 		List<SensorState> sensorStates = new ArrayList<SensorState>();
-		while(multiPoints.hasNext()) {
+		while (multiPoints.hasNext()) {
 			DataPoint dataPoint = multiPoints.next();
-			SensorState sensorState = new SensorState(sensorID, new Date(), dataPoint.getTimestamp().toDate(),dataPoint.getValue().toString());
+			SensorState sensorState = new SensorState(sensorID, new Date(), dataPoint.getTimestamp().toDate(), dataPoint.getValue().toString());
 			sensorStates.add(sensorState);
 		}
-		
+
 		return new QueryResult(systemID, sensorStates);
 	}
 
 	public void write(EmitterSystemState data) throws FailedToWriteToDatastoreException {
 		Result<Series> result = null;
 		Set<String> tags = new HashSet<String>();
-        tags.add(data.getSystemID());
-        Map<String, String> sensorReadings = data.getSensorReadings();
-		
-        for(String sensorID : sensorReadings.keySet()) {
-        	String key = data.getSystemID() + "." + sensorID;
+		tags.add(data.getSystemID());
+		Map<String, String> sensorReadings = data.getSensorReadings();
+
+		for (String sensorID : sensorReadings.keySet()) {
+			String key = data.getSystemID() + "." + sensorID;
 			result = client.getSeries(key);
 			WriteRequest writeRequest = new WriteRequest();
 			DataPoint dataPoint = new DataPoint();
 			dataPoint.setTimestamp(new DateTime(data.getTimeStamp()));
 			dataPoint.setValue(Integer.parseInt(sensorReadings.get(sensorID)));
-			if(result.getValue() == null) {
+			
+			if (result.getValue() == null) {
 				Series series = new Series(key);
-		        series.setTags(tags);
-		        series.setName(key);
+				series.setTags(tags);
+				series.setName(key);
 				writeRequest.add(series, dataPoint);
 			} else {
 				Series series = result.getValue();
@@ -110,15 +131,15 @@ public class TempoDBSystemDataGateway extends SystemDataGateway {
 				writeRequest.add(series, dataPoint);
 			}
 			Result<Void> writeResult = client.writeDataPoints(writeRequest);
-			if(writeResult.getCode() != HttpStatus.SC_OK) {
+			if (writeResult.getCode() != HttpStatus.SC_OK) {
 				throw new FailedToWriteToDatastoreException("Failed to write EmitterSystemState to TempoDB: " + result.getMessage());
 			}
-        }
+		}
 	}
 
 	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException {
-		for(EmitterSystemState systemState : data) {
+		for (EmitterSystemState systemState : data) {
 			write(systemState);
 		}
-	}	
+	}
 }
