@@ -5,15 +5,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.neo4j.cypher.javacompat.ExecutionEngine;
 import org.neo4j.cypher.javacompat.ExecutionResult;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.ResourceIterable;
 import org.neo4j.graphdb.ResourceIterator;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
@@ -29,6 +33,7 @@ import com.gpigc.dataabstractionlayer.client.SensorState;
 
 public class Neo4jSystemDataGateway extends SystemDataGateway {
 
+	private static final DynamicRelationshipType SYSTEM_OWNS_SENSOR = DynamicRelationshipType.withName("OWNS");
 	private static final String DB_PATH = System.getProperty("user.home") + "/neo4j-GPIG-C-db";
 	private GraphDatabaseService graphDb;
 	private ExecutionEngine engine;
@@ -110,22 +115,21 @@ public class Neo4jSystemDataGateway extends SystemDataGateway {
 	public void write(EmitterSystemState data) throws FailedToWriteToDatastoreException {
 		Transaction tx = graphDb.beginTx();
 		try {
-			// Create new system if one does not currently exist
-			Node system = graphDb.createNode(GPIGCLabel.SYSTEM);
-			system.setProperty("system_id", data.getSystemID());
-			system.setProperty("last_write", new Date().getTime());
-
-			// Add system_id to index
-			graphDb.index().forNodes("systems").add(system, "system_id", system.getProperty("system_id"));
-
+			ResourceIterable<Node> system = graphDb.index().forNodes("systems").query("system_id", data.getSystemID());
+			Node systemNode = null;
+			if(system.iterator().hasNext() == false) {
+				systemNode = graphDb.createNode(GPIGCLabel.SYSTEM);
+				systemNode.setProperty("system_id", data.getSystemID());
+				systemNode.setProperty("last_write", new Date().getTime());
+				graphDb.index().forNodes("systems").add(systemNode, "system_id", systemNode.getProperty("system_id"));
+			} else {
+				systemNode = system.iterator().next();
+				systemNode.setProperty("last_write", new Date().getTime());
+			}
+			
+			
 			for (String sensorID : data.getSensorReadings().keySet()) {
-				Node sensor = graphDb.createNode(GPIGCLabel.SENSOR);
-				sensor.setProperty("sensor_id", sensorID);
-				system.createRelationshipTo(sensor, DynamicRelationshipType.withName("OWNS"));
-				Node value = graphDb.createNode(GPIGCLabel.VALUE);
-				value.setProperty("value", data.getSensorReadings().get(sensorID));
-				value.setProperty("measured_at", data.getTimeStamp().getTime());
-				sensor.createRelationshipTo(value, DynamicRelationshipType.withName("SENSOR"));
+				updateValueNode(data, systemNode, sensorID);
 			}
 			
 			tx.success();
@@ -135,6 +139,28 @@ public class Neo4jSystemDataGateway extends SystemDataGateway {
 		} finally {
 			tx.close();
 		}
+	}
+
+	private void updateValueNode(EmitterSystemState data, Node systemNode, String sensorID) {
+		Iterator<Relationship> outgoingRelationships = systemNode.getRelationships(Direction.OUTGOING).iterator();
+		while(outgoingRelationships.hasNext()) {
+			Node endNode = outgoingRelationships.next().getEndNode();
+			if(endNode.getProperty("sensor_id").equals(sensorID)) {
+				Node value = graphDb.createNode(GPIGCLabel.VALUE);
+				value.setProperty("value", data.getSensorReadings().get(sensorID));
+				value.setProperty("measured_at", data.getTimeStamp().getTime());
+				endNode.createRelationshipTo(value, DynamicRelationshipType.withName("SENSOR"));
+				return;
+			}
+		}
+		Node sensor = graphDb.createNode(GPIGCLabel.SENSOR);	
+		sensor.setProperty("sensor_id", sensorID);
+		systemNode.createRelationshipTo(sensor, SYSTEM_OWNS_SENSOR);
+		Node value = graphDb.createNode(GPIGCLabel.VALUE);
+		value.setProperty("value", data.getSensorReadings().get(sensorID));
+		value.setProperty("measured_at", data.getTimeStamp().getTime());
+		sensor.createRelationshipTo(value, DynamicRelationshipType.withName("SENSOR"));
+		return;
 	}
 
 	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException {
