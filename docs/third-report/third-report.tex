@@ -93,7 +93,7 @@ Walker}
 \Huge GPIG-C Final Report}
 \vspace*{0.2cm}
 
-Word count: %\input{wc} (\textit{using TeXCount})
+Word count: \input{wc} (\textit{using TeXCount})
 \vspace*{0.1cm}
 
 Wednesday, 21st May 2014
@@ -150,7 +150,7 @@ In Section~\ref{sec:requirements}, previously identified requirements are refine
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-Based on Customer feedback from the previous reports, the requirements of the HUMS have been updated. This included refining existing requirements and adding newly identified requirements. The constraint requirements have been removed as they were deemed unnecessary by the module leader and, instead, the external dependencies of the system hvae been identified.
+Based on Customer feedback from the previous reports, the requirements of the HUMS have been updated. This included refining existing requirements and adding newly identified requirements. The constraint requirements have been removed as they were deemed unnecessary by the module leader and, instead, the external dependencies of the system have been identified.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
@@ -239,7 +239,7 @@ External dependencies are requirements outside the scope of development that are
  \begin{description}
  \item[\ed{1}] The provisioned deployment platform must be running an up-to-date Java Virtual Machine (JVM) in a GNU/Linux, Windows or OS X environment.
  \item[\ed{2}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core where necessary.
-  \item[\ed{3}] The selected remote datastores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
+  \item[\ed{3}] The selected remote data stores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
  \end{description}
 % \item[\ed{3}] The HUMS and Customer test applications must be compatible, allowing the HUMS to sensor, storage, analyse and notify regarding the test applications in such a way that no data is lost. % Doesn't sound like an External Dependancy to me?
 
@@ -678,7 +678,7 @@ Prepared statements were used where possible in the Datastore implementations, b
 For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$~MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of datastored by Neo4j is presented in Figure~\ref{fig:neo4j}.
+To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of data stored by Neo4j is presented in Figure~\ref{fig:neo4j}.
 
 \begin{figure}[ht]
 \centering
@@ -733,7 +733,7 @@ This section describes the reporting and notification capabilities of our HUMS. 
 For reporting, two sample engines were created which can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines show just a small selection of what is possible with our HUMS implementation, with scope for adding further web based, standalone, or integrated reporting engines to interact with the HUMS.
 
 \subsubsection{SMS Notifications}
-A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: An individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
 The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications of Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
@@ -974,9 +974,9 @@ The \texttt{FaceAnalysisEngine} provided an example of a complex, domain-specifi
 \section{Customer Communication}
 \label{sec:customer_comms}
 
-We maintained communication with the Customer throughout the phase of this report, with emails exchanged every few weeks. The first feedback received from the Customer came from the Interim Report, and a face-to-face meeting with the Customer. The Customer give us a number of areas to work on for this report including, better explaining how we considered risks, how we can improve the presented views of our System architecture, and explicitly stating our quality attribute scenarios. This feedback has been clearly acted upon in this report.
+We maintained communication with the Customer throughout the phase of this report, with emails exchanged every few weeks. The first feedback received from the Customer came from the Interim Report, and a face-to-face meeting with the Customer. The Customer give us a number of areas to work on for this report, including better explaining how we considered risks, how we can improve the presented views of our System architecture, and explicitly stating our quality attribute scenarios. This feedback has been clearly acted upon in this report.
 
-During email communication with the Customer, we attempted to resolve an issue they had accessing the web sources that were produced as part of the Interim Report. Once this had been resolved, the ideas behind the configurable engines architecture was agreed to be a good strategy. We then asked about which qualities the customer would like us to focus on during development, suggesting that flexibility and interoperability appear important. The Customer replied highlighting that configurability is also key quality and should be considered, this led to the creation of the configuration file system. 
+During email communication with the Customer, we attempted to resolve an issue they had accessing the web sources that were produced as part of the Interim Report. Once this had been resolved, the ideas behind the configurable engines architecture was agreed to be a good strategy. We then asked about which qualities the customer would like us to focus on during development, suggesting that flexibility and interoperability appear important. The Customer replied highlighting that configurability is also key quality and should be considered, and this led to the creation of the configuration file system. 
 
 Further information about how development was progressing and proposals for future work was exchanged, ensuring the Customer was kept up-to-date and that the project remained on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at both compile time and runtime. Discussion about Datastores was also useful and revealed the possibility of adding distributed Datastores to our implementation. This feedback was taken on board leading us to add \emph{Neo4j} and \emph{TempoDB} to our implementation.
 
@@ -987,41 +987,29 @@ Further information about how development was progressing and proposals for futu
 
 \section{Conclusion}
 \label{sec:conclusion}
-\hl{TODO All}
 
+This report has presented the updated design and implementation of our HUMS solution, highlighting any progress since the Interim Report. It focusses particularly on the technical development undertaken and evaluates the implemented System against the identified requirements.
 
-\subsection{Summary}
-\label{sec:summary}
+Whilst we were not able to implement a complete solution within the constraints of the project, and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. Whilst developing the prototype and the example applications, we have shown that it supports many of the key quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines.
 
-This report has presented the design and implementation of our HUMS solution, highlighting any progress since the Interim Report. It focusses particularly on the technical development undertaken and evaluates the implemented System against the identified requirements.
-
-Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines.
-
-In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS---that is, sensing, storing, analysing, and reporing---and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasability of the HUMS, while later development can tackle the details of Consumer deployment.
+In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS---that is, sensing, storing, analysing, and reporting---and less on those quality attributes required for a real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasibility of the HUMS, while later development can tackle the details of Consumer deployment.
 
 \subsection{Reflection}
 \label{sec:reflection}
 
 In hindsight, to improve our final product and streamline our process, a number of development tasks could have been performed differently.
 
-A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for dynamically loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier by more thorough testing or better team communication.
+A more thorough evaluation of early prototypes should have been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for dynamically loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}, and wasted development time. Such problems could have been avoided if they had been identified earlier by more thorough testing or better team communication.
 
-Software engineering design patterns were not explicitly identified during early development, which meant that much of the software architecture needed to be heavily modified in the later stages where the ramifications of our design decisions became clear.
+Software engineering design patterns were not explicitly identified during the interim development, meaning that much of the software architecture needed to be heavily modified in this phase as the ramifications of the changes to our design decisions became clear.
 
-The initial development plans did not fully account for prior commitments. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
+The development plan in the previous report did not fully account for external pressures, such as other modules. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
 
 The necessary build tools could have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself rather than solving build issues. This would also have allowed the use of continuous integration for greater quality control and hence a more efficient development process.
 
-Our use of the SWT library for building the user interface cost a surprising amount of time because of the need to bundle the appropriate native binaries for each platform and pass addition parameters to the JVM for some systems, complicating the build process. Whilst we were pleased with the final result, this added complication may not have been worth the time spent on it.
+Our use of the SWT library for building the user interface cost a surprising amount of time as appropriate native libraries had to be bundled for each platform, complicating the build process. Whilst we were pleased with the final result, this may not have been worth the time spent on it.
 
-The implementation of the graph database, Neo4j, provided numerous challenges and therefore proved time consuming. As the teams data modelling experience lay largely in the relational and key-value data modelling realm, the mindset of modelling data as graphs proved challenging initially. In hindsight, more time should have been devoted to the implementation of unfamiliar datastore technologies.
-
-
-
-\hl{TODO All (add stuff above)}
-
-% also reflect on orignal requirements, how/why they have chanaged, how we met them etc
-% How thoroughly has it been evaluated, how diverse are the applications that have been tested, and how good are the results?
+The implementation of the graph database, \emph{Neo4j}, provided numerous challenges and therefore proved time consuming. Team members were most familiar with modelling relational and key-value data, making the experience quite jarring. In hindsight, more time should have been devoted to the implementation of unfamiliar datastore technologies.
 
 \clearpage
 
