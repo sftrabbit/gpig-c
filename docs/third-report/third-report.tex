@@ -248,9 +248,9 @@ External dependencies are requirements outside the scope of development that are
 %-------------------------------------------------------------%
 \section{Project Risks}
 \label{sec:risks}
-It is important to consider the risks of any software project so that appropriate mitigation strategies can be applied, and clear contingency plans can be put in place to prevent potential problems having a large impact. This will help to ensure that all work is completed on time and to a high standard. For this phase of the project risks have been identified and mitigated before beginning development, unlike in previous phases where risks were updated ad-hoc which otherwise potentially allowed them to occur before a mitigation strategy is in place. In this iteration many risks were explicitly known, and mitigated, before commencing the next stage of development.
+It is important to consider the risks of any software project so that appropriate mitigation strategies can be applied and clear contingency plans can be put in place to prevent any potential problems having a large impact. This will help to ensure that all work is completed within project constraints and to a high standard. For this phase of the project, risks have been identified and contingencies put in place before beginning development, unlike in previous phases during which risks were mitigated as the occurred.
 
-Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks being sidelined and inadequately considered. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}. Some risks have been modified since the previous report, while others are completely new and specific to the revised system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured on a scale between 1$-$100.
+Unlike in the previous reports, risks have been separated into personnel risks and technical risks. This distinction was not made previously and resulted in technical risks being sidelined and inadequately considered. Personnel risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}. Some risks from the Interim Report have been modified, while others are new and specific to the revised system architecture. Each risk has been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is a value in the range 1--100 where 100 is a high likelihood.
 
 \tableformat{ p{0.8cm} X X X c c c }
 { 	\hline
@@ -280,17 +280,17 @@ Unlike in the previous reports, risks have been separated into human risks and t
 {The technical risks associated with this phase of the project.}{tab:tech_risks}
 
 \subsection{Risk Mitigation}
-The following risk reduction techniques have been applied throughout this phase of the project, including both project planning and development, in order to mitigate the identified risks. In addition to the techniques specified in this section, the tactics and patterns explained later in this report have also been used to mitigate technical risks which affect the quality of the system.
+The following risk mitigation strategies have been applied throughout this phase of the project, during both project planning and development. In addition to the techniques specified in this section, the tactics and patterns explained in Section~\ref{sec:tactics} also help to mitigate technical risks which affect the quality of the system.
 
 \begin{description}
-\item[Scrum:]
-The use of the scrum as part of our software engineering methodology, as discussed in the Initial Report, helps to mitigate risks \emph{R.1--3}. The scrum allows team members to be kept up to date on what others are working on, and the state of the project as a whole, making it easier for work to be reallocated across team members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customer's brief.
+\item[Scrum]
+The use of the scrum as part of our software engineering methodology, as discussed in the Initial Report, helps to mitigate risks \emph{R.1--3}. The scrum allows team members to be kept up to date on what others are working on and the state of the project as a whole, making it easier for work to be reallocated between team members. It also helps to ensure decisions concerning the HUMS design are discussed and agreed upon, reducing the risk of straying away from the Customer's specification.
 
-\item[Version Control:]
-Git version control is used, allowing the entire team to simultaneously modify the project whilst keeping a reversible project history. This helps to mitigate the majority of the identified risks. Human risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and undo changes which may have caused a problem in the System, or caused the System to not meet Customer expectations.
+\item[Version Control]
+The Git version control system is used, allowing the entire team to simultaneously modify the project whilst keeping a reversible history of changes. This helps to mitigate the majority of the identified risks. Personnel risks are mitigated as the team has access to the work of other members, making it easy to take over when members are unavailable, and preventing large amounts of work being lost due to human or hardware errors. Technical risks are mitigated as it is easy to identify and revert changes which may have caused a problem in the System or caused the System to not meet Customer expectations.
 
-\item[Automated Testing:] 
-Automated integration, unit and regression testing is used throughout the project, using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.6--10}, helping to automatically validate system requirements. Static testing is also performed using type checkers and code profilers in order to reduce the time spent debugging. % TODO Code profilers don't run on static code, do they?
+\item[Automated Testing] 
+Automated integration, unit, and regression testing is used throughout the project, using JUnit and Mockito where necessary to ensure the HUMS implementation is stable and free of major bugs. This reduces risks \emph{R.6--10}, helping to automatically validate system requirements. Static testing is also performed using static code analysis tools in order to reduce the time spent debugging. The performance of the System is assessed with a profiler. All of these techniques help to mitigate all of the above technical risks.
 \end{description}
 
 %-------------------------------------------------------------%
