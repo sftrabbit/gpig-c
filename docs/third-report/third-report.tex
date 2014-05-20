@@ -508,16 +508,14 @@ The \emph{Allocation View} shows how System components may be assigned to physic
 
 Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:distributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configuring the HUMS.
 
-
-
-\begin{figure}[ht]
+\begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{images/Isolated.png}
   \caption{\hl{Foo}}
   \label{fig:deployisolated}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{images/Distributed.png}
   \caption{\hl{Foo}}
@@ -526,16 +524,16 @@ Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurat
 
 Figure~\ref{fig:deployscaled} shows how the HUMS capacity can be scaled up to support many Consumer systems. Due to the modular design of the system, various components can be allocated to multiple devices and scaled independently. Many Consumer devices may communicate with the HUMS at any time. To support an increased capacity, load balancers may be introduced to divide the load amongst a number of Cores. This architecture supports dynamic scaling, in which additional Cores are allocated when necessary. Figure~\ref{fig:deployhumsaas} shows how these architectural qualities allow the HUMS to be deployed as a service (HUMSaaS). The HUMSaaS allocates Cores according to Consumer demand, allowing the Consumer systems to emit data without any knowledge of how these Cores are allocated. A web interface is provided for Consumers to configure their HUMS instances.
 
-\begin{figure}[ht]
+\begin{figure}[htp]
   \centering
-  \includegraphics[width=0.8\textwidth]{images/Scaled.png}
+  \includegraphics[width=0.75\textwidth]{images/Scaled.png}
   \caption{\hl{Foo}}
   \label{fig:deployscaled}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[htp]
   \centering
-  \includegraphics[width=0.8\textwidth]{images/HUMSaaS.png}
+  \includegraphics[width=0.75\textwidth]{images/HUMSaaS.png}
   \caption{\hl{Foo}}
   \label{fig:deployhumsaas}
 \end{figure}
