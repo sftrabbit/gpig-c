@@ -797,9 +797,9 @@ Additionally, the Admin Centre provides access to the current reporting faciliti
 
 The implementation consists of a number of independent software projects which must be built separately and then collated into a final distribution. A number of tools have been used to aid this build process. 
 
-Java applications are typically bundled into Java Archive (JAR) files. By default, libraries that are required by an application must be distributed together with the JAR. This is inconvenient for early distribution because many files must be distributed together. To avoid this, the One-JAR build tool \cite{foo} is used. It allows an application and its dependencies to be bundled into a single JAR file. In the future, the HUMS may be distributed through system-dependent package managers which handle dependencies automatically.
+Java applications are typically bundled into Java Archive (JAR) files. By default, libraries that are required by an application must be distributed together with the JAR. This is inconvenient for early distribution because many files must be distributed together. To avoid this, the One-JAR build tool \cite{onejar} is used. It allows an application and its dependencies to be bundled into a single JAR file. In the future, the HUMS may be distributed through system-dependent package managers which handle dependencies automatically.
 
-Apache Ant build scripts \cite{foo} are used to build most of the projects. Much of the build process is common to all projects and so this behaviour has been extracted out into \texttt{tools/common-ant.xml}. This has the following benefits:
+Apache Ant build scripts \cite{ant} are used to build most of the projects. Much of the build process is common to all projects and so this behaviour has been extracted out into \texttt{tools/common-ant.xml}. This has the following benefits:
 
 \begin{itemize}
 \item Projects need only specify build requirements that are project-specific in their respective \texttt{build.xml} files.
@@ -1020,26 +1020,21 @@ Further information about how development was progressing and the proposals for 
 \label{sec:summary}
 \hl{TODO All}
 
-This report has set out the details for the design and implementation of our HUMS solution, and in particular highlights the changes and progression from the previous report. The main addition from the previous report were requirements, the set of external dependencies and the design of the system architecture. The risks to the project, as well as mitigation and contingencies for these risks have been shown, as well as an indepth consideration of the quality attributes that make up the project.
-
-The project management methodology has been shown and the different teams which worked together to build the core have been laid out and roles of each team explained.
-
-The testing plan has been laid out and steps for acceptence testing and the methodology behind manual and automated testing of the prototypes.
-
-The prototype systems, such as the test applications like the earthquake monitor, for the HUMS system have been demonstrated and the validation for the functional and non-functional requirements, as well as the quality of the solution, have been considered. The prototypes have been evaluated to check if they meet these requirements and qualities.
+This report has presented the design and implementation of our HUMS solution, discussing the changes and progression from the previous reports, the development undertaken, and how well it meets the requirements and supports the underlying quality attributes.
 
 
 \subsection{Reflection}
 \label{sec:reflection}
 
-A number of development tasks may have been performed differently with sufficient foresight. For example, build tools should have been determined and configured at an earlier stage, allowing more of the later work to focus on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+A number of development tasks would have been performed differently with sufficient foresight. For example, build tools should have been determined and configured at an earlier stage, allowing more of the later work to focus on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
 
 \hl{TODO All (add stuff above)}
 
 % also reflect on orignal requirements, how/why they have chanaged, how we met them etc
 % how completely has the solution been implemented - we didn't do storage limits/quotas etc
 
+\clearpage
+
 \bibliography{report-refs}
 \bibliographystyle{IEEEtran}
 \end{document}
-
