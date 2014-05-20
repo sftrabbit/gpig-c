@@ -998,24 +998,17 @@ In this way, we have focussed mostly on the quality attributes that pertain to t
 
 In hindsight, to improve our final product and streamline our process, a number of development tasks could have been performed differently.
 
-A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for dynamically loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier by more thorough testing or better team communication.
+A more thorough evaluation of early prototypes should have been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for dynamically loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}, and wasted development time. Such problems could have been avoided if they had been identified earlier by more thorough testing or better team communication.
 
-Software engineering design patterns were not explicitly identified during early development, which meant that much of the software architecture needed to be heavily modified in the later stages where the ramifications of our design decisions became clear.
+Software engineering design patterns were not explicitly identified during the interim development, this meant that much of the software architecture needed to be heavily modified in this phase as the ramifications of the changes to our design decisions became clear.
 
-The initial development plans did not fully account for prior commitments. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
+The development plan in the previous report did not fully account for external pressures, such as other modules. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
 
 The necessary build tools could have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself rather than solving build issues. This would also have allowed the use of continuous integration for greater quality control and hence a more efficient development process.
 
-Our use of the SWT library for building the user interface cost a surprising amount of time because of the need to bundle the appropriate native binaries for each platform and pass addition parameters to the JVM for some systems, complicating the build process. Whilst we were pleased with the final result, this added complication may not have been worth the time spent on it.
+Our use of the SWT library for building the user interface cost a surprising amount of time as appropriate native libraries had to be bundled for each platform, complicating the build process. Whilst we were pleased with the final result, is may not have been worth the time spent on it.
 
-The implementation of the graph database, Neo4j, provided numerous challenges and therefore proved time consuming. As the teams data modelling experience lay largely in the relational and key-value data modelling realm, the mindset of modelling data as graphs proved challenging initially. In hindsight, more time should have been devoted to the implementation of unfamiliar datastore technologies.
-
-
-
-\hl{TODO All (add stuff above)}
-
-% also reflect on orignal requirements, how/why they have chanaged, how we met them etc
-% How thoroughly has it been evaluated, how diverse are the applications that have been tested, and how good are the results?
+The implementation of the graph database, \emph{Neo4j}, provided numerous challenges and therefore proved time consuming. Team members were most familiar with modelling relational and key-value data, making the experience quite jarring. In hindsight, more time should have been devoted to the implementation of unfamiliar datastore technologies.
 
 \clearpage
 
