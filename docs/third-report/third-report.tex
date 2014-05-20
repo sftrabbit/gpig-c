@@ -493,7 +493,7 @@ An \texttt{Event} object contains the ID of the system which caused the event, a
 
 \subsection{Behavioural View}
 
-The \emph{Behavioural View} can show the actual actions taken by the HUMS when the data flows through the System, showing the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the HUMS Core and how it behaves during normal operation. Various methods and invocations are listed in the order that they occur, from top to bottom and left to right. The external Clients, such as the sources that data is gathered from and the destinations that Notifications are sent to, are omitted, as this view purely describes the HUMS Core.
+The \emph{Behavioural View} shows the actual actions taken by the HUMS when the data flows through the System, displaying the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the HUMS Core and how it behaves during normal operation. Various methods and invocations are listed in the order that they occur, from top to bottom and left to right. The external Clients, such as the sources that data is gathered from and the destinations that Notifications are sent to, are omitted, as this view purely describes the HUMS Core.
 
 \begin{figure}[h]
   \centering
@@ -549,17 +549,17 @@ The \emph{Behavioural View} can show the actual actions taken by the HUMS when t
 
 \section{Development}
 \label{sec:dev}
-In this section, the implementation created in the previous report is summarised and the significant changes made since then detailed. When making these changes our team was structured as described in the previous report. However, we had to alter our project plan slightly to accommodate other important deadlines. Luckily, we had considered this in risk \emph{R.2} and had appropriate contingency and mitigation strategies in place, meaning we were able to fully utilise the development time available. 
+In this section, the implementation created in the previous report is summarised and the significant changes made since then detailed. When making these changes our team was structured as described in the previous report. However, we did have to alter our project plan slightly to accommodate other important deadlines. Luckily, we had considered this in risk \emph{R.2} and had appropriate contingency and mitigation strategies in place, meaning we were able to fully utilise the development time available. 
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
-At the end of the Interim Report we had implemented the basic functionality of our core, with data being sent through the Input Interface and controllers managing engines. However, we did not have dynamic class loading and the Consumer was not able to add classes at runtime. The Consumer was able to create their own engines, but would be required to rebuild the HUMS in order for additions to take effect.
+At the end of the Interim Report we had implemented the basic functionality of our Core, with data being sent through the Input Interface and controllers managing engines. However, we did not have dynamic class loading and the Consumer was not able to add classes at runtime. The Consumer was able to create their own engines, but would be required to rebuild the HUMS in order for additions to take effect.
 
-At the interim stage of the project we had created a Data Emitter for the first test application, and an addition Data Emitter monitoring earthquakes. We had implemented a single Datastore using Google App Engine, and had created a basic analysis engine which computed the mean of the latest data for a System and created an \texttt{Event} if that mean was outside define bounds. The parameters used for analysis and to determine system sensors were hard-coded, as the configuration file system had not yet been created. An \texttt{EmailNotificationEngine} had also been created, which sent emails to a defined address. 
+At the interim stage of the project we had created a Data Emitter for the first test application, and an addition Data Emitter monitoring earthquakes. We had implemented a single Datastore using Google App Engine, and had created a basic analysis engine which computed the mean of the latest data for a System and created an \texttt{Event} if that mean was outside define bounds. The parameters used for analysis and to determine system sensors were hard-coded as the configuration file system had not yet been created. An \texttt{EmailNotificationEngine} had also been created which sent emails to a defined address. 
 
-We had created a low fidelity  Admin Centre, which appeared as we had desired, but had no actual functionality, created in just HTML and JavaScript.
+We had created a low fidelity  Admin Centre, which appeared as we had desired, but had no actual functionality, created in just static HTML and JavaScript.
 
-Overall, our interim solution was a low fidelity end-to-end solution, but did not meet a large number of our requirements and was not impressively tailorable or configurable. 
+Overall, our interim solution was a low fidelity end-to-end solution, but did not meet all of our requirements and was not impressively tailorable or configurable. 
 
 \subsection{Core Development}
 \label{sec:core}
@@ -572,9 +572,9 @@ The HUMS Core is the main application controlling the behaviour and functionalit
 
 In addition, the Core now automatically detects when new files are added to the folder they are loaded from, and refreshes the System. This means that from the Consumer's perspective they merely have to place their class into the correct folder to load it, increasing the HUMS's usability.
 
-Several example applications provided with our HUMS are described throughout this report. These implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the System by creating their own engines to meet their needs.
+Several example applications provided with our HUMS are described in this report. These implement standard interfaces provided with the HUMS Core, one for each of the three engine types: storage, analysis and notification. The Customer and Consumer can therefore easily extend and tailor the System by creating their own engines to meet their needs.
 
-The Consumer system monitored by a particular HUMS instance, and how they will be monitored, is now defined using a JSON configuration file. The format of this file is displayed in Figure~\ref{fig:configFiles}, which shows the definition of a particular Consumer system, with a System ID, Sensor IDs, parameters, and which engines the system uses. A System configuration file (\texttt{*.config}) is loaded into the Core by the Consumer before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
+The Consumer system and Sensors monitored by a particular HUMS instance, and how they will be monitored, is now defined using a JSON configuration file. The format of this file is displayed in Figure~\ref{fig:configFiles}, showing the definition of a particular Consumer system with a System ID, Sensor IDs, parameters, and which engines the system uses. A System configuration file (\texttt{*.config}) is loaded into the Core by the Consumer before it is run. Changes to configuration files can be made manually through a text editor or in a more user-friendly manner through the Admin Centre.
 
 \begin{figure}[tbp]
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -607,9 +607,9 @@ The Consumer system monitored by a particular HUMS instance, and how they will b
 
 Any changes made to the System configuration file whilst the HUMS is running are automatically detected by the Core and cause the file to be reloaded allowing the alterations to take immediate effect. This reduces risk \emph{R.5} by ensuring the Consumer cannot forget to reload the file, increasing the usability of our HUMS by improving its learnability.
 
-The Core has also been refactored to load Consumer system parameters to be used by engines from System configuration files. This includes both individual Sensor parameters and System parameters meaning that, for example, analysis can be performed both per Sensor and on the System as a whole, further increasing the tailorability of our solution. The configuration file for a particular instance of the HUMS can be set and modified at runtime or compile time, as it is separate from the code-base, making it very versatile and further improving configurability. 
+The Core has also been refactored to load Consumer system parameters to be used by engines from System configuration files. This includes both individual Sensor parameters and System parameters meaning that, for example, analysis can be performed both per Sensor and on the System as a whole, further increasing the tailorability of our solution. The configuration file for a particular instance of the HUMS can be set and modified at runtime or compile time, as it is separate from the codebase, making it very versatile and further improving configurability. 
 
-In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, which reports any errors such as incorrectly formatted configuration files, as well as the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit}~\cite{swt}. This was chosen over other UI libraries such as \emph{Swing} as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
+In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, reporting any errors such as incorrectly formatted configuration files alongside the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit}~\cite{swt}. This was chosen over other UI libraries such as \emph{Swing} as it uses native components, increasing user efficiency and satisfaction by using components they are already familiar with.
 
 \begin{figure}[ht]
 \centering
@@ -617,6 +617,7 @@ In addition to the above, we created an optional GUI for our HUMS Core which mak
 \caption{A screenshot of the HUMS Core GUI.}
 \label{fig:coreGUI}
 \end{figure}
+
 A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface which now allows these files to be easily administered by both technical and non-technical users, and avoids a custom server having to be manually set up by the Consumer as the process is automated.
 
 \subsection{Project Management}
@@ -624,11 +625,11 @@ A lightweight Jetty server was also added to the Core demonstrating that the Adm
 
 \subsection{Sensing}
 \label{sec:monitor}
-In this section we describe the applications our HUMS currently monitors. We created six sample Data Emitters for this stage of the project in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications and APIs, as well as how it can be used with specially made applications. An Consumer would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS Core.
+In this section we describe the applications our HUMS currently monitors. We created six sample Data Emitters for this stage of the project in order to demonstrate the tailorability of our HUMS. These show how the HUMS can integrate with existing applications and APIs, as well as how it can be used with specially made applications. A Consumer would be able to quickly create a Data Emitter for their own application by using the interfaces provided with our HUMS Core.
 
 \subsubsection{Test Application Data Emitters} 
 \label{subsec:tapp}
-Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added swap state, number of threads, last processor it was run on and working directory. For this we created a process monitoring Data Emitter which is capable of tracking information from a process. This utilises the \emph{System Information Gatherer} (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about the implementation for reading that information that the platform provides. The information gathered by this engine is forwarded to the Core for analysis.
+Part of our task was monitoring the provided test applications, treating them as black-box systems we knew nothing about. For the first we simply monitored the memory and CPU usage, but for the second we also added swap state, number of threads, last processor it was run on, and working directory. For this we created a process monitoring Data Emitter which is capable of tracking information from a process. This utilises the \emph{System Information Gatherer} (SIGAR) API. SIGAR is a cross-platform API which allows system information and process information to be read, without worrying about the implementation that the platform provides for reading that information. The information gathered by these engines is forwarded to the Core for analysis.
 
 \subsubsection{Earthquake and Traffic Data Emitters}
 In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data (from the U.S. Geological Survey~\cite{us_geo}) is formatted as JSON and the traffic data (from the UK Highways Agency~\cite{ha_traffic}) as XML, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use XML or JSON formats.
@@ -647,11 +648,11 @@ For demonstration purposes, and to make our prototype easier to test and use, we
 \end{figure}
 
 \subsubsection{Android Mobile Application}
-To explore the possibilities surrounding monitoring remote systems over network communications, we created an Android application, with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in Figure~\ref{fig:android}.
+To explore the possibilities surrounding monitoring remote systems over network communications, we created an Android application with three test systems allowing us to demonstrate that our HUMS is capable of this. Screenshots of the Android application are shown in Figure~\ref{fig:android}.
 
-The first system simulates a car monitoring application, allowing users to select values for a number of Sensors and then push them to the remotely-based Core. In the real system, the user would not set the values or manually push them---it would be automatic---however, we choose to manually update the data for the purposes of demonstrating the functionality.
+The first system simulates a car monitoring application, allowing users to select values for a number of Sensors and then push them to the remotely-based Core. In a real system, the user would not set the values or manually push them---it would be automatic---however, we choose to manually update the data for the purposes of demonstrating the functionality.
 
-The second system is a phone battery monitoring application, which allows the user to define how long they would like to use their mobile device for and based on the given battery life, uses the HUMS to determine which services can stay on in order for this target to be met. The HUMS feeds back into the phone system, toggling services as necessary to balance device functionality and battery usage. This system was designed to show how our HUMS is capable of monitoring a system, and feeding information back to alter the systems behaviour in response to the information it collects.
+The second system is a phone battery monitoring application, which allows the user to define how long they would like to use their mobile device for and based on the given battery life, uses the HUMS to determine which services can stay on in order for this target to be met. The HUMS feeds back into the phone system, toggling services as necessary to balance device functionality and battery usage. This system was designed to show how our HUMS is capable of monitoring a system, and feeding information back to alter the system's behaviour in response to the information it collects.
 
 The final system performs face recognition, collecting face data using the built-in device camera, forwarding that data to the HUMS for analysis. This system was included to show how our HUMS allows for fast, complex, and specific data analysis, in this case using computer vision algorithms, in order to show that risk \emph{R.8} has not been realised. 
 
@@ -668,36 +669,36 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of Datastores. To demonstrate this we created \hl{five} sample implementations interfacing with a range of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our System does not force the Consumer to conform to a particular data schema or datastore technology, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9--10} be achieved.
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of Datastores. To demonstrate this we created \hl{five} sample implementations interfacing with a range of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our System does not force the Consumer to conform to a particular data schema or data storage technology, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9--10} be achieved.
 
 Prepared statements were used where possible in the Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
 
 \subsubsection{Google App Engine Storage}
-\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote, NoSQL, datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
+\emph{Google App Engine} is a popular cloud based Platform as a Service (PaaS) solution, which is used to deploy applications and manage data. We choose to use this as part of our implementation to demonstrate how our HUMS can easily interface with a remote NoSQL datastore. We did this by creating and hosting a simple web-based application on \emph{Google App Engine}, and then communicating with it using a \texttt{SystemDataGateway} object which performed the relevant HTTP requests.  
 
 \subsubsection{PostgreSQL Storage}
 \emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliant. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. To implement this we created a \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
 
 \subsubsection{H2 Storage}
-For real-time applications that require high performance and low response times a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
+For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-\emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships, and as such is suited for analyses which need to ask questions about the relationships between different pieces of data. \emph{Neo4j} can be distributed across a number of physical systems, providing the capacity for great reliability when necessary.
+\emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships, and as such is suited for analysis which needs to ask questions about the relationships between different pieces of data. \emph{Neo4j} can be distributed across a number of physical systems, providing the capacity for great reliability when necessary.
 
 \subsubsection{TempoDB Storage}
-\emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of 1ms. A time series is a collection of data points consisting of a timestamp and some value, and so is suited to analyses such as change in some sensor value over a period of time.
+\emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of 1ms. A time series is a collection of data points consisting of a timestamp and some value, and so is suited to analysis such as change in sensor values over a period of time.
 
 \subsection{Analysing}
 \label{sec:analysis}
 In this section we describe how our HUMS implementation analyses data. We created five sample analysis engines for this stage of the project, demonstrating the flexibility of our HUMS, performing both complex and simple analysis. These engines show how the HUMS can be used for a variety of analysis applications, and how easy it is for the Consumer to add additional engines using the generic \texttt{AnalysisEngine} abstract class provided.
 
 \subsubsection{Bounded Sensor Value Engine}
-The previous mean analysis engine has been extended to form a generic bounded sensor value engine. This engine performs per sensor analysis of a Consumer system to determine if the rolling mean average of a number of values is outside of bounds defined in the system configuration diagram. A single event is produced detailing any violations across all sensors, generating a single notification for the system being analysed rather than an unmanageable amount.
+The previous mean analysis engine has been extended to form a generic bounded sensor value engine. This engine performs per sensor analysis of a Consumer system to determine if the rolling mean average of a number of values is outside of bounds (defined in the system configuration diagram). A single Event is produced detailing any violations across all sensors, generating a single Notification for the system being analysed rather than an unmanageable amount.
 
 The engine is able to analyse any sensor that records numerical values so is reusable across different contexts and flexible for use in a variety of domains.
 
 \subsubsection{Expression Engine}
-We created a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential whole System analysis processes. The expression engine supports most reasonable closed-form expressions, as well as less common helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the System configuration file to define how the engine evaluates a system.
+We created a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential whole System analysis processes. The expression engine supports most reasonable closed-form expressions, as well as less common helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the configuration file to define how the engine evaluates a system.
 \begin{figure}[ht]
 \centering
 \verb+if(max(ENGINE_TEMP_A, ENGINE_TEMP_B) >= 120 or RPM > 5000, -1, 0)+
@@ -705,14 +706,14 @@ We created a generic expression engine, \texttt{ExpressionAnalysisEngine}, which
 \label{fig:exprExample}
 \end{figure}
 
-The values of variables which represent the state of the system being monitored are available in the expression, and are evaluated lazily for efficiency, as evaluation often entails querying the Datastore to retrieve the most recent value, and would unnecessarily impact performance.
+The values of variables which represent the state of the system being monitored are available in the expression, and are evaluated lazily for efficiency as evaluation often entails querying the Datastore to retrieve the most recent value which would unnecessarily impact performance.
 
 The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its modifiability and configurability, allowing the HUMS to be easily customised by the Consumer without needing any knowledge outside of the analysis engine interface.
 
 \subsubsection{Face Analysis Engine}
 \label{sec:fae}
 
-The Android app collects face data, forwarding it to the Core for analysis, where notifications are generated, notionally granting or denying access to services. This engine shows how components of our HUMS work together to perform complex analysis, which can be tailored using the Core configuration file.
+The Android app collects face data, forwarding it to the Core for analysis, where Notifications are generated, notionally granting or denying access to services. This engine shows how components of our HUMS work together to perform complex analysis, which can be tailored using the Core configuration file.
 
 The face recognition process is two fold: an image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
 
@@ -721,7 +722,7 @@ The face description in the Android app is computed using the \emph{Local Binary
 When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces provided by the configuration file using the \emph{Chi-Squared} distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces is less than some threshold, also given by the configuration file, and any example unauthorised face.
 
 \subsubsection{Other Analysis Engines}
-The \texttt{TrafficAnalysisEngine} creates an Event when a reading is received---the analysis performed in this case is simply parsing the data about the traffic incident and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating an Event only if the magnitude above a specified value. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class is incredibly versatile.
+The \texttt{TrafficAnalysisEngine} creates an Event when a reading is received---the analysis performed in this case is simply parsing the data about the traffic incident and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating an Event only if the magnitude is above a specified value. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class is incredibly versatile.
 
 \subsection{Reporting and Notifying}
 \label{sec:reporting}
@@ -733,7 +734,7 @@ For reporting, two sample engines were created which can be used through the Adm
 A notification engine was created than sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile devices in modern life; an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular code-base. It can be configured to send email notifications for Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
+The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email notifications for Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
 The \texttt{TwitterNotificationEngine} provided allows Events to be pushed to the social networking site \emph{Twitter}. This was included to demonstrate how our HUMS implementation can be used to interact with popular platforms to report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the output of analysis and pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
