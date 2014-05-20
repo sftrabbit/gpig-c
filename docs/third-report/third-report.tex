@@ -823,21 +823,17 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 
   \item[Analysis Controller] Due to the central role played by the \texttt{Analysis Controller}, we identified its key attributes as performance and testability. We utilised Mockito~\cite{mockito} to provide isolated unit tests, confirming that Notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, confirmed to be working via inspection and integration testing, verifying \emph{FR.12}.
 
-  \item[Analysis Engine] For the Analysis Engines, we created a unit test to check each aspect of the different engines as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependencies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as Datastore access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
+  \item[Analysis Engine] For the Analysis Engines, we created unit tests to verify each aspect of the different engines as per \emph{FR.7} and its refinements. 
 
-  \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a Notification is generated when analysis has indicated it. The second test ensured that Notifications were only sent once to avoid spamming users.
+  \item[Notification Controller] We created multiple unit tests to verify the functionality of the Notification controller as per \emph{FR.8} and \emph{FR.9}. Mockito was used to isolate the class, allowing for a true unit test. We verified that a Notification is generated when analysis has indicated it should be, and that Notifications were only sent once to avoid spamming.
 
-  \item[Notification Engine] The functionality of the example Notification Engines is tested using unit tests. The tests use each Notification Engine to send a message to a certain recipient with a given subject and message, then verifies it is successfully sent and received, inspecting the message to ensure that it contains the correct information, satisfying \emph{FR.9}.
+  \item[Notification Engine] The functionality of the example Notification Engines is tested using unit testing. The tests use each Notification Engine to send a message to a specified recipient or device, with a given subject and message, then verify that the  Notification is successfully sent and received, inspecting it to ensure that the correct information is included, satisfying \emph{FR.9} and \emph{FR.11}.
 
-  \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was mainly manual and inspection.
+  \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was primarily performed manually through inspection.
 
-  \item[Reports Engine] We tested the Reports Engines by inspection since the reports produced are quite visual and vary depending on the data requested. This reporting ensured \emph{FR.10} was met.
+  \item[Reports Engine] Reports Engines are again web based and tested by inspection to ensure the data appeared as desired. This reporting ensured \emph{FR.10} was met.
 
 \end{description}
-
-\subsubsection{Traceability Table}
-
-Table~\ref{tab:traceability} shows the tests used to verify that the system requirements were met.
 
 \tableformat{p{1.4cm} p{4.7cm} p{1.8cm} p{6cm}}
 { 	\hline
