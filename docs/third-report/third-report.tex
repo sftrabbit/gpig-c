@@ -432,26 +432,26 @@ A number of software design patterns have been chosen which realise the above ta
 \section{Views of the System Architecture} 
 \label{sec:architecture}
 
-Building on our work in the previous reports we decided to present four further, more detailed, views of our HUMS. This time we choose to take inspiration from the SEI~\cite{Bass98} approach to software architecture, including a more detailed \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally a more extensive \emph{Allocation View}.
+Building on the architectural designs presented in the Interim Report, four more detailed views of our HUMS architecture are given in this section. We have chosen to take inspiration from the SEI~\cite{Bass98} approach to software architecture, including a \emph{Module View}, a \emph{Component and Connector View}, a dynamic \emph{Behavioural View} and finally an extensive \emph{Allocation View}.
 
 \subsection{Module View}
 \label{sec:views}
-A \emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective in terms of a collection of sub-components, each encapsulated so as to minimise the propagation of changes through the system. % Structural perspective
+A \emph{Module View} of the HUMS, shown in Figure~\ref{fig:modules}, describes our architecture from a structural perspective in terms of a collection of components. Each component is encapsulated in order to minimise the propagation of modifications to the system.
 
 This view is targeted at all System stakeholders, showing enough detail for developers to understand the structure and interactions between components, but not so much detail that non-technical stakeholders would be confused.
 
 In the previous report many of the details in the module view were omitted. In this iteration details of the included and customisable components, such as the engines, are included showing exactly which modules have been implemented so far, as well as their associated interfaces which would be used by the Consumer. 
 
-Figure~\ref{fig:modules} shows a clear separation between those modules included with the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our System is highly tailorable, with plenty scope for adding additional functionality.
+Figure~\ref{fig:modules} shows a clear separation between those modules included as part of the HUMS (in blue) and those which may be implemented by the Consumer (in green). The variety and extensiveness of our existing engine implementations already show that our System is highly tailorable, with plenty of scope for adding additional functionality.
 
 The design patterns described above can be seen within this view, including the table data gateway pattern which is used for abstracting away the implementation details of particular Datastores, and the observer pattern implemented through the controllers and engines.
 
 The components of the Consumer facing API, made up of generic engines and emitters, are described below:
 \begin{description} [noitemsep]	
-	\item[Analysis Engines] All Consumer analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a \texttt{ClientSystem} object, which wraps information about a particular system loaded from the configuration file and returns an \texttt{Event} object generated as a result of the analysis (which may be \texttt{null}). This Event object holds stores the ID of the Client that generated it and key-values describing the event to be used by notification engines. This allows analysis engines free reign as to how they define events, and what information they store about events.
-	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an \texttt{Event}, representing the result of analysis, and notifies the relevant individual, software or hardware, as defined. Consumers can implement this interface themselves or extend a provided implementation.
+	\item[Analysis Engines] All Consumer analysis engines must extend the \texttt{AnalysisEngine} abstract class, and therefore implement the \texttt{analyse()} method. This method takes a \texttt{ClientSystem} object, which wraps information about a particular system loaded from the configuration file and returns an \texttt{Event} object generated as a result of the analysis (which may be \texttt{null}). This Event object stores the ID of the Client that generated it and key-value pairs describing the event. This gives analysis engines free reign when defining events and what information they store about those events.
+	\item[Notification Engines] Notification engines must extend from the \texttt{NotificationEngine} abstract class, and therefore implement the \texttt{send()} method. The send method takes an \texttt{Event}, representing the result of analysis, and notifies the relevant individual, software, or hardware as defined. Consumers can implement this interface themselves or extend an existing implementation.
 	\item[Storage Engines] Storage engines must extend from the \texttt{SystemDataGateway} abstract class, and implement four methods for interacting with a Datastore. There are two methods for writing and two for reading. The \texttt{readMostRecent()} method returns the $n$ most recent records for a given Sensor, and the \texttt{readBetween()} method returns all records for a Sensor within a time period. Both methods for reading return a \texttt{QueryResult} object, which encapsulates the values in the Datastore which fit the query. The methods for writing to a Datastore are both named \texttt{write()}, however one takes a single item of data and writes it to the Datastore and the other is a batch method, used for writing a list of data points more efficiently in the underlying implementation. 
-	\item[Data Emitters] Data Emitters read values from Sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example emitters, such as the Earthquake Emitter and the Test App Emitters, but more may be added by the user. This method of data input allows data from different Clients to pass through the HUMS Core as if it was all the same, vastly increasing our solution's interoperability with different types of Client.
+	\item[Data Emitters] Data Emitters read values from Sensors in any format, translate them to a standard format and forward them to the Core for processing. To do this, they must implement the Input Interface. The prototype includes a number of example Data Emitters, such as the Earthquake Emitter and the Test App Emitters which are used for demonstrating the prototype. However, it is expected that Data Emitters be developed for each Consumer system. This method of data input allows data from different Clients to pass through the HUMS Core as if it was all the same, vastly increasing our solution's interoperability with different types of Client.
 \end{description}
 
 \begin{figure}[t]
@@ -462,19 +462,19 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \end{figure}
 
 \subsection{Component and Connector View}
-In order to visualise how data flows through the System, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them.
+In order to visualise how data flows through the System, a \emph{Pipes and Filters} diagram of the HUMS has been created. Each filter within the diagram transforms the data received on its input pipe into the data at its output pipes. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them.
 
-Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer. This view is again targeted more at technical stakeholders, allowing them to visualise the flow of data, and determine what within the System they can configure.
+Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer. This view is again primarily targeted at technical stakeholders, allowing them to visualise the flow of data and determine what within the System they can configure.
 
 The input to the HUMS, in this view, is the Sensor data from the Consumer system. This can be passed to the \texttt{:Emit Data} filter in any format, as this is the stage which converts client data to HUMS data. The \texttt{:Emit Data} filter transforms the client data into a format which can be sent using \emph{Protocol Buffers} to the \texttt{:Read Data} filter. The use of \emph{Protocol Buffers} allows for data to be sent locally or over a network, with or without encryption. 
 
 The \texttt{:Read Data} filter deserialises the client data and transforms it to a format which can be used with the Consumer's defined Datastore. The \texttt{:Store Data} filter inserts the data into the Consumers defined Datastore.
 
-The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the Consumer, being limited only by what their defined Datastores support. The \texttt{:Create Report} filter transforms data from the Datastore into a \texttt{Data Report}, for example, a graph or PDF.
+The protocol of the pipes used to pass data to the \texttt{:Store Data} and the \texttt{:Create Report} filters are defined by the Consumer, being limited only by what their defined Datastores support. The \texttt{:Create Report} filter transforms data from the Datastore into a \texttt{Data Report}, for example, a graph or PDF document.
 
 When sending data between the \texttt{:Store Data} and \texttt{:Analyse Data} filters, \texttt{SensorState} objects are passed, each of which hold the ID of a particular Sensor, the timestamp of when it was created and stored, and its value at the time of creation. The \texttt{:Analyse Data} filter transforms \texttt{SensorState} objects into \texttt{Event} objects, which are used by the \texttt{:Generate Notification} filter to produce Notifications using the engines specified by the Consumer.
 
-An \texttt{Event} object contains the ID of the system which caused the event, and a \texttt{Map} of key-value pairs containing information needed by the registered notification engines. The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a Notification, for example, an SMS or email. 
+An \texttt{Event} object contains the ID of the system that caused the event, and a \texttt{Map} of key-value pairs containing information needed by the registered notification engines. The \texttt{:Generate Notification} filter transforms an \texttt{Event} object into a Notification; for example, an SMS or email. 
 
 \begin{figure}[ht]
   \includegraphics[width=\textwidth]{images/pipesAndFilters.pdf}
@@ -484,7 +484,7 @@ An \texttt{Event} object contains the ID of the system which caused the event, a
 
 \subsection{Behavioural View}
 
-The \emph{Behavioural View} shows the actual actions taken by the HUMS when the data flows through the System, displaying the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the HUMS Core and how it behaves during normal operation. Various methods and invocations are listed in the order that they occur, from top to bottom and left to right. The external Clients, such as the sources that data is gathered from and the destinations that Notifications are sent to, are omitted, as this view purely describes the HUMS Core.
+The \emph{Behavioural View} shows the actions taken by the HUMS when data flows through the System, displaying the different components and how they interact. Figure~\ref{fig:sequence} shows a sequence diagram that presents this information, detailing the different elements of the HUMS Core and how it behaves during normal operation. Various methods and invocations are listed in the order that they occur, from top to bottom and left to right. The external Clients are omitted, as this view purely describes the HUMS Core.
 
 \begin{figure}[h]
   \centering
@@ -497,7 +497,7 @@ The \emph{Behavioural View} shows the actual actions taken by the HUMS when the 
 
 The \emph{Allocation View} shows how System components may be assigned to physical hardware. It demonstrates various configurations in which the System can operate, each of which is useful in particular situations. The HUMS is designed such that, if necessary, its components can be distributed amongst a number of devices, perhaps at different geographical locations. This is achieved by allowing each component to execute in its own environment, between which data is transferred via network protocols. The deployment diagrams in Figure~\ref{fig:deployisolated} through Figure~\ref{fig:deploydemo} represent various allocations of System components. In these figures, blue components are those deployed as a service, while green components are those deployed by the Consumer.
 
-Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:deploydistributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configuring the HUMS.
+Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:deploydistributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configure the HUMS.
 
 \begin{figure}[htp]
   \centering
@@ -529,7 +529,7 @@ Figure~\ref{fig:deployscaled} shows how the HUMS capacity can be scaled up to su
   \label{fig:deployhumsaas}
 \end{figure}
 
-For the purposes of demonstration, the HUMS has been configured to support a number of Data Emitters, with various engines for each, and to store data in a variety of Datastores. Most components are deployed to a single device, while one Data Emitter is deployed to an Android smartphone and three Datastores are provided by cloud services. The complete deployment for demonstration is shown in Figure~\ref{fig:deploydemo}.
+For the purposes of demonstration, the HUMS prototype has been configured to support a number of Data Emitters, with various engines for each, and to store data in a variety of Datastores. Most components are deployed to a single device, while one Data Emitter is deployed to an Android smartphone and three Datastores are provided by cloud services. The complete deployment for demonstration is shown in Figure~\ref{fig:deploydemo}.
 
 \begin{figure}[ht]
   \centering
