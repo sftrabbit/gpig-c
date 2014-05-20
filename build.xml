@@ -1,0 +1,103 @@
+<project name="GPIG-C" basedir="." default="dist">
+    
+	<!-- Determine platform directory name -->
+    
+	<condition property="platform.name" value="win">
+		<os family="windows" />
+	</condition>
+
+	<condition property="platform.name" value="osx">
+		<os family="mac" />
+	</condition>
+
+	<condition property="platform.name" value="linux">
+		<and>
+			<not>
+				<isset property="platform.name" />
+			</not>
+			<os family="unix" />
+		</and>
+	</condition>
+
+	<property name="${platform.name}" value="true" />
+	
+	<fail message="Only OSX 64-bit, Linux 64-bit, and Windows 32- or 64-bit supported atm" unless="platform.name" />
+	
+	<!-- Various directories -->
+
+	<property name="dist.dir" value="dist" />
+	<property name="dist.emitters.dir" value="${dist.dir}/emitters" />
+	<property name="projects.dir" value="projects" />
+	
+	<!-- TARGETS -->
+
+	<property name="ant-contrib.dist.dir" value="tools/ant-contrib" />
+	<import file="${ant-contrib.dist.dir}/ant-contrib-ant-task.xml" />
+
+	<target name="clean" description="Clean the dist directory">
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<property name="applications" value="Core,EmitterLauncher" />
+	<property name="emitters" value="EarthquakeEmitter,ResponseTimeEmitter,TestApp1Emitter,TestApp2Emitter,TrafficEmitter" />
+
+	<target name="build">
+		<for list="${emitters}" param="emitter">
+			<sequential>
+				<property name="@{emitter}.dir" value="${projects.dir}/@{emitter}" />
+				<property name="@{emitter}.ant" value="${@{emitter}.dir}/build.xml" />
+				<echo message="Building emitter in ${@{emitter}.dir}" />
+				<ant antfile="${@{emitter}.ant}" target="rebuild" inheritAll="false" useNativeBasedir="true" />
+				<echo message="Done building emitter" />
+			</sequential>
+		</for>
+		<for list="${applications}" param="application">
+			<sequential>
+				<property name="@{application}.dir" value="${projects.dir}/@{application}" />
+				<property name="@{application}.ant" value="${@{application}.dir}/build.xml" />
+				<echo message="Building application in ${@{application}.dir}" />
+				<ant antfile="${@{application}.ant}" target="rebuild" inheritAll="false" useNativeBasedir="true" />
+				<echo message="Done building application" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="copy" depends="build">
+		<mkdir dir="${dist.emitters.dir}" />
+		<for list="${applications}" param="application">
+			<sequential>
+				<property name="@{application}.dir" value="${projects.dir}/@{application}" />
+				<property name="@{application}.jar" value="${@{application}.dir}/bin/jar/@{application}.jar" />
+				<echo message="Copying @{application}" />
+				<copy file="${@{application}.jar}" todir="${dist.dir}" />
+				<chmod file="${dist.dir}/@{application}.jar" perm="ugo+x"/>
+			</sequential>
+		</for>
+		<for list="${emitters}" param="emitter">
+			<sequential>
+				<property name="@{emitter}.dir" value="${projects.dir}/@{emitter}" />
+				<property name="@{emitter}.jar" value="${@{emitter}.dir}/bin/jar/@{emitter}.jar" />
+				<echo message="Copying @{emitter}" />
+				<copy file="${@{emitter}.jar}" todir="${dist.emitters.dir}" />
+				<chmod file="${dist.emitters.dir}/@{emitter}.jar" perm="ugo+x"/>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="copy-win-script" depends="copy" if="win">
+		<copy file="tools/run.bat" tofile="${dist.dir}/run.bat" />
+		<chmod file="${dist.dir}/run.bat" perm="ugo+x"/>
+	</target>
+
+	<target name="copy-linux-script" depends="copy" if="linux">
+		<copy file="tools/run-linux.sh" tofile="${dist.dir}/run.sh" />
+		<chmod file="${dist.dir}/run.sh" perm="ugo+x"/>
+	</target>
+
+	<target name="copy-osx-script" depends="copy" if="osx">
+		<copy file="tools/run-osx.sh" tofile="${dist.dir}/run.sh" />
+		<chmod file="${dist.dir}/run.sh" perm="ugo+x"/>
+	</target>
+	
+	<target name="dist" depends="clean,copy-win-script,copy-linux-script,copy-osx-script" />
+</project>
