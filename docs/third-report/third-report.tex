@@ -1004,23 +1004,24 @@ Further information about how development was progressing and the proposals for 
 
 \subsection{Summary}
 \label{sec:summary}
-\hl{TODO All}
 
-This report has presented the design and implementation of our HUMS solution, discussing the changes and progression from the previous reports, the development undertaken, and how well it meets the requirements and supports the underlying quality attributes.
+This report has presented the design and implementation of our HUMS solution, highlighting any progress since the Interim Report. It focusses particularly on the technical development undertaken and evaluates the implemented System against the identified requirements.
 
+Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines. In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS ---that is, sensing, storing, analysing, and reporing --- and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasbility of the HUMS, while later development can tackle the details of consumer deployment.
 
 \subsection{Reflection}
 \label{sec:reflection}
 
-% Whilst we didn't have time to implement a complete solution---notably absent are storage limits---we believe that the prototype solution is a promising start towards a more complete system, and the ease with which we were able to add new engines demonstrates that it is not difficult to extend. With this in mind, the lack of some requirements should not be seen as a weakness of the system, but rather that our attention was focussed towards our core requirements of tailorability and ease of extension, from which additional requirements can easily be implemented.
 
 A number of development tasks would have been performed differently with sufficient foresight.
 
-The necessary build tools should have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
-
-Additionally, initial development plans did not fully account for prior commitments, such as other work engagements. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively.
-
 A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier.
+
+Software engineering design patterns were not explicitly identified during early development, which meant that much of the software architecture needed to be heavily modified.
+
+Initial development plans did not fully account for prior commitments, such as other work engagements. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively.
+
+The necessary build tools should have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
 
 \hl{TODO All (add stuff above)}
 
