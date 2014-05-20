@@ -602,7 +602,7 @@ The Consumer system and Sensors monitored by a particular HUMS instance, and how
                 "EarthquakeAnalysisEngine",
                 "TwitterNotificationEngine"
             ],
-            "DatastoreGateway": "Neo4JSystemDataGateway",
+            "DatastoreGateway": "Neo4jSystemDataGateway",
             "Reporting": "Map"
         },
         etc...
@@ -674,7 +674,7 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of Datastores. To demonstrate this we created \hl{five} sample implementations interfacing with a range of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our System does not force the Consumer to conform to a particular data schema or data storage technology, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9--10} be achieved.
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of Datastores, allowing for polyglot persistence. To demonstrate this we created \hl{five} sample implementations interfacing with a range of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our System does not force the Consumer to conform to a particular data schema or data storage technology, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9--10} be achieved.
 
 Prepared statements were used where possible in the Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
 
@@ -685,14 +685,14 @@ Prepared statements were used where possible in the Datastore implementations, b
 \emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliant. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. To implement this we created a \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
 
 \subsubsection{H2 Storage}
-For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
+For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$~MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased.
+To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased.
 \hl{TODO: Defo Add Screenshot}
 
 \subsubsection{TempoDB Storage}
-To show that our HUMS can also work with a distributed Datastore running remotely, we created a\emph{TempoDB} storage engine. \emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of $1$~ms, it is designed specifically for large amounts of sensor data, and is therefore likely to be used by Consumers of our HUMS.  
+To show that our HUMS can also work with a distributed Datastore running remotely, we created a \emph{TempoDB} storage engine. \emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of $1$~ms. It is specifically designed for large amounts of sensor data and is therefore likely to be used by Consumers of our HUMS.  
 \hl{TODO: Add Screenshot?}
 
 \subsection{Analysing}
@@ -733,15 +733,15 @@ The \texttt{TrafficAnalysisEngine} creates an Event when a reading is received. 
 
 \subsection{Reporting and Notifying}
 \label{sec:reporting}
-This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create Notifications through any notification engine configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different Notifications that might be generated and dispatched using the HUMS, and to show the flexibility and tailorability of the system. They show how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
+This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create Notifications through any notification engine configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different Notifications that might be generated and dispatched using the HUMS, and to show the flexibility and tailorability of the system. The examples show how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
 
 For reporting, two sample engines were created which can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines show just a small selection of what is possible with our HUMS implementation, with scope for adding further web based, standalone, or integrated reporting engines to interact with the HUMS.
 
 \subsubsection{SMS Notifications}
-A notification engine was created than sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile devices in modern life; an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: An individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications for Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
+The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications of Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
 The \texttt{TwitterNotificationEngine} provided allows Events to be pushed to the social networking site \emph{Twitter}. This was included to demonstrate how our HUMS implementation can be used to interact with popular platforms to report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the output of analysis and pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
@@ -758,11 +758,10 @@ Similarly to the map reporting, graph reporting has been enhanced since the Inte
 \subsection{Admin Centre}
 \label{sec:admin}
 
-The prototype Admin Centre previously created has been updated and refined to provide a central locations for the Consumer to control the operation and settings of the HUMS. By offering this through a responsive web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the Core is being run.
+The prototype Admin Centre has been updated and refined to provide a central location for the Consumer to control the operation and settings of their HUMS instance. Offering this service through a responsive web interface allows both technical and non-technical personnel to administer the System, by providing a familiar and user friendly way for the configuration to be viewed and edited. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from the device running the Core.
+The Admin Centre also provides access to the current reporting facilities of the HUMS, containing the two example reporting engines previously explained. 
 
-The Admin Centre also provides the current reporting facilities of the HUMS, with the two example reporting engines created. A graph report is available and can be used with data such as that from the test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
-
-The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data, options, and available engines to the Consumer, allowing them to interact with and configure the running HUMS instance.
+The updates to the Admin Centre since the previous report have allowed it to develop into a fully functioning system that integrates with the HUMS Core and presents real data, options, and available engines to the Consumer, allowing them to interact with and configure a running HUMS instance.
 
 \begin{figure}[h!b]
     \begin{subfigure}{0.49\textwidth}
