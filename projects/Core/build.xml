@@ -1,7 +1,7 @@
 <project name="GPIG-C Core" basedir="." default="rebuild-run">
 	<property name="project.main-class" value="com.gpigc.core.Main" />
 	<property name="project.common.libs" value="Proto.jar,protobuf.jar" />
-	<property name="project.nested-libs" value="jetty/**" />
+	<property name="project.nested-libs" value="jetty/**,neo4j/**" />
 
 	<import file="../../tools/common-ant.xml" />
 
