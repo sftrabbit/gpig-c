@@ -150,7 +150,7 @@ In Section~\ref{sec:requirements}, previously identified requirements are refine
 %-------------------------------------------------------------%
 \section{Requirements Refinement}
 \label{sec:requirements}
-Based on Customer feedback from the previous reports, the requirements of the HUMS have been updated. This included refining existing requirements and adding newly identified requirements. The constraint requirements have been removed as they were deemed unnecessary by the module leader and, instead, the external dependencies of the system hvae been identified.
+Based on Customer feedback from the previous reports, the requirements of the HUMS have been updated. This included refining existing requirements and adding newly identified requirements. The constraint requirements have been removed as they were deemed unnecessary by the module leader and, instead, the external dependencies of the system have been identified.
 
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
@@ -239,7 +239,7 @@ External dependencies are requirements outside the scope of development that are
  \begin{description}
  \item[\ed{1}] The provisioned deployment platform must be running an up-to-date Java Virtual Machine (JVM) in a GNU/Linux, Windows or OS X environment.
  \item[\ed{2}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core where necessary.
-  \item[\ed{3}] The selected remote datastores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
+  \item[\ed{3}] The selected remote data stores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
  \end{description}
 % \item[\ed{3}] The HUMS and Customer test applications must be compatible, allowing the HUMS to sensor, storage, analyse and notify regarding the test applications in such a way that no data is lost. % Doesn't sound like an External Dependancy to me?
 
@@ -678,7 +678,7 @@ Prepared statements were used where possible in the Datastore implementations, b
 For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$~MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of datastored by Neo4j is presented in Figure~\ref{fig:neo4j}.
+To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of data stored by Neo4j is presented in Figure~\ref{fig:neo4j}.
 
 \begin{figure}[ht]
 \centering
@@ -733,7 +733,7 @@ This section describes the reporting and notification capabilities of our HUMS. 
 For reporting, two sample engines were created which can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines show just a small selection of what is possible with our HUMS implementation, with scope for adding further web based, standalone, or integrated reporting engines to interact with the HUMS.
 
 \subsubsection{SMS Notifications}
-A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: An individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
 The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications of Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
