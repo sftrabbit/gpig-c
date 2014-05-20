@@ -193,7 +193,7 @@ Following feedback from the previous reports, the requirements of the HUMS have 
       \requirement{\fr}{4.1.2}{The HUMS shall monitor the configuration for changes and apply them.}{}
     }
 	\requirement{\fr}{4.2}{The configuration file shall allow the Consumer to define a storage limit.}{}
-	\requirement{\fr}{4.3}{The  configuration file shall allow the Consumer to set an expiry time on stored data.}{}
+	\requirement{\fr}{4.3}{The configuration file shall allow the Consumer to set an expiry time on stored data.}{}
 	\requirement{\fr}{4.4}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
 	\requirement{\fr}{4.5}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
@@ -903,17 +903,16 @@ Requirement & Verified? & Reasoning \\ \hline
 \fr{1} & Yes & Inspection testing showed this requirement to be satisfied.\\
 \fr{2} & Yes & Unit testing showed this requirement to be satisfied.\\
 \fr{3} & Yes & Integration and unit testing showed this requirement to be satisfied.\\
-\fr{4} & Partial  & Some of the refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. Other refinements, concerning storage limits, could not be verified for reasons explained below. \\
-\fr{5} & No & Due to timing constraints, we chose not to implement storage quotas, for our SaaS distribution of the HUMS, as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data and confirming a notification is sent and received.\\
+\fr{4} & Partial & Some of the refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. Other refinements, concerning storage limits, could not be verified for reasons explained below. \\
+\fr{5} & No & Due to timing constraints, we chose not to implement storage quotas for our SaaS distribution of the HUMS as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data, then confirming a notification is sent and received.\\
 \fr{6} & No & For the reasons above, this requirement could not be fulfilled as part of this project. Verification in the future would be similar to \emph{FR.5}.\\
 \fr{7} & Yes & Unit and inspection testing showed some refinements of this requirement to be satisfied. Others are verified through the mere existence of functioning engines which implement the \texttt{AnalysisEngine} interface.\\
 \fr{8} & Yes & Unit testing verified that cool down periods function correctly in our implementation. \\
 \fr{9} & Yes & Unit and inspection testing verified that all implemented Notification engines correctly send Notifications.\\
-\fr{10}& Yes & Unit testing, and the existence of our web based reporting tools, verifies this requirement.\\
-\fr{11}& Yes & The phone system, created as part of the Android application proves that our HUMS is capable of changing the behaviour of the Consumer system it is monitoring.\\
-\fr{12}& Partial & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to timing constraints, meaning any user could add or remove engine files. \\
+\fr{10}& Yes & Unit testing, and the existence of our web based reporting tools, verified this requirement.\\
+\fr{11}& Yes & The phone system, created as part of the Android application, proves that our HUMS is capable of changing the behaviour of the Consumer system it is monitoring.\\
+\fr{12}& Partial & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to time constraints, meaning any user could add or remove engine files. \\
 }{Verification of functional requirements, and reasoning for those not met by the prototype.}{tab:functionalEval}
-
 
 
 \xtableformat{ p{2cm}  p{2cm} X }{
