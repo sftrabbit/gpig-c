@@ -233,15 +233,14 @@ When considering the non-functional requirements, \emph{NFR.14} was added as it 
 
 \subsection{External Dependencies}
 \label{sec:external_dependencies}
-External dependencies are necessary events which must take place before the HUMS can be run successfully by Consumers. The previous report did not consider the external dependencies of the Consumer running the HUMS as well as those of the development process, so they are considered here.
+External dependencies are requirements outside of the scope of control of the development project necessary for the HUMS to be run successfully. The previous report did not consider the external dependencies pertaining to the Consumer running the HUMS, as well as those of the development process, so they are considered here.
 
  \begin{description}
- \item[\ed{1}] An appropriate platform must be provisioned, including supported hardware, operating system and JVM, when not running as a SaaS.
- \item[\ed{2}] The Consumer must be instructed in the process of configuration of the HUMS.
- \item[\ed{3}] The initial Data Emitters, analysis engines, notifiers and data gateways must be selected.
- \item[\ed{4}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core, if not running on the same physical machine.
+ \item[\ed{1}] The provisioned deployment platform must be running an up-to-date JVM on top of current versions of GNU/Linux, Windows or OS X.
+ \item[\ed{2}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core where necessary.
+  \item[\ed{3}] The selected remote data stores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
  \end{description}
-
+% \item[\ed{3}] The HUMS and Customer test applications must be compatible, allowing the HUMS to sensor, storage, analyse and notify regarding the test applications in such a way that no data is lost. % Doesn't sound like an External Dependancy to me?
 
 %-------------------------------------------------------------%
 %--------------------------RISKS--------------------------%
@@ -496,7 +495,7 @@ The \emph{Behavioural View} shows the actual actions taken by the HUMS when the 
 
 The \emph{Allocation View} shows how System components may be assigned to physical hardware. It demonstrates various configurations in which the System can operate, each of which is useful in particular situations. The HUMS is designed such that, if necessary, its components can be distributed amongst a number of devices, perhaps at different geographical locations. This is achieved by allowing each component to execute in its own environment, between which data is transferred via network protocols. The deployment diagrams in Figure~\ref{fig:deployisolated} through Figure~\ref{fig:deploydemo} represent various allocations of System components. In these figures, blue components are those deployed as a service, while green components are those deployed by the Consumer.
 
-Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:distributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configuring the HUMS.
+Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:deploydistributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configuring the HUMS.
 
 \begin{figure}[htp]
   \centering
@@ -874,18 +873,21 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 %-------------------------------------------------------------%
 \section{Prototype Evaluation}
 \label{sec:prototype}
-\hl{INTRO: Rosy||Joe||Andy}
+
+In this section, our prototype implementation is evaluated to assess how well it has met our specified requirements and quality attributes. This includes evaluating how it performs with the two test applications provided by the Customer, and helps to assess the overall implementation work that has been completed.
 
 % an evaluation involving at least two distinct applications, with special attention to the "tailorability" of the solution for different applications, and including results for the test applications supplied by The Customer; (Include instructions for replicating such results.)
 
 %  How thoroughly has it been evaluated, how diverse are the applications that have been tested, and how good are the results?
 
-\subsection{Evaluation Against Requirements, Qualities, and Scenarios}
+\subsection{Evaluation Against Requirements, Quality Attributes, and Scenarios}
 \label{sec:req_eval}
 
 In order to properly evaluate our solution, we must consider its limitations and strengths. Previously, Section~\ref{sec:testing} discussed how our test plan allowed us to verify a number of our requirements. In this section we consider whether we have met the requirements which were not verified through testing, how we have maximised the utility of our key quality attributes, and whether our HUMS responds as expected in the scenarios detailed in Section~\ref{sec:scenarios}.
 
 Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in the future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
+
+These tables show how our implementation has met the majority of our requirements, however is limited in terms of security and with the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be as important to the Customer, at this stage, than more basic functionality.
 
 \tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
@@ -908,62 +910,48 @@ Requirement & Verified? & Reasoning \\ \hline
 Requirement & Verified? & Reasoning \\ \hline
 \nfr{1} & Partially & Remote Datastores have been tested and data can continue to be accessed after hardware modifications. Local Datastores persist as desired for some hardware modifications, but more thorough testing is needed.\\
 \nfr{2} & Yes & A \emph{User Manual} has been provided with our prototype implementation. \\
-\nfr{3} & Yes & Our HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the Data Emitters can be run detached from the main system, for example on an embedded system. \\
-\nfr{4} & No & Though security is a key quality attribute of our System, and has been considered throughout development, we have not actually implemented any security standards due to timing constraints. We have, however, ensured that the protocols used can be secured.\\
+\nfr{3} & Yes & Our HUMS can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the Data Emitters can be run detached from the main System, for example on an embedded system. \\
+\nfr{4} & No & Though security is a key quality attribute of our System, and has been considered throughout development, we have not actually implemented any security standards due to time constraints. We have, however, ensured that the protocols used can be secured in the future.\\
 \nfr{5} & No & As above.\\
-\nfr{6} & Yes & Section \ref{sec:testing} explains for our System was tested, and this section explains which requirements have been met.\\
-\nfr{7} & Partially & The Customer has accepted our previous implementation and providing feedback on our decisions throughout this phase. Acceptance of this final prototype will fulfil this requirement.\\
-\nfr{8} & Yes & Our Included \texttt{EmitterLauncher} had been integration tested with the System, and can concurrently run $5$ Data Emitters and dispatch Notifications to $5$ Output Clients.\\
+\nfr{6} & Yes & Section~\ref{sec:testing} explains how our System was tested, and this section explains which requirements have been met.\\
+\nfr{7} & Partially & The Customer has accepted our previous implementation and provided feedback on our decisions throughout this phase. Acceptance of this final prototype will fulfil this requirement.\\
+\nfr{8} & Yes & Our included \texttt{EmitterLauncher} had been integration tested with the System, and can concurrently run $5$ Data Emitters and dispatch Notifications to $5$ Output Clients.\\
 \nfr{9} & Yes & All Datastores currently used with our HUMS have an uptime which satisfies this requirement.\\
 \nfr{10} & Yes & Redundant copies of data are created when using the remote Datastores and backups can be easily be manually created for the local Datastores. \\
 \nfr{11} & Yes & Timestamps are stored with the data, and have been verified to be within $5$~ms of UTC. \\
-\nfr{12} & Yes & The timings have been checked for all implemented Notification engines, and are less than $5$~ms. \\
+\nfr{12} & Yes & The timings have been checked for all implemented notification engines, and are less than $5$~ms. \\
 \nfr{13} & Yes & Data has been sent to the HUMS in a variety of popular formats, including JSON, XML, and key-values, and correctly stored.\\
 \nfr{14} & Yes & The configuration file has been stored in JSON, and is shown in Figure~\ref{fig:configFiles} to be human readable.\\
 }{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
-% -- Qual attibrs
-% High configurability
-% High modifiability
-% High Interop
-% High Avail
-% High Security
-% Medi Performance
-% Medi Testability
-%  Low Usability
+Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the System's ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual responses of the prototype. For the most part, these responses are as expected. However, not implementing Client authentication in the prototype has led to \emph{QAS.3} not being satisfied, and not having an Admin Centre with fully functional user accounts means that \emph{QAS.4} cannot be entirely fulfilled.
 
-% -- scenario qual atr
-% QAS1 The Customer wishes to reconfigure the system to monitor mechanical systems.
-% QAS2 The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.
-% QAS3 The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.
-% QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
 
-\hl{Have we met requirements, why? Is our architecture just not capable of it? Or have we just not implemented because its a prototype, and here's how we'd do it.... Is this addressed by the table? Find the requirement about a manual for setting up the HUMS and link to our manual as the validation}
+\tableformat{ p{2cm} X X }{
+Scenario & Desired Response & Actual Response \\
+\qas{1} & The Consumer can modify their configuration file without reinstalling or recompiling the HUMS. & As expected.\\
+\qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As expected, time taken to achieve this was between $2-12$~hours, depending on the complexity of the engines. \\
+\qas{3} & An unknown external client is either authenticated and allowed to access HUMS services, or denied access. & Currently Clients are not authenticated, however the HUMS only listens for data from systems sending a correct System ID, as declared in the configuration file. \\
+\qas{4} & A notification is sent to the Consumer when the HUMS cannot connect to their external Datastore, and the HUMS attempts to reconnect the next time data is received. & A notification is not currently sent to the Consumer, however, the HUMS does attempt to reconnect the next time data is received.\\
+}{The desired quality attribute scenario responses, and the actual responses of the System}{tab:qasEval}
 
-We set out to test the degree to which the HUM fulfilled the required quality attributes. As an example, to test the usability of the system, we performed an informal user experience study in which members of the department were asked to interact with the system and provided feedback. Results of the study influenced our later iterations of our implementation, including adding a monospace font and clear button to our console, and a way to control engines and other plugins from a web interface, rather than directly interacting with the system configuration file.
+Throughout the document we have considered our important quality attributes, and referenced features we have implemented in an attempt to increase their utility.
 
-In our final prototype implementation, the quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The requirement that the HUMS system be utilisable in multiple domains was emphasised strongly, and so high configurability was a goal from the beginning of the project. One are important to the customer was the ability to monitor mechanical systems. This can be achieved using our HUMS system and a stand-alone Datastore to log the information. This would work in a similar manor to a black box recorder, and the data could be easily retrieved when needed. The notification system could easily be adapted to turn, for example, an LED off/on when an error had occurred.
+The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. We feel our emphasis on making our HUMS configurable, flexible, and modifiable has led to it being incredibly tailorable. This has been proven with the number of different applications we have been able to monitor, and how easily we have integrated them.
 
-\hl{Scenarios: Response and measure? What we expected and what we achieved}
+In addition to this, we performed a small UX study within the department to help us ensure that our HUMS Core interface and Admin Centre were easy to use. Results of the study led us to change the font of our consoles to an easier to read monospace font, and to add a `clear console' button, allowing old information to be deleted, making updates easier to see. We also found that users wanted to be able to toggle engines on and off using the Admin Centre, rather than manually selecting which ones they would like to use. We acted upon this feedback and changed our interfaces appropriately.
 
-A scenario for evaluating the modifiability is the ability to add engines for analysis, reporting or notifications. This has been achieved using extensible APIs for the analysis, reporting and notification engines. Each of the engines contains an abstract base class which can be extended to provide a new engine. For example, to implement a new analysis engine one must simply extend the AnalysisEngine class and implement the required abstract methods.
-
-To evaluate the security, we created a scenario whereby a unknown client would attempt to access data stored in the HUMS or would attempt to insert data into the HUMS. Whilst we have not implemented the security system in the deliverable, we have theorised about how we would go about it and if we had more time in order to implement the full system, we have stated how we would achieve a given level of security.
-
-\subsection{Evaluation on Test Application 1}
+\subsection{Evaluation on the Customers Test Applications}
 \label{sec:test_app1}
 
-We decided to monitor the memory and CPU usage of the test application, and our initial implementation simply queried the operating system for these values, using the SIGAR library. However, this did not work as the JVM manages its own heap internally. We then changed to directly querying the target JVM for its memory usage using the JMX libraries, which was successful.
+We decided to monitor the memory and CPU usage of the first test application, using SIGAR to monitor CPU usage, and JMX to monitor memory as the JVM has a fixed heap sized meaning SIGAR cannot determine what is being used by the application. 
 
-By using these cross-platform and established libraries, our monitor can be generalised to more than just the test application. This is illustrated by how easily we were able to reuse it as the basis of the second test application.
+Use of the SIGAR library proved useful when attempting to monitor the second test application, as we were able to reuse much of work.
+For the second test application, we also considered monitoring IO operations and network activity. To test whether monitoring network activity would be a good use of our time we used \emph{iotop}~\cite{iotop} to examine the applications IO operations and found nothing notable. We also used Wireshark \hl{ref} to examine network activity but found none. 
 
-\subsection{Evaluation on Test Application 2}
-\label{sec:test_app2}
+With this in mind, we decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on, allowing us to reuse the SIGAR library.
 
-Using iotop~\cite{iotop} under Ubuntu 14.04, we were able to verify that the test application did not perform any notable IO operations. Using Wireshark under the same system, no network activity was detected either.
-We decided to monitor the process memory usage, CPU usage, state (idle, running, sleeping, stopped, or zombie), working directory, number of threads, and which processor it was last run on. We were able to base the monitor on that developed for the first test application with only minor changes. We decided to monitor the threads because none of the other metrics produced an interesting result, however we found that only one thread was used.
-
-As this is an extension of the previous work for the first test application, this can be easily adapted as a cross-platform solution for monitoring any process running on a given system. 
+SIGAR is also capable of monitoring networking and file system metrics, however, we did not feel that this was useful information when considering the second test application.
 
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
@@ -993,7 +981,7 @@ We maintained communication with the Customer throughout the phase of this repor
 
 During email communication with the Customer, we attempted to resolve an issue they had with accessing the web sources that were produced as part of the Interim Report. Once this was done we briefly discussed the ideas behind the configurable engines architecture and it was agreed that it was a good strategy. We then asked about different qualities expected of the system, particularly flexibility and its related qualities. The Customer replied highlighting configurability as a key quality and this helped to influence some of our development to ensure that this was well met.
 
-Further information about how development was progressing and the proposals for future work was exchanged to keep the Customer up-to-date and ensure that it was on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at both compile time and runtime. Discussion about Datastores was also useful and revealed the possibility of additionally using a distributed database alongside the other Datastores we had implemented gateways for. This feedback was taken on board and \hl{potato data store was implemented}.
+Further information about how development was progressing and the proposals for future work was exchanged to keep the Customer up-to-date and ensure that it was on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at both compile time and runtime. Discussion about Datastores was also useful and revealed the possibility of additionally using a distributed database alongside the other Datastores we had implemented gateways for. This feedback was taken on board and \hl{data store was implemented}.
 
 
 %-------------------------------------------------------------%
@@ -1010,21 +998,28 @@ Further information about how development was progressing and the proposals for 
 
 This report has presented the design and implementation of our HUMS solution, highlighting any progress since the Interim Report. It focusses particularly on the technical development undertaken and evaluates the implemented System against the identified requirements.
 
-Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines. In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS ---that is, sensing, storing, analysing, and reporing --- and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasbility of the HUMS, while later development can tackle the details of consumer deployment.
+Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines.
+
+In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS---that is, sensing, storing, analysing, and reporing---and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasability of the HUMS, while later development can tackle the details of Consumer deployment.
 
 \subsection{Reflection}
 \label{sec:reflection}
 
+In hindsight, to improve our final product and streamline our process, a number of development tasks could have been performed differently.
 
-A number of development tasks would have been performed differently with sufficient foresight.
+A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for dynamically loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier by more thorough testing or better team communication.
 
-A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier.
+Software engineering design patterns were not explicitly identified during early development, which meant that much of the software architecture needed to be heavily modified in the later stages where the ramifications of our design decisions became clear.
 
-Software engineering design patterns were not explicitly identified during early development, which meant that much of the software architecture needed to be heavily modified.
+The initial development plans did not fully account for prior commitments. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
 
-Initial development plans did not fully account for prior commitments, such as other work engagements. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively.
+The necessary build tools could have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself rather than solving build issues. This would also have allowed the use of continuous integration for greater quality control and hence a more efficient development process.
 
-The necessary build tools should have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+Our use of the SWT library for building the user interface cost a surprising amount of time because of the need to bundle the appropriate native binaries for each platform and pass addition parameters to the JVM for some systems, complicating the build process. Whilst we were pleased with the final result, this added complication may not have been worth the time spent on it.
+
+The implementation of the graph database, Neo4j, provided numerous challenges and therefore proved time consuming. As the teams data modelling experience lay largely in the relational and key-value data modelling realm, the mindset of modelling data as graphs proved challenging initially. In hindsight, more time should have been devoted to the implementation of unfamiliar datastore technologies.
+
+
 
 \hl{TODO All (add stuff above)}
 
