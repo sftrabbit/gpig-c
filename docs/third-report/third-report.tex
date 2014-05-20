@@ -1018,7 +1018,7 @@ Further information about how development was progressing and the proposals for 
 
 This report has presented the design and implementation of our HUMS solution, highlighting any progress since the Interim Report. It focusses particularly on the technical development undertaken and evaluates the implemented System against the identified requirements.
 
-Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines. In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS ---that is, sensing, storing, analysing, and reporing --- and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasbility of the HUMS, while later development can tackle the details of consumer deployment.
+Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines. In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS ---that is, sensing, storing, analysing, and reporing --- and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasability of the HUMS, while later development can tackle the details of consumer deployment.
 
 \subsection{Reflection}
 \label{sec:reflection}
@@ -1032,6 +1032,8 @@ Software engineering design patterns were not explicitly identified during early
 The initial development plans did not fully account for prior commitments. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
 
 The necessary build tools could have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself rather than solving build issues. This would also have allowed the use of continuous integration for greater quality control and hence a more efficient development process.
+
+Our use of the SWT library for building the user interface cost a surprising amount of time because of the need to bundle the appropriate native binaries for each platform and pass addition parameters to the JVM for some systems, complicating the build process. Whilst we were pleased with the final result, this added complication may not have been worth the time spent on it.
 
 \hl{TODO All (add stuff above)}
 
