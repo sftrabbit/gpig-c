@@ -30,19 +30,6 @@
 \centering
   \rowcolors{2}{gray!10} {white}
 \def\arraystretch{1.5}
-\begin{tabular}{#1}
-  \hline
-  \rowcolor[gray]{0.9} #2
-  \hline
-\end{tabular}
-\caption{#3}
-\label{#4}
-\end{table}}
-
-\newcommand{\xtableformat}[4]{
-\begin{table}[ht!]
-\centering
-  \rowcolors{2}{gray!10} {white}
 \begin{tabularx}{\textwidth}{#1}
   \hline
   \rowcolor[gray]{0.9} #2
@@ -264,7 +251,7 @@ It is important to consider the risks of any software project so that appropriat
 
 Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks being sidelined and inadequately considered. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}. Some risks have been modified since the previous report, while others are completely new and specific to the revised system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured on a scale between 1$-$100.
 
-\xtableformat{ p{0.8cm} X X X c c c }
+\tableformat{ p{0.8cm} X X X c c c }
 { 	\hline
   	Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
@@ -278,7 +265,7 @@ Unlike in the previous reports, risks have been separated into human risks and t
 {The human and business risks associated with this phase of the project.}{tab:human_risks}
 
 
-\xtableformat{ p{0.8cm} X X X c c c }
+\tableformat{ p{0.8cm} X X X c c c }
 { 	\hline
     Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
@@ -314,7 +301,7 @@ A number of quality attributes must be considered when creating the HUMS archite
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
 Table~\ref{tab:qualities} considers the HUMS, its requirements and its stakeholders, ranking the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however this is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability has been identified as important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
 
-\xtableformat{ p{2.4cm} p{1.2cm} X }{
+\tableformat{ p{2.4cm} p{1.2cm} X }{
 \hline
 Quality \newline Attribute & Rank & Reasoning \\
 \hline
@@ -854,7 +841,7 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 
 \end{description}
 
-\xtableformat{ p{1.8cm} p{4.7cm} p{1.9cm} X }
+\tableformat{ p{1.8cm} p{4.7cm} p{1.9cm} X }
 { 	\hline
     Requirement & Test Classes & Type & Details \\
     \hline
@@ -897,7 +884,7 @@ In order to properly evaluate our solution, we must consider its limitations and
 
 Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in the future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
 
-\xtableformat{ p{2cm}  p{2cm} X }{
+\tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
 \fr{1} & Yes & Inspection testing showed this requirement to be satisfied.\\
 \fr{2} & Yes & Unit testing showed this requirement to be satisfied.\\
@@ -914,7 +901,7 @@ Requirement & Verified? & Reasoning \\ \hline
 }{Verification of functional requirements, and reasoning for those not met by the prototype.}{tab:functionalEval}
 
 
-\xtableformat{ p{2cm}  p{2cm} X }{
+\tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
 \nfr{1} & Partially & Remote Datastores have been tested and data can continue to be accessed after hardware modifications. Local Datastores persist as desired for some hardware modifications, but more thorough testing is needed.\\
 \nfr{2} & Yes & A \emph{User Manual} has been provided with our prototype implementation. \\
@@ -952,7 +939,7 @@ Requirement & Verified? & Reasoning \\ \hline
 
 To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} and \ref{nfrevaltable} the steps which we have taken in order to validate the meeting of the requirements. \emph{FR.5}, \emph{FR.6}, and \emph{FR.8} were not implemented in this prototype, and so the method of validation describes what would be done in a more complete system.
 
-\xtableformat{ p{1.3cm} X X }{
+\tableformat{ p{1.3cm} X X }{
 	NFR.x  & 	Method of Verification & Result \\ \hline
 	NFR.1  & Manual inspection testing. & It was verified that the Datastore is not within the HUMS hardware, but is instead user defined, hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \hl{What about the local Datastores?} \\ 
 	NFR.2  &There has been a README provided. 	  & 	 \\ 
