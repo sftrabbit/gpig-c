@@ -42,7 +42,7 @@ public class ResponseTimeCollector extends DataCollector {
 	}
 
 	private long getResponseTime() {
-		System.out.println("Getting reponse time.");
+		System.out.println("Getting reponse time");
 		long duration = -1;
 
 		System.setProperty("http.agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36");

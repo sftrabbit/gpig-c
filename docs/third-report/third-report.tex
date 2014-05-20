@@ -192,10 +192,10 @@ Following feedback from the previous reports, the requirements of the HUMS have 
       \requirement{\fr}{4.1.1}{The Admin Centre shall provide an interface to allow authorised individuals to modify the configuration.}{}
       \requirement{\fr}{4.1.2}{The HUMS shall monitor the configuration for changes and apply them.}{}
     }
-	\requirement{\fr}{4.2}{The HUMS shall allow the Consumer to define a storage limit.}{}
-	\requirement{\fr}{4.3}{The HUMS shall allow the Consumer to set an expiry time on stored data.}{}
-	\requirement{\fr}{4.4}{The HUMS shall allow the Consumer to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
-	\requirement{\fr}{4.5}{The HUMS shall allow the Consumer to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
+	\requirement{\fr}{4.2}{The configuration file shall allow the Consumer to define a storage limit.}{}
+	\requirement{\fr}{4.3}{The configuration file shall allow the Consumer to set an expiry time on stored data.}{}
+	\requirement{\fr}{4.4}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
+	\requirement{\fr}{4.5}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
 \requirement{\fr}{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
 \requirement{\fr}{6}{The HUMS shall store no more data records than the Consumer-defined storage quota.}{}
@@ -264,7 +264,7 @@ It is important to consider the risks of any software project so that appropriat
 
 Unlike in the previous reports, risks have been separated into human risks and technological risks. This distinction was not previously made and resulted in technical risks being sidelined and inadequately considered. Human risks are presented in Table~\ref{tab:human_risks} and technical risks in Table~\ref{tab:tech_risks}. Some risks have been modified since the previous report, while others are completely new and specific to the revised system architecture. The risks have each been assigned a risk level corresponding to the product of their likelihood and impact, as described by \cite{risks}, where likelihood is measured on a scale between 1$-$100.
 
-\xtableformat{p{0.8cm} X X X c c c }
+\xtableformat{ p{0.8cm} X X X c c c }
 { 	\hline
   	Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
@@ -278,7 +278,7 @@ Unlike in the previous reports, risks have been separated into human risks and t
 {The human and business risks associated with this phase of the project.}{tab:human_risks}
 
 
-\xtableformat{p{0.8cm} X X X c c c}
+\xtableformat{ p{0.8cm} X X X c c c }
 { 	\hline
     Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
@@ -314,25 +314,25 @@ A number of quality attributes must be considered when creating the HUMS archite
 Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
 Table~\ref{tab:qualities} considers the HUMS, its requirements and its stakeholders, ranking the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however this is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability has been identified as important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
 
-\xtableformat{p{2.4cm} p{1.2cm} X}{
+\xtableformat{ p{2.4cm} p{1.2cm} X }{
 \hline
-Quality \qquad Attribute & Rank & Reasoning \\
+Quality \newline Attribute & Rank & Reasoning \\
 \hline
-Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the customer. 
+Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the Customer. 
 \\
-Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
+Modifiability & High & The HUMS will initially be built to tackle a single domain (software application), however in the future it will be used in domains such as embedded, electrical, and mechanical systems. A System which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
 \\
-Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
+Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems.
 \\
-Availability & High & The non-functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then Consumers would lose confidence in it. The HUMS must be at least as available as the average Consumer's system in order to monitor it properly. 
+Availability & High & The non-functional system requirements identified high availability targets for the System. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then Consumers would lose confidence in it. The HUMS must be at least as available as the average Consumer's system in order to monitor it properly.
 \\
-Security & High & Security is highly ranked as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify system data, and data in transit between Data Emitters and the HUMS must be protected.
+Security & High & Security is highly ranked, as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify System data, and data in transit between Data Emitters and the HUMS must be protected.
 \\
-Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5 ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
+Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5~ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
 \\
-Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults and is also likely to increase its availability. 
+Testability & Medium & The TDD development approach, discussed in the Initial Report and followed throughout the project, makes testability of medium importance to the System. Having a highly testability utility will help to reduce System faults and is also likely to increase its availability.
 \\
-Usability & Medium & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphics and otherwise.
+Usability & Medium & Usability was not deemed of great importance to the System as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphical and otherwise.
 \\
 }{The ranked quality attributes associated with the HUMS.}{tab:qualities}
 
@@ -557,7 +557,7 @@ For the purposes of demonstration, the HUMS has been configured to support a num
 
 \section{Implementation}
 \label{sec:dev}
-In this section, the implementation created in the previous report is summarised and the significant changes made since then detailed. When making these changes our team was structured as described in the previous report. However, we did have to alter our project plan slightly to accommodate other important deadlines. Luckily, we had considered this in risk \emph{R.2} and had appropriate contingency and mitigation strategies in place, meaning we were able to fully utilise the development time available. 
+In this section, the implementation created in the previous report is summarised and the significant changes made since then detailed. When making these changes our team was structured as described in the previous report. However, we did have to alter our project plan slightly to accommodate other important deadlines. Luckily, we had considered this in risk \emph{R.2} and had appropriate contingency and mitigation strategies in place, meaning the impact was minimal though still had some effect on development.
 
 \subsection{Interim Implementation Summary}
 \label{sec:interim_summary}
@@ -688,8 +688,14 @@ Prepared statements were used where possible in the Datastore implementations, b
 For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$~MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased.
-\hl{TODO: Defo Add Screenshot}
+To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of data stored by Neo4j is presented in Figure~\ref{fig:neo4j}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics*[width=0.8\textwidth]{images/neo4j.png}
+\caption{A graphical representation of a snapshot of the Neo4j Datastore contents.}
+\label{fig:neo4j}
+\end{figure}
 
 \subsubsection{TempoDB Storage}
 To show that our HUMS can also work with a distributed Datastore running remotely, we created a \emph{TempoDB} storage engine. \emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of $1$~ms. It is specifically designed for large amounts of sensor data and is therefore likely to be used by Consumers of our HUMS.  
@@ -797,7 +803,7 @@ Additionally, the Admin Centre provides access to the current reporting faciliti
 
 The implementation consists of a number of independent software projects which must be built separately and then collated into a final distribution. A number of tools have been used to aid this build process. 
 
-Java applications are typically bundled into Java Archive (JAR) files. By default, libraries that are required by an application must be distributed together with the JAR. This is inconvenient for early distribution because many files must be distributed together. To avoid this, the One-JAR build tool \cite{onejar} is used. It allows an application and its dependencies to be bundled into a single JAR file. In the future, the HUMS may be distributed through system-dependent package managers which handle dependencies automatically.
+Java applications are typically bundled into Java Archive (JAR) files. By default, libraries that are required by an application must be distributed together with the JAR. This is inconvenient for current distribution because many files must be distributed together. To avoid this, the One-JAR build tool \cite{onejar} is used. It allows an application and its dependencies to be bundled into a single JAR file. In the future, the HUMS may be distributed through system-dependent package managers which handle dependencies automatically.
 
 Apache Ant build scripts \cite{ant} are used to build most of the projects. Much of the build process is common to all projects and so this behaviour has been extracted out into \texttt{tools/common-ant.xml}. This has the following benefits:
 
@@ -817,66 +823,59 @@ A global \texttt{build.xml} file is provided in the source root directory which 
 \section{Testing}
 \label{sec:testing}
 % this should perhaps be a subsection of the section above or the section below...?
+With our design and implementation updated from the Interim Report, we iterated over the test plan previously created, updating it to verify that our updated solution performed as desired and fulfilled the specified requirements.
 
-We built on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the System and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
+The test plan has been improved and expanded upon in this iteration to include new components. The \emph{Tracability Matrix} in Table~\ref{tab:traceability} shows the mapping between each requirement and the test classes used to verify it. Not all requirements are included, as they can not all be verified through testing. The testing performed is split into five distinct categories: acceptance, system, integration, unit, and inspection testing; as explained in the Interim Report. 
 
-For system testing we completed manual and automated testing, such as inspection testing and deploying our System across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the Customer about various functionality and features of the System, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the System, and for integration testing we ensured that the disparate components of the HUMS properly interacted including further verifying communication across a network.
+When performing acceptance testing, we communicated with the Customer about proposed functionality and features of our HUMS, and kept them up-to date on what we had achieved. We also expect that the feedback from this report will fold back into our acceptance testing. 
 
-The testing of each module is described below:
+In addition to the tests described in Table~\ref{tab:traceability}, inspection testing also performed when deploying our HUMS across various networked machines, and operating systems, to verify that the HUMS acted as expected. 
 
+Below the main modules, shown previously in Figure~\ref{fig:modules}, are explained in terms of how testing has allowed us to verify that they fulfil requirements:
 \begin{description}
+  \item[Core] The HUMS Core includes a \texttt{Shell} providing a GUI and managing execution. This includes listening for changes to engines, thus fulfilling \emph{FR.12} and \emph{FR.4.1.2}, and managing the use of configuration files, helping to fulfil \emph{NFR.14}. Unit tests and manual inspection were used to verify proper operation.
 
-  \item[Core Shell] The Core Shell provides an interface for the Core of the HUMS and also manages execution. This includes listening for changes to engines, thus fulfilling \emph{FR.12} and \emph{FR.4.1.2}, and managing the use of configuration files, helping to fulfil \emph{NFR.14}. Unit tests and manual inspection were used to verify proper operation.
+  \item[Data Emitter] The purpose of the Data Emitter is to run continuously, monitoring a Consumer system and passing data the HUMS, thereby fulfilling \emph{FR.1.2}. We completed inspection testing to verify that data was received, along with running the program for several hours to verify that it continued to function correctly.
 
-  \item[Data Emitter] The purpose of the Data Emitter is to run continuously, monitoring a system and reporting on it, thereby fulfilling \emph{FR.1.2}. We completed inspection testing to verify that data was reported, along with running the program for several hours to verify that it continued to function correctly.
+  \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple Clients simultaneously and checking that the data from all Clients was correctly recorded, thus verifying \emph{FR.1.1}.
 
-  \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple clients simultaneously and checking that the data from both was recorded, thus verifying \emph{FR.1.1}.
+  \item[Data Abstraction Layer] The Data Abstraction Layer's key attributes are availability and performance. The mere existence of the \texttt{SystemDataGateway} interface verifies \emph{FR.3.1}. At the unit testing level, as part of TDD, we verified \emph{FR.3} by testing that data transformation functions used within this layer worked as expected, such as the serialisation of objects using JSON.
 
-  \item[Data Abstraction Layer] \hl{CHANGE THIS DEPENDING ON THE TWO BELOW (and alter GWT-gateway reference)} Given the high throughput and importance of storage to the function of the HUMS as a whole, the Data Abstraction Layer's key attributes are availability and performance. We completed an inspection test and used the \texttt{GWTSystemDataGatewayTest} class to verify \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
+  \item[Analysis Controller] Due to the central role played by the \texttt{Analysis Controller}, we identified its key attributes as performance and testability. We utilised Mockito~\cite{mockito} to provide isolated unit tests, confirming that Notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, confirmed to be working via inspection and integration testing, verifying \emph{FR.12}.
 
-  \item[Storage Controller] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
+  \item[Analysis Engine] For the Analysis Engines, we created unit tests to verify each aspect of the different engines as per \emph{FR.7} and its refinements. 
 
-  \item[System Data Gateway] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
+  \item[Notification Controller] We created multiple unit tests to verify the functionality of the Notification controller as per \emph{FR.8} and \emph{FR.9}. Mockito was used to isolate the class, allowing for a true unit test. We verified that a Notification is generated when analysis has indicated it should be, and that Notifications were only sent once to avoid spamming.
 
-  \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito~\cite{mockito} to provide isolated unit tests, confirming that Notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, confirmed to be working via inspection and integration testing.
+  \item[Notification Engine] The functionality of the example Notification Engines is tested using unit testing. The tests use each Notification Engine to send a message to a specified recipient or device, with a given subject and message, then verify that the  Notification is successfully sent and received, inspecting it to ensure that the correct information is included, satisfying \emph{FR.9} and \emph{FR.11}.
 
-  \item[Analysis Engine] For the Analysis Engines, we created a unit test to check each aspect of the different engines as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependencies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as Datastore access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
+  \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was primarily performed manually through inspection.
 
-  \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a Notification is generated when analysis has indicated it. The second test ensured that Notifications were only sent once to avoid spamming users.
-
-  \item[Notification Engine] The functionality of the example Notification Engines is tested using unit tests. The tests use each Notification Engine to send a message to a certain recipient with a given subject and message, then verifies it is successfully sent and received, inspecting the message to ensure that it contains the correct information, satisfying \emph{FR.9}.
-
-  \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was mainly manual and inspection.
-
-  \item[Reports Engine] We tested the Reports Engines by inspection since the reports produced are quite visual and vary depending on the data requested. This reporting ensured \emph{FR.10} was met.
+  \item[Reports Engine] Reports Engines are again web based and tested by inspection to ensure the data appeared as desired. This reporting ensured \emph{FR.10} was met.
 
 \end{description}
 
-\subsubsection{Traceability Table}
-
-Table~\ref{tab:traceability} shows the tests used to verify that the system requirements were met.
-
-\tableformat{p{1.4cm} p{4.7cm} p{1.8cm} p{6cm}}
+\xtableformat{ p{1.8cm} p{4.7cm} p{1.9cm} X }
 { 	\hline
-    Req. ID & Test Classes & Type & Details \\
+    Requirement & Test Classes & Type & Details \\
     \hline
 
-    FR.1.1   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
-    FR.1.2   & N/A & Inspection & Verify by observing output in Admin Centre \\
-    FR.2   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
-    FR.3   & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
-	FR.3.1   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
-	FR.4.1.1 & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
-	FR.4.1.2 & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
-	FR.7     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
-    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
-    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of Events \\
-	FR.8     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
-    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
-	FR.10    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
-	FR.12    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
-    NFR.6    & N/A & Inspection & Verify existence of all test levels \\
-	NFR.14   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
+    \fr{1.1}   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
+    \fr{1.2}   & N/A & Inspection & Verify by observing output in Admin Centre \\
+    \fr{2}   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
+    \fr{3}    & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
+	\fr{3.1}   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
+	\fr{4.1.1} & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
+	\fr{4.1.2} & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
+	\fr{7}     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
+    \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
+    \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of Events \\
+	\fr{8}     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
+    \fr{9}     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
+	\fr{10}    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
+	\fr{12}    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
+    \nfr{6}    & N/A & Inspection & Verify existence of all test levels \\
+	\nfr{14}   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
 }
 {The traceability table showing the mapping from each requirement to its existing tests.}{tab:traceability}
 
@@ -894,6 +893,31 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
 \subsection{Evaluation Against Requirements, Qualities, and Scenarios}
 \label{sec:req_eval}
+
+In order to properly evaluate our solution, we must consider its limitations and strengths. Previously, Section~\ref{sec:testing} discussed how our test plan allowed us to verify a number of our requirements. In this section we consider whether we have met the requirements which were not verified through testing, how we have maximised the utility of our key quality attributes, and whether our HUMS responds as expected in the scenarios detailed in Section~\ref{sec:scenarios}.
+
+Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in this future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
+
+\xtableformat{ p{2cm}  p{2cm} X }{
+Requirement & Verified? & Reasoning \\ \hline
+\fr{1} & Yes & Inspection testing showed this requirement to be satisfied.\\
+\fr{2} & Yes & Unit testing showed this requirement to be satisfied.\\
+\fr{3} & Yes & Integration and unit testing showed this requirement to be satisfied.\\
+\fr{4} & Partial & Some of the refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. Other refinements, concerning storage limits, could not be verified for reasons explained below. \\
+\fr{5} & No & Due to timing constraints, we chose not to implement storage quotas for our SaaS distribution of the HUMS as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data, then confirming a notification is sent and received.\\
+\fr{6} & No & For the reasons above, this requirement could not be fulfilled as part of this project. Verification in the future would be similar to \emph{FR.5}.\\
+\fr{7} & Yes & Unit and inspection testing showed some refinements of this requirement to be satisfied. Others are verified through the mere existence of functioning engines which implement the \texttt{AnalysisEngine} interface.\\
+\fr{8} & Yes & Unit testing verified that cool down periods function correctly in our implementation. \\
+\fr{9} & Yes & Unit and inspection testing verified that all implemented Notification engines correctly send Notifications.\\
+\fr{10}& Yes & Unit testing, and the existence of our web based reporting tools, verified this requirement.\\
+\fr{11}& Yes & The phone system, created as part of the Android application, proves that our HUMS is capable of changing the behaviour of the Consumer system it is monitoring.\\
+\fr{12}& Partial & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to time constraints, meaning any user could add or remove engine files. \\
+}{Verification of functional requirements, and reasoning for those not met by the prototype.}{tab:functionalEval}
+
+
+\xtableformat{ p{2cm}  p{2cm} X }{
+Requirement & Verified? & Reasoning \\ \hline
+}{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
 % -- Qual attibrs
 % High configurability
@@ -914,24 +938,6 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 \hl{Have we met requirements, why? Is our architecture just not capable of it? Or have we just not implemented because its a prototype, and here's how we'd do it.... Is this addressed by the table? Find the requirement about a manual for setting up the HUMS and link to our manual as the validation}
 
 To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} and \ref{nfrevaltable} the steps which we have taken in order to validate the meeting of the requirements. \emph{FR.5}, \emph{FR.6}, and \emph{FR.8} were not implemented in this prototype, and so the method of validation describes what would be done in a more complete system.
-
-% ID/Method of Validation/Result
-\xtableformat{ p{1.3cm}  X X }{ 
-	FR.x  &  	Method of Verification & Result \\ \hline
-	FR.1  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the Core utilising a Data Emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. & Our validation showed that the Data Emitters passed correctly structure data to the Core. \\
-	FR.2  & The Datastore was queried manually. & It was verified that timestamps are held for all data, and stored in the Datastore when the information is saved.	\\
-	FR.3  & Automated tests of the System Data Gateway. & Our automated tests and assertions regarding the Datastores all passed. \\ 
-	FR.4  & Manual inspection testing of the configuration method. & Inspection showed the use of JSON configuration files that can be loaded and modified at runtime, either via the administration centre or by manually modifying the file. \\ 
-	FR.5  & This would be verified by submitting a large amount of data to the system and verifying that a notification was dispatched & Not validated in the prototype due to timing constraints. \\
-	FR.6  & This would be validated by submitting a large amount of data to the system and verifying that it behaved correctly. & Not validated in the prototype due to timing constraints. \\ 
-	FR.7  & We implemented a number of Data Input Clients and analysis engines, and checked that the analysis engines could send notifications when the input matched some configuration-defined pattern.  & All tests showed the HUMS behaving as expected--generating notifications when the data matched the given rules. \\ 
-	FR.8  & This was verified by triggering a large number of events and observing whether a configuration-defined cooldown was obeyed. & Only one notification was generated per cool down period, despite multiple Events being detected. \\ 
-	% TODO Up to here with the table
-	FR.9  & An suite of integration tests were performed to verify that Events triggered notifications when appropriate. & The results of the tested showed that notifications were sent as a result of the appropriate Events being flagged. \\
-	FR.10  & \hl{?} & The Admin Centre allowed users to pull Reports. \\ 
-	FR.11  & The Android phone battery app was run, and the battery level and required life were set such that the enabled services must have been changed. & The HUMS feedback automatically set the enabled services based on analysis of the battery level and required device life. \\ 
-	FR.12  & Class files for new analysis engines with correct namespace in JAVA were moved into the engines folder of the HUMS at run time. & The HUMS automatically loaded the new engines and started using them whilst it was running. \\ 
-}{Evaluation for satisfaction of functional requirements.}{frevaltable}
 
 \xtableformat{ p{1.3cm} X X }{
 	NFR.x  & 	Method of Verification & Result \\ \hline
@@ -1026,14 +1032,20 @@ This report has presented the design and implementation of our HUMS solution, di
 \subsection{Reflection}
 \label{sec:reflection}
 
-Whilst we didn't have time to implement a complete solution---notably absent are storage limits---we believe that the prototype solution is a promising start towards a more complete system, and the ease with which we were able to add new engines demonstrates that it is not difficult to extend. With this in mind, the lack of some requirements should not be seen as a weakness of the system, but rather that our attention was focussed towards our core requirements of tailorability and ease of extension, from which additional requirements can easily be implemented.
+% Whilst we didn't have time to implement a complete solution---notably absent are storage limits---we believe that the prototype solution is a promising start towards a more complete system, and the ease with which we were able to add new engines demonstrates that it is not difficult to extend. With this in mind, the lack of some requirements should not be seen as a weakness of the system, but rather that our attention was focussed towards our core requirements of tailorability and ease of extension, from which additional requirements can easily be implemented.
 
-A number of development tasks would have been performed differently with sufficient foresight. For example, build tools should have been determined and configured at an earlier stage, allowing more of the later work to focus on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+A number of development tasks would have been performed differently with sufficient foresight.
+
+The necessary build tools should have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+
+Additionally, initial development plans did not fully account for prior commitments, such as other work engagements. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively.
+
+A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier.
 
 \hl{TODO All (add stuff above)}
 
 % also reflect on orignal requirements, how/why they have chanaged, how we met them etc
-% how completely has the solution been implemented - we didn't do storage limits/quotas etc
+% How thoroughly has it been evaluated, how diverse are the applications that have been tested, and how good are the results?
 
 \clearpage
 
