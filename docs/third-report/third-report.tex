@@ -819,7 +819,7 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 
   \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple Clients simultaneously and checking that the data from all Clients was correctly recorded, thus verifying \emph{FR.1.1}.
 
-  \item[Data Abstraction Layer] The Data Abstraction Layer's key attributes are availability and performance. The mere existance of the \texttt{SystemDataGateway} interface verifies \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
+  \item[Data Abstraction Layer] The Data Abstraction Layer's key attributes are availability and performance. The mere existence of the \texttt{SystemDataGateway} interface verifies \emph{FR.3.1}. At the unit testing level, as part of TDD, we verified \emph{FR.3} by testing that data transformation functions used within this layer worked as expected, such as the serialisation of objects using JSON.
 
   \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito~\cite{mockito} to provide isolated unit tests, confirming that Notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, confirmed to be working via inspection and integration testing.
 
