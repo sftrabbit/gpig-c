@@ -793,9 +793,23 @@ Additionally, the Admin Centre provides access to the current reporting faciliti
 	\label{fig:admin-centre}
 \end{figure}
 
-\subsection{Project Management}
+\subsection{Project Building}
 
-\hl{TODO Joe}
+The implementation consists of a number of independent software projects which must be built separately and then collated into a final distribution. A number of tools have been used to aid this build process. 
+
+Java applications are typically bundled into Java Archive (JAR) files. By default, libraries that are required by an application must be distributed together with the JAR. This is inconvenient for early distribution because many files must be distributed together. To avoid this, the One-JAR build tool \cite{foo} is used. It allows an application and its dependencies to be bundled into a single JAR file. In the future, the HUMS may be distributed through system-dependent package managers which handle dependencies automatically.
+
+Apache Ant build scripts \cite{foo} are used to build most of the projects. Much of the build process is common to all projects and so this behaviour has been extracted out into \texttt{tools/common-ant.xml}. This has the following benefits:
+
+\begin{itemize}
+\item Projects need only specify build requirements that are project-specific in their respective \texttt{build.xml} files.
+\item Projects can be built for different platforms simply by changing a property of the build script.
+\item Libraries that are common to multiple projects need not be duplicated between those projects.
+\item The build script will perform the bundling of libraries using One-JAR.
+\item The entire build process can be performed using a single command.
+\end{itemize}
+
+A global \texttt{build.xml} file is provided in the source root directory which builds all projects and combines them into a distributable for the requested platform.
 
 %-------------------------------------------------------------%
 %-----------------------TESTING-----------------------%
@@ -804,7 +818,7 @@ Additionally, the Admin Centre provides access to the current reporting faciliti
 \label{sec:testing}
 % this should perhaps be a subsection of the section above or the section below...?
 
-We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the System and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
+We built on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the System and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
 
 For system testing we completed manual and automated testing, such as inspection testing and deploying our System across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the Customer about various functionality and features of the System, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the System, and for integration testing we ensured that the disparate components of the HUMS properly interacted including further verifying communication across a network.
 
@@ -1017,10 +1031,13 @@ The prototype systems, such as the test applications like the earthquake monitor
 
 \subsection{Reflection}
 \label{sec:reflection}
-\hl{TODO All}
+
+A number of development tasks may have been performed differently with sufficient foresight. For example, build tools should have been determined and configured at an earlier stage, allowing more of the later work to focus on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+
+\hl{TODO All (add stuff above)}
+
 % also reflect on orignal requirements, how/why they have chanaged, how we met them etc
 % how completely has the solution been implemented - we didn't do storage limits/quotas etc
-
 
 \bibliography{report-refs}
 \bibliographystyle{IEEEtran}
