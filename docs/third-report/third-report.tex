@@ -1026,9 +1026,15 @@ This report has presented the design and implementation of our HUMS solution, di
 \subsection{Reflection}
 \label{sec:reflection}
 
-Whilst we didn't have time to implement a complete solution---notably absent are storage limits---we believe that the prototype solution is a promising start towards a more complete system, and the ease with which we were able to add new engines demonstrates that it is not difficult to extend. With this in mind, the lack of some requirements should not be seen as a weakness of the system, but rather that our attention was focussed towards our core requirements of tailorability and ease of extension, from which additional requirements can easily be implemented.
+% Whilst we didn't have time to implement a complete solution---notably absent are storage limits---we believe that the prototype solution is a promising start towards a more complete system, and the ease with which we were able to add new engines demonstrates that it is not difficult to extend. With this in mind, the lack of some requirements should not be seen as a weakness of the system, but rather that our attention was focussed towards our core requirements of tailorability and ease of extension, from which additional requirements can easily be implemented.
 
-A number of development tasks would have been performed differently with sufficient foresight. For example, build tools should have been determined and configured at an earlier stage, allowing more of the later work to focus on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+A number of development tasks would have been performed differently with sufficient foresight.
+
+The necessary build tools should have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+
+Additionally, initial development plans did not appropriately account for prior commitments, such as other work engagements. This was previously identified as risk \emph{R.2}. Had this been accounted for, the available time could have been used more effectively.
+
+A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for loading engine class files only checked if those files existed and then simple instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier.
 
 \hl{TODO All (add stuff above)}
 
