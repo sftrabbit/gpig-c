@@ -192,10 +192,10 @@ Following feedback from the previous reports, the requirements of the HUMS have 
       \requirement{\fr}{4.1.1}{The Admin Centre shall provide an interface to allow authorised individuals to modify the configuration.}{}
       \requirement{\fr}{4.1.2}{The HUMS shall monitor the configuration for changes and apply them.}{}
     }
-	\requirement{\fr}{4.2}{The HUMS shall allow the Consumer to define a storage limit.}{}
-	\requirement{\fr}{4.3}{The HUMS shall allow the Consumer to set an expiry time on stored data.}{}
-	\requirement{\fr}{4.4}{The HUMS shall allow the Consumer to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
-	\requirement{\fr}{4.5}{The HUMS shall allow the Consumer to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
+	\requirement{\fr}{4.2}{The configuration file shall allow the Consumer to define a storage limit.}{}
+	\requirement{\fr}{4.3}{The  configuration file shall allow the Consumer to set an expiry time on stored data.}{}
+	\requirement{\fr}{4.4}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
+	\requirement{\fr}{4.5}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
 \requirement{\fr}{5}{The HUMS shall dispatch a Notification when the Consumer's storage limit is reached.}{}
 \requirement{\fr}{6}{The HUMS shall store no more data records than the Consumer-defined storage quota.}{}
@@ -905,7 +905,7 @@ Requirement & Verified? & Reasoning \\ \hline
 \fr{2} & Yes & Unit testing showed this requirement to be satisfied.\\
 \fr{3} & Yes & Integration and unit testing showed this requirement to be satisfied.\\
 \fr{4} & Yes & The refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. \\
-\fr{5} & No & Due to timing constraints, we chose not to implement storage limits, for our SaaS distribution of the HUMS, as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data.\\
+\fr{5} & No & Due to timing constraints, we chose not to implement storage limits, for our SaaS distribution of the HUMS, as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data and confirming a notification is sent and received.\\
 \fr{6} & No & \\
 \fr{7} & Yes & \\
 \fr{8} & Partial & \\
