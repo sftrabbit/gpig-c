@@ -10,7 +10,7 @@
 \BOOKMARK [3][-]{subsubsection.2.2.2}{Running with a Given Configuration File}{subsection.2.2}% 10
 \BOOKMARK [3][-]{subsubsection.2.2.3}{Loading a Different Configuration at Runtime}{subsection.2.2}% 11
 \BOOKMARK [1][-]{section.3}{Demonstration}{}% 12
-\BOOKMARK [2][-]{subsection.3.1}{Launching the Demo Emitter Launcher}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.1}{Running the Demo Emitter Launcher}{section.3}% 13
 \BOOKMARK [2][-]{subsection.3.2}{Demo GUI}{section.3}% 14
 \BOOKMARK [1][-]{section.4}{Troubleshooting}{}% 15
 \BOOKMARK [2][-]{subsection.4.1}{Unsupported major.minor version 51.0}{section.4}% 16
