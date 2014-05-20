@@ -460,7 +460,7 @@ The components of the Consumer facing API, made up of generic engines and emitte
 \end{figure}
 
 \subsection{Component and Connector View}
-In order to visualise how data flows through the System, from its inputs to its outputs, a \emph{Pipes and Filters diagram} of the HUMS has been created. Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them.
+In order to visualise how data flows through the System, from its inputs to its outputs, a \emph{Pipes and Filters} diagram of the HUMS has been created. Each filter within the diagram transforms the data received on its input pipe into the data on its output pipes. This diagram, shown in Figure~\ref{fig:pipesAndFilter}, shows the distinct data transformation and processing filters in our solution, as well as the protocol of the pipes connecting them.
 
 Designing this diagram helped us to determine which pipes we must choose protocols for and which can be left for the client to define, improving the tailorability of the system by not unnecessarily restricting the Consumer. This view is again targeted more at technical stakeholders, allowing them to visualise the flow of data, and determine what within the System they can configure.
 
@@ -677,7 +677,7 @@ Prepared statements were used where possible in the Datastore implementations, b
 For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$~MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of data stored by Neo4j is presented in Figure~\ref{fig:neo4j}.
+To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of datastored by Neo4j is presented in Figure~\ref{fig:neo4j}.
 
 \begin{figure}[ht]
 \centering
