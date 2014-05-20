@@ -298,9 +298,9 @@ Automated integration, unit, and regression testing is used throughout the proje
 %-------------------------------------------------------------%
 \section{Quality Attributes}
 \label{sec:qualities}
-A number of quality attributes must be considered when creating the HUMS architecture in order to ensure that architectural decisions not only provide the desired functionality, but produce a system meeting the quality requirements of all stakeholders.
-Defining these attributes explicitly allows tactics and patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
-Table~\ref{tab:qualities} considers the HUMS, its requirements and its stakeholders, ranking the qualities associated with the system, and explains why each quality was given a particular ranking. The ranking of qualities was not done in the previous report, however this is important as optimising the utility of one attribute may result in the utility of another being reduced. Achieving the right balance is therefore very important, and the utility of lower ranked qualities may need to be sacrificed in order to obtain the required utility of highly ranked qualities. Tailorability has been identified as important to the Customer, and has been decomposed into a number of sub qualities: Modifiability, Configurability, and Interoperability.
+Quality attributes must be considered when designing the HUMS architecture to ensure that architectural decisions not only provide the desired functionality, but also result in a system meeting the quality requirements of all stakeholders.
+Defining these attributes explicitly allows tactics and design patterns to be adopted at an early stage, allowing the system to achieve the desired utilities of each quality. 
+Table~\ref{tab:qualities} ranks the quality attributes associated with the system and rationalises these rankings. This was not performed in the previous report, but it is important at this phase because improving one quality attribute may result in another being reduced. Achieving the right balance is very important, and the support of lower ranked qualities may need to be sacrificed in order to support the highly ranked qualities. Tailorability has been identified as particularly important to the Customer and has been decomposed into a number of sub-qualities: Modifiability, Configurability, and Interoperability.
 
 \tableformat{ p{2.4cm} p{1.2cm} X }{
 \hline
@@ -308,19 +308,19 @@ Quality \newline Attribute & Rank & Reasoning \\
 \hline
 Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the Customer. 
 \\
-Modifiability & High & The HUMS will initially be built to tackle a single domain (software application), however in the future it will be used in domains such as embedded, electrical, and mechanical systems. A System which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
+Modifiability & High & The HUMS will initially be built to tackle a single domain (software application), however in the future it will be used in domains such as embedded, electrical, and mechanical systems. A System which is not modifiable will be timely and costly to extend and improve. In addition, both users and developers need to be able to add custom engines to the HUMS.
 \\
 Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems.
 \\
-Availability & High & The non-functional system requirements identified high availability targets for the System. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then Consumers would lose confidence in it. The HUMS must be at least as available as the average Consumer's system in order to monitor it properly.
+Availability & High & The non-functional system requirements identified high availability targets for the System. In addition, the HUMS is designed to be used to monitor the health of other systems, so if it is not highly available then Consumers will lose confidence in it. The HUMS must be at least as available on average as any Consumer system in order to monitor it properly.
 \\
 Security & High & Security is highly ranked, as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify System data, and data in transit between Data Emitters and the HUMS must be protected.
 \\
 Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than $5$~ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
 \\
-Testability & Medium & The TDD development approach, discussed in the Initial Report and followed throughout the project, makes testability of medium importance to the System. Having a highly testability utility will help to reduce System faults and is also likely to increase its availability.
+Testability & Medium & The TDD development approach, discussed in the Initial Report and followed throughout the project, makes testability of medium importance to the System. Having high testability will help to reduce System faults and is also likely to increase its availability.
 \\
-Usability & Medium & Usability was not deemed of great importance to the System as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphical and otherwise.
+Usability & Medium & Usability was not deemed of great importance to the System as its sub-qualities, such as learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphical and otherwise. Usability is likely to become more important in future development, when the focus is on deploying to real users.
 \\
 }{The ranked quality attributes associated with the HUMS.}{tab:qualities}
 
