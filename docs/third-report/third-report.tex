@@ -688,8 +688,14 @@ Prepared statements were used where possible in the Datastore implementations, b
 For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$~MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased.
-\hl{TODO: Defo Add Screenshot}
+To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased. An example of data stored by Neo4j is presented in Figure~\ref{fig:neo4j}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics*[width=0.8\textwidth]{images/neo4j.png}
+\caption{A graphical representation of a snapshot of the Neo4j Datastore contents.}
+\label{fig:neo4j}
+\end{figure}
 
 \subsubsection{TempoDB Storage}
 To show that our HUMS can also work with a distributed Datastore running remotely, we created a \emph{TempoDB} storage engine. \emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of $1$~ms. It is specifically designed for large amounts of sensor data and is therefore likely to be used by Consumers of our HUMS.  
