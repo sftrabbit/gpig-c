@@ -493,7 +493,7 @@ The \emph{Behavioural View} shows the actual actions taken by the HUMS when the 
 
 The \emph{Allocation View} shows how System components may be assigned to physical hardware. It demonstrates various configurations in which the System can operate, each of which is useful in particular situations. The HUMS is designed such that, if necessary, its components can be distributed amongst a number of devices, perhaps at different geographical locations. This is achieved by allowing each component to execute in its own environment, between which data is transferred via network protocols. The deployment diagrams in Figure~\ref{fig:deployisolated} through Figure~\ref{fig:deploydemo} represent various allocations of System components. In these figures, blue components are those deployed as a service, while green components are those deployed by the Consumer.
 
-Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:distributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configuring the HUMS.
+Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurations in which the System is entirely deployed by the Consumer. In Figure~\ref{fig:deployisolated}, the Consumer's system is deployed on an isolated device and so must also be monitored from that device. In this case, the Consumer's system emits data to the local Core, which stores that data in a local Datastore and processes it. When an Event occurs, the Core may notify the Consumer's system with feedback. In Figure~\ref{fig:deploydistributed}, the System components are distributed across a number of devices. This shows that the Consumer system may emit data to a remote HUMS Core, which may store data on a dedicated Datastore server. In this configuration, an HTTP server provides a web interface to configuring the HUMS.
 
 \begin{figure}[htp]
   \centering
@@ -877,12 +877,14 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 
 %  How thoroughly has it been evaluated, how diverse are the applications that have been tested, and how good are the results?
 
-\subsection{Evaluation Against Requirements, Qualities, and Scenarios}
+\subsection{Evaluation Against Requirements and Scenarios}
 \label{sec:req_eval}
 
 In order to properly evaluate our solution, we must consider its limitations and strengths. Previously, Section~\ref{sec:testing} discussed how our test plan allowed us to verify a number of our requirements. In this section we consider whether we have met the requirements which were not verified through testing, how we have maximised the utility of our key quality attributes, and whether our HUMS responds as expected in the scenarios detailed in Section~\ref{sec:scenarios}.
 
 Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in the future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
+
+These tables show how our implementation has met the majority of our requirements, however, is limited in terms of security and the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be more important to the Customer, at this stage, than more basic functionality.
 
 \tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
@@ -919,6 +921,15 @@ Requirement & Verified? & Reasoning \\ \hline
 \nfr{14} & Yes & The configuration file has been stored in JSON, and is shown in Figure~\ref{fig:configFiles} to be human readable.\\
 }{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
+Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the systems ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual response of the prototype. 
+
+\tableformat{ p{2cm}  p{5cm} X }{
+Scenario & Desired Response & Actual Response \\
+\qas{1} & The consumer can modify their configuration file without reinstalling or recompiling the HUMS. & As expected.\\
+\qas{2} & & \\
+\qas{3} & & \\
+\qas{4} & & \\
+}{The desired quality attribute scenario responses, and the actual responses of the System}{tab:qasEval}
 % -- Qual attibrs
 % High configurability
 % High modifiability
