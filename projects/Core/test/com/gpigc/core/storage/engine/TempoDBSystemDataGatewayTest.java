@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,6 +38,11 @@ public class TempoDBSystemDataGatewayTest {
 				new HashMap<Parameter, String>()));
 		systems.add(new ClientSystem(testSystemID, sensors,
 				new ArrayList<String>(), "", new HashMap<Parameter, String>()));
+	}
+	
+	@After
+	public void clearDatabase() {
+		gateway = new TempoDBSystemDataGateway(systems);
 	}
 	
 	@Test
