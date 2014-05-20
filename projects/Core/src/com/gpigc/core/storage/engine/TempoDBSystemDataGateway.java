@@ -135,6 +135,12 @@ public class TempoDBSystemDataGateway extends SystemDataGateway {
 				throw new FailedToWriteToDatastoreException("Failed to write EmitterSystemState to TempoDB: " + result.getMessage());
 			}
 		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void write(List<EmitterSystemState> data) throws FailedToWriteToDatastoreException {
