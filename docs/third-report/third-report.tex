@@ -907,9 +907,9 @@ Requirement & Verified? & Reasoning \\ \hline
 \fr{4} & Partial  & Some of the refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. Other refinements, concerning storage limits, could not be verified for reasons explained below. \\
 \fr{5} & No & Due to timing constraints, we chose not to implement storage quotas, for our SaaS distribution of the HUMS, as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data and confirming a notification is sent and received.\\
 \fr{6} & No & For the reasons above, this requirement could not be fulfilled as part of this project. Verification in the future would be similar to \emph{FR.5}.\\
-\fr{7} & Yes & \\
-\fr{8} & Partial & \\
-\fr{9} & Yes & \\
+\fr{7} & Yes & Unit and inspection testing showed some refinements of this requirement to be satisfied. Others are verified through the mere existence of functioning engines which implement the \texttt{AnalysisEngine} interface.\\
+\fr{8} & Yes & Unit testing verified that cool down periods function correctly in our implementation. \\
+\fr{9} & Yes & Unit and inspection testing verified that all implemented Notification engines correctly send Notifications.\\
 \fr{10}& Yes & \\
 \fr{11}& Yes & \\
 \fr{12}& Partial & \\
