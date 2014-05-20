@@ -119,19 +119,63 @@ Wednesday, 21st May 2014
 %-------------------------------------------------------------%
 \section{Launching the HUMS}
 \label{sec:launching}
-\subsection{Requirements}
-To utilise the HUMS, the target system must have Java 7 installed. This can be obtained for free for Windows, Linux, and Mac from www.java.com.
+\subsection{Software required to use the core}
+To utilise the HUMS, the target system must have Java 7 installed. This can be obtained for free for Windows, Linux, and OS X from www.java.com.
 
 \subsection{Launching the core}
 \subsubsection{Windows}
-To launch the core on windows, navigate to the directory where core.jar is located. 
+To launch the core on Windows, navigate to the directory in windows explorer where core.jar is located. The core can be launched by double clicking on the Core.jar file. This will launch the HUMS.
 \subsubsection{Linux}
+To launch the core on linux, using the terminal, navigate to the directory where Core.jar is located. The HUMS can then be launched utilising the command:
+\begin{center}
+\textit{java -jar ./Core.jar}
+\end{center}
+Alternatively, it can be opened by navigating to the directory containing Core.jar in a file browser. Right click on the file browser and select the option "Run with Java" or "Run with OpenJDK Runtime".
 
-\subsubsection{MAC}
+\subsubsection{OS X}
+To launch the core on OS X, using the terminal, navigate to the directory where core.jar is located. The HUMS can then be launched utilising the command:
+\begin{center}
+\textit{java -XstartOnFirstThread -jar Core.jar}
+\end{center}
 
-\section{Configuration}
-\label{sec:setupcore}
-\subsection{Loading a configuration file}
+\subsubsection{Troubleshooting}
+If there is an error which reads incorrect major.minor version. This means that the version of Java installed on your machine is not up to date. Therefore, to be able to run the HUMS system, you will have to install a newer version of Java. The lowest version of Java which is supported is Java 7, version 6 or lower will give an error of this nature.
+
+\section{The Core}
+\subsection{The Core GUI}
+\label{sec:core}
+When the Core has loaded, the GUI will appear. The functionality for the GUI is set out in Figure~\ref{fig:manualgui}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/manual-gui.png}
+  \caption{The GUI for the HUMS with annotations on each element.}
+  \label{fig:manualgui}
+\end{figure}
+\begin{enumerate}
+\item \textbf{Run Button} \\ 
+When a configuration file is loaded, this button runs the core
+\item \textbf{Configuration file select} \\ 
+Opens a dialogue box to select the configuration file to be used
+\item \textbf{Core Application Output} \\ 
+Displays information from the Core Application itself
+\item \textbf{Current Configuration Output} \\ 
+Displays information about things in the configuration file which are being monitored. For example updates and displays when new data is pushed.
+\item \textbf{Clear Console Button} \\ 
+Clears the \emph{current configuration output} (4.).
+\end{enumerate}
+
+\subsection{Running the core with a given config file}
+\label{subsec:setupcore}
+\subsubsection{Loading a configuration file}
+\label{subsubsec:loadconf}
+To load a configuration file, click the \emph{current configuration output} button (2.). This will open a dialogue to select the configuration file, navigate to the file, select it and click open. The \emph{run button} should not be clickable. Once clicked the GUI will: load the configuration file, initialise the core with the engines to be loaded and the \emph{run button} will become a \emph{stop button}.
+
+\subsubsection{Stopping the core and loading a different configuration}
+Click the \emph{stop button}, which is located at the same position as the \emph{run button} (1.). This will halt the running of the core for the current configuration, and will revert the GUI back to the same state as when it was first launched. The steps for Section~\ref{subsubsec:loadconf} can then be repeated for a different, or updated, configuration file.
+
+\section{Demonstration}
+\label{subsec:demo}
+\subsection{Launching the Demo Emitter Launcher}
 
 
 \end{document}
