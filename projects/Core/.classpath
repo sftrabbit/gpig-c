@@ -59,5 +59,6 @@
 	<classpathentry kind="lib" path="lib/neo4j/parboiled-scala_2.10-1.1.6.jar"/>
 	<classpathentry kind="lib" path="lib/neo4j/scala-library-2.10.3.jar"/>
 	<classpathentry kind="lib" path="lib/neo4j/server-api-2.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/tempodb-java-1.1.1-SNAPSHOT-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
