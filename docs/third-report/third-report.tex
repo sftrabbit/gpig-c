@@ -921,7 +921,7 @@ Requirement & Verified? & Reasoning \\ \hline
 \nfr{14} & Yes & The configuration file has been stored in JSON, and is shown in Figure~\ref{fig:configFiles} to be human readable.\\
 }{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
-Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the systems ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual response of the prototype. 
+Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the systems ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual response of the prototype. For the most part, these responses are as expected. However, not implementing Client authentication in the prototype has led to \emph{QAS.3} not being satisfied, and not having a fully functional Admin Centre means that \emph{QAS.4} cannot be fully fulfilled. 
 
 \tableformat{ p{2cm}  X X }{
 Scenario & Desired Response & Actual Response \\
@@ -930,21 +930,6 @@ Scenario & Desired Response & Actual Response \\
 \qas{3} & An unknown external client is either authenticated and allowed to access HUMS services, or denied access & Currently Clients are not authenticated, however, the HUMS only listens for data from Systems sending a correct System ID, as declared in the configuration file. \\
 \qas{4} & A notification is sent to the Consumer when the HUMS cannot connect to their external Datastore, and the HUMS attempts to reconnect the next time data is received. & A notification is not currently sent to the Consumer, however, the HUMS does attempt to reconnect the next time data is received.\\
 }{The desired quality attribute scenario responses, and the actual responses of the System}{tab:qasEval}
-% -- Qual attibrs
-% High configurability
-% High modifiability
-% High Interop
-% High Avail
-% High Security
-% Medi Performance
-% Medi Testability
-%  Low Usability
-
-% -- scenario qual atr
-% QAS1 The Customer wishes to reconfigure the system to monitor mechanical systems.
-% QAS2 The Customer wishes to add an additional analysis, reporting, or notification engine to the HUMS.
-% QAS3 The Client is authenticated, and allowed to access system services, or is not recognised and blocked from accessing system data and services.
-% QAS4 A Notification is sent to the administrator of the HUMS instance, and the HUMS periodically attempts to reconnect to the Datastore
 
 \hl{Have we met requirements, why? Is our architecture just not capable of it? Or have we just not implemented because its a prototype, and here's how we'd do it.... Is this addressed by the table? Find the requirement about a manual for setting up the HUMS and link to our manual as the validation}
 
