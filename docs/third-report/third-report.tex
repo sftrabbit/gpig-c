@@ -885,7 +885,7 @@ In order to properly evaluate our solution, we must consider its limitations and
 
 Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in the future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
 
-These tables show how our implementation has met the majority of our requirements, however, is limited in terms of security and the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be more important to the Customer, at this stage, than more basic functionality.
+These tables show how our implementation has met the majority of our requirements, however is limited in terms of security and with the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be as important to the Customer, at this stage, than more basic functionality.
 
 \tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
@@ -922,13 +922,13 @@ Requirement & Verified? & Reasoning \\ \hline
 \nfr{14} & Yes & The configuration file has been stored in JSON, and is shown in Figure~\ref{fig:configFiles} to be human readable.\\
 }{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
-Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the systems ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual response of the prototype. 
+Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the System's ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual responses of the prototype. 
 
-\tableformat{ p{2cm}  X X }{
+\tableformat{ p{2cm} X X }{
 Scenario & Desired Response & Actual Response \\
-\qas{1} & The consumer can modify their configuration file without reinstalling or recompiling the HUMS. & As expected.\\
-\qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As Expected, time taken to achieve this was between $2-12$~hours, depending on the complexity of the engines. \\
-\qas{3} & An unknown external client is either authenticated and allowed to access HUMS services, or denied access & Currently Clients are not authenticated, however, the HUMS only listens for data from Systems sending a correct System ID, as declared in the configuration file. \\
+\qas{1} & The Consumer can modify their configuration file without reinstalling or recompiling the HUMS. & As expected.\\
+\qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As expected, time taken to achieve this was between $2-12$~hours, depending on the complexity of the engines. \\
+\qas{3} & An unknown external client is either authenticated and allowed to access HUMS services, or denied access. & Currently Clients are not authenticated, however the HUMS only listens for data from systems sending a correct System ID, as declared in the configuration file. \\
 \qas{4} & & \\
 }{The desired quality attribute scenario responses, and the actual responses of the System}{tab:qasEval}
 % -- Qual attibrs
