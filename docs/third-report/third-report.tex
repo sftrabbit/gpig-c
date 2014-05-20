@@ -903,7 +903,7 @@ To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} 
 
 % ID/Method of Validation/Result
 \xtableformat{ p{1.3cm}  X X }{ 
-	FR.x  &  	Method of Validation & Result \\ \hline
+	FR.x  &  	Method of Verification & Result \\ \hline
 	FR.1  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the Core utilising a Data Emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. & Our validation showed that the Data Emitters passed correctly structure data to the Core. \\
 	FR.2  & The Datastore was queried manually. & It was verified that timestamps are held for all data, and stored in the Datastore when the information is saved.	\\
 	FR.3  & Automated tests of the System Data Gateway. & Our automated tests and assertions regarding the Datastores all passed. \\ 
@@ -920,8 +920,8 @@ To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} 
 }{Evaluation for satisfaction of functional requirements.}{frevaltable}
 
 \xtableformat{ p{1.3cm} X X }{
-	NFR.x  & 	Method of Validation & Result \\ \hline
-	NFR.1  &The Datastore is not within the HUMS hardware, but is instead user defined. Hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. 	  & 	 \\ 
+	NFR.x  & 	Method of Verification & Result \\ \hline
+	NFR.1  & Manual inspection testing. & It was verified that the Datastore is not within the HUMS hardware, but is instead user defined, hence, the system is capable of keeping data persistently even when the hardware the HUMS is operated on is changed. \hl{What about the local Datastores?} \\ 
 	NFR.2  &There has been a README provided. 	  & 	 \\ 
 	NFR.3  & 	The HUMS system can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the Data Emitters can be run detached from the main system, for example on an embedded system. 	  & 	 \\ 
 	NFR.4  &We did not implement a security system in the current implementation, however for the full implementation which would be for release we had a set of requirements in place which we would enforce to provide an acceptable level of security. 	  & 	\\ 
