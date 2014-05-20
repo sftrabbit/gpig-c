@@ -905,7 +905,7 @@ To consider the meeting of requirements, we lay out in Tables \ref{frevaltable} 
 	FR.x  &  	Method of Validation & Result \\ \hline
 	FR.1  & 	We created an API for data input which uses a system ID to determine which input is sending the data. The information is sent to the Core utilising a Data Emitter and this data emitter can read the sensor ID and pass the information into the analysis engine for analysis. & Our validation showed that the Data Emitters passed correctly structure data to the Core. \\
 	FR.2  & The Datastore was queried manually. & It was verified that timestamps are held for all data, and stored in the Datastore when the information is saved.	\\
-	FR.3  & To meet the requirement to store correctly structured data, we have enforced checks on data entering the core. The data is stored in a Datastore. This is H2 for a local Datastore, and is a PostgreSQL instance on Heroku for the cloud solution. 	  & Our automated tests and assertions regarding the Datastores all passed. \\ 
+	FR.3  & Automated tests of the System Data Gateway. & Our automated tests and assertions regarding the Datastores all passed. \\ 
 	FR.4  & Manual inspection testing of the configuration method. & Inspection showed the use of JSON configuration files that can be loaded and modified at runtime, either via the administration centre or by manually modifying the file. The Core is automatically updated even if the modifications happen whilst the system is running. \\ 
 	% TODO Up to here with the table
 	FR.5  & This would be verified by submitting a large amount of data to the system and verifying that a notification was dispatched & 	 \\
