@@ -1,0 +1,126 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[UKenglish]{babel}
+\usepackage{enumitem}
+\usepackage{calc}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{soul}
+\usepackage{ifthen}
+\usepackage[compact]{titlesec}
+\usepackage[justification=centering]{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\input{listingsPreamble.tex}
+
+\definecolor{reqColor}{RGB}{80,80,120}
+
+%%Tables
+\newcommand{\tableformat}[4]{
+\begin{table}[ht!]
+\centering
+  \rowcolors{2}{gray!10} {white}
+\def\arraystretch{1.5}
+\begin{tabular}{#1}
+  \hline
+  \rowcolor[gray]{0.9} #2
+  \hline
+\end{tabular}
+\caption{#3}
+\label{#4}
+\end{table}}
+
+\newcommand{\xtableformat}[4]{
+\begin{table}[ht!]
+\centering
+  \rowcolors{2}{gray!10} {white}
+\begin{tabularx}{\textwidth}{#1}
+  \hline
+  \rowcolor[gray]{0.9} #2
+  \hline
+\end{tabularx}
+\caption{#3}
+\label{#4}
+\end{table}}
+
+\pagestyle{fancy}
+\lhead{T Davies, A Fahie, A Fairbairn, A Free, J Mansfield, R Tucker, M 
+Walker}
+\chead{}
+\rhead{GPIG-C}
+\cfoot{\vspace{-0.6cm} \thepage}
+
+\setlist{nolistsep} % Reduces lots of white space around lists
+
+\renewcommand{\headrulewidth}{0.4pt} % Add rules below header
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\conreq}[1]{\textcolor{reqColor}{\textbf{CR.#1}}}
+\newcommand{\fr}[1]{\textcolor{reqColor}{\textbf{FR.#1}}}
+\newcommand{\ed}[1]{\textcolor{reqColor}{\textbf{ED.#1}}}
+\newcommand{\nfr}[1]{\textcolor{reqColor}{\textbf{NFR.#1}}}
+\newcommand{\qas}[1]{\textcolor{reqColor}{\textbf{QAS.#1}}}
+
+%%Scenarios
+\newenvironment{scenario}[1]{
+\newcommand{\source}[1]{\item[Source of Stimulus:] ##1}
+\newcommand{\stimulus}[1]{\item[Stimulus:] ##1}
+\newcommand{\artifact}[1]{\item[Artifact:] ##1}
+\newcommand{\environment}[1]{\item[Environment:] ##1}
+\newcommand{\response}[1]{\item[Response:] ##1}
+\newcommand{\measure}[1]{\item[Response Measure:] ##1}
+\newcommand{\rationale}[1]{\item[Scenario Rationale:] ##1}
+\newcommand{\quality}[1]{\item[Quality:] ##1}
+		\begin{description} [noitemsep]	
+		\item[Scenario ID:] \qas{#1}
+		}{\end{description} \vspace*{0.3cm}
+		}
+
+%%Requirements
+\newenvironment{requirements}{
+\newcommand{\requirement}[4]{\item[##1{##2}] ##3
+							\ifx&##4&
+							%nothing
+							\else
+								\begin{description}
+									##4
+								\end{description}							
+							\fi
+							}
+		\begin{description}[noitemsep, leftmargin=1.3cm]	
+		}{\end{description} \vspace*{0.3cm}
+		}
+		
+\begin{document}
+\begin{center}
+{\vspace*{-0.5cm}
+\Huge GPIG-C Final Report}
+\vspace*{0.2cm}
+
+Word count: \input{wc} (\textit{using TeXCount})
+\vspace*{0.1cm}
+
+Wednesday, 21st May 2014
+\end{center}
+\vspace*{0.4cm}
+\hrule
+\vspace*{0.4cm}
+
+%-------------------------------------------------------------%
+%----------------------INTRODUCTION -------------------%
+%-------------------------------------------------------------%
+\section{Introduction}
+\label{sec:intro}
+This report details the design and development of our HUMS, concentrating on progress made since the Interim Report. In this report the system requirements are further refined, building on feedback from previous reports and adding a set of external dependencies. The HUMS architecture is then considered in order to determine how the System will meet its requirements and what design decisions must be made. This includes examining the important quality attributes of the system and related scenarios, as well as the tactics and patterns which can be used to achieve these qualities. Our desired HUMS architecture is then presented using a number of views deemed to be the most relevant. Having determined the HUMS architecture, the associated risks of the project as a whole are considered and risk reduction tactics are discussed.
+
+The development of the prototype HUMS, demonstrating some of the important features in the design, is then described, followed by a set of evaluations used to determine the achieved quality and functionality of the System. The project is then concluded, and the team reflects on their decisions throughout the project.
+
