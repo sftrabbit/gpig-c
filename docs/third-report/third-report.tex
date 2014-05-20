@@ -803,8 +803,11 @@ The updates to the Admin Centre since the previous report have allowed it to dev
 \section{Testing}
 \label{sec:testing}
 % this should perhaps be a subsection of the section above or the section below...?
+With our design and implementation updated from the Interim Report, we iterated over the test plan previously created, updating it to verify that our updated solution performed as desired and fulfilled the specified requirements.
 
-We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the System and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
+The test plan has been improved and expanded upon in this iteration to include new components. The \emph{Tracability Matrix} in Table~\ref{tab:traceability} shows the mapping between each requirement and the test classes used to verify it. Not all requirements are included, as they can not all be verified through testing.
+
+Where appropriate, the test plan is defined in terms of each module within the System and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
 
 For system testing we completed manual and automated testing, such as inspection testing and deploying our System across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the Customer about various functionality and features of the System, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the System, and for integration testing we ensured that the disparate components of the HUMS properly interacted including further verifying communication across a network.
 
