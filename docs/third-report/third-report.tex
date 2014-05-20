@@ -555,7 +555,7 @@ For the purposes of demonstration, the HUMS has been configured to support a num
 %	- Reference requirements and scenarios 	 %
 %-------------------------------------------------------------%
 
-\section{Development}
+\section{Implementation}
 \label{sec:dev}
 In this section, the implementation created in the previous report is summarised and the significant changes made since then detailed. When making these changes our team was structured as described in the previous report. However, we did have to alter our project plan slightly to accommodate other important deadlines. Luckily, we had considered this in risk \emph{R.2} and had appropriate contingency and mitigation strategies in place, meaning we were able to fully utilise the development time available. 
 
@@ -602,7 +602,7 @@ The Consumer system and Sensors monitored by a particular HUMS instance, and how
                 "EarthquakeAnalysisEngine",
                 "TwitterNotificationEngine"
             ],
-            "DatastoreGateway": "Neo4JSystemDataGateway",
+            "DatastoreGateway": "Neo4jSystemDataGateway",
             "Reporting": "Map"
         },
         etc...
@@ -627,9 +627,6 @@ In addition to the above, we created an optional GUI for our HUMS Core which mak
 \end{figure}
 
 A lightweight Jetty server was also added to the Core demonstrating that the Admin Centre can be served from the same system that the Core runs on. This enables further integration between the configuration files and the web interface which now allows these files to be easily administered by both technical and non-technical users, and avoids a custom server having to be manually set up by the Consumer as the process is automated.
-
-\subsection{Project Management}
-\hl{TODO Joe}
 
 \subsection{Sensing}
 \label{sec:monitor}
@@ -677,7 +674,7 @@ The final system performs face recognition, collecting face data using the built
 
 \subsection{Storing}
 \label{sec:store}
-This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of Datastores. To demonstrate this we created \hl{five} sample implementations interfacing with a range of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \hl{\emph{TempoDB}} and \emph{H2}. This was done to show how our System does not force the Consumer to conform to a particular data schema or data storage technology, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9--10} be achieved.
+This section describes how our HUMS implementation stores data. Our HUMS provides a generic \texttt{SystemDataGateway} interface which can be implemented for a variety of Datastores, allowing for polyglot persistence. To demonstrate this we created five sample implementations interfacing with a range of popular storage solutions, including: \emph{Google App Engine}, \emph{PostgreSQL}, \emph{Neo4j}, \emph{TempoDB} and \emph{H2}. This was done to show how our System does not force the Consumer to conform to a particular data schema or data storage technology, in fact, the Datastores registered to our sample systems can be altered in the configuration file without any errors occurring. This method increases the overall tailorability of our solution whilst addressing risks \emph{R.7} and \emph{R.8}. The remote Datastores used in our implementation were chosen as they allow \emph{NFR.9--10} be achieved.
 
 Prepared statements were used where possible in the Datastore implementations, being compiled once and then reused, leading to significant gains in performance. Prepared statements also offer improved security against SQL injection attacks, with all user input being treated as data and thus not altering the characteristics of data queries.
 
@@ -695,7 +692,7 @@ To demonstrate that our HUMS can work with a distributed Datastore, running on a
 \hl{TODO: Defo Add Screenshot}
 
 \subsubsection{TempoDB Storage}
-To show that our HUMS can also work with a distributed Datastore running remotely, we created a\emph{TempoDB} storage engine. \emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of $1$~ms, it is designed specifically for large amounts of sensor data, and is therefore likely to be used by Consumers of our HUMS.  
+To show that our HUMS can also work with a distributed Datastore running remotely, we created a \emph{TempoDB} storage engine. \emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of $1$~ms. It is specifically designed for large amounts of sensor data and is therefore likely to be used by Consumers of our HUMS.  
 \hl{TODO: Add Screenshot?}
 
 \subsection{Analysing}
@@ -761,11 +758,10 @@ Similarly to the map reporting, graph reporting has been enhanced since the Inte
 \subsection{Admin Centre}
 \label{sec:admin}
 
-The prototype Admin Centre previously created has been updated and refined to provide a central locations for the Consumer to control the operation and settings of the HUMS. By offering this through a responsive web interface, we provide a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the Core is being run.
+The prototype Admin Centre has been updated and refined to provide a central location for the Consumer to control the operation and settings of their HUMS instance. Offering this service through a responsive web interface allows both technical and non-technical personnel to administer the System, by providing a familiar and user friendly way for the configuration to be viewed and edited. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from the device running the Core.
+The Admin Centre also provides access to the current reporting facilities of the HUMS, containing the two example reporting engines previously covered. 
 
-The Admin Centre also provides the current reporting facilities of the HUMS, with the two example reporting engines created. A graph report is available and can be used with data such as that from the test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
-
-The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data, options, and available engines to the Consumer, allowing them to interact with and configure the running HUMS instance.
+The updates to the Admin Centre since the previous report have allowed it to develop into a fully functioning system that integrates with the HUMS Core and presents real data, options, and available engines to the Consumer, allowing them to interact with and configure a running HUMS instance.
 
 \begin{figure}[h!b]
     \begin{subfigure}{0.49\textwidth}
@@ -796,6 +792,9 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 	\label{fig:admin-centre}
 \end{figure}
 
+\subsection{Project Management}
+
+\hl{TODO Joe}
 
 %-------------------------------------------------------------%
 %-----------------------TESTING-----------------------%
