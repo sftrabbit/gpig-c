@@ -726,7 +726,7 @@ The \texttt{TrafficAnalysisEngine} creates an Event when a reading is received--
 
 \subsection{Reporting and Notifying}
 \label{sec:reporting}
-This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create notifications through any notification engine configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different Notifications that might be generated and dispatched using the HUMS, and to show the flexibility and tailorability of the system. They show how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
+This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create Notifications through any notification engine configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different Notifications that might be generated and dispatched using the HUMS, and to show the flexibility and tailorability of the system. They show how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
 
 For reporting, two sample engines were created which can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines show just a small selection of what is possible with our HUMS implementation, with scope for adding further web based, standalone, or integrated reporting engines to interact with the HUMS.
 
@@ -734,28 +734,28 @@ For reporting, two sample engines were created which can be used through the Adm
 A notification engine was created than sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile devices in modern life; an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email notifications for Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
+The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications for Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
 The \texttt{TwitterNotificationEngine} provided allows Events to be pushed to the social networking site \emph{Twitter}. This was included to demonstrate how our HUMS implementation can be used to interact with popular platforms to report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the output of analysis and pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
 
 \subsubsection{Android Application Feedback Notifications}
-The \texttt{PhoneNotificationEngine} included with our HUMS, shows how a Consumer system can use to HUMS to alter its own behaviour. It takes the result of analysis on the data collected from the Android phone system, and sends a notification across the network to the phone system, informing it of which services it must turn off in order to meet its battery life target.
+The \texttt{PhoneNotificationEngine} included with our HUMS shows how a Consumer system can use the HUMS to alter its own behaviour. It takes the result of analysis on the data collected from the Android phone system, and sends a Notification across the network to the phone system, informing it of which services it must turn off in order to meet its battery life target.
 
 \subsubsection{Map Report}
 The map reporting engine created in the Interim Report was improved on, making it into a more generic reporting engine that can be used with any latitude and longitude data. This is demonstrated through its use with both the earthquake and the traffic data. Map reports are generated on demand by the Consumer through the Admin Centre, and can then automatically update with the latest HUMS data to provide live information. The map generated uses the Google Maps JavaScript API~\cite{g_maps} which is customised to fit the needs of the report.
 
 \subsubsection{Graph Report}
-Similarly to the map reporting, graph reports have been enhanced since the Interim Report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its flexibility. The graph reports generated can also automatically update to show live data. This report uses the Chart.js JavaScript charting library~\cite{chart_js} to draw and customise the graph.
+Similarly to the map reporting, graph reporting has been enhanced since the Interim Report and is now a separate engine that can be used to graph different data. The data from both test applications is graphed in the Admin Centre using this engine, showing its flexibility. The graph reports generated can also automatically update to show live data. This report uses the Chart.js JavaScript charting library~\cite{chart_js} to draw and customise the graph.
 
 \subsection{Admin Centre}
 \label{sec:admin}
 
-The prototype Admin Centre previously created has been updated and refined to provide a central locations for the Consumer to control the operation and settings of the HUMS. By offering this through a web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the core is being run.
+The prototype Admin Centre previously created has been updated and refined to provide a central locations for the Consumer to control the operation and settings of the HUMS. By offering this through a responsive web interface it provides a more familiar and user friendly way for the configuration to be viewed and edited without having to manually edit configuration files. It also means that the Admin Centre can be accessed remotely from a number of different devices and not just from where the Core is being run.
 
-The Admin Centre also provides the reporting facilities of the HUMS, with two example reporting engines currently created. A graph report is available and can be used with data like that from the first and second test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
+The Admin Centre also provides the current reporting facilities of the HUMS, with the two example reporting engines created. A graph report is available and can be used with data such as that from the test applications, and a map report is available which is more applicable to data from the earthquake or traffic monitoring.
 
-The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data and options to the Consumer, allowing them to interact with and update to have effect on the running HUMS instance.
+The updates to the Admin Centre have developed the previous prototype into a fully functioning system that integrates with the HUMS and presents real data, options, and available engines to the Consumer, allowing them to interact with and configure the running HUMS instance.
 
 \begin{figure}[h!b]
     \begin{subfigure}{0.49\textwidth}
@@ -786,12 +786,13 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 	\label{fig:admin-centre}
 \end{figure}
 
+
 %-------------------------------------------------------------%
 %-----------------------TESTING-----------------------%
 %-------------------------------------------------------------%
 \section{Testing}
 \label{sec:testing}
-% this should perhaps be a subsection of the section above or the section below...
+% this should perhaps be a subsection of the section above or the section below...?
 
 We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the system and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
 
