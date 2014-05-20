@@ -921,7 +921,7 @@ Requirement & Verified? & Reasoning \\ \hline
 \nfr{14} & Yes & The configuration file has been stored in JSON, and is shown in Figure~\ref{fig:configFiles} to be human readable.\\
 }{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
-Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the System's ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual responses of the prototype. For the most part, these responses are as expected. However, not implementing Client authentication in the prototype has led to \emph{QAS.3} not being satisfied, and not having a fully functional Admin Centre means that \emph{QAS.4} cannot be fully fulfilled. 
+Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the System's ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual responses of the prototype. For the most part, these responses are as expected. However, not implementing Client authentication in the prototype has led to \emph{QAS.3} not being satisfied, and not having an Admin Centre with fully functional user accounts means that \emph{QAS.4} cannot be entirely fulfilled.
 
 
 \tableformat{ p{2cm} X X }{
@@ -932,11 +932,11 @@ Scenario & Desired Response & Actual Response \\
 \qas{4} & A notification is sent to the Consumer when the HUMS cannot connect to their external Datastore, and the HUMS attempts to reconnect the next time data is received. & A notification is not currently sent to the Consumer, however, the HUMS does attempt to reconnect the next time data is received.\\
 }{The desired quality attribute scenario responses, and the actual responses of the System}{tab:qasEval}
 
-Throughout the document we have considered our important quality attributes, and references features we have implemented in an attempt to increase their utility.
+Throughout the document we have considered our important quality attributes, and referenced features we have implemented in an attempt to increase their utility.
 
-The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. The we feel our emphasis on making our HUMS configurable, flexible, and modifiable has led to our HUMS being incredibly tailorable. This has been proven with the number of different applications we have been able to monitor, and how easily we have integrated them.
+The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. We feel our emphasis on making our HUMS configurable, flexible, and modifiable has led to it being incredibly tailorable. This has been proven with the number of different applications we have been able to monitor, and how easily we have integrated them.
 
-In addition to this, we also preformed a small UX study, within the department, to help us to ensure that our HUMS Core interface and Admin Centre were easy to use. Results of the study led us to change the font of our consoles to an easier to read monospace font, and to add a `clear console' button, allowing old information to be deleted, making updates easier to see. We also found that users wanted to be able to toggle engines on and off using the Admin Centre, rather than manually selecting which ones they would like to use. We acted upon this feedback and changed our interfaces appropriately.
+In addition to this, we performed a small UX study within the department to help us ensure that our HUMS Core interface and Admin Centre were easy to use. Results of the study led us to change the font of our consoles to an easier to read monospace font, and to add a `clear console' button, allowing old information to be deleted, making updates easier to see. We also found that users wanted to be able to toggle engines on and off using the Admin Centre, rather than manually selecting which ones they would like to use. We acted upon this feedback and changed our interfaces appropriately.
 
 \subsection{Evaluation on Test Application 1}
 \label{sec:test_app1}
