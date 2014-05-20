@@ -913,7 +913,7 @@ Requirement & Verified? & Reasoning \\ \hline
 \nfr{8} & Yes & Our Included \texttt{EmitterLauncher} had been integration tested with the System, and can concurrently run $5$ Data Emitters and dispatch Notifications to $5$ Output Clients.\\
 \nfr{9} & Yes & All Datastores currently used with our HUMS have an uptime which satisfies this requirement.\\
 \nfr{10} & Yes & Redundant copies of data are created when using the remote Datastores and backups can be easily be manually created for the local Datastores. \\
-\nfr{11} & & \\
+\nfr{11} & Yes & Timestamps are stored with the data, and have been verified to be within $5$~ms of UTC. \\
 \nfr{12} & & \\
 \nfr{13} & & \\
 \nfr{14} & & \\
