@@ -232,15 +232,14 @@ When considering the non-functional requirements, \emph{NFR.14} was added as it 
 
 \subsection{External Dependencies}
 \label{sec:external_dependencies}
-External dependencies are constraints that limit how and when HUMS can be run successfully by Consumers. The previous report did not consider the external dependencies of the Consumer running the HUMS as well as those of the development process, so they are considered here.
+External dependencies are requirements outside of the scope of control of the development project necessary for the HUMS to be run successfully. The previous report did not consider the external dependencies pertaining to the Consumer running the HUMS, as well as those of the development process, so they are considered here.
 
  \begin{description}
- \item[\ed{1}] An appropriate platform must be provisioned, including supported hardware, operating system and JVM, when not running as a SaaS.
- \item[\ed{2}] The Consumer must be instructed in the process of configuration of the HUMS.
- \item[\ed{3}] The initial Data Emitters, analysis engines, notifiers and data gateways must be selected.
- \item[\ed{4}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core, if not running on the same physical machine.
-  \item[\ed{5}] The final HUMS prototype must be complete by the $21$\textsuperscript{st} May $2014$.
+ \item[\ed{1}] The provisioned deployment platform must be running an up-to-date JVM on top of current versions of GNU/Linux, Windows or OS X.
+ \item[\ed{2}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core where necessary.
+  \item[\ed{3}] The selected remote data stores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
  \end{description}
+% \item[\ed{3}] The HUMS and Customer test applications must be compatible, allowing the HUMS to sensor, storage, analyse and notify regarding the test applications in such a way that no data is lost. % Doesn't sound like an External Dependancy to me?
 
 %-------------------------------------------------------------%
 %--------------------------RISKS--------------------------%
@@ -871,7 +870,8 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 %-------------------------------------------------------------%
 \section{Prototype Implementation Evaluation}
 \label{sec:prototype}
-\hl{INTRO: Rosy||Joe||Andy}
+
+In this section, our prototype implementation is evaluated to assess how well it has met our specified requirements and quality attributes. This includes evaluating how it performs with the two test applications provided by the Customer, and helps to assess the overall implementation work that has been completed.
 
 % an evaluation involving at least two distinct applications, with special attention to the "tailorability" of the solution for different applications, and including results for the test applications supplied by The Customer; (Include instructions for replicating such results.)
 
@@ -884,7 +884,7 @@ In order to properly evaluate our solution, we must consider its limitations and
 
 Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in the future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
 
-These tables show how our implementation has met the majority of our requirements, however, is limited in terms of security and the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be more important to the Customer, at this stage, than more basic functionality.
+These tables show how our implementation has met the majority of our requirements, however is limited in terms of security and with the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be as important to the Customer, at this stage, than more basic functionality.
 
 \tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
@@ -921,13 +921,13 @@ Requirement & Verified? & Reasoning \\ \hline
 \nfr{14} & Yes & The configuration file has been stored in JSON, and is shown in Figure~\ref{fig:configFiles} to be human readable.\\
 }{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
 
-Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the systems ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual response of the prototype. 
+Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the System's ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual responses of the prototype. 
 
-\tableformat{ p{2cm}  X X }{
+\tableformat{ p{2cm} X X }{
 Scenario & Desired Response & Actual Response \\
-\qas{1} & The consumer can modify their configuration file without reinstalling or recompiling the HUMS. & As expected.\\
-\qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As Expected, time taken to achieve this was between $2-12$~hours, depending on the complexity of the engines. \\
-\qas{3} & An unknown external client is either authenticated and allowed to access HUMS services, or denied access & Currently Clients are not authenticated, however, the HUMS only listens for data from Systems sending a correct System ID, as declared in the configuration file. \\
+\qas{1} & The Consumer can modify their configuration file without reinstalling or recompiling the HUMS. & As expected.\\
+\qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As expected, time taken to achieve this was between $2-12$~hours, depending on the complexity of the engines. \\
+\qas{3} & An unknown external client is either authenticated and allowed to access HUMS services, or denied access. & Currently Clients are not authenticated, however the HUMS only listens for data from systems sending a correct System ID, as declared in the configuration file. \\
 \qas{4} & & \\
 }{The desired quality attribute scenario responses, and the actual responses of the System}{tab:qasEval}
 % -- Qual attibrs
@@ -1018,7 +1018,9 @@ Further information about how development was progressing and the proposals for 
 
 This report has presented the design and implementation of our HUMS solution, highlighting any progress since the Interim Report. It focusses particularly on the technical development undertaken and evaluates the implemented System against the identified requirements.
 
-Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines. In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS ---that is, sensing, storing, analysing, and reporing --- and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasability of the HUMS, while later development can tackle the details of consumer deployment.
+Whilst we were not able to implement a complete solution within the constraints of the project and not all functional requirements have been met, the prototype solution is a promising start towards a complete system. While developing the prototype and the demonstration applications, we have shown that it supports many of the required quality attributes. For example, we have demonstrated the ease with which the System can be extended by implementing new engines.
+
+In this way, we have focussed mostly on the quality attributes that pertain to the functionality required by a HUMS---that is, sensing, storing, analysing, and reporing---and less on those quality attributes required for real-world application (such as security). Doing so has allowed us to demonstrate the user-facing behaviour and feasability of the HUMS, while later development can tackle the details of Consumer deployment.
 
 \subsection{Reflection}
 \label{sec:reflection}
