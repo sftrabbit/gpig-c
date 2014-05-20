@@ -193,7 +193,7 @@ Following feedback from the previous reports, the requirements of the HUMS have 
       \requirement{\fr}{4.1.2}{The HUMS shall monitor the configuration for changes and apply them.}{}
     }
 	\requirement{\fr}{4.2}{The configuration file shall allow the Consumer to define a storage limit.}{}
-	\requirement{\fr}{4.3}{The  configuration file shall allow the Consumer to set an expiry time on stored data.}{}
+	\requirement{\fr}{4.3}{The configuration file shall allow the Consumer to set an expiry time on stored data.}{}
 	\requirement{\fr}{4.4}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage quota, new data is no longer stored.}{}
 	\requirement{\fr}{4.5}{The configuration file shall allow the Consumer to define that, upon reaching their defined data storage limit, old data is removed to make room for the new data.}{}
 }
@@ -316,23 +316,23 @@ Table~\ref{tab:qualities} considers the HUMS, its requirements and its stakehold
 
 \xtableformat{ p{2.4cm} p{1.2cm} X }{
 \hline
-Quality \qquad Attribute & Rank & Reasoning \\
+Quality \newline Attribute & Rank & Reasoning \\
 \hline
-Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the customer. 
+Configurability & High & It is important that the HUMS can be used in a range of domains; this has been strongly emphasised by the Customer. 
 \\
-Modifiability & High & The HUMS will initially be built to tackle a single domain (software applications), however, in the future it will be used in domains such as embedded, electrical, and mechanical systems. A system which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
+Modifiability & High & The HUMS will initially be built to tackle a single domain (software application), however in the future it will be used in domains such as embedded, electrical, and mechanical systems. A System which is not modifiable will be timely and costly to extend. In addition, both users and developers need to be able to add custom engines to the HUMS.
 \\
-Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems. 
+Interoperability & High & Interoperability is very important to the HUMS as its main purpose is to interface and exchange data with external systems.
 \\
-Availability & High & The non-functional system requirements identified high availability targets for the system. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then Consumers would lose confidence in it. The HUMS must be at least as available as the average Consumer's system in order to monitor it properly. 
+Availability & High & The non-functional system requirements identified high availability targets for the System. In addition, the HUMS is designed to be used to monitor the health of other systems so if it was not highly available then Consumers would lose confidence in it. The HUMS must be at least as available as the average Consumer's system in order to monitor it properly.
 \\
-Security & High & Security is highly ranked as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify system data, and data in transit between Data Emitters and the HUMS must be protected.
+Security & High & Security is highly ranked, as data being monitored must be kept both confidential and safe. It must be impossible for an unauthorised user to view or modify System data, and data in transit between Data Emitters and the HUMS must be protected.
 \\
-Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5 ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
+Performance & Medium & The HUMS is required to receive data from Sensors, and produce Notification events in response to that data with a latency no greater than 5~ms. It must also interface with many Data Emitters and Data Output Clients, meaning it must be capable of handling a large number of events quickly.
 \\
-Testability & Medium & The TDD development approach, discussed in the initial report and followed throughout the project, makes testability of medium importance to the system. Having a high testability utility will help to reduce system faults and is also likely to increase its availability. 
+Testability & Medium & The TDD development approach, discussed in the Initial Report and followed throughout the project, makes testability of medium importance to the System. Having a highly testability utility will help to reduce System faults and is also likely to increase its availability.
 \\
-Usability & Medium & Usability was not deemed of great importance to the system as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphics and otherwise.
+Usability & Medium & Usability was not deemed of great importance to the System as its sub-qualities, such as helpfulness and learnability, have little scope to be optimised in the HUMS. Usability does need to be considered for all Consumer facing interfaces, both graphical and otherwise.
 \\
 }{The ranked quality attributes associated with the HUMS.}{tab:qualities}
 
@@ -699,7 +699,6 @@ To demonstrate that our HUMS can work with a distributed Datastore, running on a
 
 \subsubsection{TempoDB Storage}
 To show that our HUMS can also work with a distributed Datastore running remotely, we created a \emph{TempoDB} storage engine. \emph{TempoDB} is a cloud database service for time series data, at a maximum resolution of $1$~ms. It is specifically designed for large amounts of sensor data and is therefore likely to be used by Consumers of our HUMS.  
-\hl{TODO: Add Screenshot?}
 
 \subsection{Analysing}
 \label{sec:analysis}
@@ -896,24 +895,23 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 
 In order to properly evaluate our solution, we must consider its limitations and strengths. Previously, Section~\ref{sec:testing} discussed how our test plan allowed us to verify a number of our requirements. In this section we consider whether we have met the requirements which were not verified through testing, how we have maximised the utility of our key quality attributes, and whether our HUMS responds as expected in the scenarios detailed in Section~\ref{sec:scenarios}.
 
-Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in this future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
+Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in the future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
 
 \xtableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
 \fr{1} & Yes & Inspection testing showed this requirement to be satisfied.\\
 \fr{2} & Yes & Unit testing showed this requirement to be satisfied.\\
 \fr{3} & Yes & Integration and unit testing showed this requirement to be satisfied.\\
-\fr{4} & Partially  & Some of the refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. Other refinements, concerning storage limits, could not be verified for reasons explained below. \\
-\fr{5} & No & Due to timing constraints, we chose not to implement storage quotas, for our SaaS distribution of the HUMS, as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data and confirming a notification is sent and received.\\
+\fr{4} & Partially & Some of the refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. Other refinements, concerning storage limits, could not be verified for reasons explained below. \\
+\fr{5} & No & Due to timing constraints, we chose not to implement storage quotas for our SaaS distribution of the HUMS as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data, then confirming a notification is sent and received.\\
 \fr{6} & No & For the reasons above, this requirement could not be fulfilled as part of this project. Verification in the future would be similar to \emph{FR.5}.\\
 \fr{7} & Yes & Unit and inspection testing showed some refinements of this requirement to be satisfied. Others are verified through the mere existence of functioning engines which implement the \texttt{AnalysisEngine} interface.\\
 \fr{8} & Yes & Unit testing verified that cool down periods function correctly in our implementation. \\
 \fr{9} & Yes & Unit and inspection testing verified that all implemented Notification engines correctly send Notifications.\\
-\fr{10}& Yes & Unit testing, and the existence of our web based reporting tools, verifies this requirement.\\
-\fr{11}& Yes & The phone system, created as part of the Android application proves that our HUMS is capable of changing the behaviour of the Consumer system it is monitoring.\\
-\fr{12}& Partially & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to timing constraints, meaning any user could add or remove engine files. \\
+\fr{10}& Yes & Unit testing, and the existence of our web based reporting tools, verified this requirement.\\
+\fr{11}& Yes & The phone system, created as part of the Android application, proves that our HUMS is capable of changing the behaviour of the Consumer system it is monitoring.\\
+\fr{12}& Partially & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to time constraints, meaning any user could add or remove engine files. \\
 }{Verification of functional requirements, and reasoning for those not met by the prototype.}{tab:functionalEval}
-
 
 
 \xtableformat{ p{2cm}  p{2cm} X }{
