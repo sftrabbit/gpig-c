@@ -817,13 +817,9 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
 
   \item[Data Emitter] The purpose of the Data Emitter is to run continuously, monitoring a Consumer system and passing data the HUMS, thereby fulfilling \emph{FR.1.2}. We completed inspection testing to verify that data was received, along with running the program for several hours to verify that it continued to function correctly.
 
-  \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple clients simultaneously and checking that the data from both was recorded, thus verifying \emph{FR.1.1}.
+  \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple Clients simultaneously and checking that the data from all Clients was correctly recorded, thus verifying \emph{FR.1.1}.
 
-  \item[Data Abstraction Layer] \hl{CHANGE THIS DEPENDING ON THE TWO BELOW (and alter GWT-gateway reference)} Given the high throughput and importance of storage to the function of the HUMS as a whole, the Data Abstraction Layer's key attributes are availability and performance. We completed an inspection test and used the \texttt{GWTSystemDataGatewayTest} class to verify \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
-
-  \item[Storage Controller] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
-
-  \item[System Data Gateway] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
+  \item[Data Abstraction Layer] The Data Abstraction Layer's key attributes are availability and performance. The mere existance of the \texttt{SystemDataGateway} interface verifies \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
 
   \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito~\cite{mockito} to provide isolated unit tests, confirming that Notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, confirmed to be working via inspection and integration testing.
 
