@@ -511,14 +511,14 @@ Figures~\ref{fig:deployisolated} and~\ref{fig:deploydistributed} show configurat
 \begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{images/Isolated.png}
-  \caption{\hl{Foo}}
+  \caption{A deployment of the HUMS in which all components are allocated to an isolated device which is under the Consumer's control.}
   \label{fig:deployisolated}
 \end{figure}
 
 \begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{images/Distributed.png}
-  \caption{\hl{Foo}}
+  \caption{A deployment of the HUMS in which components are distributed amongst a number of devices which are all under the Consumer's control.}
   \label{fig:deploydistributed}
 \end{figure}
 
@@ -527,14 +527,14 @@ Figure~\ref{fig:deployscaled} shows how the HUMS capacity can be scaled up to su
 \begin{figure}[htp]
   \centering
   \includegraphics[width=0.75\textwidth]{images/Scaled.png}
-  \caption{\hl{Foo}}
+  \caption{The HUMS components are easily scaled to allow for an increased load capacity.}
   \label{fig:deployscaled}
 \end{figure}
 
 \begin{figure}[htp]
   \centering
   \includegraphics[width=0.75\textwidth]{images/HUMSaaS.png}
-  \caption{\hl{Foo}}
+  \caption{The HUMS can be deployed as a service to which Consumer's can subscribe in order to analyse data emitted by their devices.}
   \label{fig:deployhumsaas}
 \end{figure}
 
@@ -543,7 +543,7 @@ For the purposes of demonstration, the HUMS has been configured to support a num
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{images/Demo.png}
-  \caption{\hl{Foo}}
+  \caption{A concrete deployment of the HUMS used for demonstration purposes.}
   \label{fig:deploydemo}
 \end{figure}
 
@@ -688,10 +688,10 @@ Prepared statements were used where possible in the Datastore implementations, b
 \emph{PostgreSQL} is a prominent relational database management system, which is queried using SQL and is ACID compliant. We included this storage engine in order to show how our HUMS can interact with a remote SQL datastore. To implement this we created a \emph{Heroku} web application, which included a \emph{PostgreSQL} database, and communicated with it from a \texttt{SystemDataGateway} object, again using HTTP.
 
 \subsubsection{H2 Storage}
-For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$MB and low memory usage make it ideal for use in resource constrained environments. 
+For real-time applications that require high performance and low response times, a local \emph{H2} instance is offered. \emph{H2} is a Java library that implements a simple, self-contained and server-less transactional SQL database. \emph{H2} can be run in embedded or server mode; its small storage footprint of $1.5$~MB and low memory usage make it ideal for use in resource constrained environments. 
 
 \subsubsection{Neo4j Storage}
-To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased.
+To demonstrate that our HUMS can work with a distributed Datastore, running on a local cluster or machine, we included a \emph{Neo4j} storage engine. \emph{Neo4j} is a graph database, where data is stored in nodes connected by types and directed relationships. This allows for a more interesting analysis which can take advantage of the relationships between nodes. It also allows for easy distribution and sharding across machines, with each Consumer system creating a distinct sub-graph, meaning performance is increased.
 \hl{TODO: Defo Add Screenshot}
 
 \subsubsection{TempoDB Storage}
@@ -708,7 +708,7 @@ The previous mean analysis engine has been extended to form a generic bounded se
 The engine is able to analyse any sensor that records numerical values so is reusable across different contexts and flexible for use in a variety of domains.
 
 \subsubsection{Expression Engine}
-We created a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential whole System analysis processes. The expression engine supports most reasonable closed-form expressions, as well as less common helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the configuration file to define how the engine evaluates a system.
+We created a generic expression engine, \texttt{ExpressionAnalysisEngine}, which allows the configuration file to describe a wide range of potential whole System analysis processes. The expression engine supports most reasonable closed-form expressions, as well as less common, but helpful features such as conditional expressions. Figure~\ref{fig:exprExample} gives an example of an expression that can be given in the configuration file to define how the engine evaluates a system.
 \begin{figure}[ht]
 \centering
 \verb+if(max(ENGINE_TEMP_A, ENGINE_TEMP_B) >= 120 or RPM > 5000, -1, 0)+
@@ -716,9 +716,9 @@ We created a generic expression engine, \texttt{ExpressionAnalysisEngine}, which
 \label{fig:exprExample}
 \end{figure}
 
-The values of variables which represent the state of the system being monitored are available in the expression, and are evaluated lazily for efficiency as evaluation often entails querying the Datastore to retrieve the most recent value which would unnecessarily impact performance.
+The values of variables which represent the state of the system being monitored are available in the expression, and are evaluated lazily for efficiency, since evaluation often entails querying the Datastore to retrieve the most recent value which would unnecessarily impact performance.
 
-The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its modifiability and configurability, allowing the HUMS to be easily customised by the Consumer without needing any knowledge outside of the analysis engine interface.
+The implementation of the \texttt{ExpressionAnalysisEngine} works towards addressing the tailorability quality attribute of the solution, particularly its modifiability and configurability aspects, allowing the HUMS to be easily customised by the Consumer without needing any knowledge outside of a basic expression language.
 
 \subsubsection{Face Analysis Engine}
 \label{sec:fae}
@@ -727,24 +727,24 @@ The Android app collects face data, forwarding it to the Core for analysis, wher
 
 The face recognition process is two fold: an image is captured and its dimensionality is reduced by the Android app before being sent on to the Core, then the \texttt{FaceAnalysisEngine} takes this face description and analyses it to decide if the face is authorised or not.
 
-The face description in the Android app is computed using the \emph{Local Binary Patterns Histogram} (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it. These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns} (those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s) have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This method is robust to changes in illumination and pose~\cite{ahonen2006face}, making it a robust method for describing faces in the presence of extraneous variables. This is the data which is then transmitted to the Core for storage and analysis to determine if the face is authorised.
+The face description in the Android app is computed using the \emph{Local Binary Patterns Histogram} (LBPH) \cite{ahonen2006face} method. Each pixel in the image is reduced to a bit-vector describing whether each of the neighbouring pixels is brighter or darker than it. These bit-vectors are then used to generate a histogram. All \emph{uniform bit patterns} (those which have at least two $1$s in a row and no more than two transitions between runs of $1$s and $0$s) have a separate bin and all other patterns have a single bin. A histogram is made for each of a fixed number of regions in the image to ensure that some degree of locality is kept. Each histogram is then concatenated to create the full description vector---the \emph{spatially enhanced histogram}. This results in a compressed description of the image which attempts to preserve the information content pertaining to face description. This method is robust to changes in illumination and pose~\cite{ahonen2006face}, making it an appropriate method for describing faces in the presence of extraneous variables. This is the data which is then transmitted to the Core for storage and analysis to determine if the face is authorised.
 
 When the histogram data is received by the \texttt{FaceAnalysisEngine}, it is compared against the example authorised faces provided by the configuration file using the \emph{Chi-Squared} distance measure, authorising the face provided by the sensor if its distance from any of the example authorised faces is less than some threshold, also given by the configuration file, and any example unauthorised face.
 
 \subsubsection{Other Analysis Engines}
-The \texttt{TrafficAnalysisEngine} creates an Event when a reading is received---the analysis performed in this case is simply parsing the data about the traffic incident and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating an Event only if the magnitude is above a specified value. These engines show how simple the analysis components can be, going to prove that the \texttt{AnalysisEngine} abstract class is incredibly versatile.
+The \texttt{TrafficAnalysisEngine} creates an Event when a reading is received. The analysis performed in this case is simply parsing the data about the traffic incident and putting it into a readable format for the registered notification engine. The \texttt{EarthquakeAnalysisEngine} is similar, parsing CSV data about an earthquake and then creating an Event only if the magnitude is above a specified threshold. These engines show how simple the analysis components can be, despite also supporting advanced features such as face recognition, going to prove that the \texttt{AnalysisEngine} abstract class is incredibly versatile.
 
 \subsection{Reporting and Notifying}
 \label{sec:reporting}
-This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create Notifications through any notification engine configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different Notifications that might be generated and dispatched using the HUMS, and to show the flexibility and tailorability of the system. They show how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
+This section describes the reporting and notification capabilities of our HUMS. Events created by analysis are used to create Notifications through any notification engine configured for a particular HUMS instance. We created four example notification engines to demonstrate a range of different Notifications that might be generated and dispatched using the HUMS, and to show the flexibility and tailorability of the system. The examples show how the Customer or Consumer could easily create custom notification engines by implementing the generic \texttt{NotificationEngine} abstract class provided, and can easily choose which engines to use for different systems using the configuration file.
 
 For reporting, two sample engines were created which can be used through the Admin Centre. Once requested by the Consumer, these generate reports with live updating information from the HUMS. These engines show just a small selection of what is possible with our HUMS implementation, with scope for adding further web based, standalone, or integrated reporting engines to interact with the HUMS.
 
 \subsubsection{SMS Notifications}
-A notification engine was created than sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquitousness of mobile devices in modern life; an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
+A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: An individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notification that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy to use API.
 
 \subsubsection{Email Notifications}
-The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications for Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
+The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report, however has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications of Events to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over IMAP and SMTP.
 
 \subsubsection{Twitter Notifications}
 The \texttt{TwitterNotificationEngine} provided allows Events to be pushed to the social networking site \emph{Twitter}. This was included to demonstrate how our HUMS implementation can be used to interact with popular platforms to report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the output of analysis and pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
