@@ -802,9 +802,9 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 \label{sec:testing}
 % this should perhaps be a subsection of the section above or the section below...?
 
-We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the system and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
+We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the System and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
 
-For system testing we completed manual and automated testing, such as inspection testing and deploying our system across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the customer about various functionality and features of the system, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the system, and for integration testing we ensured that the disparate components of the HUMS properly interacted and further verified communication across a network.
+For system testing we completed manual and automated testing, such as inspection testing and deploying our System across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the Customer about various functionality and features of the System, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the System, and for integration testing we ensured that the disparate components of the HUMS properly interacted including further verifying communication across a network.
 
 The testing of each module is described below:
 
@@ -816,25 +816,25 @@ The testing of each module is described below:
 
   \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple clients simultaneously and checking that the data from both was recorded, thus verifying \emph{FR.1.1}.
 
-  \item[Data Abstraction Layer] Given the high throughput and importance of storage to the function of the HUMS as a whole, the Data Abstraction Layer's key attributes are availability and performance. We completed an inspection test and used the \texttt{GWTSystemDataGatewayTest} class to verify \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
+  \item[Data Abstraction Layer] \hl{CHANGE THIS DEPENDING ON THE TWO BELOW (and alter GWT-gateway reference)} Given the high throughput and importance of storage to the function of the HUMS as a whole, the Data Abstraction Layer's key attributes are availability and performance. We completed an inspection test and used the \texttt{GWTSystemDataGatewayTest} class to verify \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
 
   \item[Storage Controller] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
 
   \item[System Data Gateway] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
 
-  \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito to provide isolated unit tests, confirming that notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, this was confirmed to be working via inspection and integration testing.
+  \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito~\cite{mockito} to provide isolated unit tests, confirming that Notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, confirmed to be working via inspection and integration testing.
 
-  \item[Analysis Engine] For the Analysis Engine, we created a unit test to check each aspect of the engine as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependencies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
+  \item[Analysis Engine] For the Analysis Engines, we created a unit test to check each aspect of the different engines as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependencies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as Datastore access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
 
-  \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a notification is generated when analysis has indicated it. The second test ensured that notifications were only sent once to avoid spamming users.	 
+  \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a Notification is generated when analysis has indicated it. The second test ensured that Notifications were only sent once to avoid spamming users.
 
-  \item[Notification Engine] The functionality of the email Notification Engine is tested using a unit test. The test uses the Notification Engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information, satisfying \emph{FR.9}.
+  \item[Notification Engine] The functionality of the example Notification Engines is tested using unit tests. The tests use each Notification Engine to send a message to a certain recipient with a given subject and message, then verifies it is successfully sent and received, inspecting the message to ensure that it contains the correct information, satisfying \emph{FR.9}.
 
-  \item[Admin Centre] One of the features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Amin Centre is web based so testing was mainly manual.
+  \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was mainly manual and inspection.
 
-  \item[Reports Engine] We tested the Reports Engine by inspection since the reports produced are quite visual and vary depending on the data used in them. This reporting ensured \emph{FR.10} was met.
+  \item[Reports Engine] We tested the Reports Engines by inspection since the reports produced are quite visual and vary depending on the data requested. This reporting ensured \emph{FR.10} was met.
 
- \end{description}
+\end{description}
 
 \subsubsection{Traceability Table}
 
@@ -847,17 +847,16 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
     FR.1.1   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
     FR.1.2   & N/A & Inspection & Verify by observing output in Admin Centre \\
-    FR.2.1   & SystemDataTest & Unit & Verify existence of timestamp \\
-    FR.2.2   & EmitterSystemStateTest & Unit & Verify existence of timestamp \\
-    FR.3   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON \\
+    FR.2   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
+    FR.3   & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
 	FR.3.1   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
 	FR.4.1.1 & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
 	FR.4.1.2 & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
 	FR.7     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
-    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Check notification flag is set and queried to control notifications \\
-    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of events \\
-	FR.8     & NotificationEngineTest & Unit & Verify the specified notification cool down period is adhered to \\
-    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit,\newline Inspection & Verify sending of notifications \\
+    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
+    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of Events \\
+	FR.8     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
+    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
 	FR.10    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
 	FR.12    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
     NFR.6    & N/A & Inspection & Verify existence of all test levels \\
@@ -872,6 +871,10 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 \section{Prototype Implementation Evaluation}
 \label{sec:prototype}
 \hl{INTRO: Rosy||Joe||Andy}
+
+% an evaluation involving at least two distinct applications, with special attention to the "tailorability" of the solution for different applications, and including results for the test applications supplied by The Customer; (Include instructions for replicating such results.)
+
+%  How thoroughly has it been evaluated, how diverse are the applications that have been tested, and how good are the results?
 
 \subsection{Evaluation Against Requirements, Qualities, and Scenarios}
 \label{sec:req_eval}
@@ -959,20 +962,18 @@ As this is an extension of the previous work for the first test application, thi
 \subsection{Evaluation of the HUMS SaaS}
 \label{sec:hums_saas}
 
-In the Interim Report we proposed an innovative deployment option for our HUMS as a System as a Service (SaaS) solution. This would allow multiple Consumers to use the same central HUMS, saving them from the complexity of setting up and managing the system themselves, whilst still allowing flexibility for them to configure it to their needs and interface with local Datastores and engines.
+In the Interim Report we proposed an innovative deployment option for our HUMS as a System as a Service (SaaS) solution. This would allow multiple Consumers to use the same central HUMS, saving them from the complexity of setting up and managing the system themselves, whilst still allowing flexibility for them to configure it to their needs and interface with their own Datastores and custom engines.
 
 This is possible due to the ability of different components to run from different location, for example a data emitter can run on a different system to the Core of the HUMS. With our HUMS implementation the SaaS solution could be achieved by running multiple Cores on the same server, with one Core for each Consumer. This is not ideal, as a new Core instance for a new Consumer would have to manually be started, but does successfully enable this type of deployment.
 
 Ideally, only a single instance of the Core would be needed and would be able to handle multiple Consumers' configurations. This is a future possibility for the system as only small parts of the Core would need to be changed and all other components, including all engines, would still work as before.
 
-Along with SaaS, a Platform as a Service (PaaS) deployment is also possible with our implementation. The HUMS would be provided to the Consumer so they could configure it as needed and then deploy it using servers and storage that we would provide. They would also be able to bundle in their own custom engines and any additional software to be deployed and run alongside the HUMS on our platform, which would further reduce the the complexity and cost to the Consumer of purchasing and managing their own hardware. This could not be fully explored in the report due to time and resource limitations.
-
 \subsection{Evaluation of Additional Engines}
 \label{sec:additional}
 
-Providing support for multiple kinds of datastore within the HUMS prototype proved to be a relatively straightforward process. As part of our prototype, we added both local and remote SQL, NoSQL and distributed Datastores, showing our architecture yields a high level of interoperability. The fact that we can switch between these by changing a configuration file at runtime, without any code being written, shows a high level of configurability and accessibility, since consumers with even low levels of technical knowledge can implement these changes.
- 
-The \texttt{FaceAnalysisEngine} provided a convincing example of a complex, domain-specific analysis engine being easily built on top of the generic interface. The configuration file allowed easy description of the faces to be accepted by storing a relative path to a face description file, and the Java interface provided a simple mechanism for retrieving data from the sensors. This engine showed that even highly tailored engines comfortably fit within our plugin model of engines, giving strong evidence that our prototype is highly tailorable.
+Providing support for multiple kinds of data store technologies within the HUMS prototype proved to be a relatively straightforward process. As part of our prototype, we added both local and remote SQL, NoSQL and distributed Datastores, showing our architecture yields a high level of interoperability. The fact that we can switch between these by changing a configuration file for runtime, without any code being written, shows a high level of configurability and accessibility, since consumers with even low levels of technical knowledge can implement these changes.
+
+The \texttt{FaceAnalysisEngine} provided a convincing example of a complex, domain-specific analysis engine being easily built on top of the generic interface. The configuration file allowed easy description of the faces to be accepted by storing a relative path to a face description file, and the Java interface provided a simple mechanism for retrieving data from the Sensors. This engine showed that even highly tailored engines comfortably fit within our plugin model of engines, giving strong evidence that our prototype is highly tailorable.
 
 % TODO Cover Availability, Security and Performance quality attributes if possible
 
@@ -984,9 +985,9 @@ The \texttt{FaceAnalysisEngine} provided a convincing example of a complex, doma
 
 We maintained communication with the Customer throughout the phase of this report, with emails exchanged every few weeks. The first feedback received from the Customer was the feedback to the previous Interim Report. This was in the form of written feedback and a face-to-face meeting with the Customer, with the main points raised for improvement surrounding the risks and the quality attribute scenarios. This feedback was taken on board and incorporated into this report, with risks more thoroughly considered throughout the process and with the scenarios explicitly defined.
 
-During email communication with the Customer, we attempted to resolve an issue they had with accessing the web sources that were produced as part of the Interim Report. Once this was done we briefly discussed the ideas behind the configurable engines architecture and it was agreed that it was a good strategy. We then asked about different qualities expected of the system, particularly configurability and its related qualities. The Customer replied highlighting configurability as a key quality and this helped to influence some of our development to ensure that this was well met.
+During email communication with the Customer, we attempted to resolve an issue they had with accessing the web sources that were produced as part of the Interim Report. Once this was done we briefly discussed the ideas behind the configurable engines architecture and it was agreed that it was a good strategy. We then asked about different qualities expected of the system, particularly flexibility and its related qualities. The Customer replied highlighting configurability as a key quality and this helped to influence some of our development to ensure that this was well met.
 
-Further information about how development was progressing and the proposals for future work was exchanged to keep the Customer up-to-date and ensure that it was on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at both compile time and runtime. Discussion about Datastores was also useful and revealed the possibility of additionally using a distributed database alongside the other Datastores we had implemented gateways for. This feedback was taken on board and \hl{xxx data store was yyy}.
+Further information about how development was progressing and the proposals for future work was exchanged to keep the Customer up-to-date and ensure that it was on the right track. This included information about how the system would meet the previously highlighted configurability quality, and how this could be achieved at both compile time and runtime. Discussion about Datastores was also useful and revealed the possibility of additionally using a distributed database alongside the other Datastores we had implemented gateways for. This feedback was taken on board and \hl{potato data store was implemented}.
 
 
 %-------------------------------------------------------------%
