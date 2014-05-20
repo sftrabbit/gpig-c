@@ -794,9 +794,9 @@ The updates to the Admin Centre have developed the previous prototype into a ful
 \label{sec:testing}
 % this should perhaps be a subsection of the section above or the section below...?
 
-We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the system and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
+We iterated on the test plan created in the Interim Report to help verify that our solution fulfilled its requirements. The test plan has been improved and expanded to also cover new components. In this section we give the mapping between each test and its associated requirement. Where appropriate, the test plan is defined in terms of each module within the System and what specific, testable attributes that module must have to fulfil its requirements. We also further deconstructed the testing into various levels of abstraction, mapping the higher level requirements to their lower level requisite requirements: acceptance testing, system testing, integration testing and unit testing.
 
-For system testing we completed manual and automated testing, such as inspection testing and deploying our system across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the customer about various functionality and features of the system, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the system, and for integration testing we ensured that the disparate components of the HUMS properly interacted and further verified communication across a network.
+For system testing we completed manual and automated testing, such as inspection testing and deploying our System across various networked machines to verify that the HUMS acted as expected. For acceptance testing, we communicated with the Customer about various functionality and features of the System, and we expect that the feedback from this report will fold back into our acceptance testing. Unit testing involved automated tests for each different part of the System, and for integration testing we ensured that the disparate components of the HUMS properly interacted including further verifying communication across a network.
 
 The testing of each module is described below:
 
@@ -808,25 +808,25 @@ The testing of each module is described below:
 
   \item[Data Input Layer] For the Data Input Layer, it is essential that large amounts of data can be received in parallel. We verified this by inspection testing, and also by running multiple clients simultaneously and checking that the data from both was recorded, thus verifying \emph{FR.1.1}.
 
-  \item[Data Abstraction Layer] Given the high throughput and importance of storage to the function of the HUMS as a whole, the Data Abstraction Layer's key attributes are availability and performance. We completed an inspection test and used the \texttt{GWTSystemDataGatewayTest} class to verify \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
+  \item[Data Abstraction Layer] \hl{CHANGE THIS DEPENDING ON THE TWO BELOW (and alter GWT-gateway reference)} Given the high throughput and importance of storage to the function of the HUMS as a whole, the Data Abstraction Layer's key attributes are availability and performance. We completed an inspection test and used the \texttt{GWTSystemDataGatewayTest} class to verify \emph{FR.3.1}. At the unit testing level, as part of TDD, we focussed on the comparably complex, well defined module-internal functions, such as the generation and parsing of the JSON serialisation of objects.
 
   \item[Storage Controller] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
 
   \item[System Data Gateway] \hl{HOW DO THESE DIFFER FROM THE DAL ABOVE :S}
 
-  \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito to provide isolated unit tests, confirming that notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, this was confirmed to be working via inspection and integration testing.
+  \item[Analysis Controller] Due to the central role played by the Analysis Controller, we identified its key attributes as performance and testability. We utilised Mockito~\cite{mockito} to provide isolated unit tests, confirming that Notifications are only triggered when appropriate, satisfying \emph{FR.7} and \emph{FR.9}. Class loading was used to load Analysis Engines for the prototype, confirmed to be working via inspection and integration testing.
 
-  \item[Analysis Engine] For the Analysis Engine, we created a unit test to check each aspect of the engine as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependencies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as database access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
+  \item[Analysis Engine] For the Analysis Engines, we created a unit test to check each aspect of the different engines as per \emph{FR.7.1} and \emph{FR.7.4}. Again, we utilised Mockito to mock out dependencies, restricting the possible sources of failure of a test to be as narrow as possible. This was especially useful for potentially flakey areas, such as Datastore access or connecting over a network that may not be available at test time. Our unit tests covered valid, extreme and null values being sent to the Analysis Engine.
 
-  \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a notification is generated when analysis has indicated it. The second test ensured that notifications were only sent once to avoid spamming users.	 
+  \item[Notification Generator] For the Notification Generator, we created multiple unit tests to verify functionality as per \emph{FR.8}. Mockito was used to isolate the class, allowing for a true unit test. The initial test ensured that a Notification is generated when analysis has indicated it. The second test ensured that Notifications were only sent once to avoid spamming users.
 
-  \item[Notification Engine] The functionality of the email Notification Engine is tested using a unit test. The test uses the Notification Engine to send a message to a certain recipient with a given subject and message, then verifies that the email was successfully sent and received by checking the inbox of the specified recipient and inspecting the message to ensure that it contains the correct information, satisfying \emph{FR.9}.
+  \item[Notification Engine] The functionality of the example Notification Engines is tested using unit tests. The tests use each Notification Engine to send a message to a certain recipient with a given subject and message, then verifies it is successfully sent and received, inspecting the message to ensure that it contains the correct information, satisfying \emph{FR.9}.
 
-  \item[Admin Centre] One of the features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Amin Centre is web based so testing was mainly manual.
+  \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was mainly manual and inspection.
 
-  \item[Reports Engine] We tested the Reports Engine by inspection since the reports produced are quite visual and vary depending on the data used in them. This reporting ensured \emph{FR.10} was met.
+  \item[Reports Engine] We tested the Reports Engines by inspection since the reports produced are quite visual and vary depending on the data requested. This reporting ensured \emph{FR.10} was met.
 
- \end{description}
+\end{description}
 
 \subsubsection{Traceability Table}
 
@@ -839,17 +839,16 @@ Table~\ref{tab:traceability} shows the tests used to verify that the system requ
 
     FR.1.1   & N/A & Inspection & Use Datastore consoles and viewers to verify data storage \\
     FR.1.2   & N/A & Inspection & Verify by observing output in Admin Centre \\
-    FR.2.1   & SystemDataTest & Unit & Verify existence of timestamp \\
-    FR.2.2   & EmitterSystemStateTest & Unit & Verify existence of timestamp \\
-    FR.3   & SystemDataTest,\newline EmitterSystemStateTest,\newline QueryResultTest & Integration, Unit & Read and write to database, create and parse JSON \\
+    FR.2   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
+    FR.3   & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
 	FR.3.1   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
 	FR.4.1.1 & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
 	FR.4.1.2 & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
 	FR.7     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
-    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Check notification flag is set and queried to control notifications \\
-    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of events \\
-	FR.8     & NotificationEngineTest & Unit & Verify the specified notification cool down period is adhered to \\
-    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit,\newline Inspection & Verify sending of notifications \\
+    FR.7.1   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
+    FR.7.4   & AnalysisControllerTest & Unit & Verify generation of Events \\
+	FR.8     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
+    FR.9     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
 	FR.10    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
 	FR.12    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
     NFR.6    & N/A & Inspection & Verify existence of all test levels \\
