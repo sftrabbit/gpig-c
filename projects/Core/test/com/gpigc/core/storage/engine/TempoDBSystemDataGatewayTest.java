@@ -84,4 +84,26 @@ public class TempoDBSystemDataGatewayTest {
 		assertTrue(testSystemID.equals(result.getSystemID()));
 		assertEquals(2, result.getRecords().size());
 	}
+	
+	@Test
+	public void testReadMostRecentWithFewRecords() throws FailedToWriteToDatastoreException, FailedToReadFromDatastoreException, InterruptedException {
+		gateway = new TempoDBSystemDataGateway(systems);
+		Map<String, String> payload = new HashMap<String, String>();
+		payload.put("Test1", "15");
+		payload.put("Test2", "24");
+		payload.put("Test3", "83"); 
+
+		DateTime dateTime = new DateTime();
+		
+		for(int i = 0; i < 5; i++){
+			gateway.write(new EmitterSystemState(testSystemID, dateTime.minusMinutes(5).plusMinutes(i).toDate(), payload));
+		}
+		//Wait for persistence.
+		Thread.sleep(3000);
+		
+		QueryResult result = gateway.readMostRecent(testSystemID, "Test1", 8);
+		
+		assertTrue(testSystemID.equals(result.getSystemID()));
+		assertEquals(5, result.getRecords().size());
+	}
 }
