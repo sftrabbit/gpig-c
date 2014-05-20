@@ -179,8 +179,22 @@ To load a configuration file, click the \emph{current configuration output} butt
 Click the \emph{Stop Button}, which is located at the same position as the \emph{Run Button} ($1$). This will halt the running of the core for the current configuration, and will revert the GUI back to the same state as when it was first launched. The steps for Section~\ref{subsec:loadconf} can then be repeated for a different, or updated, configuration file.
 
 \section{Demonstration}
-\label{subsec:demo}Run Button
+\label{subsec:demo}
 \subsection{Launching the Demo Emitter Launcher}
+\subsubsection{Windows}
+To launch the core on Windows, navigate to the directory in Windows Explorer where \texttt{EmitterLauncher.jar} file is located. The core can be launched by double clicking on the \texttt{EmitterLauncher.jar} file. This will launch the HUMS.
+\subsubsection{Linux}
+To launch the core on linux, using the terminal, navigate to the directory where \texttt{EmitterLauncher.jar} is located. The HUMS can then be launched with the command:
+\begin{center}
+\texttt{java -jar ./EmitterLauncher.jar}
+\end{center}
+Alternatively, it can be opened by navigating to the directory containing EmitterLauncher.jar in a file browser. Right click on the file browser and select the option ``Run with Java'' or ``Run with OpenJDK Runtime''.
+
+\subsubsection{OS X}
+To launch the core on OS X, using the terminal, navigate to the directory where EmitterLauncher.jar is located. The HUMS can then be launched utilising the command:
+\begin{center}
+\texttt{java -XstartOnFirstThread -jar EmitterLauncher.jar}
+\end{center}
 
 \subsection{Demo GUI}
 \begin{figure}[H]
