@@ -128,9 +128,9 @@ To launch the core on Windows, navigate to the directory in windows explorer whe
 \subsubsection{Linux}
 To launch the core on linux, using the terminal, navigate to the directory where Core.jar is located. The HUMS can then be launched utilising the command:
 \begin{center}
-\textit{./Core.jar}
+\textit{java -jar ./Core.jar}
 \end{center}
-Alternatively, it can be opened by navigating to the directory containing Core.jar in a file browser. Right click on the file browser and select the option "Run with Java" or "Run with OpenJDK".
+Alternatively, it can be opened by navigating to the directory containing Core.jar in a file browser. Right click on the file browser and select the option "Run with Java" or "Run with OpenJDK Runtime".
 
 \subsubsection{MAC}
 To launch the core on Mac, using the terminal, navigate to the directory where core.jar is located. The HUMS can then be launched utilising the command:
@@ -138,9 +138,38 @@ To launch the core on Mac, using the terminal, navigate to the directory where c
 \textit{java -XstartOnFirstThread -jar Core.jar}
 \end{center}
 
-\section{Configuration}
-\label{sec:setupcore}
+\subsubsection{Troubleshooting}
+If there is an error which reads incorrect major.minor version. This means that the version of Java installed on your machine is not up to date. Therefore, to be able to run the HUMS system, you will have to install a newer version of Java. The lowest version of Java which is supported is Java 7, version 6 or lower will give an error of this nature.
+
+\section{The Core}
+\subsection{The Core GUI}
+\label{sec:core}
+When the Core has loaded, the GUI will appear. The functionality for the GUI is set out in Figure~\ref{fig:manualgui}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/manual-gui.png}
+  \caption{The GUI for the HUMS with annotations on each element.}
+  \label{fig:manualgui}
+\end{figure}
+\begin{enumerate}
+\item \textbf{Run Button} \\ 
+When a configuration file is loaded, this button runs the core
+\item \textbf{Configuration file select} \\ 
+Opens a dialogue box to select the configuration file to be used
+\item \textbf{Core Application Output} \\ 
+Displays information from the Core Application itself
+\item \textbf{Current Configuration Output} \\ 
+Displays information about things in the configuration file which are being monitored. For example updates and displays when new data is pushed.
+\item \textbf{Clear Console Button} \\ 
+Clears the current configuration output (4.).
+\end{enumerate}
+
 \subsection{Loading a configuration file}
+\label{subsec:setupcore}
+
+\section{Demonstration}
+\label{subsec:demo}
+\subsection{Launching the Demo Emitter Launcher}
 
 
 \end{document}
