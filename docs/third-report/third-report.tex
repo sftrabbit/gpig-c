@@ -1012,16 +1012,15 @@ Whilst we were not able to implement a complete solution within the constraints 
 \subsection{Reflection}
 \label{sec:reflection}
 
+In hindsight, to improve our final product and streamline our process, a number of development tasks could have been performed differently.
 
-A number of development tasks would have been performed differently with sufficient foresight.
+A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for dynamically loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier by more thorough testing or better team communication.
 
-A more thorough evaluation of early prototypes should have been been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}. Such problems could have been avoided if they had been identified earlier.
+Software engineering design patterns were not explicitly identified during early development, which meant that much of the software architecture needed to be heavily modified in the later stages where the ramifications of our design decisions became clear.
 
-Software engineering design patterns were not explicitly identified during early development, which meant that much of the software architecture needed to be heavily modified.
+The initial development plans did not fully account for prior commitments. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
 
-Initial development plans did not fully account for prior commitments, such as other work engagements. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively.
-
-The necessary build tools should have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself. This would also have allowed the use of continuous integration for greater quality control and more efficient development.
+The necessary build tools could have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself rather than solving build issues. This would also have allowed the use of continuous integration for greater quality control and hence a more efficient development process.
 
 \hl{TODO All (add stuff above)}
 
