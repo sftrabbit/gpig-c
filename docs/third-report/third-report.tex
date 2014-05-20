@@ -1001,13 +1001,13 @@ In hindsight, to improve our final product and streamline our process, a number 
 
 A more thorough evaluation of early prototypes should have been performed to ensure that all components were working according to the functional requirements. For example, it was discovered late in development that the functionality for dynamically loading engine class files only checked if those files existed and then simply instantiated the engines that were compiled into the Core. This violated requirement \emph{FR.12}, and wasted development time. Such problems could have been avoided if they had been identified earlier by more thorough testing or better team communication.
 
-Software engineering design patterns were not explicitly identified during the interim development, this meant that much of the software architecture needed to be heavily modified in this phase as the ramifications of the changes to our design decisions became clear.
+Software engineering design patterns were not explicitly identified during the interim development, meaning that much of the software architecture needed to be heavily modified in this phase as the ramifications of the changes to our design decisions became clear.
 
 The development plan in the previous report did not fully account for external pressures, such as other modules. This was previously identified as risk \emph{R.2}. Had this been appropriately accounted for, the available time could have been used more effectively and we could have avoided running into our contingency time.
 
 The necessary build tools could have been determined and configured at an earlier stage, allowing later work to focus more on development of the HUMS itself rather than solving build issues. This would also have allowed the use of continuous integration for greater quality control and hence a more efficient development process.
 
-Our use of the SWT library for building the user interface cost a surprising amount of time as appropriate native libraries had to be bundled for each platform, complicating the build process. Whilst we were pleased with the final result, is may not have been worth the time spent on it.
+Our use of the SWT library for building the user interface cost a surprising amount of time as appropriate native libraries had to be bundled for each platform, complicating the build process. Whilst we were pleased with the final result, this may not have been worth the time spent on it.
 
 The implementation of the graph database, \emph{Neo4j}, provided numerous challenges and therefore proved time consuming. Team members were most familiar with modelling relational and key-value data, making the experience quite jarring. In hindsight, more time should have been devoted to the implementation of unfamiliar datastore technologies.
 
