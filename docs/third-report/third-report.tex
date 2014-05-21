@@ -905,26 +905,26 @@ Requirement & Verified? & Reasoning \\ \hline
 \fr{10}& Yes & Unit testing, and the existence of our web based reporting tools, verified this requirement.\\
 \fr{11}& Yes & The phone system, created as part of the Android application, proves that our HUMS is capable of changing the behaviour of the Consumer system it is monitoring.\\
 \fr{12}& Partially & Dynamic class loading is fully functional, and verified through testing. However, we have not implemented a secure user system as part of this prototype due to time constraints, meaning any user with write-access could add or remove engine files. \\
-}{Verification of functional requirements, and reasoning for those not met by the prototype.}{tab:functionalEval}
+}{Verification of functional requirements.}{tab:functionalEval}
 
 
 \tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
-\nfr{1} & Partially & Remote Datastores have been tested and data can continue to be accessed after hardware modifications. Local Datastores persist as desired for some hardware modifications, but more thorough testing is needed.\\
+\nfr{1} & Partially & Remote Datastores have been tested, and data can continue to be accessed after local hardware modifications. Local Datastores persist as desired through some hardware modifications, but more thorough testing is required.\\
 \nfr{2} & Yes & A \emph{User Manual} has been provided with our prototype implementation. \\
-\nfr{3} & Yes & Our HUMS can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the Data Emitters can be run detached from the main System, for example on an embedded system. \\
-\nfr{4} & No & Though security is a key quality attribute of our System, and has been considered throughout development, we have not actually implemented any security standards due to time constraints. We have, however, ensured that the protocols used can be secured in the future.\\
+\nfr{3} & Yes & Our HUMS can be utilised regardless of geographic location, as the main monitoring site is accessible from the web. Furthermore, the Data Emitters can be run separately from the main System, for example, on an embedded system. \\
+\nfr{4} & No & Though security is a key quality attribute of our System, and has been considered throughout development, we have not actually implemented any security standards due to time constraints. We have however ensured that the protocols used can be secured in the future.\\
 \nfr{5} & No & As above.\\
 \nfr{6} & Yes & Section~\ref{sec:testing} explains how our System was tested, and this section explains which requirements have been met.\\
 \nfr{7} & Partially & The Customer has accepted our previous implementation and provided feedback on our decisions throughout this phase. Acceptance of this final prototype will fulfil this requirement.\\
-\nfr{8} & Yes & Our included \texttt{EmitterLauncher} had been integration tested with the System, and can concurrently run $5$ Data Emitters and dispatch Notifications to $5$ Output Clients.\\
+\nfr{8} & Yes & Our included \texttt{EmitterLauncher} had been integration tested with the System, and can concurrently run five Data Emitters and dispatch Notifications to five Output Clients.\\
 \nfr{9} & Yes & All Datastores currently used with our HUMS have an uptime which satisfies this requirement.\\
-\nfr{10} & Yes & Redundant copies of data are created when using the remote Datastores and backups can be easily be manually created for the local Datastores. \\
+\nfr{10} & Yes & Redundant copies of data are created when using the remote Datastores and backups can easily be manually created for the local Datastores. \\
 \nfr{11} & Yes & Timestamps are stored with the data, and have been verified to be within $5$~ms of UTC. \\
 \nfr{12} & Yes & The timings have been checked for all implemented notification engines, and are less than $5$~ms. \\
-\nfr{13} & Yes & Data has been sent to the HUMS in a variety of popular formats, including JSON, XML, and key-values, and correctly stored.\\
+\nfr{13} & Yes & Data has been sent to the HUMS in a variety of popular formats, including JSON, XML, and key-values, and then correctly stored.\\
 \nfr{14} & Yes & The configuration file has been stored in JSON, and is shown in Figure~\ref{fig:configFiles} to be human readable.\\
-}{Verification of non-functional requirements, and reasoning for those not met by the prototype.}{tab:nonfunctionalEval}
+}{Verification of non-functional requirements.}{tab:nonfunctionalEval}
 
 Having evaluated our solution against the requirements, we must also consider our quality attribute scenarios, designed to test the System's ability to provide the desired responses in interesting contexts. Table~\ref{tab:qasEval} shows the expected responses of our included quality attribute scenarios, and the actual responses of the prototype. For the most part, these responses are as expected. However, not implementing Client authentication in the prototype has led to \emph{QAS.3} not being satisfied, and not having an Admin Centre with fully functional user accounts means that \emph{QAS.4} cannot be entirely fulfilled.
 
