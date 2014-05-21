@@ -933,7 +933,7 @@ Scenario & Desired Response & Actual Response \\
 \qas{1} & The Consumer can modify their configuration file without reinstalling or recompiling the HUMS. & As expected.\\
 \qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As expected, time taken to achieve this was between $2$ and $12$~hours, depending on the complexity of the engines. \\
 \qas{3} & An unknown external Client is either authenticated and allowed to access HUMS services, or denied access. & Currently Clients are not authenticated, however, the HUMS only listens for data from systems sending a correct System ID, as declared in the configuration file. \\
-\qas{4} & A notification is sent to the Consumer when the HUMS cannot connect to their external Datastore, and the HUMS attempts to reconnect the next time data is received. & A notification is not currently sent to the Consumer, however, the HUMS does attempt to reconnect the next time data is received.\\
+\qas{4} & A Notification is sent to the Consumer when the HUMS cannot connect to their external Datastore, and the HUMS attempts to reconnect the next time data is received. & A Notification is not currently sent to the Consumer, however, the HUMS does attempt to reconnect the next time data is received.\\
 }{The desired quality attribute scenario responses and the actual responses of the System}{tab:qasEval}
 
 Throughout the document we have considered our important quality attributes, and referenced features we have implemented in an attempt to increase their utility.
