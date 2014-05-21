@@ -200,7 +200,7 @@ Based on Customer feedback from the previous reports, the requirements of the HU
 \requirement{\fr}{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type shall be sent during a Consumer-specified cool down period.}{
 	\requirement{\fr}{8.1}{The HUMS shall allow the Consumer to specify a cool down period for particular Events.}{}
 }
-\requirement{\fr}{9}{The HUMS shall generate Notifications in response to Events using the registered Notification Engines.}{}
+\requirement{\fr}{9}{The HUMS shall generate Notifications in response to Events using the registered Notification engines.}{}
 \requirement{\fr}{10}{The HUMS shall interface with Report engines, allowing them to pull Reports.}{}
 \requirement{\fr}{11}{The System shall allow for Notifications to be fed back to Client to change the way in which data is sensed.}{}
 \requirement{\fr}{12}{The System shall load new engines added by an authorised user at both runtime and compile time.}{}
@@ -244,7 +244,7 @@ External dependencies are requirements outside the scope of development that are
  \item[\ed{2}] Any necessary network or firewall configuration must be performed to allow Clients to communicate with the Core where necessary.
   \item[\ed{3}] The selected remote data stores must have a high enough availability to meet the non-functional requirements of the HUMS set out earlier.
  \end{description}
-% \item[\ed{3}] The HUMS and Customer test applications must be compatible, allowing the HUMS to sensor, storage, analyse and notify regarding the test applications in such a way that no data is lost. % Doesn't sound like an External Dependancy to me?
+% \item[\ed{3}] The HUMS and Customer test applications must be compatible, allowing the HUMS to sensor, storage, analyse and notify regarding the test applications in such a way that no data is lost. % Doesn't sound like an External Dependency to me?
 
 %-------------------------------------------------------------%
 %--------------------------RISKS--------------------------%
@@ -260,7 +260,7 @@ Unlike in the previous reports, risks have been separated into personnel risks a
   	Risk ID & Risk \newline Description & Impact \newline Description & Contingency & Prob. (\%) & Impact & Score \\
   	\hline
   
-    R.1 & Loss of team member(s) or team member(s) underperform. & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
+    R.1 & Loss of team member(s) or team member(s) under-performance & Internal/external deadline failure. Poor standard of work. & Reallocate work across remaining team members and notify module leader. & 10 & Moderate & \textbf{Low} \\
     R.2 & External pressures (such as other modules) limit the amount of development time. & Internal/external deadline failure. Lack of technical achievement. & Modify the project plan to reduce the prototype functionality. Request extension. & 25 & Moderate &  \textbf{Low} \\
     R.3 & Customer does not think that the HUMS design correctly fulfils their brief. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Modify the system and communicate with the customer to ensure the HUMS design is as they expect. & 15 & Serious &  \textbf{Low} \\
     R.4 & Work is lost due to human or hardware error. & Wasted time. Failure to meet deadlines. Limited prototype implementation. & Revert to a backup and continue working from there, possibly reducing system functionality. & 30 & Minor &  \textbf{Low} \\
@@ -411,7 +411,7 @@ Below, the tactics that are most suitable for the HUMS are summarised. Each qual
 	\begin{description}[noitemsep]
 	\item[Fault Prevention] Bundling related actions into atomic transactions should prevent the System from entering an inconsistent state. If a single action fails within a transaction, all operations will roll back to the previous valid state. Monitoring and shutting down failed processes (e.g. failure of an analysis engine) allows for damage due to erroneous operation to be minimised.
 	\item[Fault Detection] Exceptions can be used throughout the software to detect and handle errors. Ping/echo could also be used to ensure external components registered with the HUMS Core are available.
-	\item[Fault Recovery] Having active or passive redundant systems would allow for automatic switchover in the event of a System failure, thus minimising any interruption that Clients experience.
+	\item[Fault Recovery] Having active or passive redundant systems would allow for automatic switch-over in the event of a System failure, thus minimising any interruption that Clients experience.
 	\end{description}
 \item[Security] \hfill
 	\begin{description}[noitemsep]
@@ -426,7 +426,7 @@ Below, the tactics that are most suitable for the HUMS are summarised. Each qual
 A number of software design patterns have been chosen which realise the above tactics:
 
 \begin{description}
-\item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. Observers are kept in a list within the subject andare sent updates when the state of the subject changes. This will be used for the implementation of our analysis, storage, and notification engines, with controller objects keeping a list of engine observers. When the controller receives an update it can inform the relevant engines through a method call.
+\item[Observer] The observer pattern is a behavioural pattern that defines a one-to-many relationship between a single subject and many observers. Observers are kept in a list within the subject and are sent updates when the state of the subject changes. This will be used for the implementation of our analysis, storage, and notification engines, with controller objects keeping a list of engine observers. When the controller receives an update it can inform the relevant engines through a method call.
 \item[Pipes and Filters] The adoption of the pipes and filters pattern allows for large processing tasks to be broken down into sequences of smaller independent filters, and the protocol of the data passed between those filters to be explicitly defined. Pipes and filters also increase the tailorability of the HUMS, as alternative architectures can be composed by connecting alternate filters to different pipes.
 \item[Table Data Gateway] Using the table data gateway pattern, defined by \cite{fowler2002patterns} as a single object which handles all interactions with a Datastore (e.g. SQL statements), will reduce coupling and allow a single HUMS to interact with a number of different Datastores. It does so by ensuring the Core is not coupled to a particular Datastore implementation. Instead, each Datastore implements its own table data gateway which can be interchanged both at runtime and compile time. The single point of access and encapsulation means that the System as a whole is unaffected by changes to the Datastore or data access logic and therefore facilitates easier maintenance.
 \item[Row Data Gateway] A row data gateway is an object which encapsulates a single record in a Datastore~\cite{fowler2002patterns}. This could be utilised by our HUMS as a method of ensuring data pulled from various Datastores can be used throughout the Core as if it had originated from a single Datastore. This will reduce the effect of impedance mismatch whilst increasing the tailorability of our solution and decreasing coupling.
@@ -611,7 +611,7 @@ Any changes made to the System configuration file whilst the HUMS is running are
 
 The Core has also been refactored to load Consumer system parameters to be used by engines from System configuration files. This includes both individual Sensor parameters and System parameters meaning that, for example, analysis can be performed both per Sensor and on the System as a whole, further increasing the tailorability of our solution. The configuration file for a particular instance of the HUMS can be set and modified at runtime or compile time, as it is separate from the codebase, making it very versatile and further improving configurability. 
 
-In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, reporting any errors such as incorrectly formatted configuration files alongside the general status of the Core. The GUI was created using the \emph{Standard Widget Toolkit}~\cite{swt}. This was chosen over other UI libraries such as \emph{Swing} as it uses native widgets, such as buttons and menus, improving the user experience by using components they are already familiar with.
+In addition to the above, we created an optional GUI for our HUMS Core which makes the process of configuring and running our HUMS even simpler. Shown in Figure~\ref{fig:coreGUI}, this GUI allows the Consumer to select the configuration file they wish to use and to start and stop the Core with the click of a button. The GUI also keeps the Consumer informed of what the Core is doing through an integrated console, reporting any errors such as incorrectly formatted configuration files alongside the general status of the Core. The GUI was created using the \emph{Standard Widget Tool-kit}~\cite{swt}. This was chosen over other UI libraries such as \emph{Swing} as it uses native widgets, such as buttons and menus, improving the user experience by using components they are already familiar with.
 
 \begin{figure}[ht]
 \centering
@@ -631,13 +631,13 @@ In this section, we describe the applications our HUMS currently monitors. We cr
 Part of our task was to monitor the test applications provided by the Customer, treating them as black-box systems. For the first test application, we simply monitored the memory and CPU usage, but for the second we also added swap state, number of threads, last processor it was run on, and working directory. For this we created a process monitoring Data Emitter which is capable of tracking information from a process. This utilises the \emph{System Information Gatherer} (SIGAR) library. SIGAR is a cross-platform library which allows system information and process information to be accessed, without worrying about the implementation that the platform provides for reading that information. The information gathered by these engines is forwarded to the Core for analysis.
 
 \subsubsection{Earthquake and Traffic Data Emitters}
-In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data (from the U.S. Geological Survey~\cite{us_geo}) is formatted as JSON and the traffic data (from the UK Highways Agency~\cite{ha_traffic}) as XML, which are both standard and commonly used data formats. These two emitters demonstrate the extensiblility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use the same or similar formats.
+In order to ensure our HUMS is capable of receiving, analysing, and reporting data through various external APIs, we updated our earthquake Data Emitter and added an additional traffic Data Emitter, monitoring real time UK traffic accidents and incidents. The earthquake data (from the U.S. Geological Survey~\cite{us_geo}) is formatted as JSON and the traffic data (from the UK Highways Agency~\cite{ha_traffic}) as XML, which are both standard and commonly used data formats. These two emitters demonstrate the extensibility of the HUMS as similar additional Data Emitters can easily be created to read data from other sources, which would likely also use the same or similar formats.
 
 \subsubsection{Server Responsiveness}
 A common use of existing HUMS implementations is in monitoring the responsiveness of websites and servers, alerting users and staff if the system becomes unavailable. In order to ensure our HUMS was capable of such a task, we implemented a response time Data Emitter which determines the response time of requests to a given website\footnote{thalesgroup.com} and sends this data to the Core for analysis.
 
 \subsubsection{Emitter Launcher}
-For demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher} which simplifies the process of running our desktop Data Emitters by allowing the individually packaged Data Emitters to be simultaneously run from a single application using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, which has again been created using the \emph{Standard Widget Toolkit} \cite{swt}, meaning native components can be used.
+For demonstration purposes, and to make our prototype easier to test and use, we created an \emph{Emitter Launcher} which simplifies the process of running our desktop Data Emitters by allowing the individually packaged Data Emitters to be simultaneously run from a single application using a GUI. A screenshot of this GUI is shown in Figure~\ref{fig:launcherGUI}, which has again been created using the \emph{Standard Widget Tool-kit} \cite{swt}, meaning native components can be used.
  
 \begin{figure}[ht]
 \centering
@@ -740,7 +740,7 @@ For reporting, two sample engines were created which can be accessed through the
 A notification engine was created that sends SMS text messages to mobile phones. This is useful functionality for a HUMS due to the near ubiquity of mobile devices in modern life: an individual is likely to be in possession of their phone and can instantly be notified by the HUMS. This is a quick and efficient method of notifying users that can be used across phone carriers, hardware, and platforms. To create this engine we utilised the service offered by popular communications company Twilio~\cite{twilio}, who have a large infrastructure for telecommunications and offer an easy-to-use API.
 
 \subsubsection{Email Notifications}
-The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report. However, it has been heavily refactored to comply with our new, more modular codebase. It can be configured to send email Notifications to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over the IMAP and SMTP protocols.
+The \texttt{EmailNotificationEngine} provided has the same functionality as the engine included in the Interim Report. However, it has been heavily refactored to comply with our new, more modular codebase It can be configured to send email Notifications to any email address, and may be useful for more detailed, less frequent Notifications. This has been implemented using the Apache Commons Email~\cite{ac_email} library for Java to interact with an email account over the IMAP and SMTP protocols.
 
 \subsubsection{Twitter Notifications}
 The \texttt{TwitterNotificationEngine} provided allows Events to be pushed to the social networking site \emph{Twitter}. This was included to demonstrate how our HUMS implementation can be used to interact with popular platforms to report events, such as earthquakes and traffic information, to the masses. The engine creates a tweet from the output of analysis and pushes that tweet to the registered account. This has been implemented using the Twitter4J~\cite{twitter4j} Java library to access the Twitter API.
@@ -817,7 +817,7 @@ A global \texttt{build.xml} file is provided in the source root directory which 
 \label{sec:testing}
 With our design and implementation updated from the Interim Report, we iterated on the test plan created previously, updating it to verify that our updated solution performed as desired and fulfilled the specified requirements.
 
-The test plan has been improved and expanded upon in this iteration to include new components. The \emph{Tracability Matrix} in Table~\ref{tab:traceability} shows the mapping between each requirement and the test classes used to verify it. Not all requirements are included, as they can not all be verified through testing. The testing performed is split into five distinct categories --- acceptance, system, integration, unit, and inspection testing --- as explained in the Interim Report. 
+The test plan has been improved and expanded upon in this iteration to include new components. The \emph{Traceability Matrix} in Table~\ref{tab:traceability} shows the mapping between each requirement and the test classes used to verify it. Not all requirements are included, as they can not all be verified through testing. The testing performed is split into five distinct categories --- acceptance, system, integration, unit, and inspection testing --- as explained in the Interim Report. 
 
 When performing acceptance testing, we communicated with the Customer about proposed functionality and features of our HUMS, and kept them up-to date on what we had achieved. We also expect that the feedback from this report will fold back into our acceptance testing. 
 
@@ -839,7 +839,7 @@ Below, the main modules, shown previously in Figure~\ref{fig:modules}, are expla
 
   \item[Notification Controller] We created multiple unit tests to verify the functionality of the Notification controller as per \emph{FR.8} and \emph{FR.9}. Mockito was used to isolate the class, allowing for a true unit test. We verified that a Notification is generated when analysis has indicated it should be and that Notifications were only sent once to avoid spamming.
 
-  \item[Notification Engine] The functionality of the example Notification engines is tested using unit testing. The tests use each Notification Engine to send a message to a specified recipient or device, with a given subject and message, then verify that the Notification is successfully sent and received, inspecting it to ensure that the correct information is included. This satisfies \emph{FR.9} and \emph{FR.11}.
+  \item[Notification Engine] The functionality of the example Notification engines is tested using unit testing. The tests use each Notification engine to send a message to a specified recipient or device, with a given subject and message, then verify that the Notification is successfully sent and received, inspecting it to ensure that the correct information is included. This satisfies \emph{FR.9} and \emph{FR.11}.
 
   \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was primarily performed manually through inspection.
 
@@ -933,7 +933,7 @@ Scenario & Desired Response & Actual Response \\
 \qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As expected, time taken to achieve this was between $2$ and $12$~hours, depending on the complexity of the engines. \\
 \qas{3} & An unknown external Client is either authenticated and allowed to access HUMS services, or denied access. & Currently Clients are not authenticated, however, the HUMS only listens for data from systems sending a correct System ID, as declared in the configuration file. \\
 \qas{4} & A Notification is sent to the Consumer when the HUMS cannot connect to their external Datastore, and the HUMS attempts to reconnect the next time data is received. & A Notification is not currently sent to the Consumer, however, the HUMS does attempt to reconnect the next time data is received.\\
-}{The desired quality attribute scenario responses and the actual responses of the System}{tab:qasEval}
+}{The desired quality attribute scenario responses and the actual responses of the System.}{tab:qasEval}
 
 Throughout the document we have considered our important quality attributes, and referenced features we have implemented in an attempt to increase their utility.
 
@@ -973,7 +973,7 @@ The \texttt{FaceAnalysisEngine} provided an example of a complex, domain-specifi
 \section{Customer Communication}
 \label{sec:customer_comms}
 
-We maintained communication with the Customer throughout this phase of this report, with emails exchanged every few weeks. The first feedback received from the Customer came from the Interim Report and a face-to-face meeting with the Customer. The Customer give us a number of areas to work on for this report, including better explaining how we considered risks, how we can improve the presented views of our System architecture, and explicitly stating our quality attribute scenarios. This feedback has been clearly acted upon in this report.
+We maintained communication with the Customer throughout the phase of this report, with emails exchanged every few weeks. The first feedback received from the Customer came from the Interim Report and a face-to-face meeting with the Customer. The Customer gave us a number of areas to work on for this report, including better explaining how we considered risks, how we could improve the presented views of our System architecture, and explicitly stating our quality attribute scenarios. This feedback has been clearly acted upon in this report.
 
 During email communication with the Customer, we attempted to resolve an issue they had accessing the web sources that were produced as part of the Interim Report. Once this had been resolved, the ideas behind the configurable engines architecture was agreed to be a good strategy. We then asked about which qualities the customer would like us to focus on during development, suggesting that flexibility and interoperability appear important. The Customer replied highlighting that configurability is also key quality and should be considered, and this led to the creation of the configuration file system. 
 
