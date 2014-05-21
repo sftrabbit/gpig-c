@@ -854,19 +854,19 @@ Below the main modules, shown previously in Figure~\ref{fig:modules}, are explai
     \fr{2}   & SystemDataTest, \newline EmitterSystemStateTest & Unit & Verify existence of timestamp \\
     \fr{3}    & SystemDataTest, \newline EmitterSystemStateTest, \newline QueryResultTest & Integration, Unit & Verify reading and writing to Datastores, create and parse JSON \\
 	\fr{3.1}   & GWTSystemDataGatewayTest, \newline H2SystemDataGatewayTest, \newline HerokuSystemDataGatewayTest & Unit & Verify that different Datastores work correctly and interchangeably \\
-	\fr{4.1.1} & N/A & Inspection & Verify configuration can be changed through the Admin Centre \\
+	\fr{4.1.1} & N/A & Inspection & Verify configuration files can be changed through the Admin Centre \\
 	\fr{4.1.2} & ConfigParserTest & Unit, \newline Inspection & Verify changes to the configuration file are detected and acted upon \\
 	\fr{7}     & AnalysisEngineTest, \newline DataEventTest & Unit & Verify events are triggered by analysis where appropriate \\
-    \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verrify notification flag is set and queried to control Notifications \\
+    \fr{7.1}   & AnalysisControllerTest, \newline NotificationGeneratorTest & Unit,\newline Inspection & Verify notification flag is set and queried to manage Notification frequency \\
     \fr{7.4}   & AnalysisControllerTest & Unit & Verify generation of Events \\
 	\fr{8}     & NotificationEngineTest & Unit & Verify the specified Notification cool down period is adhered to \\
-    \fr{9}     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify sending of Notifications \\
+    \fr{9}     & EmailNotificationTest, \newline SMSNotificationTest, \newline TwitterNotificationTest & Unit, \newline Inspection & Verify the sending of Notifications \\
 	\fr{10}    & N/A & Inspection & Verify appropriate graph and map reports can be generated with correct data \\
-	\fr{12}    & N/A & Inspection & Verify that the Core detects new engines and informs that they are loaded \\
+	\fr{12}    & N/A & Inspection & Verify that the Core detects and loads new engines \\
     \nfr{6}    & N/A & Inspection & Verify existence of all test levels \\
 	\nfr{14}   & ConfigParserTest, \newline ParameterTest, \newline ClientSensorTest, \newline ClientSystemTest & Unit, \newline Inspection & Verify that configuration files are understandable and parseable \\
 }
-{The traceability table showing the mapping from each requirement to its existing tests.}{tab:traceability}
+{The traceability table showing the mapping between requirements and existing tests.}{tab:traceability}
 
 
 %-------------------------------------------------------------%
@@ -896,7 +896,7 @@ Requirement & Verified? & Reasoning \\ \hline
 \fr{2} & Yes & Unit testing showed this requirement to be satisfied.\\
 \fr{3} & Yes & Integration and unit testing showed this requirement to be satisfied.\\
 \fr{4} & Partially & Some of the refinements of this requirement were verified through testing, and a snapshot of the configuration file format used is shown in Figure~\ref{fig:configFiles}. Other refinements, concerning storage limits, could not be verified for reasons explained below. \\
-\fr{5} & No & Due to timing constraints, we chose not to implement storage quotas for our SaaS distribution of the HUMS as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data, then confirming a notification is sent and received.\\
+\fr{5} & No & Due to timing constraints, we chose not to implement storage quotas for our SaaS distribution of the HUMS as part of this prototype. In the future this requirement would be verified by defining a storage limit through the Admin Centre and attempting to store more data than allowed. It would then be confirmed that a notification is sent and received.\\
 \fr{6} & No & For the reasons above, this requirement could not be fulfilled as part of this project. Verification in the future would be similar to \emph{FR.5}.\\
 \fr{7} & Yes & Unit and inspection testing showed some refinements of this requirement to be satisfied. Others are verified through the mere existence of functioning engines which implement the \texttt{AnalysisEngine} interface.\\
 \fr{8} & Yes & Unit testing verified that cool down periods function correctly in our implementation. \\
