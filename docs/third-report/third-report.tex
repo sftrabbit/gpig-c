@@ -875,20 +875,16 @@ Below, the main modules, shown previously in Figure~\ref{fig:modules}, are expla
 \section{Prototype Evaluation}
 \label{sec:prototype}
 
-In this section, our prototype implementation is evaluated to assess how well it has met our specified requirements and quality attributes. This includes evaluating how it performs with the two test applications provided by the Customer, and helps to assess the overall implementation work that has been completed.
-
-% an evaluation involving at least two distinct applications, with special attention to the "tailorability" of the solution for different applications, and including results for the test applications supplied by The Customer; (Include instructions for replicating such results.)
-
-%  How thoroughly has it been evaluated, how diverse are the applications that have been tested, and how good are the results?
+In this section, our prototype implementation is evaluated to assess how well it has met the identified requirements and quality attributes. This includes evaluating how it performs with the two test applications provided by the Customer, and helps to assess the overall work that has been completed.
 
 \subsection{Evaluation Against Requirements, Quality Attributes, and Scenarios}
 \label{sec:req_eval}
 
 In order to properly evaluate our solution, we must consider its limitations and strengths. Previously, Section~\ref{sec:testing} discussed how our test plan allowed us to verify a number of our requirements. In this section we consider whether we have met the requirements which were not verified through testing, how we have maximised the utility of our key quality attributes, and whether our HUMS responds as expected in the scenarios detailed in Section~\ref{sec:scenarios}.
 
-Table~\ref{tab:functionalEval} shows which functional requirements we were able to meet with our prototype, describing how we checked these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how in the future they would be achieved. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
+Table~\ref{tab:functionalEval} shows which functional requirements were met by the prototype, describing how we checked that these requirements were met if verification was not completed through testing, as previously detailed. Where requirements have not been met, an explanation has been given as to why this was the case, and how they would be achieved in the future. Table~\ref{tab:nonfunctionalEval} details the same information for the non-functional requirements.
 
-These tables show how our implementation has met the majority of our requirements, however is limited in terms of security and with the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be as important to the Customer, at this stage, than more basic functionality.
+These tables show how our implementation has met the majority of our requirements, but is limited in terms of security and with the services offered through our SaaS deployment. We chose not to fulfil these requirements as part of the prototype as we did not feel that they would be as important to the Customer at this stage than more integral functionality.
 
 \tableformat{ p{2cm}  p{2cm} X }{
 Requirement & Verified? & Reasoning \\ \hline
@@ -938,9 +934,9 @@ Scenario & Desired Response & Actual Response \\
 
 Throughout the document we have considered our important quality attributes, and referenced features we have implemented in an attempt to increase their utility.
 
-The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. We feel our emphasis on making our HUMS configurable, flexible, and modifiable has led to it being incredibly tailorable. This has been proven with the number of different applications we have been able to monitor, and how easily we have integrated them.
+The quality attributes laid out in Section~\ref{sec:scenarios} have been largely satisfied. We feel our emphasis on making our HUMS configurable, flexible, and modifiable has led to it being incredibly tailorable. This has been proven with the number of different applications we have been able to monitor and how easily we have integrated them.
 
-In addition to this, we performed a small UX study within the department to help us ensure that our HUMS Core interface and Admin Centre were easy to use. Results of the study led us to change the font of our consoles to an easier to read monospace font, and to add a `clear console' button, allowing old information to be deleted, making updates easier to see. We also found that users wanted to be able to toggle engines on and off using the Admin Centre, rather than manually selecting which ones they would like to use. We acted upon this feedback and changed our interfaces appropriately.
+In addition to this, we performed a small user experience study within the department to help us ensure that our HUMS Core interface and Admin Centre were easy to use. Results of the study led us to change the font of our consoles to an easier to read monospace font and to add a `clear console' button, allowing old information to be deleted, making updates easier to see. We also found that users wanted to be able to toggle engines on and off using the Admin Centre, rather than manually selecting which ones they would like to use. We acted upon this feedback and changed our interfaces appropriately.
 
 \subsection{Evaluation on the Customer's Test Applications}
 \label{sec:test_app1}
