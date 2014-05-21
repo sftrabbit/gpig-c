@@ -197,7 +197,7 @@ Based on Customer feedback from the previous reports, the requirements of the HU
 \requirement{\fr}{8}{After dispatching a Notification for an Event of a particular type, no more Notifications for an Event of that type shall be sent during a Consumer-specified cool down period.}{
 	\requirement{\fr}{8.1}{The HUMS shall allow the Consumer to specify a cool down period for particular Events.}{}
 }
-\requirement{\fr}{9}{The HUMS shall generate Notifications in response to Events using the registered Notification Engines.}{}
+\requirement{\fr}{9}{The HUMS shall generate Notifications in response to Events using the registered Notification engines.}{}
 \requirement{\fr}{10}{The HUMS shall interface with Report engines, allowing them to pull Reports.}{}
 \requirement{\fr}{11}{The System shall allow for Notifications to be fed back to Client to change the way in which data is sensed.}{}
 \requirement{\fr}{12}{The System shall load new engines added by an authorised user at both runtime and compile time.}{}
@@ -836,7 +836,7 @@ Below, the main modules, shown previously in Figure~\ref{fig:modules}, are expla
 
   \item[Notification Controller] We created multiple unit tests to verify the functionality of the Notification controller as per \emph{FR.8} and \emph{FR.9}. Mockito was used to isolate the class, allowing for a true unit test. We verified that a Notification is generated when analysis has indicated it should be and that Notifications were only sent once to avoid spamming.
 
-  \item[Notification Engine] The functionality of the example Notification engines is tested using unit testing. The tests use each Notification Engine to send a message to a specified recipient or device, with a given subject and message, then verify that the Notification is successfully sent and received, inspecting it to ensure that the correct information is included. This satisfies \emph{FR.9} and \emph{FR.11}.
+  \item[Notification Engine] The functionality of the example Notification engines is tested using unit testing. The tests use each Notification engine to send a message to a specified recipient or device, with a given subject and message, then verify that the Notification is successfully sent and received, inspecting it to ensure that the correct information is included. This satisfies \emph{FR.9} and \emph{FR.11}.
 
   \item[Admin Centre] One of the major features of the Admin Centre is to modify configuration files, thereby fulfilling \emph{FR.4.1.1}. The Admin Centre is web based so testing was primarily performed manually through inspection.
 
@@ -930,7 +930,7 @@ Scenario & Desired Response & Actual Response \\
 \qas{2} & A new engine is implemented, tested, and added to the HUMS without loss of service, and without affecting other systems. & As expected, time taken to achieve this was between $2$ and $12$~hours, depending on the complexity of the engines. \\
 \qas{3} & An unknown external Client is either authenticated and allowed to access HUMS services, or denied access. & Currently Clients are not authenticated, however, the HUMS only listens for data from systems sending a correct System ID, as declared in the configuration file. \\
 \qas{4} & A Notification is sent to the Consumer when the HUMS cannot connect to their external Datastore, and the HUMS attempts to reconnect the next time data is received. & A Notification is not currently sent to the Consumer, however, the HUMS does attempt to reconnect the next time data is received.\\
-}{The desired quality attribute scenario responses and the actual responses of the System}{tab:qasEval}
+}{The desired quality attribute scenario responses and the actual responses of the System.}{tab:qasEval}
 
 Throughout the document we have considered our important quality attributes, and referenced features we have implemented in an attempt to increase their utility.
 
