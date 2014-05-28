@@ -3,7 +3,7 @@ package uk.co.gpigc.emitter.responsetime;
 import uk.co.gpigc.emitter.SimpleEmitter;
 
 public class ResponseTimeEmitter {
-	private static final int COLLECTION_INTERVAL = 120000;
+	private static final int COLLECTION_INTERVAL = 5000;
 
 	public static void main(String[] args) throws Exception {	
 		System.setProperty("java.library.path", System.getProperty("java.library.path") + ":" + getExpandedFilePath("binlib"));
