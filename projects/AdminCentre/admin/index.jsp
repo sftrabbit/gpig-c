@@ -117,16 +117,17 @@ for (File engineFile : notificationFolder.listFiles()) {
                             <%
                             if (otherSystems.isEmpty()) {
                             %>
-                                <li>&nbsp;No other systems</li>
+                                <li><a href="">No other systems</a></li>
                             <%
                             } else {
-                            for (String system: otherSystems) {
+                                for (String system: otherSystems) {
                                 %>
                                 <li><a href="?system=<%= system %>"><%= system %></a></li>
                                 <%
                                 }
                             }
                             %>
+                            <li><a href="/admin"><em><i class="fa fa-plus"></i> Create new system</em></a></li>
                         </ul>
                     </div>
                 </div>
@@ -135,7 +136,58 @@ for (File engineFile : notificationFolder.listFiles()) {
         </div>
     </div>
     <%
-    if (currentSystem.get("unknown") == null) {
+    if (currentSystem.get("unknown") != null) {
+    %>
+    <form id="form-new">
+        <div class="form-group">
+            <label for="new-name">System name</label>
+            <input type="text" class="form-control" id="new-name" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <label>Sensors</label>
+            <ul class="list-group new-sensors">
+                <li class="list-group-item"><a href="#" class="new-sensor btn"><span>Add a new sensor</span></a></li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <label for="new-store">Data store</label>
+            <select id="new-store" class="form-control">
+            <%
+            for (String store: availableDatastores) {
+            %>
+                <option value="<%= store %>"><%= store %></option>
+            <%
+            }
+            %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Reporting</label>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="new-reporting" id="new-reporting1" value="none" checked>
+                    None
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="new-reporting" id="new-reporting2" value="Map">
+                    Map
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="new-reporting" id="new-reporting3" value="Graph">
+                    Graph
+                </label>
+            </div>
+        </div>
+        <div class="buttons-group">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>&nbsp;&nbsp;Add</button><button type="reset" class="btn btn-default">Cancel</button>
+        </div>
+    </form>
+    <%
+    } else {
     %>
     <ul class="nav nav-tabs nav-justified" id="tab-menu">
         <li class="active"><a href="#" data-tab="sensors"><i class="fa fa-tasks"></i> Sensors</a></li>
@@ -167,9 +219,9 @@ for (File engineFile : notificationFolder.listFiles()) {
                             Set<String> keys = params.keySet();
                             for (String key : keys) {
                             %>
-                                <li class="list-group-item param-item">
-                                    <input type="text" value="<%= key %>" class="form-control param-key"><input type="text" value="<%= params.get(key) %>" class="form-control param-value"><a class="btn btn-danger param-delete" href="#"><i class="fa fa-trash-o"></i></a>
-                                </li>
+                            <li class="list-group-item param-item">
+                                <input type="text" value="<%= key %>" class="form-control param-key"><input type="text" value="<%= params.get(key) %>" class="form-control param-value"><a class="btn btn-danger param-delete" href="#"><i class="fa fa-trash-o"></i></a>
+                            </li>
                             <%
                             }
                         }
