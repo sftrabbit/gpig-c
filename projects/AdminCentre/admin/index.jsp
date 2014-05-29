@@ -163,24 +163,11 @@ for (File engineFile : notificationFolder.listFiles()) {
         </div>
         <div class="form-group">
             <label>Reporting</label>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="new-reporting" id="new-reporting1" value="none" checked>
-                    None
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="new-reporting" id="new-reporting2" value="Map">
-                    Map
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="new-reporting" id="new-reporting3" value="Graph">
-                    Graph
-                </label>
-            </div>
+            <select id="new-reporting" class="form-control">
+                <option value="none">None</option>
+                <option value="Map">Map</option>
+                <option value="Graph">Graph</option>
+            </select>
         </div>
         <div class="buttons-group">
             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>&nbsp;&nbsp;Add</button><button type="reset" class="btn btn-default">Cancel</button>

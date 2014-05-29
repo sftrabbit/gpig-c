@@ -54,7 +54,7 @@ $("#form-new").submit(function() {
         "sensors": [],
         "store": $("#new-store option:selected").val()
     };
-    if ($("input:radio[name=new-reporting]:checked").val() != "none") data.reporting = $("input:radio[name=new-reporting]:checked").val();
+    if ($("#new-reporting option:selected").val() != "none") data.reporting = $("#new-reporting option:selected").val();
     $(".sensor-item", $this).each(function(index, element) {
         data.sensors.push($(".sensor-name", element).val());
     });
