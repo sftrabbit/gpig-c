@@ -1,29 +1,27 @@
 package uk.co.gpigc.androidapp;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Mat;
-
-import uk.co.gpigc.androidapp.comms.DataPusher;
 import uk.co.gpigc.gpigcandroid.R;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
+import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
+import android.hardware.Camera.Size;
+import android.media.FaceDetector;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 public class FaceSystemActivity extends Activity implements Camera.PreviewCallback,
 SurfaceHolder.Callback {
@@ -38,14 +36,9 @@ SurfaceHolder.Callback {
 	private Camera camera;
 	private Button saveButton;
 	private boolean save;
-	
+
 	private long lastUpdate = 0;
 	private static final long WAIT_MILLIS = 5000;
-
-	static {
-		System.loadLibrary("opencv_java");
-		System.loadLibrary("faces");
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +52,7 @@ SurfaceHolder.Callback {
 
 		previewSurface = new SurfaceView(this);
 		previewSurface.getHolder().addCallback(this);
+		lastUpdate = System.currentTimeMillis() - WAIT_MILLIS;
 	}
 
 	@Override
@@ -74,9 +68,6 @@ SurfaceHolder.Callback {
 	public void onResume() {
 		super.onResume();
 		Log.d("Foo", "onResume");
-
-		OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, new BaseLoaderCallback(this) {});
-
 		camera = Camera.open();
 		camera.setDisplayOrientation(90);
 		camera.setPreviewCallback(this);
@@ -114,117 +105,29 @@ SurfaceHolder.Callback {
 			return;
 		}
 		System.out.println("Analysing");
-		Camera.Size previewSize = camera.getParameters().getPreviewSize();
-		byte[][] rgbImage = NV21toRGB(data, previewSize.width,
-				previewSize.height);
+		// Convert to JPG
+		Size previewSize = camera.getParameters().getPreviewSize(); 
+		YuvImage yuvimage=new YuvImage(data, ImageFormat.NV21, previewSize.width, previewSize.height, null);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		yuvimage.compressToJpeg(new Rect(0, 0, previewSize.width, previewSize.height), 80, baos);
+		byte[] jdata = baos.toByteArray();
 
-		Mat faceData = new Mat();
-		computeFaceData(rgbImage, previewSize.width, previewSize.height,
-				faceData.getNativeObjAddr());
+		// Convert to Bitmap
+		Bitmap bmp = BitmapFactory.decodeByteArray(jdata, 0, jdata.length);
 		
-		System.out.println(">>> New frame <<<");
-
-		if (save) {
-			save = false;
-
-			File dir = Environment.getExternalStoragePublicDirectory(
-					Environment.DIRECTORY_DOWNLOADS);
-			if (!dir.mkdirs()) {
-				Log.e("GPIGC", "Directory not created");
-			}
-			Log.d("GPIGC", "Storage dir = "+dir);
-			File file = new File(dir,"faces.csv");
-			try {
-				PrintStream fileStream = new PrintStream(new FileOutputStream(
-						file, true));
-				for (int i = 0; i < faceData.size().width; i++) {
-					float[] faceDataValue = new float[1];
-					faceData.get(0, i, faceDataValue);
-					fileStream.print(faceDataValue[0]);
-					if (i != faceData.size().width - 1) {
-						fileStream.print(",");
-					}
-				}
-				fileStream.println();
-				fileStream.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			Log.d("GPIGC", ">>>>>>>>> SAVED <<<<<<<<<");
-			Log.d("GPIGC", "Storage dir = "+dir);
-			saveButton.setText("Save Data");
-			saveButton.setEnabled(true);
+		FaceDetector fd = new FaceDetector(bmp.getWidth(), bmp.getHeight(), 1);
+		FaceDetector.Face[] faces = new FaceDetector.Face[1];
+		fd.findFaces(bmp, faces);
+		FaceDetector.Face face = faces[0];
+		if (face != null) {
+			PointF faceCentre = new PointF();
+			face.getMidPoint(faceCentre);
+			String msg = "Face at "+faceCentre+" with confidence "+face.confidence();
+			System.out.println(msg);
+			Toast.makeText(getApplication(), msg, Toast.LENGTH_LONG).show();
+			lastUpdate = System.currentTimeMillis();
 		} else {
-			transmitFaceData(faceData);
+			System.out.println("No face found");
 		}
-		lastUpdate = System.currentTimeMillis();
-	}
-
-	private void transmitFaceData(Mat faceData) {
-		// TODO Switch to base64 encoding if we want to waste less space
-		System.out.println(">>>>>>>>>> TRANSMITTING <<<<<<<<<<");
-		StringBuilder bld = new StringBuilder();
-		for (int i = 0; i < faceData.size().width; i++) {
-			float[] faceDataValue = new float[1];
-			faceData.get(0, i, faceDataValue);
-			bld.append(faceDataValue[0]);
-			if (i != faceData.size().width - 1) {
-				bld.append(',');
-			}
-		}
-		String encodedFaceData = bld.toString();
-		Map<String, String> data = new HashMap<String, String>();
-		data.put(FACE_ID, encodedFaceData);
-		DataPusher pusher = new DataPusher(getApplicationContext(),
-				SYSTEM_ID, 
-				data, 
-				getIntent().getStringExtra(DataPusher.CORE_IP_KEY),
-				false);
-		pusher.execute();
-	}
-
-	private static native void computeFaceData(byte[][] image, int width,
-			int height, long outputMatAddress);
-
-	private static byte[][] NV21toRGB(byte[] data, int width, int height) {
-		int size = width * height;
-		int offset = size;
-		byte[][] pixels = new byte[size][3];
-		int u, v, y1, y2, y3, y4;
-
-		// i along Y and the final pixels
-		// k along pixels U and V
-		for (int i = 0, k = 0; i < size; i += 2, k += 2) {
-			y1 = data[i] & 0xff;
-			y2 = data[i + 1] & 0xff;
-			y3 = data[width + i] & 0xff;
-			y4 = data[width + i + 1] & 0xff;
-
-			v = data[offset + k] & 0xff;
-			u = data[offset + k + 1] & 0xff;
-			v = v - 128;
-			u = u - 128;
-
-			pixels[i] = YUVtoRGB(y1, u, v);
-			pixels[i + 1] = YUVtoRGB(y2, u, v);
-			pixels[width + i] = YUVtoRGB(y3, u, v);
-			pixels[width + i + 1] = YUVtoRGB(y4, u, v);
-
-			if (i != 0 && (i + 2) % width == 0)
-				i += width;
-		}
-
-		return pixels;
-	}
-
-	private static byte[] YUVtoRGB(int y, int u, int v) {
-		byte[] pixelValue = new byte[3];
-		int r = y + (int) (1.772f * v);
-		int g = y - (int) (0.344f * v + 0.714f * u);
-		int b = y + (int) (1.402f * u);
-		pixelValue[0] = (byte) (r > 255 ? 255 : r < 0 ? 0 : r);
-		pixelValue[1] = (byte) (g > 255 ? 255 : g < 0 ? 0 : g);
-		pixelValue[2] = (byte) (b > 255 ? 255 : b < 0 ? 0 : b);
-		return pixelValue;
 	}
 }
