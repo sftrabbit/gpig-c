@@ -161,14 +161,6 @@ for (File engineFile : notificationFolder.listFiles()) {
             %>
             </select>
         </div>
-        <div class="form-group">
-            <label>Reporting</label>
-            <select id="new-reporting" class="form-control">
-                <option value="none">None</option>
-                <option value="Map">Map</option>
-                <option value="Graph">Graph</option>
-            </select>
-        </div>
         <div class="buttons-group">
             <button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>&nbsp;&nbsp;Add</button><button type="reset" class="btn btn-default">Cancel</button>
         </div>
@@ -284,10 +276,35 @@ for (File engineFile : notificationFolder.listFiles()) {
                 </div>
             </div>
         </form>
+        <form id="reporting">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reporting engines</h3>
+                </div>
+                <%
+                String report = "";
+                if (currentSystem.get("Reporting") != null) {
+                    report = ((String) currentSystem.get("Reporting"));
+                }
+                %>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            GraphReportingEngine
+                            <input type="checkbox" class="toggle-switch" name="engines[]" value="Graph"<%= report.equals("Graph") ? " checked='checked'" : "" %>>
+                        </li>
+                        <li class="list-group-item">
+                            MapReportingEngine
+                            <input type="checkbox" class="toggle-switch" name="engines[]" value="Map"<%= report.equals("Map") ? " checked='checked'" : "" %>>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
     </div>
     <div id="content-reports" class="tab-content" style="display:none;">
         <%
-        if (currentSystem.get("Reporting") == null) {
+        if (report.equals("")) {
             %>
             <br><ul class="list-group"><li class="list-group-item">No reports configured</li></ul>
             <%
@@ -297,9 +314,9 @@ for (File engineFile : notificationFolder.listFiles()) {
                 <div class="panel panel-primary">
                     <div class="panel-heading">
             <%
-            if (((String) currentSystem.get("Reporting")).equals("Graph")) {
+            if (report.equals("Graph")) {
             %>
-                        <h3 class="panel-title">Memory Graph</h3>
+                        <h3 class="panel-title">Graph</h3>
                         <script type="text/javascript">
                             var ENDPOINT = "http://gpigc-beta.appspot.com/gpigc-webapp";
                             var REFRESH_SECONDS = 10;
@@ -316,7 +333,7 @@ for (File engineFile : notificationFolder.listFiles()) {
                     <div class="panel-body">
                         <canvas id="graph"></canvas>
             <%
-            } else if (((String) currentSystem.get("Reporting")).equals("Map")) {
+            } else if (report.equals("Map")) {
             %>
                         <h3 class="panel-title">Map</h3>
                     </div>

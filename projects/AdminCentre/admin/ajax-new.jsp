@@ -32,7 +32,6 @@ if (!sensors.isEmpty()) {
 }
 toWrite.put("Engines", new JSONArray());
 toWrite.put("DatastoreGateway", newData.get("store"));
-if (newData.get("reporting") != null) toWrite.put("Reporting", newData.get("reporting"));
 
 JSONArray systems = (JSONArray) configJson.get("Systems");
 systems.add(toWrite);

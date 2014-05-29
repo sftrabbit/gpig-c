@@ -54,7 +54,6 @@ $("#form-new").submit(function() {
         "sensors": [],
         "store": $("#new-store option:selected").val()
     };
-    if ($("#new-reporting option:selected").val() != "none") data.reporting = $("#new-reporting option:selected").val();
     $(".sensor-item", $this).each(function(index, element) {
         data.sensors.push($(".sensor-name", element).val());
     });
@@ -164,25 +163,51 @@ $("#data-store").submit(function() {
 });
 
 
-var changing = false;
-$(".toggle-switch").bootstrapSwitch({
+var changingEngines = false;
+$("#engines .toggle-switch").bootstrapSwitch({
     size: "normal",
     onSwitchChange: function(event, state) {
-        changing = true;
+        changingEngines = true;
         var data = {"engines": $("#engines input[type=checkbox]:checked").map(function() { return $(this).val(); }).get()};
         $.post("ajax-engines.jsp?system=" + $("#systems-list .dropdown-toggle").text().trim(), {"post": JSON.stringify(data)}, function success(data, textStatus, jqXHR) {
-            changing = false;
+            changingEngines = false;
         }, "json").fail(function() {
             alert("Error: permission denied - could not write to the config file.");
-            if (!changing) {
+            if (!changingEngines) {
                 $("#engines")[0].reset();
-                changing = false;
+                changingEngines = false;
             }
         });
     }
 });
 
+var changingReporting = false;
+$("#reporting .toggle-switch").bootstrapSwitch({
+    size: "normal",
+    onSwitchChange: function(event, state) {
+        if (!changingReporting) {
+            changingReporting = true;
+            $("#reporting input[type=checkbox]").not(this).prop("checked", false).trigger("change.bootstrapSwitch", false);
+            var data = {"reporting": $("#reporting input[type=checkbox]:checked").map(function() { return $(this).val(); }).get()[0]};
+            $.post("ajax-reporting.jsp?system=" + $("#systems-list .dropdown-toggle").text().trim(), {"post": JSON.stringify(data)}, function success(data, textStatus, jqXHR) {
+                changingReporting = false;
+                window.location.href += "#report-change";
+                location.reload();
+            }, "json").fail(function() {
+                alert("Error: permission denied - could not write to the config file.");
+                $("#reporting")[0].reset();
+                changingReporting = false;
+            });
+        }
+    }
+});
+
 $(function() {
+    if (window.location.hash == "#report-change") {
+        $("a[data-tab='engines']").click();
+        setTimeout(function() { window.scrollTo(0, document.body.scrollHeight); }, 500);
+        window.location.hash = "";
+    }
     $(window).bind("unload", function() {
         $("input, button, select").prop("disabled", false);
         if ($("#form-new")) $("#form-new")[0].reset();
