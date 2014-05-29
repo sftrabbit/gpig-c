@@ -83,6 +83,13 @@ var mapCircle;
 var bounds = new google.maps.LatLngBounds();
 var infoWindow = new google.maps.InfoWindow();
 
+var windowBlurred = false;
+$(window).focus(function() {
+    windowBlurred = false;
+}).blur(function() {
+    windowBlurred = true;
+});
+
 $("body").on("reports-show", function() {
     if (!initialised) {
         var relative = $("#map").parent();
@@ -101,7 +108,7 @@ $("body").on("reports-show", function() {
 });
 
 function refresh() {
-    if ($("#content-reports").is(":visible")) {
+    if ($("#content-reports").is(":visible") && !windowBlurred) {
         $.ajax({
             url: ENDPOINT+"?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+MAX_POINTS+"&callback=?",
             dataType: "jsonp",

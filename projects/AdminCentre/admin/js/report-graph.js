@@ -17,6 +17,13 @@ var data = {
     ]
 };
 
+var windowBlurred = false;
+$(window).focus(function() {
+    windowBlurred = false;
+}).blur(function() {
+    windowBlurred = true;
+});
+
 $("body").on("reports-show", function() {
     if (!initialised) {
         var relative = $("#graph").parent();
@@ -39,7 +46,7 @@ $("body").on("reports-show", function() {
 });
 
 function refresh() {
-    if ($("#content-reports").is(":visible")) {
+    if ($("#content-reports").is(":visible") && !windowBlurred) {
         $.ajax({
             url: ENDPOINT+"?SystemID="+SYSTEM_ID+"&SensorID="+RECORD_TYPE+"&NumRecords="+(REFRESH_SECONDS*FREQUENCY)+"&callback=?",
             dataType: "jsonp",
@@ -57,8 +64,6 @@ function parseDate(input) {
 }
 
 function addItems(items) {
-    var min = Number.MAX_VALUE;
-    var max = Number.MIN_VALUE;
     var changed = false;
     items.reverse();
     $.each(items, function(key, item) {
@@ -69,10 +74,6 @@ function addItems(items) {
                     data.datasets[0].data.shift();
                 }
                 var value = parseFloat(item.Value)
-                var thisMin = Math.floor(value / ROUND_SCALE) * ROUND_SCALE;
-                var thisMax = Math.ceil(value / ROUND_SCALE) * ROUND_SCALE;
-                if (thisMin < min) min = thisMin;
-                if (thisMax > max) max = thisMax;
                 data.labels.push(parseDate(item.CreationTimestamp));
                 data.datasets[0].data.push(value);
                 changed = true;
@@ -80,6 +81,15 @@ function addItems(items) {
         }
     });
     if (changed) {
+        var min = Number.MAX_VALUE;
+        var max = Number.MIN_VALUE;
+        for (var i = 0; i < data.datasets[0].data.length; i++) {
+            var value = data.datasets[0].data[i];
+            var thisMin = Math.floor(value / ROUND_SCALE) * ROUND_SCALE;
+            var thisMax = Math.ceil(value / ROUND_SCALE) * ROUND_SCALE;
+            if (thisMin < min) min = thisMin;
+            if (thisMax > max) max = thisMax;
+        }
         var stepWidth = Math.round(((max - min) / (STEPS_SCALE - 2)) / ROUND_SCALE) * ROUND_SCALE;
         options.scaleStepWidth = stepWidth;
         options.scaleStartValue = min - stepWidth;
