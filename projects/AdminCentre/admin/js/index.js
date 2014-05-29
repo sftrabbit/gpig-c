@@ -30,6 +30,13 @@ $("#form-new").on("click", ".sensor-delete", function() { // bind this using .on
     return false;
 });
 
+$("#form-new").on("click", ".param-delete", function() { // bind this using .on() so that it also applies to new items added
+    if (!$(this).hasClass("disabled")) {
+        $(this).parent("li").remove();
+    }
+    return false;
+});
+
 $(".new-sensor").click(function() {
     if (!$(this).hasClass("disabled")) {
         $(this).parent("li").before('<li class="list-group-item sensor-item"><input type="text" value="" class="form-control sensor-name" placeholder="Enter sensor name"><a class="btn btn-danger sensor-delete" href="#"><i class="fa fa-trash-o"></i></a></li>');
@@ -54,6 +61,11 @@ $("#form-new").submit(function() {
         "sensors": [],
         "store": $("#new-store option:selected").val()
     };
+    var params = {};
+    $(".param-item", $this).each(function(index, element) {
+        params[$(".param-key", element).val()] = $(".param-value", element).val();
+    });
+    if (!jQuery.isEmptyObject(params)) data.params = params;
     $(".sensor-item", $this).each(function(index, element) {
         data.sensors.push($(".sensor-name", element).val());
     });

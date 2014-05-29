@@ -30,6 +30,10 @@ if (!sensors.isEmpty()) {
 } else {
     toWrite.put("Sensors", sensors);
 }
+JSONObject params = (JSONObject) newData.get("params");
+if (newData.get("params") != null && !params.isEmpty()) {
+    toWrite.put("Params", params);
+}
 toWrite.put("Engines", new JSONArray());
 toWrite.put("DatastoreGateway", newData.get("store"));
 

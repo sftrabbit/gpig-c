@@ -150,6 +150,12 @@ for (File engineFile : notificationFolder.listFiles()) {
             </ul>
         </div>
         <div class="form-group">
+            <label>Parameters</label>
+            <ul class="list-group new-params">
+                <li class="list-group-item"><a href="#" class="new-param btn"><span>Add a new parameter</span></a></li>
+            </ul>
+        </div>
+        <div class="form-group">
             <label for="new-store">Data store</label>
             <select id="new-store" class="form-control">
             <%
